@@ -1,0 +1,272 @@
+#+OPTIONS:    H:3 num:nil toc:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:(HIDE) tags:not-in-toc
+#+TITLE:      Pipenv 的使用
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-02 周五>
+
+* 简介
+  =Pipenv= 是被 =Python= 官方推荐的包管理器.
+
+  =Pipenv= 可以自动生成 =Virtualenv= 环境, 通过 =Pipfile= 方便的管理生产环境与依赖环境
+  的包. 并可以根据 =Pipfile= 生成 =Pipfile.lock= 文件.
+
+* Pipenv
+** 下载
+   下载 =Pipenv= 很简单, 使用指令 =Pip install pipenv= 就可以了.
+
+   同时, 建议使用 =Python3= 下载安装 =Pipenv=.
+
+** 使用
+   =Pipenv= 拥有简洁明了的帮助信息, 如下:
+   #+BEGIN_EXAMPLE
+     $  pipenv                                                                           
+     Usage: pipenv [OPTIONS] COMMAND [ARGS]...                                           
+                                                                                    
+     Options:                                                                            
+       --update         Update Pipenv & pip to latest.                                   
+       --where          Output project home information.                                 
+       --venv           Output virtualenv information.                                   
+       --py             Output Python interpreter information.                           
+       --envs           Output Environment Variable options.                             
+       --rm             Remove the virtualenv.                                           
+       --bare           Minimal output.                                                  
+       --completion     Output completion (to be eval'd).                                
+       --man            Display manpage.                                                 
+       --three / --two  Use Python 3/2 when creating virtualenv.                         
+       --python TEXT    Specify which version of Python virtualenv should use.           
+       --site-packages  Enable site-packages for the virtualenv.                         
+       --jumbotron      An easter egg, effectively.                                      
+       --version        Show the version and exit.                                       
+       -h, --help       Show this message and exit.                                      
+                                                                                    
+                                                                                    
+     Usage Examples:                                                                     
+        Create a new project using Python 3.6, specifically:                             
+        $ pipenv --python 3.6                                                            
+                                                                                    
+        Install all dependencies for a project (including dev):                          
+        $ pipenv install --dev                                                           
+                                                                                    
+        Create a lockfile containing pre-releases:                                       
+        $ pipenv lock --pre                                                              
+                                                                                    
+        Show a graph of your installed dependencies:                                     
+        $ pipenv graph                                                                   
+                                                                                    
+        Check your installed dependencies for security vulnerabilities:                  
+        $ pipenv check                                                                   
+                                                                                    
+        Install a local setup.py into your virtual environment/Pipfile:                  
+        $ pipenv install -e .                                                            
+                                                                                    
+     Commands:                                                                           
+       check      Checks for security vulnerabilities and against PEP 508 markers        
+                  provided in Pipfile.                                                   
+       graph      Displays currently–installed dependency graph information.             
+       install    Installs provided packages and adds them to Pipfile, or (if none       
+                  is given), installs all packages.                                      
+       lock       Generates Pipfile.lock.                                                
+       open       View a given module in your editor.                                    
+       run        Spawns a command installed into the virtualenv.                        
+       shell      Spawns a shell within the virtualenv.                                  
+       uninstall  Un-installs a provided package and removes it from Pipfile.            
+       update     Uninstalls all packages, and re-installs package(s) in [packages]      
+                  to latest compatible versions.                                         
+   #+END_EXAMPLE
+   
+   =Pipenv= 的指令格式是: =Pipenv [OPTIONS] COMMAND [ARGS]=.
+
+   + *OPTIONS*:
+     - ~--update~: 更新 =Pipenv= 和 =pip=.
+     - ~--where~: 获取当前项目的位置.
+     - ~--venv~: 获取当前项目虚拟环境的信息.
+     - ~--py~: 获取当前项目 =Python= 解释器的信息.
+     - ~--envs~: 获取可以设置的 =环境变量= 的信息.
+     - ~--rm~: 移除当前项目虚拟环境.
+     - ~--bare~: 获取最小的输出.
+     - ~--completion~: 命名的自动补全, 需要对你的 =shell= 进行设置.
+       比如说 =bash=, 可以在 =.bashrc= 或 =.bash_profile= 中添加:
+       =eval "$(pipenv --completion)"=.
+     - ~--man~: 显示手册页.
+     - ~--three/--two~: 使用 =Python3/2= 创建虚拟环境, 默认为 =3=.
+     - ~--python TEXT~: 指定使用的 =Python= 版本. 如: =Pipenv --python 3.6=.
+     - ~--site-packages~: 允许 =Virtualenv= 使用 =site-packages=.
+     - ~--jumbotron~: 复活节彩蛋.
+     - ~--version~: 显示版本信息.
+     - ~-h, --help~: 显示帮助信息.
+   + *COMMAND*:
+     可以通过 =[COMMAND] -h= 查看命令的帮助信息.
+     - ~check~: 检查 =Pipfile= 是否符合 =PEP508= 规范, 和下载的包是否安全.
+       + 参数 =--style TEXT= 检查 =Python= 脚本是否符合样式规范.
+       + more...
+     - ~graph~: 显示当前安装的包的依赖关系图.
+     - ~install~: 下载指定的包并添加到 =Pipfile=, 或不指定, 下载所有的包.
+       + 参数 =-d, --dev= 下载所有的包, 包括 =[dev-packages]=.
+       + 参数 =--system= 使用系统的 =Pip= 而非 =Virtualenv=.
+       + 参数 =-r, --requirements TEXT= 导入 =requirements= 文件.
+       + more...
+     - ~lock~: 生成 =Pipfile.lock= 文件.
+     - ~open~: 在编辑器中显示指定的模块.
+     - ~run~: 传递一个命令到 =Virtualenv=. (PS: 就这个功能了, 没有其他参数)
+     - ~shell~: 通过 =Virtualenv= 产生一个 =Shell=, 类似于 =activate=.
+     - ~uninstall~: 卸载所有的包.
+       - 参数 =--all-dev= 从 =[dev-packages]= 卸载所有的包.
+       - 参数 =--all= 卸载所有的包但不修改 =Pipfile=.
+       - more...
+     - ~update~: 卸载所有的包, 从 =[packages]= 重新下载安装到最新的兼容版本.
+
+** 设置
+   + 虚拟环境位置
+
+     =Pipenv= 生成的虚拟环境默认在用户目录, 你可以通过设置环境变量: =PIPENV_VENV_IN_PROJECT=1=
+     来使生成的虚拟环境位于项目目录.
+
+     有关这个问题: [[https://github.com/pypa/pipenv/issues/1049][issues 1049]].
+
+   + =Pip= 源
+     国内环境原因, 可以更换 =Pip= 的源来提高包的安装速度, 我使用的是清华镜像:
+     #+BEGIN_EXAMPLE
+       [[source]]
+
+       url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+       verify_ssl = true
+       name = "pypi.tuna"
+     #+END_EXAMPLE
+     
+* Pipfile
+  =Pipfile= 和 =Pipfile.lock= 用于替代 =pip= 的 =requirements.txt=.
+
+  为了使用 =Pipfile=, 你可以使用最新版的 =Pip= 的 =-p= 参数. 类似于参数 =-r=,
+  =pip= 会自动寻找读取 =Pipfile= 的内容.
+
+  但是, 更加推荐使用 =Pipenv=.
+
+** Pipfile
+   =Pipfile= 的特点:
+   + 使用 =TOML= 语法编写.
+   + 一个 =Pipfile= 可以替代多个 =requirements.txt=. 不需要为开发环境和依赖环境
+     单独划分文件.
+   + 通过 =Pipfile.lock= 指定确定的环境配置, 通过 =Pipfile.lock= 恢复项目环境.
+
+** Pipfile.lock
+   环境的详细信息保存在 =Pipfile.lock= 中, 方便复用. 这个文件应该是自动生成的, 不应该手动修改.
+
+** PEP508
+   =Pipfile= 支持所有的 =PEP508= 标记, 并可以通过 =Pipenv check= 来检查是否符合标准.
+   
+   =PEP508= 的语法文档格式直接看是不太好理解的, 最好的办法就是找一份例子边看边理解.
+   这里有一份 =Pipfile= 官网的一个例子, 可以看一看:
+   #+BEGIN_EXAMPLE
+     [[source]]
+     url = 'https://pypi.python.org/simple'
+     verify_ssl = true
+     name = 'pypi'
+
+     [requires]
+     python_version = '2.7'
+
+     [packages]
+     requests = { extras = ['socks'] }
+     records = '>0.5.0'
+     django = { git = 'https://github.com/django/django.git', ref = '1.11.4', editable = true }
+     "e682b37" = {file = "https://github.com/divio/django-cms/archive/release/3.4.x.zip"}
+     "e1839a8" = {path = ".", editable = true}
+     pywinusb = { version = "*", os_name = "=='nt'", index="pypi"}
+
+     [dev-packages]
+     nose = '*'
+     unittest2 = {version = ">=1.0,<3.0", markers="python_version < '2.7.9' or (python_version >= '3.0' and python_version < '3.4')"}
+   #+END_EXAMPLE
+   
+   部分语法和标记:
+   1. 指定版本
+      #+BEGIN_EXAMPLE
+        version_cmp   = wsp* '<' | '<=' | '!=' | '==' | '>=' | '>' | '~=' | '==='
+        version       = wsp* ( letterOrDigit | '-' | '_' | '.' | '*' | '+' | '!' )+
+        version_one   = version_cmp version wsp*
+        version_many  = version_one (wsp* ',' version_one)*
+        versionspec   = ( '(' version_many ')' ) | version_many
+        urlspec       = '@' wsp* <URI_reference>
+      #+END_EXAMPLE
+      
+      其中, =wsp= 代表 =' '= 或 =\t=, =*= 代表任意次数, =+= 为至少一次.
+
+      例: =>1.0, <=2.0=, 指定版本大于 =1.0= 小于等于 =2.0=.
+
+   2. 环境标记
+      #+BEGIN_EXAMPLE
+        marker_op     = version_cmp | (wsp* 'in') | (wsp* 'not' wsp+ 'in')
+        python_str_c  = (wsp | letter | digit | '(' | ')' | '.' | '{' | '}' |
+                         '-' | '_' | '*' | '#' | ':' | ';' | ',' | '/' | '?' |
+                         '[' | ']' | '!' | '~' | '`' | '@' | '$' | '%' | '^' |
+                         '&' | '=' | '+' | '|' | '<' | '>' )
+        dquote        = '"'
+        squote        = '\\''
+        python_str    = (squote (python_str_c | dquote)* squote |
+                         dquote (python_str_c | squote)* dquote)
+        env_var       = ('python_version' | 'python_full_version' |
+                         'os_name' | 'sys_platform' | 'platform_release' |
+                         'platform_system' | 'platform_version' |
+                         'platform_machine' | 'platform_python_implementation' |
+                         'implementation_name' | 'implementation_version' |
+                         'extra' # ONLY when defined by a containing layer
+                         )
+        marker_var    = wsp* (env_var | python_str)
+        marker_expr   = marker_var marker_op marker_var
+                      | wsp* '(' marker wsp* ')'
+        marker_and    = marker_expr wsp* 'and' marker_expr
+                      | marker_expr
+        marker_or     = marker_and wsp* 'or' marker_and
+                          | marker_and
+        marker        = marker_or
+        quoted_marker = ';' wsp* marker
+      #+END_EXAMPLE
+
+      =python_str=: 使用单引号 ='= 引起来, 可以包含双引号 ="=, 或用双引号 ~"~ 引起来, 可以包含单引号 ~'~.
+
+      例:
+      : markers="python_version < '2.7.9' or (python_version >= '3.0' and python_version < '3.4')"
+      指定 =Python= 版本小于 =2.7.9= 或 (大于等于 =3.0= 并 小于 =3.4=). 分解为语法:
+      : markers = dquote wsp* env_var marker_op squote python_str squote marker_or ...
+
+   3. 额外的依赖
+      #+BEGIN_EXAMPLE
+        identifer_end = letterOrDigit | (('-' | '_' | '.' )* letterOrDigit)
+        identifier    = letterOrDigit identifier_end*
+        name          = identifier
+        extras_list   = identifier (wsp* ',' wsp* identifier)*
+        extras        = '[' wsp* extras_list? wsp* ']'
+      #+END_EXAMPLE
+
+      一个 =package= 的名称结尾应该是: =letterOrDigit=.
+
+      简单的使用就是:
+      : extras = [pkg1, pkg2...]
+      例:
+      : requests[security]
+      指定 =requests= 额外依赖 =security=.
+      
+      在 =Pipfile= 中:
+      : requests = { extras = ['security'] }
+
+   4. 指定依赖的规则:
+      
+      基于名称需求的规则:
+      : name_req      = name wsp* extras? wsp* versionspec? wsp* quoted_marker?
+
+      直接的规则:
+      : url_req       = name wsp* extras? wsp* urlspec wsp+ quoted_marker?
+
+      统一规则:
+      : specification = wsp* ( url_req | name_req ) wsp*
+
+   5. [[https://www.python.org/dev/peps/pep-0508/#complete-grammar][more...]]
+
+   头晕...
+      
+* 相关链接
+  + [[https://github.com/pypa/pipenv][pipenv]]
+  + [[https://github.com/pypa/pipfile][pipfile]]
+  + [[https://www.python.org/dev/peps/pep-0508/][PEP508]]
+  + [[https://docs.pipenv.org/advanced/][Advanced Usage of Pipenv]]
+

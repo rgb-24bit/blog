@@ -1,0 +1,12 @@
+#+TITLE:      rgb-24bit's blog
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+
+- 2018
+  - [[file:2018/pipenv.org][Pipenv 的使用]]
+  - [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]]
+  - [[file:2018/regex.org][正则表达式]]
+  - [[file:2018/sqllocaldb和sqlcmd.org][sqllocaldb和sqlcmd]]
+- 2017
+  - [[file:2017/org-mode搭建GTD系统.org][org-mode搭建GTD系统]]
+  - [[file:2017/C99宽字符及本地化设置.org][C99宽字符及本地化支持]]

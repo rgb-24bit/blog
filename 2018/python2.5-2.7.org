@@ -1,0 +1,1300 @@
+#+OPTIONS:    H:3 num:nil toc:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:(HIDE) tags:not-in-toc
+#+TITLE:      Python2.5-2.7的版本变化
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-01-23 周二>
+
+* 前言
+  在学习 =Python= 之前就纠结过到底是先学 =Python2= 好还是先学 =Python3= 好.
+
+  后来, 考虑了一下, 决定先学 =Python2=, 这时我选择的教材是 《Python基础教程》.
+
+  这本书在网上评价很好, 同时也让我受益匪浅, 但是唯一的缺陷是, 这本书讲解的 =Python版本=
+  是 =Python2.5=, 而目前主流的 =Python版本= 是 =2.7=, 和 =3.6=.
+
+  所以为了进一步了解和学习 =Python=, 我决定通过官方文档来了解 =2.5->2.7= 这几个版本的
+  变化. (=3.x= 的留待以后)
+
+* Python2.5
+  虽然 《Python基础教程》 讲解的便是 =Python2.5=, 但我还是感觉有必要来了解一下
+  =2.5= 版本的内容.
+
+** 主要语言变化
+   =2.5= 对比 =2.4= 有了这些变化.
+
+   1. *Conditional Expressions*
+
+      即条件表达式, 从众多选择中脱颖而出的是这样的: =x = true_value if condition else false_value=
+      (编辑文档的作者貌似对这一选择感到惊讶)
+      
+      这里有两种书写方式:
+
+      #+BEGIN_SRC python
+        # First version -- no parens
+        level = 1 if logging else 0
+
+        # Second version -- with parens
+        level = (1 if logging else 0)
+      #+END_SRC
+
+      第二种貌似要清楚一些 ?
+
+   2. *Partial Function Application*
+      
+      这个功能包含在 =functools= 模块中. 这个模块有个函数 =partial()=.
+
+      =partial()= 的使用方式为: =partial(function, arg1, arg2, ... kwarg1=value1, kwarg2=value2)=
+
+      示例代码:
+
+      #+BEGIN_SRC python
+        import functools
+
+        def log (message, subsystem):
+            "Write the contents of 'message' to the specified subsystem."
+            print '%s: %s' % (subsystem, message)
+            ...
+
+        server_log = functools.partial(log, subsystem='server')
+        server_log('Unable to open socket')
+      #+END_SRC
+
+      个人理解: 这个功能允许通过现有的函数来构造一个具有该函数部分功能的新函数.
+      构造新函数时, 指定 =旧函数参数的值=, 使得新函数使用时不需要在手动传入 =指定的参数=.
+      
+   3. *Metadata for Python Software Packages*
+      
+      =setup()= 函数新增了 =requires=, =provides=, =obsoletes= 关键字参数.
+      使用 =sdist= 命令构建你的包的时候, 依赖信息会保存在 =PKG-INFO= 中.
+
+      还有一个关键字参数 =download_url=, 用于设置包的 =源码= 链接.
+
+      more...
+   
+   4. *Absolute and Relative Imports*
+      
+      相对和绝对导入.
+
+      假设有这样一个目录:
+
+      #+BEGIN_EXAMPLE
+        pkg/
+        pkg/__init__.py
+        pkg/main.py
+        pkg/string.py
+      #+END_EXAMPLE
+
+      你可以这样导入模块:
+
+      #+BEGIN_SRC python
+        # Import names from pkg.string
+        from .string import name1, name2
+        # Import pkg.string
+        from . import string
+      #+END_SRC
+
+      这在 =2.7= 版本中已经是默认特性了, 但是在 =2.5= 中使用还需要:
+      : from __future__ import absolute_import
+
+   5. *Executing Modules as Scripts*
+      
+      =python -m module=, =-m= 参数的由来
+      
+   6. *Unified try/except/finally*
+      
+      直到 =2.5= 版本, =try= 才可以同时使用: =except=, =finally=.
+
+      即, 你可以这样写了:
+
+      #+BEGIN_SRC python
+        try:
+            block-1 ...
+        except Exception1:
+            handler-1 ...
+        except Exception2:
+            handler-2 ...
+        else:
+            else-block
+        finally:
+            final-block
+      #+END_SRC
+
+      =2.5= 以前不行, 貌似这是 =Python= 的作者从 =Java= 获取的灵感.
+
+   7. *New Generator Features*
+      
+      =2.5= 版本对 =yield= 进行了一些修改, 使得它可以返回值了(之前不可以)
+
+      于是, 我们的生成器便成了这样:
+
+      #+BEGIN_SRC python
+        def counter (maximum):
+            i = 0
+            while i < maximum:
+                yield i
+                i += 1
+      #+END_SRC
+
+      对现在的我们来说, =yield= 似乎就是一个这样, 所以这里就不多讲了.
+
+   8. *The ‘with’ statement*
+      
+      =2.5= 版本新增了 =with= 结构, 你可以这样使用它:
+
+      #+BEGIN_SRC python
+        with expression [as variable]:
+            with-block
+      #+END_SRC
+
+      这里的 =expression= 返回的结果应该是一个上下文对象, 即这个对象至少包含:
+      =__enter__()=  和 =__exit__()= 方法.
+
+      =__enter__()= 在 =with-block= 代码块之前调用, =__exit__()= 在 =with-block=
+      代码块执行完成后调用.
+
+      当然, 如果你要使用这个功能在 =2.5= 版本, 你还需要这样的代码:
+      : from __future__ import with_statement
+      
+      * *Writing Context Managers*
+        
+        如果你要自己便写一个上下文对象, 需要注意以下细节:
+
+        - 表达式返回的对象应该是一个上下文对象, 这个对象至少包含有: =__enter__()=
+          和 =__exit__()= 方法.
+
+        - 上下文对象的 =__enter__()= 方法被调用, 返回值被分配给 =as variable= 指定的值.
+          如果没有指定值, 那么值将会被简单的丢弃.
+
+        - 代码块将被执行
+
+        - 如果代码块抛出一个异常, 那么 =__exit__(type, value, traceback)= 将被执行.
+
+        - 如果代码块没有抛出异常, 那么 =__exit__()= 仍然会执行, 只不过 =type=, =value=, =traceback= 都将是 =None=
+
+        这里是一个例子:
+
+        #+BEGIN_SRC python
+          # 假设我们定义了一个名为 DatabaseConnection 的上下文对象
+          db_connection = DatabaseConnection()
+          with db_connection as cursor:
+              cursor.execute('insert into ...')
+              cursor.execute('delete from ...')
+              # ... more operations ...
+
+          # 这个上下文对象的基本方法有
+          class DatabaseConnection:
+              # Database interface
+              def cursor (self):
+                  "Returns a cursor object and starts a new transaction"
+              def commit (self):
+                  "Commits current transaction"
+              def rollback (self):
+                  "Rolls back current transaction"
+
+          # 现在定义它的 __enter__() 方法
+          class DatabaseConnection:
+              ...
+              def __enter__ (self):
+                  # Code to start a new transaction
+                  cursor = self.cursor()
+                  return cursor
+
+          # 现在定义它的 __exit__() 方法
+          class DatabaseConnection:
+              ...
+              def __exit__ (self, type, value, tb):
+                  if tb is None:
+                      # No exception, so commit
+                      self.commit()
+                  else:
+                      # Exception occurred, so rollback.
+                      self.rollback()
+                      # return False
+        #+END_SRC
+
+      * *The contextlib module*
+        
+        =2.5= 版本的一个新模块 =contextlib= 提供了一些 *函数* 和 一个 *装饰器*.
+        这些函数和装饰器对便写一个上下文对象很有帮助.
+
+        这个装饰器是: =contextmanager()=. 这个装饰器允许让你编写一个 *生成器* 来而不是编写一个 *类.*
+
+        你编写的 *生成器* 应该只返回 *一个值*.
+
+        这个生成器的 *yield* 将会被当做 =__enter__()= 方法执行. 而 *yield* 之后的代码将会当做 =__exit__()= 方法执行.
+
+        代码示例:
+
+        #+BEGIN_SRC python
+          from contextlib import contextmanager
+
+          @contextmanager
+          def db_transaction (connection):
+              cursor = connection.cursor()
+              try:
+                  yield cursor
+              except:
+                  connection.rollback()
+                  raise
+              else:
+                  connection.commit()
+
+          db = DatabaseConnection()
+          with db_transaction(db) as cursor:
+              ...
+        #+END_SRC
+
+        另外, =contextlib= 模块包含了 =nested(mgr1, mgr2, ...)= 和 =closing(object)= 函数.
+        
+        =nested= 允许你同时结合 *多个* 上下文管理器(而不是编写嵌套的 *with*).
+        
+        而 =closing(object)= 返回 =object=, 所以可以被绑定到一个变量上. 并且在代码块执行完后会调用
+        =object.close= 方法.
+
+        使用例:
+
+        #+BEGIN_SRC python
+          # nested
+          lock = threading.Lock()
+          with nested (db_transaction(db), lock) as (cursor, locked):
+              ...
+
+          # closing
+          with closing(urllib.urlopen('http://www.yahoo.com')) as f:
+              for line in f:
+                  sys.stdout.write(line)
+        #+END_SRC
+
+   9. *Exceptions as New-Style Classes*
+
+      =2.5= 版本的异常的继承层次被重新安排了一下， 现在是这样的:
+
+      #+BEGIN_EXAMPLE
+        BaseException       # New in Python 2.5
+        |- KeyboardInterrupt
+        |- SystemExit
+        |- Exception
+           |- (all other current built-in exceptions)
+      #+END_EXAMPLE
+
+      所以现在可以使用: =except:= 来捕获 *所有的* 异常了(以前的版本啥样的...)
+
+   10. *Using ssize_t as the index type*
+
+       这个是针对 =Python's C API= 的, 使用一个新的类型 =Py_ssize_t= 来替代 =int=.
+       好方便 =Python= 在 =64= 位机上处理更多的数据, 而不影响 =32= 位机.
+
+       嗯... 没感觉
+
+   11. *The ‘__index__’ method*
+       
+       =2.5= 版本添加了 =__index__()= 方法, 这个方法不接受参数并且返回一个整型的数字, 
+       用于分片索引的使用.
+
+       #+BEGIN_SRC python
+         class C:
+             def __index__ (self):
+                 return self.value
+       #+END_SRC
+
+       值得注意的是, 这个返回值的类型必须是一个 python 整型/长整型, 否则会出现 =TypeError= 错误.
+
+** 核心语言变化
+   以下是Python 2.5对Python核心语言所做的更改.
+
+   + 字典类型 =dict= 多了一个新的方法 =__missing__(key)=. 当访问的键不存在在时, 让子类的
+     =__missing__(key)= 方法提供值.
+
+     代码示例:
+
+     #+BEGIN_SRC python
+       class zerodict (dict):
+           def __missing__ (self, key):
+               return 0
+
+       d = zerodict({1:1, 2:2})
+       print d[1], d[2]   # Prints 1, 2
+       print d[3], d[4]   # Prints 0, 0
+     #+END_SRC
+
+   + 所有的 8-bit 字符和 Unicode 字符都有了新的 =partition(sep)= 和 =rpartition(sep)= 方法来
+     简化常见用例.
+
+     这两个方法返回一个三元组, 根据 =sep= 指定的分隔符分割, 如果 =sep= 为找的, 那么
+     元组的另外两个值为 =''=
+
+     代码说明一切:
+
+     #+BEGIN_SRC python
+       >>> ('http://www.python.org').partition('://')
+       ('http', '://', 'www.python.org')
+       >>> ('file:/usr/share/doc/index.html').partition('://')
+       ('file:/usr/share/doc/index.html', '', '')
+       >>> (u'Subject: a quick question').partition(':')
+       (u'Subject', u':', u' a quick question')
+       >>> 'www.python.org'.rpartition('.')
+       ('www.python', '.', 'org')
+       >>> 'www.python.org'.rpartition(':')
+       ('', '', 'www.python.org')
+     #+END_SRC
+
+     =r= 代表反向.
+
+   + 字符串类型的 =startswith()= 和 =endswith()= 方法支持元组作为参数.
+
+     #+BEGIN_SRC python
+       def is_image_file (filename):
+           return filename.endswith(('.gif', '.jpg', '.tiff'))
+     #+END_SRC
+
+   + 内建函数 =min()= 和 =max()= 增加了关键字参数 =key=, 用于对值排序.
+     
+     #+BEGIN_SRC python
+       L = ['medium', 'longest', 'short']
+       # Prints 'longest'
+       print max(L, key=len)
+       # Prints 'short', because lexicographically 'short' has the largest value
+       print max(L)
+     #+END_SRC
+
+   + 新的内建函数 =any()= 和 =all()=.
+     =any()=: 如果迭代器有元素为 =True= 便返回 =True=
+     =all()=: 迭代器所有元素为 =True= 才返回 =True=
+
+   + 类的 =__hash__()= 方法现在可以返回一个长整数会常规整数
+
+   + ASCII现在是模块的默认编码.
+     
+     所有我们要在文件顶部加:
+     : # -*- coding: utf-8 -*-
+
+   + 一个新的警告 =UnicodeWarning=, 怎么样? 是不是有点熟悉...
+     
+     警告发生在你尝试比较一个 *ASCII* 字符串和一个 *Unicode* 字符串, 而 Unicode 字符串
+     _不能转化为 ASCII 字符串_ 的时候
+
+   + 从 =2.5= 版本开始, 如果你的包里没有 =__init__.py=, 将会出现 =ImportWarning=
+
+   + 你现在可以定义一个这样的类了:
+
+     #+BEGIN_SRC python
+       class C():
+           pass
+     #+END_SRC
+
+   [[https://docs.python.org/2/whatsnew/2.5.html#interactive-interpreter-changes][more...]]
+
+** 其他内容
+   其他的内容包括: [[https://docs.python.org/2/whatsnew/2.5.html#new-improved-and-removed-modules][新增, 改进, 移除的模块]], [[https://docs.python.org/2/whatsnew/2.5.html#build-and-c-api-changes][Python 构建过程和 C API 的变化]] ...
+
+   感觉这些内容还是看现在的文档吧 !
+
+* Python2.6
+  ok, 搞定了 =2.5=, 可以进入 =2.6= 了 ！
+
+  通过文档发现, =2.6= 版本的主题是向 =3.0= 迁移. 所以这个版本就已经在尽可能的
+  适应可能的 =3.0= 版本可能拥有的特性了.
+
+  =3.0= 版本和 =2.6= 版本居然是同步开发, 难怪现在就是 =3.6= 了...
+
+  好了, 直接开始正题了 ！
+
+** 主要语言变化
+   对比 =2.5=, =2.6= 版本的 Python 多了这些变化.
+
+   1. *The ‘with’ statement*
+
+      嗯, 也就是说在 =2.6= 版本使用 =with= 就不需要这样了:
+      : from __future__ import with_statement
+
+      可喜可贺, 但是其他内容貌似没有太多变化 !
+
+   2. *Explicit Relative Imports From a Main Module*
+      
+      =2.5= 版本的 =-m= 参数虽然允许了像运行一个脚本那样运行一个模块,
+      但是如果运行一个 *包* 内的模块的时候, *相对导入* 会出现错误.
+
+      为了修复这个 *bug*, =2.6= 版本为模块添加了 =__package__= 属性.
+      当这个属性存在的时候, 相对导入将依据这个属性的值而不是 =__name__= 的值.
+
+   3. *The multiprocessing Package*
+
+      这个新的多进程的包允许 Python 程序创建新的进程, 执行计算并将结果返回给父进程.
+
+      父进程和子进程通过 *管道* 和 *队列* 进行通信.
+
+      这里有几个类, 分别是: =Process=, =Queue=, =Pool=, =Manager=.
+
+      + =Process= 的 =start()= 方法启动一个子进程, =is_alive()= 方法判断进程是否存活, 
+        =join()= 方法等待子进程退出.
+
+      + =Queue= 对象储存在 *全局变量* 之中, 所以父进程和子进程可以通过队列来传递信息.
+
+      #+BEGIN_SRC python
+        import time
+        from multiprocessing import Process, Queue
+
+
+        def factorial(queue, N):
+            "Compute a factorial."
+            # If N is a multiple of 4, this function will take much longer.
+            if (N % 4) == 0:
+                time.sleep(.05 * N/4)
+
+            # Calculate the result
+            fact = 1L
+            for i in range(1, N+1):
+                fact = fact * i
+
+            # Put the result on the queue
+            queue.put(fact)
+
+        if __name__ == '__main__':
+            queue = Queue()
+
+            N = 5
+
+            p = Process(target=factorial, args=(queue, N))
+            p.start()
+            p.join()
+
+            result = queue.get()
+            print 'Factorial', N, '=', result
+      #+END_SRC
+
+      + =Pool= 提供更高级的接口. =Pool= 可以创建固定数量的 =工作进程=, 可以通过 =apply()= 或 =apply_async()= 方法来
+        请求使用. 也可以使用 =map()= 或 =map_async()= 来添加一些请求.
+
+      #+BEGIN_SRC python
+        from multiprocessing import Pool
+
+        def factorial(N, dictionary):
+            "Compute a factorial."
+            ...
+        p = Pool(5)
+        result = p.map(factorial, range(1, 1000, 10))
+        for v in result:
+            print v
+
+
+        # 输出的结果:
+        1
+        39916800
+        51090942171709440000
+        8222838654177922817725562880000000
+        33452526613163807108170062053440751665152000000000
+        ...
+      #+END_SRC
+
+      + =Manager= 同样提供高级的接口. =Manager= 会创建一个单独的服务器进程，可以保存Python数据结构的主副本.
+        其他进程可以使用代理对象访问和修改这些数据结构. 
+
+        #+BEGIN_SRC python
+          import time
+          from multiprocessing import Pool, Manager
+
+          def factorial(N, dictionary):
+              "Compute a factorial."
+              # Calculate the result
+              fact = 1L
+              for i in range(1, N+1):
+                  fact = fact * i
+
+              # Store result in dictionary
+              dictionary[N] = fact
+
+          if __name__ == '__main__':
+              p = Pool(5)
+              mgr = Manager()
+              d = mgr.dict()         # Create shared dictionary
+
+              # Run tasks using the pool
+              for N in range(1, 1000, 10):
+                  p.apply_async(factorial, (N, d))
+
+              # Mark pool as closed -- no more tasks can be added.
+              p.close()
+
+              # Wait for tasks to exit
+              p.join()
+
+              # Output results
+              for k, v in sorted(d.items()):
+                  print k, v
+
+          # 输出的结果:
+          1 1
+          11 39916800
+          21 51090942171709440000
+          31 8222838654177922817725562880000000
+          41 33452526613163807108170062053440751665152000000000
+          51 15511187532873822802242430164693032110632597200169861120000...
+        #+END_SRC
+
+      详细的使用还是查阅文档吧...
+
+      [[https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing][multiprocessing]]
+
+   4. *Advanced String Formatting*
+
+      嗯, 字符串对象新增了 =format()= 方法, 因为 =3.0= 版本的 =%= 有了更强大的方法 =format()= 方法
+      作为补充.
+
+      据说未来的版本中 操作符 =%= 可能要废除, 所以可以考虑一下在代码编写的过程中更多的使用 =format()=.
+
+   5. *print As a Function*
+
+      =print= 从关键字变成函数了.(=3.x= 版本默认如此)
+
+      如果要在 =2.6, 2.7= 使用的话, 还需要这样:
+      : from __future__ import print_function
+
+      =print= 函数是这样的:
+      : def print(*args, sep=' ', end='\n', file=None)
+
+      参数说明:
+
+      + args: 将值打印出来的位置参数
+
+      + sep: 分隔符, 将在参数之间打印
+
+      + end: 结束文本, 在所有参数打印完成后输出, 默认是换行.
+
+      + file: 输出将被发送到的文件对象.
+
+   6. *Exception-Handling Changes*
+
+      因为Python程序员有时会犯这样的错误:
+      
+      #+BEGIN_SRC python
+        try:
+            ...
+        except TypeError, ValueError:  # Wrong!
+            ...
+
+        # 正确写法:
+        try:
+            ...
+        except (TypeError, ValueError):
+            ...
+      #+END_SRC
+
+      为了减少这样的错误, =3.0= 版本开始异常的捕获必须这样写了:
+
+      #+BEGIN_SRC python
+        try:
+            ...
+        except TypeError as exc:
+            ...
+      #+END_SRC
+
+      当然, 在 =2.6= 版本, 中间是逗号或as的版本都可以用, 但很明显, 你更应该选择 =as=
+
+   7. *Byte Literals*
+
+      =3.0= 版本开始, 文本字符串的类型便默认为 =Unicode= 了.并使用不同的方法来表示
+      8位字符. 如 =b'string'= 或 =bytes= 构造函数.
+
+      为了向前兼容, =2.6= 版本添加了 =bytes= 作为 =str= 的同义字. 并同样支持 =b''= 符号.
+
+      但是 =2.6= 版本的 =str= 和 =3.0= 版本的 =bytes= 还是有很多不同. 最特别的是:
+
+      #+BEGIN_SRC python
+        # 2.6 版本例:
+
+        >>> bytes([65, 66, 67])
+        '[65, 66, 67]'
+
+        # 3.0 版本例
+
+        >>> bytes([65, 66, 67])
+        b'ABC'
+      #+END_SRC
+      
+      差别很明显了. =2.6= 版本中的 =bytes= 还是主要用于编写像 =isinstance(x, bytes)= 的类型
+      检测器. 方便 =2.x= 版本向 =3.x= 版本转化.
+
+      另外, 你还可以从 =__future__= 导入 =unicode_literals=, 这将使得所有字符串变为 =Unicode= 字符串.
+      这意味着 =\u= 转义序列可以用来包含 =Unicode= 字符:
+
+      #+BEGIN_SRC python
+        from __future__ import unicode_literals
+
+        s = ('\u751f\u3080\u304e\u3000\u751f\u3054'
+             '\u3081\u3000\u751f\u305f\u307e\u3054')
+
+        print len(s)               # 12 Unicode characters
+      #+END_SRC
+
+   8. *New I/O Library*
+
+      这方面的内容在使用过程中实在没有太多感触, 有兴趣的可以了解一下.
+
+      传送门: [[https://docs.python.org/2/whatsnew/2.6.html#pep-3116-new-i-o-library][PEP 3116: New I/O Library]]
+
+   9. *Revised Buffer Protocol*
+
+      偏向于 =C API= 的内容. 这个还是参照现在的文档吧.
+
+   10. *Abstract Base Classes*
+
+       如果你学过 Java, C++, C# 等中的任何一门, 那么这个更新应该不难理解.
+
+       =ABCs(Abstract Base Classes)= 类似于其他语言中的 =接口或抽象类= 的概念. 你可以定义一个
+       基本的类, 而继承这个类的子类可能必须实现这个基类定义的某些方法. 另一方面, 你可以继承一些现成
+       的 =ABC(Abstract Base Classe)= 来实现一些功能而非手动定义.
+
+       =2.6= 版本存在一个模块 =collections=, 这个模块定义了一些基类, 比如说 =Iterable= 表示一个类定义了 =__iter__()=,
+       =Container= 说明一个类定义了 =__contains__()=, 即支持: =x in y= 表达式. 而 =MutableMapping= 表名这个类支持字典类型的基础功能, 如:
+       =keys(), values(), items()=.
+
+       这些类有两种使用方式:
+
+       #+BEGIN_SRC python
+         import collections
+
+         class Storage(collections.MutableMapping):
+             ...
+
+         # 或
+
+         import collections
+
+         class Storage:
+             ...
+
+         collections.MutableMapping.register(Storage)
+
+         # 第一种方式要简洁一些, 但第二种在某些时候可能很有用
+         # 比如你定义了自己的 ABC 的时候， 如 PrintableType
+
+         # Register Python's types
+         PrintableType.register(int)
+         PrintableType.register(float)
+         PrintableType.register(str)
+       #+END_SRC
+
+       如果要检查一个类是否支持某个接口, 可以这样做:
+
+       #+BEGIN_SRC python
+         def func(d):
+             if not isinstance(d, collections.MutableMapping):
+                 raise ValueError("Mapping object expected, not %r" % d)
+       #+END_SRC
+
+       当然, 你不必时时刻刻进行类型检查, 只需要在必须的时候做好这一点即可.
+
+       你可以使用 =abc.ABCMeta= 作为类定义中的元类来编写自己的ABCs:
+
+       #+BEGIN_SRC python
+         from abc import ABCMeta, abstractmethod
+
+         class Drawable():
+             __metaclass__ = ABCMeta
+
+             @abstractmethod
+             def draw(self, x, y, scale=1.0):
+                 pass
+
+             def draw_doubled(self, x, y):
+                 self.draw(x, y, scale=2.0)
+
+
+         class Square(Drawable):
+             def draw(self, x, y, scale):
+                 ...
+       #+END_SRC
+
+       由装饰器 =@abstractmethod= 修饰的方法在子类继承的时候必须实现, 如 =draw=.
+       而 =draw_double= 并不需要.
+
+       抽象的属性通过 =@abstractproperty= 实现.
+
+       #+BEGIN_SRC python
+         from abc import abstractproperty
+         ...
+
+         @abstractproperty
+         def readonly(self):
+            return self._x
+       #+END_SRC
+
+       ps: 亏得我一直以为python没有这个功能....
+
+   11. *Integer Literal Support and Syntax*
+
+       来自 =3.0= 版本的变化, =2.6= 版本支持 =0o= 和 =0b= 作为前导字符的 八进制和二进制数字.
+
+       #+BEGIN_SRC python
+         >>> 0o21, 2*8 + 1
+         (17, 17)
+         >>> 0b101111
+         47
+
+         # 内建函数 0ct() 仍然返回前导 0 的字符.
+         # 新增内建函数 bin() 返回二进制串.
+
+         >>> oct(42)
+         '052'
+         >>> future_builtins.oct(42)
+         '0o52'
+         >>> bin(173)
+         '0b10101101'
+
+         # 函数 int() 和 long() 开始支持 '0o' 个 '0b' 开头的字符串.
+         # 或者即便参数为 0 的时候(表示所使用的基数从字符串确定)
+
+         >>> int ('0o52', 0)
+         42
+         >>> int('1101', 2)
+         13
+         >>> int('0b1101', 2)
+         13
+         >>> int('0b1101', 0)
+         13
+       #+END_SRC
+
+   12. *Class Decorators*
+
+       类装饰器 ?
+
+       #+BEGIN_SRC python
+         @foo
+         @bar
+         class A:
+           pass
+
+         # 等价于:
+
+         class A:
+           pass
+
+         A = foo(bar(A))
+       #+END_SRC
+
+   13. *A Type Hierarchy for Numbers*
+
+       数字类型的继承关系:
+
+       #+BEGIN_EXAMPLE
+         Number  -- 基类
+         `-- Complex  -- 继承自 Number, 代表复数类
+             `-- Real -- 继承自 Complex, 代表实数类
+                 `-- Rational -- 继承自 Real, 代表有理数类(可以被转化为 floats)
+                     `-- Integral -- 继承自 Rational, 代表整数类, 支持 <<, >>, |, & 运算
+       #+END_EXAMPLE
+
+       额, 厉害 ！
+
+       * *The fractions Module*
+
+         =2.6= 版本新增了 =fractions= 模块来更好的表示有理数. 这需要用到这个模块的
+         =Fraction= 类.
+
+         #+BEGIN_SRC python
+           >>> from fractions import Fraction
+           >>> a = Fraction(2, 3)
+           >>> b = Fraction(2, 5)
+           >>> float(a), float(b)
+           (0.66666666666666663, 0.40000000000000002)
+           >>> a+b
+           Fraction(16, 15)
+           >>> a/b
+           Fraction(5, 3)
+         #+END_SRC
+
+         另外可以通过 =as_integer_ratio()= 方法将浮点数转化为有理数.
+
+         #+BEGIN_SRC python
+           >>> (2.5) .as_integer_ratio()
+           (5, 2)
+           >>> (3.1415) .as_integer_ratio()
+           (7074029114692207L, 2251799813685248L)
+           >>> (1./3) .as_integer_ratio()
+           (6004799503160661L, 18014398509481984L)
+         #+END_SRC
+
+         注意第三个例子, 这个函数的转化是通过近似的值来完成的(不是近似的样子)
+       
+** 核心语言变化
+   以下是python核心语言的小变动.
+
+   + 包含 =__main__.py= 的目录或 zip archives 现在可以直接将其名字传递给解释器执行了.
+     其路径将会直接插入 =sys.path=.
+   
+   + =hasattr()= 现在捕获并忽略所有的错误.
+     
+   + 使用 =**= 提供关键字参数的时候, 不需要在使用python字典, 任何 =映射= 都将工作.
+
+     #+BEGIN_SRC python
+       >>> def f(**kw):
+       ...    print sorted(kw)
+       ...
+       >>> ud=UserDict.UserDict()
+       >>> ud['a'] = 1
+       >>> ud['b'] = 'string'
+       >>> f(**ud)
+       ['a', 'b']
+     #+END_SRC
+
+     另外, 这样写是合法的了:
+     
+     #+BEGIN_SRC python
+       >>> def f(*args, **kw):
+       ...     print args, kw
+       ...
+       >>> f(1,2,3, *(4,5,6), keyword=13)
+       (1, 2, 3, 4, 5, 6) {'keyword': 13}
+     #+END_SRC
+
+     ..., 这样写没毛病.
+
+   + 新的内建 =next(iterator, [default]=, 当迭代器耗尽的时候, =default= 将被返回.
+     如果 =default= 没有定义, 将会出现 =StopIteration= 异常.
+
+   + 元组现在有了 =index()= 和 =count()= 方法.
+
+   + 内建类型的切片操作支持 =(start, stop, step)= 的任意组合.
+
+   + 属性(Properties) 现在有三个 属性(attributes). =getter, setter, deleter=, 它们是装饰器.
+
+     #+BEGIN_SRC python
+       class C(object):
+           @property
+           def x(self):
+               return self._x
+
+           @x.setter
+           def x(self, value):
+               self._x = value
+
+           @x.deleter
+           def x(self):
+               del self._x
+
+       class D(C):
+           @C.x.getter
+           def x(self):
+               return self._x * 2
+
+           @x.setter
+           def x(self, value):
+               self._x = value / 2
+     #+END_SRC
+
+   + 内置类型 =set= 的几个方法现在接受多个迭代. =intersection(), intersection_update(), union(), update(), difference()= 和 =difference_update()=
+
+     #+BEGIN_SRC python
+       >>> s=set('1234567890')
+       >>> s.intersection('abc123', 'cdf246')  # Intersection between all inputs
+       set(['2'])
+       >>> s.difference('246', '789')
+       set(['1', '0', '3', '5'])
+     #+END_SRC
+
+   + 在支持 =+0= 和 =-0= 的系统上创建复数时, =complex()= 的构造器将保留 =0= 的符号.
+
+   + 从父类继承 =__hash__()= 方法的类可以设置 =__hash__ = None= 来指示该类不可散列.
+
+   + 生成器对象现在有了 =gi_code= 属性, 引用支持生成器的原始代码对象
+
+   + 内建函数 =compile()= 现在支持关键字参数和位置参数.
+
+   + =complex()= 构造函数现在支持带括号的复杂的表达式.
+
+   + 字符串的 =translate()= 现在支持 =None= 作为参数.
+
+   + 内建函数 =dir()= 现在检查接受对象的 =__dir__()= 方法. 此方法必须返回包含该对象的有效属性名称的字符串列表，并让该对象控制 =dir()= 生成的值.
+
+   + 当你在一个类语句中使用 =locals()= 函数时，结果字典不再返回自由变量.
+
+   [[https://docs.python.org/2/whatsnew/2.6.html#interpreter-changes][more...]]
+
+** 其他内容
+   同上, 文档链接:
+   [[https://docs.python.org/2/whatsnew/2.6.html#new-and-improved-modules][新增和改进模块]], [[https://docs.python.org/2/whatsnew/2.6.html#deprecations-and-removals][弃用和移除]], [[https://docs.python.org/2/whatsnew/2.6.html#build-and-c-api-changes][Python 构建过程和 C API 的变化]] ...
+
+* Python2.7
+  终于 =2.7= 了...
+
+  =2.7= 是 =2.x= 的最后一个版本, 如同 =2.6=, =2.7= 也包含了一部分 =3.x= 版本的功能.
+  而 =2.7= 某种程度上对应于 =3.1= 版本.
+
+** 主要变化之前
+   官方文档在正式讲解 =2.7= 版本的新功能前, 还讲了一些其他的东西 !
+   如果你有兴趣的话, 可以看一看:
+
+   [[https://docs.python.org/2/whatsnew/2.7.html#the-future-for-python-2-x][The Future for Python 2.x]]
+
+   [[https://docs.python.org/2/whatsnew/2.7.html#changes-to-the-handling-of-deprecation-warnings][Changes to the Handling of Deprecation Warnings]]
+
+   [[https://docs.python.org/2/whatsnew/2.7.html#python-3-1-features][Python 3.1 Features]]
+
+   PS: 写程序的时候尽可能的考虑与 =3.x= 版本兼容吧 !
+
+** 主要语言变化
+   1. *Adding an Ordered Dictionary to collections*
+
+      居然有有序字典, 之前就在想要是有有序字典多好...
+
+      有序字典类 =OrderedDict= 位于 =collections= 模块. 简单使用如下:
+
+      #+BEGIN_SRC python
+        >>> from collections import OrderedDict
+        >>> d = OrderedDict([('first', 1),
+        ...                  ('second', 2),
+        ...                  ('third', 3)])
+        >>> d.items()
+        [('first', 1), ('second', 2), ('third', 3)]
+      #+END_SRC
+
+      需要注意的是, 有序字典的排序依据是一个键的插入时间. 插入越早, 排名越前.
+
+      #+BEGIN_SRC python
+        # 更改键的值位置保持不变
+        >>> d['second'] = 4
+        >>> d.items()
+        [('first', 1), ('second', 4), ('third', 3)]
+
+        # 删除一个键又重新插入会改变顺序
+        >>> del d['second']
+        >>> d['second'] = 5
+        >>> d.items()
+        [('first', 1), ('third', 3), ('second', 5)]
+      #+END_SRC
+
+      另外, =popitem()= 方法将会默认返回最后一个元素, 如果设置 =last= 参数为 =False= 的
+      话, 将从头开始返回元素.
+
+      #+BEGIN_SRC python
+        >>> od = OrderedDict([(x,0) for x in range(20)])
+        >>> od.popitem()
+        (19, 0)
+        >>> od.popitem()
+        (18, 0)
+        >>> od.popitem(last=False)
+        (0, 0)
+        >>> od.popitem(last=False)
+        (1, 0)
+      #+END_SRC
+
+      比较两个字典的话, 如果是两个有序字典相比较, 这必须保证 =键值= 及 =顺序= 都一样才为相等.
+      如果是 一个有序字典 和 一个普通字典, 那么保证 =键值= 相同即可.
+
+      #+BEGIN_SRC python
+        >>> od1 = OrderedDict([('first', 1),
+        ...                    ('second', 2),
+        ...                    ('third', 3)])
+        >>> od2 = OrderedDict([('third', 3),
+        ...                    ('first', 1),
+        ...                    ('second', 2)])
+        >>> od1 == od2
+        False
+        >>> # Move 'third' key to the end
+        >>> del od2['third']; od2['third'] = 3
+        >>> od1 == od2
+        True
+      #+END_SRC
+
+      [[https://www.python.org/dev/peps/pep-0372][more...]]
+
+   2. *Format Specifier for Thousands Separator*
+
+      为了让我们的程序的输出更美观, =str.format()= 支持通过这种方式来输出更好看的数字:
+
+      #+BEGIN_SRC python
+        # 浮点数, 在宽度和精度之间加个 ',' 号
+        >>> '{:20,.2f}'.format(18446744073709551616.0)
+        '18,446,744,073,709,551,616.00'
+
+        # 整数, 在宽度后面加个 ',' 号.
+        >>> '{:20,d}'.format(18446744073709551616)
+        '18,446,744,073,709,551,616'
+      #+END_SRC
+
+   3. *The argparse Module for Parsing Command Lines*
+
+      在 =2.7= 版本之前, 你可以使用 =getopt()= 和 =optparse= 来接受和处理命令行参数.
+
+      现在, =python= 在此添加了一个名为 =argparse= 的模块, 这个模块同样用于处理命令行参数.
+      用法和 =optparse= 类似, 但功能更加强大.(意思就是前段时间刚学的 =optparse= 可以换了...)
+
+      #+BEGIN_SRC python
+        import argparse
+
+        parser = argparse.ArgumentParser(description='Command-line example.')
+
+        # Add optional switches
+        parser.add_argument('-v', action='store_true', dest='is_verbose',
+                            help='produce verbose output')
+        parser.add_argument('-o', action='store', dest='output',
+                            metavar='FILE',
+                            help='direct output to FILE instead of stdout')
+        parser.add_argument('-C', action='store', type=int, dest='context',
+                            metavar='NUM', default=0,
+                            help='display NUM lines of added context')
+
+        # Allow any number of additional arguments.
+        parser.add_argument(nargs='*', action='store', dest='inputs',
+                            help='input filenames (default is stdin)')
+
+        args = parser.parse_args()
+        print args.__dict__
+      #+END_SRC
+
+      和 =optparse= 一样, =-h, --help= 指令会自动添加.
+
+      [[https://www.python.org/dev/peps/pep-0389][more...]]
+
+   4. *Dictionary-Based Configuration For Logging*
+
+      日志的打印是一个问题. 日志打印的配置也同样是一个问题. =2.7= 版本开始 =logging= 模块便可以通过
+      =dictConfig= 函数设置日志打印. 例:
+
+      #+BEGIN_SRC python
+        import logging
+        import logging.config
+
+        configdict = {
+         'version': 1,    # Configuration schema in use; must be 1 for now
+         'formatters': {
+             'standard': {
+                 'format': ('%(asctime)s %(name)-15s '
+                            '%(levelname)-8s %(message)s')}},
+
+         'handlers': {'netlog': {'backupCount': 10,
+                             'class': 'logging.handlers.RotatingFileHandler',
+                             'filename': '/logs/network.log',
+                             'formatter': 'standard',
+                             'level': 'INFO',
+                             'maxBytes': 1000000},
+                      'syslog': {'class': 'logging.handlers.SysLogHandler',
+                                 'formatter': 'standard',
+                                 'level': 'ERROR'}},
+
+         # Specify all the subordinate loggers
+         'loggers': {
+                     'network': {
+                                 'handlers': ['netlog']
+                     }
+         },
+         # Specify properties of the root logger
+         'root': {
+                  'handlers': ['syslog']
+         },
+        }
+
+        # Set up configuration
+        logging.config.dictConfig(configdict)
+
+        # As an example, log two error messages
+        logger = logging.getLogger('/')
+        logger.error('Database not found')
+
+        netlogger = logging.getLogger('network')
+        netlogger.error('Connection failed')
+      #+END_SRC
+
+      额, 详细的配置方法还是看文档吧: [[https://docs.python.org/2/library/logging.config.html#logging-config-api][logging-configuration]]
+
+   5. *Dictionary Views*
+
+      由于在 =3.x= 版本 =dict()= 的 =keys()=, =values()=, =items()= 返回一个名为视图(view)的对象，而不是完全的列表.
+
+      所以为了向 =3.x= 版本兼容, 同时又不至于修改大量的核心代码, =2.7= 的 =dict= 添加了 =viewkeys()=, =viewvalues()=, =viewitems()=
+      三个方法.
+
+      =view= 可以迭代, 但是 *键* 和 *值* 视图也可以使用类似于 *集合(set)* 的 =&= 和 =|= 操作.
+
+      #+BEGIN_SRC python
+        >>> d = dict((i*10, chr(65+i)) for i in range(26))
+        >>> d
+        {0: 'A', 130: 'N', 10: 'B', 140: 'O', 20: ..., 250: 'Z'}
+        >>> d.viewkeys()
+        dict_keys([0, 130, 10, 140, 20, 150, 30, ..., 250])
+
+
+        >>> d1 = dict((i*10, chr(65+i)) for i in range(26))
+        >>> d2 = dict((i**.5, i) for i in range(1000))
+        >>> d1.viewkeys() & d2.viewkeys()
+        set([0.0, 10.0, 20.0, 30.0])
+        >>> d1.viewkeys() | range(0, 30)
+        set([0, 1, 130, 3, 4, 5, 6, ..., 120, 250])
+      #+END_SRC
+
+      视图的内容跟随字典变化而变化, 然而你并不能通过更改视图来更改字典...(咋那么像数据库呢...)
+
+      #+BEGIN_SRC python
+        # 更改字典改变视图
+        >>> vk = d.viewkeys()
+        >>> vk
+        dict_keys([0, 130, 10, ..., 250])
+        >>> d[260] = '&'
+        >>> vk
+        dict_keys([0, 130, 260, 10, ..., 250])
+
+        # 更改视图发生错误
+        >>> for k in vk:
+        ...     d[k*2] = k
+        ...
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+        RuntimeError: dictionary changed size during iteration
+      #+END_SRC
+
+      PS: =3.x= 版本的 =keys()=, =values()=, =items()= 默认返回的就是视图.
+
+   6. *The memoryview Object*
+
+      =memoryview= 对象提供了与字节类型的接口相匹配的另一个对象的 *内存内容* 的 *视图*.
+
+      #+BEGIN_SRC python
+        >>> import string
+        >>> m = memoryview(string.letters)
+        >>> m
+        <memory at 0x37f850>
+        >>> len(m)           # Returns length of underlying object
+        52
+        >>> m[0], m[25], m[26]   # Indexing returns one byte
+        ('a', 'z', 'A')
+        >>> m2 = m[0:26]         # Slicing returns another memoryview
+        >>> m2
+        <memory at 0x37f080>
+      #+END_SRC
+
+      视图的内容可以被转换成一个 *字节串* 或一个 *整数列表*:
+
+      #+BEGIN_SRC python
+        >>> m2.tobytes()
+        'abcdefghijklmnopqrstuvwxyz'
+        >>> m2.tolist()
+        [97, 98, 99, 100, 101, 102, 103, ... 121, 122]
+        >>>
+      #+END_SRC
+
+      =memoryview= 对象允许修改底层对象，如果它是一个可变的对象.
+
+      #+BEGIN_SRC python
+        >>> m2[0] = 75
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+        TypeError: cannot modify read-only memory
+        >>> b = bytearray(string.letters)  # Creating a mutable object
+        >>> b
+        bytearray(b'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        >>> mb = memoryview(b)
+        >>> mb[0] = '*'         # Assign to view, changing the bytearray.
+        >>> b[0:5]              # The bytearray has been changed.
+        bytearray(b'*bcde')
+        >>>
+      #+END_SRC
+
+      PS: 你可以通过视图的 =readonly= 属性来判断它是否是可以更改的.
+
+** 核心语言变化
+   + 通过 ={}= 来常见集合, 空集合使用 =set()= 创建, ={}= 继续代表空字典.
+     
+     #+BEGIN_SRC python
+       >>> {1, 2, 3, 4, 5}
+       set([1, 2, 3, 4, 5])
+       >>> set() # empty set
+       set([])
+       >>> {}    # empty dict
+       {}
+     #+END_SRC
+
+   + 可以使用列表推导式来生成 =字典= 和 =集合= 了.
+
+     #+BEGIN_SRC python
+       >>> {x: x*x for x in range(6)}
+       {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+       >>> {('a'*x) for x in range(6)}
+       set(['', 'a', 'aa', 'aaa', 'aaaa', 'aaaaa'])
+     #+END_SRC
+
+   + =with= 语句现在可以同时创建多个上下文管理器. 这些对象从左到右进行管理.
+     嗯, =contextlib.nested()= 提供类似的功能, 所以它被弃用了.
+
+     #+BEGIN_SRC python
+       with A() as a, B() as b:
+           ... suite of statements ...
+
+       # 等价于
+       with A() as a:
+           with B() as b:
+               ... suite of statements ...
+     #+END_SRC
+
+   + 对长整数, 浮点数的转化进行了优化.
+
+     #+BEGIN_SRC python
+       # 2.6
+       >>> n = 295147905179352891391
+       >>> float(n)
+       2.9514790517935283e+20
+       >>> n - long(float(n))
+       65535L
+
+       # 2.7
+       >>> n = 295147905179352891391
+       >>> float(n)
+       2.9514790517935289e+20
+       >>> n - long(float(n))
+       -1L
+     #+END_SRC
+
+   + =str.format()= 现在可以使用自动编号替换字段l. 既可以这样:
+
+     #+BEGIN_SRC python
+       >>> '{}:{}:{}'.format(2009, 04, 'Sunday')
+       '2009:4:Sunday'
+       >>> '{}:{}:{day}'.format(2009, 4, day='Sunday')
+       '2009:4:Sunday'
+     #+END_SRC
+
+   + =int()= 和 =long()= 添加了 =bit_length()= 方法来获取对应数字的二进制位数.
+
+     #+BEGIN_SRC python
+       >>> n = 37
+       >>> bin(n)
+       '0b100101'
+       >>> n.bit_length()
+       6
+       >>> n = 2**123-1
+       >>> n.bit_length()
+       123
+       >>> (n+1).bit_length()
+       124
+     #+END_SRC
+
+   + =bytearray= 类型的 =translate()= 方法现在接受 =None= 作为其第一个参数
+
+   + [[https://docs.python.org/2/whatsnew/2.7.html#other-language-changes][more...]]
+
+   + *Interpreter Changes*
+
+     新增环境变量 =PYTHONWARNINGS= 来控制输出的警告信息.
+
+** 其他内容
+   同上上: [[https://docs.python.org/2/whatsnew/2.7.html#new-and-improved-modules][新增和改进模块]], [[https://docs.python.org/2/whatsnew/2.7.html#build-and-c-api-changes][构建过程和 C API]], [[https://docs.python.org/2/whatsnew/2.7.html#porting-to-python-2-7][迁移到2.7]]
+* 完结感言
+  终于...
+
+  基本完成了...
+
+  本来还说一下午搞定这一切...
+
+  事实证明我想多了.....
+
+  嗯, 在看文档前我是没想到每个版本之间的变化有这么多的, 这篇文章里我还省略了一部分...
+
+  本来是想看看 =set= 这个类型的相关内容才来翻文档的(买的书对 =set= 的讲解很少), 结果 =set= 的内容
+  没有多少, 到是其他内容收获不少...
+
+  果然, 官方的文档才是最好的教程么...
+
+* 相关链接
+  + [[https://docs.python.org/2/whatsnew/2.5.html][What’s New in Python 2.5]]
+  + [[https://docs.python.org/2/whatsnew/2.6.html][What’s New in Python 2.6]]
+  + [[https://docs.python.org/2/whatsnew/2.7.html][What’s New in Python 2.7]]
+
