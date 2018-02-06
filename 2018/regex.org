@@ -1,4 +1,3 @@
-#+OPTIONS:    H:3 num:nil toc:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:(HIDE) tags:not-in-toc
 #+TITLE:      正则表达式
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com

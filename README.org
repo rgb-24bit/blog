@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - 2018
+  - [[file:2018/blockchain.org][区块链的简单尝试]]
   - [[file:2018/pipenv.org][Pipenv 的使用]]
   - [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]]
   - [[file:2018/regex.org][正则表达式]]

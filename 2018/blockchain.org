@@ -1,0 +1,175 @@
+#+TITLE:      区块链的简单尝试
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-06 周二>
+
+* 前言
+  昨晚， 我再一次浏览了有关于区块链技术的博客。
+
+  然后， 我便惊喜的发现了这一篇博客： [[http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433][区块链入门教程]]
+
+  之前看了很多博客， 但一直让我很捉急的便是， 对于实现部分， 对于为何会花那么多
+  算力的部分， 讲解的不是很清楚。
+
+  我知道， ~Hash~ 算法耗费算力， 但我平时用 ~Hash~ 算法的时候， 花费的时间也不多啊 ！
+
+  在看了这篇博客之后， 突然明白， ~Hash~ 计算并不是只有一次， 而是由很多次计算得来的。
+
+  而 ~难度系数~ 影响了计算所需要的次数。
+
+  终于， 一个一直困惑我的部分得到了解答。
+
+  但是， 我还是想尝试一下， 具体怎么个耗时法。
+
+* 代码尝试
+  得益于看到的博客， 我从相关链接中， 看到了一篇很简洁但很精辟的示例：
+  [[https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d][How does blockchain really work? I built an app to show you.]]
+
+  这是一篇很好的文章， 模仿文中的代码， 我用 ~Python~ 写了一个小脚本来测试：
+  #+BEGIN_SRC python
+    # -*- coding: utf-8 -*-
+
+    from __future__ import print_function
+
+    import time, random
+
+    from hashlib import sha256
+
+
+    class BlockChain(object):
+        """ 区块.
+
+        :param index: 当前区块的 `index`.
+        :type index: int
+        :param pre_hash: 前一个区块的 `hash`.
+        :type pre_hash: str
+        :param data: 当前区块要储存的信息.
+        :type data: str
+        """
+        def __init__(self, index, pre_hash, data):
+            self.index = index
+            self.pre_hash = pre_hash
+            self.time = time.ctime()
+            self.data = data
+            self.hash = None
+            self.nonce = 0      # 计算 `hash` 的次数
+
+        def calc_hash(self, difficulty):
+            """ 计算 `hash`.
+
+            :pparam difficulty: 计算难度.
+            :type difficulty: int
+            """
+            def is_vaild_hash(hash, difficulty):
+                """ 判断算的的 `hash` 是否有效.
+                """
+                for i in range(len(hash)):
+                    if not hash[i] == '0':
+                        break
+                return i >= difficulty
+
+            input = str(self.index) + self.pre_hash + \
+                    self.time + self.data + str(self.nonce)
+            self.hash = sha256(input).hexdigest()
+
+            while not is_vaild_hash(self.hash, difficulty):
+                self.nonce += 1
+                input = str(self.index) + self.pre_hash + \
+                        self.time + self.data + str(self.nonce)
+                self.hash = sha256(input).hexdigest()
+
+
+    def genesis_block():
+        """ 获取创世区块.
+        """
+        first_block = BlockChain(0, '0', 'My first block')
+        first_block.calc_hash(random.randint(1, 4))
+        return first_block
+
+
+    def print_block(block):
+        """ 输出区块信息.
+        """
+        print('index: %s' % block.index)
+        print('hash: %s' % block.hash)
+        print('nonce: %s\n' % block.nonce)
+
+
+    if __name__ == '__main__':
+        print('Genesis block:')
+        first_block = genesis_block()
+        print_block(first_block)
+
+        pre_block = first_block
+
+        while True:
+            data = raw_input('Input data: ')
+            if data:
+                cur_block = BlockChain(pre_block.index + 1, pre_block.hash, data)
+
+                difficulty = random.randint(1, 4)    # ..., 难度稍微大一点居然都要算半天...
+                print('difficulty: %s' % difficulty)
+
+                cur_block.calc_hash(difficulty)
+                print_block(cur_block)
+
+                pre_block = cur_block
+
+            else:
+                break
+
+        print('over')
+  #+END_SRC
+  
+  代码比较粗糙， 但是并不妨碍我进行测试：
+  #+BEGIN_EXAMPLE
+    Genesis block:
+    index: 0
+    hash: 000a630deaf076650dc5ee90490ee1d16b3bc5a36ababcce68b807a32f16bfbd
+    nonce: 491
+
+    Input data: 第二个区块
+    difficulty: 3
+    index: 1
+    hash: 000da279af9350e82481bbcfbdec65ba47b5f79fbfb3439734cae69056bc8315
+    nonce: 6947
+
+    Input data: 难度是 ？
+    difficulty: 3
+    index: 2
+    hash: 000a4699eb0d5e74d15833c383a6c191a40fee89b804a792aa1ecbfecc3cf98a
+    nonce: 3725
+
+    Input data: 再一次测试
+    difficulty: 4
+    index: 3
+    hash: 0000f2d8aadd829dadb048d2624d155729d06b258dc7013ac31621ac515eb644
+    nonce: 37817
+
+    Input data: 再来一次
+    difficulty: 4
+    index: 4
+    hash: 00002863448497e9e4028d0875b7624d5172e952fc0ab128b336b20abe7df95e
+    nonce: 84479
+
+    Input data: github
+    difficulty: 4
+    index: 5
+    hash: 00001c6ce47f2e7d66f7a75a12f5de390a8456cfb734c3679af3750ee2917425
+    nonce: 53565
+  #+END_EXAMPLE
+
+  这是测试过程， 当然不是最开始的。
+
+  最开始的时候， 难度系数生成的代码是： ~random.randint(1, 24)~.
+
+  然后， 上来就是一个难度 7， 结果便是， 我去上了个厕所回来那一个区块还没出来......
+
+  于是， 我默默的将代码改为了： ~random.randint(1, 4)~.
+
+  但是， 这个计算次数还是让我很惊讶。轻轻松松上万。
+
+* 相关链接
+  + [[https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d][How does blockchain really work? I built an app to show you.]]
+  + [[http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433][区块链入门教程]]
+

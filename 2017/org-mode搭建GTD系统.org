@@ -1,4 +1,3 @@
-#+OPTIONS:    H:3 num:nil toc:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:(HIDE) tags:not-in-toc
 #+TITLE:      org-mode搭建GTD系统
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
