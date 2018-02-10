@@ -1,0 +1,272 @@
+#+TITLE:      Python urllib
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-10 周六>
+
+* 简介
+  这几天在看 ~requests~ 的源码， 虽然最开始只是准备学习一下前辈的编程经验。
+  但是， 由于对 ~urllib~ 相关模块的不熟悉， 在阅读源码的过程中， 相对少了不少
+  体会。
+
+  因此， 在继续阅读源码前， 先来了解一下 ~urllib~ 及相关模块。
+
+* URL
+  ~urllib~ 模块是用来获取 ~url~ 资源的， 所以， 我觉得可以先了解一下 ~URL~ 的相关概念。
+
+  ~URL-Uniform Resource Locator~, 译名： 统一资源定位符。 用于定位万维网上的文档或其他数据。
+
+  结构如下：
+  :  scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
+
+  解释：
+  + scheme - 定义因特网服务的类型。 目前最常见的类型是 ~http~
+  + user, password - 可选的凭证信息， 用 ~:~ 分割， 后跟 ~@~
+  + host - 服务器地址
+  + port - 定义主机上的端口号， ~:~ 开始（http 的默认端口号是 80）
+  + path - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）
+  + filename - 定义文档/资源的名称
+  + query - 可选的查询， 以 ~?~ 字符为起点，每个参数以 ~&~ 隔开，再以 ~=~ 分开参数名称与数据，
+    通常以 ~UTF8~ 的 ~URL~ 编码，避开字符冲突的问题（百度或谷歌搜索时就有一堆）
+  + fragment - 片段， 以 ~#~ 为起点， 定位网页中的某一个位置
+
+  常见的服务类型：
+  |-------+-----------------------------------|
+  | 类型  | 描述                              |
+  |-------+-----------------------------------|
+  | http  | 超文本传输协议， 不加密           |
+  | https | 安全超文本传输协议                |
+  | ftp   | 文件传输协议， 用于下载或上传文件 |
+  | file  | 本地文件                          |
+  |-------+-----------------------------------|
+
+* Python2.7
+** 简单的使用
+   ~urllib~ 和 ~urllib2~ 都可以用于获取 ~URL~ 资源， 这里由 ~urllib2~ 开始。
+
+   一个简单的例子：
+   #+BEGIN_SRC python
+     import urllib2
+     response = urllib2.urlopen('http://python.org')
+     html = response.read()
+   #+END_SRC
+
+   大多数时候， 我们都在和 ~HTTP~ 打交道， ~HTTP~ 是基于 *请求* 和 *响应* 的。（客服端发出请求， 服务器端进行响应）
+
+   ~urllib2~ 使用一个 ~Request~ 对象来表示一个请求， 使用 ~Request~ 对象来调用 ~urlopen~ 函数，
+   将会返回与之对应的响应对象。 响应对象类似于一个文件对象， 你可以调用 ~read~ 方法来获取内容。
+
+   #+BEGIN_SRC python
+     import urllib2
+
+     req = urllib2.Request('http://www.voidspace.org.uk')
+     response = urllib2.urlopen(req)
+     the_page = response.read()
+   #+END_SRC
+
+   对于其他服务类型， 接口的调用方式是一样的。
+
+   但是对于 ~HTTP~, 我们还可以向服务器发送数据， 同时可以附加一些 ~Headers~ 头信息。
+
+** 发送数据
+   我们可以使用 ~POST~ 请求向服务器发送一些数据， 数据在发送之前， 需要以标准方式进行编码。
+
+   这时， 我们需要使用 ~urllib~ 模块， 这一点是 ~2.7~ 和 ~3.x~ 的一个很大的不同。
+
+   在 ~2.7~ 版本中， ~urllib~ 可以对数据进行编码， ~urllib2~ 可以发送数据。
+
+   在 ~3.x~ 版本中， 这两个功能合并在一个模块 ~urllib~ 中了。
+
+   #+BEGIN_SRC python
+     import urllib
+     import urllib2
+
+     url = 'http://www.someserver.com/cgi-bin/register.cgi'
+     values = {'name' : 'Michael Foord',
+               'location' : 'Northampton',
+               'language' : 'Python' }
+
+     data = urllib.urlencode(values)
+     req = urllib2.Request(url, data)
+     response = urllib2.urlopen(req)
+     the_page = response.read()
+   #+END_SRC
+
+   PS: 有时需要其他编码， 详见 [[https://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13][HTML Specification, Form Submission]]
+
+   如果没有传递 ~data~ 参数， 那么默认使用 ~GET~ 方法。
+
+   另外， 可以通过将数据整合到到 ~url~ 方式， 使用 ~GET~ 请求发送数据。
+   #+BEGIN_SRC python
+     >>> import urllib2
+     >>> import urllib
+     >>> data = {}
+     >>> data['name'] = 'Somebody Here'
+     >>> data['location'] = 'Northampton'
+     >>> data['language'] = 'Python'
+     >>> url_values = urllib.urlencode(data)
+     >>> print url_values  # The order may differ. 
+     name=Somebody+Here&language=Python&location=Northampton
+     >>> url = 'http://www.example.com/example.cgi'
+     >>> full_url = url + '?' + url_values
+     >>> data = urllib2.urlopen(full_url)
+   #+END_SRC
+
+   即， 使用 ~query~.
+
+** 头信息
+   很多时候， 我们发出请求的时候， 还需要一些附加的数据来标识自己， 让服务器
+   认可并发出响应。
+
+   默认情况下， ~urllib2~ 对自己的标识是： ~Python-urllib/x.y~, 如 ~Python-urllib/2.7~.
+
+   而浏览器通过 ~User-Agent~ 来标识自己。 
+
+   有时， 服务器仅对正常的浏览器访问做出响应的情况， 这时， 我们可以通过设置头信息来进行伪装。
+
+   获取浏览器的 ~User-Agent~ 的方法很简单：
+   [[file:./img/user-agent.png]]
+   
+   这是通过谷歌浏览器获取的 ~user-agent~, 发送这段数据：
+   #+BEGIN_SRC python
+     import urllib
+     import urllib2
+
+     url = 'http://www.someserver.com/cgi-bin/register.cgi'
+     user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36'
+     values = {'name': 'Michael Foord',
+               'location': 'Northampton',
+               'language': 'Python' }
+     headers = {'User-Agent': user_agent}
+
+     data = urllib.urlencode(values)
+     req = urllib2.Request(url, data, headers)
+     response = urllib2.urlopen(req)
+     the_page = response.read()
+   #+END_SRC
+
+   PS: 如果 ~Network~ 没有内容， 可以刷新一下网页。
+
+** 异常处理
+   /urlopen/ 不能处理响应的时候会抛出错误 ~URLError~.
+
+   *HTTPError* 是特定情况下引发的 *URLError* 的子类。
+
+   + *URLError*
+
+     一般情况下， 如果没有网络连接或服务器不存在， 会引起 *URLError*.
+
+     该异常具有 *reason* 属性， 包含错误代码和错误信息的一个元组。
+     #+BEGIN_SRC python
+       >>> req = urllib2.Request('http://www.pretend_server.org')
+       >>> try: urllib2.urlopen(req)
+       ... except urllib2.URLError as e:
+       ...    print e.reason
+       ...
+       (4, 'getaddrinfo failed')
+     #+END_SRC
+
+   + *HTTPError*
+
+     每个来自服务器的响应都包含一个数字 *状态码*, 有时状态码指示服务器无法完成请求。
+
+     默认的处理程序会处理一些响应， 对于哪些不能处理的， ~urlopen~ 会引发一个 *HTTPError*.
+
+     如： 404(找不到页面), 403(禁止请求), 401(需要身份验证).
+
+     *HTTPError* 异常具有一个整型的 *code* 属性， 对应服务器发送的错误代码。
+
+     另外， ~BaseHTTPServer.BaseHTTPRequestHandler.responses~ 是一个有用的响应码字典。
+     你可以打印这个字典来了解一些响应码的含义。
+     #+BEGIN_SRC python
+       from BaseHTTPServer import BaseHTTPRequestHandler.responses
+
+
+       for code, info in BaseHTTPRequestHandler.responses.items():
+           print(code, info)
+     #+END_SRC
+     
+     *HTTPError* 实例可以作为服务器响应的实例， 及其拥有 *read*, *geturl*, *info* 方法。
+     #+BEGIN_SRC python
+       >>> req = urllib2.Request('http://www.python.org/fish.html')
+       >>> try:
+       ...     urllib2.urlopen(req)
+       ... except urllib2.HTTPError as e:
+       ...     print e.code
+       ...     print e.read() 
+       ...
+       404
+       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+       ...
+       <title>Page Not Found</title>
+       ...
+     #+END_SRC
+
+   现在， 有两种方式来处理这两个异常， 推荐第二种。
+   #+BEGIN_SRC python
+     # 方式一
+     from urllib2 import Request, urlopen, URLError, HTTPError
+     req = Request(someurl)
+     try:
+         response = urlopen(req)
+     except HTTPError as e:
+         print 'The server couldn\'t fulfill the request.'
+         print 'Error code: ', e.code
+     except URLError as e:
+         print 'We failed to reach a server.'
+         print 'Reason: ', e.reason
+     else:
+         pass
+         # everything is fine
+
+     # PS: HTTPError 必须是第一个
+
+     # 方式二
+     from urllib2 import Request, urlopen, URLError
+     req = Request(someurl)
+     try:
+         response = urlopen(req)
+     except URLError as e:
+         if hasattr(e, 'reason'):
+             print 'We failed to reach a server.'
+             print 'Reason: ', e.reason
+         elif hasattr(e, 'code'):
+             print 'The server couldn\'t fulfill the request.'
+             print 'Error code: ', e.code
+     else:
+         pass
+         # everything is fine
+   #+END_SRC
+   
+   ~urlopen~ 返回的响应实例或 ~HTTPError~ 实例具有 *geturl* 和 *info* 方法。
+   + *geturl*: 获取当前返回数据的真实 *URL*
+   + *info*: 返回页面的描述信息， 是一个 ~httplib.HTTPMessage~ 实例
+
+** Openers and Handlers
+   获取 *URL* 的时候， 我们使用的 *urlopen* 是一个 *opener*, 一个 *urllib2.OpenerDirector* 的实例。
+
+   一般情况下， *urlopen* 足够我们的使用， 但是根据需要， 你可以常见自己的 *opener*.
+
+   *Openers* 使用处理器 *Handlers* 来处理所有 “繁重” 的工作。 如通过特定协议打开 *URLs*,
+   或者如何处理 *URL* 打开时的各个方面。
+
+   你可以创建一个使用特定的 *handler* 的 *opener*. 比如可以处理 *coocie* 的， 能够不重定向的。
+
+   一般情况下， 你可以通过这样的流程创建一个 *opener*.
+   #+BEGIN_SRC python
+     # 创建一个 handler
+     handler = ........
+
+     # 创建一个 opener
+     opener = urllib2.build_opener(handler)
+
+     # 使用 opener
+     opener.open(url)
+
+     # 使 opener 成为全局的默认 opener(代替 urlopen)
+     urllib2.install_opener(opener)
+   #+END_SRC
+
+** Basic Authentication
+
+   
