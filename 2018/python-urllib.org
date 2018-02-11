@@ -18,16 +18,16 @@
   结构如下：
   :  scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 
-  解释：
-  + scheme - 定义因特网服务的类型。 目前最常见的类型是 ~http~
-  + user, password - 可选的凭证信息， 用 ~:~ 分割， 后跟 ~@~
-  + host - 服务器地址
-  + port - 定义主机上的端口号， ~:~ 开始（http 的默认端口号是 80）
-  + path - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）
-  + filename - 定义文档/资源的名称
-  + query - 可选的查询， 以 ~?~ 字符为起点，每个参数以 ~&~ 隔开，再以 ~=~ 分开参数名称与数据，
-    通常以 ~UTF8~ 的 ~URL~ 编码，避开字符冲突的问题（百度或谷歌搜索时就有一堆）
-  + fragment - 片段， 以 ~#~ 为起点， 定位网页中的某一个位置
+  各部分含义：
+  + *scheme* - 定义因特网服务的类型。 目前最常见的类型是 ~http~
+  + *user*, *password* - 可选的凭证信息， 用 ~:~ 分割， 后跟 ~@~
+  + *host* - 服务器的地址， 如： ~github.com~
+  + *port* - 定义主机上的端口号， ~:~ 开始（ ~http~ 的默认端口号是 ~80~ ）
+  + *path* - 定义服务器上资源的路径
+  + *filename* - 定义文档/资源的名称
+  + *query* - 可选的查询， 以 ~?~ 字符为起点，每个参数以 ~&~ 隔开，再以 ~=~ 分开参数名称与数据，
+    通常以 ~UTF8~ 的 ~URL~ 编码，以避开字符冲突的问题（百度或谷歌搜索时就有一堆）
+  + *fragment* - 片段， 以 ~#~ 为起点， 定位网页中的某一个位置
 
   常见的服务类型：
   |-------+-----------------------------------|
@@ -40,8 +40,8 @@
   |-------+-----------------------------------|
 
 * Python2.7
-** 简单的使用
-   ~urllib~ 和 ~urllib2~ 都可以用于获取 ~URL~ 资源， 这里由 ~urllib2~ 开始。
+** 获取 ~URL~
+   ~urllib~ 和 ~urllib2~ 都可以用于获取 ~URL~ 资源， 这里主要是 ~urllib2~ 和 ~HTTP~.
 
    一个简单的例子：
    #+BEGIN_SRC python
@@ -50,9 +50,9 @@
      html = response.read()
    #+END_SRC
 
-   大多数时候， 我们都在和 ~HTTP~ 打交道， ~HTTP~ 是基于 *请求* 和 *响应* 的。（客服端发出请求， 服务器端进行响应）
+   ~HTTP~ 基于 *请求* 和 *响应* （客服端发出请求， 服务器端进行响应）
 
-   ~urllib2~ 使用一个 ~Request~ 对象来表示一个请求， 使用 ~Request~ 对象来调用 ~urlopen~ 函数，
+   ~urllib2~ 使用一个 ~Request~ 对象来表示一个请求， 用 ~Request~ 对象作为参数调用 ~urlopen~ 函数，
    将会返回与之对应的响应对象。 响应对象类似于一个文件对象， 你可以调用 ~read~ 方法来获取内容。
 
    #+BEGIN_SRC python
@@ -70,12 +70,13 @@
 ** 发送数据
    我们可以使用 ~POST~ 请求向服务器发送一些数据， 数据在发送之前， 需要以标准方式进行编码。
 
-   这时， 我们需要使用 ~urllib~ 模块， 这一点是 ~2.7~ 和 ~3.x~ 的一个很大的不同。
+   对数据编码需要使用 ~urllib~, 这一点是 ~2.7~ 和 ~3.x~ 的一个很大的不同。
 
    在 ~2.7~ 版本中， ~urllib~ 可以对数据进行编码， ~urllib2~ 可以发送数据。
 
-   在 ~3.x~ 版本中， 这两个功能合并在一个模块 ~urllib~ 中了。
+   在 ~3.x~ 版本中， 这两个功能合并在 ~urllib~ 中了。
 
+   一个例子：
    #+BEGIN_SRC python
      import urllib
      import urllib2
@@ -91,9 +92,9 @@
      the_page = response.read()
    #+END_SRC
 
-   PS: 有时需要其他编码， 详见 [[https://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13][HTML Specification, Form Submission]]
+   PS: 有时可能需要其他编码， 详见 [[https://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13][HTML Specification, Form Submission]]
 
-   如果没有传递 ~data~ 参数， 那么默认使用 ~GET~ 方法。
+   如果构建 ~Request~ 时没有传递 ~data~ 参数， 那么默认使用 ~GET~ 方法。
 
    另外， 可以通过将数据整合到到 ~url~ 方式， 使用 ~GET~ 请求发送数据。
    #+BEGIN_SRC python
@@ -114,19 +115,19 @@
    即， 使用 ~query~.
 
 ** 头信息
-   很多时候， 我们发出请求的时候， 还需要一些附加的数据来标识自己， 让服务器
-   认可并发出响应。
+   很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器
+   认可并发出响应。（比如只允许浏览器进行访问的网页）
 
    默认情况下， ~urllib2~ 对自己的标识是： ~Python-urllib/x.y~, 如 ~Python-urllib/2.7~.
 
-   而浏览器通过 ~User-Agent~ 来标识自己。 
-
-   有时， 服务器仅对正常的浏览器访问做出响应的情况， 这时， 我们可以通过设置头信息来进行伪装。
+   浏览器通过 ~User-Agent~ 来标识自己。 但既然只是一段信息， 那我们可以通过浏览器的头信息
+   伪装自己。
 
    获取浏览器的 ~User-Agent~ 的方法很简单：
+
    [[file:./img/user-agent.png]]
    
-   这是通过谷歌浏览器获取的 ~user-agent~, 发送这段数据：
+   这是获取的谷歌浏览器的 ~user-agent~, 发送这段数据：
    #+BEGIN_SRC python
      import urllib
      import urllib2
@@ -147,15 +148,15 @@
    PS: 如果 ~Network~ 没有内容， 可以刷新一下网页。
 
 ** 异常处理
-   /urlopen/ 不能处理响应的时候会抛出错误 ~URLError~.
+   /urlopen/ 在不能处理响应的时候会抛出错误 ~URLError~.
 
-   *HTTPError* 是特定情况下引发的 *URLError* 的子类。
+   ~HTTPError~ 是特定情况下引发的 ~URLError~ 的子类。
 
    + *URLError*
 
      一般情况下， 如果没有网络连接或服务器不存在， 会引起 *URLError*.
 
-     该异常具有 *reason* 属性， 包含错误代码和错误信息的一个元组。
+     该异常具有 ~reason~ 属性， 一个包含错误代码和错误信息的元组。
      #+BEGIN_SRC python
        >>> req = urllib2.Request('http://www.pretend_server.org')
        >>> try: urllib2.urlopen(req)
@@ -169,11 +170,11 @@
 
      每个来自服务器的响应都包含一个数字 *状态码*, 有时状态码指示服务器无法完成请求。
 
-     默认的处理程序会处理一些响应， 对于哪些不能处理的， ~urlopen~ 会引发一个 *HTTPError*.
+     默认的处理程序会处理一些响应， 对于哪些不能处理的， ~urlopen~ 会引发一个 ~HTTPError~.
 
-     如： 404(找不到页面), 403(禁止请求), 401(需要身份验证).
+     如： ~404(找不到页面), 403(禁止请求), 401(需要身份验证)~.
 
-     *HTTPError* 异常具有一个整型的 *code* 属性， 对应服务器发送的错误代码。
+     *HTTPError* 实例具有一个整型的 ~code~ 属性， 对应服务器发送的错误代码。
 
      另外， ~BaseHTTPServer.BaseHTTPRequestHandler.responses~ 是一个有用的响应码字典。
      你可以打印这个字典来了解一些响应码的含义。
@@ -185,7 +186,7 @@
            print(code, info)
      #+END_SRC
      
-     *HTTPError* 实例可以作为服务器响应的实例， 及其拥有 *read*, *geturl*, *info* 方法。
+     *HTTPError* 实例可以作为服务器响应(~response~)的实例， 即其拥有 *read*, *geturl*, *info* 方法。
      #+BEGIN_SRC python
        >>> req = urllib2.Request('http://www.python.org/fish.html')
        >>> try:
@@ -239,20 +240,20 @@
    #+END_SRC
    
    ~urlopen~ 返回的响应实例或 ~HTTPError~ 实例具有 *geturl* 和 *info* 方法。
-   + *geturl*: 获取当前返回数据的真实 *URL*
-   + *info*: 返回页面的描述信息， 是一个 ~httplib.HTTPMessage~ 实例
+   + *geturl* - 获取当前返回数据的真实 *URL*
+   + *info* - 返回页面的描述信息， 是一个 ~httplib.HTTPMessage~ 实例
 
 ** Openers and Handlers
-   获取 *URL* 的时候， 我们使用的 *urlopen* 是一个 *opener*, 一个 *urllib2.OpenerDirector* 的实例。
+   获取 ~URL~ 使用的 ~urlopen~ 其是一个 ~opener~, 一个 ~urllib2.OpenerDirector~ 的实例。
 
-   一般情况下， *urlopen* 足够我们的使用， 但是根据需要， 你可以常见自己的 *opener*.
+   一般情况下， ~urlopen~ 足够我们的使用， 但是根据需要， 你可以创建自己的 ~opener~.
 
-   *Openers* 使用处理器 *Handlers* 来处理所有 “繁重” 的工作。 如通过特定协议打开 *URLs*,
-   或者如何处理 *URL* 打开时的各个方面。
+   ~Openers~ 使用处理器 ~Handlers~ 来处理所有 “繁重” 的工作。 如通过特定协议打开 ~URLs~,
+   或者如何处理 ~URL~ 打开时的各个方面。
 
-   你可以创建一个使用特定的 *handler* 的 *opener*. 比如可以处理 *coocie* 的， 能够不重定向的。
+   你可以创建一个使用特定的 ~handler~ 的 ~opener~. 比如可以处理 ~coocie~ 的， 能够不重定向的。
 
-   一般情况下， 你可以通过这样的流程创建一个 *opener*.
+   可以通过这样的流程创建一个 ~opener~.
    #+BEGIN_SRC python
      # 创建一个 handler
      handler = ........
@@ -263,10 +264,124 @@
      # 使用 opener
      opener.open(url)
 
-     # 使 opener 成为全局的默认 opener(代替 urlopen)
+     # 使 opener 成为全局的默认 opener(成为 urlopen)
      urllib2.install_opener(opener)
    #+END_SRC
 
 ** Basic Authentication
+   部分网页的浏览可能需要进行验证， 如果未进行验证， 服务器会返回错误码 *401*.
 
+   这会指定验证方案和 realm。
+
+   头信息的的格式类似于： ~WWW-Authenticate: SCHEME realm="REALM"~.
+
+   例：
+   : WWW-Authenticate: Basic realm="cPanel Users"
+
+   在这种情况下， 客户端的请求头部应该包含用户名和密码， 这时我们可以使用 ~HTTPBasicAuthHandler~
+   构造一个 ~opener~ 进行请求。
+
+   ~HTTPBasicAuthHandler~ 使用一个密码管理的对象来处理 *URL*, *realm* 和 *username*, *password* 的混合。
+
+   如果知道 realm， 你可以使用 ~HTTPPasswordMgr~ （realm 从服务器返回的验证头信息获取）
+
+   如果验证不在意 realm， 那么可以使用 ~HTTPPasswordMgrWithDefaultRealm~. 这时， 你可以设置默认的
+   用户名和密码。
+
+   ~add_password~ 的第一个参数为 realm， 如果没有则置为 ~None~.
    
+   #+BEGIN_SRC python
+     # create a password manager
+     password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+
+     # Add the username and password.
+     # If we knew the realm, we could use it instead of None.
+     top_level_url = "http://example.com/foo/"
+     password_mgr.add_password(None, top_level_url, username, password)
+
+     handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+
+     # create "opener" (OpenerDirector instance)
+     opener = urllib2.build_opener(handler)
+
+     # use the opener to fetch a URL
+     opener.open(a_url)
+
+     # Install the opener.
+     # Now all calls to urllib2.urlopen use our opener.
+     urllib2.install_opener(opener)
+   #+END_SRC
+
+** 代理
+   *urllib2* 会通过 ~ProxyHandler~ 自动获取你的代理设置， 但有时你也可以单独设置代理。
+   #+BEGIN_SRC python
+     >>> proxy_support = urllib2.ProxyHandler({})
+     >>> opener = urllib2.build_opener(proxy_support)
+     >>> urllib2.install_opener(opener)
+   #+END_SRC
+
+** Sockets and Layers
+   通过 ~socket~ 设置超时时限。
+   #+BEGIN_SRC python
+     import socket
+     import urllib2
+
+     # timeout in seconds
+     timeout = 10
+     socket.setdefaulttimeout(timeout)
+
+     # this call to urllib2.urlopen now uses the default timeout
+     # we have set in the socket module
+     req = urllib2.Request('http://www.voidspace.org.uk')
+     response = urllib2.urlopen(req)
+   #+END_SRC
+   
+* Python3.6
+  我们都知道 ~Python3~ 和 ~Python2~ 不兼容。 对于 ~urllib~ 来说更是如此。
+  
+  ~3.x~ 没有 ~urllib2~, 替代它的是 ~urllib.request~. 而与原有 ~urllib~ 对应的
+  是 ~urllib.parse~.
+
+  同时， ~3.x~ 版本的 ~urlopen~ 返回的响应对象支持上下文管理器， 即可以这样
+  写代码：
+  #+BEGIN_SRC python
+    import urllib.request
+
+    req = urllib.request.Request('http://www.voidspace.org.uk')  # urllib2.Request
+    with urllib.request.urlopen(req) as response:  # urllib2.urlopen
+       the_page = response.read()
+  #+END_SRC
+  
+  其他接口的调用基本上换个名字就可以了， 但需要注意的是上传数据时进行编码处理：
+  #+BEGIN_SRC python
+    import urllib.parse
+    import urllib.request
+
+    url = 'http://www.someserver.com/cgi-bin/register.cgi'
+    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
+    values = {'name': 'Michael Foord',
+              'location': 'Northampton',
+              'language': 'Python' }
+    headers = {'User-Agent': user_agent}
+
+    data = urllib.parse.urlencode(values)
+    data = data.encode('ascii')  # 上传的数据应该是 bytes
+    req = urllib.request.Request(url, data, headers)
+    with urllib.request.urlopen(req) as response:
+       the_page = response.read()
+  #+END_SRC
+
+  还有便是那个有用的错误码字典：
+  #+BEGIN_SRC python
+    from http.server import BaseHTTPRequestHandler
+
+    for code, info in BaseHTTPRequestHandler.responses.items():
+        print(code, info)
+  #+END_SRC
+
+* 相关链接
+  + [[https://docs.python.org/2/howto/urllib2.html][HOWTO Fetch Internet Resources Using urllib2]]
+  + [[https://docs.python.org/3/howto/urllib2.html][HOWTO Fetch Internet Resources Using The urllib Package]]
+  + [[https://en.wikipedia.org/wiki/URL][URL]]
+  + [[https://zh.wikipedia.org/zh-hans/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6][统一资源定位符]]
+
