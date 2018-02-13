@@ -1,0 +1,138 @@
+#+TITLE:      Python 内置函数
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-13 周二>
+
+* 简介
+  ~Python~ 拥有众多的内置函数， 适当的使用它们可以为代码的编写带来极大的便利。
+
+  然而， 内置函数的数量确实不少， 且 ~2.x~ 和 ~3.x~ 版本的内置函数也具有一些区别。
+
+  所以， 今天来补一补这方面的内容。
+
+* Python2
+  这个表格列举出了大部分内建函数：
+  #+CAPTION: Build-in Functions
+  |---------------+-------------+--------------+-------------+----------------|
+  | abs()         | divmod()    | input()      | open()      | staticmethod() |
+  | all()         | enumerate() | int()        | ord()       | str()          |
+  | any()         | eval()      | isinstance() | pow()       | sum()          |
+  | basestring()  | execfile()  | issubclass() | print()     | super()        |
+  | bin()         | file()      | iter()       | property()  | tuple()        |
+  | bool()        | filter()    | len()        | range()     | type()         |
+  | bytearray()   | float()     | list()       | raw_input() | unichr()       |
+  | callable()    | format()    | locals()     | reduce()    | unicode()      |
+  | chr()         | frozenset() | long()       | reload()    | vars()         |
+  | classmethod() | getattr()   | map()        | repr()      | xrange()       |
+  | cmp()         | globals()   | max()        | reversed()  | zip()          |
+  | compile()     | hasattr()   | memoryview() | round()     | __import__()   |
+  | complex()     | hash()      | min()        | set()       |                |
+  | delattr()     | help()      | next()       | setattr()   |                |
+  | dict()        | hex()       | object()     | slice()     |                |
+  | dir()         | id()        | oct()        | sorted()    |                |
+  |---------------+-------------+--------------+-------------+----------------|
+
+  另外， 还有四个不必要的内建函数： apply(), buffer(), coerce(), intern().
+
+  这四个函数在 ~Python3~ 中已被删除， 如果想要了解的话可以看这个文档： [[https://docs.python.org/2/library/functions.html#non-essential-built-in-functions][Non-essential Built-in Functions]]
+
+
+  以下是 ~Python2~ 和 ~Python3~ 都有的内建函数：
+  * abs(x) :: 返回绝对值， 参数可以为整数， 浮点数。 如果参数是复数， 则返回其大小。
+
+  * all(iterable) :: 当可迭代对象的所有元素均为 ~True~ 时返回 ~True~, 否则返回 ~False~.
+
+  * any(iterable) :: 当可迭代对象的存在元素为 ~True~ 时返回 ~True~, 否则返回 ~False~.
+
+  * bin(x) :: 将整数转换为二进制字符串。 如果 ~x~ 不是 ~int~, 则必须定义返回整数的 ~__index__()~ 方法。
+
+  * bool([x]) :: 返回一个 ~bool~ 值。 如果 ~x~ 缺省则返回 ~False~.
+
+  * bytearray([source[, encoding[, errors]]]) :: 返回一个新的字节数组。 类 ~bytearray~ 是一个可变的整数序列， 范围为 ~0-255~.
+       具有大部分可变序列对象和字符串对象的常用方法。
+
+       可选的 ~source~ 参数可以用几种不同的方式初始化数组：
+    - 如果 ~source~ 是 ~unicode~, 则必须提供 ~encoding~ 参数， ~bytearray~ 会使用 ~unicode.encode()~ 转化 unicode 到 bytes.
+
+    - 如果是一个整数， 则会创建具有该大小的数组， 并以空字节初始化。
+
+    - 如果是符合 ~buffer~ 接口的对象， 则该对象的 ~read-only buffer~ 被用来初始化字节序列。
+
+    - 如果是一个可迭代对象， 则元素必须是取值范围在 ~0-255~ 的整数， 用来初始化数组。
+
+    #+BEGIN_SRC python
+      >>> bytearray(u'测试', encoding='utf-8')
+      bytearray(b'\xe6\xb5\x8b\xe8\xaf\x95')
+      >>> bytearray('Test')
+      bytearray(b'Test')
+      >>> bytearray(10)
+      bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+      >>> bytearray([1, 2, 3])
+      bytearray(b'\x01\x02\x03')
+    #+END_SRC
+
+  * callable(object) :: 如果 ~object~ 显示可调用则返回 ~True~, 否则返回 ~False~.
+
+  * chr(i) :: 返回 ~ASCII~ 码对应的字符。 取值范围是 ~0-255~, 超出范围会抛出 ~ValueError~.
+
+  * ord(c) :: 和 ~chr~ 相反， 返回单个字符对应的整数值。 参数可以为 ~Unicode~ 字符。
+
+  * classmethod(function) :: 常用作装饰器， 使得类的方法可以直接通过 ~类名.方法名~ 的形式调用.
+       装饰的函数应该具有代表类的 ~cls~ 参数.
+       #+BEGIN_SRC python
+         class C(object):
+             @classmethod
+             def f(cls, arg1, arg2, ...):
+                 ...
+       #+END_SRC
+
+  * staticmethod(function) :: 类似 ~classmethod~, 不过不需要 ~cls~ 参数。
+
+  * compile(source, filename, mode[, flags[, dont_inherit]]) :: 将一个字符串编译为字节代码。
+       字节代码可以由 ~exec~ 或 ~eval~ 执行。
+
+    - source - 字符串或AST对象
+
+    - filename - 代码文件名称， 如果不是从文件读取代码则传递一些可辨认的值。
+
+    - mode - 指定编译代码的种类。可以指定为 exec, eval, single.
+
+    - flags - 变量作用域，局部命名空间，如果被提供，可以是任何映射对象。
+
+    - flags 和 dont_inherit 用来控制编译源码时的标志
+
+  * complex([real[, imag]]) :: 创建一个值为 ~real + imag * j~ 的复数或者转化一个字符串或数为复数。
+       如果第一个参数为字符串， 则不需要指定第二个参数。
+
+  * delattr(object, name) :: 用于删除属性。 ~name~ 必须是对象的属性。
+
+  * setattr(object, name, value) :: 用于设置属性值， 该属性必须存在。
+
+  * dict(**kwarg) ::
+
+  * dict(mapping, **kwarg) ::
+
+  * dict(iterable, **kwarg) :: 创建一个新的字典。
+
+  * dir([object]) :: 不带参数时， 返回当前范围内的变量、 方法和定义的类型列表；
+                     带参数时， 返回参数的属性、 方法列表。
+                     如果参数包含方法 ~__dir__()~, 该方法将被调用。 如果参数不包含 ~__dir__()~, 则最大限度地收集参数信息。
+
+                     #+BEGIN_SRC python
+                       >>> import struct
+                       >>> dir()   # show the names in the module namespace
+                       ['__builtins__', '__doc__', '__name__', 'struct']
+                       >>> dir(struct)   # show the names in the struct module
+                       ['Struct', '__builtins__', '__doc__', '__file__', '__name__',
+                        '__package__', '_clearcache', 'calcsize', 'error', 'pack', 'pack_into',
+                        'unpack', 'unpack_from']
+                       >>> class Shape(object):
+                               def __dir__(self):
+                                   return ['area', 'perimeter', 'location']
+                               >>> s = Shape()
+                               >>> dir(s)
+                               ['area', 'perimeter', 'location']
+                     #+END_SRC
+
+  * divmod(a, b) :: 把除数和余数运算结果结合起来， 返回一个包含商和余数的元组 ~(a // b, a % b)~.
+
