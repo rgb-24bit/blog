@@ -1,0 +1,139 @@
+#+TITLE:      Python 内置对象
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-14 周三>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#内置函数][内置函数]]
+  - [[#数值计算][数值计算]]
+  - [[#可迭代对象处理][可迭代对象处理]]
+
+* 内置函数
+  ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
+
+  ~Python2~ 内置函数：
+  |---------------+-------------+--------------+-------------+----------------|
+  | abs()         | divmod()    | input()      | open()      | staticmethod() |
+  | all()         | enumerate() | int()        | ord()       | str()          |
+  | any()         | eval()      | isinstance() | pow()       | sum()          |
+  | basestring()  | execfile()  | issubclass() | print()     | super()        |
+  | bin()         | file()      | iter()       | property()  | tuple()        |
+  | bool()        | filter()    | len()        | range()     | type()         |
+  | bytearray()   | float()     | list()       | raw_input() | unichr()       |
+  | callable()    | format()    | locals()     | reduce()    | unicode()      |
+  | chr()         | frozenset() | long()       | reload()    | vars()         |
+  | classmethod() | getattr()   | map()        | repr()      | xrange()       |
+  | cmp()         | globals()   | max()        | reversed()  | zip()          |
+  | compile()     | hasattr()   | memoryview() | round()     | __import__()   |
+  | complex()     | hash()      | min()        | set()       |                |
+  | delattr()     | help()      | next()       | setattr()   |                |
+  | dict()        | hex()       | object()     | slice()     |                |
+  | dir()         | id()        | oct()        | sorted()    |                |
+  |---------------+-------------+--------------+-------------+----------------|
+
+  另外， 还有四个不必要的内置函数： /apply(), buffer(), coerce(), intern()/.
+
+  ~Python3~ 内置函数：
+  |---------------+-------------+--------------+------------+----------------|
+  | abs()         | dict()      | help()       | min()      | setattr()      |
+  | all()         | dir()       | hex()        | next()     | slice()        |
+  | any()         | divmod()    | id()         | object()   | sorted()       |
+  | ascii()       | enumerate() | input()      | oct()      | staticmethod() |
+  | bin()         | eval()      | int()        | open()     | str()          |
+  | bool()        | exec()      | isinstance() | ord()      | sum()          |
+  | bytearray()   | filter()    | issubclass() | pow()      | super()        |
+  | bytes()       | float()     | iter()       | print()    | tuple()        |
+  | callable()    | format()    | len()        | property() | type()         |
+  | chr()         | frozenset() | list()       | range()    | vars()         |
+  | classmethod() | getattr()   | locals()     | repr()     | zip()          |
+  | compile()     | globals()   | map()        | reversed() | __import__()   |
+  | complex()     | hasattr()   | max()        | round()    |                |
+  | delattr()     | hash()      | memoryview() | set()      |                |
+  |---------------+-------------+--------------+------------+----------------|
+
+  对比 ~Python2~, ~Python3~ 无疑是剔除了一部分内置函数， 同时又添加了内置函数 ~bytes()~
+  和 ~ascii()~.
+
+  这里仅简单的列举部分函数， 如果想要了解完整的用法， 可以参考官方文档：
+  + [[https://docs.python.org/2/library/functions.html][Python2 Built-in Functions]]
+  + [[https://docs.python.org/3.6/library/functions.html][Python3 Built-in Functions]]
+
+** 数值计算
+   + abs(x) :: 获取 ~x~ 的绝对值， 如果 ~x~ 是复数， 则返回其大小。
+   
+   + divmode(a, b) :: 返回 ~(a //b, a % b)~.
+
+   + pow(x, y[, z]) :: 返回 ~x~ 的 ~y~ 次方。 如果 ~z~ 存在， 则返回较 ~pow(x, y) % z~ 精确的值。
+
+   + round(x) :: 方法返回浮点数 ~x~ 的四舍五入值。
+
+** 可迭代对象处理 
+   + all(iterable) :: 如果所有元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
+   
+   + any(iterable) :: 如果存在元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
+
+   + enumerate(sequence, start=0) :: 代码说明一切：
+        #+BEGIN_SRC python
+          >>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+          >>> list(enumerate(seasons))
+          [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+          >>> list(enumerate(seasons, start=1))
+          [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+
+
+          # 等价于
+          def enumerate(sequence, start=0):
+              n = start
+              for elem in sequence:
+                  yield n, elem
+                  n += 1
+        #+END_SRC
+
+   + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~, 
+        如果 ~function~ 为 ~None~, 等价于 ~[item for item in iterable if item]~.
+
+   + len(s) :: 返回 ~s~ 的长度。
+
+   + map(function, iterable, ...) :: 将 ~iterable~ 的每个元素作为参数调用 ~function~,
+        ~Python2~ 返回结果列表， ~Python3~ 返回迭代器， 如果要得到和 ~Python2~ 相同的结果，
+        应该这样： ~list(map(x))~.
+
+   + max(iterable[, key]) ::
+
+   + max(arg1, arg2, *args[, key]) :: 返回最大值， ~Python3~ 可以 ~max(iterable[, key, default])~.
+
+   + min(...) :: 参数同 ~max~, 返回最小值。
+
+   + next(iterable[, default]) :: 调用 ~__next__()~ 方法获取下一个元素， 如果提供 ~default~,
+        那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。
+
+   + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
+
+   + reduce(function, iterable[, initializer]) :: ~Python2~, 对参数序列中元素进行累积。
+
+   + reversed(seq) :: 反转序列。
+
+   + slice(stop) ::
+
+   + slice(start, stop[, step]) :: 返回一个切片对象， 同样代码说明一切：
+        #+BEGIN_SRC python
+          >>>myslice = slice(5)    # 设置截取5个元素的切片
+          >>> myslice
+          slice(None, 5, None)
+          >>> arr = range(10)
+          >>> arr
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          >>> arr[myslice]         # 截取 5 个元素
+          [0, 1, 2, 3, 4]
+        #+END_SRC
+
+   + sorted(iterable[, cmp[, key[, reverse]]]) :: 对所有可迭代的对象进行排序操作。
+        ~Python3~ 对参数进行了修改， 应该这样： ~sorted(iterable, *, key=None, reverse=False)~.
+        简单的来说就是取消的 ~cmp~ 参数。
+
+   + sum(iterable[, start]) :: 对序列进行求和运算。
+
+   + zip([iterable, ...]) :: 将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，
+        然后返回由这些元组组成的列表。 如果各个迭代器的元素个数不一致，
+        则返回列表长度与最短的对象相同， 利用 ~*~ 号操作符，可以将元组解压为列表。
+         

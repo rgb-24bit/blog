@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - 2018
+  - [[file:2018/python-build-in-object.org][Python 内置对象]]
   - [[file:2018/python-urllib.org][Python urllib]]
   - [[file:2018/blockchain.org][区块链的简单尝试]]
   - [[file:2018/pipenv.org][Pipenv 的使用]]
