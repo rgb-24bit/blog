@@ -3,6 +3,18 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-01-04 周四>
 
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+  - [[#sqllocaldb-介绍][sqllocaldb 介绍]]
+  - [[#sqlcmd-介绍][sqlcmd 介绍]]
+- [[#安装][安装]]
+  - [[#通过vs安装][通过VS安装]]
+  - [[#通过安装包安装][通过安装包安装]]
+- [[#使用][使用]]
+  - [[#使用sqllocaldb][使用sqllocaldb]]
+  - [[#使用sqlcmd][使用sqlcmd]]
+- [[#结语][结语]]
+
 * 简介
   本文介绍如何通过 =sqllocaldb=, =sqlcmd= 搭建一个 *简单* 的 =sql server= 学习开发环境.
 

@@ -3,6 +3,11 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-02-06 周二>
 
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#代码尝试][代码尝试]]
+- [[#相关链接][相关链接]]
+
 * 前言
   昨晚， 我再一次浏览了有关于区块链技术的博客。
 
@@ -120,7 +125,7 @@
 
         print('over')
   #+END_SRC
-  
+
   代码比较粗糙， 但是并不妨碍我进行测试：
   #+BEGIN_EXAMPLE
     Genesis block:
@@ -172,4 +177,3 @@
 * 相关链接
   + [[https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d][How does blockchain really work? I built an app to show you.]]
   + [[http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433][区块链入门教程]]
-

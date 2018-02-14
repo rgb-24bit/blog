@@ -3,6 +3,21 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-02-10 周六>
 
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#url][URL]]
+- [[#python27][Python2.7]]
+  - [[#获取-url][获取 ~URL~]]
+  - [[#发送数据][发送数据]]
+  - [[#头信息][头信息]]
+  - [[#异常处理][异常处理]]
+  - [[#openers-and-handlers][Openers and Handlers]]
+  - [[#basic-authentication][Basic Authentication]]
+  - [[#代理][代理]]
+  - [[#sockets-and-layers][Sockets and Layers]]
+- [[#python36][Python3.6]]
+- [[#相关链接][相关链接]]
+
 * 简介
   这几天在看 ~requests~ 的源码， 虽然最开始只是准备学习一下前辈的编程经验。
   但是， 由于对 ~urllib~ 相关模块的不熟悉， 在阅读源码的过程中， 相对少了不少

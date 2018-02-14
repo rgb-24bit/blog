@@ -3,6 +3,24 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-01-23 周二>
 
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#python25][Python2.5]]
+  - [[#主要语言变化][主要语言变化]]
+  - [[#核心语言变化][核心语言变化]]
+  - [[#其他内容][其他内容]]
+- [[#python26][Python2.6]]
+  - [[#主要语言变化-1][主要语言变化]]
+  - [[#核心语言变化-1][核心语言变化]]
+  - [[#其他内容-1][其他内容]]
+- [[#python27][Python2.7]]
+  - [[#主要变化之前][主要变化之前]]
+  - [[#主要语言变化-2][主要语言变化]]
+  - [[#核心语言变化-2][核心语言变化]]
+  - [[#其他内容-2][其他内容]]
+- [[#完结感言][完结感言]]
+- [[#相关链接][相关链接]]
+
 * 前言
   在学习 =Python= 之前就纠结过到底是先学 =Python2= 好还是先学 =Python3= 好.
 
@@ -25,7 +43,7 @@
 
       即条件表达式, 从众多选择中脱颖而出的是这样的: =x = true_value if condition else false_value=
       (编辑文档的作者貌似对这一选择感到惊讶)
-      
+
       这里有两种书写方式:
 
       #+BEGIN_SRC python
@@ -39,7 +57,7 @@
       第二种貌似要清楚一些 ?
 
    2. *Partial Function Application*
-      
+
       这个功能包含在 =functools= 模块中. 这个模块有个函数 =partial()=.
 
       =partial()= 的使用方式为: =partial(function, arg1, arg2, ... kwarg1=value1, kwarg2=value2)=
@@ -60,18 +78,18 @@
 
       个人理解: 这个功能允许通过现有的函数来构造一个具有该函数部分功能的新函数.
       构造新函数时, 指定 =旧函数参数的值=, 使得新函数使用时不需要在手动传入 =指定的参数=.
-      
+
    3. *Metadata for Python Software Packages*
-      
+
       =setup()= 函数新增了 =requires=, =provides=, =obsoletes= 关键字参数.
       使用 =sdist= 命令构建你的包的时候, 依赖信息会保存在 =PKG-INFO= 中.
 
       还有一个关键字参数 =download_url=, 用于设置包的 =源码= 链接.
 
       more...
-   
+
    4. *Absolute and Relative Imports*
-      
+
       相对和绝对导入.
 
       假设有这样一个目录:
@@ -96,11 +114,11 @@
       : from __future__ import absolute_import
 
    5. *Executing Modules as Scripts*
-      
+
       =python -m module=, =-m= 参数的由来
-      
+
    6. *Unified try/except/finally*
-      
+
       直到 =2.5= 版本, =try= 才可以同时使用: =except=, =finally=.
 
       即, 你可以这样写了:
@@ -121,7 +139,7 @@
       =2.5= 以前不行, 貌似这是 =Python= 的作者从 =Java= 获取的灵感.
 
    7. *New Generator Features*
-      
+
       =2.5= 版本对 =yield= 进行了一些修改, 使得它可以返回值了(之前不可以)
 
       于是, 我们的生成器便成了这样:
@@ -137,7 +155,7 @@
       对现在的我们来说, =yield= 似乎就是一个这样, 所以这里就不多讲了.
 
    8. *The ‘with’ statement*
-      
+
       =2.5= 版本新增了 =with= 结构, 你可以这样使用它:
 
       #+BEGIN_SRC python
@@ -153,9 +171,9 @@
 
       当然, 如果你要使用这个功能在 =2.5= 版本, 你还需要这样的代码:
       : from __future__ import with_statement
-      
+
       * *Writing Context Managers*
-        
+
         如果你要自己便写一个上下文对象, 需要注意以下细节:
 
         - 表达式返回的对象应该是一个上下文对象, 这个对象至少包含有: =__enter__()=
@@ -212,7 +230,7 @@
         #+END_SRC
 
       * *The contextlib module*
-        
+
         =2.5= 版本的一个新模块 =contextlib= 提供了一些 *函数* 和 一个 *装饰器*.
         这些函数和装饰器对便写一个上下文对象很有帮助.
 
@@ -244,9 +262,9 @@
         #+END_SRC
 
         另外, =contextlib= 模块包含了 =nested(mgr1, mgr2, ...)= 和 =closing(object)= 函数.
-        
+
         =nested= 允许你同时结合 *多个* 上下文管理器(而不是编写嵌套的 *with*).
-        
+
         而 =closing(object)= 返回 =object=, 所以可以被绑定到一个变量上. 并且在代码块执行完后会调用
         =object.close= 方法.
 
@@ -286,8 +304,8 @@
        嗯... 没感觉
 
    11. *The ‘__index__’ method*
-       
-       =2.5= 版本添加了 =__index__()= 方法, 这个方法不接受参数并且返回一个整型的数字, 
+
+       =2.5= 版本添加了 =__index__()= 方法, 这个方法不接受参数并且返回一个整型的数字,
        用于分片索引的使用.
 
        #+BEGIN_SRC python
@@ -347,7 +365,7 @@
      #+END_SRC
 
    + 内建函数 =min()= 和 =max()= 增加了关键字参数 =key=, 用于对值排序.
-     
+
      #+BEGIN_SRC python
        L = ['medium', 'longest', 'short']
        # Prints 'longest'
@@ -363,12 +381,12 @@
    + 类的 =__hash__()= 方法现在可以返回一个长整数会常规整数
 
    + ASCII现在是模块的默认编码.
-     
+
      所有我们要在文件顶部加:
      : # -*- coding: utf-8 -*-
 
    + 一个新的警告 =UnicodeWarning=, 怎么样? 是不是有点熟悉...
-     
+
      警告发生在你尝试比较一个 *ASCII* 字符串和一个 *Unicode* 字符串, 而 Unicode 字符串
      _不能转化为 ASCII 字符串_ 的时候
 
@@ -409,7 +427,7 @@
       可喜可贺, 但是其他内容貌似没有太多变化 !
 
    2. *Explicit Relative Imports From a Main Module*
-      
+
       =2.5= 版本的 =-m= 参数虽然允许了像运行一个脚本那样运行一个模块,
       但是如果运行一个 *包* 内的模块的时候, *相对导入* 会出现错误.
 
@@ -424,7 +442,7 @@
 
       这里有几个类, 分别是: =Process=, =Queue=, =Pool=, =Manager=.
 
-      + =Process= 的 =start()= 方法启动一个子进程, =is_alive()= 方法判断进程是否存活, 
+      + =Process= 的 =start()= 方法启动一个子进程, =is_alive()= 方法判断进程是否存活,
         =join()= 方法等待子进程退出.
 
       + =Queue= 对象储存在 *全局变量* 之中, 所以父进程和子进程可以通过队列来传递信息.
@@ -470,8 +488,8 @@
         def factorial(N, dictionary):
             "Compute a factorial."
             ...
-        p = Pool(5)
-        result = p.map(factorial, range(1, 1000, 10))
+            p = Pool(5)
+            result = p.map(factorial, range(1, 1000, 10))
         for v in result:
             print v
 
@@ -486,7 +504,7 @@
       #+END_SRC
 
       + =Manager= 同样提供高级的接口. =Manager= 会创建一个单独的服务器进程，可以保存Python数据结构的主副本.
-        其他进程可以使用代理对象访问和修改这些数据结构. 
+        其他进程可以使用代理对象访问和修改这些数据结构.
 
         #+BEGIN_SRC python
           import time
@@ -564,7 +582,7 @@
    6. *Exception-Handling Changes*
 
       因为Python程序员有时会犯这样的错误:
-      
+
       #+BEGIN_SRC python
         try:
             ...
@@ -609,7 +627,7 @@
         >>> bytes([65, 66, 67])
         b'ABC'
       #+END_SRC
-      
+
       差别很明显了. =2.6= 版本中的 =bytes= 还是主要用于编写像 =isinstance(x, bytes)= 的类型
       检测器. 方便 =2.x= 版本向 =3.x= 版本转化.
 
@@ -814,15 +832,15 @@
          #+END_SRC
 
          注意第三个例子, 这个函数的转化是通过近似的值来完成的(不是近似的样子)
-       
+
 ** 核心语言变化
    以下是python核心语言的小变动.
 
    + 包含 =__main__.py= 的目录或 zip archives 现在可以直接将其名字传递给解释器执行了.
      其路径将会直接插入 =sys.path=.
-   
+
    + =hasattr()= 现在捕获并忽略所有的错误.
-     
+
    + 使用 =**= 提供关键字参数的时候, 不需要在使用python字典, 任何 =映射= 都将工作.
 
      #+BEGIN_SRC python
@@ -837,7 +855,7 @@
      #+END_SRC
 
      另外, 这样写是合法的了:
-     
+
      #+BEGIN_SRC python
        >>> def f(*args, **kw):
        ...     print args, kw
@@ -941,8 +959,8 @@
       #+BEGIN_SRC python
         >>> from collections import OrderedDict
         >>> d = OrderedDict([('first', 1),
-        ...                  ('second', 2),
-        ...                  ('third', 3)])
+                             ...                  ('second', 2),
+                             ...                  ('third', 3)])
         >>> d.items()
         [('first', 1), ('second', 2), ('third', 3)]
       #+END_SRC
@@ -982,11 +1000,11 @@
 
       #+BEGIN_SRC python
         >>> od1 = OrderedDict([('first', 1),
-        ...                    ('second', 2),
-        ...                    ('third', 3)])
+                               ...                    ('second', 2),
+                               ...                    ('third', 3)])
         >>> od2 = OrderedDict([('third', 3),
-        ...                    ('first', 1),
-        ...                    ('second', 2)])
+                               ...                    ('first', 1),
+                               ...                    ('second', 2)])
         >>> od1 == od2
         False
         >>> # Move 'third' key to the end
@@ -1055,31 +1073,31 @@
         import logging.config
 
         configdict = {
-         'version': 1,    # Configuration schema in use; must be 1 for now
-         'formatters': {
-             'standard': {
-                 'format': ('%(asctime)s %(name)-15s '
-                            '%(levelname)-8s %(message)s')}},
+            'version': 1,    # Configuration schema in use; must be 1 for now
+            'formatters': {
+                'standard': {
+                    'format': ('%(asctime)s %(name)-15s '
+                               '%(levelname)-8s %(message)s')}},
 
          'handlers': {'netlog': {'backupCount': 10,
-                             'class': 'logging.handlers.RotatingFileHandler',
-                             'filename': '/logs/network.log',
-                             'formatter': 'standard',
-                             'level': 'INFO',
-                             'maxBytes': 1000000},
+                                 'class': 'logging.handlers.RotatingFileHandler',
+                                 'filename': '/logs/network.log',
+                                 'formatter': 'standard',
+                                 'level': 'INFO',
+                                 'maxBytes': 1000000},
                       'syslog': {'class': 'logging.handlers.SysLogHandler',
                                  'formatter': 'standard',
                                  'level': 'ERROR'}},
 
          # Specify all the subordinate loggers
          'loggers': {
-                     'network': {
-                                 'handlers': ['netlog']
-                     }
+             'network': {
+                 'handlers': ['netlog']
+             }
          },
-         # Specify properties of the root logger
+            # Specify properties of the root logger
          'root': {
-                  'handlers': ['syslog']
+             'handlers': ['syslog']
          },
         }
 
@@ -1137,7 +1155,7 @@
         ...     d[k*2] = k
         ...
         Traceback (most recent call last):
-          File "<stdin>", line 1, in <module>
+        File "<stdin>", line 1, in <module>
         RuntimeError: dictionary changed size during iteration
       #+END_SRC
 
@@ -1176,7 +1194,7 @@
       #+BEGIN_SRC python
         >>> m2[0] = 75
         Traceback (most recent call last):
-          File "<stdin>", line 1, in <module>
+        File "<stdin>", line 1, in <module>
         TypeError: cannot modify read-only memory
         >>> b = bytearray(string.letters)  # Creating a mutable object
         >>> b
@@ -1192,7 +1210,7 @@
 
 ** 核心语言变化
    + 通过 ={}= 来常见集合, 空集合使用 =set()= 创建, ={}= 继续代表空字典.
-     
+
      #+BEGIN_SRC python
        >>> {1, 2, 3, 4, 5}
        set([1, 2, 3, 4, 5])
@@ -1296,4 +1314,3 @@
   + [[https://docs.python.org/2/whatsnew/2.5.html][What’s New in Python 2.5]]
   + [[https://docs.python.org/2/whatsnew/2.6.html][What’s New in Python 2.6]]
   + [[https://docs.python.org/2/whatsnew/2.7.html][What’s New in Python 2.7]]
-
