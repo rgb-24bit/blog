@@ -6,51 +6,241 @@
 * 目录                                                    :TOC_4_gh:noexport:
 - [[#内置函数][内置函数]]
   - [[#数值计算][数值计算]]
-  - [[#可迭代对象处理][可迭代对象处理]]
+  - [[#可迭代对象相关][可迭代对象相关]]
+  - [[#进制和编码转化][进制和编码转化]]
+  - [[#类和属性相关][类和属性相关]]
 
 * 内置函数
   ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
+  
+  这里为了方便， 直接拷贝了官网上的两个表格。
 
   ~Python2~ 内置函数：
-  |---------------+-------------+--------------+-------------+----------------|
-  | abs()         | divmod()    | input()      | open()      | staticmethod() |
-  | all()         | enumerate() | int()        | ord()       | str()          |
-  | any()         | eval()      | isinstance() | pow()       | sum()          |
-  | basestring()  | execfile()  | issubclass() | print()     | super()        |
-  | bin()         | file()      | iter()       | property()  | tuple()        |
-  | bool()        | filter()    | len()        | range()     | type()         |
-  | bytearray()   | float()     | list()       | raw_input() | unichr()       |
-  | callable()    | format()    | locals()     | reduce()    | unicode()      |
-  | chr()         | frozenset() | long()       | reload()    | vars()         |
-  | classmethod() | getattr()   | map()        | repr()      | xrange()       |
-  | cmp()         | globals()   | max()        | reversed()  | zip()          |
-  | compile()     | hasattr()   | memoryview() | round()     | __import__()   |
-  | complex()     | hash()      | min()        | set()       |                |
-  | delattr()     | help()      | next()       | setattr()   |                |
-  | dict()        | hex()       | object()     | slice()     |                |
-  | dir()         | id()        | oct()        | sorted()    |                |
-  |---------------+-------------+--------------+-------------+----------------|
-
+  #+BEGIN_EXPORT html
+  <table border="1" class="docutils">
+    <colgroup>
+      <col width="21%">
+      <col width="19%">
+      <col width="20%">
+      <col width="19%">
+      <col width="22%">
+    </colgroup>
+    <thead valign="bottom">
+      <tr class="row-odd"><th class="head"></th>
+        <th class="head"></th>
+        <th class="head">Built-in Functions</th>
+        <th class="head"></th>
+        <th class="head"></th>
+      </tr>
+    </thead>
+    <tbody valign="top">
+      <tr class="row-even"><td><a class="reference internal" href="#abs" title="abs"><code class="xref py py-func docutils literal"><span class="pre">abs()</span></code></a></td>
+        <td><a class="reference internal" href="#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a></td>
+        <td><a class="reference internal" href="#input" title="input"><code class="xref py py-func docutils literal"><span class="pre">input()</span></code></a></td>
+        <td><a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a></td>
+        <td><a class="reference internal" href="#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal"><span class="pre">staticmethod()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#all" title="all"><code class="xref py py-func docutils literal"><span class="pre">all()</span></code></a></td>
+        <td><a class="reference internal" href="#enumerate" title="enumerate"><code class="xref py py-func docutils literal"><span class="pre">enumerate()</span></code></a></td>
+        <td><a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a></td>
+        <td><a class="reference internal" href="#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a></td>
+        <td><a class="reference internal" href="#str" title="str"><code class="xref py py-func docutils literal"><span class="pre">str()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#any" title="any"><code class="xref py py-func docutils literal"><span class="pre">any()</span></code></a></td>
+        <td><a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a></td>
+        <td><a class="reference internal" href="#isinstance" title="isinstance"><code class="xref py py-func docutils literal"><span class="pre">isinstance()</span></code></a></td>
+        <td><a class="reference internal" href="#pow" title="pow"><code class="xref py py-func docutils literal"><span class="pre">pow()</span></code></a></td>
+        <td><a class="reference internal" href="#sum" title="sum"><code class="xref py py-func docutils literal"><span class="pre">sum()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#basestring" title="basestring"><code class="xref py py-func docutils literal"><span class="pre">basestring()</span></code></a></td>
+        <td><a class="reference internal" href="#execfile" title="execfile"><code class="xref py py-func docutils literal"><span class="pre">execfile()</span></code></a></td>
+        <td><a class="reference internal" href="#issubclass" title="issubclass"><code class="xref py py-func docutils literal"><span class="pre">issubclass()</span></code></a></td>
+        <td><a class="reference internal" href="#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a></td>
+        <td><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#bin" title="bin"><code class="xref py py-func docutils literal"><span class="pre">bin()</span></code></a></td>
+        <td><a class="reference internal" href="#file" title="file"><code class="xref py py-func docutils literal"><span class="pre">file()</span></code></a></td>
+        <td><a class="reference internal" href="#iter" title="iter"><code class="xref py py-func docutils literal"><span class="pre">iter()</span></code></a></td>
+        <td><a class="reference internal" href="#property" title="property"><code class="xref py py-func docutils literal"><span class="pre">property()</span></code></a></td>
+        <td><a class="reference internal" href="#tuple" title="tuple"><code class="xref py py-func docutils literal"><span class="pre">tuple()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#bool" title="bool"><code class="xref py py-func docutils literal"><span class="pre">bool()</span></code></a></td>
+        <td><a class="reference internal" href="#filter" title="filter"><code class="xref py py-func docutils literal"><span class="pre">filter()</span></code></a></td>
+        <td><a class="reference internal" href="#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a></td>
+        <td><a class="reference internal" href="#range" title="range"><code class="xref py py-func docutils literal"><span class="pre">range()</span></code></a></td>
+        <td><a class="reference internal" href="#type" title="type"><code class="xref py py-func docutils literal"><span class="pre">type()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#bytearray" title="bytearray"><code class="xref py py-func docutils literal"><span class="pre">bytearray()</span></code></a></td>
+        <td><a class="reference internal" href="#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a></td>
+        <td><a class="reference internal" href="#func-list"><code class="docutils literal"><span class="pre">list()</span></code></a></td>
+        <td><a class="reference internal" href="#raw_input" title="raw_input"><code class="xref py py-func docutils literal"><span class="pre">raw_input()</span></code></a></td>
+        <td><a class="reference internal" href="#unichr" title="unichr"><code class="xref py py-func docutils literal"><span class="pre">unichr()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#callable" title="callable"><code class="xref py py-func docutils literal"><span class="pre">callable()</span></code></a></td>
+        <td><a class="reference internal" href="#format" title="format"><code class="xref py py-func docutils literal"><span class="pre">format()</span></code></a></td>
+        <td><a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a></td>
+        <td><a class="reference internal" href="#reduce" title="reduce"><code class="xref py py-func docutils literal"><span class="pre">reduce()</span></code></a></td>
+        <td><a class="reference internal" href="#unicode" title="unicode"><code class="xref py py-func docutils literal"><span class="pre">unicode()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#chr" title="chr"><code class="xref py py-func docutils literal"><span class="pre">chr()</span></code></a></td>
+        <td><a class="reference internal" href="#func-frozenset"><code class="docutils literal"><span class="pre">frozenset()</span></code></a></td>
+        <td><a class="reference internal" href="#long" title="long"><code class="xref py py-func docutils literal"><span class="pre">long()</span></code></a></td>
+        <td><a class="reference internal" href="#reload" title="reload"><code class="xref py py-func docutils literal"><span class="pre">reload()</span></code></a></td>
+        <td><a class="reference internal" href="#vars" title="vars"><code class="xref py py-func docutils literal"><span class="pre">vars()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#classmethod" title="classmethod"><code class="xref py py-func docutils literal"><span class="pre">classmethod()</span></code></a></td>
+        <td><a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a></td>
+        <td><a class="reference internal" href="#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a></td>
+        <td><a class="reference internal" href="#func-repr"><code class="docutils literal"><span class="pre">repr()</span></code></a></td>
+        <td><a class="reference internal" href="#xrange" title="xrange"><code class="xref py py-func docutils literal"><span class="pre">xrange()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#cmp" title="cmp"><code class="xref py py-func docutils literal"><span class="pre">cmp()</span></code></a></td>
+        <td><a class="reference internal" href="#globals" title="globals"><code class="xref py py-func docutils literal"><span class="pre">globals()</span></code></a></td>
+        <td><a class="reference internal" href="#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a></td>
+        <td><a class="reference internal" href="#reversed" title="reversed"><code class="xref py py-func docutils literal"><span class="pre">reversed()</span></code></a></td>
+        <td><a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a></td>
+        <td><a class="reference internal" href="#hasattr" title="hasattr"><code class="xref py py-func docutils literal"><span class="pre">hasattr()</span></code></a></td>
+        <td><a class="reference internal" href="#func-memoryview"><code class="docutils literal"><span class="pre">memoryview()</span></code></a></td>
+        <td><a class="reference internal" href="#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round()</span></code></a></td>
+        <td><a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a></td>
+        <td><a class="reference internal" href="#hash" title="hash"><code class="xref py py-func docutils literal"><span class="pre">hash()</span></code></a></td>
+        <td><a class="reference internal" href="#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a></td>
+        <td><a class="reference internal" href="#func-set"><code class="docutils literal"><span class="pre">set()</span></code></a></td>
+        <td></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#delattr" title="delattr"><code class="xref py py-func docutils literal"><span class="pre">delattr()</span></code></a></td>
+        <td><a class="reference internal" href="#help" title="help"><code class="xref py py-func docutils literal"><span class="pre">help()</span></code></a></td>
+        <td><a class="reference internal" href="#next" title="next"><code class="xref py py-func docutils literal"><span class="pre">next()</span></code></a></td>
+        <td><a class="reference internal" href="#setattr" title="setattr"><code class="xref py py-func docutils literal"><span class="pre">setattr()</span></code></a></td>
+        <td></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#func-dict"><code class="docutils literal"><span class="pre">dict()</span></code></a></td>
+        <td><a class="reference internal" href="#hex" title="hex"><code class="xref py py-func docutils literal"><span class="pre">hex()</span></code></a></td>
+        <td><a class="reference internal" href="#object" title="object"><code class="xref py py-func docutils literal"><span class="pre">object()</span></code></a></td>
+        <td><a class="reference internal" href="#slice" title="slice"><code class="xref py py-func docutils literal"><span class="pre">slice()</span></code></a></td>
+        <td></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a></td>
+        <td><a class="reference internal" href="#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a></td>
+        <td><a class="reference internal" href="#oct" title="oct"><code class="xref py py-func docutils literal"><span class="pre">oct()</span></code></a></td>
+        <td><a class="reference internal" href="#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  #+END_EXPORT
   另外， 还有四个不必要的内置函数： /apply(), buffer(), coerce(), intern()/.
 
   ~Python3~ 内置函数：
-  |---------------+-------------+--------------+------------+----------------|
-  | abs()         | dict()      | help()       | min()      | setattr()      |
-  | all()         | dir()       | hex()        | next()     | slice()        |
-  | any()         | divmod()    | id()         | object()   | sorted()       |
-  | ascii()       | enumerate() | input()      | oct()      | staticmethod() |
-  | bin()         | eval()      | int()        | open()     | str()          |
-  | bool()        | exec()      | isinstance() | ord()      | sum()          |
-  | bytearray()   | filter()    | issubclass() | pow()      | super()        |
-  | bytes()       | float()     | iter()       | print()    | tuple()        |
-  | callable()    | format()    | len()        | property() | type()         |
-  | chr()         | frozenset() | list()       | range()    | vars()         |
-  | classmethod() | getattr()   | locals()     | repr()     | zip()          |
-  | compile()     | globals()   | map()        | reversed() | __import__()   |
-  | complex()     | hasattr()   | max()        | round()    |                |
-  | delattr()     | hash()      | memoryview() | set()      |                |
-  |---------------+-------------+--------------+------------+----------------|
-
+  #+BEGIN_EXPORT html
+  <table border="1" class="docutils">
+    <colgroup>
+      <col width="21%">
+      <col width="19%">
+      <col width="20%">
+      <col width="18%">
+      <col width="22%">
+    </colgroup>
+    <thead valign="bottom">
+      <tr class="row-odd"><th class="head"></th>
+        <th class="head"></th>
+        <th class="head">Built-in Functions</th>
+        <th class="head"></th>
+        <th class="head"></th>
+      </tr>
+    </thead>
+    <tbody valign="top">
+      <tr class="row-even"><td><a class="reference internal" href="#abs" title="abs"><code class="xref py py-func docutils literal"><span class="pre">abs()</span></code></a></td>
+        <td><a class="reference internal" href="#func-dict"><code class="docutils literal"><span class="pre">dict()</span></code></a></td>
+        <td><a class="reference internal" href="#help" title="help"><code class="xref py py-func docutils literal"><span class="pre">help()</span></code></a></td>
+        <td><a class="reference internal" href="#min" title="min"><code class="xref py py-func docutils literal"><span class="pre">min()</span></code></a></td>
+        <td><a class="reference internal" href="#setattr" title="setattr"><code class="xref py py-func docutils literal"><span class="pre">setattr()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#all" title="all"><code class="xref py py-func docutils literal"><span class="pre">all()</span></code></a></td>
+        <td><a class="reference internal" href="#dir" title="dir"><code class="xref py py-func docutils literal"><span class="pre">dir()</span></code></a></td>
+        <td><a class="reference internal" href="#hex" title="hex"><code class="xref py py-func docutils literal"><span class="pre">hex()</span></code></a></td>
+        <td><a class="reference internal" href="#next" title="next"><code class="xref py py-func docutils literal"><span class="pre">next()</span></code></a></td>
+        <td><a class="reference internal" href="#slice" title="slice"><code class="xref py py-func docutils literal"><span class="pre">slice()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#any" title="any"><code class="xref py py-func docutils literal"><span class="pre">any()</span></code></a></td>
+        <td><a class="reference internal" href="#divmod" title="divmod"><code class="xref py py-func docutils literal"><span class="pre">divmod()</span></code></a></td>
+        <td><a class="reference internal" href="#id" title="id"><code class="xref py py-func docutils literal"><span class="pre">id()</span></code></a></td>
+        <td><a class="reference internal" href="#object" title="object"><code class="xref py py-func docutils literal"><span class="pre">object()</span></code></a></td>
+        <td><a class="reference internal" href="#sorted" title="sorted"><code class="xref py py-func docutils literal"><span class="pre">sorted()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#ascii" title="ascii"><code class="xref py py-func docutils literal"><span class="pre">ascii()</span></code></a></td>
+        <td><a class="reference internal" href="#enumerate" title="enumerate"><code class="xref py py-func docutils literal"><span class="pre">enumerate()</span></code></a></td>
+        <td><a class="reference internal" href="#input" title="input"><code class="xref py py-func docutils literal"><span class="pre">input()</span></code></a></td>
+        <td><a class="reference internal" href="#oct" title="oct"><code class="xref py py-func docutils literal"><span class="pre">oct()</span></code></a></td>
+        <td><a class="reference internal" href="#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal"><span class="pre">staticmethod()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#bin" title="bin"><code class="xref py py-func docutils literal"><span class="pre">bin()</span></code></a></td>
+        <td><a class="reference internal" href="#eval" title="eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a></td>
+        <td><a class="reference internal" href="#int" title="int"><code class="xref py py-func docutils literal"><span class="pre">int()</span></code></a></td>
+        <td><a class="reference internal" href="#open" title="open"><code class="xref py py-func docutils literal"><span class="pre">open()</span></code></a></td>
+        <td><a class="reference internal" href="#func-str"><code class="docutils literal"><span class="pre">str()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#bool" title="bool"><code class="xref py py-func docutils literal"><span class="pre">bool()</span></code></a></td>
+        <td><a class="reference internal" href="#exec" title="exec"><code class="xref py py-func docutils literal"><span class="pre">exec()</span></code></a></td>
+        <td><a class="reference internal" href="#isinstance" title="isinstance"><code class="xref py py-func docutils literal"><span class="pre">isinstance()</span></code></a></td>
+        <td><a class="reference internal" href="#ord" title="ord"><code class="xref py py-func docutils literal"><span class="pre">ord()</span></code></a></td>
+        <td><a class="reference internal" href="#sum" title="sum"><code class="xref py py-func docutils literal"><span class="pre">sum()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#func-bytearray"><code class="docutils literal"><span class="pre">bytearray()</span></code></a></td>
+        <td><a class="reference internal" href="#filter" title="filter"><code class="xref py py-func docutils literal"><span class="pre">filter()</span></code></a></td>
+        <td><a class="reference internal" href="#issubclass" title="issubclass"><code class="xref py py-func docutils literal"><span class="pre">issubclass()</span></code></a></td>
+        <td><a class="reference internal" href="#pow" title="pow"><code class="xref py py-func docutils literal"><span class="pre">pow()</span></code></a></td>
+        <td><a class="reference internal" href="#super" title="super"><code class="xref py py-func docutils literal"><span class="pre">super()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#func-bytes"><code class="docutils literal"><span class="pre">bytes()</span></code></a></td>
+        <td><a class="reference internal" href="#float" title="float"><code class="xref py py-func docutils literal"><span class="pre">float()</span></code></a></td>
+        <td><a class="reference internal" href="#iter" title="iter"><code class="xref py py-func docutils literal"><span class="pre">iter()</span></code></a></td>
+        <td><a class="reference internal" href="#print" title="print"><code class="xref py py-func docutils literal"><span class="pre">print()</span></code></a></td>
+        <td><a class="reference internal" href="#func-tuple"><code class="docutils literal"><span class="pre">tuple()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#callable" title="callable"><code class="xref py py-func docutils literal"><span class="pre">callable()</span></code></a></td>
+        <td><a class="reference internal" href="#format" title="format"><code class="xref py py-func docutils literal"><span class="pre">format()</span></code></a></td>
+        <td><a class="reference internal" href="#len" title="len"><code class="xref py py-func docutils literal"><span class="pre">len()</span></code></a></td>
+        <td><a class="reference internal" href="#property" title="property"><code class="xref py py-func docutils literal"><span class="pre">property()</span></code></a></td>
+        <td><a class="reference internal" href="#type" title="type"><code class="xref py py-func docutils literal"><span class="pre">type()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#chr" title="chr"><code class="xref py py-func docutils literal"><span class="pre">chr()</span></code></a></td>
+        <td><a class="reference internal" href="#func-frozenset"><code class="docutils literal"><span class="pre">frozenset()</span></code></a></td>
+        <td><a class="reference internal" href="#func-list"><code class="docutils literal"><span class="pre">list()</span></code></a></td>
+        <td><a class="reference internal" href="#func-range"><code class="docutils literal"><span class="pre">range()</span></code></a></td>
+        <td><a class="reference internal" href="#vars" title="vars"><code class="xref py py-func docutils literal"><span class="pre">vars()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#classmethod" title="classmethod"><code class="xref py py-func docutils literal"><span class="pre">classmethod()</span></code></a></td>
+        <td><a class="reference internal" href="#getattr" title="getattr"><code class="xref py py-func docutils literal"><span class="pre">getattr()</span></code></a></td>
+        <td><a class="reference internal" href="#locals" title="locals"><code class="xref py py-func docutils literal"><span class="pre">locals()</span></code></a></td>
+        <td><a class="reference internal" href="#repr" title="repr"><code class="xref py py-func docutils literal"><span class="pre">repr()</span></code></a></td>
+        <td><a class="reference internal" href="#zip" title="zip"><code class="xref py py-func docutils literal"><span class="pre">zip()</span></code></a></td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#compile" title="compile"><code class="xref py py-func docutils literal"><span class="pre">compile()</span></code></a></td>
+        <td><a class="reference internal" href="#globals" title="globals"><code class="xref py py-func docutils literal"><span class="pre">globals()</span></code></a></td>
+        <td><a class="reference internal" href="#map" title="map"><code class="xref py py-func docutils literal"><span class="pre">map()</span></code></a></td>
+        <td><a class="reference internal" href="#reversed" title="reversed"><code class="xref py py-func docutils literal"><span class="pre">reversed()</span></code></a></td>
+        <td><a class="reference internal" href="#__import__" title="__import__"><code class="xref py py-func docutils literal"><span class="pre">__import__()</span></code></a></td>
+      </tr>
+      <tr class="row-even"><td><a class="reference internal" href="#complex" title="complex"><code class="xref py py-func docutils literal"><span class="pre">complex()</span></code></a></td>
+        <td><a class="reference internal" href="#hasattr" title="hasattr"><code class="xref py py-func docutils literal"><span class="pre">hasattr()</span></code></a></td>
+        <td><a class="reference internal" href="#max" title="max"><code class="xref py py-func docutils literal"><span class="pre">max()</span></code></a></td>
+        <td><a class="reference internal" href="#round" title="round"><code class="xref py py-func docutils literal"><span class="pre">round()</span></code></a></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr class="row-odd"><td><a class="reference internal" href="#delattr" title="delattr"><code class="xref py py-func docutils literal"><span class="pre">delattr()</span></code></a></td>
+        <td><a class="reference internal" href="#hash" title="hash"><code class="xref py py-func docutils literal"><span class="pre">hash()</span></code></a></td>
+        <td><a class="reference internal" href="#func-memoryview"><code class="docutils literal"><span class="pre">memoryview()</span></code></a></td>
+        <td><a class="reference internal" href="#func-set"><code class="docutils literal"><span class="pre">set()</span></code></a></td>
+        <td>&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  #+END_EXPORT
   对比 ~Python2~, ~Python3~ 无疑是剔除了一部分内置函数， 同时又添加了内置函数 ~bytes()~
   和 ~ascii()~.
 
@@ -60,16 +250,16 @@
 
 ** 数值计算
    + abs(x) :: 获取 ~x~ 的绝对值， 如果 ~x~ 是复数， 则返回其大小。
-   
+
    + divmode(a, b) :: 返回 ~(a //b, a % b)~.
 
    + pow(x, y[, z]) :: 返回 ~x~ 的 ~y~ 次方。 如果 ~z~ 存在， 则返回较 ~pow(x, y) % z~ 精确的值。
 
    + round(x) :: 方法返回浮点数 ~x~ 的四舍五入值。
 
-** 可迭代对象处理 
+** 可迭代对象相关
    + all(iterable) :: 如果所有元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
-   
+
    + any(iterable) :: 如果存在元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
 
    + enumerate(sequence, start=0) :: 代码说明一切：
@@ -89,8 +279,10 @@
                   n += 1
         #+END_SRC
 
-   + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~, 
+   + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~,
         如果 ~function~ 为 ~None~, 等价于 ~[item for item in iterable if item]~.
+
+   + iter(object[, sentinel]) :: 返回一个迭代器对象。
 
    + len(s) :: 返回 ~s~ 的长度。
 
@@ -109,7 +301,7 @@
 
    + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
 
-   + reduce(function, iterable[, initializer]) :: ~Python2~, 对参数序列中元素进行累积。
+   + reduce(function, iterable[, initializer]) :: 仅限 ~Python2~, 对参数序列中元素进行累积。
 
    + reversed(seq) :: 反转序列。
 
@@ -136,4 +328,113 @@
    + zip([iterable, ...]) :: 将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，
         然后返回由这些元组组成的列表。 如果各个迭代器的元素个数不一致，
         则返回列表长度与最短的对象相同， 利用 ~*~ 号操作符，可以将元组解压为列表。
-         
+
+** 进制和编码转化
+   + bin(x) :: 将一个整数转化为二进制字符串， 如果 ~x~ 不是整数， 那么它必须定义了 ~__index__()~ 方法。
+
+   + hex(x) :: 将一个整数转化为十六进制字符串。 如果 ~x~ 不是整数， 那么需要定义 ~__hex__()~ 方法。
+               ~Python3~ 是 ~__index__()~ 方法。
+
+               浮点数使用 ~float.hex()~ 方法。
+
+   + oct(x) :: 将一个整数转化为八进制字符串。
+
+   + chr(i) ::
+
+     - Python2: ~i~ 的取值范围为 ~0-255~, 返回对应的字符。
+
+     - Python3: ~i~ 的取值范围为 ~0-0x10FFFF~, 返回对应的字符。
+
+   + unichr(i) :: 仅限 ~Python2~, ~chr(i)~ 的高级版本， 取值范围为 ~0-0xFFFF~ 或 ~0-0x10FFFF~.
+
+   + ord(c) :: ~chr~ 的逆方法， 返回字符对应的数字。
+
+** 类和属性相关
+   + callable(object) :: 检查一个对象是否是可调用的。
+        如果返回 ~True~, ~object~ 仍然可能调用失败； 但如果返回 ~False~, 调用对象 ~ojbect~ 绝对不会成功。
+
+        对于函数, 方法, lambda 函式, 类, 以及实现了 ~__call__~ 方法的类实例, 它都返回 ~True~.
+
+   + classmethod(function) :: 常用作装饰器， 修饰的方法可以通过 ~类名.方法名~ 的形式调用。
+        修饰的方法需要有代表类的 ~cls~ 参数。
+        #+BEGIN_SRC python
+          class C(object):
+              @classmethod
+              def f(cls, arg1, arg2, ...):
+                  pass
+        #+END_SRC
+
+   + staticmethod(function) :: 类似 ~classmethod~, 不过不需要 ~cls~ 参数。
+
+   + property(fget=None, fset=None, fdel=None, doc=None) :: 返回新式类属性。
+        参数：
+        - fget - 获取属性值的函数
+
+        - fset - 设置属性值的函数
+
+        - fdel - 删除属性值函数
+
+        - doc - 属性描述信息
+
+        例：
+        #+BEGIN_SRC python
+          class C:
+              def __init__(self):
+                  self._x = None
+
+              def getx(self):
+                  return self._x
+
+              def setx(self, value):
+                  self._x = value
+
+              def delx(self):
+                  del self._x
+
+              x = property(getx, setx, delx, "I'm the 'x' property.")
+        #+END_SRC
+        如果 *c* 是 *C* 的实例化, *c.x* 将触发 *getter*, *c.x = value* 将触发 *setter*, *del c.x* 触发 *deleter*.
+
+        如果给定 ~doc~ 参数， 其将成为这个属性值的 ~docstring~, 否则 ~property~ 函数就会复制 ~fget~ 函数的 ~docstring~.
+
+        将 ~property~ 函数用作装饰器可以很方便的创建只读属性：
+        #+BEGIN_SRC python
+          class Parrot:
+              def __init__(self):
+                  self._voltage = 100000
+
+              @property
+              def voltage(self):
+                  """Get the current voltage."""
+                  return self._voltage
+        #+END_SRC
+        上面的代码将 ~voltage()~ 方法转化成同名只读属性的 ~getter~ 方法。
+
+        ~property~ 的 ~getter~, ~setter~ 和 ~deleter~ 方法同样可以用作装饰器：
+        #+BEGIN_SRC python
+          class C(object):
+              def __init__(self):
+                  self._x = None
+ 
+              @property
+              def x(self):
+                  """I'm the 'x' property."""
+                  return self._x
+ 
+              @x.setter
+              def x(self, value):
+                  self._x = value
+ 
+              @x.deleter
+              def x(self):
+                  del self._x
+        #+END_SRC
+
+   + getattr(object, name[, default]) :: 返回一个对象属性值， 属性不存在时可以通过设置默认值避免出错。
+
+   + hasattr(object, name) :: 判断对象是否包含对应的属性。
+
+   + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
+
+   + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
+
