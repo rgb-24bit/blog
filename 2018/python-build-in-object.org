@@ -9,6 +9,7 @@
   - [[#可迭代对象相关][可迭代对象相关]]
   - [[#进制和编码转化][进制和编码转化]]
   - [[#类和属性相关][类和属性相关]]
+- [[#内置常量][内置常量]]
 
 * 内置函数
   ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
@@ -149,9 +150,9 @@
 
    + chr(i) ::
 
-     - Python2: ~i~ 的取值范围为 ~0-255~, 返回对应的字符。
+               - Python2: ~i~ 的取值范围为 ~0-255~, 返回对应的字符。
 
-     - Python3: ~i~ 的取值范围为 ~0-0x10FFFF~, 返回对应的字符。
+               - Python3: ~i~ 的取值范围为 ~0-0x10FFFF~, 返回对应的字符。
 
    + unichr(i) :: 仅限 ~Python2~, ~chr(i)~ 的高级版本， 取值范围为 ~0-0xFFFF~ 或 ~0-0x10FFFF~.
 
@@ -223,16 +224,16 @@
           class C(object):
               def __init__(self):
                   self._x = None
- 
+
               @property
               def x(self):
                   """I'm the 'x' property."""
                   return self._x
- 
+
               @x.setter
               def x(self, value):
                   self._x = value
- 
+
               @x.deleter
               def x(self):
                   del self._x
@@ -245,4 +246,18 @@
    + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
 
    + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
+* 内置常量
+  内置常量不多， 就这几个：
+  + False :: ~bool~ 类型的错误值。
+  
+  + True :: ~bool~ 类型的正确值。
 
+  + None :: ~NoneType~ 类型的唯一值。
+
+  + NotImplemented :: 二元操作返回的特殊值。(~__eq()__()~, ~__lt__()~, ~__add__()~...)
+
+  + Ellipsis :: 与 ~...~ 相同， 主要和用户定义的容器数据类型的扩展切片语法结合使用。
+
+  + *__debug__* :: 如果 ~Python~ 启动未使用 ~-O~ 参数， 这个值为真。
+
+  emmm, 感觉除了头三个......
