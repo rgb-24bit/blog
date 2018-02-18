@@ -1,0 +1,123 @@
+#+TITLE:      Python 内置函数
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-18 周日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#python2-内置异常][Python2 内置异常]]
+
+* 简介
+  *异常处理* 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
+  的异常类型而直接对所有异常进行处理。 这样虽然让程序运行了起来， 但是很明显，
+  这样做是不合适的。
+
+  所以， 准备通过官方文档来了解内置的异常类型。
+  - [[https://docs.python.org/2/library/exceptions.html][Python2 Built-in Exceptions]]
+  - [[https://docs.python.org/3.6/library/exceptions.html][Python3 Built-in Exceptions]]
+
+* Python2 内置异常
+  + *BaseException* -- 所有内建的异常的基类
+    + *SystemExit* -- 由 ~sys.exit()~ 函数引发此异常。如果不处理这个异常， ~Python~ 解释器退出
+    + *KeyboardInterrupt* -- 当用户按下中断键（通常是 ~Ctrl-C~ 或 ~Delete~ ）时引发
+    + *GeneratorExit* -- 当调用一个 ~generator~ 对象的 ~close()~ 方法时引发
+    + *Exception* -- 所有内建的、非系统退出的异常，都是从该类派生的。此外， _应该从该类派生所有用户定义的异常_
+    + *StopIteration* -- 当一个 ~iterator~ 的 ~next()~ 方法发出信号， 表示没有更多的值时引发
+      + *StandardError* -- 除 ~StopIteration~, ~GeneratorExit~, ~KeyboardInterrupt~ 和 ~SystemExit~ 以外的所有内建异常的基类
+        + *BufferError* -- 当 ~buffer~ 相关的操作无法执行时引发
+        + *ArithmeticError* -- 各种算术错误引发的内建异常的基类
+          + *FloatingPointError* -- 当浮点数操作失败时引发
+          + *OverflowError* -- 当要表示算术运算的结果太大时引发， 长整型不会引发该异常
+          + *ZeroDivisionError* -- 当除法或取模运算的第 *2* 个参数为 *0* 时引发
+        + *AssertionError* -- 当 ~assert~ 语句失败时引发
+        + *AttributeError* -- 当属性引用或赋值失败时引发。当对象根本不支持属性引用或属性赋值时，将引发 ~TypeError~
+        + *EnvironmentError* -- ~Python~ 系统以外发生的异常的基类
+          + *IOError* -- 当一个 ~I/O~ 操作， 由于 ~I/O~ 相关原因导致失败时（未找到文件 或 磁盘已满）
+          + *OSError* -- 当一个函数返回系统相关的错误时引发
+            + *WindowsError* -- 当 ~Windows~ 特定的错误发生时， 或者当错误号码与 ~errno~ 值不对应时引发。
+            + *VMSError* -- 仅在 ~VMS~ 上可用。当发生 ~VMS~ 特定错误时引发
+        + *EOFError* -- 当内建函数 ~input()~ 或 ~raw_input()~ 的其中之一，在触及文件结尾 (~EOF~) 情形，而没有读取到任何数据时引发
+        + *ImportError* -- 当 ~import~ 语句无法找到模块定义，或者当 ~from ... import~ 语句未能找到要导入的名称时引发
+        + *LookupError* -- 当用于映射或序列的键或索引无效时引发的异常的基类
+          + *IndexError* -- 当序列下标超出取值范围时引发。（切片索引会被静默地截取到允许范围内；如果索引不是一个普通整数，则引发 ~TypeError~ ）
+          + *KeyError* --  当在现有键的集合中找不到映射的键时引发
+        + *MemoryError* -- 当一个操作将内存耗尽，但情况仍可挽救时（通过删除某些对象）时引发
+        + *NameError* -- 当找不到本地或全局名称时引发
+          + *UnboundLocalError* -- 当引用函数或方法局部变量，但变量没有绑定值时引发
+        + *ReferenceError* -- 当用一个由 ~weakref.proxy()~ 函数创建的弱引用代理，去访问引用者的属性，而该引用者已经被垃圾回收时，会引发此异常
+        + *RuntimeError* -- 当检出错误不属于任何其它类别时引发
+        + *SyntaxError* -- 当解析器遇到语法错误时引发
+          + *IndentationError* -- 与不正确的缩进相关的语法错误的基类
+            + *TabError* -- 当缩进中包含对制表符和空格的混用时引发
+        + *SystemError* -- 当解释器发现内部错误，但情况并没有看起来那么严重，不至于到要放弃所有希望的地步，此时会引发本异常
+        + *TypeError* -- 当操作或函数应用于不合适类型的对象时引发
+        + *ValueError* -- 当内建操作或函数，接收到类型正确，但值不正确的参数，而且这种情况不能用诸如 ~IndexError~ 这样的更精确的异常进行描述时引发
+          + *UnicodeError* -- 当有关 ~Unicode~ 编码或解码错误出现时引发
+            + *UnicodeDecodeError* -- 当解码过程中出现的一个 ~Unicode~ 相关的错误时引发
+            + *UnicodeEncodeError* -- 当编码过程中出现的一个 ~Unicode~ 相关的错误时引发
+            + *UnicodeTranslateError* --  当翻译过程中出现的一个 ~Unicode~ 相关的错误时引发
+      + *Warning* -- 警告类别基类
+        + *DeprecationWarning* -- 弃用特性警告基类
+        + *PendingDeprecationWarning* -- 将来会被弃用特性的警告基类
+        + *RuntimeWarning* -- 可疑 ~Runtime~ 行为警告基类
+        + *SyntaxWarning* -- 可疑句法警告基类
+        + *UserWarning* -- 用户代码生成警告基类
+        + *FutureWarning* -- 将来会改变语义结构的警告基类
+      + *ImportWarning* -- 可能弄错模块导入警告基类
+      + *UnicodeWarning* -- ~Unicode~ 相关的警告基类
+      + *BytesWarning*
+
+  异常层次结构：
+  #+BEGIN_EXAMPLE
+    BaseException
+     +-- SystemExit
+     +-- KeyboardInterrupt
+     +-- GeneratorExit
+     +-- Exception
+          +-- StopIteration
+          +-- StandardError
+          |    +-- BufferError
+          |    +-- ArithmeticError
+          |    |    +-- FloatingPointError
+          |    |    +-- OverflowError
+          |    |    +-- ZeroDivisionError
+          |    +-- AssertionError
+          |    +-- AttributeError
+          |    +-- EnvironmentError
+          |    |    +-- IOError
+          |    |    +-- OSError
+          |    |         +-- WindowsError (Windows)
+          |    |         +-- VMSError (VMS)
+          |    +-- EOFError
+          |    +-- ImportError
+          |    +-- LookupError
+          |    |    +-- IndexError
+          |    |    +-- KeyError
+          |    +-- MemoryError
+          |    +-- NameError
+          |    |    +-- UnboundLocalError
+          |    +-- ReferenceError
+          |    +-- RuntimeError
+          |    |    +-- NotImplementedError
+          |    +-- SyntaxError
+          |    |    +-- IndentationError
+          |    |         +-- TabError
+          |    +-- SystemError
+          |    +-- TypeError
+          |    +-- ValueError
+          |         +-- UnicodeError
+          |              +-- UnicodeDecodeError
+          |              +-- UnicodeEncodeError
+          |              +-- UnicodeTranslateError
+          +-- Warning
+               +-- DeprecationWarning
+               +-- PendingDeprecationWarning
+               +-- RuntimeWarning
+               +-- SyntaxWarning
+               +-- UserWarning
+               +-- FutureWarning
+         +-- ImportWarning
+         +-- UnicodeWarning
+         +-- BytesWarning
+  #+END_EXAMPLE
+
