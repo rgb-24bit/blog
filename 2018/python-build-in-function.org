@@ -1,4 +1,4 @@
-#+TITLE:      Python 内置对象
+#+TITLE:      Python 内置函数
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-02-14 周三>
@@ -9,7 +9,6 @@
   - [[#可迭代对象相关][可迭代对象相关]]
   - [[#进制和编码转化][进制和编码转化]]
   - [[#类和属性相关][类和属性相关]]
-- [[#内置常量][内置常量]]
 
 * 内置函数
   ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
@@ -246,18 +245,6 @@
    + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
 
    + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
-* 内置常量
-  内置常量不多， 就这几个：
-  + False :: ~bool~ 类型的错误值。
-  
-  + True :: ~bool~ 类型的正确值。
-
-  + None :: ~NoneType~ 类型的唯一值。
-
-  + NotImplemented :: 二元操作返回的特殊值。(~__eq()__()~, ~__lt__()~, ~__add__()~...)
-
-  + Ellipsis :: 与 ~...~ 相同， 主要和用户定义的容器数据类型的扩展切片语法结合使用。
-
-  + *__debug__* :: 如果 ~Python~ 启动未使用 ~-O~ 参数， 这个值为真。
-
-  emmm, 感觉除了头三个......
+    
+    
+    
