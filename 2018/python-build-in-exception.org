@@ -5,7 +5,13 @@
 
 * 目录                                                    :TOC_4_gh:noexport:
 - [[#简介][简介]]
+- [[#常见异常][常见异常]]
 - [[#python2-内置异常][Python2 内置异常]]
+  - [[#完整异常列表][完整异常列表]]
+  - [[#异常层次结构][异常层次结构]]
+- [[#python3-内置异常][Python3 内置异常]]
+  - [[#完整异常列表-1][完整异常列表]]
+  - [[#异常层次结构-1][异常层次结构]]
 
 * 简介
   *异常处理* 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
@@ -16,13 +22,34 @@
   - [[https://docs.python.org/2/library/exceptions.html][Python2 Built-in Exceptions]]
   - [[https://docs.python.org/3.6/library/exceptions.html][Python3 Built-in Exceptions]]
 
+* 常见异常
+  网上有人总结了 ~Python~ 的常见异常， 这里记录下来：
+  |-------------------+-------------------------------------------------------------------------------------------|
+  | 异常              | 描述                                                                                      |
+  |-------------------+-------------------------------------------------------------------------------------------|
+  | AssertionError    | assert 语句失败                                                                           |
+  | AttributeError    | 试图访问一个对象没有的属性                                                                |
+  | IOError           | 输入/输出异常， 基本上是无法打开文件。                                                    |
+  | ImportError       | 无法引入模块或者包， 基本上是路径问题                                                     |
+  | IndentationError  | 语法错误， 代码没有正确对齐                                                               |
+  | IndexError        | 下标索引超出序列边界， 比如当 l 只有三个元素， 却试图访问 l[5]                            |
+  | KeyError          | 试图访问字典里不存在的键                                                                  |
+  | KerboardInterrupt | Ctrl + C 被按下                                                                           |
+  | NameError         | 使用一个还未被赋值予对象的变量                                                            |
+  | SyntaxError       | Python 代码非法， 代码不能解释                                                            |
+  | TypeError         | 传入对象类型与要求的不符                                                                  |
+  | UnboundLocalError | 试图访问一个还未被设置的局部变量， 基本上是由于另一个同名的全局变量，导致你以为正在访问它 |
+  | ValueError        | 传入一个调用者不期望的值， 即使值的类型是正确的                                           |
+  |-------------------+-------------------------------------------------------------------------------------------|
+
 * Python2 内置异常
+** 完整异常列表
   + *BaseException* -- 所有内建的异常的基类
     + *SystemExit* -- 由 ~sys.exit()~ 函数引发此异常。如果不处理这个异常， ~Python~ 解释器退出
     + *KeyboardInterrupt* -- 当用户按下中断键（通常是 ~Ctrl-C~ 或 ~Delete~ ）时引发
     + *GeneratorExit* -- 当调用一个 ~generator~ 对象的 ~close()~ 方法时引发
     + *Exception* -- 所有内建的、非系统退出的异常，都是从该类派生的。此外， _应该从该类派生所有用户定义的异常_
-    + *StopIteration* -- 当一个 ~iterator~ 的 ~next()~ 方法发出信号， 表示没有更多的值时引发
+      + *StopIteration* -- 当一个 ~iterator~ 的 ~next()~ 方法发出信号， 表示没有更多的值时引发
       + *StandardError* -- 除 ~StopIteration~, ~GeneratorExit~, ~KeyboardInterrupt~ 和 ~SystemExit~ 以外的所有内建异常的基类
         + *BufferError* -- 当 ~buffer~ 相关的操作无法执行时引发
         + *ArithmeticError* -- 各种算术错误引发的内建异常的基类
@@ -67,7 +94,7 @@
       + *UnicodeWarning* -- ~Unicode~ 相关的警告基类
       + *BytesWarning*
 
-  异常层次结构：
+** 异常层次结构
   #+BEGIN_EXAMPLE
     BaseException
      +-- SystemExit
@@ -120,4 +147,146 @@
          +-- UnicodeWarning
          +-- BytesWarning
   #+END_EXAMPLE
+
+* Python3 内置异常
+  ~Python3~ 和 ~Python2~ 不兼容， 异常处理方面， ~Python3~ 也对异常结构进行了一些调整。
+
+  - 移除了 ~StandardError~, 继承自 ~StandardError~ 的异常变为继承自 ~Exception~
+  - ~OSError~ 直接继承自 ~Exception~ 并且极大的扩充的子类的数量， 对异常情况可以更细致的处理
+  - 所有警告现在都继承自 ~Warning~
+  - more...
+
+** 完整异常列表
+  + *BaseException* -- 所有内建的异常的基类
+    + *SystemExit* -- 由 ~sys.exit()~ 函数引发此异常。如果不处理这个异常， ~Python~ 解释器退出
+    + *KeyboardInterrupt* -- 当用户按下中断键（通常是 ~Ctrl-C~ 或 ~Delete~ ）时引发
+    + *GeneratorExit* -- 当调用一个 ~generator~ 对象的 ~close()~ 方法时引发
+    + *Exception* -- 所有内建的、非系统退出的异常，都是从该类派生的。此外， _应该从该类派生所有用户定义的异常_
+      + *StopIteration* -- 当一个 ~iterator~ 的 ~next()~ 方法发出信号， 表示没有更多的值时引发
+      + *StopAsyncIteration*
+      + *ArithmeticError* -- 各种算术错误引发的内建异常的基类
+        + *FloatingPointError* -- 当浮点数操作失败时引发
+        + *OverflowError* -- 当要表示算术运算的结果太大时引发， 长整型不会引发该异常
+        + *ZeroDivisionError* -- 当除法或取模运算的第 *2* 个参数为 *0* 时引发
+      + *AssertionError* -- 当 ~assert~ 语句失败时引发
+      + *AttributeError* -- 当属性引用或赋值失败时引发。当对象根本不支持属性引用或属性赋值时，将引发 ~TypeError~
+      + *BufferError* -- 当 ~buffer~ 相关的操作无法执行时引发
+      + *EOFError* -- 当内建函数 ~input()~ 或 ~raw_input()~ 的其中之一，在触及文件结尾 (~EOF~) 情形，而没有读取到任何数据时引发
+      + *ImportError* -- 当 ~import~ 语句无法找到模块定义，或者当 ~from ... import~ 语句未能找到要导入的名称时引发
+        + *ModuleNotFoundError* -- 导入的模块不存在
+      + *LookupError* -- 当用于映射或序列的键或索引无效时引发的异常的基类
+        + *IndexError* -- 当序列下标超出取值范围时引发。（切片索引会被静默地截取到允许范围内；如果索引不是一个普通整数，则引发 ~TypeError~ ）
+        + *KeyError* --  当在现有键的集合中找不到映射的键时引发
+      + *MemoryError* -- 当一个操作将内存耗尽，但情况仍可挽救时（通过删除某些对象）时引发
+      + *NameError* -- 当找不到本地或全局名称时引发
+        + *UnboundLocalError* -- 当引用函数或方法局部变量，但变量没有绑定值时引发
+      + *OSError*
+        + *BlockingIOError* -- 当一个操作阻塞一个设置为非阻塞操作的对象（例如套接字）时引发
+        + *ChildProcessError* -- 在对子进程执行操作失败时引发
+        + *ConnectionError* -- 连接相关问题的基类
+          + *BrokenPipeError* -- 当试图在管道上写入而另一端已关闭时尝试写入，或试图写入已关闭写入的套接字时引发
+          + *ConnectionAbortedError* -- 当连接尝试被同伴中止时引发
+          + *ConnectionRefusedError* -- 当连接尝试被同伴拒绝时引发
+          + *ConnectionResetError* -- 当连接被同伴重置时引发
+        + *FileExistsError* -- 尝试创建已存在的文件或目录时引发
+        + *FileNotFoundError* -- 当请求文件或目录但不存在时引发
+        + *InterruptedError* -- 当系统调用被传入信号中断时引发
+        + *IsADirectoryError* -- 在目录上请求文件操作时引发
+        + *NotADirectoryError* -- 当目录操作被请求的目录不是目录时引发
+        + *PermissionError* -- 当尝试运行没有足够访问权限的操作时引发
+        + *ProcessLookupError* -- 当一个给定的过程不存在时引发
+        + *TimeoutError* -- 当系统功能在系统级别超时时引发
+      + *ReferenceError* -- 当用一个由 ~weakref.proxy()~ 函数创建的弱引用代理，去访问引用者的属性，而该引用者已经被垃圾回收时，会引发此异常
+      + *RuntimeError* -- 当检出错误不属于任何其它类别时引发
+        + *NotImplementedError*
+        + *RecursionError* 
+      + *SyntaxError* -- 当解析器遇到语法错误时引发
+        + *IndentationError* -- 与不正确的缩进相关的语法错误的基类
+          + *TabError* -- 当缩进中包含对制表符和空格的混用时引发
+      + *SystemError* -- 当解释器发现内部错误，但情况并没有看起来那么严重，不至于到要放弃所有希望的地步，此时会引发本异常
+      + *TypeError* -- 当操作或函数应用于不合适类型的对象时引发
+      + *ValueError* -- 当内建操作或函数，接收到类型正确，但值不正确的参数，而且这种情况不能用诸如 ~IndexError~ 这样的更精确的异常进行描述时引发
+        + *UnicodeError* -- 当有关 ~Unicode~ 编码或解码错误出现时引发
+          + *UnicodeDecodeError* -- 当解码过程中出现的一个 ~Unicode~ 相关的错误时引发
+          + *UnicodeEncodeError* -- 当编码过程中出现的一个 ~Unicode~ 相关的错误时引发
+          + *UnicodeTranslateError* --  当翻译过程中出现的一个 ~Unicode~ 相关的错误时引发
+      + *Warning* -- 警告类别基类
+        + *DeprecationWarning* -- 弃用特性警告基类
+        + *PendingDeprecationWarning* -- 将来会被弃用特性的警告基类
+        + *RuntimeWarning* -- 可疑 ~Runtime~ 行为警告基类
+        + *SyntaxWarning* -- 可疑句法警告基类
+        + *UserWarning* -- 用户代码生成警告基类
+        + *FutureWarning* -- 将来会改变语义结构的警告基类
+        + *ImportWarning* -- 可能弄错模块导入警告基类
+        + *UnicodeWarning* -- ~Unicode~ 相关的警告基类
+        + *BytesWarning*
+        + *ResourceWarninf*
+
+** 异常层次结构
+   #+BEGIN_EXAMPLE
+     BaseException
+      +-- SystemExit
+      +-- KeyboardInterrupt
+      +-- GeneratorExit
+      +-- Exception
+           +-- StopIteration
+           +-- StopAsyncIteration
+           +-- ArithmeticError
+           |    +-- FloatingPointError
+           |    +-- OverflowError
+           |    +-- ZeroDivisionError
+           +-- AssertionError
+           +-- AttributeError
+           +-- BufferError
+           +-- EOFError
+           +-- ImportError
+           |    +-- ModuleNotFoundError
+           +-- LookupError
+           |    +-- IndexError
+           |    +-- KeyError
+           +-- MemoryError
+           +-- NameError
+           |    +-- UnboundLocalError
+           +-- OSError
+           |    +-- BlockingIOError
+           |    +-- ChildProcessError
+           |    +-- ConnectionError
+           |    |    +-- BrokenPipeError
+           |    |    +-- ConnectionAbortedError
+           |    |    +-- ConnectionRefusedError
+           |    |    +-- ConnectionResetError
+           |    +-- FileExistsError
+           |    +-- FileNotFoundError
+           |    +-- InterruptedError
+           |    +-- IsADirectoryError
+           |    +-- NotADirectoryError
+           |    +-- PermissionError
+           |    +-- ProcessLookupError
+           |    +-- TimeoutError
+           +-- ReferenceError
+           +-- RuntimeError
+           |    +-- NotImplementedError
+           |    +-- RecursionError
+           +-- SyntaxError
+           |    +-- IndentationError
+           |         +-- TabError
+           +-- SystemError
+           +-- TypeError
+           +-- ValueError
+           |    +-- UnicodeError
+           |         +-- UnicodeDecodeError
+           |         +-- UnicodeEncodeError
+           |         +-- UnicodeTranslateError
+           +-- Warning
+                +-- DeprecationWarning
+                +-- PendingDeprecationWarning
+                +-- RuntimeWarning
+                +-- SyntaxWarning
+                +-- UserWarning
+                +-- FutureWarning
+                +-- ImportWarning
+                +-- UnicodeWarning
+                +-- BytesWarning
+                +-- ResourceWarning
+   #+END_EXAMPLE
 
