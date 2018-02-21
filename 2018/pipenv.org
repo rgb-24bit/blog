@@ -115,6 +115,8 @@
        + 参数 =-d, --dev= 下载所有的包, 包括 =[dev-packages]=.
        + 参数 =--system= 使用系统的 =Pip= 而非 =Virtualenv=.
        + 参数 =-r, --requirements TEXT= 导入 =requirements= 文件.
+       + 参数 =--skip-lock= 在安装是忽略 =Pipfile.lock=, 使用 =Pipfile=.
+         推荐， 目前 =Pipenv= 存在一些 =Bug=, 使用 =Pipfile.lock= 可能导致依赖下载不完整。
        + more...
      - ~lock~: 生成 =Pipfile.lock= 文件.
      - ~open~: 在编辑器中显示指定的模块.
