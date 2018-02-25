@@ -1,0 +1,19 @@
+# Commit message template
+
+<type>: <name>
+
+<body>
+
+#
+# type:
+#     new: 新的博客
+#     complete: 完善博客
+#     revise: 修订博客
+#     delete: 删除博客
+#
+# name:
+#     博客名
+#
+# body:
+#     详细描述
+#
