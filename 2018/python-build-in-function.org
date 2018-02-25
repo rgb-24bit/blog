@@ -90,13 +90,20 @@
    + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~,
         如果 ~function~ 为 ~None~, 等价于 ~[item for item in iterable if item]~.
 
-   + iter(object[, sentinel]) :: 返回一个迭代器对象。
-
-   + len(s) :: 返回 ~s~ 的长度。
+        ~Python2~ 返回列表， ~Python3~ 返回迭代器， 为了兼容， 建议这样使用 ~list(filter())~
 
    + map(function, iterable, ...) :: 将 ~iterable~ 的每个元素作为参数调用 ~function~,
         ~Python2~ 返回结果列表， ~Python3~ 返回迭代器， 如果要得到和 ~Python2~ 相同的结果，
         应该这样： ~list(map(x))~.
+
+   + reduce(function, iterable[, initializer]) :: ~reduce~ 把一个函数作用在一个序列 ~[x1, x2, x3, ...]~ 上，
+        这个函数必须接收两个参数， ~reduce~ 把结果继续和序列的下一个元素做累积计算。
+
+        ~Python3~ 使用需要： ~from functools import reduce~
+
+   + iter(object[, sentinel]) :: 返回一个迭代器对象。
+
+   + len(s) :: 返回 ~s~ 的长度。
 
    + max(iterable[, key]) ::
 
@@ -108,8 +115,6 @@
         那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。
 
    + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
-
-   + reduce(function, iterable[, initializer]) :: 仅限 ~Python2~, 对参数序列中元素进行累积。
 
    + reversed(seq) :: 反转序列。
 
