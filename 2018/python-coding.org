@@ -1,0 +1,124 @@
+#+TITLE:      Python 编码问题
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-02-26 周一>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#unicode--utf-8][Unicode & UTF-8]]
+- [[#编码格式转化][编码格式转化]]
+- [[#python2][Python2]]
+- [[#python3][Python3]]
+- [[#编写程序][编写程序]]
+- [[#参考链接][参考链接]]
+
+* Unicode & UTF-8
+  + ~Unicode~, 一个字符集， 将世界上所有的字符都纳入其中， 并给予每一个字符
+    一个独一无二的编码。
+
+    表示方式： ~U+XXXX~, ~X~ 代表一个十六进制数字。
+
+    *注：* ~Unicode~ 只是一个字符集， 只规定了一个字符的二进制编码， 没有规定这个二进制编码
+    的储存方式。
+
+  + ~UTF-8~, ~Unicode~ 的 *一种* 实现方式， 规定了二进制编码的储存方式， 可以由计算机识别。
+
+  *PS:* 不同的编码方式对同一字符的编码很有可能是不一样的， 所以按照错误的编码方式
+  显示数据时， 会导致乱码。
+
+* 编码格式转化
+  1. 目前存在有很多种编码方式， 如 ~UTF-8~, ~cp936~ 等
+  2. 很多编码方式都向下兼容 ~ASCII~
+  3. 不同编码方式在其他字符的表示上很可能不兼容
+  4. 我们可以用 ~Unicode~ 来映射不同字符集中的字符编码
+  5. 因此， 我们可以将一个编码方式 *解码* 为 ~Unicode~, 对应 ~Python~ 的 ~decode()~
+  6. 然后， 通过 ~Unicode~ 映射出另一编码方式中的字符的编码， 对应 ~Python~ 的 ~encode()~
+
+* Python2
+  ~Python2~ 中的两种字符串数据类型：
+  + ~str~, 存储 ~bytes~, 对应编码方式中 *二进制编码* 的存储格式
+  + ~unicode~, 存储 ~Unicode~ 编码， 如: ~u'\u7f16\u7801'~ 对应 ~U+7F16~ - 编， ~U+7801~ - 码
+
+  *注:* 类似 ~u'abcd'~ 的字符串是一个 ~Unicode~ 对象， 之前我一直认为还是 ~str~.
+
+  两者的转化方式为：
+  #+BEGIN_EXAMPLE
+    str -> decode -> unicode
+    unicode -> encode -> str
+  #+END_EXAMPLE
+
+  #+BEGIN_SRC python
+    >>> s = '编码'
+    >>> type(s)
+    <type 'str'>
+    >>> s.decode('cp936')  # 解码
+    u'\u7f16\u7801'
+    >>> type(s.decode('cp936'))
+    <type 'unicode'>
+    >>> u'编码'
+    u'\u7f16\u7801'
+    >>> u'编码'.encode('cp936')  # 编码
+    '\xb1\xe0\xc2\xeb'
+  #+END_SRC
+
+  ~Python2~ 中， 组合 ~str~ 和 ~unicode~ 对象的时候， 会自动尝试将 ~str~ 解码为 ~unicode~, 解码中使用的
+  字符集的值与 ~sys.getdefaultencoding()~ 的值相等。
+
+  然而， 这个值通常为 ~ascii~, 如果你的 ~str~ 中包含非 ~str~ 字符的话， 就会出现 ~UnicodeDecodeError~
+
+  #+BEGIN_SRC python
+    >>> u'abc' + 'def'
+    u'abcdef'
+    >>> u'abc' + '编码'
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    UnicodeDecodeError: 'ascii' codec can't decode byte 0xb1 in position 0: ordinal not in range(128)
+  #+END_SRC
+
+* Python3
+  和 ~Python2~ 中不同的是， ~Python3~ 默认的字符串类型变为了 ~unicode~, 而字节字符串的定义需要通过 ~b'abc'~ 的方式。
+
+  这是一个坑， 很多时候， ~Python2~ 的程序中会存在类似 ~str.decode()~ 的代码， 然后到了 ~Python3~, 你就会发现， ~GG~ 了。
+
+  ~unicode~ 是不存在 ~decode~ 方法的， ~unicode~ 很明显已经不能再解码了， 应该 ~encode~.
+
+  同时， 不在对 ~bytes~ 和 ~unicode~ 进行隐式处理。
+
+  所以， 直接组合 ~unicode~ 和 ~bytes~ 将会报错。
+
+  #+BEGIN_SRC python
+    >>> s = '编码'
+    >>> type(s)
+    <class 'str'>
+    >>> s = u'编码'
+    >>> type(s)
+    <class 'str'>
+    >>> s = b'编码'
+      File "<stdin>", line 1
+    SyntaxError: bytes can only contain ASCII literal characters.
+    >>> s = '编码'.encode('cp936')
+    >>> s
+    b'\xb1\xe0\xc2\xeb'
+    >>> type(s)
+    <class 'bytes'>
+    >>> s = '编码'.decode('cp936')
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    AttributeError: 'str' object has no attribute 'decode'
+  #+END_SRC
+
+* 编写程序
+  *无法改变的五个事实：*
+  1. 程序的所有输入输出均为 ~byte(二进制数据)~
+  2. 世界上的文本需要比 ~256~ 更多的符号来表现
+  3. 你的程序必须处理 ~byte~ 和 ~unicode~
+  4. ~byte~ 流中不会包含编码信息
+  5. 指明的编码有可能是错误的
+
+  *编程建议：*
+  1. ~Unicode~ 三明治： 尽可能的让程序处理的文本都为 ~Unicode~
+  2. 了解程序中的字符串， 哪些是 ~unicode~, 哪些是 ~byte~, 对于这些 ~byte~ 串，知道他们的编码是什么
+  3. 测试 ~Unicode~ 支持。使用一些奇怪的符号来测试是否已经做到了以上几点
+
+* 参考链接
+  - [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html][unicode 之痛]] - 推荐
+  - [[http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html][字符编码笔记：ASCII，Unicode 和 UTF-8]] - 阮一峰
