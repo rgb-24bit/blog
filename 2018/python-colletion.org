@@ -1,0 +1,105 @@
+#+TITLE:      Python 容器
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-03-03 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#python2--python3][Python2 & Python3]]
+  - [[#counter][Counter]]
+    - [[#方法][方法]]
+
+* 简介
+  ~Python~ 的内置模块 ~collections~ 提供了通用内置容器 ~dict~, ~list~, ~set~, ~tuple~ 的替代方案。
+
+  ~Python2~ 和 ~Python3~ 在这个模块上具有一些区别， 所以后面的内容分为：
+  - ~Python2~ 和 ~Python3~ 都支持的容器类型
+  - ~Python3~ 支持的容器类型
+
+* Python2 & Python3
+** Counter
+   ~Counter~ 提供计数器以支持方便快捷的计数。
+
+   一个例子：
+   #+BEGIN_SRC python
+     >>> lst = [1, 2, 3, 4, 5, 6, 6, 6, 2, 1]
+     >>> Counter(lst)
+     Counter({6: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 1})
+   #+END_SRC
+
+   初始化 ~Counter~ 对象：
+   #+BEGIN_SRC python
+     >>> c = Counter()                       # 空的新容器
+     >>> c = Counter('abcdefg')              # 通过一个可迭代对象初始化
+     >>> c = Counter({'red': 4, 'blue': 2})  # 通过一个映射对象初始化
+     >>> c = Counter(boy=30, girl=8)         # 通过关键字参数初始化
+   #+END_SRC
+
+   和 ~dict~ 的一个不同：
+   #+BEGIN_SRC python
+     # 访问不存在的键时， 不是引发 KeyError, 而是返回一个 0 计数
+     >>> c = Counter(['girl', 'boy'])
+     >>> c
+     Counter({'boy': 1, 'girl': 1})
+     >>> c['nogirl']
+     0
+   #+END_SRC
+
+*** 方法
+    + elements() :: 返回计数器中的所有元素的 *迭代器*, 每个元素的重复次数和其计数相同。
+
+                    #+BEGIN_SRC python
+                      >>> c = Counter(a=4, b=2, c=0, d=-2)
+                      >>> list(c.elements())
+                      ['a', 'a', 'a', 'a', 'b', 'b']
+                    #+END_SRC
+
+    + most_common([n]) :: 列出出现次数最多的 ~n~ 个元素及其计数， 如果省略 ~n~, 便返回所有元素。
+
+         #+BEGIN_SRC python
+           >>> Counter('abracadabra').most_common(3)
+           [('a', 5), ('r', 2), ('b', 2)]
+         #+END_SRC
+
+    + substract([iterable-or-mapping]) :: 从一个 *可迭代* 对象或一个 *映射* 对象中减去元素计数。
+
+         #+BEGIN_SRC python
+           >>> c = Counter(a=4, b=2, c=0, d=-2)
+           >>> d = Counter(a=1, b=2, c=3, d=4)
+           >>> c.subtract(d)
+           >>> c
+           Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
+         #+END_SRC
+
+    + update([iterable-or-mapping]) :: 从一个 *可迭代* 对象或一个 *映射* 对象中加上元素计数。
+
+         #+BEGIN_SRC python
+           >>> c = Counter(a=4, b=2, c=0, d=-2)
+           >>> d = Counter(a=1, b=2, c=3, d=4)
+           >>> c.update(d)
+           >>> c
+           Counter({'a': 5, 'b': 4, 'c': 3, 'd': 2})
+         #+END_SRC
+
+    + 数学计算 :: 
+              
+              #+BEGIN_SRC python
+                >>> c = Counter(a=3, b=1)
+                >>> d = Counter(a=1, b=2)
+                >>> c + d                       # add two counters together:  c[x] + d[x]
+                Counter({'a': 4, 'b': 3})
+                >>> c - d                       # subtract (keeping only positive counts)
+                Counter({'a': 2})
+                >>> c & d                       # intersection:  min(c[x], d[x])
+                Counter({'a': 1, 'b': 1})
+                >>> c | d                       # union:  max(c[x], d[x])
+                Counter({'a': 3, 'b': 2})
+
+                # Python3 还支持
+                >>> c = Counter(a=2, b=-4)
+                >>> +c
+                Counter({'a': 2})
+                >>> -c
+                Counter({'b': 4})
+              #+END_SRC
+
