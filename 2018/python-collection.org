@@ -1,0 +1,341 @@
+#+TITLE:      Python 容器
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-03-03 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#python2--python3][Python2 & Python3]]
+  - [[#counter][Counter]]
+    - [[#方法][方法]]
+  - [[#deque][deque]]
+    - [[#方法-1][方法]]
+    - [[#属性][属性]]
+  - [[#defaultdict][defaultdict]]
+  - [[#namedtuple][namedtuple]]
+  - [[#ordereddict][OrderedDict]]
+    - [[#方法-2][方法]]
+- [[#python3][Python3]]
+  - [[#chainmap][ChainMap]]
+    - [[#方法-3][方法]]
+    - [[#属性-1][属性]]
+  - [[#other][Other]]
+- [[#相关链接][相关链接]]
+
+* 简介
+  ~Python~ 的内置模块 ~collections~ 提供了通用内置容器 ~dict~, ~list~, ~set~, ~tuple~ 的替代方案。
+
+  ~Python2~ 和 ~Python3~ 在这个模块上具有一些区别， 所以后面的内容分为：
+  - ~Python2~ 和 ~Python3~ 都支持的容器类型
+  - ~Python3~ 支持的容器类型
+
+* Python2 & Python3
+** Counter
+   ~Counter~ 提供计数器以支持方便快捷的计数。
+
+   一个例子：
+   #+BEGIN_SRC python
+     >>> lst = [1, 2, 3, 4, 5, 6, 6, 6, 2, 1]
+     >>> Counter(lst)
+     Counter({6: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 1})
+   #+END_SRC
+
+   初始化 ~Counter~ 对象：
+   #+BEGIN_SRC python
+     >>> c = Counter()                       # 空的新容器
+     >>> c = Counter('abcdefg')              # 通过一个可迭代对象初始化
+     >>> c = Counter({'red': 4, 'blue': 2})  # 通过一个映射对象初始化
+     >>> c = Counter(boy=30, girl=8)         # 通过关键字参数初始化
+   #+END_SRC
+
+   和 ~dict~ 的一个不同：
+   #+BEGIN_SRC python
+     # 访问不存在的键时， 不是引发 KeyError, 而是返回一个 0 计数
+     >>> c = Counter(['girl', 'boy'])
+     >>> c
+     Counter({'boy': 1, 'girl': 1})
+     >>> c['nogirl']
+     0
+   #+END_SRC
+
+*** 方法
+    + elements() :: 返回计数器中的所有元素的 *迭代器*, 每个元素的重复次数和其计数相同。
+
+                    #+BEGIN_SRC python
+                      >>> c = Counter(a=4, b=2, c=0, d=-2)
+                      >>> list(c.elements())
+                      ['a', 'a', 'a', 'a', 'b', 'b']
+                    #+END_SRC
+
+    + most_common([n]) :: 列出出现次数最多的 ~n~ 个元素及其计数， 如果省略 ~n~, 便返回所有元素。
+
+         #+BEGIN_SRC python
+           >>> Counter('abracadabra').most_common(3)
+           [('a', 5), ('r', 2), ('b', 2)]
+         #+END_SRC
+
+    + substract([iterable-or-mapping]) :: 从一个 *可迭代* 对象或一个 *映射* 对象中减去元素计数。
+
+         #+BEGIN_SRC python
+           >>> c = Counter(a=4, b=2, c=0, d=-2)
+           >>> d = Counter(a=1, b=2, c=3, d=4)
+           >>> c.subtract(d)
+           >>> c
+           Counter({'a': 3, 'b': 0, 'c': -3, 'd': -6})
+         #+END_SRC
+
+    + update([iterable-or-mapping]) :: 从一个 *可迭代* 对象或一个 *映射* 对象中加上元素计数。
+
+         #+BEGIN_SRC python
+           >>> c = Counter(a=4, b=2, c=0, d=-2)
+           >>> d = Counter(a=1, b=2, c=3, d=4)
+           >>> c.update(d)
+           >>> c
+           Counter({'a': 5, 'b': 4, 'c': 3, 'd': 2})
+         #+END_SRC
+
+    + 数学运算 :: 
+              
+              #+BEGIN_SRC python
+                >>> c = Counter(a=3, b=1)
+                >>> d = Counter(a=1, b=2)
+                >>> c + d                       # add two counters together:  c[x] + d[x]
+                Counter({'a': 4, 'b': 3})
+                >>> c - d                       # subtract (keeping only positive counts)
+                Counter({'a': 2})
+                >>> c & d                       # intersection:  min(c[x], d[x])
+                Counter({'a': 1, 'b': 1})
+                >>> c | d                       # union:  max(c[x], d[x])
+                Counter({'a': 3, 'b': 2})
+
+                # Python3 还支持
+                >>> c = Counter(a=2, b=-4)
+                >>> +c
+                Counter({'a': 2})
+                >>> -c
+                Counter({'b': 4})
+              #+END_SRC
+
+** deque
+   ~deque~ 是提供快速追加和两端弹出的类列表容器。
+
+   初始化 ~deque~ 对象：
+   #+BEGIN_SRC python
+     # deque([iterable[, maxlen]]) --> deque object
+     # param: iterable --> 可迭代对象
+     # param: maxlen --> 定义 deque 的最大长度
+     # 如果 maxlen 为 None, deque 可增长到任意长度
+     # 如果 maxlen 不为 None, 在 deque 达到最大长度时， 添加元素的同时从对端删除相同数量的元素
+
+     >>> d = deque([1,2,3,4,5,6,7,8,9], maxlen=10)
+     >>> d.append(10)
+     >>> d
+     deque([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], maxlen=10)
+     >>> d.append(11)
+     >>> d
+     deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
+   #+END_SRC
+
+*** 方法
+    + append(x) :: 添加 ~x~ 到右端
+    
+    + appendleft(x) :: 添加 ~x~ 到左端
+
+    + clear() :: 移除所有元素使 ~deque~ 的长度为零
+
+    + copy() :: 创建一个 ~deque~ 的浅表副本
+
+    + count(x) :: 获取等于 ~x~ 的元素的个数
+
+    + extend(iterable) :: 使用可迭代对象的元素扩展 ~deque~ 的右端
+
+    + extendleft(iterable) ::  使用可迭代对象的元素扩展 ~deque~ 的左端
+
+    + index(x[, start[, stop]]) :: (/python3/) 返回 ~deque~ 中的 ~x~ 的位置（在索引开始处或索引停止之前）。
+         如果未找到， 引发 ~ValueError~
+
+    + insert(i, x) :: (/python3/) 在 ~i~ 处插入 ~x~, 如果 ~insert~ 将导致 ~deque~ 大长度超出 ~maxlen~, 将会引发 ~IndexError~.
+
+    + pop() :: 移除右端的一个元素， 如果 ~deque~ 为空， 引发 ~IndexError~
+
+    + popleft() :: 移除左端的一个元素， 如果 ~deque~ 为空， 引发 ~IndexError~
+
+    + remove(value) :: 移除第一个 ~value~, 如果不存在引发 ~ValueError~
+
+    + reversse() :: 翻转 ~deque~ 并返回 ~None~
+
+    + ronate(n=1) :: 根据指定的 ~step~ 向右翻转 ~deque~. 如果 ~n~ 为负数， 便向左翻转。
+
+                     注： ~n~ 不是关键字参数
+
+*** 属性
+    + maxlen :: 只读属性， 返回 ~maxlen~ 或 ~None~
+
+** defaultdict
+   ~defaultdict~ 是 ~dict~ 的一个子类， 覆盖了一个方法并添加了一个可写实例变量。
+
+   ~defaultdict~ 的第一个参数用来初始化 ~defaul_factory~, 其余参数和 ~dict~ 相同。
+
+   + 覆盖的方法： ~__missing__(key)~
+   
+     这个方法受添加的可写实例变量 ~default_factory~ 影响。
+
+     如果 ~default_factory~ 为 ~None~, 则这个方法的行为和 ~dict~ 中一样， 抛出 ~KeyError~.
+
+     如果 ~default_factory~ 不是 ~None~, 则在访问不存在的键时， 调用这个属性为给定键设置默认值。
+
+   + 新增实例属性： ~default_factory~
+     
+     这个属性通过构造函数的第一个参数初始化， 如果不存在， 便设为 ~None~.
+
+   + 使用例：
+     #+BEGIN_SRC python
+       >>> s = 'mississippi'
+       >>> d = defaultdict(int)
+       >>> for k in s:
+       ...     d[k] += 1  # dict 中会引发 KeyError
+       ...
+       >>> sorted(d.items())
+       [('i', 4), ('m', 1), ('p', 2), ('s', 4)]
+     #+END_SRC
+
+** namedtuple
+   ~namedtuple~ 是用于创建具有命名字段的元组子类的工厂函数。
+
+   使用这个函数有两个步骤：
+   1. 调用函数获取元组子类
+   2. 使用这个元组子类创建具有命名字段的元组
+
+   ~namedtuple~ 创建的元组子类向后兼容于 ~tuple~.
+
+   使用这个函数：
+   + *namedtuple(typename, field_names[, verbose=False][, rename=False])*
+
+     - ~typename~ 定义返回的元组子类的名称
+
+     - ~field_names~ 定义字段名， 是一个序列对象。
+
+       允许的格式：
+       1. 类似于 ~['x', 'y']~
+
+       2. 用空格或逗号分割字符串： 'x y' 或 'x, y'
+
+     - ~rename~ 如果为 ~True~, ~field_names~ 存在非法字段名时， 会自动重命名字段。
+
+       如： ~['abc', 'def', 'ghi', 'abc']~ --> ~['abc', '_1', 'ghi', '_3']~
+
+       其中， ~abc~ 为重复的字段名。
+
+     - ~verbose~ 如果为 ~True~, 在类的构建之前打印类的定义（感觉没什么用）
+
+   例子：
+   #+BEGIN_SRC python
+     >>> from collections import namedtuple
+     >>> human = namedtuple('human', 'name, age, sex')
+     >>> man = human(name='***', age='**', sex='♂')
+     >>> man
+     human(name='***', age='**', sex='♂')
+     >>> man.sex
+     '♂'
+     >>> man[2]
+     '♂'
+   #+END_SRC
+
+** OrderedDict
+   ~OrderedDict~ 和 ~Dict~ 不同的是， 它们会记住元素添加的顺序。
+
+   ~OrderedDict~ 的初始化和 ~Dict~ 的初始化是相同的， 但是会记住键的首次插入的顺序。
+
+   如果键的值被修改， 它的顺序不会被改变。
+
+*** 方法
+    + popitem(last=True) :: 如果 ~last~ 为 ~True~, 返回最后的键值对。 如果 ~last~ 为 ~False~, 返回最前的键值对
+    
+    + move_to_end(key, last=True) :: (/python3/) 如果 ~last~ 为 ~True~, 将现有键移动到最后。 荣誉感 ~last~ 为 ~False~, 将现有键移动到最前。
+         如果键不存在， 引发 ~KeyError~
+
+         #+BEGIN_SRC python
+           >>> d = OrderedDict.fromkeys('abcde')
+           >>> d.move_to_end('b')
+           >>> ''.join(d.keys())
+           'acdeb'
+           >>> d.move_to_end('b', last=False)
+           >>> ''.join(d.keys())
+           'bacde'
+         #+END_SRC
+
+* Python3
+** ChainMap
+   ~ChainMap~ 可以将多个 ~dict~ 或其他映射组合在一起， 这比使用 ~update~ 来的快。
+
+   ~ChainMap~ 初始化：
+   #+BEGIN_SRC python
+     # ChainMap(*maps)
+     # param: maps 多个映射
+
+     >>> m1 = dict(a=1)
+     >>> m2 = dict(b=2)
+     >>> c = ChainMap(m1, m2)
+     >>> c
+     ChainMap({'a': 1}, {'b': 2})
+   #+END_SRC
+   
+   使用例：
+   #+BEGIN_SRC python
+     >>> c = ChainMap(dict(m=10))
+     >>> c
+     ChainMap({'m': 10})
+     >>> d = dict(t=4)
+     >>> c = c.new_child(d)
+     >>> c
+     ChainMap({'t': 4}, {'m': 10})
+     >>> c['t']  # 访问元素
+     4
+     >>> c.maps
+     [{'t': 4}, {'m': 10}]
+     >>> c.parents
+     ChainMap({'m': 10})
+     >>> c = c.new_child(dict(m=1))
+     >>> c
+     ChainMap({'m': 1}, {'t': 4}, {'m': 10})
+     >>> c['m']
+     1
+   #+END_SRC
+
+*** 方法
+    + new_child(m=None) :: 创建一个包含新的 ~map~ 的新 ~ChainMap~. 如果未指定 ~m~, 则新的 ~map~ 为一个空的 ~map~.
+         指定 ~m~ 将这个 ~m~ 作为新的 ~map~.
+
+         #+BEGIN_SRC python
+           >>> c = ChainMap(dict(m=10))
+           >>> c
+           ChainMap({'m': 10})
+           >>> c = c.new_child()
+           >>> c
+           ChainMap({}, {'m': 10})
+           >>> c = c.new_child(dict(t=4))
+           >>> c
+           ChainMap({'t': 4}, {}, {'m': 10})
+         #+END_SRC
+
+*** 属性
+    + maps :: 可更新的映射列表
+
+              #+BEGIN_SRC python
+                >>> c.maps
+                [{'t': 4}, {}, {'m': 10}]
+              #+END_SRC
+
+    + parents :: 等价于 ~ChainMap(*d.maps[1:])~, 返回一个新的 ~ChainMap~ 对象
+
+** Other
+   除了前面的， 还有三个容器： ~UserDict~, ~UserList~, ~UserString~.
+
+   这三个容器分别对 ~Dict~, ~List~, ~String~ 进行了封装， 更方便的创建 ~Dict~, ~List~, ~String~ 的子类。
+
+   如果需要创建自己的 ~Dict~, ~List~, ~String~, 可以考虑从继这三个容器继承。
+
+* 相关链接
+  + [[https://docs.python.org/2/library/collections.html][Python2 collections]]
+  + [[https://docs.python.org/3/library/collections.html][Python3 collections]]
+
