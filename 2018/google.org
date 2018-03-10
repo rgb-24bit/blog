@@ -51,19 +51,11 @@
    + define: :: 搜索关键词的定义， 如： ~define:鬼畜~
    + filetype: :: 搜索指定的文件类型(等价于 ~ext:~)， 如： ~filetype:flv~
    + intitle: :: 搜索标题包含关键词的网页， 如： ~intitle:bi~
-                 
-                 *allintitle:* 限定多个关键词， 如： ~allintitle:123 456~
-                 
+   + allintitle: :: 类似 ~intitle:~, 限定多个关键词， 如： ~allintitle:123 456~
    + inurl: :: 搜索 ~url~ 中含指定关键词的网页， 如： ~inurl:kkk~
-
-               *allinurl:* 限定多个关键词， 如： ~allinurl:123 456~
-
-   + inanchor: :: 搜索页面链接锚文本中含指定关键词的网页， 如： ~inanchor:测试~
-
-                  *HTML锚点：* ~#~ 开头的页内链接
-
-                  *allinanchor:* 限定多个关键词， 如： ~allinanchor:123 456~
-                  
+   + allinurl: :: 类似 ~inurl:~, 限定多个关键词， 如： ~allinurl:123 456~
+   + inanchor: :: 搜索 页面链接锚(~#~ 开头的页内链接) 文本中含指定关键词的网页， 如： ~inanchor:测试~
+   + allinanchor: :: 类似 ~inanchor:~, 限定多个关键词， 如： ~allinanchor:123 456~
    + intext: :: 搜索正文文本中含指定关键词的网页， 如： ~intext:1234567890~
    + site: :: 搜索特定网站， 如： ~site:youtube.com~
    + link: :: 搜索链向某网站/网址的网页， 如： ~link:www.google.com~
