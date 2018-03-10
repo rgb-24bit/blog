@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - 2018
+  - [[file:2018/google.org][Google 搜索]]
   - [[file:2018/python-collection.org][Python 容器]]
   - [[file:2018/python-coding.org][Python 编码问题]]
   - [[file:2018/python-format-string.org][Python 格式化字符串]]

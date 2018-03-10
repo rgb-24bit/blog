@@ -1,0 +1,78 @@
+#+TITLE:      Google 搜索
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-03-10 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#google-搜索][Google 搜索]]
+- [[#快速获得解答][快速获得解答]]
+- [[#搜索运算符][搜索运算符]]
+  - [[#搜索符号][搜索符号]]
+  - [[#搜索字词][搜索字词]]
+- [[#参考链接][参考链接]]
+
+* Google 搜索
+  谷歌是世界上最好的搜索引擎， 然而因为一些原因， 在国内的使用并不方便。
+
+  如果有能力的话， 可以直接使用谷歌搜索：
+  + [[https://www.google.com/webhp][谷歌搜索]]
+
+  当然， 也可以使用镜像：
+  + [[https://google.jiongjun.cc/][谷歌镜像站]]
+
+  同时， 如果掌握一些搜索技巧的话， 也会有很多帮助。
+
+* 快速获得解答
+  Google 可以在搜索结果页上直接给出某些搜索字词的相关解答
+
+  + *天气：* 搜索 ~天气~ 可查看所在地点的天气信息，如果在 ~天气~ 后加上城市名(如 ~天气北京~)， 则可查看相应城市的天气信息
+  + *字典：* 在任意字词前加上 ~定义~ 即可查询其定义， 如 ~定义谷歌~
+  + *计算：* 输入数学公式(例如 ~3*9123~)或求解复杂的图形公式
+  + *单位换算：* 输入任何换算内容，例如 ~3 美元 人民币~
+  + *颜色代码：* 输入一个颜色代码可直接显示对应颜色， 如 ~#FFFFFF~
+  + *基本信息：* 搜索名人、地点、电影或歌曲的名称即可看到相关信息
+
+* 搜索运算符
+  使用搜索运算符需要注意的是：
+  + Google 搜索通常会忽略不属于搜索运算符的标点符号
+  + 不要在符号/字词和搜索字词之间加上空格。 例如， ~site:nytimes.com~ 可以正常发挥作用，但 ~site: nytimes.com~ 则不行
+  
+** 搜索符号
+   + 逻辑与 + :: 包含后面的字词， 如： ~测试 +测试~
+   + 逻辑非 - :: 排除后面的字词， 如： ~游戏 -小游戏~
+   + 逻辑或 | :: 包含任意一个字词， 如： ~游戏 |作业~
+   + 通配符 * :: 匹配任意字词， 如： ~单*~
+   + 完全匹配 "" :: 完全匹配引起来的字词， 如： "游戏4576"
+   + 数字范围 .. :: 在指定范围搜索， 如： ~200..100~
+   + 价格 $ :: 搜索指定价格， 如： ~$10..$20~
+
+** 搜索字词
+   + OR :: 逻辑或， 同 ~|~
+   + define: :: 搜索关键词的定义， 如： ~define:鬼畜~
+   + filetype: :: 搜索指定的文件类型(等价于 ~ext:~)， 如： ~filetype:flv~
+   + intitle: :: 搜索标题包含关键词的网页， 如： ~intitle:bi~
+                 
+                 *allintitle:* 限定多个关键词， 如： ~allintitle:123 456~
+                 
+   + inurl: :: 搜索 ~url~ 中含指定关键词的网页， 如： ~inurl:kkk~
+
+               *allinurl:* 限定多个关键词， 如： ~allinurl:123 456~
+
+   + inanchor: :: 搜索页面链接锚文本中含指定关键词的网页， 如： ~inanchor:测试~
+
+                  *HTML锚点：* ~#~ 开头的页内链接
+
+                  *allinanchor:* 限定多个关键词， 如： ~allinanchor:123 456~
+                  
+   + intext: :: 搜索正文文本中含指定关键词的网页， 如： ~intext:1234567890~
+   + site: :: 搜索特定网站， 如： ~site:youtube.com~
+   + link: :: 搜索链向某网站/网址的网页， 如： ~link:www.google.com~
+   + related: :: 搜索相关网站， 如： ~related:www.google.com~
+   + info: :: 获取网站详情， 如： ~related:time.com~
+   + cache: :: 查看网站的 Google 缓存版本， 如： ~cache:time.org~
+
+* 参考链接
+  + [[https://support.google.com/websearch/answer/134479?hl=zh-Hans&ref_topic=3081620][Google 搜索帮助]]
+  + [[http://blog.jobbole.com/72211/][这些 Google 高级搜索技巧，你都知道么？]]
+  + [[https://sites.google.com/site/zzllrr/google-search-tips][谷歌搜索技巧Google Search Tips（终极整理Ultimate Version）]]
+
