@@ -1,4 +1,4 @@
-#+TITLE:      C99宽字符及本地化支持
+#+TITLE:      C99 宽字符
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2017-12-26 周二>

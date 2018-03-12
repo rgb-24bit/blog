@@ -16,5 +16,5 @@
   - [[file:2018/regex.org][正则表达式]]
   - [[file:2018/sqllocaldb和sqlcmd.org][sqllocaldb和sqlcmd]]
 - 2017
-  - [[file:2017/org-mode搭建GTD系统.org][org-mode搭建GTD系统]]
-  - [[file:2017/C99宽字符及本地化设置.org][C99宽字符及本地化支持]]
+  - [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]]
+  - [[file:2017/c99-wchar.org][C99 宽字符]]
