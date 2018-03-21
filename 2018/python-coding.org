@@ -9,6 +9,7 @@
 - [[#python2][Python2]]
 - [[#python3][Python3]]
 - [[#编写程序][编写程序]]
+- [[#代码样例][代码样例]]
 - [[#参考链接][参考链接]]
 
 * Unicode & UTF-8
@@ -118,6 +119,59 @@
   1. ~Unicode~ 三明治： 尽可能的让程序处理的文本都为 ~Unicode~
   2. 了解程序中的字符串， 哪些是 ~unicode~, 哪些是 ~byte~, 对于这些 ~byte~ 串，知道他们的编码是什么
   3. 测试 ~Unicode~ 支持。使用一些奇怪的符号来测试是否已经做到了以上几点
+
+* 代码样例
+  在阅读 [[https://github.com/webpy/webpy][webpy]] 源码的过程中， 返现了在 ~utils.py~ 中的一段处理这个问题的代码， 感觉很有用：
+  
+  #+BEGIN_SRC python
+    def safeunicode(obj, encoding='utf-8'):
+        r"""
+        Converts any given object to unicode string.
+    
+            >>> safeunicode('hello')
+            u'hello'
+            >>> safeunicode(2)
+            u'2'
+            >>> safeunicode('\xe1\x88\xb4')
+            u'\u1234'
+        """
+        t = type(obj)
+        if t is text_type:
+            return obj
+        elif t is bytes:
+            return obj.decode(encoding)
+        elif t in [int, float, bool]:
+            return unicode(obj)
+        #elif hasattr(obj, '__unicode__') or isinstance(obj, unicode):
+        #    return unicode(obj)
+        #else:
+        #    return str(obj).decode(encoding)
+        else:
+            return unicode(obj)
+
+    def safestr(obj, encoding='utf-8'):
+        r"""
+        Converts any given object to utf-8 encoded string. 
+    
+            >>> safestr('hello')
+            'hello'
+            >>> safestr(2)
+            '2'
+        """
+
+        if PY2 and isinstance(obj, unicode):
+            return obj.encode(encoding)
+        elif is_iter(obj):
+            return imap(safestr, obj)
+        else:
+            return str(obj)
+
+    if not PY2:
+        #Since Python3, utf-8 encoded strings and unicode strings are the same thing
+        safeunicode = safestr
+  #+END_SRC
+
+  笔记链接： [[https://github.com/rgb-24bit/read-source-code/blob/master/webpy/utils.org#function-safeunicode][function safeunicode]]
 
 * 参考链接
   - [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html][unicode 之痛]] - 推荐
