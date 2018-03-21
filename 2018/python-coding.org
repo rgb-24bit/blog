@@ -121,7 +121,7 @@
   3. 测试 ~Unicode~ 支持。使用一些奇怪的符号来测试是否已经做到了以上几点
 
 * 代码样例
-  在阅读 [[https://github.com/webpy/webpy][webpy]] 源码的过程中， 返现了在 ~utils.py~ 中的一段处理这个问题的代码， 感觉很有用：
+  在阅读 [[https://github.com/webpy/webpy][webpy]] 源码的过程中， 发现了在 ~utils.py~ 中的一段处理这个问题的代码， 感觉很有用：
   
   #+BEGIN_SRC python
     def safeunicode(obj, encoding='utf-8'):
