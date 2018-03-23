@@ -9,6 +9,7 @@
   - [[#可迭代对象相关][可迭代对象相关]]
   - [[#进制和编码转化][进制和编码转化]]
   - [[#类和属性相关][类和属性相关]]
+  - [[#其他内置函数][其他内置函数]]
 
 * 内置函数
   ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
@@ -251,5 +252,31 @@
 
    + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
     
-    
-    
+** 其他内置函数
+   + type(object) ::
+   
+   + type(name, bases, dict) :: ~type~ 可以用来获取对象的类型或用来创建类。
+
+        其中， 类似 ~type(dict)~ 的结果就是 ~type~, ~dict~ 等的实例的类型才是 ~dict~.
+
+        这里可以看出来， ~dict~ 这些内置类型其实就是 ~type~ 的实例。
+
+        用 ~type~ 创建类可以通过这样的方式：
+        #+BEGIN_SRC python
+          X = type('X', (object,), dict(a=1))
+
+          # 'X' 是这个类的名称
+          # (object, ) 是这个类继承的类， 由于 python 支持多重继承， 所以这个参数应该是一个 tuple
+          # dict(a=1) 是这个类的 属性-值 字典
+
+          # 等价于
+          class X:
+              a = 1
+        #+END_SRC
+
+   + isinstance(object, classinfo) :: 判断一个 ~object~ 的类型是否属于 ~classinfo~.
+
+        其中， ~classinfo~ 可以是 ~class~, ~type~, ~tuple~. ~tuple~ 可以包含多个 ~class~ 或 ~type~ 用于判断。
+
+        可以通过 ~type(object) is type~ 的方式达到类似效果。
+
