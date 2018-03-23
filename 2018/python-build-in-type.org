@@ -1,0 +1,187 @@
+#+TITLE:      Python 内置类型
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-03-23 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#bool][bool]]
+- [[#数值类型][数值类型]]
+  - [[#方法][方法]]
+- [[#序列类型][序列类型]]
+- [[#文本序列类型][文本序列类型]]
+- [[#集合类型][集合类型]]
+- [[#映射类型][映射类型]]
+- [[#参考链接][参考链接]]
+
+* 简介
+  这篇博客是对 ~Python~ 内置类型的简单汇总， 省略了很多内容。
+  
+  部分内容会在以后逐渐补充， 如果需要详细了解， 请看 [[#参考链接][官方文档]]
+
+* bool
+  ~Python~ 中， ~bool~ 类型属于 ~int~ 的子类， 只存在 ~True~ 和 ~False~ 这两个实例。
+
+  ~Python2~ 中可以对 ~True~ 或 ~False~ 赋值搞出 ~True = False~ 的操作， 这一点在 ~Python3~ 中得到
+  了修改。
+
+  知道在什么情况下 ~bool~ 判断为 ~False~ 是很有用的：
+  - ~None~
+  - ~False~
+  - 任何数值类型的零
+  - 任何空序列
+  - 任何空映射
+
+  对于比较操作符， 我觉得需要注意的是： ~is not~.
+
+  初学的时候， 经常写成 ~not is~ 出错。
+
+* 数值类型
+  ~Python~ 的数值类型有 ~int~, ~float~, ~complex~. 其中， ~complex~ 是复数， ~Python~ 默认就支持
+  复数运算。 另外， ~Python2~ 还有一个 ~long~ 类型。
+  
+  对于数值类型， 有一些通用的操作， 如 ~+~, ~-~, ~*~, ~/~ 等。
+
+  详细了解可以看一下文档： [[https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex][Numeric Types — int, float, complex]]
+
+  这里列举出需要注意的一点：
+  + 除法 ~/~: ~Python2~ 中的除法默认是地板除， 而在 ~Python3~ 中地板除是 ~//~. 当然， ~Python2~
+    中也可以使用 ~//~, 但是这和 ~/~ 没有区别。 如果想要 ~Python2~ 中的除法和 ~Python3~ 中的
+    行为保持一致， 可以：
+    
+    #+BEGIN_SRC python
+      from __future__ import division
+    #+END_SRC
+
+  另外， ~int~ 类型是支持位运算的。
+
+** 方法
+   + int.bit_length() :: 返回整数的二进制长度。
+
+   + int.to_bytes(length, byteorder, *, signed=False) :: (~Python3~) 返回表示整数的字节数组。
+        效果和 ~hex(x)~ 有点像， 但更高级
+
+   + int.from_bytes(bytes, byteorder, *, signed=False) :: (~Python3~) 返回给定字节数组所表示的整数。
+
+   + float.as_integer_ratio() :: 返回一对整数，其比例与原始浮点数完全相等，并带有一个正的分母。
+
+        #+BEGIN_SRC python
+          >>> x = 3.3
+          >>> x.as_integer_ratio()
+          (3715469692580659L, 1125899906842624L)
+        #+END_SRC
+
+   + float.is_integer() :: 如果小数点后全是 ~0~, 返回 ~True~, 否则返回 ~False~
+
+   + float.hex() :: 将浮点数的表示形式返回为十六进制字符串。
+
+   + float.fromhex(s) :: 返回由十六进制字符串 ~s~ 表示的 ~float~.
+        
+        字符串格式： ~[sign] ['0x'] integer ['.' fraction] ['p' exponent]~
+
+* 序列类型
+  从这里开始， ~Python2~ 和 ~Python3~ 的文档就存在明显的差异了。这里
+  采取 ~Python3~ 的类型划分。
+  
+  序列类型有： ~list~, ~tuple~, ~range~. 当然了， ~Python2~ 应该是 ~xrange~.
+
+  其中， ~tuple~ 属于不可变序列类型， 即不能进行修改。
+
+  对于序列类型来说， 它们都拥有一定数量的方法， 具有一些很强大的功能。
+ 
+  比如对 *切片* 操作的支持， 可以说这些功能足够满足我们的基本需求。
+
+  鉴于各个类型的方法数量， 如果想要了解的话， 建议 ~help(type)~. 这里就不多说了。
+
+  但是， 还是有几个地方需要注意以下：
+  + sort(*, key=None, reverse=False) :: ~Python2~ 还有一个 ~cmp~ 参数， 这个参数
+       在 ~Python3~ 已经被废除了， 可以的话， 就不用 ~cmp~ 参数了。
+
+       另外， ~sort()~ 是没有返回值的， 如果想当然的希望 ~list.sort()~ 返回排序后的列表
+       的话， 你将得到一个 ~None~. 
+
+       对此， 建议使用内置函数 ~sorted~.
+
+  + 切片 :: 可以通过切片来转置序列， ~x[::-1]~ 即可。以前我是 ~x[-1::-1]~ 这样操作的......
+
+* 文本序列类型
+  万恶之源 ~str~. ~Python2~ 和 ~Python3~ 的不兼容相当难受。
+
+  但是， 依然需要记清楚：
+  + ~Python2 str~ 是 ~bytes~
+  + ~Python3 str~ 是 ~unicode~
+
+  除此之外， ~bytes~ 和 ~str~ 的方法基本相同。
+
+  但是需要注意的一点： 由于在 ~Python2~ 中同时操作 ~unicode~ 和 ~bytes~ 会对
+  ~bytes~ 进行隐式的 ~decode~ 操作。 这就导致当字符串只存在 ~ASCII~ 字符时，
+  ~Python2~ 中的字符串就像同时存在 ~encode~ 和 ~decode~ 的方法一样。 但是这只是
+  ~Python2~ 自动帮你完成了 ~decode~ 的操作。
+
+  而 ~Python3~ 中是不允许同时操作 ~unicode~ 和 ~bytes~ 的， 所以， 要明白：
+  + ~bytes~ 有 ~decode~ 方法
+  + ~unicode~ 有 ~encode~ 方法
+
+* 集合类型
+  ~Python~ 中的集合类型有 ~set~ 和 ~frozenset~ 两种。
+
+  其中， ~frozenset~ 是 ~set~ 的不可变类型。
+
+  对于 ~set~, 我觉的用代码来说明是最合适的：
+  #+BEGIN_SRC python
+    # 定义 set
+    >>> x = set([1,2,2,3,4,5,5,6])
+    >>> y = {1, 2, 3, 7, 9, 10}
+
+
+    # set 会自动过滤重复的元素
+    >>> x
+    set([1, 2, 3, 4, 5, 6])
+    >>> y
+    set([1, 2, 3, 7, 9, 10])
+
+
+    # 需要注意的是 {} 是 dict 而不是 set, 如果要创建空 set 应该使用 set()
+    >>> z = {}
+    >>> type(z)
+    <type 'dict'>
+
+
+    # set 支持常用的集合运算
+    >>> x & y               # 交集
+    set([1, 2, 3])
+
+    >>> x | y               # 并集
+    set([1, 2, 3, 4, 5, 6, 7, 9, 10])
+
+    >>> x - y               # 差集
+    set([4, 5, 6])
+
+    >>> x ^ y               # 对称差集
+    set([4, 5, 6, 7, 9, 10])
+  #+END_SRC
+* 映射类型
+  ~Python~ 的映射类型无疑是 ~dict~ 了。
+
+  #+BEGIN_SRC python
+    >>> help(dict)
+    Help on class dict in module __builtin__:
+
+    class dict(object)
+     |  dict() -> new empty dictionary
+     |  dict(mapping) -> new dictionary initialized from a mapping object's
+     |      (key, value) pairs
+     |  dict(iterable) -> new dictionary initialized as if via:
+     |      d = {}
+     |      for k, v in iterable:
+     |          d[k] = v
+     |  dict(**kwargs) -> new dictionary initialized with the name=value pairs
+     |      in the keyword argument list.  For example:  dict(one=1, two=2)
+  #+END_SRC
+
+  对于 ~dict~, ~help~ 已说明了一切 ！
+
+* 参考链接
+  + [[https://docs.python.org/3/library/stdtypes.html][Python3]]
+  + [[https://docs.python.org/2.7/library/stdtypes.html][Python2]]
+

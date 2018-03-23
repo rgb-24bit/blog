@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - 2018
+  - [[file:2018/python-build-in-type.org][Python 内置类型]]
   - [[file:2018/glob.org][glob]]
   - [[file:2018/google.org][Google 搜索]]
   - [[file:2018/python-collection.org][Python 容器]]
