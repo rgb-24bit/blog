@@ -1,4 +1,4 @@
-#+TITLE:      glob
+#+TITLE:      Glob 语法及解析
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-03-20 周二>

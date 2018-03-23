@@ -4,7 +4,7 @@
 
 - 2018
   - [[file:2018/python-build-in-type.org][Python 内置类型]]
-  - [[file:2018/glob.org][glob]]
+  - [[file:2018/glob.org][Glob 语法及解析]]
   - [[file:2018/google.org][Google 搜索]]
   - [[file:2018/python-collection.org][Python 容器]]
   - [[file:2018/python-coding.org][Python 编码问题]]
@@ -16,7 +16,7 @@
   - [[file:2018/pipenv.org][Pipenv 的使用]]
   - [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]]
   - [[file:2018/regex.org][正则表达式]]
-  - [[file:2018/sqllocaldb和sqlcmd.org][sqllocaldb和sqlcmd]]
+  - [[file:2018/sqllocaldb-sqlcmd.org][SqlLocalDB 和 Sqlcmd]]
 - 2017
   - [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]]
   - [[file:2017/c99-wchar.org][C99 宽字符]]
