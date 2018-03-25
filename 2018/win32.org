@@ -65,7 +65,7 @@
      - *DWORD_PTR*
      - *INT_PTR*
      - *LONG_PTR*
-     *- ULONG_PTR*
+     - *ULONG_PTR*
      - *UINT_PTR*
 
 ** 匈牙利命名法
