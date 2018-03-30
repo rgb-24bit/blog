@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - 2018
+  - [[file:2018/git-base.org][03-30 Git 基础使用]]
   - [[file:2018/win32.org][03-25 Win32 API 窗口程序]]
   - [[file:2018/python-build-in-type.org][03-23 Python 内置类型]]
   - [[file:2018/glob.org][03-20 Glob 语法及解析]]
