@@ -97,12 +97,28 @@
         ~Python2~ 返回结果列表， ~Python3~ 返回迭代器， 如果要得到和 ~Python2~ 相同的结果，
         应该这样： ~list(map(x))~.
 
+        ~Python2~ 的 ~functools~ 模块存在 ~imap~, 和 ~Python3~ 的 ~map~ 效果相同. 
+
    + reduce(function, iterable[, initializer]) :: ~reduce~ 把一个函数作用在一个序列 ~[x1, x2, x3, ...]~ 上，
         这个函数必须接收两个参数， ~reduce~ 把结果继续和序列的下一个元素做累积计算。
 
         ~Python3~ 使用需要： ~from functools import reduce~
 
-   + iter(object[, sentinel]) :: 返回一个迭代器对象。
+   + iter(object[, sentinel]) :: 返回一个迭代器对象。 
+        #+BEGIN_SRC python
+          >>> s = '123'                      
+          >>> iter_s = iter(s)                  
+          >>> next(iter_s)                      
+          '1'                                   
+          >>> next(iter_s)                      
+          '2'                                   
+          >>> next(iter_s)                      
+          '3'                                   
+          >>> next(iter_s)                      
+          Traceback (most recent call last):    
+            File "<stdin>", line 1, in <module> 
+          StopIteration                         
+        #+END_SRC
 
    + len(s) :: 返回 ~s~ 的长度。
 
@@ -113,11 +129,11 @@
    + min(...) :: 参数同 ~max~, 返回最小值。
 
    + next(iterable[, default]) :: 调用 ~__next__()~ 方法获取下一个元素， 如果提供 ~default~,
-        那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。
+        那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。 对于 ~Python2~ 调用的是 ~next()~ 方法。
 
    + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
 
-   + reversed(seq) :: 反转序列。
+   + reversed(seq) :: 返回一个 *反向迭代器*.
 
    + slice(stop) ::
 
