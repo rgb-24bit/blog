@@ -3,22 +3,22 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018* 
-  - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] :: :smiley:
+  - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] ::
   - 03-25 -- [[file:2018/win32.org][Win32 API 窗口程序]] ::
   - 03-23 -- [[file:2018/python-build-in-type.org][Python 内置类型]] ::
   - 03-20 -- [[file:2018/glob.org][Glob 语法及解析]] ::
   - 03-10 -- [[file:2018/google.org][Google 搜索]] ::
   - 03-03 -- [[file:2018/python-collection.org][Python 容器]] ::
   - 02-26 -- [[file:2018/python-coding.org][Python 编码问题]] ::
-  - 02-21 -- [[file:2018/python-format-string.org][02-21 Python 格式化字符串]] ::
-  - 02-18 -- [[file:2018/python-build-in-exception.org][02-18 Python 内置异常]] ::
-  - 02-14 -- [[file:2018/python-build-in-function.org][02-14 Python 内置函数]] ::
-  - 02-10 -- [[file:2018/python-urllib.org][02-10 Python urllib]] ::
-  - 02-06 -- [[file:2018/blockchain.org][02-06 区块链的简单尝试]] ::
-  - 02-02 -- [[file:2018/pipenv.org][02-02 Pipenv 的使用]] ::
-  - 01-23 -- [[file:2018/python2.5-2.7.org][01-23 Python2.5-2.7的版本变化]] ::
-  - 01-04 -- [[file:2018/regex.org][01-04 正则表达式]] ::
-  - 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][01-04 SqlLocalDB 和 Sqlcmd]] ::
+  - 02-21 -- [[file:2018/python-format-string.org][Python 格式化字符串]] ::
+  - 02-18 -- [[file:2018/python-build-in-exception.org][Python 内置异常]] ::
+  - 02-14 -- [[file:2018/python-build-in-function.org][Python 内置函数]] ::
+  - 02-10 -- [[file:2018/python-urllib.org][Python urllib]] ::
+  - 02-06 -- [[file:2018/blockchain.org][区块链的简单尝试]] ::
+  - 02-02 -- [[file:2018/pipenv.org][Pipenv 的使用]] ::
+  - 01-23 -- [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]] ::
+  - 01-04 -- [[file:2018/regex.org][正则表达式]] ::
+  - 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][SqlLocalDB 和 Sqlcmd]] ::
 - 2017
-  - 12-27 -- [[file:2017/org-gtd.org][12-27 Emacs Org 搭建 GTD 系统]] ::
-  - 12-26 -- [[file:2017/c99-wchar.org][12-26 C99 宽字符]] ::
+  - 12-27 -- [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]] ::
+  - 12-26 -- [[file:2017/c99-wchar.org][C99 宽字符]] ::
