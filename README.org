@@ -2,23 +2,23 @@
 #+AUTHOR:     rgb_24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
-- 2018
-  - [[file:2018/git-base.org][03-30 Git 基础使用]]
-  - [[file:2018/win32.org][03-25 Win32 API 窗口程序]]
-  - [[file:2018/python-build-in-type.org][03-23 Python 内置类型]]
-  - [[file:2018/glob.org][03-20 Glob 语法及解析]]
-  - [[file:2018/google.org][03-10 Google 搜索]]
-  - [[file:2018/python-collection.org][03-03 Python 容器]]
-  - [[file:2018/python-coding.org][02-26 Python 编码问题]]
-  - [[file:2018/python-format-string.org][02-21 Python 格式化字符串]]
-  - [[file:2018/python-build-in-exception.org][02-18 Python 内置异常]]
-  - [[file:2018/python-build-in-function.org][02-14 Python 内置函数]]
-  - [[file:2018/python-urllib.org][02-10 Python urllib]]
-  - [[file:2018/blockchain.org][02-06 区块链的简单尝试]]
-  - [[file:2018/pipenv.org][02-02 Pipenv 的使用]]
-  - [[file:2018/python2.5-2.7.org][01-23 Python2.5-2.7的版本变化]]
-  - [[file:2018/regex.org][01-04 正则表达式]]
-  - [[file:2018/sqllocaldb-sqlcmd.org][01-04 SqlLocalDB 和 Sqlcmd]]
+- *2018* 
+  - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] :: Git-Book 前三章内容的简单记录
+  - 03-25 -- [[file:2018/win32.org][Win32 API 窗口程序]] :: 使用 Win32 API 编写窗口程序
+  - 03-23 -- [[file:2018/python-build-in-type.org][Python 内置类型]] :: Python 常用内置类型笔记
+  - 03-20 -- [[file:2018/glob.org][Glob 语法及解析]] :: Glob 的语法规则和解析
+  - 03-10 -- [[file:2018/google.org][Google 搜索]] :: Google 搜索技巧
+  - 03-03 -- [[file:2018/python-collection.org][Python 容器]] :: Python collections 模块
+  - 02-26 -- [[file:2018/python-coding.org][Python 编码问题]] :: Python 编码问题处理的笔记
+  - 02-21 -- [[file:2018/python-format-string.org][02-21 Python 格式化字符串]] :: Python 的格式字符串使用
+  - 02-18 -- [[file:2018/python-build-in-exception.org][02-18 Python 内置异常]] :: Python 的常用异常及所有内置异常
+  - 02-14 -- [[file:2018/python-build-in-function.org][02-14 Python 内置函数]] :: Python 内置函数的笔记
+  - 02-10 -- [[file:2018/python-urllib.org][02-10 Python urllib]] :: Python urllib 模块的使用
+  - 02-06 -- [[file:2018/blockchain.org][02-06 区块链的简单尝试]] :: 区块链的简单尝试
+  - 02-02 -- [[file:2018/pipenv.org][02-02 Pipenv 的使用]] :: Python Pipenv 工具的使用
+  - 01-23 -- [[file:2018/python2.5-2.7.org][01-23 Python2.5-2.7的版本变化]] :: Python 2.5 到 2.7 的主要版本变化
+  - 01-04 -- [[file:2018/regex.org][01-04 正则表达式]] :: 正则表达式语法笔记
+  - 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][01-04 SqlLocalDB 和 Sqlcmd]] :: SqlLocalDB 和 Sqlcmd 的安装与使用
 - 2017
-  - [[file:2017/org-gtd.org][12-27 Emacs Org 搭建 GTD 系统]]
-  - [[file:2017/c99-wchar.org][12-26 C99 宽字符]]
+  - 12-27 -- [[file:2017/org-gtd.org][12-27 Emacs Org 搭建 GTD 系统]] :: 使用 Emacs Org-mode 搭建自己的 GTD 系统
+  - 12-26 -- [[file:2017/c99-wchar.org][12-26 C99 宽字符]] :: C99 宽字符的使用
