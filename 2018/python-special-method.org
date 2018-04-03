@@ -12,24 +12,21 @@
 - [[#类型转化][类型转化]]
 - [[#表现类][表现类]]
 - [[#属性访问控制][属性访问控制]]
+- [[#创建定制的序列][创建定制的序列]]
+- [[#反射][反射]]
+- [[#可以调用的对象][可以调用的对象]]
+- [[#上下文管理器][上下文管理器]]
+- [[#更多的方法][更多的方法]]
 - [[#参考链接][参考链接]]
 
 * 简介
-  在 ~Python~ 中， 对一个对象的所有操作基本上都是可以由自己定义的。
+  在 ~Python~ 中， 你可以通过定义一些特殊的方法来控制一个对象的行为。
 
-  这一点的实现离不开 *魔法方法*.
+  这些方法的名字常用名为 *魔法方法* 或 *魔术方法*.
 
-  通过魔法方法可以控制对对象的各种操作， 如 *四则运算*, *迭代*, *属性的设置与删除* 等.
-
-  然而， 关于这些方法的官方文档在我看来不是很友好， 特别是对于我这种英语不是很好的：
-
-  + [[https://docs.python.org/2.7/reference/datamodel.html#special-method-names][Special method names]]
-
-  当然了， 网上也有很好的教程：
-
-  + [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html][Python 魔术方法指南]]
-
-  这篇博客主要借鉴这篇指南， 然后添加部分自己的理解， 方便需要的时候查阅。
+  当然了， 官方文档的名字更加直接， 叫做 *Special method*.
+  
+  这篇博客主要借鉴 [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html][Python 魔术方法指南]] 对 *部分* 魔法方法进行总结。
 
 * 构造和初始化
   ~Python~ 一个对象实例化到销毁调用的方法的顺序是：
@@ -59,7 +56,7 @@
   #+END_SRC
 
 * 比较和数值运算
-  ~Python~ 中的运算和比较也是通过对 *魔法方法* 的定义来实现的， 比如有趣的一点：
+  一个有趣的例子：
   #+BEGIN_SRC python
     # one list
     >>> l = [0]
@@ -82,8 +79,6 @@
 
   当时我很疑惑， 有大佬给出了解答：
   ~l + t~ 对应的是 ~l.__add__(t)~ ，而 ~l += t~ 对应的是 ~l.__iadd__(t)~ ，实现可以是不同的.
-
-  所以， 我们可以通过对对应运算的魔法方法进行定义实现特定的运算行为。
 
   当然， 大佬还说了这样的代码学习可以，就不要在实际操作中用了。
   
@@ -128,7 +123,7 @@
      + __pos__(self) :: 实现正号的特性, 如 ~+object~
      + __neg__(self) :: 实现负号的特性, 如 ~-object~
      + __abs__(self) :: 实现内置 ~abs()~ 函数的特性, 如 ~abs(object)~
-     + __invert__(self) :: 实现 ~~~ 符号的特性, 参考文章: [[https://en.wikipedia.org/wiki/Bitwise_operation#NOT][Bitwise operation]]
+     + __invert__(self) :: 实现 =~= 符号的特性, 参考文章: [[https://en.wikipedia.org/wiki/Bitwise_operation#NOT][Bitwise operation]]
 
    + *普通算数操作符*
      + __add__(self, other) :: 实现加法, 如 ~A + B~
@@ -149,9 +144,10 @@
 
    + *反运算*
 
-     看到反运算我是一脸懵逼的， 反运算是个什么东西， 指南上的解释是这样的：
+     指南给出的反运算的解释：
      #+BEGIN_EXAMPLE
        一个普通的加法运算： some_object + other
+
        对应的反运算： other + some_object
      #+END_EXAMPLE
 
@@ -184,6 +180,8 @@
   + __trunc__(self) :: 当使用 ~math.trunc(self)~ 的时候被调用, 应该返回数值被截取成整形的值
   + __coerce__(self, other) :: 实现混合模式算数, 也是 ~Python2~ 的
 
+  转换成什么类型就返回什么类型的值。
+
 * 表现类
   + __str__(self) :: 使用 ~str(obj)~ 会调用这个方法
   + __repr__(self) :: 使用 ~repr(obj)~ 会调用这个方法
@@ -200,6 +198,7 @@
 
   + __setattr__(self, name, value) :: 定义设置对象的属性时的行为， 即 ~obj.xxx = xxx~ 时会调用这个方法
 
+       使用这个方法需要注意的一点：
        #+BEGIN_SRC python
          def __setattr__(self, name, value):
              self.name = value
@@ -211,7 +210,85 @@
              #定制特有属性
        #+END_SRC
 
+       设置 *实例* 属性会调用这个方法， 包括在 ~__init__~ 中设置属性。 但类属性不受影响。
+
   + __delattr__(self, name) :: 定义删除对象的属性时的行为， 即 ~del obj.xxx~ 时会调用这个方法
+
+* 创建定制的序列
+  ~Python~ 中的序列有 *可变* 和 *不可变* 的区分， 比如 ~tuple~ 和 ~list~.
+
+  通过魔法方法的定义来控制创建的序列的类型：
+  + *不可变*: 只能定义 ~__len__~ 和 ~__getitem__~.
+  + *可变*: 需要定义 ~__setitem__~ 和 ~__delitem__~.
+  + *可迭代*: 需要定义 ~__iter__~ 返回一个迭代器
+
+  这些魔法方法的具体作用：
+  + __len__(self) :: 使用 ~len(obj)~ 的时候调用， 返回序列的长度
+  + __getitem__(self, key) :: 使用 ~obj[key]~ 时调用， 返回序列指定键的值
+  + __setitem__(self, key, value) :: 使用 ~obj[key] = value~ 时调用， 设置序列指定键的值
+  + __delitem__(self, key) :: 使用 ~del obj[key]~ 时调用， 删除序列指定条目
+  + __iter__(self) :: 返回迭代器， ~iter(obj)~
+  + __reversed__(self) :: 使用 ~reversed(obi)~ 时调用， 反转序列
+  + __contains__(self, item) :: 使用 ~item in obj~ 和 ~item not in obj~ 时调用， 检测成员是否存在
+  + __concat__(self, other) :: 连接两个序列的时候调用
+
+* 反射
+  通过魔法方法控制使用 ~isinstance~ 和 ~issubclass~ 的反射行为：
+  + __instancecheck__(self, instance) :: 检查一个实例是不是定义的类的实例, 对应 ~isinstance~
+  + __subclasscheck__(self, subclass) :: 检查一个类是不是定义的类的子类, 对应 ~issubclass~
+  
+* 可以调用的对象
+  如果你希望可以向调用函数那样调用你的 *对象*, 那么你可以定义那个对象的 ~__call__~ 方法。
+
+  + __call__(self, [args...]) :: 使用 ~obj(...)~ 时调用
+
+  #+BEGIN_SRC python
+    class Test(object):
+        def __init__(self):
+            self.val = 10
+
+        def __call__(self):
+            return self.val
+
+    t = Test()
+    t()
+  #+END_SRC
+
+* 上下文管理器
+  ~Python~ 中使用 ~with~ 可以写出更加简洁高效的代码， 而能够使用 ~with~ 的对象需要支持上下文管理器。
+
+  上下文管理器需要两个方法： ~__enter__~ 和 ~__exit__~.
+
+  #+BEGIN_SRC python
+    with expression [as variable]:
+        with-block
+  #+END_SRC
+
+  + __enter__(self) :: 这个方法在进入 ~with-block~ 之前调用, 返回值被 ~with~ 的目标或 ~as~ 后的名字绑定
+  + __exit__(self, exception_type, exception_value, traceback) :: 这个方法在退出 ~with-block~ 时调用
+
+  #+BEGIN_SRC python
+    class Closer(object):
+        '''通过with语句和一个close方法来关闭一个对象的会话管理器'''
+
+        def __init__(self, obj):
+        self.obj = obj
+
+        def __enter__(self):
+            return self.obj # bound to target
+
+        def __exit__(self, exception_type, exception_val, trace):
+            try:
+                self.obj.close()
+            except AttributeError: # obj isn't closable
+                print 'Not closable.'
+                return True # exception handled successfully
+  #+END_SRC
+
+* 更多的方法
+  ~Python~ 的魔法方法还有不少， ~Python2~ 和 ~Python3~ 在这方面也有一定的区别。
+
+  部分内容会在后面进行补充， 详细内容可以参考 [[#参考链接][参考链接]].
 
 * 参考链接
   + [[https://docs.python.org/2.7/reference/datamodel.html#special-method-names][Python2.7 Special method names]]
