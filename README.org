@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018* 
+  - 04-03 -- [[file:2018/python-special-method.org][Python 魔法方法]] ::
   - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] ::
   - 03-25 -- [[file:2018/win32.org][Win32 API 窗口程序]] ::
   - 03-23 -- [[file:2018/python-build-in-type.org][Python 内置类型]] ::

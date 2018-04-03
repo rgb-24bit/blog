@@ -1,0 +1,220 @@
+#+TITLE:      Python 魔法方法
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-04-03 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#构造和初始化][构造和初始化]]
+- [[#比较和数值运算][比较和数值运算]]
+  - [[#用于比较的魔法方法][用于比较的魔法方法]]
+  - [[#数值处理的魔法方法][数值处理的魔法方法]]
+- [[#类型转化][类型转化]]
+- [[#表现类][表现类]]
+- [[#属性访问控制][属性访问控制]]
+- [[#参考链接][参考链接]]
+
+* 简介
+  在 ~Python~ 中， 对一个对象的所有操作基本上都是可以由自己定义的。
+
+  这一点的实现离不开 *魔法方法*.
+
+  通过魔法方法可以控制对对象的各种操作， 如 *四则运算*, *迭代*, *属性的设置与删除* 等.
+
+  然而， 关于这些方法的官方文档在我看来不是很友好， 特别是对于我这种英语不是很好的：
+
+  + [[https://docs.python.org/2.7/reference/datamodel.html#special-method-names][Special method names]]
+
+  当然了， 网上也有很好的教程：
+
+  + [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html][Python 魔术方法指南]]
+
+  这篇博客主要借鉴这篇指南， 然后添加部分自己的理解， 方便需要的时候查阅。
+
+* 构造和初始化
+  ~Python~ 一个对象实例化到销毁调用的方法的顺序是：
+  : __new__() ==> __init__() ==> ... ==> __del__()
+
+  因为最常用的方法是 ~__init__()~, 所以我一直认为最先调用的方法应该是 ~__init__()~,
+  但结果居然还有一个 ~__new__()~. 没人气的方法 *@_@*.
+
+  + __new__(cls[,...])) :: 对象实例化的时候所调用的第一个方法， 它的第一个参数是这个类，
+       其他的参数是用来直接传递给 ~__init__()~ 方法。
+
+  + __init__(self[, ...]) :: 类的初始化方法。 可以说是最常用的方法了。 调用构造函数时
+       的参数就是传给它的。
+
+  + __del__(self) :: 当实例即将被销毁时调用， 也被叫做析构函数。 *没有参数*.
+
+  #+BEGIN_SRC python :results output
+    class Test(object):
+        def __init__(self):
+            print("Hello World !")
+
+        def __del__(self):
+            print("Goodbye World QAQ")
+
+    T = Test()
+    del T
+  #+END_SRC
+
+* 比较和数值运算
+  ~Python~ 中的运算和比较也是通过对 *魔法方法* 的定义来实现的， 比如有趣的一点：
+  #+BEGIN_SRC python
+    # one list
+    >>> l = [0]
+
+    # one tuple
+    >>> t = (1, )
+
+    # list + tuple ?
+    >>> l + t
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: can only concatenate list (not "tuple") to list
+
+    # list += tuple ?
+    >>> l += t
+    [0, 1]
+  #+END_SRC
+
+  一个列表直接加一个元组会出错， 而 ~+=~ 没有问题...
+
+  当时我很疑惑， 有大佬给出了解答：
+  ~l + t~ 对应的是 ~l.__add__(t)~ ，而 ~l += t~ 对应的是 ~l.__iadd__(t)~ ，实现可以是不同的.
+
+  所以， 我们可以通过对对应运算的魔法方法进行定义实现特定的运算行为。
+
+  当然， 大佬还说了这样的代码学习可以，就不要在实际操作中用了。
+  
+** 用于比较的魔法方法
+   + __cmp__(self, other) :: 最基本的用于比较的魔法方法， 现了所有的比较符号 *(<,==,!=,etc.)*. 如果 ~self < other~ 应该返回一个 *负数*, 如果
+        ~self == other~ 应该返回 *0*, 如果 ~self > other~ 应该返回一个 *正数*.
+
+   + __eq__(self, other) :: 定义了 ~==~ 行为， 相等返回 ~True~, 反之返回 ~False~. 
+
+   + __ne__(self, other) :: 定义了 ~!=~ 行为， 不等返回 ~True~, 反之返回 ~False~. 
+
+   + __lt__(self, other) :: 定义了 ~<~ 行为， 小于返回 ~True~, 反之返回 ~False~. 
+
+   + __gt__(self, other) :: 定义了 ~>~ 行为， 大于返回 ~True~, 反之返回 ~False~. 
+
+   #+BEGIN_SRC python
+     class Word(str):
+     '''存储单词的类，定义比较单词的几种方法'''
+
+         def __new__(cls, word):
+             # 注意我们必须要用到__new__方法，因为str是不可变类型
+             # 所以我们必须在创建的时候将它初始化
+             if ' ' in word:
+                 print "Value contains spaces. Truncating to first space."
+                 word = word[:word.index(' ')] #单词是第一个空格之前的所有字符
+             return str.__new__(cls, word)
+
+         def __gt__(self, other):
+             return len(self) > len(other)
+         def __lt__(self, other):
+             return len(self) < len(other)
+         def __ge__(self, other):
+             return len(self) >= len(other)
+         def __le__(self, other):
+             return len(self) <= len(other)
+   #+END_SRC
+
+   这里就直接可耻的盗用 *指南* 的例子了。
+
+** 数值处理的魔法方法
+   + *一元操作符和函数* 
+     + __pos__(self) :: 实现正号的特性, 如 ~+object~
+     + __neg__(self) :: 实现负号的特性, 如 ~-object~
+     + __abs__(self) :: 实现内置 ~abs()~ 函数的特性, 如 ~abs(object)~
+     + __invert__(self) :: 实现 ~~~ 符号的特性, 参考文章: [[https://en.wikipedia.org/wiki/Bitwise_operation#NOT][Bitwise operation]]
+
+   + *普通算数操作符*
+     + __add__(self, other) :: 实现加法, 如 ~A + B~
+     + __sub__(self, other) :: 实现减法, 如 ~A - B~
+     + __mul__(self, other) :: 实现乘法, 如 ~A * B~
+     + __floordiv__(self, other) :: 实现 ~//~ 除, 如 ~A // B~
+     + __div__(self, other) :: 实现 ~/~ 除, 如 ~A / B~
+     + __truediv__(self, other) :: 实现真除法， 需要：
+          : from __future__ import division
+     + __mod__(self, other) :: 实现取模运算, 如 ~A % B~
+     + __divmod___(self, other) :: 实现内置函数 ~divmod()~ 运算, 如 ~divmod(obj)~
+     + __pow___(self, other[, modulo]) :: 实现使用 ~**~ 的指数运算, 如 ~A**2~
+     + __lshift__(self, other) :: 实现使用 ~<<~ 的按位左移运算, 如 ~A << B~
+     + __rshift__(self, other) :: 实现使用 ~>>~ 的按位右移运算, 如 ~A >> B~
+     + __and__(self, other) :: 实现使用 ~&~ 的按位与运算, 如 ~A & B~
+     + __or__(self, other) :: 实现使用 ~|~ 的按位或运算, 如 ~A | B~
+     + __xor__(self, other) :: 实现使用 ~^~ 的按位异或运算, 如 ~A ^ B~
+
+   + *反运算*
+
+     看到反运算我是一脸懵逼的， 反运算是个什么东西， 指南上的解释是这样的：
+     #+BEGIN_EXAMPLE
+       一个普通的加法运算： some_object + other
+       对应的反运算： other + some_object
+     #+END_EXAMPLE
+
+     意思就是把操作数调了个位置， 大多数情况下，反运算的结果是与普通运算相同的。
+
+     具体的实现和 *普通算数操作符* 的实现差不多， 只需要在对应的运算前面加上一个 ~r~ 就可以了。
+
+     如： ~__add__()~ 对应 ~__radd__()~.
+
+   + *增量赋值*
+
+     这个就是比较熟悉的运算了， 就是类似于 ~A += B~ 的运算， 实现方式和 *普通算数操作符* 类似， 
+     只需要在对应的运算前面加上一个 ~i~ 就可以了。
+
+     如： ~__add__()~ 对应 ~__iadd__()~. 
+
+     实际操作就是对应的运算符紧跟一个等号 ~=~.
+
+     如： ~+=~, ~>>=~, ~**=~...
+
+* 类型转化
+  可以通过一些 *魔法方法* 来实现内置类型类型转换， 注意， 是转换为 *内置类型*. 
+  + __int__(self) :: 实现整形的强制转换
+  + __long__(self) :: 实现长整形的强制转换, 当然， 这应该是 ~Python2~ 的
+  + __float__(self) :: 实现浮点型的强制转换
+  + __complex__(self) :: 实现复数的强制转换
+  + __oct__(self) :: 实现八进制的强制转换
+  + __hex__(self) :: 实现二进制的强制转换
+  + __index__(self) :: 当对象是被应用在 *切片表达式* 中时，实现整形强制转换
+  + __trunc__(self) :: 当使用 ~math.trunc(self)~ 的时候被调用, 应该返回数值被截取成整形的值
+  + __coerce__(self, other) :: 实现混合模式算数, 也是 ~Python2~ 的
+
+* 表现类
+  + __str__(self) :: 使用 ~str(obj)~ 会调用这个方法
+  + __repr__(self) :: 使用 ~repr(obj)~ 会调用这个方法
+  + __unicode(self) :: 使用 ~unicode(obj)~ 会调用这个方法， 当然这也是 ~Python2~ 的
+  + __hash__(self) :: 使用 ~hash(obj)~ 会调用这个方法， 应该返回一个 *整型*
+  + __nonzero(self) :: 使用 ~bool(obj)~ 会调用这个方法， 应该返回 ~True~ 或 ~False~.
+       在 ~Python3~ 中改为了 ~__bool__().~
+       
+* 属性访问控制
+  作为动态语言， ~Python~ 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
+  就可以使用这一部分的 *魔法方法*.
+
+  + __getattr__(self, name) :: 定义获取对象的属性时的行为， 即 ~obj.xxx~ 时会调用这个方法
+
+  + __setattr__(self, name, value) :: 定义设置对象的属性时的行为， 即 ~obj.xxx = xxx~ 时会调用这个方法
+
+       #+BEGIN_SRC python
+         def __setattr__(self, name, value):
+             self.name = value
+             #每当属性被赋值的时候， ``__setattr__()`` 会被调用，这样就造成了递归调用。
+             #这意味这会调用 ``self.__setattr__('name', value)`` ，每次方法会调用自己。这样会造成程序崩溃。
+
+         def __setattr__(self, name, value):
+             self.__dict__[name] = value  #给类中的属性名分配值
+             #定制特有属性
+       #+END_SRC
+
+  + __delattr__(self, name) :: 定义删除对象的属性时的行为， 即 ~del obj.xxx~ 时会调用这个方法
+
+* 参考链接
+  + [[https://docs.python.org/2.7/reference/datamodel.html#special-method-names][Python2.7 Special method names]]
+  + [[https://docs.python.org/3/reference/datamodel.html#special-method-names][Python3.6 Special method names]]
+  + [[http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html][Python 魔术方法指南]]
+
