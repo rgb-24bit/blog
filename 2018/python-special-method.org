@@ -194,7 +194,20 @@
   作为动态语言， ~Python~ 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
   就可以使用这一部分的 *魔法方法*.
 
-  + __getattr__(self, name) :: 定义获取对象的属性时的行为， 即 ~obj.xxx~ 时会调用这个方法
+  + __getattr__(self, name) :: 获取不存在的属性的值时会调用这个方法， 所以在这个方法内可以
+       获取正常属性的值。
+
+  + __getattribute__(self, name) :: 获取对象的属性时调用， 不管属性存不存在。 同时如果定义了这个方法， ~__getattr__~ 将
+       不起作用， 除非显示调用或引发 ~AttributeError~.
+
+       由于获取任意属性都将调用这一方法， 所以如果在这个方法内获取属性将导致 *无限递归*.
+
+       解决这一问题的方法是把获取属性的方法指向一个更高的 *超类*:
+       #+BEGIN_SRC python
+         class ClassA:
+             def __getattribute__(self, item):
+                 return super().__getattribute__(self, item)
+       #+END_SRC
 
   + __setattr__(self, name, value) :: 定义设置对象的属性时的行为， 即 ~obj.xxx = xxx~ 时会调用这个方法
 
@@ -202,12 +215,12 @@
        #+BEGIN_SRC python
          def __setattr__(self, name, value):
              self.name = value
-             #每当属性被赋值的时候， ``__setattr__()`` 会被调用，这样就造成了递归调用。
-             #这意味这会调用 ``self.__setattr__('name', value)`` ，每次方法会调用自己。这样会造成程序崩溃。
+             # 每当属性被赋值的时候， ``__setattr__()`` 会被调用，这样就造成了递归调用
+             # 这意味这会调用 ``self.__setattr__('name', value)`` ，每次方法会调用自己。这样会造成程序崩溃
 
          def __setattr__(self, name, value):
-             self.__dict__[name] = value  #给类中的属性名分配值
-             #定制特有属性
+             # 通过这种方式来避免
+             self.__dict__[name] = value  # 给类中的属性名分配值
        #+END_SRC
 
        设置 *实例* 属性会调用这个方法， 包括在 ~__init__~ 中设置属性。 但类属性不受影响。
