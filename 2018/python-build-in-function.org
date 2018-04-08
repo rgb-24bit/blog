@@ -4,14 +4,15 @@
 #+DATE:       <2018-02-14 周三>
 
 * 目录                                                    :TOC_4_gh:noexport:
-- [[#内置函数][内置函数]]
-  - [[#数值计算][数值计算]]
-  - [[#可迭代对象相关][可迭代对象相关]]
-  - [[#进制和编码转化][进制和编码转化]]
-  - [[#类和属性相关][类和属性相关]]
-  - [[#其他内置函数][其他内置函数]]
+- [[#简介][简介]]
+- [[#数值计算相关][数值计算相关]]
+- [[#可迭代对象相关][可迭代对象相关]]
+- [[#进制和编码转化][进制和编码转化]]
+- [[#类和属性相关][类和属性相关]]
+- [[#命名空间相关][命名空间相关]]
+- [[#其他内置函数][其他内置函数]]
 
-* 内置函数
+* 简介
   ~Python~ 具有众多的内置函数， ~Python2~ 和 ~Python3~ 在这方面也具有一定的区别。
 
   ~Python2~ 内置函数：
@@ -64,241 +65,273 @@
   + [[https://docs.python.org/2/library/functions.html][Python2 Built-in Functions]]
   + [[https://docs.python.org/3.6/library/functions.html][Python3 Built-in Functions]]
 
-** 数值计算
-   + abs(x) :: 获取 ~x~ 的绝对值， 如果 ~x~ 是复数， 则返回其大小。
+* 数值计算相关
+  + abs(x) :: 获取 ~x~ 的绝对值， 如果 ~x~ 是复数， 则返回其大小。
 
-   + divmod(a, b) :: 返回 ~(a //b, a % b)~.
+  + divmod(a, b) :: 返回 ~(a //b, a % b)~.
 
-   + pow(x, y[, z]) :: 返回 ~x~ 的 ~y~ 次方。 如果 ~z~ 存在， 则返回较 ~pow(x, y) % z~ 精确的值。
+  + pow(x, y[, z]) :: 返回 ~x~ 的 ~y~ 次方。 如果 ~z~ 存在， 则返回较 ~pow(x, y) % z~ 精确的值。
 
-   + round(x) :: 方法返回浮点数 ~x~ 的四舍五入值。
+  + round(x) :: 方法返回浮点数 ~x~ 的四舍五入值。
 
-** 可迭代对象相关
-   + all(iterable) :: 如果所有元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
+* 可迭代对象相关
+  + all(iterable) :: 如果所有元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
 
-   + any(iterable) :: 如果存在元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
+  + any(iterable) :: 如果存在元素为 ~True~ 则返回 ~True~, 否则返回 ~False~.
 
-   + enumerate(sequence, start=0) :: 代码说明一切：
-        #+BEGIN_SRC python
-          >>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
-          >>> list(enumerate(seasons))
-          [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
-          >>> list(enumerate(seasons, start=1))
-          [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+  + enumerate(sequence, start=0) :: 代码说明一切：
+       #+BEGIN_SRC python
+         >>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+         >>> list(enumerate(seasons))
+         [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+         >>> list(enumerate(seasons, start=1))
+         [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
 
 
-          # 等价于
-          def enumerate(sequence, start=0):
-              n = start
-              for elem in sequence:
-                  yield n, elem
-                  n += 1
-        #+END_SRC
+         # 等价于
+         def enumerate(sequence, start=0):
+             n = start
+             for elem in sequence:
+                 yield n, elem
+                 n += 1
+       #+END_SRC
 
-   + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~,
-        如果 ~function~ 为 ~None~, 等价于 ~[item for item in iterable if item]~.
+  + filter(function, iterable) :: 等价于 ~[item for item in iterable if function(item)]~,
+       如果 ~function~ 为 ~None~, 等价于 ~[item for item in iterable if item]~.
 
-        ~Python2~ 返回列表， ~Python3~ 返回迭代器， 为了兼容， 建议这样使用 ~list(filter())~
+       ~Python2~ 返回列表， ~Python3~ 返回迭代器， 为了兼容， 建议这样使用 ~list(filter())~
 
-   + map(function, iterable, ...) :: 将 ~iterable~ 的每个元素作为参数调用 ~function~,
-        ~Python2~ 返回结果列表， ~Python3~ 返回迭代器， 如果要得到和 ~Python2~ 相同的结果，
-        应该这样： ~list(map(x))~.
+  + map(function, iterable, ...) :: 将 ~iterable~ 的每个元素作为参数调用 ~function~,
+       ~Python2~ 返回结果列表， ~Python3~ 返回迭代器， 如果要得到和 ~Python2~ 相同的结果，
+       应该这样： ~list(map(x))~.
 
-        ~Python2~ 的 ~functools~ 模块存在 ~imap~, 和 ~Python3~ 的 ~map~ 效果相同.
+       ~Python2~ 的 ~functools~ 模块存在 ~imap~, 和 ~Python3~ 的 ~map~ 效果相同.
 
-   + reduce(function, iterable[, initializer]) :: ~reduce~ 把一个函数作用在一个序列 ~[x1, x2, x3, ...]~ 上，
-        这个函数必须接收两个参数， ~reduce~ 把结果继续和序列的下一个元素做累积计算。
+  + reduce(function, iterable[, initializer]) :: ~reduce~ 把一个函数作用在一个序列 ~[x1, x2, x3, ...]~ 上，
+       这个函数必须接收两个参数， ~reduce~ 把结果继续和序列的下一个元素做累积计算。
 
-        ~Python3~ 使用需要： ~from functools import reduce~
+       ~Python3~ 使用需要： ~from functools import reduce~
 
-   + iter(object[, sentinel]) :: 返回一个迭代器对象。
-        #+BEGIN_SRC python
-          >>> s = '123'
-          >>> iter_s = iter(s)
-          >>> next(iter_s)
-          '1'
-          >>> next(iter_s)
-          '2'
-          >>> next(iter_s)
-          '3'
-          >>> next(iter_s)
-          Traceback (most recent call last):
-          File "<stdin>", line 1, in <module>
-          StopIteration
-        #+END_SRC
+  + iter(object[, sentinel]) :: 返回一个迭代器对象。
+       #+BEGIN_SRC python
+         >>> s = '123'
+         >>> iter_s = iter(s)
+         >>> next(iter_s)
+         '1'
+         >>> next(iter_s)
+         '2'
+         >>> next(iter_s)
+         '3'
+         >>> next(iter_s)
+         Traceback (most recent call last):
+         File "<stdin>", line 1, in <module>
+         StopIteration
+       #+END_SRC
 
-   + len(s) :: 返回 ~s~ 的长度。
+  + len(s) :: 返回 ~s~ 的长度。
 
-   + max(iterable[, key]) ::
+  + max(iterable[, key]) ::
 
-   + max(arg1, arg2, *args[, key]) :: 返回最大值， ~Python3~ 可以 ~max(iterable[, key, default])~.
+  + max(arg1, arg2, *args[, key]) :: 返回最大值， ~Python3~ 可以 ~max(iterable[, key, default])~.
 
-   + min(...) :: 参数同 ~max~, 返回最小值。
+  + min(...) :: 参数同 ~max~, 返回最小值。
 
-   + next(iterable[, default]) :: 调用 ~__next__()~ 方法获取下一个元素， 如果提供 ~default~,
-        那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。 对于 ~Python2~ 调用的是 ~next()~ 方法。
+  + next(iterable[, default]) :: 调用 ~__next__()~ 方法获取下一个元素， 如果提供 ~default~,
+       那么迭代器耗尽时返回它， 否则抛出 ~StopIteration~ 异常。 对于 ~Python2~ 调用的是 ~next()~ 方法。
 
-   + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
+  + range(start, stop[, step]) :: 返回一个列表， ~Python3~ 的 ~range()~ 类似于 ~Python2~ 的 ~xrange()~.
 
-   + reversed(seq) :: 返回一个 *反向迭代器*.
+  + reversed(seq) :: 返回一个 *反向迭代器*.
 
-   + slice(stop) ::
+  + slice(stop) ::
 
-   + slice(start, stop[, step]) :: 返回一个切片对象， 同样代码说明一切：
-        #+BEGIN_SRC python
-          >>>myslice = slice(5)    # 设置截取5个元素的切片
-          >>> myslice
-          slice(None, 5, None)
-          >>> arr = range(10)
-          >>> arr
-          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-          >>> arr[myslice]         # 截取 5 个元素
-          [0, 1, 2, 3, 4]
-        #+END_SRC
+  + slice(start, stop[, step]) :: 返回一个切片对象， 同样代码说明一切：
+       #+BEGIN_SRC python
+         >>>myslice = slice(5)    # 设置截取5个元素的切片
+         >>> myslice
+         slice(None, 5, None)
+         >>> arr = range(10)
+         >>> arr
+         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+         >>> arr[myslice]         # 截取 5 个元素
+         [0, 1, 2, 3, 4]
+       #+END_SRC
 
-   + sorted(iterable[, cmp[, key[, reverse]]]) :: 对所有可迭代的对象进行排序操作。
-        ~Python3~ 对参数进行了修改， 应该这样： ~sorted(iterable, *, key=None, reverse=False)~.
-        简单的来说就是取消的 ~cmp~ 参数。
+  + sorted(iterable[, cmp[, key[, reverse]]]) :: 对所有可迭代的对象进行排序操作。
+       ~Python3~ 对参数进行了修改， 应该这样： ~sorted(iterable, *, key=None, reverse=False)~.
+       简单的来说就是取消的 ~cmp~ 参数。
 
-   + sum(iterable[, start]) :: 对序列进行求和运算。
+  + sum(iterable[, start]) :: 对序列进行求和运算。
 
-   + zip([iterable, ...]) :: 将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，
-        然后返回由这些元组组成的列表。 如果各个迭代器的元素个数不一致，
-        则返回列表长度与最短的对象相同， 利用 ~*~ 号操作符，可以将元组解压为列表。
+  + zip([iterable, ...]) :: 将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，
+       然后返回由这些元组组成的列表。 如果各个迭代器的元素个数不一致，
+       则返回列表长度与最短的对象相同， 利用 ~*~ 号操作符，可以将元组解压为列表。
 
-** 进制和编码转化
-   + bin(x) :: 将一个整数转化为二进制字符串， 如果 ~x~ 不是整数， 那么它必须定义了 ~__index__()~ 方法。
+* 进制和编码转化
+  + bin(x) :: 将一个整数转化为二进制字符串， 如果 ~x~ 不是整数， 那么它必须定义了 ~__index__()~ 方法。
 
-   + hex(x) :: 将一个整数转化为十六进制字符串。 如果 ~x~ 不是整数， 那么需要定义 ~__hex__()~ 方法。
-               ~Python3~ 是 ~__index__()~ 方法。
+  + hex(x) :: 将一个整数转化为十六进制字符串。 如果 ~x~ 不是整数， 那么需要定义 ~__hex__()~ 方法。
+              ~Python3~ 是 ~__index__()~ 方法。
 
-               浮点数使用 ~float.hex()~ 方法。
+              浮点数使用 ~float.hex()~ 方法。
 
-   + oct(x) :: 将一个整数转化为八进制字符串。
+  + oct(x) :: 将一个整数转化为八进制字符串。
 
-   + chr(i) ::
+  + chr(i) ::
 
-               - Python2: ~i~ 的取值范围为 ~0-255~, 返回对应的字符。
+              - Python2: ~i~ 的取值范围为 ~0-255~, 返回对应的字符。
 
-               - Python3: ~i~ 的取值范围为 ~0-0x10FFFF~, 返回对应的字符。
+              - Python3: ~i~ 的取值范围为 ~0-0x10FFFF~, 返回对应的字符。
 
-   + unichr(i) :: 仅限 ~Python2~, ~chr(i)~ 的高级版本， 取值范围为 ~0-0xFFFF~ 或 ~0-0x10FFFF~.
+  + unichr(i) :: 仅限 ~Python2~, ~chr(i)~ 的高级版本， 取值范围为 ~0-0xFFFF~ 或 ~0-0x10FFFF~.
 
-   + ord(c) :: ~chr~ 的逆方法， 返回字符对应的数字。
+  + ord(c) :: ~chr~ 的逆方法， 返回字符对应的数字。
 
-** 类和属性相关
-   + callable(object) :: 检查一个对象是否是可调用的。
-        如果返回 ~True~, ~object~ 仍然可能调用失败； 但如果返回 ~False~, 调用对象 ~ojbect~ 绝对不会成功。
+* 类和属性相关
+  + callable(object) :: 检查一个对象是否是可调用的。
+       如果返回 ~True~, ~object~ 仍然可能调用失败； 但如果返回 ~False~, 调用对象 ~ojbect~ 绝对不会成功。
 
-        对于函数, 方法, lambda 函式, 类, 以及实现了 ~__call__~ 方法的类实例, 它都返回 ~True~.
+       对于函数, 方法, lambda 函式, 类, 以及实现了 ~__call__~ 方法的类实例, 它都返回 ~True~.
 
-   + classmethod(function) :: 常用作装饰器， 修饰的方法可以通过 ~类名.方法名~ 的形式调用。
-        修饰的方法需要有代表类的 ~cls~ 参数。
-        #+BEGIN_SRC python
-          class C(object):
-              @classmethod
-              def f(cls, arg1, arg2, ...):
-                  pass
-        #+END_SRC
+  + classmethod(function) :: 常用作装饰器， 修饰的方法可以通过 ~类名.方法名~ 的形式调用。
+       修饰的方法需要有代表类的 ~cls~ 参数。
+       #+BEGIN_SRC python
+         class C(object):
+             @classmethod
+             def f(cls, arg1, arg2, ...):
+                 pass
+       #+END_SRC
 
-   + staticmethod(function) :: 类似 ~classmethod~, 不过不需要 ~cls~ 参数。
+  + staticmethod(function) :: 类似 ~classmethod~, 不过不需要 ~cls~ 参数。
 
-   + property(fget=None, fset=None, fdel=None, doc=None) :: 返回新式类属性。
-        参数：
-        - fget - 获取属性值的函数
+  + property(fget=None, fset=None, fdel=None, doc=None) :: 返回新式类属性。
+       参数：
+       - fget - 获取属性值的函数
 
-        - fset - 设置属性值的函数
+       - fset - 设置属性值的函数
 
-        - fdel - 删除属性值函数
+       - fdel - 删除属性值函数
 
-        - doc - 属性描述信息
+       - doc - 属性描述信息
 
-        例：
-        #+BEGIN_SRC python
-          class C:
-              def __init__(self):
-                  self._x = None
+       例：
+       #+BEGIN_SRC python
+         class C:
+             def __init__(self):
+                 self._x = None
 
-              def getx(self):
-                  return self._x
+             def getx(self):
+                 return self._x
 
-              def setx(self, value):
-                  self._x = value
+             def setx(self, value):
+                 self._x = value
 
-              def delx(self):
-                  del self._x
+             def delx(self):
+                 del self._x
 
-              x = property(getx, setx, delx, "I'm the 'x' property.")
-        #+END_SRC
-        如果 *c* 是 *C* 的实例化, *c.x* 将触发 *getter*, *c.x = value* 将触发 *setter*, *del c.x* 触发 *deleter*.
+             x = property(getx, setx, delx, "I'm the 'x' property.")
+       #+END_SRC
+       如果 *c* 是 *C* 的实例化, *c.x* 将触发 *getter*, *c.x = value* 将触发 *setter*, *del c.x* 触发 *deleter*.
 
-        如果给定 ~doc~ 参数， 其将成为这个属性值的 ~docstring~, 否则 ~property~ 函数就会复制 ~fget~ 函数的 ~docstring~.
+       如果给定 ~doc~ 参数， 其将成为这个属性值的 ~docstring~, 否则 ~property~ 函数就会复制 ~fget~ 函数的 ~docstring~.
 
-        将 ~property~ 函数用作装饰器可以很方便的创建只读属性：
-        #+BEGIN_SRC python
-          class Parrot:
-              def __init__(self):
-                  self._voltage = 100000
+       将 ~property~ 函数用作装饰器可以很方便的创建只读属性：
+       #+BEGIN_SRC python
+         class Parrot:
+             def __init__(self):
+                 self._voltage = 100000
 
-              @property
-              def voltage(self):
-                  """Get the current voltage."""
-                  return self._voltage
-        #+END_SRC
-        上面的代码将 ~voltage()~ 方法转化成同名只读属性的 ~getter~ 方法。
+             @property
+             def voltage(self):
+                 """Get the current voltage."""
+                 return self._voltage
+       #+END_SRC
+       上面的代码将 ~voltage()~ 方法转化成同名只读属性的 ~getter~ 方法。
 
-        ~property~ 的 ~getter~, ~setter~ 和 ~deleter~ 方法同样可以用作装饰器：
-        #+BEGIN_SRC python
-          class C(object):
-              def __init__(self):
-                  self._x = None
+       ~property~ 的 ~getter~, ~setter~ 和 ~deleter~ 方法同样可以用作装饰器：
+       #+BEGIN_SRC python
+         class C(object):
+             def __init__(self):
+                 self._x = None
 
-              @property
-              def x(self):
-                  """I'm the 'x' property."""
-                  return self._x
+             @property
+             def x(self):
+                 """I'm the 'x' property."""
+                 return self._x
 
-              @x.setter
-              def x(self, value):
-                  self._x = value
+             @x.setter
+             def x(self, value):
+                 self._x = value
 
-              @x.deleter
-              def x(self):
-                  del self._x
-        #+END_SRC
+             @x.deleter
+             def x(self):
+                 del self._x
+       #+END_SRC
 
-   + getattr(object, name[, default]) :: 返回一个对象属性值， 属性不存在时可以通过设置默认值避免出错。
+  + getattr(object, name[, default]) :: 返回一个对象属性值， 属性不存在时可以通过设置默认值避免出错。
 
-   + hasattr(object, name) :: 判断对象是否包含对应的属性。
+  + hasattr(object, name) :: 判断对象是否包含对应的属性。
 
-   + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
+  + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
 
-   + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
+  + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
 
-** 其他内置函数
-   + type(object) ::
+* 命名空间相关
+  ~Python~ 使用叫做 *命名空间* 的东西来记录变量的轨迹。命名空间是一个 *字典*, 
+  它的键就是 变量名， 它的值就是那些变量的值。
 
-   + type(name, bases, dict) :: ~type~ 可以用来获取对象的类型或用来创建类。
+  命名空间及查找顺序：
+  1. 局部命名空间： 记录当前 *函数* 或类的 *方法* 的变量， ~Python~ 优先在局部命名空间下寻找变量。
+  2. 全局命名空间： 记录当前 *模块* 的变量， ~Python~ 在全局命名空间寻找不在局部命名空间中的变量。
+  3. 内置命名空间： 记录 *内置* 的变量， ~Python~ 在内置命名空间寻找不在全局命名空间中的变量。
+  4. 如果在内置命名空间都没找到变量， 就放弃查找并引发一个 ~NameError~.
 
-        其中， 类似 ~type(dict)~ 的结果就是 ~type~, ~dict~ 等的实例的类型才是 ~dict~.
+  + locals() :: 访问局部命名空间， 返回局部变量字典
+                
+                #+BEGIN_SRC python
+                  def autoassign(self, locals):
+                      """
+                      Automatically assigns local variables to `self`.
 
-        这里可以看出来， ~dict~ 这些内置类型其实就是 ~type~ 的实例。
+                      Generally used in `__init__` methods, as in:
 
-        用 ~type~ 创建类可以通过这样的方式：
-        #+BEGIN_SRC python
-          X = type('X', (object,), dict(a=1))
+                          def __init__(self, foo, bar, baz=1):
+                              autoassign(self, locals())
+                      """
+                      for (key, value) in iteritems(locals):
+                          if key == 'self': 
+                              continue
+                          setattr(self, key, value)
+                #+END_SRC
 
-          # 'X' 是这个类的名称
-          # (object, ) 是这个类继承的类， 由于 python 支持多重继承， 所以这个参数应该是一个 tuple
-          # dict(a=1) 是这个类的 属性-值 字典
+  + globals() :: 访问全局命名空间， 返回全局变量字典
 
-          # 等价于
-          class X:
-              a = 1
-        #+END_SRC
+* 其他内置函数
+  + type(object) ::
 
-   + isinstance(object, classinfo) :: 判断一个 ~object~ 的类型是否属于 ~classinfo~.
+  + type(name, bases, dict) :: ~type~ 可以用来获取对象的类型或用来创建类。
 
-        其中， ~classinfo~ 可以是 ~class~, ~type~, ~tuple~. ~tuple~ 可以包含多个 ~class~ 或 ~type~ 用于判断。
+       其中， 类似 ~type(dict)~ 的结果就是 ~type~, ~dict~ 等的实例的类型才是 ~dict~.
 
-        可以通过 ~type(object) is type~ 的方式达到类似效果。
+       这里可以看出来， ~dict~ 这些内置类型其实就是 ~type~ 的实例。
+
+       用 ~type~ 创建类可以通过这样的方式：
+       #+BEGIN_SRC python
+         X = type('X', (object,), dict(a=1))
+
+         # 'X' 是这个类的名称
+         # (object, ) 是这个类继承的类， 由于 python 支持多重继承， 所以这个参数应该是一个 tuple
+         # dict(a=1) 是这个类的 属性-值 字典
+
+         # 等价于
+         class X:
+             a = 1
+       #+END_SRC
+
+  + isinstance(object, classinfo) :: 判断一个 ~object~ 的类型是否属于 ~classinfo~.
+
+       其中， ~classinfo~ 可以是 ~class~, ~type~, ~tuple~. ~tuple~ 可以包含多个 ~class~ 或 ~type~ 用于判断。
+
+       可以通过 ~type(object) is type~ 的方式达到类似效果。
+
+  + locals() :: 
