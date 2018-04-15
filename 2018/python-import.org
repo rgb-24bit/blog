@@ -1,0 +1,220 @@
+#+TITLE:      Python 导入相关
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-04-15 周日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#import-语法][import 语法]]
+- [[#相对导入和绝对导入][相对导入和绝对导入]]
+  - [[#相对导入][相对导入]]
+  - [[#绝对导入][绝对导入]]
+- [[#同名的包和模块][同名的包和模块]]
+- [[#模块导入后][模块导入后]]
+- [[#更多][更多]]
+- [[#参考链接][参考链接]]
+
+* 简介
+  ~Python~ 导入相关的问题说简单也简单， 说坑也坑。
+
+  如果平时使用的时候避开容易出现坑的地方， 那么 ~import~ 就会老老实实的， 没有任何
+  问题。
+
+  但是， 常在河边走， 哪有不湿鞋。
+
+  为了尽可能的弄清楚这些坑， 决定来总结一下。
+
+* import 语法
+  使用 ~import~ 导入的东西只有三种： *包*, *模块*, *其他对象*.
+
+  + *包*: ~__init__.py~ 文件所在目录
+  + *模块*: 单个 ~.py~ 文件
+  + *其他对象*: 除了 *包* 和 *模块* 以外的 *Python Object*
+  
+  
+  使用 *import* 的两种格式：
+  + ~import package/module~
+  + ~from package/module import object~
+
+  可以看到， 单独使用 ~import~ 的时候， 导入的只能是 *包* 或 *模块*.
+  
+  而 ~from ... import ...~ 的形式则可以从 *包* 或 *模块* 中导入任意对象。
+
+* 相对导入和绝对导入
+** 相对导入
+   相对导入的方式只能用在 *包* 内部， 语法格式为：
+   #+BEGIN_SRC python
+     from . import object
+   #+END_SRC
+
+   其中， ~.~ 代表当前目录， ~..~ 代表父级目录， 之后每多一个点代表目录上升一层。
+
+   很明显， 相对导入的含义是很明确的， 出现的坑也比较少。
+
+   需要注意的一点： 代表相对路径的符号 ~.~ 只能出现在 ~from~ 后面而不能出现在 ~import~ 后面， 即：
+   #+BEGIN_SRC python
+     from . import utils  # True
+     import .utils  # False
+   #+END_SRC
+
+** 绝对导入
+   绝对导入可以在任何地方使用， 所有非 *相对导入* 都是绝对导入。
+
+   绝对导入根据 ~sys.path~ 来查找 *包* 或 *模块*.
+
+   ~sys.path~ 是一个列表， 通常情况下会包含
+   1. 内建模块的索引路径
+   2. 第三方库的保存路径
+   3. 环境变量 ~PYTHONPATH~ 列出的目录
+   4. 脚本所在目录或当前目录
+
+   前三个路径一般不需要怎么管， 容易出现问题的地方是第四个 *脚本所在目录或当前目录*.
+
+   首先， 需要清楚的一点是： 第四个路径会被放在 ~sys.path~ 首部， 所以如果该路径下存在
+   和内建或第三方库同名的模块或包， 使用绝对导入会导入那个同名的模块。
+
+   然后， 问题就是确定第四个目录到底是 *脚本所在目录* 还是 *当前目录* 了。
+
+   这个问题通过实践来测试：
+   #+BEGIN_EXAMPLE
+     pkg/
+     +--- __init__.py
+     +--- test.py
+   #+END_EXAMPLE
+
+   ~test.py~ 中的内容为：
+   #+BEGIN_SRC python
+     # -*- coding: utf-8 -*-
+
+     import sys
+
+     print(sys.path[0:1])
+   #+END_SRC
+
+   执行结果：
+   |-----------+--------------------+--------------------------------------------|
+   | version   | python -m pkg.test | python pkg/test.py                         |
+   |-----------+--------------------+--------------------------------------------|
+   | Python2.7 | ['']               | ['C:\\Users\\Administrator\\Desktop\\pkg'] |
+   | Python3.6 | ['']               | ['C:\\Users\\Administrator\\Desktop\\pkg'] |
+   |-----------+--------------------+--------------------------------------------|
+
+   对于直接输入脚本的情况， 第四个目录都是 *脚本所在目录*.
+
+   而使用 ~Python -m~ 的时候， 第四个目录都是 *空字符串*.
+
+   现在可以来测试一下 *空字符串* 代表的含义：
+   #+BEGIN_EXAMPLE
+     Desktop/
+     +--- string/
+          +--- __init__.py
+     +--- pkg/
+          +--- __init__.py
+          +--- test.py
+          +--- string.py
+   #+END_EXAMPLE
+
+   ~test.py~ 的内容：
+   #+BEGIN_SRC python
+     # -*- coding: utf-8 -*-
+
+     import string
+
+     print(string)
+   #+END_SRC
+
+   执行结果：
+   |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
+   | version   | python -m pkg.test                                                              | python pkg/test.py                                                         |
+   |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
+   | Python2.7 | <module 'pkg.string' from 'pkg\string.py'>                                      | <module 'string' from 'C:\Users\Administrator\Desktop\pkg\string.pyc'>     |
+   | Python3.6 | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\string\\__init__.py'> | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string.py'> |
+   |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
+
+
+   可以看到， ~Python pkg/test.py~ 的输出结果是一样的， 而 ~Python -m~ 的结果有所区别。
+
+   对于 ~Python2.7~ 来说， *空字符串* 代表的目录仍是脚本所在目录， 而对于 ~Python3.6~, 代表的是当前目录。
+
+   总结一下：
+   + *Python2.7* 和 *Python3.6* 中， 使用 ~Python xxx.py~ 的格式执行脚本时， 第四个路径都是脚本所在目录。
+   + 使用 ~Python -m~ 时， ~Python3.6~ 中为 *当前目录*, ~Python2.7~ 中为脚本所在目录。
+
+* 同名的包和模块
+  前面了解到， 当前目录下的 *包* 和 *模块* 的导入优先级最高。
+
+  那么， 要是当前目录下存在名字相同的 *包* 和 *模块* 怎么处理呢 ？
+
+  尝试一下：
+  #+BEGIN_EXAMPLE
+    pkg/
+    +--- string/
+         +--- __init__.py
+    +--- __init__.py
+    +--- test.py
+    +--- string.py
+  #+END_EXAMPLE
+
+  ~test.py~ 的内容：
+  #+BEGIN_SRC python
+    # -*- coding: utf-8 -*-
+
+    import string
+
+    print(string)
+  #+END_SRC
+
+  执行结果：
+  |-----------+--------------------------------------------------------------------------------------|
+  | version   | Python pkg/test.py                                                                   |
+  |-----------+--------------------------------------------------------------------------------------|
+  | Python2.7 | <module 'string' from 'C:\Users\Administrator\Desktop\pkg\string\__init__.pyc'>      |
+  | Python3.6 | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string\\__init__.py'> |
+  |-----------+--------------------------------------------------------------------------------------|
+
+  可以看到， 对应 ~Python2.7~ 和 ~Python3.6~ 来说， 结果是相同的。
+
+  即： 同一目录下， 同名的 *包* 和 *模块*, *包* 的导入优先级比 *模块* 高。
+
+  可以得出的一个优先级排序为：
+  + *当前目录或脚本所在目录* ==> *内建模块* ==> *第三方库*
+  + *包* ==> *模块*
+
+* 模块导入后
+  假设存在目录结构如下：
+  #+BEGIN_EXAMPLE
+    Desktop/
+    +--- pkg/
+         +--- __init__.py
+         +--- test.py
+    +--- config.py
+    +--- run.py
+  #+END_EXAMPLE
+
+  然后：
+  1. ~test.py~ 包含语句 ~from config import *~
+  2. ~run.py~ 包含语句 ~from pkg import config~
+  3. 执行 ~Python pkg/test.py~
+  4. 执行 ~Python run.py~
+
+  这时， 执行结果是这样的：
+  + ~Python pkg/test.py~: *ModuleNotFoundError: No module named 'config'*
+  + ~Python run.py~: *执行成功*
+
+  这是一种骚操作， 初看时不太好理解， 但问题是在一些地方看到了这种方式的使用。
+
+  对于此的个人理解是： 和 ~C~ 语言的 ~#include~ 类似， ~import~ 也是将模块的内容导入到
+  了当前模块。 其中的部分语句在原环境下执行会失败， 而放到当前目录下会成功。
+
+* 更多
+  + ~import~ 会生成 ~.pyc~ 文件, ~.pyc~ 文件的执行速度不比 ~.py~ 快， 但是加载速度更快
+  + 重复 ~import~ 只会执行第一次 ~import~
+  + 如果在 *执行过程中* 中 ~import~ 的模块发生改动，可以通过 ~reload~ 函数重新加载
+  + ~from xxx import *~ 会导入除了以 ~_~ 开头的所有变量，但是如果定义了 ~__all__~, 那么会导入 ~__all__~ 中列出的东西
+  + ~import xxx.object~ 的方式不能直接使用 ~object~, 仍然需要通过 ~xxx.object~ 的方式使用
+  + ~import xxx.object as obj~ 的方式可以直接使用 ~obj~
+  
+* 参考链接
+  + [[https://loggerhead.me/posts/python-de-import-ji-zhi.html][Python 的 import 机制]]
+  + [[http://codingpy.com/article/python-import-101/][Python导入模块的几种姿势]]
+
