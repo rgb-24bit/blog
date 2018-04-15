@@ -95,8 +95,8 @@
    |-----------+--------------------+--------------------------------------------|
    | version   | python -m pkg.test | python pkg/test.py                         |
    |-----------+--------------------+--------------------------------------------|
-   | Python2.7 | ['']               | ['C:\\Users\\Administrator\\Desktop\\pkg'] |
-   | Python3.6 | ['']               | ['C:\\Users\\Administrator\\Desktop\\pkg'] |
+   | ~Python2.7~ | ~['']~               | ~['C:\\Users\\Administrator\\Desktop\\pkg']~ |
+   | ~Python3.6~ | ~Python3~            | ~['C:\\Users\\Administrator\\Desktop\\pkg']~ |
    |-----------+--------------------+--------------------------------------------|
 
    对于直接输入脚本的情况， 第四个目录都是 *脚本所在目录*.
@@ -127,8 +127,8 @@
    |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
    | version   | python -m pkg.test                                                              | python pkg/test.py                                                         |
    |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
-   | Python2.7 | <module 'pkg.string' from 'pkg\string.py'>                                      | <module 'string' from 'C:\Users\Administrator\Desktop\pkg\string.pyc'>     |
-   | Python3.6 | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\string\\__init__.py'> | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string.py'> |
+   | ~Python2.7~ | ~<module 'pkg.string' from 'pkg\string.py'>~                                      | ~<module 'string' from 'C:\Users\Administrator\Desktop\pkg\string.pyc'>~     |
+   | ~Python3.6~ | ~<module 'string' from 'C:\\Users\\Administrator\\Desktop\\string\\__init__.py'>~ | ~<module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string.py'>~ |
    |-----------+---------------------------------------------------------------------------------+----------------------------------------------------------------------------|
 
 
@@ -168,8 +168,8 @@
   |-----------+--------------------------------------------------------------------------------------|
   | version   | Python pkg/test.py                                                                   |
   |-----------+--------------------------------------------------------------------------------------|
-  | Python2.7 | <module 'string' from 'C:\Users\Administrator\Desktop\pkg\string\__init__.pyc'>      |
-  | Python3.6 | <module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string\\__init__.py'> |
+  | ~Python2.7~ | ~<module 'string' from 'C:\Users\Administrator\Desktop\pkg\string\__init__.pyc'>~      |
+  | ~Python3.6~ | ~<module 'string' from 'C:\\Users\\Administrator\\Desktop\\pkg\\string\\__init__.py'>~ |
   |-----------+--------------------------------------------------------------------------------------|
 
   可以看到， 对应 ~Python2.7~ 和 ~Python3.6~ 来说， 结果是相同的。
