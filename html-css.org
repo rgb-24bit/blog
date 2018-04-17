@@ -1,0 +1,39 @@
+#+TITLE:      HTML & CSS 基础
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-04-17 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#html][HTML]]
+  - [[#语法规则][语法规则]]
+
+* 简介
+  这段时间搞 ~Flask~, 发现前端方面的基础还是需要滴。
+
+  但是， 很明显， 前端的东西不少， ~HTML~, ~CSS~, ~JavaScript~ 都跑不了。
+
+  放到一块还挺麻烦。
+
+  看了不少教程， 发现对于我来说内容还是繁杂了一点， 所以决定先总结一下 ~HTML~ 和
+  ~CSS~ 方面较为基础的内容。
+
+* HTML
+  ~HTML~ 的全名是 *超文本标记语言(HyperText Markup Language)*.
+
+** 语法规则
+   ~HTML~ 的语法规则很简单：
+
+   #+BEGIN_SRC html
+     <tagname attribute="value">content</tagname>
+   #+END_SRC
+   
+   + 标签 :: ~HTML~ 元素由 *开始标签* 起始， *结束标签* 终止
+   + 属性 :: 大多数标签都可以拥有 *属性*
+   + 内容 :: 元素的内容位于 *开始标签* 和 *结束标签* 之间
+
+   *PS:* 某些 ~HTML~ 元素具有 *空内容*, 这些元素被称为 *空元素*. *空元素* 是在 *开始标签* 中关闭的.
+
+   *个人理解*: *HTML* 相当于限定了 *标签* 及 *属性* 的 *XML*, 这些标签和属性可以由浏览器进行解析并显示
+   相应的内容。
+           
