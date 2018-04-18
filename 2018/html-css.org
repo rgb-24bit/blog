@@ -1,0 +1,297 @@
+#+TITLE:      HTML & CSS 基础
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-04-17 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#html][HTML]]
+  - [[#语法规则][语法规则]]
+  - [[#部分标签][部分标签]]
+  - [[#部分属性][部分属性]]
+  - [[#字符实体][字符实体]]
+- [[#css][CSS]]
+  - [[#语法规则-1][语法规则]]
+  - [[#元素选择器][元素选择器]]
+  - [[#选择器分组][选择器分组]]
+  - [[#类选择器][类选择器]]
+  - [[#id-选择器][ID 选择器]]
+  - [[#属性选择器][属性选择器]]
+  - [[#后代选择器][后代选择器]]
+  - [[#子元素选择器][子元素选择器]]
+  - [[#相邻兄弟选择器][相邻兄弟选择器]]
+- [[#参考链接][参考链接]]
+
+* 简介
+  这段时间搞 ~Flask~, 发现前端方面的基础还是需要滴。
+
+  但是， 很明显， 前端的东西不少， ~HTML~, ~CSS~, ~JavaScript~ 都跑不了。
+
+  放到一块还挺麻烦。
+
+  看了不少教程， 发现对于我来说内容还是繁杂了一点， 所以决定先总结一下 ~HTML~ 和
+  ~CSS~ 方面较为基础的内容。
+
+* HTML
+  ~HTML~ 的全名是 *超文本标记语言(HyperText Markup Language)*.
+
+** 语法规则
+   ~HTML~ 的语法规则很简单：
+
+   #+BEGIN_SRC html
+     <tagname attribute="value">content</tagname>
+   #+END_SRC
+   
+   + 标签 :: ~HTML~ 元素由 *开始标签* 起始， *结束标签* 终止
+   + 属性 :: 大多数标签都可以拥有 *属性*
+   + 内容 :: 元素的内容位于 *开始标签* 和 *结束标签* 之间
+
+   *PS:* 某些 ~HTML~ 元素具有 *空内容*, 这些元素被称为 *空元素*. *空元素* 是在 *开始标签* 中关闭的.
+
+   *理解*: *HTML* 相当于限定了 *标签* 及 *属性* 的 *XML*. 限定的这部分标签和属性可以由浏览器进行解析并显示
+   相应的内容。
+
+** 部分标签
+   简单记录一部分标签的使用.
+
+   *注释*:
+   #+BEGIN_SRC html
+     <!-- comment -->
+   #+END_SRC
+
+   *<link>*: 定义文档与外部资源之间的关系
+   #+BEGIN_SRC html
+     <!-- css -->
+     <link rel="stylesheet" type="text/css" href="theme.css">
+
+     <!-- favicon -->
+     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+     <link rel="icon" href="favicon.ico" type="image/x-icon">
+   #+END_SRC
+
+   *PS:* 浏览器会自动获取网站根目录下的 ~favicon.ico~ 作为网站图标
+
+   *<style>*: 定义网页内容的样式
+   #+BEGIN_SRC html
+     <style>
+       body {background-color:yellow;}
+     </style>
+   #+END_SRC
+
+   *<meta>*: 定义网页的元数据
+   #+BEGIN_SRC html
+     <!-- 定义搜索引擎关键词 -->
+     <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
+
+     <!-- 定义描述内容 -->
+     <meta name="description" content="HTML">
+
+     <!-- 定义网页作者 -->
+     <meta name="author" content="rgb-24bit">
+
+     <!-- 每30秒钟刷新当前页面 -->
+     <meta http-equiv="refresh" content="30">
+
+     <!-- 定义字符集 -->
+     <meta charset="UTF-8">
+   #+END_SRC
+
+   *<script>*: 定义网页脚本
+   #+BEGIN_SRC html
+     <script src="https://code.jquery.com/jquery.js"></script>
+
+     <script>
+       document.write("script");
+     </script>
+   #+END_SRC
+
+** 部分属性
+   简单记录一部分属性的使用.
+
+   |---------+------------------------------------------------|
+   | 属性    | 描述                                           |
+   |---------+------------------------------------------------|
+   | ~class~   | 为 ~html~ 元素定义 *一个* 或 *多个* 类名             |
+   | ~id~      | 定义元素的 *唯一* ~id~                             |
+   | ~style~	 | 定义元素的行内样式, 优先级最高                 |
+   | ~title~   | 描述了元素的额外信息, 当鼠标放到元素上时会显示 |
+   |---------+------------------------------------------------|
+
+** 字符实体
+   简单记录常用的几个字符实体.
+
+   |----------+--------------|
+   | 文字字符 | 等价字符引用 |
+   |----------+--------------|
+   | "        | &quot;       |
+   | '        | &#39;        |
+   | >        | &gt;         |
+   | <        | &lt;         |
+   | &        | &amp         |
+   |----------+--------------|
+
+* CSS
+  *层叠样式表(Cascading Style Sheets) - CSS* 定义如何显示 ~HTML~ 元素。
+
+** 语法规则
+   ~CSS~ 的语法规则也很简单：
+   #+BEGIN_SRC css
+     selector {attribute: value;}
+   #+END_SRC
+
+   三个基本组成： *选择器*, *属性* 和 *属性的值*.
+
+   其中， 一个 *属性:值* 对构成一条声明， 一个选择器可以有多条声明， 每条声明用
+   分号 ~;~ 分隔。
+
+   #+BEGIN_SRC css
+     selector {
+         attributeA: value;
+         attributeB: value;
+         attributeC: value;
+     }
+   #+END_SRC
+
+   对于属性和值来说， 主要靠在使用中积累经验。 而 *选择器* 却是使用的
+   基础。
+
+   因此这里不会对 *属性* 和 *值* 做太多介绍。
+
+** 元素选择器
+   最基本的选择器， 又称为类型选择器。 格式如下：
+   #+BEGIN_SRC css
+     html {color:black;}
+   #+END_SRC
+
+   选择器为 ~HTML~ 标签的名字。
+
+** 选择器分组
+   总会有一些元素的样式是一样的， 这时如果单个设置样式费时费力。 而选择器的
+   *分组* 可以很好的解决这个问题。
+
+   #+BEGIN_SRC css
+     body, h2, p, table, th, td, pre, strong, em {color:gray;}
+   #+END_SRC
+
+   同一组的选择器用 *逗号* 分隔， 拥有相同的样式。
+
+   符号 ~*~ 是 *通配选择器*, 和通配符一样， 它可以代表所有的 ~HTML~ 元素。
+
+** 类选择器
+   *注意*: 不是类型选择器
+
+   ~HTML~ 元素就具有 ~class~ 属性， 我们可以通过这个属性来对特定类型的元素进行渲染。
+
+   #+BEGIN_SRC css
+     .class {attribute: value;}
+   #+END_SRC
+
+   *类选择器* 以 ~.~ 开头， 后面紧跟类名。
+
+   类选择器还可以和元素选择器结合， 定义某一类特定元素的样式：
+   #+BEGIN_SRC css
+     element.class {attribute: value;}
+   #+END_SRC
+
+   另外， 由于 *class* 属性的值可能不止一个， 所以还可以将多个类选择器链接在一起，
+   仅可以选择 *同时包含这些类名* 的元素（类名的顺序不限）。
+   #+BEGIN_SRC css
+     .classA.classB {attribute: value;}
+   #+END_SRC
+
+** ID 选择器
+   同 *类选择器* 相似， *ID 选择器* 通过元素的 *ID* 属性进行选择。
+
+   #+BEGIN_SRC css
+     #id {attribute: value;}
+   #+END_SRC
+
+   *ID 选择器* 由符号 ~#~ 开始。
+
+** 属性选择器
+   *属性选择器可以根据元素的属性及属性值来选择元素*.
+
+   #+BEGIN_SRC css
+     element[attribute="value"] {attribute: value};
+   #+END_SRC
+
+   属性选择器的构成相对复杂， 其中：
+   + *element*: 元素， 可选。 省略时代表所有定义了某属性的元素。
+   + *[attribute="value"]*: 属性及其值。 属性可以定义多个， 而值可以省略， 如：
+     #+BEGIN_SRC css
+       a[href][title] {color:red;}
+     #+END_SRC
+
+     属性值具有多种选择方式：
+     #+BEGIN_SRC css
+       [attribute] {attribute: value;}  /* 用于选取带有指定属性的元素 */
+
+       [attribute=value] {attribute: value;}  /* 用于选取带有指定属性和值的元素 */
+
+       [attribute~=value] {attribute: value;} /* 用于选取属性值中包含指定词汇的元素 */
+
+       [attribute|=value] {attribute: value;} /* 用于选取带有以指定值开头的属性值的元素，该值必须是整个单词 */
+
+       [attribute^=value] {attribute: value;} /* 匹配属性值以指定值开头的每个元素 */
+
+       [attribute$=value] {attribute: value;} /* 匹配属性值以指定值结尾的每个元素 */
+
+       [attribute*=value] {attribute: value;} /* 匹配属性值中包含指定值的每个元素 */
+     #+END_SRC
+
+** 后代选择器
+   *后代选择器可以选择作为某元素后代的元素*.
+
+   #+BEGIN_SRC css
+     selectorA selectorB {attribute: value};
+   #+END_SRC
+
+   在后代选择器中， 规定 *左边* 的选择器一端包括两个或多个用 *空格分隔* 的选择器。
+
+   例如：
+   #+BEGIN_SRC css
+     h1 em {color:red;}
+   #+END_SRC
+
+   表示只对 ~h1~ 元素中的 ~em~ 元素应用样式。
+
+   当然了， 选择器可以不只是元素选择器。
+
+** 子元素选择器
+   *子元素选择器只能选择作为某元素子元素的元素*.
+
+   语法格式为：
+   #+BEGIN_SRC css
+     selectorA > selectorB {attribute: value;}
+   #+END_SRC
+
+   选择器之间由 ~>~ 分隔。
+
+   *注*: 对于以下 ~HTML~ 文档来说， ~head~ 是 ~html~ 的子元素， 而 ~title~ 不是。是 *孙* 辈了。
+   #+BEGIN_SRC html
+     <html>
+       <head>
+         <title>HTML & CSS</title>
+       </head>
+       <body>
+         <p>HTML & CSS</p>
+       </body>
+     </html>
+   #+END_SRC
+
+** 相邻兄弟选择器
+   有了 *后代*, 有了 *子代*, 怎么能少了 *兄弟* 呢。
+
+   相邻兄弟选择器可选择紧接在另一元素后的元素，且二者有 *相同父元素*.
+
+   #+BEGIN_SRC css
+     selectorA + selectorB {attribute: value;}
+   #+END_SRC
+
+   选择器用 ~+~ 分隔。
+* 参考链接
+  + [[http://www.runoob.com/html/html-tutorial.html][HTML 教程 | 菜鸟教程]]
+  + [[http://www.runoob.com/css/css-tutorial.html][CSS 教程 | 菜鸟教程]]
+  + [[http://www.w3school.com.cn/html/index.asp][HTML 教程 | W3School]]
+  + [[http://www.w3school.com.cn/css/index.asp][CSS 教程 | W3School]]
+
