@@ -9,6 +9,7 @@
   - [[#格式化字符串语法][格式化字符串语法]]
   - [[#格式说明符][格式说明符]]
 - [[#使用-][使用 %]]
+- [[#update-2018-04-18][Update: 2018-04-18]]
 
 * 简介
   ~Python~ 目前有两种进行格式化字符串的方式：
@@ -308,5 +309,53 @@
   | ~s~          | 字符串， 使用 str() 转换任何 Python 对象                                    |
   | ~%~          | % 字符                                                                      |
   |------------+-----------------------------------------------------------------------------|
+ 
+* Update: 2018-04-18
+  这次更新是关于使用 ~str.format~ 的过程中包含 ~{}~ 的问题的。
 
-  
+  以前遇到过的一个 ~Bug~, 其中有一串代码大概是这样的：
+  #+BEGIN_SRC python
+    LOGIN_POST_DATA = r"""
+    {
+        "action": "login",
+        "username": "",
+        "password": "",
+        "ac_id": "2",
+        "user_ip": "{user_ip}",
+        "nas_ip": "",
+        "user_mac": "",
+        "save_me": "1",
+        "ajax": "1"
+    }
+    """.format(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  # format keyerror
+  #+END_SRC
+
+  当时偷懒没有用字典， 直接使用了 ~Json~ 字符串。
+
+  结果就是一运行就出现 ~Keyerror~.
+
+  当时一直不明白是什么原因， 后来只能用 ~replace~ 来替代 ~format~.
+
+  今天， 这个 ~Bug~ 的原因搞清楚了 ！
+
+  ~Json~ 啊！ 有 ~{}~ 啊 ！
+
+  改一下就好：
+  #+BEGIN_SRC python
+    LOGIN_POST_DATA = r"""
+    {{
+        "action": "login",
+        "username": "",
+        "password": "",
+        "ac_id": "2",
+        "user_ip": "{user_ip}",
+        "nas_ip": "",
+        "user_mac": "",
+        "save_me": "1",
+        "ajax": "1"
+    }}
+    """.format(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  # format keyerror
+  #+END_SRC
+
+  细节问题很重要 ！
+
