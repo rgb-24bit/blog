@@ -20,6 +20,10 @@
   - [[#后代选择器][后代选择器]]
   - [[#子元素选择器][子元素选择器]]
   - [[#相邻兄弟选择器][相邻兄弟选择器]]
+  - [[#伪类-和-伪元素][伪类 和 伪元素]]
+  - [[#盒子模型][盒子模型]]
+  - [[#positioning定位][Positioning(定位)]]
+  - [[#display-与-visibility][Display 与 Visibility]]
 - [[#参考链接][参考链接]]
 
 * 简介
@@ -150,6 +154,11 @@
          attributeB: value;
          attributeC: value;
      }
+   #+END_SRC
+
+   另外， 这是注释：
+   #+BEGIN_SRC css
+     /* comment */
    #+END_SRC
 
    对于属性和值来说， 主要靠在使用中积累经验。 而 *选择器* 却是使用的
@@ -289,6 +298,100 @@
    #+END_SRC
 
    选择器用 ~+~ 分隔。
+** 伪类 和 伪元素
+   *伪类用于向某些选择器添加特殊的效果*.
+
+   伪类的语法:
+   #+BEGIN_SRC css
+     selector : pseudo-class {attribute: value;}
+   #+END_SRC
+
+   *伪类* 在相应的事件发生时向 *被选择* 的元素添加 *样式*, 如：
+   + ~:link~ - 向未被访问的链接添加样式
+   + ~:visited~ - 向已被访问的链接添加样式
+   + ~:hover~ - 当鼠标悬浮在元素上方时，向元素添加样式
+   + ~:active~ - 向被激活的元素添加样式
+
+   *PS1:* ~a:hover~ 必须被置于 ~a:link~ 和 ~a:visited~ 之后，才是有效的
+
+   *PS2:* ~a:active~ 必须被置于 ~a:hover~ 之后，才是有效的
+
+   *伪元素用于向某些选择器设置特殊效果*.
+
+   伪元素的语法:
+   #+BEGIN_SRC css
+     selector:pseudo-element {attribute: value;}
+   #+END_SRC
+
+   *伪元素* 和 *伪类* 很相似， 当区别还是很明显的：
+   + *伪类* 为现有元素添加样式
+   + *伪元素* 可以添加 *新的* 元素， 这个元素可以包含自己的 *内容* 与 *样式*.
+
+   常见的两个伪元素：
+   + ~:before~ - 在元素的内容前面插入新内容
+   + ~:after~ - 在元素的内容之后插入新内容
+
+   例子：
+   #+BEGIN_SRC css
+     h1:before {
+         content:url(logo.gif);  /* 在每个 <h1> 元素前面插入一幅图片 */
+     }
+
+     h1:after {
+         content:url(logo.gif); /* 在每个 <h1> 元素后面插入一幅图片 */
+     }
+   #+END_SRC
+
+** 盒子模型
+   ~HTML~ 元素所占范围除了自身的 *内容* 以外， 还有 *内边距*, *边框* 和 *外边距*.
+
+   [[file:http://www.runoob.com/images/box-model.gif]]
+
+   + *Margin* (外边距) - 清除边框外的区域，外边距是透明的
+   + *Border* (边框) - 围绕在内边距和内容外的边框
+   + *Padding* (内边距) - 清除内容周围的区域，内边距是透明的
+   + *Content* (内容) - 盒子的内容，显示文本和图像
+
+   *注*: 元素的 ~width~ 和 ~height~ 定义的大小不是总大小， 总大小的计算还要加上其他内容
+   
+   + 总元素的宽度 = 宽度 + 左填充 + 右填充 + 左边框 + 右边框 + 左边距 + 右边距
+   + 总元素的高度 = 高度 + 顶部填充 + 底部填充 + 上边框 + 下边框 + 上边距 + 下边距
+
+** Positioning(定位)
+   可以通过 ~position~ 属性指定了元素的定位类型：
+
+   + static :: *HTML* 元素的默认值, 不会受到 top, bottom, left, right 影响
+   + fixed  :: 元素的位置相对于浏览器窗口是固定位置
+   + relative :: 元素的定位是 *相对其正常位置*
+
+                 例：
+                 #+BEGIN_SRC css
+                   #box_relative {
+                       position: relative;
+                       left: 30px;
+                       top: 20px;
+                   }
+                 #+END_SRC
+
+                 [[file:http://www.w3school.com.cn/i/ct_css_positioning_relative_example.gif]]
+
+   + absolute :: 素的位置相对于最近的已定位父元素，如果元素没有已定位的父元素，那么它的位置相对于 <html>
+
+                 例：
+                 #+BEGIN_SRC css
+                   #box_relative {
+                       position: absolute;
+                       left: 30px;
+                       top: 20px;
+                   }
+                 #+END_SRC
+
+                 [[file:http://www.w3school.com.cn/i/ct_css_positioning_absolute_example.gif]]
+
+** Display 与 Visibility
+   + ~visibility:hidden~ 可以隐藏某个元素，但隐藏的元素仍需占用与未隐藏之前一样的空间
+   + ~display:none~ 可以隐藏某个元素，且隐藏的元素不会占用任何空间
+
 * 参考链接
   + [[http://www.runoob.com/html/html-tutorial.html][HTML 教程 | 菜鸟教程]]
   + [[http://www.runoob.com/css/css-tutorial.html][CSS 教程 | 菜鸟教程]]
