@@ -333,5 +333,3 @@
        其中， ~classinfo~ 可以是 ~class~, ~type~, ~tuple~. ~tuple~ 可以包含多个 ~class~ 或 ~type~ 用于判断。
 
        可以通过 ~type(object) is type~ 的方式达到类似效果。
-
-  + locals() :: 
