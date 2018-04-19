@@ -1,4 +1,4 @@
-#+TITLE:      Python 内置函数
+#+TITLE:      Python 内置异常
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-02-18 周日>
@@ -6,6 +6,7 @@
 * 目录                                                    :TOC_4_gh:noexport:
 - [[#简介][简介]]
 - [[#常见异常][常见异常]]
+- [[#自定义异常][自定义异常]]
 - [[#python2-内置异常][Python2 内置异常]]
   - [[#完整异常列表][完整异常列表]]
   - [[#异常层次结构][异常层次结构]]
@@ -27,20 +28,94 @@
   |-------------------+-------------------------------------------------------------------------------------------|
   | 异常              | 描述                                                                                      |
   |-------------------+-------------------------------------------------------------------------------------------|
-  | AssertionError    | assert 语句失败                                                                           |
-  | AttributeError    | 试图访问一个对象没有的属性                                                                |
-  | IOError           | 输入/输出异常， 基本上是无法打开文件。                                                    |
-  | ImportError       | 无法引入模块或者包， 基本上是路径问题                                                     |
-  | IndentationError  | 语法错误， 代码没有正确对齐                                                               |
-  | IndexError        | 下标索引超出序列边界， 比如当 l 只有三个元素， 却试图访问 l[5]                            |
-  | KeyError          | 试图访问字典里不存在的键                                                                  |
-  | KerboardInterrupt | Ctrl + C 被按下                                                                           |
-  | NameError         | 使用一个还未被赋值予对象的变量                                                            |
-  | SyntaxError       | Python 代码非法， 代码不能解释                                                            |
-  | TypeError         | 传入对象类型与要求的不符                                                                  |
-  | UnboundLocalError | 试图访问一个还未被设置的局部变量， 基本上是由于另一个同名的全局变量，导致你以为正在访问它 |
-  | ValueError        | 传入一个调用者不期望的值， 即使值的类型是正确的                                           |
+  | ~AssertionError~    | assert 语句失败                                                                           |
+  | ~AttributeError~    | 试图访问一个对象没有的属性                                                                |
+  | ~IOError~           | 输入/输出异常， 基本上是无法打开文件。                                                    |
+  | ~ImportError~       | 无法引入模块或者包， 基本上是路径问题                                                     |
+  | ~IndentationError~  | 语法错误， 代码没有正确对齐                                                               |
+  | ~IndexError~        | 下标索引超出序列边界， 比如当 l 只有三个元素， 却试图访问 l[5]                            |
+  | ~KeyError~          | 试图访问字典里不存在的键                                                                  |
+  | ~KerboardInterrupt~ | Ctrl + C 被按下                                                                           |
+  | ~NameError~         | 使用一个还未被赋值予对象的变量                                                            |
+  | ~SyntaxError~       | Python 代码非法， 代码不能解释                                                            |
+  | ~TypeError~         | 传入对象类型与要求的不符                                                                  |
+  | ~UnboundLocalError~ | 试图访问一个还未被设置的局部变量， 基本上是由于另一个同名的全局变量，导致你以为正在访问它 |
+  | ~ValueError~        | 传入一个调用者不期望的值， 即使值的类型是正确的                                           |
   |-------------------+-------------------------------------------------------------------------------------------|
+
+* 自定义异常
+  定义自己的异常是很有用的， 能够提供更清楚的 *异常信息*, 也能添加内置异常不具有的功能。
+
+  首先， 自定义异常类应该总是继承自内置的 ~Exception~ 类， 
+  或者是继承自那些本身就是从 ~Exception~ 继承而来的类。
+
+  既然自定义异常类继承自 ~Exception~, 那么应该先了解一下 ~Exception~ 的内容：
+  #+BEGIN_SRC python
+    >>> help(Exception)
+    Help on class Exception in module builtins:
+
+    class Exception(BaseException)
+     |  Common base class for all non-exit exceptions.
+     |
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+  #+END_SRC
+
+  这里截取了一部分 ~Exception~ 的帮助文档， 可以看到， ~Exception~ 的参数包含：
+  ~*args~, ~**kwargs~.
+
+  先来测试一下这些参数的作用：
+  #+BEGIN_SRC python
+    >>> raise Exception('exception')
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    Exception: exception
+
+    >>> raise Exception('exception', 2)
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    Exception: ('exception', 2)
+
+    >>> raise Exception('exception', 2, name='Test')
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: exceptions.Exception does not take keyword arguments
+  #+END_SRC
+
+  这是测试过程， 很明显， ~Exception~ 可以接受任意数量的 *位置参数*, 而 *关键字* 参数不会被使用。
+
+  同时， 所有的参数会保存在名为 ~args~ 元组中：
+  #+BEGIN_SRC python
+    >>> try:
+    ...     raise Exception(1, 2, 3)
+    ... except Exception as ex:
+    ...     print(ex.args)
+    ...
+    (1, 2, 3)
+  #+END_SRC
+
+  现在， 可以来定义自己的异常了。
+
+  #+BEGIN_SRC python
+    class MyException(Exception):
+        """ My Exception."""
+        def __init(self, message, status, more=None):
+            Exception.__init__(self, message, status, more)
+            self.message = message
+            self.status = status
+  #+END_SRC
+
+  一个简单的自定义异常， 包含了 ~message~ 及 ~status~ 属性。
+  还有 ~more~ 参数， 可以通过 ~args~ 属性获取其值。
+
+  这样， 当遇到 ~MyException~ 时的处理方式可以更加丰富：
+  #+BEGIN_SRC python
+    try:
+        ...
+    except MyException as ex:
+        if ex.status > 500:
+            print(ex.message)
+  #+END_SRC
 
 * Python2 内置异常
 ** 完整异常列表
