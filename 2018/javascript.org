@@ -174,7 +174,7 @@
    这个对象具有一些方法及属性， 详情可以通过这个链接了解： [[https://developer.mozilla.org/zh-CN/docs/Web/API/Event#DOM_Event_interface][DOM Event 接口]].
 
 * Browser Object Model
-  *浏览器对象模型 BOM*, 我决定这是一个很有用的东西。
+  *浏览器对象模型 BOM*, 我觉得这是一个很有用的东西。
 
   通过这个模型我们可以获取 *浏览器* 的一些信息， 并通过 *浏览器* 完成一些操作。
 
