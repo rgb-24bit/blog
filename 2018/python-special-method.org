@@ -227,6 +227,9 @@
 
   + __delattr__(self, name) :: 定义删除对象的属性时的行为， 即 ~del obj.xxx~ 时会调用这个方法
 
+  对于这一部分的 *魔法方法*, 每个 *对象* 的 ~__dict__~ 属性应该是一个很重要的内容， 有兴趣可以
+  了解一下 ☞ [[https://docs.python.org/3/library/stdtypes.html?highlight=__dict__#object.__dict__][object.__dict__]].
+
 * 创建定制的序列
   ~Python~ 中的序列有 *可变* 和 *不可变* 的区分， 比如 ~tuple~ 和 ~list~.
 
