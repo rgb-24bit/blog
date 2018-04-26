@@ -316,6 +316,15 @@
                $ git branch -u origin/serverfix
              #+END_SRC
 
+             通过这样的方式可以获取远程分支但不会跟踪：
+             #+BEGIN_SRC bash
+               $ git checkout -b [branch]
+
+               $ git pull [remote] [branch]  # 获取远程分支内容但不跟踪
+
+               $ git push [remote] [branch]  # 任然可以将更新推送到远程分支
+             #+END_SRC
+
    + 删除远程分支 :: 运行带有 ~--delete~ 选项的 ~git push~ 命令来删除一个远程分支(从服务器删除)
                #+BEGIN_SRC bash
                  $ git push origin --delete serverfix
