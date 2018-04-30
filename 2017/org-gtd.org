@@ -17,6 +17,10 @@
 
 * 前言
   使用 ~Emacs Org~ 来搭建 ~GTD~ 系统是很安逸的， 这里简单分享一下自己的 ~GTD~ 系统的结构。
+  
+  强烈推荐一篇博客： [[http://blog.csdn.net/u014801157/article/details/24372485][Emacs月月积累（终结篇）：熟练使用org-mode管理日常事务]].
+
+  写的真的很棒， 很多细节内容在里面都有提及。
 
 * 文件结构
   #+BEGIN_EXAMPLE
