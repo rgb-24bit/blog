@@ -192,7 +192,7 @@
        如果返回 ~True~, ~object~ 仍然可能调用失败； 但如果返回 ~False~, 调用对象 ~ojbect~ 绝对不会成功。
 
        对于函数, 方法, lambda 函式, 类, 以及实现了 ~__call__~ 方法的类实例, 它都返回 ~True~.
-
+       
   + classmethod(function) :: 常用作装饰器， 修饰的方法可以通过 ~类名.方法名~ 的形式调用。
        修饰的方法需要有代表类的 ~cls~ 参数。
        #+BEGIN_SRC python
@@ -275,6 +275,12 @@
   + setattr(object, name, value) :: 设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 ~object.name = value~.
 
   + delattr(object, name) :: 删除对象的属性， 等价于 ~del object.name~.
+
+  + super([type[, object-or-type]]) :: 返回将方法调用委托给父类或同类类的代理对象, 常用来调用父类的方法。
+
+       ~Python2~ 中使用， 类需要时新式类， 即继承自 ~object~.
+
+       ~Python3~ 中可以用 ~super().xxx~ 代替 ~super(class, self).xxx~.
 
 * 命名空间相关
   ~Python~ 使用叫做 *命名空间* 的东西来记录变量的轨迹。命名空间是一个 *字典*, 
