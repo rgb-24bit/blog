@@ -1,0 +1,24 @@
+#+TITLE:      rgb-24bit's blog
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-05-02 周三>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#博客汇总][博客汇总]]
+- [[#相关理解][相关理解]]
+
+* 博客汇总
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python2.5-2.7.org][Python2.5-2.7的版本变化]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/pipenv.org][Pipenv 的使用]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-urllib.org][Python urllib]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-function.org][Python 内置函数]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-exception.org][Python 内置异常]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-format-string.org][Python 格式化字符串]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-coding.org][Python 编码问题]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-collection.org][Python 容器]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-type.org][Python 内置类型]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-special-method.org][Python 魔法方法]]
+  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-import.org][Python 导入相关]]
+
+* 相关理解
+
