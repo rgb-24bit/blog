@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018* 
+  - 05-02 -- [[file:python-var.org][Python 特殊变量]] ::
   - 04-22 -- [[file:2018/javascript.org][JavaScript 基础]] ::
   - 04-17 -- [[file:2018/html-css.org][HTML & CSS 基础]] ::
   - 04-15 -- [[file:2018/python-import.org][Python 导入相关]] ::

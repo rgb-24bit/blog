@@ -1,0 +1,113 @@
+#+TITLE:      Python 特殊变量
+#+AUTHOR:     rgb_24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-05-02 周三>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#保护成员和私有成员][保护成员和私有成员]]
+- [[#其他特殊对象][其他特殊对象]]
+
+* 前言
+  在 ~Python~ 中， 常可以看到以 *下划线* 开头的 *对象*.
+
+  这些对象包括 *变量*, *属性*, *类*, *方法*, *函数* 等。
+
+  这一篇博客主要梳理除 [[https://github.com/rgb-24bit/blog/blob/master/2018/python-special-method.org][魔法方法]] 以外的 *下划线* 开头的 *对象*.
+
+* 保护成员和私有成员
+  这两者通常是由我们自己定义的对象， 其中：
+  + 保护成员以 *单下划线* 开头， 如： ~_obj~
+  + 私有成员以 *双下划线* 开头， 图： ~__obj~
+
+  *保护成员* 不能用 ~from module import *~ 的方式导入， 但任然可以通过
+  ~import module~ 后， 使用 ~module._xxxx~ 的方式调用。
+
+  除此之外， *保护成员* 和公有成员的行为是一样的。
+
+  当然了， 既然都定义为 ~_xxxx~ 的形式了， 那么就不要随便调用了。
+
+  *私有成员* 只有类对象自己能访问， 子类不能访问。 如果硬是要访问， 可以
+  使用 ~_class__xxxx~ 的形式进行访问。
+
+  #+BEGIN_SRC python
+    In [1]: class Test(object):
+       ...:     _protect = 10
+       ...:     __private = 100
+       ...:
+       ...:     def __init__(self):
+       ...:         self._protect = 100
+       ...:         self.__private = 10
+       ...:
+
+    In [2]: t = Test()
+
+    In [3]: t._protect
+    Out[3]: 100
+
+    In [4]: t._private
+    ---------------------------------------------------------------------------
+    AttributeError                            Traceback (most recent call last)
+    <ipython-input-7-7eef0038cbda> in <module>()
+    ----> 1 t._private
+
+    AttributeError: 'Test' object has no attribute '_private'
+
+    In [5]: t._Test__private
+    Out[5]: 10
+  #+END_SRC
+
+* 其他特殊对象
+  形如 ~__xxxx__~ 的变量， 通常为 ~Python~ 内置的对象， 不建议自己命名这种类型的变量。
+
+  + ~__name__~ 这应该是使用最频繁的变量了， 代表 *模块* 或 *类* 的名称。 其中， 如果 *模块* 是被直接
+    执行的模块的话， 那么 ~__name__~ 的值为 ~__main__~.
+
+    #+BEGIN_SRC python
+      #- *- coding: utf-8 -*-
+
+      class Test(object):
+          pass
+
+
+      if __name__ == '__main__':
+          print(Test.__name__)
+    #+END_SRC
+
+    执行结果为：
+    #+BEGIN_SRC python
+      'Test'
+    #+END_SRC
+
+    *注意：* ~Test~ 的实例没有 ~__name__~ 属性。
+
+  + ~__dict__~ 这应该是使用第二频繁的变量了， 通常在定义属性操作相关的 *魔法方法* 的时候会用到。
+
+    这个变量或者说属性是一个对象的 *名称* 和 *值* 的字典对象。 包含了所有的属性及相应的值。
+
+    #+BEGIN_SRC python
+      >>> Test.__dict__
+      mappingproxy({'__module__': '__main__', 'num': 10, '__dict__': <attribute '__dict__' of 'Test' objects>, '__weakref__': <attribute '__weakref__' of 'Test' objects>, '__doc__': None})
+    #+END_SRC
+
+  + ~__doc__~ 可以通过这个属性为一个对象设置文档信息。
+    #+BEGIN_SRC python
+      >>> class Test(object):
+      ...     """ Test object."""
+      ...     pass
+      ...
+
+      >>> t = Test()
+      >>> t.__doc__ = 'Test object instance'
+
+      >>> Test.__doc__
+      ' Test object.'
+
+      >>> t.__doc__
+      'Test object instance'
+    #+END_SRC
+
+  + ~__path__~ 包含这个属性的 *模块* 会被当做一个 *包*.
+
+  + /The rest gradually added./
+
