@@ -4,21 +4,106 @@
 #+DATE:       <2018-05-02 周三>
 
 * 目录                                                    :TOC_4_gh:noexport:
-- [[#博客汇总][博客汇总]]
-- [[#相关理解][相关理解]]
+- [[#前言][前言]]
+- [[#成员相关][成员相关]]
+  - [[#保护成员和私有成员][保护成员和私有成员]]
+  - [[#内置成员][内置成员]]
+- [[#类属性和实例属性的理解][类属性和实例属性的理解]]
 
-* 博客汇总
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python2.5-2.7.org][Python2.5-2.7的版本变化]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/pipenv.org][Pipenv 的使用]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-urllib.org][Python urllib]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-function.org][Python 内置函数]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-exception.org][Python 内置异常]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-format-string.org][Python 格式化字符串]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-coding.org][Python 编码问题]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-collection.org][Python 容器]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-build-in-type.org][Python 内置类型]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-special-method.org][Python 魔法方法]]
-  + [[https://github.com/rgb-24bit/blog/blob/master/2018/python-import.org][Python 导入相关]]
+* 前言
+  这篇博客用于总结 ~Python~ 中较为零散的概念的理解。
 
-* 相关理解
+* 成员相关
+** 保护成员和私有成员
+   + *单下划线* 开头的对象为 *保护成员*, 如 ~_obj~.
 
+     *保护成员* 不能通过 ~from module impport *~ 的方式导入， 但可以在使用
+     ~import module~ 导入模块后， 通过 ~module._obj~ 的形式访问。
+
+     除此之外， *保护成员* 的行为与一般成员的行为 *无区别*.
+
+   + *双下划线* 开头的对象为 *私有成员*, 只能由 *类对象* 自身进行访问。 但可以通过 ~_class__obj~ 的
+     形式强行访问。
+
+   #+BEGIN_SRC python
+     In [1]: class Test(object):
+        ...:     def __init__(self):
+        ...:         self._protect = 10
+        ...:         self.__private = 10
+        ...:
+
+     In [2]: t = Test()
+
+     In [3]: t._protect
+     Out[3]: 10
+
+     In [4]: t.__private
+     ---------------------------------------------------------------------------
+     AttributeError                            Traceback (most recent call last)
+     <ipython-input-4-948bf5e358da> in <module>()
+     ----> 1 t.__private
+
+     AttributeError: 'Test' object has no attribute '__private'
+
+     In [5]: t._Test__private
+     Out[5]: 10
+   #+END_SRC
+
+** 内置成员
+   + ~__name__~ *模块* 或 *类* 的名称， 如果 *模块* 是被直接执行的模块， ~__name__~ 的值为 ~__main__~.
+
+     #+BEGIN_SRC python
+       In [7]: class Test(object):
+          ...:     pass
+          ...:
+
+       In [8]: Test.__name__
+       Out[8]: 'Test'
+     #+END_SRC
+
+     *注：* *类实例* 没有 ~__name__~ 属性。
+
+   + ~__dict__~ *对象* 的 *属性* 与 *值* 字典， 常在定义 *属性* 相关的 *魔法方法* 时使用。
+
+   + ~__doc__~ 定义一个 *对象* 的 *文档字符串*.
+
+   + ~__path__~ 包含这个属性的 *模块* 会被当做一个 *包*.
+
+* 类属性和实例属性的理解
+  搞清楚 *类属性* 和 *实例属性* 的关系之前， 需要明确的几点是：
+  1. ~Python~ 之中， 一切皆是对象
+  2. ~class~ 是 ~type~ 的实例
+  3. ~instance~ 是 ~class~ 的实例
+  4. *获取属性* 和 *设置属性* 的行为不同
+
+  #+BEGIN_SRC python
+    class OneClass(object):
+        num = 10
+
+
+    A = OneClass()
+    B = OneClass()
+    print(A.num, B.num, OneClass.num)
+
+    A.num += 2
+    print(A.num, B.num, OneClass.num)
+
+    OneClass.num += 2
+    print(A.num, B.num, OneClass.num)
+  #+END_SRC
+  
+  以上代码的执行结果为：
+  #+BEGIN_EXAMPLE
+    10 10 10
+    12 10 10
+    12 12 12
+  #+END_EXAMPLE
+
+  *理解*:
+  1. *类* 是一个对象， *实例* 也是一个对象
+  2. 通过 ~self.xxx = xxx~ 的方式设置的属性直接 *绑定* 到 *实例对象*
+  3. 直接在 *类* 内部定义的属性 *没有绑定* 到 *实例*, 而是 *绑定* 到 *类* 对象
+  4. 访问一个 *实例对象* 不存在的 *属性* 的时候会尝试从 *类对象* 回去那个属性
+  5. 设置 一个 *实例对象* 不存在的 *属性* 的值的时候， 会尝试从 *类对象* 获取属性的值，
+     然后将运算后的结果 *绑定* 到 *实例* 上， 使之成为 *实例属性*
+  
