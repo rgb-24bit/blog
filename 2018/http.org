@@ -193,4 +193,10 @@
 
 * 参考链接
   + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP][HTTP]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Overview][HTTP概述]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies][HTTP cookies]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers][HTTP Headers]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods][HTTP 请求方法]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status][HTTP 响应代码]]
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication][HTTP 身份验证]]
 
