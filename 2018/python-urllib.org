@@ -54,6 +54,35 @@
   | file  | 本地文件                          |
   |-------+-----------------------------------|
 
+  + Update 2018-05-03 :: 关于 ~URL~ 的编码。
+
+    1. ~URL~ 只能是 ~ASCII~ 字符
+
+    2. ~URL~ 中的非 ~ASCII~ 字符会转化为对应的 ~ASCII~ 形式
+
+    根据阮一峰老师的博客 [[http://www.ruanyifeng.com/blog/2010/02/url_encoding.html][关于URL编码]] 了解到：
+    1. *网址路径* 中用的是 ~utf-8~ 编码
+
+    2. *查询字符串* 中用的是操作系统的默认编码
+
+    3. ~GET~ 和 ~POST~ 方法用的是 *网页* 的编码
+
+    编程中需要注意的问题：
+    #+BEGIN_SRC python
+      # python2
+      from urllib import quote
+
+      # or python3
+      from urllib.parse import quote
+
+
+      # python2 中， quote 转化的编码就是 字符串 的编码
+      quote('str')
+
+      # python3 中， 通过 encoding 参数指定编码， 默认为 utf-8
+      quote('str', encoding='utf-8')
+    #+END_SRC
+
 * Python2.7
 ** 获取 ~URL~
    ~urllib~ 和 ~urllib2~ 都可以用于获取 ~URL~ 资源， 这里主要是 ~urllib2~ 和 ~HTTP~.
