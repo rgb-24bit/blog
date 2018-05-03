@@ -1,0 +1,196 @@
+#+TITLE:      HTTP 协议相关
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-05-03 周四>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#url-相关][URL 相关]]
+- [[#http-概览][HTTP 概览]]
+  - [[#http-报文][HTTP 报文]]
+  - [[#http-消息头][HTTP 消息头]]
+  - [[#http-cookie][HTTP Cookie]]
+  - [[#http-身份验证][HTTP 身份验证]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  最近在阅读源码的过程中， 因为对 ~HTTP~ 协议了解的太少， 使得源码的阅读难以推进。
+
+  所以暂停了源码的阅读， 腾出时间来解决阅读源码的过程中遇到的问题。
+
+  这篇博客是对 ~HTTP~ 协议及相关内容的简单总结。
+  
+  *PS:* 网络中传输的数据是 *二进制流*.
+
+* URL 相关
+  首先来看 *统一资源定位符 URL*.
+
+  常见的 *URL* 的格式是这样的：
+  #+BEGIN_EXAMPLE
+    scheme:[//host[:port]][/path][?query][#fragment]
+  #+END_EXAMPLE
+
+  还有一种不常见的：
+  #+BEGIN_EXAMPLE
+     scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
+  #+END_EXAMPLE
+
+  这种格式中的 ~user~ 和 ~password~ 是访问资源时需要的凭证信息， 因为安全问题几乎
+  被遗弃了。
+
+  其它组成的含义如下：
+  |----------+-------------------------------+------------------------|
+  | 名称     | 含义                          | 例子                   |
+  |----------+-------------------------------+------------------------|
+  | ~scheme~   | 协议类型                      | ~http~, ~https~, ~ftp~, ~file~ |
+  | ~host~     | 服务器地址                    | ~github.com~, ~127.0.0.1~  |
+  | ~port~     | 端口号(默认为 80)             | ~80~, ~8080~               |
+  | ~path~     | 资源层级 UNIX 文件路径        | ~/explore~               |
+  | ~query~    | 查询字符串(使用 & 链接不同项) | ~?game=snake&score=100~  |
+  | ~fragment~ | 页内链接                      | ~#top~                   |
+  |----------+-------------------------------+------------------------|
+
+  + URL 的编码 :: 由于 ~URL~ 只能包含部分 ~ASCII~ 字符， 所以其他字符都需要进行 [[https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81][百分号编码]].
+
+               *百分号编码* 类似于 ~%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81~, 通常为
+               字符对应的 ~UTF-8~ 字节序和转义字符 ~%~ 的组合。
+
+               当然， 也可能遇到特殊情况， 需要了解的可以看一下阮一峰老师的博客 [[http://www.ruanyifeng.com/blog/2010/02/url_encoding.html][关于URL编码]].
+        
+  更多的内容：
+  + [[https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E6%A0%87%E5%BF%97%E7%AC%A6][统一资源标志符]]
+  + [[https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6][统一资源定位符]]
+    
+* HTTP 概览
+  首先， ~HTTP~ 是一个协议， 主要规定了 *客户端* 和 *服务端* 之间数据传输的 *格式*.
+  
+  简单来说就是： ~HTTP~ 规定了 *客户端* 和 *服务端* 传输的数据的 *结构*, 而没有规定怎样
+  将数据传过去。
+  
+** HTTP 报文
+   *HTTP 报文* 在一定程度是就是 ~HTTP~ 协议的数据结构。
+
+   有两种 ~HTTP~ 报文的类型， 请求与响应， 每种都有其特定的格式：
+   + *请求* :: 由客户端向服务端发送。
+
+             [[file:https://mdn.mozillademos.org/files/13687/HTTP_Request.png]]
+
+   + 响应 :: 服务端对客户端请求的反馈。
+
+           [[https://mdn.mozillademos.org/files/13691/HTTP_Response.png]]
+  
+   [[file:https://mdn.mozillademos.org/files/13827/HTTPMsgStructure2.png]]
+
+   *请求* 和 *响应* 报文的结构都可以划分为 *Status line*, *Header*, *Body* 三个部分。
+
+   *请求* 的 *状态行* 包含了 *请求方法*, *资源路径* 和 *协议版本*.
+
+   *响应* 的 *状态行* 包含了 *协议版本*, *状态码* 和 *状态信息*.
+
+   常用的 *请求方法*:
+   |------+------------------|
+   | 方法 | 作用             |
+   |------+------------------|
+   | ~GET~  | 获取资源         |
+   | ~POST~ | 发送数据到服务端 |
+   |------+------------------|
+
+   创建的 *状态码*:
+   |--------+-----------------------+-------------------------------------+---|
+   | 状态码 | 状态信息              | 含义                                |   |
+   |--------+-----------------------+-------------------------------------+---|
+   |    200 | OK                    | 请求成功                            |   |
+   |    401 | Unauthorized          | 当前请求需要用户验证                |   |
+   |    403 | Forbidden             | 服务器已经理解请求， 但是拒绝执行它 |   |
+   |    404 | Not Found             | 请求资源不存在或已被墙              |   |
+   |    500 | Internal Server Error | 服务器遇到了不知道如何处理的情况    |   |
+   |--------+-----------------------+-------------------------------------+---|
+
+   *注：* 状态信息可以由服务端自己定义。
+
+** HTTP 消息头
+   *HTTP 消息头* 的格式为 ~Name: Value~.
+   
+   其中， ~Name~ 不区分大小写， ~Value~ 不能有 *换行符*. 同时 ~Value~ 前面的空格会被忽略。
+
+   *客户端* 和 *服务端* 可以通过 *消息头* 来传递额外的信息。
+
+   而 *消息头* 也使得 ~HTTP~ 协议易于扩展， 只要 *客户端* 和 *服务端* 在 *消息头* 上达成共识。
+
+   + User-Agent :: 用户代理
+
+   + Set-Cookie :: *响应* 头部， 设置 ~Cookie~
+
+   + Cookie :: *请求* 头部， 发送 ~Cookie~
+
+   + WWW-Authenticate :: *响应* 头部， 指定身份验证的方法
+
+   + Authorization :: *请求* 头部， 包含证明用户代理身份的凭证
+
+   + Proxy-Authenticate :: *响应* 头部， 指定身份验证的方法
+
+   + Proxy-Authorization :: *请求* 头部， 包含证明用户代理身份的凭证
+
+** HTTP Cookie
+   由于 ~HTTP~ 是 *无状态* 的协议， 因此无法直接判断两个 *请求* 之间的关系。
+
+   如果需要对 *请求* 进行辨识， 那么就可以使用 ~Cookie~ 来实现。
+
+   *服务端* 可以通过 *响应头* 来设置 *客户端* 要 *保存* 的 *Cookie* 信息， *客户端* 在发起新的
+   请求的时候会将 *Cookie* 信息一同发送。
+
+   这时 *服务端* 可以通过 *Cookie* 来判断 *请求*.
+
+   *Cookie* 和其他 *消息头* 的最大区别应该就是可以 *保存* 吧.
+
+   *Cookie* 的格式为 ~name=value~, 不同的键值使用 ~;~ 分隔。
+
+   如果要了解如何 *创建 Cookie*, 可以前往 ☞ [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies#%E5%88%9B%E5%BB%BACookie][创建Cookie]].
+
+   *Session*
+   
+   *Cookie* 都有了， *Session* 怎么能少呢 ？
+
+   *HTTP* 没有规定 *Session* 的实现， *Session* 通常是在 *服务端* 创建的某种 *数据结构*.
+
+   用于保存某些信息， 比如用户的在线信息。
+
+   当用户上线后创建一个 *Session* 保存用户的在线信息， 并在返回的 *响应头* 中包含与
+   这个 *Session* 相关的数据。
+
+   再次获得用户的 *请求* 后， 通过 *请求头* 的 *Cookie* 在 *Session* 中查询对应的用户信息。
+
+   如果存在就代表 *用户在线*, 不存在便可以要求用户 *登录*.
+
+   当然， 这些只是一种设想， 实际的实现肯定有所区别。
+
+** HTTP 身份验证
+   某些情况下， *客户端* 向 *服务端* 发送请求后， *服务端* 会返回 ~401~ 状态码， 说明需要验证消息，
+   并在 ~WWW-Authenticate~ 头中指定 *验证方式*.
+
+   [[file:https://mdn.mozillademos.org/files/14689/HTTPAuth.png]]
+
+   类似的， *服务端* 还可以返回 ~407~ 状态码说明需要 *代理认证*, 并在 ~Proxy-Authenticate~ 中
+   指明验证方式。
+
+   *客户端* 可以通过 ~Authorization~ 或 ~Proxy-Authorization~ 发送验证信息。
+
+   ~WWW-Authenticate~ 和 ~Proxy-Authenticate~ 的格式为：
+   #+BEGIN_EXAMPLE
+     WWW-Authenticate: <type> realm=<realm>
+     Proxy-Authenticate: <type> realm=<realm>
+   #+END_EXAMPLE
+   其中， ~<type>~ 指明验证方案的类型， ~realm~ 描述进行保护的区域.
+
+   *请求头* 的格式与之类似：
+   #+BEGIN_EXAMPLE
+     Authorization: <type> <credentials>
+     Proxy-Authorization: <type> <credentials>
+   #+END_EXAMPLE
+   ~<type>~ 为验证方案类型， ~<credentials>~ 为验证信息。
+   
+   对于验证方案的使用， 可以前往 ☞ [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication#%E5%9F%BA%E6%9C%AC%E9%AA%8C%E8%AF%81%E6%96%B9%E6%A1%88][基本验证方案]].
+
+* 参考链接
+  + [[https://developer.mozilla.org/zh-CN/docs/Web/HTTP][HTTP]]
+
