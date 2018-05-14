@@ -175,5 +175,6 @@
   但是， 这个计算次数还是让我很惊讶。轻轻松松上万。
 
 * 相关链接
+  + [[http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html][Bitcoin mining the hard way: the algorithms, protocols, and bytes.]]
   + [[https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d][How does blockchain really work? I built an app to show you.]]
   + [[http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433][区块链入门教程]]
