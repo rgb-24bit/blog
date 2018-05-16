@@ -1,0 +1,83 @@
+#+TITLE:      Python 闭包和装饰器
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-05-16 周三>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#闭包][闭包]]
+
+* 简介
+  ~Python~ 中， 适当的使用 *闭包* 和 *装饰器* 可以有效的提高编码效率， 同时
+  编写出更加简介的代码。
+
+  *闭包* 和 *装饰器* 的实现之间有着密切的关系， 所以这篇博客将 *闭包* 和 *装饰器*
+  的内容合在一起了。
+
+* 闭包
+  *闭包* 的概念可以通过查阅 [[https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)][维基百科]] 进行了解， 其中的一种说法感觉和 ~Python~ 中的
+  *闭包* 的实现更贴近：
+
+  + *闭包是由函数和与其相关的引用环境组合而成的实体*.
+
+  这种说法的理解可以通过代码来尝试理解：
+  #+BEGIN_SRC python
+    In [1]: def func(num):
+       ...:     def inner_func():
+       ...:         return num
+       ...:     return inner_func
+       ...:
+
+    In [2]: f = func(10)
+
+    In [3]: f
+    Out[3]: <function __main__.func.<locals>.inner_func>
+  #+END_SRC
+
+  这里实现了一个简单的 *闭包*, 调用函数 ~func~ 的时候会返回在 ~func~ 中定义的嵌套函数 ~inner_func~.
+
+  在函数 ~inner_func~ 中使用变量 ~num~, 这个变量来自函数 ~func~.
+
+  可以看到第三行的输出
+  #+BEGIN_EXAMPLE
+    <function __main__.func.<locals>.inner_func>
+  #+END_EXAMPLE
+
+  可以看到字段 ~func.<locals>.inner_func~, 这说明 ~inner_func~ 是位于 ~func~ 的局部命名空间中的。
+
+  返回的 ~inner_func~ 除了函数体本身外， 还与 ~func~ 的局部命名空间存在联系。
+
+  现在换一个方式来进行测试：
+  #+BEGIN_SRC python
+    In [7]: def func(lst=[]):
+       ...:     def inner_func():
+       ...:         lst.append(10)
+       ...:         return lst
+       ...:     return inner_func
+       ...:
+
+    In [8]: f1 = func()
+
+    In [9]: f2 = func()
+
+    In [10]: f1()
+    Out[10]: [10]
+
+    In [11]: f2()
+    Out[11]: [10, 10]
+
+    In [12]: id(f1) == id(f2)
+    Out[12]: False
+  #+END_SRC
+
+  ~Python~ 中， *函数* 也是一个 *引用类型* 的对象， 而 *引用类型* 的对象只会存在唯一的一个 *实体*.
+
+  因此函数 ~func~ 的 *局部命名空间* 也是唯一的。
+  
+  而 ~Out[12]~ 可以看到， ~f1~ 和 ~f2~ 并不是同一个对象， 而分别调用 ~f1~ 和 ~f2~ 的输出却产生了影响。
+
+  说明 ~f1~ 和 ~f2~ 共用函数 ~func~ 的局部命名空间， 即： 函数 ~f1~ 和 ~f2~ 是和函数 ~func~ 的局部命名空间组合
+  而成的实体。
+
+  *总结:* *闭包* 函数是 *函数体* 和定义该 *函数体* 的 *局部命名空间* 共同组成的。 *闭包* 函数可以调用该 *局部命名空间* 的内容。
+
