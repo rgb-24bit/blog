@@ -1,4 +1,4 @@
-#+TITLE:      rgb-24bit's blog
+#+TITLE:      Python 琐碎
 #+AUTHOR:     rgb_24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 #+DATE:       <2018-05-02 周三>
