@@ -75,8 +75,9 @@
     var myMother = new person("Steve", "Jobs", 48, "green");
   #+END_SRC
 
-  就不要纠结为什么定义 *对象构造器* 的方式那么眼熟， 毕竟 *一切皆是对象*.
-
+  只能说， ~JavaScript~ 的构造函数的定义方式实在是与众不同， 当初看的时候一时
+  还看不懂啥意思......
+  
   *PS*: 对象是 ~new~ 出来的， ~new~ 很重要！
 
 * HTML DOM
