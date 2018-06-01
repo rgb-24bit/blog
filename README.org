@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018* 
+  - 06-01 -- [[file:2018/c-pointer.org][C 语言指针和数组]] ::
   - 05-20 -- [[file:2018/python-regex.org][Python 正则表达式]] ::
   - 05-16 -- [[file:2018/python-decorator.org][Python 闭包和装饰器]] ::
   - 05-03 -- [[file:2018/http.org][HTTP 协议相关]] ::
