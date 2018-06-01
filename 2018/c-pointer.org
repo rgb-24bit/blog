@@ -182,21 +182,20 @@
   + 指针数组是一个数组， 这个数组保存的元素的类型是指针
   + 数组指针时应该指针， 这个指针指向的对象是一个数组
 
- 通常来说， 指针数组使用如下方式声明：
- #+BEGIN_SRC C
-   int* prt_arr[4];
- #+END_SRC
+  通常来说， 指针数组使用如下方式声明：
+  #+BEGIN_SRC C
+    int* prt_arr[4];
+  #+END_SRC
 
- 声明一个数组 ~ptr_arr~, 保存的元素类型为 ~int*~.
+  声明一个数组 ~ptr_arr~, 保存的元素类型为 ~int*~.
 
- 而数组指针使用下面的方式声明：
- #+BEGIN_SRC C
-   int (*arr_ptr)[3];
- #+END_SRC
+  而数组指针使用下面的方式声明：
+  #+BEGIN_SRC C
+    int (*arr_ptr)[3];
+  #+END_SRC
 
- 声明一个指针 ~arr_ptr~, 指向的对象是一个拥有三个元素的 *数组*.
+  声明一个指针 ~arr_ptr~, 指向的对象是一个拥有三个元素的 *数组*.
 
 * 参考链接
   + [[http://www.runoob.com/w3cnote/c-pointer-detail.html][C 指针详解]]
   + [[http://home.netcom.com/~tjensen/ptr/pointers.htm][A TUTORIAL ON POINTERS AND ARRAYS IN C]]
-
