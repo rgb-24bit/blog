@@ -1,0 +1,172 @@
+#+TITLE:      Python 描述器简述
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-06-16 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#描述器][描述器]]
+- [[#描述器的使用][描述器的使用]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  前端时间在阅读 [[https://github.com/faif/python-patterns][python-patterns]] 的源码的时候， 其中一个模式的实现使用到了 *描述器*.
+
+  当时看到诸如 ~__get__~ 的方法的时候， 还以为很简单， 毕竟之前已经整理学习过一次 [[https://github.com/rgb-24bit/blog/blob/master/2018/python-special-method.org][Python 魔法方法]].
+
+  然而， 事实就是， 看不懂 ！！！
+  
+  经历一番研究后， 对 *描述器* 的理解总算有了一些眉目， 剩下的更多的是需要实践操作中进行理解。
+
+  当然， 我不觉得目前我需要在什么程序中用到描述器......
+
+  为了不至于忘了描述器是怎么一回事， 我觉得有必要用这篇博客记录下来。
+
+* 描述器
+  和描述器密切相关的魔法方法有四个， 其中： ~__get__~, ~__set__~ 和 ~__delete__~ 是描述器协议的组成部分。
+
+  而 ~__getattribute__~ 影响 *描述器* 的调用。
+
+  理解 *描述器* 的关键点在于 ~__getattribute__~, 如果你不清楚 ~__getattribute__~ 的作用， 那么请记住：
+
+  ~__getattribute__~ 是 ~Python~ 在获取 *对象属性* 时调用的方法， 原型为： ~__getattribute__(self, name)~.
+  
+  其中 ~name~ 是要获取的属性的名称， 而该方法的 *返回值* 就是获取的属性的值。
+
+  在 *描述器* 的 [[https://docs.python.org/3/howto/descriptor.html][官方教程]] 中有这样一段代码， 大致告诉了我们 *描述器* 是怎么一回事：
+  #+BEGIN_SRC python
+    def __getattribute__(self, key):
+        "Emulate type_getattro() in Objects/typeobject.c"
+        v = object.__getattribute__(self, key)
+        if hasattr(v, '__get__'):
+           return v.__get__(None, self)
+        return v
+  #+END_SRC
+
+  通过这段代码可以看到， 当我们尝试去获取属性 ~key~ 的值的时候， ~__getattribute__~ 会尝试判读获取到
+  的值 ~v~ 是否存在属性 ~__get__~.
+
+  如果存在， 就将返回 ~v.__get__(None, self)~ 的值， 否则返回 ~v~.
+
+  这一段很关键， 告诉了我们非常重要的一件事： *描述器* 不是在获取 *描述器属性* 时调用的， 而是在 *获取描述器* 时调用的。
+
+  先看代码：
+  #+BEGIN_SRC python
+    class Descriptor(object):
+        def __get__(self, obj, obj_type):
+            print('call __get__')
+            return 0
+
+
+    class Test(object):
+        descriptor = Descriptor()
+
+    Test.descriptor
+  #+END_SRC
+
+  上述代码的输出为：
+  #+BEGIN_EXAMPLE
+    call __get__
+  #+END_EXAMPLE
+
+  可以看到， 获取 ~Test~ 的 ~descriptor~ 属性时， ~Python~ 发现 ~descriptor~ 是一个 *描述器*, 于是调用了这个描述器的 ~__get__~ 方法。
+
+  当然， 上述代码是对于 *类* 来说的， 描述器的调用在 *实例* 和 *类* 上存在一定的区别。
+
+  在说的这个区别前， 需要了解的一个概念是 *描述器* 的类型：
+  + 资料描述器： 同时定义了 ~__get__~ 和 ~__set__~ 方法的描述器是资料描述器
+  + 非资料描述器： 仅定义了 ~__get__~ 方法的描述器是非资料描述器
+
+  这两种描述器的区别主要在于 *调用优先级* 的区别。
+
+  假设存在 ~obj.x~ 的调用， 其中 ~x~ 是一个 *描述器*:
+  + 如果 ~obj~ 是一个 *实例*, 那么调用顺序依次为： *资料描述器* -> *实例字典* -> *非资料描述器*.
+
+    如果 ~obj~ 的实例属性中存在和 ~x~ 同名的 *属性*, 同时 ~x~ 是一个 *非资料描述器*, 那么 ~obj.x~ 获取的会是
+    *实例属性* 的值。 反之， 如果 ~x~ 是一个 *资料描述器*, 那么获取的会是这个 *资料描述器* 的值。
+
+  + 如果 ~obj~ 是一个 *类*, 那么 ~obj.x~ 的调用等价于之前的那段代码：
+    #+BEGIN_SRC python
+      def __getattribute__(self, key):
+          "Emulate type_getattro() in Objects/typeobject.c"
+          v = object.__getattribute__(self, key)
+          if hasattr(v, '__get__'):
+             return v.__get__(None, self)
+          return v
+    #+END_SRC
+
+  因此， 使用 *描述器* 的时候， 需要分清： 类、 实例、 资料描述器、 非资料描述器。
+
+  *注：* 描述器的调用是因为 ~__getattribute__~, 重写 ~__getattribute__~ 会影响描述器的正常调用。
+
+* 描述器的使用
+  描述器的方法原型为：
+  #+BEGIN_EXAMPLE
+    descr.__get__(self, obj, obj_type) --> value
+
+    descr.__set__(self, obj, value) --> None
+
+    descr.__delete__(self, obj) --> None
+  #+END_EXAMPLE
+
+  其中， ~obj~ 代表的是 *实例*, 如果描述器的拥有者是 *类*, 那么 ~obj~ 就为 ~None~.
+
+  ~obj_type~ 代表的就是 *类*, 而 ~value~ 就是你要设置的值。
+
+  对于描述器的使用场景， 我编写程序还没遇到过需要使用描述器的地方， 只能拿教程里的
+  一个例子来说明了：
+  
+  #+BEGIN_SRC python
+    class Property(object):
+        "Emulate PyProperty_Type() in Objects/descrobject.c"
+
+        def __init__(self, fget=None, fset=None, fdel=None, doc=None):
+            self.fget = fget
+            self.fset = fset
+            self.fdel = fdel
+            self.__doc__ = doc
+
+        def __get__(self, obj, objtype=None):
+            if obj is None:
+                return self
+            if self.fget is None:
+                raise AttributeError, "unreadable attribute"
+            return self.fget(obj)
+
+        def __set__(self, obj, value):
+            if self.fset is None:
+                raise AttributeError, "can't set attribute"
+            self.fset(obj, value)
+
+        def __delete__(self, obj):
+            if self.fdel is None:
+                raise AttributeError, "can't delete attribute"
+            self.fdel(obj)
+
+        def getter(self, fget):
+            return type(self)(fget, self.fset, self.fdel, self.__doc__)
+
+        def setter(self, fset):
+            return type(self)(self.fget, fset, self.fdel, self.__doc__)
+
+        def deleter(self, fdel):
+            return type(self)(self.fget, self.fset, fdel, self.__doc__)
+  #+END_SRC
+
+  上述代码是内置函数 ~property~ 的一个等价实现， 至于 ~property~ 的作用我想不需要
+  我多说了。
+
+  简单的理解代码：
+  + 构造函数， 当使用 ~property~ 装饰一个方法时会被调用， 装饰的方法会作为 ~fget~
+    传入， 然后被装饰的方法变成了一个资料装饰器 - ~Property~ 的实例。
+
+  + 当调用 ~obj.func~ 时， 这个 ~func~ 是一个 *资料装饰器*, 因此会调用 ~Property~ 的 ~__get__~ 方法。
+
+  emmm, 剩下的代码就很简单了。
+
+  最后， _描述器很强大， 使用请谨慎_.
+
+* 参考链接
+  + [[https://docs.python.org/3/howto/descriptor.html][Descriptor HowTo Guide]]
+  + [[http://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html][Python描述器引导]]
+
