@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018* 
+  - 06-17 -- [[file:2018/about-note.org][关于笔记的那些事儿]] ::
   - 06-16 -- [[file:2018/python-descriptor.org][Python 描述器简述]] ::
   - 06-01 -- [[file:2018/c-pointer.org][C 语言指针和数组]] ::
   - 05-20 -- [[file:2018/python-regex.org][Python 正则表达式]] ::
