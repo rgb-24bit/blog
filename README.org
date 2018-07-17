@@ -11,8 +11,6 @@
   - 05-16 -- [[file:2018/python-decorator.org][Python 闭包和装饰器]] ::
   - 05-03 -- [[file:2018/http.org][HTTP 协议相关]] ::
   - 05-02 -- [[file:2018/python-trivial.org][Python 琐碎]] ::
-  - 04-22 -- [[file:2018/javascript.org][JavaScript 基础]] ::
-  - 04-17 -- [[file:2018/html-css.org][HTML & CSS 基础]] ::
   - 04-15 -- [[file:2018/python-import.org][Python 导入相关]] ::
   - 04-03 -- [[file:2018/python-special-method.org][Python 魔法方法]] ::
   - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] ::
