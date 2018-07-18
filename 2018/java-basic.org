@@ -8,6 +8,12 @@
 - [[#语法无关内容][语法无关内容]]
 - [[#原始数据类型和引用][原始数据类型和引用]]
 - [[#数组和字符串][数组和字符串]]
+- [[#继承和多态][继承和多态]]
+- [[#重载][重载]]
+- [[#抽象类][抽象类]]
+- [[#接口][接口]]
+- [[#异常][异常]]
+- [[#结尾][结尾]]
 
 * 前言
   本篇博客主要是对 ~Java~ 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容
@@ -144,3 +150,154 @@
     12345true3.4Test@15db9742
   #+END_EXAMPLE
 
+* 继承和多态
+  ~Java~ 中的继承机制并不复杂， 一般语法就是 ~class A extends B~.
+
+  一些基本规则和其他语言也差不多， 比如子类可以继承父类的公有或保护成员等。
+
+  但是也还有一些我在其他语言中没有接触到的东西：
+  + 可以通过将类声明为 ~final~ 的或者让类只拥有 ~private~ 的构造方法可以让类无法继承
+ 
+  *PS:* 只有 ~private~ 的构造方法的类也不能实例化
+
+  同时， 子类可以覆盖父类的 *方法*, 要求是：
+  1. 要覆盖的方法的参数和返回值类型都必须和父类的相同
+  2. 不能降低方法的存取权限， 只能保持一样或更加开放
+
+  #+BEGIN_SRC java
+    public class Parent {
+      public void method() {}
+    }
+
+    public class Child extends Parent {
+      @Override
+      public void method() {}
+    }
+  #+END_SRC
+
+  如上， ~Child~ 继承并覆盖了父类的 ~method~, ~@Override~ 是一个注释类， 不要也没有问题， 但是加上更清楚。
+
+  *PS:* ~java~ 不允许多重继承， 也就是说一个类只能继承一个类
+
+  对于 *多态*, 其实并不复杂， 简单的说的话就是允许 *父类类型* 的引用引用 *子类类型* 的对象。
+
+  #+BEGIN_SRC java
+    Parent obj = new Child();
+  #+END_SRC
+
+  就是这样， 这就是多态， 在函数参数， 赋值， 返回值等地方都可以使用多态。
+
+  多态使用中需要注意的问题：
+  + 父类类型的引用只能调用父类中存在的那些方法， 不能调用子类中新增的方法
+
+  编译器根据 *引用类型* 来判断有哪些 ~method~ 可以调用， 而不是 ~Object~ 实际的类型。
+
+* 重载
+  首先需要明白的一点是： *重载不是多态*.
+
+  重载运行一个类中存在两个 *名称* 相同的方法， 这两个方法的 *参数* 必然不一样。
+
+  重载的基本规则：
+  1. 可以修改返回值类型
+  2. 不能只修改返回值类型
+  3. 可以修改存取权限
+
+  如果你只修改了参数的 *名字* 而没有更改 *类型* 或 *顺序* 或 *数量* 是没有用的， 编译器不关心参数的名字。
+
+* 抽象类
+  假如你希望一个 *方法* 必须被子类覆盖， 那么你可以用 ~abstract~ 这个关键字来修饰它。
+
+  *PS:* 可以通过将子类也声明为 ~abstract~ 的而不去实现抽象方法， 放到这个子类的子类去实现（迟早都要实现的）
+
+  但是， 只有 *抽象类* 才能拥有 *抽象方法*.
+
+  *抽象方法* 不能有实体， 需要这样定义：
+  #+BEGIN_SRC java
+    public abstract class Example {
+      public abstract method();
+    }
+  #+END_SRC
+
+  你需要省略抽象方法的 *方法主体*.
+
+  *PS:* 只有抽象方法允许这样做， 其他的方法和类的定义， 既是主体为空也必须写出来， 不能省略 ~{}~
+
+  而 *抽象类* 不能被实例化， 但是你依然可以在抽象类中定义 *构造方法*, 这些构造方法绘制子类实例化时调用。
+
+  *子类* 实例化时， 会先调用 *父类* 的构造方法， 然后在调用自己的。
+
+* 接口
+  *接口不是类*.
+
+  由于 ~java~ 不允许多重继承， 因此需要一些特殊的方式来扩展 ~java~ 的类型系统。
+
+  而 *接口* 可以起到这一作用， 虽然 *接口不是类*, 但是 *接口* 可以使用多态。
+
+  #+BEGIN_SRC java
+    public interface Pet {
+      void beFriendly();
+      void play();
+    }
+
+    public class A implements Pet {
+      public void beFriendly() {}
+      public void play() {}
+    }
+
+    Pet p = new A();  // 多态的使用
+  #+END_SRC
+
+  接口的声明方式和 *类* 很相似， 但是两者是不同的。 同时 *接口* 内部的方法默认为 ~public abstract~ 型的。
+
+  *实现接口* 的类必须实现 *接口* 中定义的方法， 和继承不一样， 一个类可以实现 *多个接口*.
+
+  #+BEGIN_SRC java
+    public class A implements IA, IB, IC {}
+  #+END_SRC
+
+* 异常
+  ~java~ 中使用 ~throw~ 抛出异常， 使用 ~throws~ 声明要抛出的远程， 使用 ~try/catch~ 捕获处理异常。
+
+  所有的异常都是 ~Exception~ 的子类， 除了 ~RuntimeException~ 及其子类类型的异常以外， 其他类型的异常都要
+  求捕获处理
+
+  #+BEGIN_SRC java
+    public class Example {
+      public void method() throws ExceptionA, ExceptionB {
+        throw ExceptionA();
+        throw ExceptionB();
+      }
+    }
+  #+END_SRC
+
+  这是声明可能要抛出的异常的方式， 如果 ~ExceptionA~ 是 ~ExceptionB~ 的父类， 那么可以只声明 ~ExceptionA~.
+
+  当你在其他方法中使用 ~Example.method~ 时， 你必须使用 ~try/catch~ 捕获可能要抛出的异常并进行处理。
+
+  #+BEGIN_SRC java
+    try {
+      e = new Example();
+      e.method();
+    } catch (ExcepthonA ex) {
+    } catch (ExcepthonB ex) {
+    }
+  #+END_SRC
+ 
+  如果你不想自己处理异常， 你也可以将可能要抛出的异常写在你的方法声明上， 这样， 你就可以让你的函数的调用者去处理这些异常了 @_@
+
+  #+BEGIN_SRC java
+    public void myMethod() throws ExceptionA, ExceptionB {
+      e = new Example();
+      e.method();
+    }
+  #+END_SRC
+
+  另外， ~try/catch~ 语句后还可以接 ~finally~ 块， ~finally~ 块中的内容必然会执行， 哪怕 ~try/catch~ 中存在 ~return~ 语句。
+  
+* 结尾
+  本来说大致看了 ~java~ 基础后感觉有点乱， 准备通过这篇博客理一下， 结果， 突然就通了 (｀・ω・´)
+
+  然后就咸鱼了 <・)))><<
+  
+  剩下的内容慢慢补充 (￣▽￣)／
+  
