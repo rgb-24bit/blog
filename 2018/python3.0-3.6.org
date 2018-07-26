@@ -1,0 +1,205 @@
+#+TITLE:      Python3.0-3.6的版本变化
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+
+* Table of Contents                                       :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#python30][Python3.0]]
+  - [[#简单的变化][简单的变化]]
+  - [[#语法的变化][语法的变化]]
+    - [[#新语法][新语法]]
+    - [[#改动的语法][改动的语法]]
+  - [[#剩下的变化][剩下的变化]]
+- [[#相关链接][相关链接]]
+
+* 前言
+  我记得上次整理 ~2.5-2.7~ 的版本变化的时候还是寒假， 结果这个暑假有轮到 ~3.0-3.6~ 了。
+
+  虽然已经用了一段时间的 ~Python3~ 了， 感觉也还可以， 但是还是没有对 ~Python3~ 的新特性进行系统的了解。
+
+  前段时间 ~Python3.7~ 横空出世， 看了看我电脑上的 ~Python3.6~, 觉得有必要对 ~Python3~ 的特性进行一下了解了。
+
+  ~3.0-3.6~ 一共七个版本， 估计要花不少时间， 准备慢慢搞了， 一天弄一点。
+
+* Python3.0
+** 简单的变化
+   + *Print Is A Function*
+
+     ~print~ 现在是一个 ~function~ 而不是一个关键字了， 对于这个变化我只能说 ⑥
+
+   + *Views And Iterators Instead Of Lists*
+
+     某些接口的返回值由 ~List~ 替换为了 ~View~ 或 ~Iterators~:
+     + 字典 ~dict~ 的方法 ~dict.keys()~, ~dict.items()~ 和 ~dict.values()~ 现在返回的是 ~View~ 而不是 ~List~ 了
+
+     + 内置函数 ~map()~ 和 ~filter()~ 现在返回 ~Iterators~ 而不是返回 ~List~
+
+     + ~range()~ 的行为变得和 ~xrange()~ 一样， 而 ~xrange()~ 惨遭移除 QAQ
+
+     + ~zip()~ 现在返回的也是 ~Iterators~ 了
+
+     感觉这些变化适应了就挺好的， 还可以在一定程度上提升 ~Python~ 的性能， 就是苦了那些需要兼容 ~Python2~ 的程序 @_@
+
+   + *Ordering Comparisons*
+
+     + 比较操作符 ~<~, ~<=~, ~>=~ 和 ~>~ 现在比较两个无法比较的对象时会引发 ~TypeError~, 比如 ~0 > None~ 之类的操作。 不包括 ~!=~ 和 ~==~
+       这两个操作符。
+
+       ~Python2~ 居然可以这样比较......
+
+     + 内置函数 ~builtin.sorted()~ 和 ~list.sort()~ 不在支持 ~cmp~ 参数。
+
+       让坑过......
+
+     + 不在支持 ~cmp()~ 和 ~__cmp__()~, 现在使用 ~__lt__()~ 进行排序， ~__eq__()~ 和 ~__hash__()~ 用于比较。
+
+       这个没啥存在感 @_@
+
+   + *Text Vs. Data Instead Of Unicode Vs. 8-bit*
+
+     老话题了， ~byte~ 变成了 ~unicode~, 不过用起来感觉不错
+
+** 语法的变化
+*** 新语法
+    + [[https://www.python.org/dev/peps/pep-3107/][PEP 3107 -- Function Annotations]]
+      
+      现在函数的参数和返回值都可以有注释了， 但是貌似没看到有人用， 有兴趣的可以了解一下：
+      #+BEGIN_SRC python
+        def compile(source: "something compilable",
+                    filename: "where the compilable thing comes from",
+                    mode: "is this a single statement or a suite?"):
+            ...
+
+        def haul(item: Haulable, *vargs: PackAnimal) -> Distance:
+            ...
+      #+END_SRC
+
+    + [[https://www.python.org/dev/peps/pep-3102/][PEP 3102 -- Keyword-Only Arguments]]
+
+      #+BEGIN_SRC python
+        def compare(a, b, *ignore, key=None):
+            if ignore:  # If ignore is not empty
+                raise TypeError
+      #+END_SRC
+      
+      类似上面代码的代码现在可以用如下方式代替：
+      #+BEGIN_SRC python
+        def compare(a, b, *, key=None):
+            ...
+      #+END_SRC
+
+    + [[https://www.python.org/dev/peps/pep-3104/][PEP 3104 -- Access to Names in Outer Scopes]]
+
+      新的关键字 ~nonlocal~, 可以声明一个变量不是本地变量， 具体使用可以去看文档。
+
+    + [[https://www.python.org/dev/peps/pep-3132/][PEP 3132 -- Extended Iterable Unpacking]]
+
+      扩展的可迭代包， 原来这样的语法是 ~3.0~ 出来的：
+      #+BEGIN_SRC python
+        (a, *rest, b) = range(5)
+      #+END_SRC
+
+      其实感觉用的也不多， 但是确实是一个很不错的特性
+
+    + [[https://www.python.org/dev/peps/pep-0274/][PEP 274 -- Dict Comprehensions]]
+
+      *字典推导式* 的正确证明， 莫非当初只是提出了 ~PEP 274~ 但一时没实现 ？
+
+      反正感觉编写文档的作者挺搞笑的 <_<
+
+    + *集合字面值*
+
+      也就是说类似下面的字面值表示一个集合：
+      #+BEGIN_SRC python
+        {1, 2}
+      #+END_SRC
+
+      同时， *集合推导式* 也自然而然的出现了：
+      #+BEGIN_SRC python
+        {x for x in stuff} 
+      #+END_SRC
+
+    + *新的八进制字面值*
+
+      类似 ~0o720~ 的数字代表八进制数字， 早在 ~2.6~ 就有了
+
+    + *新的二进制字面值*
+
+      类似 ~0b1010~ 的数字代表二进制数字， 也是 ~2.6~ 就有了， 同时新增内置函数 ~bin()~
+
+    + *字节字符串*
+
+      现在使用前导字符 ~b~ 或 ~B~ 来表示一个字节字符串：
+      #+BEGIN_SRC python
+        b'123456'
+      #+END_SRC
+
+      同时， 新增内置函数 ~bytes()~
+
+*** 改动的语法
+    + *新的 ~raise~ 语法*
+
+      #+BEGIN_SRC python
+        raise [expr [from expr]]
+      #+END_SRC
+
+      额， 感觉没人用的样子
+
+    + 这些东西现在是保留字： ~True~, ~False~, ~None~, ~with~, ~as~
+
+    + [[https://www.python.org/dev/peps/pep-3110/][PEP 3110 -- Catching Exceptions in Python 3000]]
+
+      就是这个：
+      #+BEGIN_SRC python
+        try:
+            try_body
+        except E, N:
+            except_body
+      #+END_SRC
+
+      变成了：
+      #+BEGIN_SRC python
+        try:
+            try_body
+        except E as N:
+            except_body
+      #+END_SRC
+
+    + [[https://www.python.org/dev/peps/pep-3115/][PEP 3115 -- Metaclasses in Python 3000]]
+
+      元类的指定方式变了：
+      #+BEGIN_SRC python
+        # Python2
+        class C:
+            __metaclass__ = M
+            ...
+
+
+        # Python3
+        class C(metaclass=M):
+            ...
+      #+END_SRC
+
+      贼坑， 如果要兼容可以使用 ~with_metaclass~
+
+** 剩下的变化
+   这次的整理主要是了解一些新特性和常用的变化， 对于哪些说出去基本没人知道的特性的变化还是算了吧......
+
+   因此， 剩下的变化我选择省略， 如果你有兴趣的话， 可以到 [[https://docs.python.org/3/whatsnew/3.0.html][官方文档]] 了解一波。
+
+   另外， 这里有一个很有趣的事情：
+
+   [[file:img/PEP-3101.png]]
+
+
+   #+BEGIN_EXAMPLE
+     Python 3.6.2 (v3.6.2:5fd33b5, Jul  8 2017, 04:14:34) [MSC v.1900 32 bit (Intel)] on win32
+     Type "help", "copyright", "credits" or "license" for more information.
+     >>> "%s" % 123456
+     '123456'
+   #+END_EXAMPLE
+
+   @_@
+
+* 相关链接
+  + [[https://docs.python.org/3/whatsnew/3.0.html][What’s New In Python 3.0]]

@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 07-26 -- [[file:2018/python3.0-3.6.org][Python3.0-3.6的版本变化]] ::
   - 07-17 -- [[file:2018/java-basic.org][Java 基础梳理]] ::
   - 07-01 -- [[file:2018/os-exception.org][操作系统之异常控制流]] ::
   - 06-17 -- [[file:2018/about-note.org][关于笔记的那些事儿]] ::
