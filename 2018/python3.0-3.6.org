@@ -10,6 +10,8 @@
     - [[#新语法][新语法]]
     - [[#改动的语法][改动的语法]]
   - [[#剩下的变化][剩下的变化]]
+- [[#python31][Python3.1]]
+- [[#python32][Python3.2]]
 - [[#相关链接][相关链接]]
 
 * 前言
@@ -201,5 +203,93 @@
 
    @_@
 
+* Python3.1
+  相对 ~3.0~ 来说， ~3.1~ 的变化不是很多， 简单来看看。
+
+  + [[https://www.python.org/dev/peps/pep-0372][PEP 372 -- Adding an ordered dictionary to collections]]
+
+    #+BEGIN_SRC python
+      In [1]: from collections import OrderedDict
+
+      In [2]: d = OrderedDict()
+
+      In [3]: d['parrot'] = 'dead'
+
+      In [4]: d['penguin'] = 'exploded'
+
+      In [5]: d.items()
+      Out[5]: odict_items([('parrot', 'dead'), ('penguin', 'exploded')])
+    #+END_SRC
+
+    有序字典， 这个在一些需要保持原有顺序的地方很有用。
+
+  + [[https://www.python.org/dev/peps/pep-0378][PEP 378: Format Specifier for Thousands Separator]]
+
+    #+BEGIN_SRC python
+      In [1]: format(1234567, ',d')
+      Out[1]: '1,234,567'
+
+      In [2]: format(1234567.89, ',.2f')
+      Out[2]: '1,234,567.89'
+
+      In [3]: format(12345.6 + 8901234.12j, ',f')
+      Out[3]: '12,345.600000+8,901,234.120000j'
+    #+END_SRC
+
+    都快忘记有 ~format~ 这个内置函数了 QAQ
+
+    感觉这个特性还是挺好的， 用到的时候可以省不少劲。
+
+  + *new method bit_length() for int type*
+
+    #+BEGIN_SRC python
+      >>> n = 37
+      >>> bin(n)
+      '0b100101'
+      >>> n.bit_length()
+      6
+    #+END_SRC
+
+  虽然还有一些其他的变化， 但我觉得剩下的变化简单了解一下就好， 就不列出来了。
+
+* Python3.2
+  和 ~3.1~ 一样， 变换不是很多， 简单看一下就好。
+
+  + [[https://www.python.org/dev/peps/pep-3147][PEP 3147: PYC Repository Directories]]
+
+    新的缓存机制， 以前的缓存方案为 ~.pyc~ 文件， 但是这个方案在安装了多个 ~Python~ 的机器上
+    运行的不太好。
+
+    于是现在更换的缓存机制， 将缓存保存在了 ~__pycache__~ 目录中， 同时根据 ~Python~ 版本命名缓存文件。
+
+    目录 ~__pycache__~ 基本上一出现我就直接删除了 QAQ
+
+  + *new start option -q*
+
+    使用 ~Python -q~ 启动解释器可以不显示版本信息， 感觉对我来说暂时没啥用。
+
+  + *range objects now support index and count methods*
+
+    #+BEGIN_SRC python
+      >>> range(0, 100, 2).count(10)
+      1
+      >>> range(0, 100, 2).index(10)
+      5
+      >>> range(0, 100, 2)[5]
+      10
+      >>> range(0, 100, 2)[0:5]
+      range(0, 10, 2)
+    #+END_SRC
+
+    我觉得这是一个很棒的特性 (￣▽￣)／
+
+  + *The callable() builtin function from Py2.x was resurrected*
+
+    什么， ~callable()~ GG 过 !!!∑(ﾟДﾟノ)ノ
+
+  剩下的变化主要是关于内置模块和低层接口的， 这些东西还是在实践中看相关的文档好了。
+
 * 相关链接
   + [[https://docs.python.org/3/whatsnew/3.0.html][What’s New In Python 3.0]]
+  + [[https://docs.python.org/3/whatsnew/3.1.html][What’s New In Python 3.1]]
+  + [[https://docs.python.org/3/whatsnew/3.2.html][What’s New In Python 3.2]]
