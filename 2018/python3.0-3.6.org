@@ -12,6 +12,11 @@
   - [[#剩下的变化][剩下的变化]]
 - [[#python31][Python3.1]]
 - [[#python32][Python3.2]]
+- [[#python33][Python3.3]]
+- [[#python34][Python3.4]]
+- [[#python35][Python3.5]]
+- [[#python36][Python3.6]]
+- [[#完结撒花][完结撒花]]
 - [[#相关链接][相关链接]]
 
 * 前言
@@ -289,7 +294,374 @@
 
   剩下的变化主要是关于内置模块和低层接口的， 这些东西还是在实践中看相关的文档好了。
 
+* Python3.3
+  和前面两个版本一样， 核心的语法变化不是很多， 简单来看一下就好。
+
+  + [[https://www.python.org/dev/peps/pep-0397/][PEP 397 -- Python launcher for Windows]]
+
+    如果你的操作系统是 ~Windows~, 并且安装了不止一个版本的 ~Python~, 那么这个特性应该不陌生。
+
+    通过如下的指令来启动指定版本的 ~Python~ 解释器：
+    #+BEGIN_EXAMPLE
+      py -2.7
+      py -3.6
+    #+END_EXAMPLE
+
+  + [[https://www.python.org/dev/peps/pep-0380/][PEP 380 -- Syntax for Delegating to a Subgenerator]]
+
+    我觉的这是个好东西， 通过文档中的一个例子来看：
+    #+BEGIN_SRC python
+      >>> def g(x):
+      ...     yield from range(x, 0, -1)
+      ...     yield from range(x)
+      ...
+      >>> list(g(5))
+      [5, 4, 3, 2, 1, 0, 1, 2, 3, 4]
+    #+END_SRC
+
+    这个很爽啊， 又可以少写几行代码 @_@
+
+  + [[https://www.python.org/dev/peps/pep-0409/][PEP 409 -- Suppressing exception context]]
+
+    这个特性可以让异常的输出更加清楚 ？
+    #+BEGIN_SRC python
+      >>> class D:
+      ...     def __init__(self, extra):
+      ...         self._extra_attributes = extra
+      ...     def __getattr__(self, attr):
+      ...         try:
+      ...             return self._extra_attributes[attr]
+      ...         except KeyError:
+      ...             raise AttributeError(attr) from None
+      ...
+      >>> D({}).x
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+        File "<stdin>", line 8, in __getattr__
+      AttributeError: x
+    #+END_SRC
+
+    关键点在 ~from None~ 上， 没有这个 ~from None~ 的话，  抛出的异常会是这样的：
+    #+BEGIN_SRC python
+      Traceback (most recent call last):
+        File "<stdin>", line 6, in __getattr__
+      KeyError: 'x'
+
+      During handling of the above exception, another exception occurred:
+
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+        File "<stdin>", line 8, in __getattr__
+      AttributeError: x
+    #+END_SRC
+
+  + [[https://www.python.org/dev/peps/pep-0414/][PEP 414 -- Explicit Unicode Literal for Python 3.3]]
+
+    这个特性运行在 ~Python3~ 的版本环境中使用 ~u~ 前缀显示的声明 ~unicode~ 字符串：
+    #+BEGIN_SRC python
+      u'text'
+      U'text'
+    #+END_SRC
+
+    虽然已经习惯了， 但还是想吐槽 ~2 -> 3~ 的版本变化是真的阔怕......
+
+  + [[https://www.python.org/dev/peps/pep-3155/][PEP 3155 -- Qualified name for classes and functions]]
+
+    函数和类对象的新属性： ~__qualname__~, 效果看代码：
+    #+BEGIN_SRC python
+      >>> class C:
+      ...     class D:
+      ...         def meth(self):
+      ...             pass
+      ...
+      >>> C.D.__name__
+      'D'
+      >>> C.D.__qualname__
+      'C.D'
+      >>> C.D.meth.__name__
+      'meth'
+      >>> C.D.meth.__qualname__
+      'C.D.meth'
+    #+END_SRC
+
+* Python3.4
+  这个版本的文档结构比前面几个版本清楚多了， 简单看一下新特性。
+
+  + [[PEP 453 -- Explicit bootstrapping of pip in Python installations][PEP 453 -- Explicit bootstrapping of pip in Python installations]]
+
+    这个特性很好， 很 ~nice~, 现在你可以通过这样的命令来安装 ~pip~ 了：
+    #+BEGIN_EXAMPLE
+      python -m ensurepip 
+    #+END_EXAMPLE
+
+    之前我的 ~pip~ 因为一天命令 GG, 也因为一条指令还原 QAQ
+
+  emmmm, 剩下的变化对我们写代码的影响不大， 省略。
+
+* Python3.5
+  + [[https://www.python.org/dev/peps/pep-0492/][PEP 492 -- Coroutines with async and await syntax]]
+
+    针对 *协程* 的新关键字 ~async~ 和 ~await~, 官网的例子：
+    #+BEGIN_SRC python
+      import asyncio
+
+      async def coro(name, lock):
+          print('coro {}: waiting for lock'.format(name))
+          async with lock:
+              print('coro {}: holding the lock'.format(name))
+              await asyncio.sleep(1)
+              print('coro {}: releasing the lock'.format(name))
+
+      loop = asyncio.get_event_loop()
+      lock = asyncio.Lock()
+      coros = asyncio.gather(coro(1, lock), coro(2, lock))
+      try:
+          loop.run_until_complete(coros)
+      finally:
+          loop.close()
+
+      # results
+      coro 2: waiting for lock
+      coro 2: holding the lock
+      coro 1: waiting for lock
+      coro 2: releasing the lock
+      coro 1: holding the lock
+      coro 1: releasing the lock
+    #+END_SRC
+
+    我觉得这是一个很重要的新特性， 目前在 ~Github~ 上已经可以看到一些只针对高版本 ~Python~ 开发的库，
+    其中就用到了这一特性。
+
+    当然了， 目前我对协程的了解并不多， 因此也更应该去了解。 嗯， 现在知道这么一个特性了。
+
+  + [[https://www.python.org/dev/peps/pep-0465/][PEP 465 -- A dedicated infix operator for matrix multiplication]]
+
+    这应该算是语言的应用场景反过来影响语法开发的一个实例吧， 针对 *矩阵运算* 的操作符 ~@~.
+    #+BEGIN_SRC python
+      >>> import numpy
+
+      >>> x = numpy.ones(3)
+      >>> x
+      array([ 1., 1., 1.])
+
+      >>> m = numpy.eye(3)
+      >>> m
+      array([[ 1., 0., 0.],
+             [ 0., 1., 0.],
+             [ 0., 0., 1.]])
+
+      >>> x @ m
+      array([ 1., 1., 1.])
+    #+END_SRC
+
+    这些东西都没用过， 不做评价。 有兴趣的可以了解一下。
+
+  + [[https://www.python.org/dev/peps/pep-0448/][PEP 448 -- Additional Unpacking Generalizations]]
+
+    扩展了 ~*iterable~ 和 ~**dictionary~ 拆包操作符的允许用法， 现在可以在函数中调用任意数量的拆包：
+    #+BEGIN_SRC python
+      >>> print(*[1], *[2], 3, *[4, 5])
+      1 2 3 4 5
+
+      >>> def fn(a, b, c, d):
+      ...     print(a, b, c, d)
+      ...
+
+      >>> fn(**{'a': 1, 'c': 3}, **{'b': 2, 'd': 4})
+      1 2 3 4
+    #+END_SRC
+
+    同时， 元组， 列表， 集合， 字典等允许同时多个解包：
+    #+BEGIN_SRC python
+      >>> *range(4), 4
+      (0, 1, 2, 3, 4)
+
+      >>> [*range(4), 4]
+      [0, 1, 2, 3, 4]
+
+      >>> {*range(4), 4, *(5, 6, 7)}
+      {0, 1, 2, 3, 4, 5, 6, 7}
+
+      >>> {'x': 1, **{'y': 2}}
+      {'x': 1, 'y': 2}
+    #+END_SRC
+
+    恐怖如斯 ！
+
+  + [[https://www.python.org/dev/peps/pep-0484][PEP 484 -- Type Hints]]
+
+    和这个特性有关的一个特性： [[https://www.python.org/dev/peps/pep-3107][PEP 3107]]. 我觉得， 只要看了它的表现形式你也应该明白是和什么有关了：
+    #+BEGIN_SRC python
+      def greeting(name: str) -> str:
+          return 'Hello ' + name
+    #+END_SRC
+
+    通过注释来表示参数和返回值的类型。
+
+    效果：
+    #+BEGIN_SRC python
+      >>> def greeting(name: str) -> str:
+      ...     return 'Hello ' + name
+      ...
+      >>> greeting(10)
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+        File "<stdin>", line 2, in greeting
+      TypeError: must be str, not int
+    #+END_SRC
+
+    感觉 ~Python~ 代码长得越来越奇怪了 QAQ
+
+* Python3.6
+  + [[https://www.python.org/dev/peps/pep-0498/][PEP 498 -- Literal String Interpolation]]
+
+    现在我学过的脚本语言都会这一套了：
+    #+BEGIN_SRC python
+      >>> name = "Fred"
+      >>> f"He said his name is {name}."
+      'He said his name is Fred.'
+      >>> width = 10
+      >>> precision = 4
+      >>> value = decimal.Decimal("12.34567")
+      >>> f"result: {value:{width}.{precision}}"  # nested fields
+      'result:      12.35'
+    #+END_SRC
+
+    感觉通过 ~Python~ 的 *名称空间* 来实现这个特性还是很方便的， 不知道是不是这样来实现的。
+
+  + [[https://www.python.org/dev/peps/pep-0526/][PEP 526 -- Syntax for Variable Annotations]]
+
+    通过特殊的语法来对变量的类型进行注释：
+    #+BEGIN_SRC python
+      primes: List[int] = []
+
+      captain: str  # Note: no initial value!
+
+      class Starship:
+          stats: Dict[str, int] = {}
+    #+END_SRC
+
+    其他的注释也可以：
+    #+BEGIN_SRC python
+      name: 'your name'
+    #+END_SRC
+
+    但似乎就只有注释的作用 ？
+    #+BEGIN_SRC python
+      >>> name: str = 10
+    #+END_SRC
+
+  + [[https://www.python.org/dev/peps/pep-0515/][PEP 515 -- Underscores in Numeric Literals]]
+
+    通过在数字中添加下划线来提高可读性：
+    #+BEGIN_SRC python
+      >>> 1_000_000_000_000_000
+      1000000000000000
+      >>> 0x_FF_FF_FF_FF
+      4294967295
+    #+END_SRC
+
+  + [[https://www.python.org/dev/peps/pep-0525/][PEP 525 -- Asynchronous Generators]]
+
+    ~3.5~ 引入了关键字 ~async~ 和 ~await~, 但是， 通过 ~async~ 修饰的函数内部不能在使用 ~yield~, 现在， 这个限制
+    解除了：
+    #+BEGIN_SRC python
+      async def ticker(delay, to):
+          """Yield numbers from 0 to *to* every *delay* seconds."""
+          for i in range(to):
+              yield i
+              await asyncio.sleep(delay)
+    #+END_SRC
+
+    代码更难懂了......
+
+  + [[https://www.python.org/dev/peps/pep-0530/][PEP 530 -- Asynchronous Comprehensions]]
+    
+    现在在各种推导式， 生成式中都可以用 ~async~ 了：
+    #+BEGIN_SRC python
+      result = [i async for i in aiter() if i % 2]
+      result = [await fun() for fun in funcs if await condition()]
+    #+END_SRC
+
+  + [[https://www.python.org/dev/peps/pep-0487/][PEP 487 -- Simpler customisation of class creation]]
+
+    现在可以在不使用元类的情况下自定义子类创建， 通过方法 ~__init_subclass__~:
+    #+BEGIN_SRC python
+      >>> class QuestBase:
+      ...    # this is implicitly a @classmethod (see below for motivation)
+      ...    def __init_subclass__(cls, swallow, **kwargs):
+      ...        cls.swallow = swallow
+      ...        super().__init_subclass__(**kwargs)
+
+      >>> class Quest(QuestBase, swallow="african"):
+      ...    pass
+
+      >>> Quest.swallow
+      'african'
+    #+END_SRC
+
+  + [[https://www.python.org/dev/peps/pep-0487/][PEP 487 -- Simpler customisation of class creation]]
+
+    ~PEP 487~ 除了前面那个特性以外， 还增强了 *描述器* 协议 (ノ｀Д)ノ
+    #+BEGIN_SRC python
+      class IntField:
+          def __get__(self, instance, owner):
+              return instance.__dict__[self.name]
+
+          def __set__(self, instance, value):
+              if not isinstance(value, int):
+                  raise ValueError(f'expecting integer in {self.name}')
+              instance.__dict__[self.name] = value
+
+          # this is the new initializer:
+          def __set_name__(self, owner, name):
+              self.name = name
+
+      class Model:
+          int_field = IntField()
+    #+END_SRC
+
+    ~__set_name__~ 这个方法会在描述器定义时自动定义， ~owner~ 是这个描述器的拥有者， ~name~ 则是
+    描述器在 ~owner~ 中的名称。
+
+    在上述例子中， ~name~ 就是 ~int_field~.
+
+  + *PEP 529: Change Windows filesystem encoding to UTF-8*
+
+  + *PEP 528: Change Windows console encoding to UTF-8*
+
+  + [[https://www.python.org/dev/peps/pep-0520/][PEP 520 -- Preserving Class Attribute Definition Order]]
+    
+    现在类的 ~__dict__~ 中的属性顺序和定义顺序保持一致了。
+
+  + [[https://www.python.org/dev/peps/pep-0468/][PEP 468 -- Preserving the order of **kwargs in a function]]
+    
+   ~**kwargs~ 形式的参数现在会保持传入的顺序：
+   #+BEGIN_SRC python
+     >>> def func(**kwargs):
+     ...     print(kwargs)
+     ...
+     >>> func(a=1, b=2, c=3, ab=4)
+     {'a': 1, 'b': 2, 'c': 3, 'ab': 4}
+   #+END_SRC
+
+* 完结撒花
+  了解这些版本特性变化的过程中， 虽然已经省略了相等一部分的内容， 但还是花了我不少时间。
+
+  并且， 这次只是知道了有什么新特性， 不代表会用了 @_@
+
+  感觉 ~Python~ 的特性是越来越多， 可以说， 我学过的所有语言中， ~Python~ 的特性是最多的。
+
+  想起前几天 ~Guido van Rossum~ 退出核心决策圈的原因， 还有已经发布的 ~Python3.7~...
+
+  <・)))><<
+  
 * 相关链接
   + [[https://docs.python.org/3/whatsnew/3.0.html][What’s New In Python 3.0]]
   + [[https://docs.python.org/3/whatsnew/3.1.html][What’s New In Python 3.1]]
   + [[https://docs.python.org/3/whatsnew/3.2.html][What’s New In Python 3.2]]
+  + [[https://docs.python.org/3/whatsnew/3.3.html][What’s New In Python 3.3]]
+  + [[https://docs.python.org/3/whatsnew/3.4.html][What’s New In Python 3.4]]
+  + [[https://docs.python.org/3/whatsnew/3.5.html][What’s New In Python 3.5]]
+  + [[https://docs.python.org/3/whatsnew/3.6.html][What’s New In Python 3.6]]
+
