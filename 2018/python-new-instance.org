@@ -1,0 +1,197 @@
+#+TITLE:      Python 构造对象实例
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-07-31 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#使用][使用]]
+- [[#关系][关系]]
+- [[#元类][元类]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  ~Python~ 中我们常用的一个特殊方法为 ~__init__~, 曾经， 我认为这个方法是用于构造对象实例的方法。
+
+  但是， 后来我发现， 还有一个特殊方法 ~__new__~, 它的执行顺序还在 ~__init__~ 前面。
+
+  如果 ~__init__~ 就是构造实例的方法的话， 怎么还会有方法在它之前执行呢 ？
+
+  一番查阅后， 我明白了， 方法 ~__new__~ 才是构造对象实例的方法， 而 ~__init__~, 只不过是对象实例构造完成后初始化
+  *实例属性* 的方法而已。
+
+  现在， 需要关心的是 ~__new__~ 和 ~__init__~ 的使用以及两者之间的关系。
+
+* 使用
+  对于 ~__init__~, 相信只要使用过 ~Python~, 应该都不陌生， 其一般形式为：
+  #+BEGIN_SRC python
+    __init__(self, *args, **kwargs)
+  #+END_SRC
+
+ 而 ~__init__~ 的使用， 相信不需要我来说明了， 这次的重点还是放到 ~__new__~ 上：
+  #+BEGIN_SRC python
+    __new__(cls, *args, **kwargs)
+  #+END_SRC
+
+  对于 ~__new__~ 来说， 只有参数 ~cls~ 是必需的， ~cls~ 代表的是当前要构造的对象实例的 *类型*.
+  #+BEGIN_SRC python
+    class Example(object):
+        def __new__(cls):
+            print(cls)
+
+    print(Example)
+    Example()
+
+    # <class '__main__.Example'>
+    # <class '__main__.Example'>
+  #+END_SRC
+
+  通过上述代码可以更直观的看到， ~cls~ 代表的其实就是 ~Example~ 这个类。
+
+  ~__new__~ 和 ~__init__~ 在使用上来说， 其实区别不大， 两者的主要区别在于第一个参数， 一个是 *类*, 一个是 *实例*.
+
+  虽然大多数时候都不会有需要重写 ~__new__~ 方法的时候， 但是， 假如遇到了这种情况， 那么还是需要注意一个问题， 那就是
+  *构造实例*.
+
+  很明显， 当前类的 ~__new__~ 被覆盖了， 我们不能再调用当前类的 ~__new__~ 来构造实例， 因此， 在 ~__new__~ 中构造实例， 需要借助 ~super()~ 的帮助：
+  #+BEGIN_SRC python
+    class Example1(object):
+        def __new__(cls):
+            return super(Example1, cls).__new__(cls)
+
+
+    class Example2(object):
+        def __new__(cls):
+            pass
+
+
+    print('For Example1: %s' % Example1())
+    print('For Example2: %s' % Example2())
+
+    # For Example1: <__main__.Example1 object at 0x021B36B0>
+    # For Example2: None
+  #+END_SRC
+  
+  *注意:* 请记得把构造出来的实例返回， 有用的 (｀・ω・´)
+
+* 关系
+  ~__new__~ 和 ~__init__~ 两者之间存在很紧密的关系， 简单的概括一下就是：
+  
+  + ~__new__~ 的返回值是 ~__init__~ 的参数
+
+  具体的执行过程可以看一下 ~cpython~ 中对应的源码：
+  #+BEGIN_SRC C
+    static PyObject *
+    type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
+    {
+        PyObject *obj;
+
+        if (type->tp_new == NULL) {
+            PyErr_Format(PyExc_TypeError,
+                         "cannot create '%.100s' instances",
+                         type->tp_name);
+            return NULL;
+        }
+
+        obj = type->tp_new(type, args, kwds);
+        obj = _Py_CheckFunctionResult((PyObject*)type, obj, NULL);
+        if (obj == NULL)
+            return NULL;
+
+        /* Ugly exception: when the call was type(something),
+           don't call tp_init on the result. */
+        if (type == &PyType_Type &&
+            PyTuple_Check(args) && PyTuple_GET_SIZE(args) == 1 &&
+            (kwds == NULL ||
+             (PyDict_Check(kwds) && PyDict_Size(kwds) == 0)))
+            return obj;
+
+        /* If the returned object is not an instance of type,
+           it won't be initialized. */
+        if (!PyType_IsSubtype(Py_TYPE(obj), type))
+            return obj;
+
+        type = Py_TYPE(obj);
+        if (type->tp_init != NULL) {
+            int res = type->tp_init(obj, args, kwds);
+            if (res < 0) {
+                assert(PyErr_Occurred());
+                Py_DECREF(obj);
+                obj = NULL;
+            }
+            else {
+                assert(!PyErr_Occurred());
+            }
+        }
+        return obj;
+    }
+  #+END_SRC
+
+  如果想深入了解， 可以见 ☞ [[https://github.com/python/cpython/blob/3.6/Objects/typeobject.c#L876][Github 源码链接]]
+
+  用 ~Python~ 进行简单的概述为：
+  #+BEGIN_SRC python
+    def create_instance(obj_type, *args, **kwargs):
+        obj = obj_type.__new__(*args, **kwargs)
+        if obj is not None and issubclass(obj, obj_type):
+            obj.__init__(*args, **kwargs)
+        return obj
+  #+END_SRC
+
+  首先执行方法 ~__new__~, 然后判断 *返回值* 的情况：
+  + 如果返回值不是 ~None~ 同时是 *当前类或当前类的子类的实例*, 就执行当前类的 ~__init__~ 方法
+  + 如果返回值不满足以上条件， 就直接返回 *返回值*
+
+  #+BEGIN_SRC python
+    class ClassA(object):
+        def __init__(self):
+            self.name = "ClassA's instance"
+
+
+    class ClassB(object):
+        def __new__(cls, flag=False):
+            if flag:
+                return super().__new__(ClassA)
+            else:
+                return super().__new__(ClassB)
+
+        def __init__(self, flag=False):
+            self.name = "ClassB's instance"
+
+
+    print(getattr(ClassA(), 'name', 'Not run __init__.'))
+    print(getattr(ClassB(), 'name', 'Not run __init__.'))
+    print(getattr(ClassB(flag=True), 'name', 'Not run __init__.'))
+    print(ClassB(flag=True))
+
+    # ClassA's instance
+    # ClassB's instance
+    # Not run __init__.
+    # <__main__.ClassA object at 0x02493050>
+  #+END_SRC
+
+  通过上述代码可以看到， ~__new__~ 方法的第一个参数决定了构造的实例的类型。
+
+  需要注意的是， ~ClassB~ 中返回了 ~ClassA~ 的实例， 虽然不会执行 ~ClassB~ 的构造方法了， 但也不会执行 ~ClassA~ 的构造方法。
+
+* 元类
+  ~__new__~ 的一大使用场景就是元类了， 和一般的 ~__new__~ 不一样， 由于 *元类* 的实例是 *类*, 因此 *元类* 的 ~__new__~ 方法
+  的参数需要和 ~type~ 相符合。
+
+  #+BEGIN_SRC python
+    class TestMetaclass(type):
+        def __new__(meta_class, name, base_class, attr_dict):
+            pass
+  #+END_SRC
+
+  *元类* 继承自 *type*, 其 ~__new__~ 方法的几个参数依次为：
+  + ~meta_class~, 当前的元类
+  + ~name~, 要创建的类的名称
+  + ~base_class~, 要创建的类的父类集合
+  + ~attr_dict~, 要创建的类的属性字典(方法也是属性)
+
+  对于 *元类* 的具体使用可以查阅相关的资料。
+
+* 参考链接
+  + [[https://amir.rachum.com/blog/2016/10/03/understanding-python-class-instantiation/][Understanding Python Class Instantiation]]
+
