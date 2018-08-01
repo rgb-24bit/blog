@@ -387,7 +387,7 @@
 * Python3.4
   这个版本的文档结构比前面几个版本清楚多了， 简单看一下新特性。
 
-  + [[PEP 453 -- Explicit bootstrapping of pip in Python installations][PEP 453 -- Explicit bootstrapping of pip in Python installations]]
+  + [[https://www.python.org/dev/peps/pep-0453/][PEP 453 -- Explicit bootstrapping of pip in Python installations]]
 
     这个特性很好， 很 ~nice~, 现在你可以通过这样的命令来安装 ~pip~ 了：
     #+BEGIN_EXAMPLE
