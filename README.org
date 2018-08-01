@@ -31,6 +31,6 @@
   - 01-23 -- [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]] ::
   - 01-04 -- [[file:2018/regex.org][正则表达式]] ::
   - 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][SqlLocalDB 和 Sqlcmd]] ::
-- 2017
+- *2017*
   - 12-27 -- [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]] ::
   - 12-26 -- [[file:2017/c99-wchar.org][C99 宽字符]] ::
