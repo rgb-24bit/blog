@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 内置函数</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 内置函数</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf498e42">1. 简介</a></li>
+<li><a href="#orgc9aa3b4">2. 数值计算相关</a></li>
+<li><a href="#orga0c57aa">3. 可迭代对象相关</a></li>
+<li><a href="#orga818065">4. 进制和编码转化</a></li>
+<li><a href="#orgddbad16">5. 类和属性相关</a></li>
+<li><a href="#org6f07b1a">6. 命名空间相关</a></li>
+<li><a href="#org06e5c78">7. 其他内置函数</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf498e42" class="outline-2">
+<h2 id="orgf498e42"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>Python</code> 具有众多的内置函数， <code>Python2</code> 和 <code>Python3</code> 在这方面也具有一定的区别。
+</p>
+
+<p>
+<code>Python2</code> 内置函数：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">内置函数</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>abs()</code></td>
+<td class="org-left"><code>divmod()</code></td>
+<td class="org-left"><code>input()</code></td>
+<td class="org-left"><code>open()</code></td>
+<td class="org-left"><code>staticmethod()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>all()</code></td>
+<td class="org-left"><code>enumerate()</code></td>
+<td class="org-left"><code>int()</code></td>
+<td class="org-left"><code>ord()</code></td>
+<td class="org-left"><code>str()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>any()</code></td>
+<td class="org-left"><code>eval()</code></td>
+<td class="org-left"><code>isinstance()</code></td>
+<td class="org-left"><code>pow()</code></td>
+<td class="org-left"><code>sum()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>basestring()</code></td>
+<td class="org-left"><code>execfile()</code></td>
+<td class="org-left"><code>issubclass()</code></td>
+<td class="org-left"><code>print()</code></td>
+<td class="org-left"><code>super()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bin()</code></td>
+<td class="org-left"><code>file()</code></td>
+<td class="org-left"><code>iter()</code></td>
+<td class="org-left"><code>property()</code></td>
+<td class="org-left"><code>tuple()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bool()</code></td>
+<td class="org-left"><code>filter()</code></td>
+<td class="org-left"><code>len()</code></td>
+<td class="org-left"><code>range()</code></td>
+<td class="org-left"><code>type()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bytearray()</code></td>
+<td class="org-left"><code>float()</code></td>
+<td class="org-left"><code>list()</code></td>
+<td class="org-left"><code>raw_input()</code></td>
+<td class="org-left"><code>unichr()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>callable()</code></td>
+<td class="org-left"><code>format()</code></td>
+<td class="org-left"><code>locals()</code></td>
+<td class="org-left"><code>reduce()</code></td>
+<td class="org-left"><code>unicode()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>chr()</code></td>
+<td class="org-left"><code>frozenset()</code></td>
+<td class="org-left"><code>long()</code></td>
+<td class="org-left"><code>reload()</code></td>
+<td class="org-left"><code>vars()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>classmethod()</code></td>
+<td class="org-left"><code>getattr()</code></td>
+<td class="org-left"><code>map()</code></td>
+<td class="org-left"><code>repr()</code></td>
+<td class="org-left"><code>xrange()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cmp()</code></td>
+<td class="org-left"><code>globals()</code></td>
+<td class="org-left"><code>max()</code></td>
+<td class="org-left"><code>reversed()</code></td>
+<td class="org-left"><code>zip()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>compile()</code></td>
+<td class="org-left"><code>hasattr()</code></td>
+<td class="org-left"><code>memoryview()</code></td>
+<td class="org-left"><code>round()</code></td>
+<td class="org-left"><code>__import__()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>complex()</code></td>
+<td class="org-left"><code>hash()</code></td>
+<td class="org-left"><code>min()</code></td>
+<td class="org-left"><code>set()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>delattr()</code></td>
+<td class="org-left"><code>help()</code></td>
+<td class="org-left"><code>next()</code></td>
+<td class="org-left"><code>setattr()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dict()</code></td>
+<td class="org-left"><code>hex()</code></td>
+<td class="org-left"><code>object()</code></td>
+<td class="org-left"><code>slice()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dir()</code></td>
+<td class="org-left"><code>id()</code></td>
+<td class="org-left"><code>oct()</code></td>
+<td class="org-left"><code>sorted()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+另外， 还有四个不必要的内置函数： <i>apply(), buffer(), coerce(), intern()</i>.
+</p>
+
+<p>
+<code>Python3</code> 内置函数：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">内置函数</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>abs()</code></td>
+<td class="org-left"><code>dict()</code></td>
+<td class="org-left"><code>help()</code></td>
+<td class="org-left"><code>min()</code></td>
+<td class="org-left"><code>setattr()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>all()</code></td>
+<td class="org-left"><code>dir()</code></td>
+<td class="org-left"><code>hex()</code></td>
+<td class="org-left"><code>next()</code></td>
+<td class="org-left"><code>slice()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>any()</code></td>
+<td class="org-left"><code>divmod()</code></td>
+<td class="org-left"><code>id()</code></td>
+<td class="org-left"><code>object()</code></td>
+<td class="org-left"><code>sorted()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ascii()</code></td>
+<td class="org-left"><code>enumerate()</code></td>
+<td class="org-left"><code>input()</code></td>
+<td class="org-left"><code>oct()</code></td>
+<td class="org-left"><code>staticmethod()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bin()</code></td>
+<td class="org-left"><code>eval()</code></td>
+<td class="org-left"><code>int()</code></td>
+<td class="org-left"><code>open()</code></td>
+<td class="org-left"><code>str()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bool()</code></td>
+<td class="org-left"><code>exec()</code></td>
+<td class="org-left"><code>isinstance()</code></td>
+<td class="org-left"><code>ord()</code></td>
+<td class="org-left"><code>sum()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bytearray()</code></td>
+<td class="org-left"><code>filter()</code></td>
+<td class="org-left"><code>issubclass()</code></td>
+<td class="org-left"><code>pow()</code></td>
+<td class="org-left"><code>super()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bytes()</code></td>
+<td class="org-left"><code>float()</code></td>
+<td class="org-left"><code>iter()</code></td>
+<td class="org-left"><code>print()</code></td>
+<td class="org-left"><code>tuple()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>callable()</code></td>
+<td class="org-left"><code>format()</code></td>
+<td class="org-left"><code>len()</code></td>
+<td class="org-left"><code>property()</code></td>
+<td class="org-left"><code>type()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>chr()</code></td>
+<td class="org-left"><code>frozenset()</code></td>
+<td class="org-left"><code>list()</code></td>
+<td class="org-left"><code>range()</code></td>
+<td class="org-left"><code>vars()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>classmethod()</code></td>
+<td class="org-left"><code>getattr()</code></td>
+<td class="org-left"><code>locals()</code></td>
+<td class="org-left"><code>repr()</code></td>
+<td class="org-left"><code>zip()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>compile()</code></td>
+<td class="org-left"><code>globals()</code></td>
+<td class="org-left"><code>map()</code></td>
+<td class="org-left"><code>reversed()</code></td>
+<td class="org-left"><code>__import__()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>complex()</code></td>
+<td class="org-left"><code>hasattr()</code></td>
+<td class="org-left"><code>max()</code></td>
+<td class="org-left"><code>round()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>delattr()</code></td>
+<td class="org-left"><code>hash()</code></td>
+<td class="org-left"><code>memoryview()</code></td>
+<td class="org-left"><code>set()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+对比 <code>Python2</code>, <code>Python3</code> 无疑是剔除了一部分内置函数， 同时又添加了内置函数 <code>bytes()</code>
+和 <code>ascii()</code>.
+</p>
+
+<p>
+这里仅简单的列举部分函数， 如果想要了解完整的用法， 可以参考官方文档：
+</p>
+<ul class="org-ul">
+<li><a href="https://docs.python.org/2/library/functions.html">Python2 Built-in Functions</a></li>
+<li><a href="https://docs.python.org/3.6/library/functions.html">Python3 Built-in Functions</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc9aa3b4" class="outline-2">
+<h2 id="orgc9aa3b4"><span class="section-number-2">2</span> 数值计算相关</h2>
+<div class="outline-text-2" id="text-2">
+<dl class="org-dl">
+<dt>abs(x)</dt><dd>获取 <code>x</code> 的绝对值， 如果 <code>x</code> 是复数， 则返回其大小。</dd>
+
+<dt>divmod(a, b)</dt><dd>返回 <code>(a //b, a % b)</code>.</dd>
+
+<dt>pow(x, y[, z])</dt><dd>返回 <code>x</code> 的 <code>y</code> 次方。 如果 <code>z</code> 存在， 则返回较 <code>pow(x, y) % z</code> 精确的值。</dd>
+
+<dt>round(x)</dt><dd>方法返回浮点数 <code>x</code> 的四舍五入值。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orga0c57aa" class="outline-2">
+<h2 id="orga0c57aa"><span class="section-number-2">3</span> 可迭代对象相关</h2>
+<div class="outline-text-2" id="text-3">
+<dl class="org-dl">
+<dt>all(iterable)</dt><dd>如果所有元素为 <code>True</code> 则返回 <code>True</code>, 否则返回 <code>False</code>.</dd>
+
+<dt>any(iterable)</dt><dd>如果存在元素为 <code>True</code> 则返回 <code>True</code>, 否则返回 <code>False</code>.</dd>
+
+<dt>enumerate(sequence, start=0)</dt><dd><p>
+代码说明一切：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">seasons</span> = [<span style="font-style: italic;">'Spring'</span>, <span style="font-style: italic;">'Summer'</span>, <span style="font-style: italic;">'Fall'</span>, <span style="font-style: italic;">'Winter'</span>]
+&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(<span style="font-weight: bold;">enumerate</span>(seasons))
+[(0, <span style="font-style: italic;">'Spring'</span>), (1, <span style="font-style: italic;">'Summer'</span>), (2, <span style="font-style: italic;">'Fall'</span>), (3, <span style="font-style: italic;">'Winter'</span>)]
+&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(<span style="font-weight: bold;">enumerate</span>(seasons, start=1))
+[(1, <span style="font-style: italic;">'Spring'</span>), (2, <span style="font-style: italic;">'Summer'</span>), (3, <span style="font-style: italic;">'Fall'</span>), (4, <span style="font-style: italic;">'Winter'</span>)]
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">enumerate</span>(sequence, start=0):
+    <span style="font-weight: bold; font-style: italic;">n</span> = start
+    <span style="font-weight: bold;">for</span> elem <span style="font-weight: bold;">in</span> sequence:
+        <span style="font-weight: bold;">yield</span> n, elem
+        <span style="font-weight: bold; font-style: italic;">n</span> += 1
+</pre>
+</div></dd>
+
+<dt>filter(function, iterable)</dt><dd><p>
+等价于 <code>[item for item in iterable if function(item)]</code>,
+如果 <code>function</code> 为 <code>None</code>, 等价于 <code>[item for item in iterable if item]</code>.
+</p>
+
+<p>
+<code>Python2</code> 返回列表， <code>Python3</code> 返回迭代器， 为了兼容， 建议这样使用 <code>list(filter())</code>
+</p></dd>
+
+<dt>map(function, iterable, &#x2026;)</dt><dd><p>
+将 <code>iterable</code> 的每个元素作为参数调用 <code>function</code>,
+<code>Python2</code> 返回结果列表， <code>Python3</code> 返回迭代器， 如果要得到和 <code>Python2</code> 相同的结果，
+应该这样： <code>list(map(x))</code>.
+</p>
+
+<p>
+<code>Python2</code> 的 <code>functools</code> 模块存在 <code>imap</code>, 和 <code>Python3</code> 的 <code>map</code> 效果相同.
+</p></dd>
+
+<dt>reduce(function, iterable[, initializer])</dt><dd><p>
+<code>reduce</code> 把一个函数作用在一个序列 <code>[x1, x2, x3, ...]</code> 上，
+这个函数必须接收两个参数， <code>reduce</code> 把结果继续和序列的下一个元素做累积计算。
+</p>
+
+<p>
+<code>Python3</code> 使用需要： <code>from functools import reduce</code>
+</p></dd>
+
+<dt>iter(object[, sentinel])</dt><dd><p>
+返回一个迭代器对象。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'123'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">iter_s</span> = <span style="font-weight: bold;">iter</span>(s)
+&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
+<span style="font-style: italic;">'1'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
+<span style="font-style: italic;">'2'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
+<span style="font-style: italic;">'3'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
+Traceback (most recent call last):
+File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>
+</pre>
+</div></dd>
+
+<dt>len(s)</dt><dd>返回 <code>s</code> 的长度。</dd>
+
+<dt>max(iterable[, key])</dt><dd></dd>
+
+
+<dt>max(arg1, arg2, *args[, key])</dt><dd>返回最大值， <code>Python3</code> 可以 <code>max(iterable[, key, default])</code>.</dd>
+
+<dt>min(&#x2026;)</dt><dd>参数同 <code>max</code>, 返回最小值。</dd>
+
+<dt>next(iterable[, default])</dt><dd>调用 <code>__next__()</code> 方法获取下一个元素， 如果提供 <code>default</code>,
+那么迭代器耗尽时返回它， 否则抛出 <code>StopIteration</code> 异常。 对于 <code>Python2</code> 调用的是 <code>next()</code> 方法。</dd>
+
+<dt>range(start, stop[, step])</dt><dd>返回一个列表， <code>Python3</code> 的 <code>range()</code> 类似于 <code>Python2</code> 的 <code>xrange()</code>.</dd>
+
+<dt>reversed(seq)</dt><dd>返回一个 <b>反向迭代器</b>.</dd>
+
+<dt>slice(stop)</dt><dd></dd>
+
+
+<dt>slice(start, stop[, step])</dt><dd><p>
+返回一个切片对象， 同样代码说明一切：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt;<span style="font-weight: bold; font-style: italic;">myslice</span> = <span style="font-weight: bold;">slice</span>(5)    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35774;&#32622;&#25130;&#21462;5&#20010;&#20803;&#32032;&#30340;&#20999;&#29255;</span>
+&gt;&gt;&gt; myslice
+<span style="font-weight: bold;">slice</span>(<span style="font-weight: bold; text-decoration: underline;">None</span>, 5, <span style="font-weight: bold; text-decoration: underline;">None</span>)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">arr</span> = <span style="font-weight: bold;">range</span>(10)
+&gt;&gt;&gt; arr
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+&gt;&gt;&gt; arr[myslice]         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25130;&#21462; 5 &#20010;&#20803;&#32032;</span>
+[0, 1, 2, 3, 4]
+</pre>
+</div></dd>
+
+<dt>sorted(iterable[, cmp[, key[, reverse]]])</dt><dd>对所有可迭代的对象进行排序操作。
+<code>Python3</code> 对参数进行了修改， 应该这样： <code>sorted(iterable, *, key=None, reverse=False)</code>.
+简单的来说就是取消的 <code>cmp</code> 参数。</dd>
+
+<dt>sum(iterable[, start])</dt><dd>对序列进行求和运算。</dd>
+
+<dt>zip([iterable, &#x2026;])</dt><dd>将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，
+然后返回由这些元组组成的列表。 如果各个迭代器的元素个数不一致，
+则返回列表长度与最短的对象相同， 利用 <code>*</code> 号操作符，可以将元组解压为列表。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orga818065" class="outline-2">
+<h2 id="orga818065"><span class="section-number-2">4</span> 进制和编码转化</h2>
+<div class="outline-text-2" id="text-4">
+<dl class="org-dl">
+<dt>bin(x)</dt><dd>将一个整数转化为二进制字符串， 如果 <code>x</code> 不是整数， 那么它必须定义了 <code>__index__()</code> 方法。</dd>
+
+<dt>hex(x)</dt><dd><p>
+将一个整数转化为十六进制字符串。 如果 <code>x</code> 不是整数， 那么需要定义 <code>__hex__()</code> 方法。
+<code>Python3</code> 是 <code>__index__()</code> 方法。
+</p>
+
+<p>
+浮点数使用 <code>float.hex()</code> 方法。
+</p></dd>
+
+<dt>oct(x)</dt><dd>将一个整数转化为八进制字符串。</dd>
+
+<dt>chr(i)</dt><dd><ul class="org-ul">
+<li>Python2: <code>i</code> 的取值范围为 <code>0-255</code>, 返回对应的字符。</li>
+
+<li>Python3: <code>i</code> 的取值范围为 <code>0-0x10FFFF</code>, 返回对应的字符。</li>
+</ul></dd>
+
+<dt>unichr(i)</dt><dd>仅限 <code>Python2</code>, <code>chr(i)</code> 的高级版本， 取值范围为 <code>0-0xFFFF</code> 或 <code>0-0x10FFFF</code>.</dd>
+
+<dt>ord(c)</dt><dd><code>chr</code> 的逆方法， 返回字符对应的数字。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgddbad16" class="outline-2">
+<h2 id="orgddbad16"><span class="section-number-2">5</span> 类和属性相关</h2>
+<div class="outline-text-2" id="text-5">
+<dl class="org-dl">
+<dt>callable(object)</dt><dd><p>
+检查一个对象是否是可调用的。
+如果返回 <code>True</code>, <code>object</code> 仍然可能调用失败； 但如果返回 <code>False</code>, 调用对象 <code>ojbect</code> 绝对不会成功。
+</p>
+
+<p>
+对于函数, 方法, lambda 函式, 类, 以及实现了 <code>__call__</code> 方法的类实例, 它都返回 <code>True</code>.
+</p></dd>
+
+<dt>classmethod(function)</dt><dd><p>
+常用作装饰器， 修饰的方法可以通过 <code>类名.方法名</code> 的形式调用。
+修饰的方法需要有代表类的 <code>cls</code> 参数。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold; text-decoration: underline;">@classmethod</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">f</span>(cls, arg1, arg2, ...):
+        <span style="font-weight: bold;">pass</span>
+</pre>
+</div></dd>
+
+<dt>staticmethod(function)</dt><dd>类似 <code>classmethod</code>, 不过不需要 <code>cls</code> 参数。</dd>
+
+<dt>property(fget=None, fset=None, fdel=None, doc=None)</dt><dd><p>
+返回新式类属性。
+参数：
+</p>
+<ul class="org-ul">
+<li>fget - 获取属性值的函数</li>
+
+<li>fset - 设置属性值的函数</li>
+
+<li>fdel - 删除属性值函数</li>
+
+<li>doc - 属性描述信息</li>
+</ul>
+
+<p>
+例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>:
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">self</span>._x = <span style="font-weight: bold; text-decoration: underline;">None</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">getx</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">setx</span>(<span style="font-weight: bold;">self</span>, value):
+        <span style="font-weight: bold;">self</span>._x = value
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">delx</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">del</span> <span style="font-weight: bold;">self</span>._x
+
+    <span style="font-weight: bold; font-style: italic;">x</span> = <span style="font-weight: bold;">property</span>(getx, setx, delx, <span style="font-style: italic;">"I'm the 'x' property."</span>)
+</pre>
+</div>
+<p>
+如果 <b>c</b> 是 <b>C</b> 的实例化, <b>c.x</b> 将触发 <b>getter</b>, <b>c.x = value</b> 将触发 <b>setter</b>, <b>del c.x</b> 触发 <b>deleter</b>.
+</p>
+
+<p>
+如果给定 <code>doc</code> 参数， 其将成为这个属性值的 <code>docstring</code>, 否则 <code>property</code> 函数就会复制 <code>fget</code> 函数的 <code>docstring</code>.
+</p>
+
+<p>
+将 <code>property</code> 函数用作装饰器可以很方便的创建只读属性：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Parrot</span>:
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">self</span>._voltage = 100000
+
+    <span style="font-weight: bold; text-decoration: underline;">@property</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">voltage</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-style: italic;">"""Get the current voltage."""</span>
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._voltage
+</pre>
+</div>
+<p>
+上面的代码将 <code>voltage()</code> 方法转化成同名只读属性的 <code>getter</code> 方法。
+</p>
+
+<p>
+<code>property</code> 的 <code>getter</code>, <code>setter</code> 和 <code>deleter</code> 方法同样可以用作装饰器：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">self</span>._x = <span style="font-weight: bold; text-decoration: underline;">None</span>
+
+    <span style="font-weight: bold; text-decoration: underline;">@property</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-style: italic;">"""I'm the 'x' property."""</span>
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+
+    <span style="font-weight: bold; text-decoration: underline;">@x.setter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>, value):
+        <span style="font-weight: bold;">self</span>._x = value
+
+    <span style="font-weight: bold; text-decoration: underline;">@x.deleter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">del</span> <span style="font-weight: bold;">self</span>._x
+</pre>
+</div></dd>
+
+<dt>getattr(object, name[, default])</dt><dd>返回一个对象属性值， 属性不存在时可以通过设置默认值避免出错。</dd>
+
+<dt>hasattr(object, name)</dt><dd>判断对象是否包含对应的属性。</dd>
+
+<dt>setattr(object, name, value)</dt><dd>设置对象属性值， 如果属性不存在则先创建在赋值， 等价于 <code>object.name = value</code>.</dd>
+
+<dt>delattr(object, name)</dt><dd>删除对象的属性， 等价于 <code>del object.name</code>.</dd>
+
+<dt>super([type[, object-or-type]])</dt><dd><p>
+返回将方法调用委托给父类或同类类的代理对象, 常用来调用父类的方法。
+</p>
+
+<p>
+<code>Python2</code> 中使用， 类需要时新式类， 即继承自 <code>object</code>.
+</p>
+
+<p>
+<code>Python3</code> 中可以用 <code>super().xxx</code> 代替 <code>super(class, self).xxx</code>.
+</p></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org6f07b1a" class="outline-2">
+<h2 id="org6f07b1a"><span class="section-number-2">6</span> 命名空间相关</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>Python</code> 使用叫做 <b>命名空间</b> 的东西来记录变量的轨迹。命名空间是一个 <b>字典</b>, 
+它的键就是 变量名， 它的值就是那些变量的值。
+</p>
+
+<p>
+命名空间及查找顺序：
+</p>
+<ol class="org-ol">
+<li>局部命名空间： 记录当前 <b>函数</b> 或类的 <b>方法</b> 的变量， <code>Python</code> 优先在局部命名空间下寻找变量。</li>
+<li>全局命名空间： 记录当前 <b>模块</b> 的变量， <code>Python</code> 在全局命名空间寻找不在局部命名空间中的变量。</li>
+<li>内置命名空间： 记录 <b>内置</b> 的变量， <code>Python</code> 在内置命名空间寻找不在全局命名空间中的变量。</li>
+<li>如果在内置命名空间都没找到变量， 就放弃查找并引发一个 <code>NameError</code>.</li>
+
+<li value="locals()"><p>
+访问局部命名空间， 返回局部变量字典
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">autoassign</span>(<span style="font-weight: bold;">self</span>, <span style="font-weight: bold;">locals</span>):
+    <span style="font-style: italic;">"""</span>
+<span style="font-style: italic;">    Automatically assigns local variables to `self`.</span>
+
+<span style="font-style: italic;">    Generally used in `__init__` methods, as in:</span>
+
+<span style="font-style: italic;">        def __init__(self, foo, bar, baz=1):</span>
+<span style="font-style: italic;">            autoassign(self, locals())</span>
+<span style="font-style: italic;">    """</span>
+    <span style="font-weight: bold;">for</span> (key, value) <span style="font-weight: bold;">in</span> iteritems(<span style="font-weight: bold;">locals</span>):
+        <span style="font-weight: bold;">if</span> key == <span style="font-style: italic;">'self'</span>: 
+            <span style="font-weight: bold;">continue</span>
+        <span style="font-weight: bold;">setattr</span>(<span style="font-weight: bold;">self</span>, key, value)
+</pre>
+</div></li>
+
+<li value="globals()">访问全局命名空间， 返回全局变量字典</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org06e5c78" class="outline-2">
+<h2 id="org06e5c78"><span class="section-number-2">7</span> 其他内置函数</h2>
+<div class="outline-text-2" id="text-7">
+<dl class="org-dl">
+<dt>type(object)</dt><dd></dd>
+
+
+<dt>type(name, bases, dict)</dt><dd><p>
+<code>type</code> 可以用来获取对象的类型或用来创建类。
+</p>
+
+<p>
+其中， 类似 <code>type(dict)</code> 的结果就是 <code>type</code>, <code>dict</code> 等的实例的类型才是 <code>dict</code>.
+</p>
+
+<p>
+这里可以看出来， <code>dict</code> 这些内置类型其实就是 <code>type</code> 的实例。
+</p>
+
+<p>
+用 <code>type</code> 创建类可以通过这样的方式：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">X</span> = <span style="font-weight: bold;">type</span>(<span style="font-style: italic;">'X'</span>, (<span style="font-weight: bold;">object</span>,), <span style="font-weight: bold;">dict</span>(a=1))
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">'X' &#26159;&#36825;&#20010;&#31867;&#30340;&#21517;&#31216;</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">(object, ) &#26159;&#36825;&#20010;&#31867;&#32487;&#25215;&#30340;&#31867;&#65292; &#30001;&#20110; python &#25903;&#25345;&#22810;&#37325;&#32487;&#25215;&#65292; &#25152;&#20197;&#36825;&#20010;&#21442;&#25968;&#24212;&#35813;&#26159;&#19968;&#20010; tuple</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">dict(a=1) &#26159;&#36825;&#20010;&#31867;&#30340; &#23646;&#24615;-&#20540; &#23383;&#20856;</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">X</span>:
+    <span style="font-weight: bold; font-style: italic;">a</span> = 1
+</pre>
+</div>
+
+<p>
+<b>更新</b>: 测试了一下， 除了 <b>内置类型</b> 以外， 新创建的 <b>类</b> 也是 <code>type</code> 的实例。
+</p>
+
+<p>
+这一连串的关系在理清 <b>类属性</b> 和 <b>实例属性</b> 的时候感觉很有用。
+</p></dd>
+
+<dt>isinstance(object, classinfo)</dt><dd><p>
+判断一个 <code>object</code> 的类型是否属于 <code>classinfo</code>.
+</p>
+
+<p>
+其中， <code>classinfo</code> 可以是 <code>class</code>, <code>type</code>, <code>tuple</code>. <code>tuple</code> 可以包含多个 <code>class</code> 或 <code>type</code> 用于判断。
+</p>
+
+<p>
+可以通过 <code>type(object) is type</code> 的方式达到类似效果。
+</p></dd>
+
+<dt>dir([object])</dt><dd>如果没有参数， 返回当前本地作用域中的名称列表。
+使用参数尝试返回该对象的 <b>有效属性</b> 列表。</dd>
+
+<dt>id(object)</dt><dd><p>
+返回一个 <b>对象</b> 的身份， 这个身份在该对象的 <b>生命周期</b> 中 <b>不变且唯一</b>.
+</p>
+
+<p>
+我觉得这在某些环境下是很有用的。
+</p></dd>
+
+<dt>vars([object])</dt><dd>返回一个 <b>模块</b>, <b>类</b>, <b>实例</b> 或任意一个 <b>对象</b> 的 <code>__dict__</code> 属性。</dd>
+
+<dt>hash(object)</dt><dd>返回一个 <b>对象</b> 的 <code>hash value</code>, 如果存在的话。 可以通过定义 <code>__hash__</code> 来
+影响这个函数的行为， 但是 <code>__hash__</code> 的返回值应该是一个 <b>整数</b>.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-14 周三 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

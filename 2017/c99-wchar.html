@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C99 宽字符</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">C99 宽字符</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3189f1f">1. 前言</a></li>
+<li><a href="#orga7f4175">2. 头文件</a></li>
+<li><a href="#org1673d1a">3. 宽字符及本地化支持</a>
+<ul>
+<li><a href="#orgfac1391">3.1. 本地化支持</a></li>
+<li><a href="#orgd5ca97b">3.2. 文件编码格式设置</a></li>
+<li><a href="#org76e99e1">3.3. 代码编写</a></li>
+</ul>
+</li>
+<li><a href="#org0cdfb3a">4. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3189f1f" class="outline-2">
+<h2 id="org3189f1f"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这两天学习 <code>C99标准</code> 的过程中, 宽字符的问题可是花了我不少时间。
+</p>
+
+<p>
+趁现在印象还比较深，总结下来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga7f4175" class="outline-2">
+<h2 id="orga7f4175"><span class="section-number-2">2</span> 头文件</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li><p>
+<b>&lt;wchar.h&gt;</b> &#x2013; 对宽字符的支持是源自 <code>C99标准</code> (准确来说应该是 <code>C95</code>) 的标准库 <code>&lt;wchar.h&gt;</code>
+</p>
+
+<p>
+这个头文件定义了宽字符类型: <code>wchar_t</code> (准确来说这个是源自C++的关键字, wchar.h
+定义的类型应该是 <code>wint_t</code>, 但两者可以替换)
+</p></li>
+
+<li><b>&lt;locale.h&gt;</b> &#x2013; 本地化支持设置</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1673d1a" class="outline-2">
+<h2 id="org1673d1a"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+一段简单的代码:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;locale.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;wchar.h&gt;</span>
+
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
+    setlocale(LC_ALL, <span style="font-style: italic;">""</span>);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26412;&#22320;&#21270;&#35774;&#32622;</span>
+
+    <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">str</span> = <span style="font-style: italic;">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
+    <span style="font-weight: bold; text-decoration: underline;">wchar_t</span>* <span style="font-weight: bold; font-style: italic;">wstr</span> = L<span style="font-style: italic;">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
+
+    printf(<span style="font-style: italic;">"%s\n"</span>, str);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#21333;&#65288;&#22810;&#65289;&#23383;&#33410;&#23383;&#31526;&#20018;</span>
+    wprintf(L<span style="font-style: italic;">"%ls\n"</span>, wstr);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#23485;&#23383;&#31526;&#20018;</span>
+
+    getchar();
+    <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+这段代码用于向控制台分别输出 <code>多字节字符串</code> 和 <code>宽字符字符串</code> 形式的 <code>"宽字符测试"</code>.
+</p>
+
+<p>
+其中，虽然多字节字符串形式的输出能够正常输出，但是这时你并不能对这个字符串进行操作，
+不然可能会出现乱码。
+</p>
+
+<p>
+之所以能够正确输出相应的内容， 是因为 <code>控制台</code> 对字符串的原始字节序列进行了处理。如果这时
+对这个字符串进行操作，那么便会打乱原始字节序列，从而得不到想要得到的输出。
+</p>
+
+<p>
+因此，为了能够对 <code>非ASCII字符串</code> 进行各种操作，我们需要用到宽字符。
+</p>
+</div>
+
+<div id="outline-container-orgfac1391" class="outline-3">
+<h3 id="orgfac1391"><span class="section-number-3">3.1</span> 本地化支持</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+在使用宽字符之前，我们需要了解一些相关的内容。
+</p>
+
+<p>
+在不同的系统，平台，区域环境下，可能具有不同的区域设置，如: <b>编码格式</b> ，日期写法，文字排序
+等，为了保证程序能够输出正确的字符，便需要进行本地化支持。
+</p>
+
+<p>
+在C语言中， 本地化支持需要用到到一个标准库头文件: <code>&lt;locale.h&gt;</code>
+</p>
+
+<p>
+该头文件文件定义了一个函数: <code>setlocale(int category, const char* locale)</code>
+</p>
+
+<p>
+这个函数用于将程序调整到特定的区域设置，而这个设置会影响到如: <b>字符串处理函数</b>
+的执行，如果没做好本地化支持，便可能会导致输出的字符串乱码。
+</p>
+
+<p>
+其中: 参数 <code>category</code> 通过指定预定义的宏: <code>LC_ALL、LC_COLLATE、LC_CTYPE、</code>
+<code>LC_MESSAGES、LC_MONETARY、LC_NUMERIC、LC_TIME</code> 来指定本地化设置的分类，
+其中: <code>LC_ALL</code> 是其他分类的并集。
+</p>
+
+<p>
+而参数 <code>locale</code> 指定本次设置的内容，由于 <code>windows</code> 和 <code>unix</code> 系统的区别，
+所以设置的格式也有一定的区别，如果想要详细了解，可以查看以下文档:
+</p>
+
+<ul class="org-ul">
+<li>windows: <a href="https://msdn.microsoft.com/en-us/library/x99tb11d(v=vs.100).aspx">windows setlocale</a></li>
+<li>unix: <a href="https://www.gnu.org/software/libc/manual/html_mono/libc.html#Locales">GNU Locales and Internationalization</a></li>
+<li>wiki: <a href="https://zh.wikipedia.org/wiki/Locale.h">locale.h</a></li>
+</ul>
+
+<p>
+如果没有显式的对本地化进行设置的话， C程序在运行前会 <b>默认</b> 运行 <code>setlocale(LC_ALL, "C")</code> 来进行本地化设置，
+而这个 <b>C</b> 对应着怎样的设置我们并不清楚，但是有一点，这个设置不适合 <code>中文字符</code> 的环境。
+</p>
+
+<p>
+所以可以通过像这样 <code>setlocale(LC_ALL, "")</code> 来简单调用该函数，这时C程序会通过环境变量来进行本地化
+设置。简单省事。
+</p>
+
+<p>
+<b>注意</b>: 这样的设置是系统默认的环境配置，可能和你程序需要的运行环境存在差异 ！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd5ca97b" class="outline-3">
+<h3 id="orgd5ca97b"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+完成了本地化支持的设置，那么还有一个关键内容便是 <code>文件编码格式</code> 了。
+</p>
+
+<p>
+首先要清楚的一个概念是: 程序并不知道你的字符串的编码是怎样的 ！
+</p>
+
+<p>
+除了 <code>ASCII字符</code> 在各个编码环境下对应的字节序列都是一样的外，
+其他字符的编码在各个环境的字节序列很有可能是不一样的。
+</p>
+
+<p>
+程序并 <code>不能自动识别</code> 你定义的字符串的编码格式，它只会按照你指定的或
+按照默认的编码格式来读取处理相应的字节序列。
+</p>
+
+<p>
+这时文件编码格式便会影响到 <code>非ASCII码</code> 字符的字节序列，如果文件编码格式与指定的环境的编码
+格式不一样，那么输出便可能乱码，或者出现 <b>编译警告甚至错误</b> 。
+</p>
+
+<p>
+当然，这个问题如果是在用 VS 作为编译环境，那么应该不会发生 -_-
+</p>
+
+<p>
+如果你遇到了问题，那么很有可能和我一样在 <code>windows</code> 上用 <code>MinGW</code> 编译程序。
+</p>
+
+<p>
+<code>Mingw</code> 文件的默认读取和输出格式都是 <code>UTF-8</code>, 而 <code>windows</code> 的默认编码格式是 GBK.
+</p>
+
+<p>
+所以。。。
+</p>
+
+<p>
+这就很难受。。。。。
+</p>
+
+<p>
+这时你可以选择通过设置编译参数来修改编译时源文件的读取及输出格式。
+</p>
+<ul class="org-ul">
+<li>参数: <code>-finput-charset=charset</code> 设置源文件的读取格式， 根据你源文件的编码格式来。</li>
+<li>参数: <code>-fexec-charset=charset</code> 设置输出格式， windows 设置成 <code>GBK</code> 就好了。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org76e99e1" class="outline-3">
+<h3 id="org76e99e1"><span class="section-number-3">3.3</span> 代码编写</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+前面两个步骤完成了基础设置， 这时候便需要了解一些在编程过程中需要注意的一些问题了。
+</p>
+
+<ol class="org-ol">
+<li>定义宽字符字符串的时候应该在前面加上 <code>L</code></li>
+<li>格式化输出时应该用 <code>%ls</code> 而不是 <code>%s</code>, 格式化字符串前面也应该加上 <code>L</code></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cdfb3a" class="outline-2">
+<h2 id="org0cdfb3a"><span class="section-number-2">4</span> 相关链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>维基百科:
+<ul class="org-ul">
+<li><a href="https://zh.wikipedia.org/wiki/C%E6%A8%99%E6%BA%96%E5%87%BD%E5%BC%8F%E5%BA%AB">C标准库函数</a></li>
+</ul></li>
+<li>个人博客
+<ul class="org-ul">
+<li><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/07/2039700.html">C标准库的setlocale()用法笔记</a></li>
+<li><a href="http://blog.csdn.net/softman11/article/details/6121538">Code：Blocks 中文乱码问题原因分析和解决方法！</a></li>
+</ul></li>
+<li>独立网页
+<ul class="org-ul">
+<li><a href="http://zh.cppreference.com/w/c/header">C标准头文件</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2017-12-26 周二 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

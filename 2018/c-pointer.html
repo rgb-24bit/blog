@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C 语言指针和数组</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">C 语言指针和数组</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga592b66">1. 简介</a></li>
+<li><a href="#org7c549b0">2. 基本对象</a></li>
+<li><a href="#org9d35bcf">3. 指针的值</a></li>
+<li><a href="#orge995f6e">4. 指针运算</a></li>
+<li><a href="#org3157444">5. 指针类型</a></li>
+<li><a href="#orgf5dc045">6. 指针参数</a></li>
+<li><a href="#orgc94216b">7. 函数指针</a></li>
+<li><a href="#orgc7bb946">8. 数组</a></li>
+<li><a href="#org9161fd7">9. 指针数组和数组指针</a></li>
+<li><a href="#orga368887">10. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga592b66" class="outline-2">
+<h2 id="orga592b66"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+C 语言是一门很重要的语言， 即使你不会使用 C 语言进行程序开发， 但是学习了解
+C 语言依然是一件很有必要的事情。
+</p>
+
+<p>
+因为， 你学的是计算机 ！
+</p>
+
+<p>
+而指针和数组， 算是 C 语言中比较难以理解的两个东西了。
+</p>
+
+<p>
+学 C 开始到现在， 快要两年了， 在指针和数组上遇到过不少坑， 也见识过不少奇淫技巧，
+到了现在， 感觉可以对两者进行一定的总结了。
+</p>
+
+<p>
+<b>NOTE:</b> 本篇博客主要内容是对指针和数组的理解与总结， 语法涉及的不多
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c549b0" class="outline-2">
+<h2 id="org7c549b0"><span class="section-number-2">2</span> 基本对象</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+为了更好的理解 <b>指针和数组</b>, 需要引入两个基本对象：
+</p>
+<ul class="org-ul">
+<li><b>内存地址</b>: 内存中的一个地址， 如： <code>0xFFFFFFFF</code></li>
+<li><b>地址的值</b>: 内存中一个地址保存的值， 如： 地址 <code>0xFFFFFFFF</code> 的值为 <code>0x01234567</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9d35bcf" class="outline-2">
+<h2 id="org9d35bcf"><span class="section-number-2">3</span> 指针的值</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+学习指针的过程中， 一定要分清楚的两个值是： <b>指针地址</b> 和 <b>指针的值</b>.
+</p>
+
+<p>
+这是容易混淆的两个值， 因为这两个值都是 <b>内存地址</b>.
+</p>
+
+<p>
+但是， 在使用指针的时候需要分清楚这两个值的关系： <b>指针地址</b> 的值是 <b>指针的值</b>.
+</p>
+
+<p>
+这是指针比较特殊的一点， 即： 所有的指针操作都是围绕着 <b>内存地址</b> 进行的。
+</p>
+
+<p>
+这两个概念需要分清楚的原因是为了理解 <b>指针</b> 与 <b>其他类型</b> 的区别：
+</p>
+<ul class="org-ul">
+<li><b>指针</b> 和 <b>其他类型</b> 没有实质性的区别</li>
+<li>两者的主要区别体现在 <b>保存的值</b> 与 <b>指针运算</b> 上</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge995f6e" class="outline-2">
+<h2 id="orge995f6e"><span class="section-number-2">4</span> 指针运算</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+和其他类型不同， 由于指针保存的值是 <b>内存地址</b>, 因此指针运算的直接操作对象就是 <b>内存地址</b>.
+</p>
+
+<p>
+C 语言通过操作符 <code>&amp;</code> 和 <code>*</code> 来产生 <b>指针</b> 和 <b>间接引用指针</b>.
+</p>
+
+<p>
+<b>指针</b>, 是类似于 <code>&amp;var</code> 产生的值， 代表 <code>var</code> 的 <b>内存地址</b>.
+</p>
+
+<p>
+<b>间接引用指针</b>, 类似于 <code>*ptr</code> 的使用， 操作修改 <b>指针的值(内存地址)</b> 的 <b>值(地址的值)</b>.
+</p>
+
+<p>
+因此， 表达式 <code>*&amp;Expr</code> 和 <code>Expr</code> 是等价的， 都是操作 <code>Expr</code> 的值。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3157444" class="outline-2">
+<h2 id="org3157444"><span class="section-number-2">5</span> 指针类型</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+由于所有的指针保存的值都是一个 <b>内存地址</b>, 因此所有指针变量的大小都是一样的， 等于操作系统的 <b>地址宽度</b>.
+</p>
+
+<p>
+这时， 为了区分不同的 <b>指针</b>, <b>指针类型</b> 的作用便体现出来了。
+</p>
+
+<p>
+首先， 需要明白的一点是： 单个地址能够保存的数据大小是 <b>一个字节</b>.
+</p>
+
+<p>
+然而， 除了 <code>char</code>, 其他大多数类型的变量的大小都大于一个字节， 因此这些类型
+的变量会占据 <b>连续</b> 的几个内存来保存自身的值。
+</p>
+
+<p>
+自身的 <b>内存地址</b> 仅为这几个 <b>连续</b> 内存地址的 <b>首地址</b>.
+</p>
+
+<p>
+同样， <b>指针</b> 保存的值就是这个 <b>首地址</b>.
+</p>
+
+<p>
+<b>指针类型</b> 的作用就是确定这个 <b>连续</b> 的内存地址究竟有多少个。
+</p>
+
+<p>
+比如， <code>int*</code> 类型的指针就表示这个连续的内存地址有 <code>4</code> 个。
+</p>
+
+<p>
+同时， <b>指针</b> 加减一个 <b>整数</b> 的时候， 实际加减的值为 <b>整数</b> 和 <b>类型大小</b> 的乘积。
+</p>
+
+<p>
+而 <b>指针</b> 减 <b>指针</b> 的时候， 得出的结果会 <b>除</b> 以 <b>类型大小</b>.
+</p>
+
+<p>
+另外， 需要注意的一点是： 转换指针类型不会改变 <b>指针的值</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf5dc045" class="outline-2">
+<h2 id="orgf5dc045"><span class="section-number-2">6</span> 指针参数</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+当函数的参数是一个指针的时候， 传参时的行为和其他类型的变量 <b>没有区别</b>.
+</p>
+
+<p>
+都是传递 <b>变量的值</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">test</span>(<span style="font-weight: bold; text-decoration: underline;">int</span>* <span style="font-weight: bold; font-style: italic;">ptr</span>) {
+  printf(<span style="font-style: italic;">"%p %p\n"</span>, &amp;ptr, ptr);
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">var</span> = 10;
+  <span style="font-weight: bold; text-decoration: underline;">int</span>* <span style="font-weight: bold; font-style: italic;">ptr</span> = &amp;var;
+
+  test(ptr);
+  printf(<span style="font-style: italic;">"%p %p\n"</span>, &amp;ptr, ptr);
+
+  <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+以上代码的执行结果为：
+</p>
+<pre class="example">
+000000000022FE20 000000000022FE4C
+000000000022FE40 000000000022FE4C
+</pre>
+
+<p>
+可以看到， <b>指针地址</b> 是不一样的， 相同的是 <b>指针的值</b>.
+</p>
+
+<p>
+函数内部的修改能够反馈到函数的调用者的原因仅仅是两者
+操作的 <b>内存地址</b> 相同而已。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc94216b" class="outline-2">
+<h2 id="orgc94216b"><span class="section-number-2">7</span> 函数指针</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+如果你学过操作系统， 那么应该就知道， <b>函数</b> 只是内存中的一个 <b>指令块</b>.
+</p>
+
+<p>
+调用函数的过程就是将要运行的指令转移到该 <b>指令块</b>.
+</p>
+
+<p>
+C 语言中， <b>函数名</b> 相当于该 <b>指令块</b> 的首地址。
+</p>
+
+<p>
+既然是地址， 那么就可以用 <b>指针</b> 来保存。
+</p>
+
+<p>
+因此可以用下面的方式来定义函数指针：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">func</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold;">return</span> a + b;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> (*fptr)(<span style="font-weight: bold; text-decoration: underline;">int</span>, <span style="font-weight: bold; text-decoration: underline;">int</span>) = func;
+</pre>
+</div>
+
+<p>
+其中， <code>int</code> 表示函数的返回值类型为 <code>int</code>, <code>(*fptr)()</code> 表示这是一个函数指针。
+</p>
+
+<p>
+括号内部为参数类型。
+</p>
+
+<p>
+由于 <code>func</code> 就代表了函数地址， 因此可以省略操作符 <code>&amp;</code>.
+</p>
+
+<p>
+当然， 这样也是等价操作：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> (*fptr)(<span style="font-weight: bold; text-decoration: underline;">int</span>, <span style="font-weight: bold; text-decoration: underline;">int</span>) = &amp;func;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc7bb946" class="outline-2">
+<h2 id="orgc7bb946"><span class="section-number-2">8</span> 数组</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+在 C 语言中， 数组和指针的关系密切， 主要原因就是 <b>数组名</b> 相当于指向数组第一个元素
+地址的 <b>指针</b>.
+</p>
+
+<p>
+但是这个指针很特殊：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">arr</span>[4] = {1, 2, 3, 4};
+  printf(<span style="font-style: italic;">"%p %p"</span>, &amp;arr, arr);
+  <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+上述代码的输出为：
+</p>
+<pre class="example">
+000000000022FE40 000000000022FE40
+
+</pre>
+
+<p>
+可以看到， <code>&amp;arr</code> 和 <code>arr</code> 的值是相同的。
+</p>
+
+<p>
+也就是说， <b>数组名</b> 相当于 <b>指针地址</b> 和 <b>指针的值</b> 相同的 <b>指针</b>.
+</p>
+
+<p>
+但是， <code>&amp;arr</code> 的 <code>arr</code> 并不相同：
+</p>
+<ul class="org-ul">
+<li><code>&amp;arr</code> 产生的是 <b>数组类型</b> 的指针， <code>&amp;arr + 1</code> 的结果是 <code>&amp;arr</code> 的值和 <b>数组大小</b> 的和</li>
+<li><code>arr</code> 相当于指向 <b>数组</b> 第一个元素的 <b>指针</b>, 指针类型就是 <b>元素类型</b>.</li>
+</ul>
+
+<p>
+同时， 数组取值操作 <code>arr[i]</code> 等价于 <code>*(arr + i)</code>. 因此在使用指针操作数组的时候， 不要忘了
+符号 <code>*</code>.
+</p>
+
+<p>
+当然， 如果不想使用 <code>*ptr</code> 的方式来使用指针， <code>ptr[0]</code> 的结果也是相同的， 当然， 不推荐。
+</p>
+
+<p>
+另： <code>arr[i]</code> 和 <code>i[arr]</code> 没有区别。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9161fd7" class="outline-2">
+<h2 id="org9161fd7"><span class="section-number-2">9</span> 指针数组和数组指针</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+指针数组和数组指针是容易犯错的一个地方， 简单梳理一下：
+</p>
+<ul class="org-ul">
+<li>指针数组是一个数组， 这个数组保存的元素的类型是指针</li>
+<li>数组指针是一个指针， 这个指针指向的对象是一个数组</li>
+</ul>
+
+<p>
+通常来说， 指针数组使用如下方式声明：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span>* <span style="font-weight: bold; font-style: italic;">prt_arr</span>[4];
+</pre>
+</div>
+
+<p>
+声明一个数组 <code>ptr_arr</code>, 保存的元素类型为 <code>int*</code>.
+</p>
+
+<p>
+而数组指针使用下面的方式声明：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> (*arr_ptr)[3];
+</pre>
+</div>
+
+<p>
+声明一个指针 <code>arr_ptr</code>, 指向的对象是一个拥有三个元素的 <b>数组</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga368887" class="outline-2">
+<h2 id="orga368887"><span class="section-number-2">10</span> 参考链接</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li><a href="http://www.runoob.com/w3cnote/c-pointer-detail.html">C 指针详解</a></li>
+<li><a href="http://home.netcom.com/~tjensen/ptr/pointers.htm">A TUTORIAL ON POINTERS AND ARRAYS IN C</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-06-01 周五 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

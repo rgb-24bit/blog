@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pipenv 的使用</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Pipenv 的使用</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org07a63f3">1. 简介</a></li>
+<li><a href="#org5207ee2">2. Pipenv</a>
+<ul>
+<li><a href="#orgcf1f3f5">2.1. 下载</a></li>
+<li><a href="#org17f6e3b">2.2. 使用</a></li>
+<li><a href="#orgce23ea1">2.3. 设置</a></li>
+</ul>
+</li>
+<li><a href="#org2958128">3. Pipfile</a>
+<ul>
+<li><a href="#org76251c6">3.1. Pipfile</a></li>
+<li><a href="#orgd19b87b">3.2. Pipfile.lock</a></li>
+<li><a href="#org41147c5">3.3. PEP508</a></li>
+</ul>
+</li>
+<li><a href="#orgde675a8">4. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org07a63f3" class="outline-2">
+<h2 id="org07a63f3"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>Pipenv</code> 是被 <code>Python</code> 官方推荐的包管理器.
+</p>
+
+<p>
+<code>Pipenv</code> 可以自动生成 <code>Virtualenv</code> 环境, 通过 <code>Pipfile</code> 方便的管理生产环境与依赖环境
+的包. 并可以根据 <code>Pipfile</code> 生成 <code>Pipfile.lock</code> 文件.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5207ee2" class="outline-2">
+<h2 id="org5207ee2"><span class="section-number-2">2</span> Pipenv</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgcf1f3f5" class="outline-3">
+<h3 id="orgcf1f3f5"><span class="section-number-3">2.1</span> 下载</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+下载 <code>Pipenv</code> 很简单, 使用指令 <code>Pip install pipenv</code> 就可以了.
+</p>
+
+<p>
+同时, 建议使用 <code>Python3</code> 下载安装 <code>Pipenv</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org17f6e3b" class="outline-3">
+<h3 id="org17f6e3b"><span class="section-number-3">2.2</span> 使用</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>Pipenv</code> 拥有简洁明了的帮助信息, 如下:
+</p>
+<pre class="example">
+$  pipenv                                                                           
+Usage: pipenv [OPTIONS] COMMAND [ARGS]...                                           
+
+Options:                                                                            
+  --update         Update Pipenv &amp; pip to latest.                                   
+  --where          Output project home information.                                 
+  --venv           Output virtualenv information.                                   
+  --py             Output Python interpreter information.                           
+  --envs           Output Environment Variable options.                             
+  --rm             Remove the virtualenv.                                           
+  --bare           Minimal output.                                                  
+  --completion     Output completion (to be eval'd).                                
+  --man            Display manpage.                                                 
+  --three / --two  Use Python 3/2 when creating virtualenv.                         
+  --python TEXT    Specify which version of Python virtualenv should use.           
+  --site-packages  Enable site-packages for the virtualenv.                         
+  --jumbotron      An easter egg, effectively.                                      
+  --version        Show the version and exit.                                       
+  -h, --help       Show this message and exit.                                      
+
+
+Usage Examples:                                                                     
+   Create a new project using Python 3.6, specifically:                             
+   $ pipenv --python 3.6                                                            
+
+   Install all dependencies for a project (including dev):                          
+   $ pipenv install --dev                                                           
+
+   Create a lockfile containing pre-releases:                                       
+   $ pipenv lock --pre                                                              
+
+   Show a graph of your installed dependencies:                                     
+   $ pipenv graph                                                                   
+
+   Check your installed dependencies for security vulnerabilities:                  
+   $ pipenv check                                                                   
+
+   Install a local setup.py into your virtual environment/Pipfile:                  
+   $ pipenv install -e .                                                            
+
+Commands:                                                                           
+  check      Checks for security vulnerabilities and against PEP 508 markers        
+             provided in Pipfile.                                                   
+  graph      Displays currently–installed dependency graph information.             
+  install    Installs provided packages and adds them to Pipfile, or (if none       
+             is given), installs all packages.                                      
+  lock       Generates Pipfile.lock.                                                
+  open       View a given module in your editor.                                    
+  run        Spawns a command installed into the virtualenv.                        
+  shell      Spawns a shell within the virtualenv.                                  
+  uninstall  Un-installs a provided package and removes it from Pipfile.            
+  update     Uninstalls all packages, and re-installs package(s) in [packages]      
+             to latest compatible versions.                                         
+</pre>
+
+<p>
+<code>Pipenv</code> 的指令格式是: <code>Pipenv [OPTIONS] COMMAND [ARGS]</code>.
+</p>
+
+<ul class="org-ul">
+<li><b>OPTIONS</b>:
+<ul class="org-ul">
+<li><code>--update</code>: 更新 <code>Pipenv</code> 和 <code>pip</code>.</li>
+<li><code>--where</code>: 获取当前项目的位置.</li>
+<li><code>--venv</code>: 获取当前项目虚拟环境的信息.</li>
+<li><code>--py</code>: 获取当前项目 <code>Python</code> 解释器的信息.</li>
+<li><code>--envs</code>: 获取可以设置的 <code>环境变量</code> 的信息.</li>
+<li><code>--rm</code>: 移除当前项目虚拟环境.</li>
+<li><code>--bare</code>: 获取最小的输出.</li>
+<li><code>--completion</code>: 命名的自动补全, 需要对你的 <code>shell</code> 进行设置.
+比如说 <code>bash</code>, 可以在 <code>.bashrc</code> 或 <code>.bash_profile</code> 中添加:
+<code>eval "$(pipenv --completion)"</code>.</li>
+<li><code>--man</code>: 显示手册页.</li>
+<li><code>--three/--two</code>: 使用 <code>Python3/2</code> 创建虚拟环境, 默认为 <code>3</code>.</li>
+<li><code>--python TEXT</code>: 指定使用的 <code>Python</code> 版本. 如: <code>Pipenv --python 3.6</code>.</li>
+<li><code>--site-packages</code>: 允许 <code>Virtualenv</code> 使用 <code>site-packages</code>.</li>
+<li><code>--jumbotron</code>: 复活节彩蛋.</li>
+<li><code>--version</code>: 显示版本信息.</li>
+<li><code>-h, --help</code>: 显示帮助信息.</li>
+</ul></li>
+<li><b>COMMAND</b>:
+可以通过 <code>[COMMAND] -h</code> 查看命令的帮助信息.
+<ul class="org-ul">
+<li><code>check</code>: 检查 <code>Pipfile</code> 是否符合 <code>PEP508</code> 规范, 和下载的包是否安全.
+<ul class="org-ul">
+<li>参数 <code>--style TEXT</code> 检查 <code>Python</code> 脚本是否符合样式规范.</li>
+<li>more&#x2026;</li>
+</ul></li>
+<li><code>graph</code>: 显示当前安装的包的依赖关系图.</li>
+<li><code>install</code>: 下载指定的包并添加到 <code>Pipfile</code>, 或不指定, 下载所有的包.
+<ul class="org-ul">
+<li>参数 <code>-d, --dev</code> 下载所有的包, 包括 <code>[dev-packages]</code>.</li>
+<li>参数 <code>--system</code> 使用系统的 <code>Pip</code> 而非 <code>Virtualenv</code>.</li>
+<li>参数 <code>-r, --requirements TEXT</code> 导入 <code>requirements</code> 文件.</li>
+<li>参数 <code>--skip-lock</code> 在安装是忽略 <code>Pipfile.lock</code>, 使用 <code>Pipfile</code>.
+推荐， 目前 <code>Pipenv</code> 存在一些 <code>Bug</code>, 使用 <code>Pipfile.lock</code> 可能导致依赖下载不完整。</li>
+<li>more&#x2026;</li>
+</ul></li>
+<li><code>lock</code>: 生成 <code>Pipfile.lock</code> 文件.</li>
+<li><code>open</code>: 在编辑器中显示指定的模块.</li>
+<li><code>run</code>: 传递一个命令到 <code>Virtualenv</code>. (PS: 就这个功能了, 没有其他参数)</li>
+<li><code>shell</code>: 通过 <code>Virtualenv</code> 产生一个 <code>Shell</code>, 类似于 <code>activate</code>.</li>
+<li><code>uninstall</code>: 卸载所有的包.
+<ul class="org-ul">
+<li>参数 <code>--all-dev</code> 从 <code>[dev-packages]</code> 卸载所有的包.</li>
+<li>参数 <code>--all</code> 卸载所有的包但不修改 <code>Pipfile</code>.</li>
+<li>more&#x2026;</li>
+</ul></li>
+<li><code>update</code>: 卸载所有的包, 从 <code>[packages]</code> 重新下载安装到最新的兼容版本.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgce23ea1" class="outline-3">
+<h3 id="orgce23ea1"><span class="section-number-3">2.3</span> 设置</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li><p>
+虚拟环境位置
+</p>
+
+<p>
+<code>Pipenv</code> 生成的虚拟环境默认在用户目录, 你可以通过设置环境变量: <code>PIPENV_VENV_IN_PROJECT=1</code>
+来使生成的虚拟环境位于项目目录.
+</p>
+
+<p>
+有关这个问题: <a href="https://github.com/pypa/pipenv/issues/1049">issues 1049</a>.
+</p></li>
+
+<li><p>
+<code>Pip</code> 源
+国内环境原因, 可以更换 <code>Pip</code> 的源来提高包的安装速度, 我使用的是清华镜像:
+</p>
+<pre class="example">
+[[source]]
+
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+name = "pypi.tuna"
+</pre></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2958128" class="outline-2">
+<h2 id="org2958128"><span class="section-number-2">3</span> Pipfile</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Pipfile</code> 和 <code>Pipfile.lock</code> 用于替代 <code>pip</code> 的 <code>requirements.txt</code>.
+</p>
+
+<p>
+为了使用 <code>Pipfile</code>, 你可以使用最新版的 <code>Pip</code> 的 <code>-p</code> 参数. 类似于参数 <code>-r</code>,
+<code>pip</code> 会自动寻找读取 <code>Pipfile</code> 的内容.
+</p>
+
+<p>
+但是, 更加推荐使用 <code>Pipenv</code>.
+</p>
+</div>
+
+<div id="outline-container-org76251c6" class="outline-3">
+<h3 id="org76251c6"><span class="section-number-3">3.1</span> Pipfile</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>Pipfile</code> 的特点:
+</p>
+<ul class="org-ul">
+<li>使用 <code>TOML</code> 语法编写.</li>
+<li>一个 <code>Pipfile</code> 可以替代多个 <code>requirements.txt</code>. 不需要为开发环境和依赖环境
+单独划分文件.</li>
+<li>通过 <code>Pipfile.lock</code> 指定确定的环境配置, 通过 <code>Pipfile.lock</code> 恢复项目环境.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd19b87b" class="outline-3">
+<h3 id="orgd19b87b"><span class="section-number-3">3.2</span> Pipfile.lock</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+环境的详细信息保存在 <code>Pipfile.lock</code> 中, 方便复用. 这个文件应该是自动生成的, 不应该手动修改.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41147c5" class="outline-3">
+<h3 id="org41147c5"><span class="section-number-3">3.3</span> PEP508</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<code>Pipfile</code> 支持所有的 <code>PEP508</code> 标记, 并可以通过 <code>Pipenv check</code> 来检查是否符合标准.
+</p>
+
+<p>
+<code>PEP508</code> 的语法文档格式直接看是不太好理解的, 最好的办法就是找一份例子边看边理解.
+这里有一份 <code>Pipfile</code> 官网的一个例子, 可以看一看:
+</p>
+<pre class="example">
+[[source]]
+url = 'https://pypi.python.org/simple'
+verify_ssl = true
+name = 'pypi'
+
+[requires]
+python_version = '2.7'
+
+[packages]
+requests = { extras = ['socks'] }
+records = '&gt;0.5.0'
+django = { git = 'https://github.com/django/django.git', ref = '1.11.4', editable = true }
+"e682b37" = {file = "https://github.com/divio/django-cms/archive/release/3.4.x.zip"}
+"e1839a8" = {path = ".", editable = true}
+pywinusb = { version = "*", os_name = "=='nt'", index="pypi"}
+
+[dev-packages]
+nose = '*'
+unittest2 = {version = "&gt;=1.0,&lt;3.0", markers="python_version &lt; '2.7.9' or (python_version &gt;= '3.0' and python_version &lt; '3.4')"}
+</pre>
+
+<p>
+部分语法和标记:
+</p>
+<ol class="org-ol">
+<li><p>
+指定版本
+</p>
+<pre class="example">
+version_cmp   = wsp* '&lt;' | '&lt;=' | '!=' | '==' | '&gt;=' | '&gt;' | '~=' | '==='
+version       = wsp* ( letterOrDigit | '-' | '_' | '.' | '*' | '+' | '!' )+
+version_one   = version_cmp version wsp*
+version_many  = version_one (wsp* ',' version_one)*
+versionspec   = ( '(' version_many ')' ) | version_many
+urlspec       = '@' wsp* &lt;URI_reference&gt;
+</pre>
+
+<p>
+其中, <code>wsp</code> 代表 <code>' '</code> 或 <code>\t</code>, <code>*</code> 代表任意次数, <code>+</code> 为至少一次.
+</p>
+
+<p>
+例: <code>&gt;1.0, &lt;=2.0</code>, 指定版本大于 <code>1.0</code> 小于等于 <code>2.0</code>.
+</p></li>
+
+<li><p>
+环境标记
+</p>
+<pre class="example">
+marker_op     = version_cmp | (wsp* 'in') | (wsp* 'not' wsp+ 'in')
+python_str_c  = (wsp | letter | digit | '(' | ')' | '.' | '{' | '}' |
+                 '-' | '_' | '*' | '#' | ':' | ';' | ',' | '/' | '?' |
+                 '[' | ']' | '!' | '~' | '`' | '@' | '$' | '%' | '^' |
+                 '&amp;' | '=' | '+' | '|' | '&lt;' | '&gt;' )
+dquote        = '"'
+squote        = '\\''
+python_str    = (squote (python_str_c | dquote)* squote |
+                 dquote (python_str_c | squote)* dquote)
+env_var       = ('python_version' | 'python_full_version' |
+                 'os_name' | 'sys_platform' | 'platform_release' |
+                 'platform_system' | 'platform_version' |
+                 'platform_machine' | 'platform_python_implementation' |
+                 'implementation_name' | 'implementation_version' |
+                 'extra' # ONLY when defined by a containing layer
+                 )
+marker_var    = wsp* (env_var | python_str)
+marker_expr   = marker_var marker_op marker_var
+              | wsp* '(' marker wsp* ')'
+marker_and    = marker_expr wsp* 'and' marker_expr
+              | marker_expr
+marker_or     = marker_and wsp* 'or' marker_and
+                  | marker_and
+marker        = marker_or
+quoted_marker = ';' wsp* marker
+</pre>
+
+<p>
+<code>python_str</code>: 使用单引号 <code>'</code> 引起来, 可以包含双引号 <code>"</code>, 或用双引号 <code>"</code> 引起来, 可以包含单引号 <code>'</code>.
+</p>
+
+<p>
+例:
+</p>
+<pre class="example">
+markers="python_version &lt; '2.7.9' or (python_version &gt;= '3.0' and python_version &lt; '3.4')"
+
+</pre>
+<p>
+指定 <code>Python</code> 版本小于 <code>2.7.9</code> 或 (大于等于 <code>3.0</code> 并 小于 <code>3.4</code>). 分解为语法:
+</p>
+<pre class="example">
+markers = dquote wsp* env_var marker_op squote python_str squote marker_or ...
+
+</pre></li>
+
+<li><p>
+额外的依赖
+</p>
+<pre class="example">
+identifer_end = letterOrDigit | (('-' | '_' | '.' )* letterOrDigit)
+identifier    = letterOrDigit identifier_end*
+name          = identifier
+extras_list   = identifier (wsp* ',' wsp* identifier)*
+extras        = '[' wsp* extras_list? wsp* ']'
+</pre>
+
+<p>
+一个 <code>package</code> 的名称结尾应该是: <code>letterOrDigit</code>.
+</p>
+
+<p>
+简单的使用就是:
+</p>
+<pre class="example">
+extras = [pkg1, pkg2...]
+
+</pre>
+<p>
+例:
+</p>
+<pre class="example">
+requests[security]
+
+</pre>
+<p>
+指定 <code>requests</code> 额外依赖 <code>security</code>.
+</p>
+
+<p>
+在 <code>Pipfile</code> 中:
+</p>
+<pre class="example">
+requests = { extras = ['security'] }
+
+</pre></li>
+
+<li><p>
+指定依赖的规则:
+</p>
+
+<p>
+基于名称需求的规则:
+</p>
+<pre class="example">
+name_req      = name wsp* extras? wsp* versionspec? wsp* quoted_marker?
+
+</pre>
+
+<p>
+直接的规则:
+</p>
+<pre class="example">
+url_req       = name wsp* extras? wsp* urlspec wsp+ quoted_marker?
+
+</pre>
+
+<p>
+统一规则:
+</p>
+<pre class="example">
+specification = wsp* ( url_req | name_req ) wsp*
+
+</pre></li>
+
+<li><a href="https://www.python.org/dev/peps/pep-0508/#complete-grammar">more&#x2026;</a></li>
+</ol>
+
+<p>
+头晕&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde675a8" class="outline-2">
+<h2 id="orgde675a8"><span class="section-number-2">4</span> 相关链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://github.com/pypa/pipenv">pipenv</a></li>
+<li><a href="https://github.com/pypa/pipfile">pipfile</a></li>
+<li><a href="https://www.python.org/dev/peps/pep-0508/">PEP508</a></li>
+<li><a href="https://docs.pipenv.org/advanced/">Advanced Usage of Pipenv</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-02 周五 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 #+TITLE:      rgb-24bit's blog
-#+AUTHOR:     rgb_24bit
+#+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*

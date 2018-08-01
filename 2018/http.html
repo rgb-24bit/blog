@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HTTP 协议相关</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">HTTP 协议相关</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1d61d6e">1. 前言</a></li>
+<li><a href="#org82292a0">2. URL 相关</a></li>
+<li><a href="#org8cf2ae9">3. HTTP 概览</a>
+<ul>
+<li><a href="#org7165123">3.1. HTTP 报文</a></li>
+<li><a href="#org16dfa24">3.2. HTTP 消息头</a></li>
+<li><a href="#org2d0a92e">3.3. HTTP Cookie</a></li>
+<li><a href="#org2583daf">3.4. HTTP 身份验证</a></li>
+</ul>
+</li>
+<li><a href="#org443933d">4. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1d61d6e" class="outline-2">
+<h2 id="org1d61d6e"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+最近在阅读源码的过程中， 因为对 <code>HTTP</code> 协议了解的太少， 使得源码的阅读难以推进。
+</p>
+
+<p>
+所以暂停了源码的阅读， 腾出时间来解决阅读源码的过程中遇到的问题。
+</p>
+
+<p>
+这篇博客是对 <code>HTTP</code> 协议及相关内容的简单总结。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org82292a0" class="outline-2">
+<h2 id="org82292a0"><span class="section-number-2">2</span> URL 相关</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+首先来看 <b>统一资源定位符 URL</b>.
+</p>
+
+<p>
+常见的 <b>URL</b> 的格式是这样的：
+</p>
+<pre class="example">
+scheme:[//host[:port]][/path][?query][#fragment]
+</pre>
+
+<p>
+还有一种不常见的：
+</p>
+<pre class="example">
+scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
+</pre>
+
+<p>
+这种格式中的 <code>user</code> 和 <code>password</code> 是访问资源时需要的凭证信息， 因为安全问题几乎
+被遗弃了。
+</p>
+
+<p>
+其它组成的含义如下：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名称</th>
+<th scope="col" class="org-left">含义</th>
+<th scope="col" class="org-left">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>scheme</code></td>
+<td class="org-left">协议类型</td>
+<td class="org-left"><code>http</code>, <code>https</code>, <code>ftp</code>, <code>file</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>host</code></td>
+<td class="org-left">服务器地址</td>
+<td class="org-left"><code>github.com</code>, <code>127.0.0.1</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>port</code></td>
+<td class="org-left">端口号(默认为 80)</td>
+<td class="org-left"><code>80</code>, <code>8080</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>path</code></td>
+<td class="org-left">资源层级 UNIX 文件路径</td>
+<td class="org-left"><code>/explore</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>query</code></td>
+<td class="org-left">查询字符串(使用 &amp; 链接不同项)</td>
+<td class="org-left"><code>?game=snake&amp;score=100</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>fragment</code></td>
+<td class="org-left">页内链接</td>
+<td class="org-left"><code>#top</code></td>
+</tr>
+</tbody>
+</table>
+
+<dl class="org-dl">
+<dt>URL 的编码</dt><dd><p>
+由于 <code>URL</code> 只能包含部分 <code>ASCII</code> 字符， 所以其他字符都需要进行 <a href="https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81">百分号编码</a>.
+</p>
+
+<p>
+<b>百分号编码</b> 类似于 <code>%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81</code>, 通常为
+字符对应的 <code>UTF-8</code> 字节序和转义字符 <code>%</code> 的组合。
+</p>
+
+<p>
+当然， 也可能遇到特殊情况， 需要了解的可以看一下阮一峰老师的博客 <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html">关于URL编码</a>.
+</p></dd>
+</dl>
+
+<p>
+更多的内容：
+</p>
+<ul class="org-ul">
+<li><a href="https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E6%A0%87%E5%BF%97%E7%AC%A6">统一资源标志符</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6">统一资源定位符</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8cf2ae9" class="outline-2">
+<h2 id="org8cf2ae9"><span class="section-number-2">3</span> HTTP 概览</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+首先， <code>HTTP</code> 是一个协议， 主要规定了 <b>客户端</b> 和 <b>服务端</b> 之间数据传输的 <b>格式</b>.
+</p>
+
+<p>
+简单来说就是： <code>HTTP</code> 规定了 <b>客户端</b> 和 <b>服务端</b> 传输的数据的 <b>结构</b>, 而没有规定怎样
+将数据传过去。
+</p>
+</div>
+
+<div id="outline-container-org7165123" class="outline-3">
+<h3 id="org7165123"><span class="section-number-3">3.1</span> HTTP 报文</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<b>HTTP 报文</b> 在一定程度是就是 <code>HTTP</code> 协议的数据结构。
+</p>
+
+<p>
+有两种 <code>HTTP</code> 报文的类型， 请求与响应， 每种都有其特定的格式：
+</p>
+<dl class="org-dl">
+<dt><b>请求</b></dt><dd><p>
+由客户端向服务端发送。
+</p>
+
+
+<div class="figure">
+<p><img src="https://mdn.mozillademos.org/files/13687/HTTP_Request.png" alt="HTTP_Request.png" />
+</p>
+</div></dd>
+
+<dt>响应</dt><dd><p>
+服务端对客户端请求的反馈。
+</p>
+
+
+<div class="figure">
+<p><img src="https://mdn.mozillademos.org/files/13691/HTTP_Response.png" alt="HTTP_Response.png" />
+</p>
+</div></dd>
+</dl>
+
+
+<div class="figure">
+<p><img src="https://mdn.mozillademos.org/files/13827/HTTPMsgStructure2.png" alt="HTTPMsgStructure2.png" />
+</p>
+</div>
+
+<p>
+<b>请求</b> 和 <b>响应</b> 报文的结构都可以划分为 <b>Status line</b>, <b>Header</b>, <b>Body</b> 三个部分。
+</p>
+
+<p>
+<b>请求</b> 的 <b>状态行</b> 包含了 <b>请求方法</b>, <b>资源路径</b> 和 <b>协议版本</b>.
+</p>
+
+<p>
+<b>响应</b> 的 <b>状态行</b> 包含了 <b>协议版本</b>, <b>状态码</b> 和 <b>状态信息</b>.
+</p>
+
+<p>
+常用的 <b>请求方法</b>:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>GET</code></td>
+<td class="org-left">获取资源</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>POST</code></td>
+<td class="org-left">发送数据到服务端</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+创建的 <b>状态码</b>:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">状态码</th>
+<th scope="col" class="org-left">状态信息</th>
+<th scope="col" class="org-left">含义</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">200</td>
+<td class="org-left">OK</td>
+<td class="org-left">请求成功</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">401</td>
+<td class="org-left">Unauthorized</td>
+<td class="org-left">当前请求需要用户验证</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">403</td>
+<td class="org-left">Forbidden</td>
+<td class="org-left">服务器已经理解请求， 但是拒绝执行它</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">404</td>
+<td class="org-left">Not Found</td>
+<td class="org-left">请求资源不存在或已被墙</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">500</td>
+<td class="org-left">Internal Server Error</td>
+<td class="org-left">服务器遇到了不知道如何处理的情况</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注：</b> 状态信息可以由服务端自己定义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org16dfa24" class="outline-3">
+<h3 id="org16dfa24"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<b>HTTP 消息头</b> 的格式为 <code>Name: Value</code>.
+</p>
+
+<p>
+其中， <code>Name</code> 不区分大小写， <code>Value</code> 不能有 <b>换行符</b>. 同时 <code>Value</code> 前面的空格会被忽略。
+</p>
+
+<p>
+<b>客户端</b> 和 <b>服务端</b> 可以通过 <b>消息头</b> 来传递额外的信息。
+</p>
+
+<p>
+而 <b>消息头</b> 也使得 <code>HTTP</code> 协议易于扩展， 只要 <b>客户端</b> 和 <b>服务端</b> 在 <b>消息头</b> 上达成共识。
+</p>
+
+<dl class="org-dl">
+<dt>User-Agent</dt><dd>用户代理</dd>
+
+<dt>Set-Cookie</dt><dd><b>响应</b> 头部， 设置 <code>Cookie</code></dd>
+
+<dt>Cookie</dt><dd><b>请求</b> 头部， 发送 <code>Cookie</code></dd>
+
+<dt>WWW-Authenticate</dt><dd><b>响应</b> 头部， 指定身份验证的方法</dd>
+
+<dt>Authorization</dt><dd><b>请求</b> 头部， 包含证明用户代理身份的凭证</dd>
+
+<dt>Proxy-Authenticate</dt><dd><b>响应</b> 头部， 指定身份验证的方法</dd>
+
+<dt>Proxy-Authorization</dt><dd><b>请求</b> 头部， 包含证明用户代理身份的凭证</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org2d0a92e" class="outline-3">
+<h3 id="org2d0a92e"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+由于 <code>HTTP</code> 是 <b>无状态</b> 的协议， 因此无法直接判断两个 <b>请求</b> 之间的关系。
+</p>
+
+<p>
+如果需要对 <b>请求</b> 进行辨识， 那么就可以使用 <code>Cookie</code> 来实现。
+</p>
+
+<p>
+<b>服务端</b> 可以通过 <b>响应头</b> 来设置 <b>客户端</b> 要 <b>保存</b> 的 <b>Cookie</b> 信息， <b>客户端</b> 在发起新的
+请求的时候会将 <b>Cookie</b> 信息一同发送。
+</p>
+
+<p>
+这时 <b>服务端</b> 可以通过 <b>Cookie</b> 来判断 <b>请求</b>.
+</p>
+
+<p>
+<b>Cookie</b> 和其他 <b>消息头</b> 的最大区别应该就是可以 <b>保存</b> 吧.
+</p>
+
+<p>
+<b>Cookie</b> 的格式为 <code>name=value</code>, 不同的键值使用 <code>;</code> 分隔。
+</p>
+
+<p>
+如果要了解如何 <b>创建 Cookie</b>, 可以前往 ☞ <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies#%E5%88%9B%E5%BB%BACookie">创建Cookie</a>.
+</p>
+
+<p>
+<b>Session</b>
+</p>
+
+<p>
+<b>Cookie</b> 都有了， <b>Session</b> 怎么能少呢 ？
+</p>
+
+<p>
+<b>HTTP</b> 没有规定 <b>Session</b> 的实现， <b>Session</b> 通常是在 <b>服务端</b> 创建的某种 <b>数据结构</b>.
+</p>
+
+<p>
+用于保存某些信息， 比如用户的在线信息。
+</p>
+
+<p>
+当用户上线后创建一个 <b>Session</b> 保存用户的在线信息， 并在返回的 <b>响应头</b> 中包含与
+这个 <b>Session</b> 相关的数据。
+</p>
+
+<p>
+再次获得用户的 <b>请求</b> 后， 通过 <b>请求头</b> 的 <b>Cookie</b> 在 <b>Session</b> 中查询对应的用户信息。
+</p>
+
+<p>
+如果存在就代表 <b>用户在线</b>, 不存在便可以要求用户 <b>登录</b>.
+</p>
+
+<p>
+当然， 这些只是一种设想， 实际的实现肯定有所区别。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2583daf" class="outline-3">
+<h3 id="org2583daf"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，
+并在 <code>WWW-Authenticate</code> 头中指定 <b>验证方式</b>.
+</p>
+
+
+<div class="figure">
+<p><img src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png" alt="HTTPAuth.png" />
+</p>
+</div>
+
+<p>
+类似的， <b>服务端</b> 还可以返回 <code>407</code> 状态码说明需要 <b>代理认证</b>, 并在 <code>Proxy-Authenticate</code> 中
+指明验证方式。
+</p>
+
+<p>
+<b>客户端</b> 可以通过 <code>Authorization</code> 或 <code>Proxy-Authorization</code> 发送验证信息。
+</p>
+
+<p>
+<code>WWW-Authenticate</code> 和 <code>Proxy-Authenticate</code> 的格式为：
+</p>
+<pre class="example">
+WWW-Authenticate: &lt;type&gt; realm=&lt;realm&gt;
+Proxy-Authenticate: &lt;type&gt; realm=&lt;realm&gt;
+</pre>
+<p>
+其中， <code>&lt;type&gt;</code> 指明验证方案的类型， <code>realm</code> 描述进行保护的区域.
+</p>
+
+<p>
+<b>请求头</b> 的格式与之类似：
+</p>
+<pre class="example">
+Authorization: &lt;type&gt; &lt;credentials&gt;
+Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
+</pre>
+<p>
+<code>&lt;type&gt;</code> 为验证方案类型， <code>&lt;credentials&gt;</code> 为验证信息。
+</p>
+
+<p>
+对于验证方案的使用， 可以前往 ☞ <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication#%E5%9F%BA%E6%9C%AC%E9%AA%8C%E8%AF%81%E6%96%B9%E6%A1%88">基本验证方案</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org443933d" class="outline-2">
+<h2 id="org443933d"><span class="section-number-2">4</span> 参考链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Overview">HTTP概述</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies">HTTP cookies</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers">HTTP Headers</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods">HTTP 请求方法</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status">HTTP 响应代码</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication">HTTP 身份验证</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-05-03 周四 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

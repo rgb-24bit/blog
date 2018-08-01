@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 描述器简述</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 描述器简述</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0e45920">1. 前言</a></li>
+<li><a href="#org4ee52f9">2. 描述器</a></li>
+<li><a href="#orgf663711">3. 描述器的使用</a></li>
+<li><a href="#org24d2352">4. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0e45920" class="outline-2">
+<h2 id="org0e45920"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+前端时间在阅读 <a href="https://github.com/faif/python-patterns">python-patterns</a> 的源码的时候， 其中一个模式的实现使用到了 <b>描述器</b>.
+</p>
+
+<p>
+当时看到诸如 <code>__get__</code> 的方法的时候， 还以为很简单， 毕竟之前已经整理学习过一次 <a href="https://github.com/rgb-24bit/blog/blob/master/2018/python-special-method.org">Python 魔法方法</a>.
+</p>
+
+<p>
+然而， 事实就是， 看不懂 ！！！
+</p>
+
+<p>
+经历一番研究后， 对 <b>描述器</b> 的理解总算有了一些眉目， 剩下的更多的是需要实践操作中进行理解。
+</p>
+
+<p>
+当然， 我不觉得目前我需要在什么程序中用到描述器&#x2026;&#x2026;
+</p>
+
+<p>
+为了不至于忘了描述器是怎么一回事， 我觉得有必要用这篇博客记录下来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4ee52f9" class="outline-2">
+<h2 id="org4ee52f9"><span class="section-number-2">2</span> 描述器</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+和描述器密切相关的魔法方法有四个， 其中： <code>__get__</code>, <code>__set__</code> 和 <code>__delete__</code> 是描述器协议的组成部分。
+</p>
+
+<p>
+而 <code>__getattribute__</code> 影响 <b>描述器</b> 的调用。
+</p>
+
+<p>
+理解 <b>描述器</b> 的关键点在于 <code>__getattribute__</code>, 如果你不清楚 <code>__getattribute__</code> 的作用， 那么请记住：
+</p>
+
+<p>
+<code>__getattribute__</code> 是 <code>Python</code> 在获取 <b>对象属性</b> 时调用的方法， 原型为： <code>__getattribute__(self, name)</code>.
+</p>
+
+<p>
+其中 <code>name</code> 是要获取的属性的名称， 而该方法的 <b>返回值</b> 就是获取的属性的值。
+</p>
+
+<p>
+在 <b>描述器</b> 的 <a href="https://docs.python.org/3/howto/descriptor.html">官方教程</a> 中有这样一段代码， 大致告诉了我们 <b>描述器</b> 是怎么一回事：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattribute__</span>(<span style="font-weight: bold;">self</span>, key):
+    <span style="font-style: italic;">"Emulate type_getattro() in Objects/typeobject.c"</span>
+    <span style="font-weight: bold; font-style: italic;">v</span> = <span style="font-weight: bold;">object</span>.__getattribute__(<span style="font-weight: bold;">self</span>, key)
+    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(v, <span style="font-style: italic;">'__get__'</span>):
+       <span style="font-weight: bold;">return</span> v.__get__(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold;">self</span>)
+    <span style="font-weight: bold;">return</span> v
+</pre>
+</div>
+
+<p>
+通过这段代码可以看到， 当我们尝试去获取属性 <code>key</code> 的值的时候， <code>__getattribute__</code> 会尝试判读获取到
+的值 <code>v</code> 是否存在属性 <code>__get__</code>.
+</p>
+
+<p>
+如果存在， 就将返回 <code>v.__get__(None, self)</code> 的值， 否则返回 <code>v</code>.
+</p>
+
+<p>
+这一段很关键， 告诉了我们非常重要的一件事： <b>描述器</b> 不是在获取 <b>描述器属性</b> 时调用的， 而是在 <b>获取描述器</b> 时调用的。
+</p>
+
+<p>
+先看代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Descriptor</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__get__</span>(<span style="font-weight: bold;">self</span>, obj, obj_type):
+        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'call __get__'</span>)
+        <span style="font-weight: bold;">return</span> 0
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold; font-style: italic;">descriptor</span> = Descriptor()
+
+Test.descriptor
+</pre>
+</div>
+
+<p>
+上述代码的输出为：
+</p>
+<pre class="example">
+call __get__
+</pre>
+
+<p>
+可以看到， 获取 <code>Test</code> 的 <code>descriptor</code> 属性时， <code>Python</code> 发现 <code>descriptor</code> 是一个 <b>描述器</b>, 于是调用了这个描述器的 <code>__get__</code> 方法。
+</p>
+
+<p>
+当然， 上述代码是对于 <b>类</b> 来说的， 描述器的调用在 <b>实例</b> 和 <b>类</b> 上存在一定的区别。
+</p>
+
+<p>
+在说的这个区别前， 需要了解的一个概念是 <b>描述器</b> 的类型：
+</p>
+<ul class="org-ul">
+<li>资料描述器： 同时定义了 <code>__get__</code> 和 <code>__set__</code> 方法的描述器是资料描述器</li>
+<li>非资料描述器： 仅定义了 <code>__get__</code> 方法的描述器是非资料描述器</li>
+</ul>
+
+<p>
+这两种描述器的区别主要在于 <b>调用优先级</b> 的区别。
+</p>
+
+<p>
+假设存在 <code>obj.x</code> 的调用， 其中 <code>x</code> 是一个 <b>描述器</b>:
+</p>
+<ul class="org-ul">
+<li><p>
+如果 <code>obj</code> 是一个 <b>实例</b>, 那么调用顺序依次为： <b>资料描述器</b> -&gt; <b>实例字典</b> -&gt; <b>非资料描述器</b>.
+</p>
+
+<p>
+如果 <code>obj</code> 的实例属性中存在和 <code>x</code> 同名的 <b>属性</b>, 同时 <code>x</code> 是一个 <b>非资料描述器</b>, 那么 <code>obj.x</code> 获取的会是
+<b>实例属性</b> 的值。 反之， 如果 <code>x</code> 是一个 <b>资料描述器</b>, 那么获取的会是这个 <b>资料描述器</b> 的值。
+</p></li>
+
+<li><p>
+如果 <code>obj</code> 是一个 <b>类</b>, 那么 <code>obj.x</code> 的调用等价于之前的那段代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattribute__</span>(<span style="font-weight: bold;">self</span>, key):
+    <span style="font-style: italic;">"Emulate type_getattro() in Objects/typeobject.c"</span>
+    <span style="font-weight: bold; font-style: italic;">v</span> = <span style="font-weight: bold;">object</span>.__getattribute__(<span style="font-weight: bold;">self</span>, key)
+    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(v, <span style="font-style: italic;">'__get__'</span>):
+       <span style="font-weight: bold;">return</span> v.__get__(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold;">self</span>)
+    <span style="font-weight: bold;">return</span> v
+</pre>
+</div></li>
+</ul>
+
+<p>
+因此， 使用 <b>描述器</b> 的时候， 需要分清： 类、 实例、 资料描述器、 非资料描述器。
+</p>
+
+<p>
+<b>注：</b> 描述器的调用是因为 <code>__getattribute__</code>, 重写 <code>__getattribute__</code> 会影响描述器的正常调用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf663711" class="outline-2">
+<h2 id="orgf663711"><span class="section-number-2">3</span> 描述器的使用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+描述器的方法原型为：
+</p>
+<pre class="example">
+descr.__get__(self, obj, obj_type) --&gt; value
+
+descr.__set__(self, obj, value) --&gt; None
+
+descr.__delete__(self, obj) --&gt; None
+</pre>
+
+<p>
+其中， <code>obj</code> 代表的是 <b>实例</b>, 如果描述器的拥有者是 <b>类</b>, 那么 <code>obj</code> 就为 <code>None</code>.
+</p>
+
+<p>
+<code>obj_type</code> 代表的就是 <b>类</b>, 而 <code>value</code> 就是你要设置的值。
+</p>
+
+<p>
+对于描述器的使用场景， 我编写程序还没遇到过需要使用描述器的地方， 只能拿教程里的
+一个例子来说明了：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Property</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-style: italic;">"Emulate PyProperty_Type() in Objects/descrobject.c"</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fget=<span style="font-weight: bold; text-decoration: underline;">None</span>, fset=<span style="font-weight: bold; text-decoration: underline;">None</span>, fdel=<span style="font-weight: bold; text-decoration: underline;">None</span>, doc=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+        <span style="font-weight: bold;">self</span>.fget = fget
+        <span style="font-weight: bold;">self</span>.fset = fset
+        <span style="font-weight: bold;">self</span>.fdel = fdel
+        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span> = doc
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__get__</span>(<span style="font-weight: bold;">self</span>, obj, objtype=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+        <span style="font-weight: bold;">if</span> obj <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+            <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>
+        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fget <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"unreadable attribute"</span>
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>.fget(obj)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__set__</span>(<span style="font-weight: bold;">self</span>, obj, value):
+        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fset <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"can't set attribute"</span>
+        <span style="font-weight: bold;">self</span>.fset(obj, value)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__delete__</span>(<span style="font-weight: bold;">self</span>, obj):
+        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fdel <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"can't delete attribute"</span>
+        <span style="font-weight: bold;">self</span>.fdel(obj)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">getter</span>(<span style="font-weight: bold;">self</span>, fget):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(fget, <span style="font-weight: bold;">self</span>.fset, <span style="font-weight: bold;">self</span>.fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">setter</span>(<span style="font-weight: bold;">self</span>, fset):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(<span style="font-weight: bold;">self</span>.fget, fset, <span style="font-weight: bold;">self</span>.fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">deleter</span>(<span style="font-weight: bold;">self</span>, fdel):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(<span style="font-weight: bold;">self</span>.fget, <span style="font-weight: bold;">self</span>.fset, fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+</pre>
+</div>
+
+<p>
+上述代码是内置函数 <code>property</code> 的一个等价实现， 至于 <code>property</code> 的作用我想不需要
+我多说了。
+</p>
+
+<p>
+简单的理解代码：
+</p>
+<ul class="org-ul">
+<li>构造函数， 当使用 <code>property</code> 装饰一个方法时会被调用， 装饰的方法会作为 <code>fget</code>
+传入， 然后被装饰的方法变成了一个资料装饰器 - <code>Property</code> 的实例。</li>
+
+<li>当调用 <code>obj.func</code> 时， 这个 <code>func</code> 是一个 <b>资料装饰器</b>, 因此会调用 <code>Property</code> 的 <code>__get__</code> 方法。</li>
+</ul>
+
+<p>
+emmm, 剩下的代码就很简单了。
+</p>
+
+<p>
+最后， <span class="underline">描述器很强大， 使用请谨慎</span>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org24d2352" class="outline-2">
+<h2 id="org24d2352"><span class="section-number-2">4</span> 参考链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/3/howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li><a href="http://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html">Python描述器引导</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-06-16 周六 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>正则表达式</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">正则表达式</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc196058">1. 简介</a></li>
+<li><a href="#orgccaac00">2. 简单的匹配</a></li>
+<li><a href="#org4117afc">3. 子表达式</a></li>
+<li><a href="#orgf9bc934">4. 回溯引用</a>
+<ul>
+<li><a href="#org976e3e1">4.1. 回溯引用在替换操作中的使用</a></li>
+</ul>
+</li>
+<li><a href="#orgaa97389">5. 前后查找</a>
+<ul>
+<li><a href="#orge0d9ed2">5.1. 向前查找</a></li>
+<li><a href="#orgedcb299">5.2. 向后查找</a></li>
+<li><a href="#org288ebc3">5.3. 对前后查找取非</a></li>
+</ul>
+</li>
+<li><a href="#orgc744d89">6. 嵌入条件</a>
+<ul>
+<li><a href="#orgbb2d33d">6.1. 回溯引用条件</a></li>
+<li><a href="#orgdecfb83">6.2. 前后查找条件</a></li>
+</ul>
+</li>
+<li><a href="#orgf2f550b">7. 正则表达式在线测试</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc196058" class="outline-2">
+<h2 id="orgc196058"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+正则表达式(regular expression, 缩写regex) 是文本处理方面功能最强大的工具之一.
+</p>
+
+<p>
+正则表达式的两个基本用途是: <code>搜索</code> 和 <code>替换</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgccaac00" class="outline-2">
+<h2 id="orgccaac00"><span class="section-number-2">2</span> 简单的匹配</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+有时, 简单的组合正则表达式的 <b>元字符</b> 和 <b>纯文本</b> 便足够解决很多问题.
+</p>
+
+<ul class="org-ul">
+<li><p>
+<b>基本的元字符</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">元字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>.</code></td>
+<td class="org-left">匹配任意单个字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[]</code></td>
+<td class="org-left">定义字符集合, 匹配字符集合中的一个字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[^]</code></td>
+<td class="org-left">对字符集合求非</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">定义一个区间(如[A-Z])</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\</code></td>
+<td class="org-left">对下一个字符转义</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注</b>: 一个完整的正则表达式, <code>\</code> 字符后面必然跟着一个字符.
+</p></li>
+
+<li><p>
+<b>数量元字符</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">元字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>*</code></td>
+<td class="org-left">匹配前一个字符(子表达式)的零次或多次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>*?</code></td>
+<td class="org-left"><code>*</code> 的懒惰型版本</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">匹配前一个字符(子表达式)的一次或多次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+?</code></td>
+<td class="org-left"><code>+</code> 的懒惰型版本</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>?</code></td>
+<td class="org-left">匹配前一个字符(子表达式)的零次或一次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>{n}</code></td>
+<td class="org-left">匹配前一个字符(子表达式)的 <code>n</code> 次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>{m, n}</code></td>
+<td class="org-left">匹配前一个字符(子表达式)至少 <code>n</code> 次且至多 m 次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>{n, }</code></td>
+<td class="org-left">匹配前一个字符(子表达式)至少 <code>n</code> 次重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>{n, }?</code></td>
+<td class="org-left">{n, } 的懒惰型版本</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注</b>: <code>*</code> 和 <code>+</code> 在默认情况下是 <b>贪婪匹配</b>, 会匹配尽可能多的字符, 容易找出过度匹配.
+所以在使用时, 考虑使用它的 <b>懒惰版本</b>.
+</p></li>
+
+<li><p>
+<b>位置元字符</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">元字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>^</code></td>
+<td class="org-left">匹配字符串的开头</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\A</code></td>
+<td class="org-left">匹配字符串的开头</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$</code></td>
+<td class="org-left">匹配字符串的结束</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\Z</code></td>
+<td class="org-left">匹配字符串的结束</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\&lt;</code></td>
+<td class="org-left">匹配单词的开头</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\&gt;</code></td>
+<td class="org-left">匹配单词的结束</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\b</code></td>
+<td class="org-left">匹配单词边界(开头和结束)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\B</code></td>
+<td class="org-left"><code>\b</code> 的反义, 即单词内部</td>
+</tr>
+</tbody>
+</table></li>
+
+<li><p>
+<b>特殊字符元字符</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">元字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>[\b]</code></td>
+<td class="org-left">退格字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\c</code></td>
+<td class="org-left">匹配一个控制字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\d</code></td>
+<td class="org-left">匹配任意数字字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\D</code></td>
+<td class="org-left"><code>\d</code> 的反义</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\f</code></td>
+<td class="org-left">换页符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\n</code></td>
+<td class="org-left">换行符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\r</code></td>
+<td class="org-left">回车符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\s</code></td>
+<td class="org-left">匹配一个空白字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\S</code></td>
+<td class="org-left"><code>\s</code> 的反义</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\t</code></td>
+<td class="org-left">制表符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\v</code></td>
+<td class="org-left">垂直制表符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\w</code></td>
+<td class="org-left">匹配任意字母数字或下划线字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\W</code></td>
+<td class="org-left"><code>\w</code> 的反义</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\x</code></td>
+<td class="org-left">匹配一个十六进制数字</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\0</code></td>
+<td class="org-left">匹配一个八进制数字</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注</b>: <code>Windows</code> 使用 <code>\r\n</code> 作为文本行结束标签. <code>Unix\Linux</code> 使用 <code>\n</code>.
+</p></li>
+
+<li><p>
+<b>POSIX字符类</b>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">字符类</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>[:alnum:]</code></td>
+<td class="org-left">任何一个字母或数字</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:alpha:]</code></td>
+<td class="org-left">任何一个字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:blank:]</code></td>
+<td class="org-left">空格或制表符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:cntrl:]</code></td>
+<td class="org-left">ASCII 控制字符(ASCII 0-31, 127)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:digit:]</code></td>
+<td class="org-left">任何一个数字</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:graph:]</code></td>
+<td class="org-left">和 <code>[:print:]</code> 一样, 但不包括空格</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:lower:]</code></td>
+<td class="org-left">任何一个小写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:print:]</code></td>
+<td class="org-left">任何一个可打印字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:punct:]</code></td>
+<td class="org-left">既不属于 <code>[:alnum:]</code> 也不属于 <code>[:cntrl:]</code> 的任何一个字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:space:]</code></td>
+<td class="org-left">任何一个空白字符, 包括空格</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:upper:]</code></td>
+<td class="org-left">任何一个大写字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[:xdigit:]</code></td>
+<td class="org-left">任何一个十六进制数字</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注</b>: 部分工具或编程语言不支持.
+</p></li>
+</ul>
+
+<p>
+通过使用这些元字符和纯文本的组合已经可以解决很多问题, 但是很多时候, 仅靠这些元字符能够
+解决的问题是有限的, 这时, 便需要用到更高级的功能.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4117afc" class="outline-2">
+<h2 id="org4117afc"><span class="section-number-2">3</span> 子表达式</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+子表达式可以对表达式进行 <b>分组</b> 和 <b>归类</b>.
+</p>
+
+<p>
+子表达式必须用 <code>(</code> 和 <code>)</code> 括起来. <code>(</code> 和 <code>)</code> 是元字符, 要匹配它们需要用 <code>\</code> 转义.
+</p>
+
+<p>
+对于子表达式, 常用的一个例子是匹配 <code>IP</code> 地址.
+</p>
+
+<p>
+假设一段文本是这样的:
+</p>
+<pre class="example">
+The ip address is: [12.159.46.200]
+
+</pre>
+
+<p>
+我们要从中匹配出 <code>IP</code> 地址, 简单的做法可以像这样:
+</p>
+<pre class="example">
+\d{1, 3}\.\d{1, 3}\.\d{1, 3}\.\d{1, 3}
+
+</pre>
+
+<p>
+<code>\d{1, 3}</code> 匹配连续的一到三个数字, <code>\.</code> 匹配字符 <code>.</code>, 这时, 虽然我们可以
+从示例文本中匹配出 <code>IP</code> 地址, 但是很繁琐.
+</p>
+
+<p>
+这时, 如果使用子表达式就会很简单:
+</p>
+<pre class="example">
+(\d{1, 3}\.){3}\d{1, 3}
+
+</pre>
+
+<p>
+<code>(\d{1, 3}\.){3}</code> 表示匹配连续的一到三个数字和一个点三次, 而 <code>(\d{1, 3})\.)</code>
+便是子表达式.通过括号括起来的一段表达式, 方便重复的匹配.
+</p>
+
+<p>
+另外, 在子表达式内部, 你可以用元字符 <code>|</code> 来将子表单式分为两个部分. 相当于C语言中的 <code>||</code>,
+只要两部分中的一个匹配成功就算匹配成功. 如: <code>(19|20)\d</code> 匹配 <code>19x</code> 或 <code>20x</code> 的数字.
+</p>
+
+<p>
+同时, 子表达式允许嵌套, 嵌套的层次理论上没有限制, 但是嵌套太多不是一个好主意.
+</p>
+
+<p>
+如: <code>(([A-Z]{2})|([a-z]{2}))</code> 可以匹配两个连续的大写字母或两个连续的小写字母.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf9bc934" class="outline-2">
+<h2 id="orgf9bc934"><span class="section-number-2">4</span> 回溯引用</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>回溯引用</b> 允许正则表达式模式引用前面部分中定义的 <b>子表达式</b> 匹配的 <b>结果</b>.
+</p>
+
+<p>
+<b>回溯引用</b> 的表示方式是 <code>\</code> 后紧跟一个 <code>数字</code>, 如: <code>\1</code> 表示前面定义的 <b>第一个</b> 子表达式.
+(<code>\0</code> 一般代表整个匹配模式).
+</p>
+
+<p>
+例如, 对于一段网页文本:
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;"> title1 </span>&lt;/<span style="font-weight: bold;">h1</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt;<span style="font-weight: bold; font-style: italic; text-decoration: underline;"> title2 </span>&lt;/<span style="font-weight: bold;">h2</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt; title3 &lt;/<span style="font-weight: bold;">h3</span>&gt;
+&lt;<span style="font-weight: bold;">h4</span>&gt;<span style="text-decoration: underline;"> title4 </span>&lt;/<span style="font-weight: bold;">h4</span>&gt;
+</pre>
+</div>
+
+<p>
+很明显, 其中第三个标题的格式是错误的, 如果要匹配出正确的标题, 我们可以使用 <b>回溯引用</b> 来办到:
+</p>
+<pre class="example">
+&lt;h([1-6])&gt;.*?&lt;/h\1&gt;
+
+</pre>
+
+<p>
+这个匹配模式使用的 <b>回溯引用</b>, <code>\1</code> 引用了子表达式 <code>([1-6])</code> 的匹配 <b>结果</b>, 当前面的子表达式匹配到
+一个数字的时候, 回溯引用代表的数字便是匹配到的这一个数字. 此时只有前后相同时才可以匹配成功.
+</p>
+</div>
+
+<div id="outline-container-org976e3e1" class="outline-3">
+<h3 id="org976e3e1"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+你可以在替换时引用匹配时使用的子表达式.
+</p>
+
+<p>
+假设有一段文本:
+</p>
+<pre class="example">
+=123=, =456=, =789=....
+</pre>
+
+<p>
+你想讲所有的 <code>=xxx=</code> 替换为 <code>+xxx+</code>, 这时, 便可以使用回溯引用.
+</p>
+
+<p>
+匹配模式: <code>=(\d{3})=</code>
+</p>
+
+<p>
+替换模式: <code>+\1+</code>
+</p>
+
+<p>
+替换结果:
+</p>
+<pre class="example">
++123+, +456+, +789+....
+
+</pre>
+
+<p>
+<b>注</b>: <code>JavaScript</code> 请使用 <code>$</code> 替换 <code>\</code>.
+</p>
+
+<ul class="org-ul">
+<li><p>
+<b>大小写转换</b>
+</p>
+
+<p>
+部分正则表达式允许使用以下元字符对字母进行大小写转换:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">元字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\E</td>
+<td class="org-left">结束 \L 或 \U 的转换</td>
+</tr>
+
+<tr>
+<td class="org-left">\l</td>
+<td class="org-left">把下一个字符(子表达式)转换为小写</td>
+</tr>
+
+<tr>
+<td class="org-left">\L</td>
+<td class="org-left">把 \L 到 \E 之间的字符全部转换为小写</td>
+</tr>
+
+<tr>
+<td class="org-left">\u</td>
+<td class="org-left">把下一个字符(子表达式)转换为大写</td>
+</tr>
+
+<tr>
+<td class="org-left">\U</td>
+<td class="org-left">把 \U 到 \E 之间的字符全部转换为大写</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+例如, 将正确的标题转换为大写:
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;"> title1 </span>&lt;/<span style="font-weight: bold;">h1</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt;<span style="font-weight: bold; font-style: italic; text-decoration: underline;"> title2 </span>&lt;/<span style="font-weight: bold;">h2</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt; title3 &lt;/<span style="font-weight: bold;">h3</span>&gt;
+&lt;<span style="font-weight: bold;">h4</span>&gt;<span style="text-decoration: underline;"> title4 </span>&lt;/<span style="font-weight: bold;">h4</span>&gt;
+</pre>
+</div>
+
+<p>
+匹配模式: <code>&lt;h([1-6])&gt;(.*?)&lt;/h\1&gt;</code>
+</p>
+
+<p>
+替换模式: <code>&lt;h\1&gt;\u\2&lt;/h\1&gt;</code>
+</p>
+
+<p>
+替换结果:
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;"> TITLE1 </span>&lt;/<span style="font-weight: bold;">h1</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt;<span style="font-weight: bold; font-style: italic; text-decoration: underline;"> TITLE2 </span>&lt;/<span style="font-weight: bold;">h2</span>&gt;
+&lt;<span style="font-weight: bold;">h2</span>&gt; title3 &lt;/<span style="font-weight: bold;">h3</span>&gt;
+&lt;<span style="font-weight: bold;">h4</span>&gt;<span style="text-decoration: underline;"> TITLE4 </span>&lt;/<span style="font-weight: bold;">h4</span>&gt;
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaa97389" class="outline-2">
+<h2 id="orgaa97389"><span class="section-number-2">5</span> 前后查找</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+使用正则表达式标记要匹配的文本的位置, 对该位置的前后内容进行查找.
+</p>
+
+<p>
+很多时候, 我们想要匹配位于网页 <code>&lt;title&gt;</code> 标签类的文本. 此时我们便可以使用
+前后查找来完成工作.
+</p>
+
+<p>
+前后查找分为: <b>向前查找</b> 和 <b>向后查找</b> (常见的正则表达式实现都支持前者, 但支持后者的就没那么多).
+</p>
+</div>
+
+<div id="outline-container-orge0d9ed2" class="outline-3">
+<h3 id="orge0d9ed2"><span class="section-number-3">5.1</span> 向前查找</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+向前查找指定了一个必须匹配但不在结果中返回的模式.
+</p>
+
+<p>
+向前查找是由 <code>?=</code> 开头的 <b>子表达式</b>. 需要匹配的文本跟在 <code>=</code> 后面.
+</p>
+
+<p>
+例如匹配这段文本的URL前缀:
+</p>
+<pre class="example">
+https://github.com
+https://gayhub.com
+ftp://@_@.com
+</pre>
+
+<p>
+匹配模式: <code>.+(?=:)</code>
+</p>
+
+<p>
+匹配结果:
+</p>
+<pre class="example">
+https
+https
+ftp
+</pre>
+
+<p>
+任何一个子表达式都可以转换为一个向前查找表达式, 只要给他加上一个 <code>?=</code> 前缀即可.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgedcb299" class="outline-3">
+<h3 id="orgedcb299"><span class="section-number-3">5.2</span> 向后查找</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+向后查找类似于向前查找, 操作符是: <code>?&lt;=</code>
+</p>
+
+<p>
+例如匹配 <code>&lt;title&gt;</code> 标签之间的文本, 我们可以这样操作:
+</p>
+<pre class="example">
+(?&lt;=&lt;title&gt;).*?(?=&lt;/title&gt;)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org288ebc3" class="outline-3">
+<h3 id="org288ebc3"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+前面两种查找方式为: <code>正向前查找</code> 和 <code>正向后查找</code>.
+</p>
+
+<p>
+既然有正, 自然有负, 负向查找与给定模式不匹配的文本.
+</p>
+
+<p>
+负向前查找: <code>(?!)</code>
+</p>
+
+<p>
+负向后查找: <code>(?&lt;!)</code>
+</p>
+
+<p>
+如: 有数字 <code>$123, 567, $23, 55</code>, 模式 <code>(?&lt;=\$)\d+)</code> 匹配 <code>$123, $23</code>.
+而模式 <code>(?&lt;!\$)\d</code> 匹配 <code>567, 55</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc744d89" class="outline-2">
+<h2 id="orgc744d89"><span class="section-number-2">6</span> 嵌入条件</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<b>注</b>: 并非所有正则表达式实现都支持条件处理.
+</p>
+
+<p>
+正则表达式里的条件用 <code>?</code> 来定义, 如: <code>?, ?=, ?&lt;=</code> 也算是条件查找了.
+</p>
+
+<p>
+嵌入条件的使用情况:
+</p>
+<ul class="org-ul">
+<li>根据有关回溯引用来进行条件处理</li>
+<li>根据一个前后查找来进行条件处理</li>
+</ul>
+</div>
+
+<div id="outline-container-orgbb2d33d" class="outline-3">
+<h3 id="orgbb2d33d"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+回溯引用条件只在前面的子表达式匹配取得成功的情况下才允许使用一个表达式.
+</p>
+
+<p>
+语法: <code>(?(backreference)true-regex)</code>, 其中 <code>?</code> 表明这是一个条件, 括号里的 <code>backreference</code> 是一个回溯引用.
+<code>true-regex</code> 是一个只在 <code>backreference</code> 存在时才被执行的表达式.
+</p>
+
+<p>
+或: <code>(?(backreference)true-regex|false-regex)</code>, 当 <code>backreference</code> 不存在时执行 <code>false-regex</code> 表达式.
+</p>
+
+<p>
+如模式: <code>(0X)?(?(1)[A-F0-9]{6}|\d{6})</code>
+</p>
+
+<p>
+这个模式的前面部分为: <code>(0X)?</code>, 当这个条件满足的时候, 后面的条件将会执行: <code>[A-F0-9]{6}</code>, 而
+不满足的时候会执行: <code>\d{6}</code>.
+</p>
+
+<p>
+<b>注</b>: 回溯引用条件中的 <code>(1)</code> 不需要加 <code>\</code>, 即不需要 <code>(\1)</code> 这样.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdecfb83" class="outline-3">
+<h3 id="orgdecfb83"><span class="section-number-3">6.2</span> 前后查找条件</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+前后查找条件只在一个向前查找或一个向后查找取得成功的情况下才允许使用一个表达式.
+</p>
+
+<p>
+语法: <code>(?(look-regex)true-regex)</code> <code>(look-regex)</code> 是一个向前或向后查找表达式, <code>true-regex</code> 是在
+向前或向后查找成功后执行的子表达式.
+</p>
+
+<p>
+如模式: <code>\d{5}(?(?=-)-\d{4})</code>, <code>(?=-)</code> 定义了一个向前查找表达式, 当查找成功后, 会执行 <code>-\d{4}</code> 表达式.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf2f550b" class="outline-2">
+<h2 id="orgf2f550b"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="https://c.runoob.com/front-end/854">正则表达式在线测试|菜鸟教程</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-01-04 周四 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

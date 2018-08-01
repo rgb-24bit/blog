@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 格式化字符串</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 格式化字符串</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org83c7037">1. 简介</a></li>
+<li><a href="#orgad987ba">2. 使用 str.format()</a>
+<ul>
+<li><a href="#org216f334">2.1. 格式化字符串语法</a></li>
+<li><a href="#orga1166bb">2.2. 格式说明符</a></li>
+</ul>
+</li>
+<li><a href="#org6a3389c">3. 使用 %</a></li>
+<li><a href="#org7652e4e">4. Update: 2018-04-18</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org83c7037" class="outline-2">
+<h2 id="org83c7037"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>Python</code> 目前有两种进行格式化字符串的方式：
+</p>
+<ul class="org-ul">
+<li>使用 <code>%</code> 操作符进行格式化字符串</li>
+<li>使用 <code>str.format()</code> 方法进行格式化字符串</li>
+</ul>
+
+<p>
+官方推荐的方式是使用 <code>str.format</code> 方法。
+</p>
+
+<p>
+官方文档链接：
+</p>
+<ul class="org-ul">
+<li><a href="https://docs.python.org/2.7/library/string.html#format-string-syntax">Format String Syntax</a></li>
+<li><a href="https://docs.python.org/2.7/library/stdtypes.html#string-formatting-operations">String Formatting Operations</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgad987ba" class="outline-2">
+<h2 id="orgad987ba"><span class="section-number-2">2</span> 使用 str.format()</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org216f334" class="outline-3">
+<h3 id="org216f334"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>format</code> 字符串包含由 <code>{}</code> 括起来的替换字段， 不包含在 <code>{}</code> 中的内容不做处理。
+</p>
+
+<p>
+<code>format</code> 字符串可以通过 <code>{{</code> 和 <code>}}</code> 的方式来包含 <code>{</code> 和 <code>}</code>.
+</p>
+
+<p>
+替换字段语法：
+</p>
+<pre class="example">
+     替换字段       - replacement_field ::=  "{" [field_name] ["!" conversion] [":" format_spec] "}"
+     字段名         - field_name        ::=  arg_name ("." attribute_name | "[" element_index "]")*
+     参数名         - arg_name          ::=  [identifier | integer]
+     属性名         - attribute_name    ::=  identifier
+     元素索引       - element_index     ::=  integer | index_string
+     索引字符串     - index_string      ::=  &lt;any source character except "]"&gt; +
+     转换字段       - conversion        ::=  "r" | "s"
+     格式规范说明符 - format_spec       ::=  &lt;described in the next section&gt;
+</pre>
+
+<p>
+注意事项：
+</p>
+<ul class="org-ul">
+<li><p>
+<b>参数名</b> - 可以为 <b>整数</b> 或 <b>关键字</b>. 整数为位置参数， 关键字为命名关键字参数。
+</p>
+
+<p>
+如果整数类似于 <code>{0}{1}{2}</code>, 则可以省略， 即： <code>{}{}{}</code> 等价于 <code>{0}{1}{2}</code>.
+</p>
+
+<p>
+如果参数存在属性， 可以通过 <code>arg_name.attribute_name</code> 的形式获取属性值。
+</p>
+
+<p>
+如果参数为可迭代对象， 可以通过 <code>arg_name[integer|index_string]</code> 的形式获取索引位置的元素。
+</p></li>
+
+<li><b>转换字段</b> - 由 <code>!</code> 开始， <code>r</code> 代表调用 <code>repr()</code>, <code>s</code> 代表调用 <code>str()</code>.</li>
+
+<li><b>格式规范说明符</b> - 由 <code>:</code> 开始。</li>
+</ul>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-style: italic;">"First, thou shalt count to {0}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
+<span style="font-style: italic;">"Bring me a {}"</span>                   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#38544;&#24335;&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
+<span style="font-style: italic;">"From {} to {}"</span>                   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110; "From {0} to {1}"</span>
+<span style="font-style: italic;">"My quest is {name}"</span>              <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24341;&#29992;&#20851;&#38190;&#23383;&#21442;&#25968; "name"</span>
+<span style="font-style: italic;">"Weight in tons {0.weight}"</span>       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31532;&#19968;&#20301;&#32622;&#21442;&#25968;&#30340; "weight" &#23646;&#24615;</span>
+<span style="font-style: italic;">"Units destroyed: {players[0]}"</span>   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' &#30340;&#31532;&#19968;&#20010;&#20803;&#32032;</span>
+<span style="font-style: italic;">"Units destroyed: {players[key]}"</span> <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' 'key' &#38190;&#19978;&#30340;&#20803;&#32032;</span>
+<span style="font-style: italic;">"Harold's a clever {0!s}"</span>         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; str()</span>
+<span style="font-style: italic;">"Bring out the holy {name!r}"</span>     <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; repr()</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga1166bb" class="outline-3">
+<h3 id="orga1166bb"><span class="section-number-3">2.2</span> 格式说明符</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>format_spec</code> 允许定义该替换字段的表现形式， 如左右对齐， 宽度等。
+</p>
+
+<p>
+标准格式说明符的一般形式：
+</p>
+<pre class="example">
+     格式说明符格式 - format_spec ::=  [[fill]align][sign][#][0][width][,][.precision][type]
+     填充字符       - fill        ::=  &lt;any character&gt;
+     对齐选项       - align       ::=  "&lt;" | "&gt;" | "=" | "^"
+     符号选项       - sign        ::=  "+" | "-" | " "
+     宽度           - width       ::=  integer
+     精度           - precision   ::=  integer
+     类型           - type        ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
+</pre>
+
+<ul class="org-ul">
+<li><p>
+<b>填充字符</b> - 如果自定了有效的对齐值， 则可以指定填充字符。 默认为 <b>空格</b>.
+</p>
+
+<p>
+对齐选项：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Option</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>&lt;</code></td>
+<td class="org-left">左对齐， 大多数对象的默认值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&gt;</code></td>
+<td class="org-left">右对齐， 数字的默认值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>=</code></td>
+<td class="org-left">强制将填充放置在符号（如果有）之后但位于数字之前， 仅适用于数字参数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>^</code></td>
+<td class="org-left">居中</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:?&lt;10}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'123456????'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:?&gt;10}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'????123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:?=10}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'????123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:?=10}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'-???123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:?^10}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'?-123456??'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>符号选项</b> - 符号选项只适用于数字参数。  
+</p>
+
+<p>
+符号选项：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Option</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">显示正负数的符号</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">仅显示负数符号（默认）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;SPC&gt;</code></td>
+<td class="org-left">表示在正数前添加空格</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:+}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'+123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:+}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'-123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:-}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:-}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'-123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0: }'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">' 123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0: }'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'-123456'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b># 选项</b> - 仅适用于数字参数， 同时仅适用于 <code>2</code>, <code>8</code>, <code>16</code> 进制的数字。 会在输出的数字前
+添加 <code>0b</code>, <code>0o</code>, <code>0x</code> 前缀。
+</p>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:#}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:#o}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'0o361100'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:#b}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'0b11110001001000000'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:#x}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'0x1e240'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:o}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'361100'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:b}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'11110001001000000'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:x}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'1e240'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>, 选项</b> - 千位分隔符。
+</p>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:,}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'123,456'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>width 选项</b> - 指定最小字段宽度， 前面的对齐选项中已经用到了。
+</p>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(123456)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25968;&#23383;&#40664;&#35748;&#20026; '&gt;'</span>
+<span style="font-style: italic;">'  123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(<span style="font-style: italic;">'123456'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23383;&#31526;&#20018;&#40664;&#35748;&#20026; '&lt;'</span>
+<span style="font-style: italic;">'123456  '</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>0 选项</b> - 如果未给出明确的对齐方式， 可以在宽度字段前加上一个 <code>0</code> 字符。 这相当于
+填充字符 <code>0</code>, 对齐方式为 <code>=</code>.
+</p>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:08}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">'-0123456'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(-123456)
+<span style="font-style: italic;">' -123456'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>precision 选项</b> - 对于由 <code>f</code> 或 <code>F</code> 格式化的浮点数， 该选项指定小数点后的位数。 对于有 <code>g</code> 或 <code>G</code> 
+格式化的浮点数的小数点前后 <b>一共</b> 多少位。 对于非整数类型的参数， 该选项指定字段最大宽度。
+<b>精度不允许使用整数值</b>.
+</p>
+
+<p>
+示例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5f}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'123456.00000'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5g}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<span style="font-style: italic;">'1.2346e+05'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5}'</span>.<span style="font-weight: bold;">format</span>(<span style="font-style: italic;">'123456'</span>)
+<span style="font-style: italic;">'12345'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5}'</span>.<span style="font-weight: bold;">format</span>(123456)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">ValueError</span>: Precision <span style="font-weight: bold;">not</span> allowed <span style="font-weight: bold;">in</span> integer <span style="font-weight: bold;">format</span> specifier
+</pre>
+</div></li>
+
+<li><p>
+<b>type 选项</b> - 该选项决定了数据应该如何呈现。
+</p>
+
+<p>
+可用的字符串表示类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>s</code></td>
+<td class="org-left">字符串格式， 字符串的默认类型， 可省略</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>None</code></td>
+<td class="org-left">同 <code>s</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+可用的整数表示类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left">输出为 2 进制整数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">输出为为相应的 unicode 字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left">输出为 10 进制整数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>o</code></td>
+<td class="org-left">输出为 8 进制整数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">输出为 16 进制整数， 使用小写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>X</code></td>
+<td class="org-left">输出为 16 进制整数， 使用大写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>n</code></td>
+<td class="org-left">类似 <code>d</code>, 会使用当前区域设置插入适当的数字分隔符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>None</code></td>
+<td class="org-left">同 <code>d</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+可用的浮点数和小数值表示类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>e</code></td>
+<td class="org-left">指数表示法， 使用字母 <code>e</code> 以科学记数法打印数字， 默认进度为 6</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>E</code></td>
+<td class="org-left">类似 <code>e</code>, 使用字母 <code>E</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>f</code></td>
+<td class="org-left">浮点数， 默认进度为 6</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F</code></td>
+<td class="org-left">浮点数， 同 <code>f</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>g</code></td>
+<td class="org-left">一般形式， 受 precision 选项影响</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>G</code></td>
+<td class="org-left">类似 <code>g</code>, 当使用指数表示法时， 使用 <code>E</code> 而不是 <code>e</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>n</code></td>
+<td class="org-left">和 <code>g</code> 相同， 会使用当前区域设置插入适当的数字分隔符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%</code></td>
+<td class="org-left">百分数表示</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>None</code></td>
+<td class="org-left">同 <code>g</code></td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a3389c" class="outline-2">
+<h2 id="org6a3389c"><span class="section-number-2">3</span> 使用 %</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>注：</b> 这个方式不被推荐， 如果可以的话， 还是尽量使用 <code>str.format()</code>
+</p>
+
+<p>
+这种方式的使用类似于 <code>C</code> 语言中的格式化字符串， 一般形式就是 <code>format % value</code>.
+</p>
+
+<p>
+格式：
+</p>
+<ol class="org-ol">
+<li>字符 <code>%</code>, 标志说明符的开始</li>
+
+<li>映射键（可选）, 有括号阔起来的字符序列指定， 如 <code>%(key)</code></li>
+
+<li>转换标志（可选）， 影响某些转换类型的结果</li>
+
+<li><p>
+最小字段宽度(可选)。 如果指定为 <code>*</code>, 则实际宽度将从值的下一个元素中读取。
+并且要转换的值位于宽度之后。
+</p>
+
+<p>
+这在 <code>str.format()</code> 中可以由嵌套的替换字段实现， 如：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:.{1}f}'</span>.<span style="font-weight: bold;">format</span>(123456, 5)
+<span style="font-style: italic;">'123456.00000'</span>
+</pre>
+</div></li>
+
+<li>精度（可选）。 以 <code>.</code> 表示。 如果指定为 <code>*</code>, 则实际精度将从值的下一个元素中读取。
+并且要转换的值位于精度之后。</li>
+
+<li>长度修饰符（可选）</li>
+
+<li>转换类型</li>
+</ol>
+
+<p>
+注： 如果值是一个字典， 那么字符串中的格式必须在 <code>%</code> 字符后面插入一个插入该字典的括号映射键.
+如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'%(language)s has %(number)03d quote types.'</span> % \
+...       {<span style="font-style: italic;">"language"</span>: <span style="font-style: italic;">"Python"</span>, <span style="font-style: italic;">"number"</span>: 2}
+Python has 002 quote types.
+</pre>
+</div>
+
+<p>
+转换标志：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Flag</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>#</code></td>
+<td class="org-left">同 <code>str.format()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>0</code></td>
+<td class="org-left">在数字前面填充 <code>0</code> 而不是默认的空格</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">左对齐</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;SPC&gt;</code></td>
+<td class="org-left">在正数前面显示空格</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">在正数前面显示 <code>+</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+转换类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Conversion</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left">格式化整数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>i</code></td>
+<td class="org-left">格式化整数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>o</code></td>
+<td class="org-left">8 进制</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>u</code></td>
+<td class="org-left">格式化无符号整型(已过时)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">16 进制， 小写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>X</code></td>
+<td class="org-left">16 进制， 大写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>e</code></td>
+<td class="org-left">浮点指数格式， 小写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>E</code></td>
+<td class="org-left">浮点指数格式， 大写字母</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>f</code></td>
+<td class="org-left">浮点数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F</code></td>
+<td class="org-left">浮点数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>g</code></td>
+<td class="org-left">浮点数， 如果指数小于 -4 或小于精度， 则使用小写指数格式， 否则使用小数格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>G</code></td>
+<td class="org-left">浮点数， 类似 <code>g</code>, 使用大写指数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">单个字符， 格式化字符及其 ASCII 码</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">字符串， 使用 repr() 转换任何 Python 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s</code></td>
+<td class="org-left">字符串， 使用 str() 转换任何 Python 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%</code></td>
+<td class="org-left">% 字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7652e4e" class="outline-2">
+<h2 id="org7652e4e"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这次更新是关于使用 <code>str.format</code> 的过程中包含 <code>{}</code> 的问题的。
+</p>
+
+<p>
+以前遇到过的一个 <code>Bug</code>, 其中有一串代码大概是这样的：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">LOGIN_POST_DATA</span> = r<span style="font-style: italic;">"""</span>
+<span style="font-style: italic;">{</span>
+<span style="font-style: italic;">    "action": "login",</span>
+<span style="font-style: italic;">    "username": "",</span>
+<span style="font-style: italic;">    "password": "",</span>
+<span style="font-style: italic;">    "ac_id": "2",</span>
+<span style="font-style: italic;">    "user_ip": "{user_ip}",</span>
+<span style="font-style: italic;">    "nas_ip": "",</span>
+<span style="font-style: italic;">    "user_mac": "",</span>
+<span style="font-style: italic;">    "save_me": "1",</span>
+<span style="font-style: italic;">    "ajax": "1"</span>
+<span style="font-style: italic;">}</span>
+<span style="font-style: italic;">"""</span>.<span style="font-weight: bold;">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">format keyerror</span>
+</pre>
+</div>
+
+<p>
+当时偷懒没有用字典， 直接使用了 <code>Json</code> 字符串。
+</p>
+
+<p>
+结果就是一运行就出现 <code>Keyerror</code>.
+</p>
+
+<p>
+当时一直不明白是什么原因， 后来只能用 <code>replace</code> 来替代 <code>format</code>.
+</p>
+
+<p>
+今天， 这个 <code>Bug</code> 的原因搞清楚了 ！
+</p>
+
+<p>
+<code>Json</code> 啊！ 有 <code>{}</code> 啊 ！
+</p>
+
+<p>
+改一下就好：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">LOGIN_POST_DATA</span> = r<span style="font-style: italic;">"""</span>
+<span style="font-style: italic;">{{</span>
+<span style="font-style: italic;">    "action": "login",</span>
+<span style="font-style: italic;">    "username": "",</span>
+<span style="font-style: italic;">    "password": "",</span>
+<span style="font-style: italic;">    "ac_id": "2",</span>
+<span style="font-style: italic;">    "user_ip": "{user_ip}",</span>
+<span style="font-style: italic;">    "nas_ip": "",</span>
+<span style="font-style: italic;">    "user_mac": "",</span>
+<span style="font-style: italic;">    "save_me": "1",</span>
+<span style="font-style: italic;">    "ajax": "1"</span>
+<span style="font-style: italic;">}}</span>
+<span style="font-style: italic;">"""</span>.<span style="font-weight: bold;">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">format keyerror</span>
+</pre>
+</div>
+
+<p>
+细节问题很重要 ！
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-21 周三 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

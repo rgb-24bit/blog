@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 闭包和装饰器</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 闭包和装饰器</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org28435c9">1. 简介</a></li>
+<li><a href="#orgd160eb1">2. 闭包</a></li>
+<li><a href="#org8693bea">3. 装饰器</a>
+<ul>
+<li><a href="#org18022ff">3.1. 多重装饰器</a></li>
+</ul>
+</li>
+<li><a href="#orgebf0865">4. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org28435c9" class="outline-2">
+<h2 id="org28435c9"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时
+编写出更加简介的代码。
+</p>
+
+<p>
+所以用这篇博客来总结对 <b>闭包</b> 和 <b>装饰器</b> 的理解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd160eb1" class="outline-2">
+<h2 id="orgd160eb1"><span class="section-number-2">2</span> 闭包</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
+<b>闭包</b> 的实现更贴近：
+</p>
+
+<ul class="org-ul">
+<li><b>闭包是由函数和与其相关的引用环境组合而成的实体</b>.</li>
+</ul>
+
+<p>
+这种说法的理解可以通过代码来尝试理解：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(num):
+   ...:     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">inner_func</span>():
+   ...:         <span style="font-weight: bold;">return</span> num
+   ...:     <span style="font-weight: bold;">return</span> inner_func
+   ...:
+
+In [2]: <span style="font-weight: bold; font-style: italic;">f</span> = func(10)
+
+In [3]: f
+Out[3]: &lt;function __main__.func.&lt;<span style="font-weight: bold;">locals</span>&gt;.inner_func&gt;
+</pre>
+</div>
+
+<p>
+这里实现了一个简单的 <b>闭包</b>, 调用函数 <code>func</code> 的时候会返回在 <code>func</code> 中定义的嵌套函数 <code>inner_func</code>.
+</p>
+
+<p>
+在函数 <code>inner_func</code> 中使用变量 <code>num</code>, 这个变量来自函数 <code>func</code>.
+</p>
+
+<p>
+可以看到第三行的输出
+</p>
+<pre class="example">
+&lt;function __main__.func.&lt;locals&gt;.inner_func&gt;
+</pre>
+
+<p>
+可以看到字段 <code>func.&lt;locals&gt;.inner_func</code>, 这说明 <code>inner_func</code> 是位于 <code>func</code> 的局部命名空间中的。
+</p>
+
+<p>
+返回的 <code>inner_func</code> 除了函数体本身外， 还与 <code>func</code> 的局部命名空间存在联系。
+</p>
+
+<p>
+现在换一个方式来进行测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [7]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(lst=[]):
+   ...:     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">inner_func</span>():
+   ...:         lst.append(10)
+   ...:         <span style="font-weight: bold;">return</span> lst
+   ...:     <span style="font-weight: bold;">return</span> inner_func
+   ...:
+
+In [8]: <span style="font-weight: bold; font-style: italic;">f1</span> = func()
+
+In [9]: <span style="font-weight: bold; font-style: italic;">f2</span> = func()
+
+In [10]: f1()
+Out[10]: [10]
+
+In [11]: f2()
+Out[11]: [10, 10]
+
+In [12]: <span style="font-weight: bold;">id</span>(f1) == <span style="font-weight: bold;">id</span>(f2)
+Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</span>
+</pre>
+</div>
+
+<p>
+<code>Python</code> 中， <b>函数</b> 也是一个 <b>引用类型</b> 的对象， 而 <b>引用类型</b> 的对象只会存在唯一的一个 <b>实体</b>.
+</p>
+
+<p>
+因此函数 <code>func</code> 的 <b>局部命名空间</b> 也是唯一的。
+</p>
+
+<p>
+而 <code>Out[12]</code> 可以看到， <code>f1</code> 和 <code>f2</code> 并不是同一个对象， 而分别调用 <code>f1</code> 和 <code>f2</code> 的输出却产生了影响。
+</p>
+
+<p>
+说明 <code>f1</code> 和 <code>f2</code> 共用函数 <code>func</code> 的局部命名空间， 即： 函数 <code>f1</code> 和 <code>f2</code> 是和函数 <code>func</code> 的局部命名空间组合
+而成的实体。
+</p>
+
+<p>
+<b>总结:</b> <b>闭包</b> 函数是 <b>函数体</b> 和定义该 <b>函数体</b> 的 <b>局部命名空间</b> 共同组成的。 <b>闭包</b> 函数可以调用该 <b>局部命名空间</b> 的内容。
+</p>
+
+<p>
+<b>PS:</b> 其实感觉如果像这样理解的话， 从模块中导入一个对象的方式也很像 <b>闭包</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8693bea" class="outline-2">
+<h2 id="org8693bea"><span class="section-number-2">3</span> 装饰器</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的
+环境存在联系。
+</p>
+
+<p>
+当然， <b>装饰器</b> 和 <b>被装饰</b> 的对象不一定必须是一个 <b>函数</b>. 只需要满足 <b>装饰器</b> 和 <b>被装饰</b> 的 <b>对象</b> 都是一个 <b>可调用</b> 的对象即可。
+</p>
+
+<p>
+这也是 <code>Python</code> 中存在各种各样的 <b>装饰器</b> 的一个原因。
+</p>
+
+<p>
+为了方便理解， 可以根据 <b>装饰器</b> 的使用方式将 <b>装饰器</b> 分为两类：
+</p>
+<ul class="org-ul">
+<li>使用时 <b>不带参</b> 的装饰器</li>
+<li>使用时 <b>带参</b> 的装饰器</li>
+</ul>
+
+<p>
+<b>注意：</b> 是 <b>使用时</b> 不带参.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; text-decoration: underline;">@decorator</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#19981;&#24102;&#21442;</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
+    <span style="font-weight: bold;">pass</span>
+
+<span style="font-weight: bold; text-decoration: underline;">@decorator</span>(level=3)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24102;&#21442;</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+这两种类型的 <b>装饰器</b> 的调用流程存在一些区别：
+</p>
+<dl class="org-dl">
+<dt>不带参的装饰器的调用流程</dt><dd><ol class="org-ol">
+<li>将 <b>被装饰</b> 的 <b>对象</b> 作为 <b>参数</b> 传入 <b>装饰器</b></li>
+<li><b>装饰器</b> 在 <b>执行</b> 完内部流程后返回一个 <b>可调用对象</b></li>
+<li>这个 <b>可调用对象</b> 就是我们使用的 <b>被装饰</b> 的 <b>函数</b> 或其他对象</li>
+</ol>
+
+<p>
+等价于： <code>func = decorator(func).</code>
+</p></dd>
+
+<dt>带参数的装饰器的调用流程</dt><dd><ol class="org-ol">
+<li>将设置的 <b>参数</b> 传入 <b>装饰器</b></li>
+<li><b>装饰器</b> 在 <b>执行</b> 完内部流程后返回一个 <b>可调用对象A</b></li>
+<li>将 <b>被装饰</b> 的 <b>对象</b> 作为参数传入返回的这个 <b>可调用对象A</b></li>
+<li><b>可调用对象A</b> 在 <b>执行</b> 完内部流程后返回一个 <b>可调用对象 B</b></li>
+<li>这个 <b>可调用对象B</b> 就是我们使用的 <b>被装饰</b> 的 <b>函数</b> 或其他对象</li>
+</ol></dd>
+</dl>
+
+<p>
+可以看到， 两种 <b>装饰器</b> 的调用流程的区别很明显， <b>带参数</b> 比 <b>不带参数</b> 多了
+一次调用流程。
+</p>
+
+<p>
+并且每次调用流程都是 <b>执行</b> 了函数体内部的 <b>内容</b> 的。
+</p>
+
+<p>
+这两种 <b>装饰器</b> 的区别主要是在 <b>调用流程</b> 上， 对于 <b>装饰器</b> 内部的代码并没做过多的
+要求。
+</p>
+
+<p>
+因此， 你可以写一个 <b>装饰器</b>, 这个 <b>装饰器</b> 接受 <b>带参</b> 与 <b>不带参</b> 两种调用方式：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">decorator</span>(func=<span style="font-weight: bold; text-decoration: underline;">None</span>, **kwargs):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap_arg</span>(func):
+        <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap</span>():
+            func()
+        <span style="font-weight: bold;">return</span> wrap
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap</span>():
+        func()
+
+    <span style="font-weight: bold;">if</span> func <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+        <span style="font-weight: bold;">return</span> wrap_arg
+
+    <span style="font-weight: bold;">return</span> wrap
+</pre>
+</div>
+
+<p>
+实现这样的 <b>装饰器</b> 的关键是 <b>关键字</b> 参数和 <b>第一个</b> 参数的设置。
+</p>
+
+<p>
+如果 <b>不带参</b> 调用 <b>装饰器</b>, 那么被装饰的对象会作为 <b>装饰器</b> 的第一个参数传入。
+</p>
+
+<p>
+如果 <b>带参</b> 调用 <b>装饰器</b>, 那么首先传入的 <b>参数</b> 会是你设置的参数， 而由于 <b>装饰器</b> 的
+参数设置为了 <b>关键字</b> 参数， 因此 <b>第一个</b> 参数 <code>func</code> 会被置为 <code>None</code>.
+</p>
+
+<p>
+此时根据相关的 <b>调用流程</b> 选择需要返回的 <b>对象</b> 即可。
+</p>
+
+<p>
+当然， 上面的这个实现方式很不规范， 常用的实现方式是结合标准库 <code>functools</code> 来定义 <b>装饰器</b>.
+</p>
+
+<p>
+比如使用 <code>functools.wraps</code> 来保留函数元信息， 使用 <code>functools.partial</code> 来创建可选参数的 <b>装饰器</b>.
+</p>
+
+<p>
+这两个函数的使用可以浏览：
+</p>
+<ul class="org-ul">
+<li><a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/c09/p02_preserve_function_metadata_when_write_decorators.html">创建装饰器时保留函数元信息</a></li>
+<li><a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/c09/p06_define_decorator_that_takes_optional_argument.html">带可选参数的装饰器</a></li>
+</ul>
+</div>
+
+<div id="outline-container-org18022ff" class="outline-3">
+<h3 id="org18022ff"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; text-decoration: underline;">@dec_a</span>
+<span style="font-weight: bold; text-decoration: underline;">@dec_b</span>
+<span style="font-weight: bold; text-decoration: underline;">@dec_c</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+像上面的代码， 会首先调用装饰器 <code>dec_c</code>, 然后依次调用 <code>dec_b</code> 和 <code>dec_a</code>.
+</p>
+
+<p>
+但是， 需要注意一下被装饰的函数在调用时执行的顺序：
+</p>
+<ul class="org-ul">
+<li>装饰器的调用顺序为 <code>dec_c -&gt; dec_b -&gt; dec_a</code></li>
+<li>那么装饰的层次就为 <code>dec_a -&gt; dec_b -&gt; dec_c</code>, 即： <code>dec_a(dec_b(dec_c(func)))</code>.</li>
+<li>定义装饰器常用的方式是返回一个函数， 返回的函数体中除了执行 <code>func</code> 以外， 往往还有其他操作</li>
+<li>因此， 调用 <code>func</code> 的时候， 会首先执行 <code>dec_a</code> 返回的函数体中的操作， 然后是 <code>dec_b</code>, <code>dec_c</code> 和 <code>func</code>.</li>
+</ul>
+
+<p>
+所以， 在使用多重装饰器的时候需要分清楚 <b>装饰</b> 的顺序和 <b>调用</b> 的顺序。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgebf0865" class="outline-2">
+<h2 id="orgebf0865"><span class="section-number-2">4</span> 参考链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>
+<li><a href="https://zh.wikipedia.org/zh-hans/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科 - 闭包</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-05-16 周三 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

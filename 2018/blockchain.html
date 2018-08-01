@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>区块链的简单尝试</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">区块链的简单尝试</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1d4d186">1. 前言</a></li>
+<li><a href="#org3f93a24">2. 代码尝试</a></li>
+<li><a href="#orgf7d1aef">3. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1d4d186" class="outline-2">
+<h2 id="org1d4d186"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+昨晚， 我再一次浏览了有关于区块链技术的博客。
+</p>
+
+<p>
+然后， 我便惊喜的发现了这一篇博客： <a href="http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433">区块链入门教程</a>
+</p>
+
+<p>
+之前看了很多博客， 但一直让我很捉急的便是， 对于实现部分， 对于为何会花那么多
+算力的部分， 讲解的不是很清楚。
+</p>
+
+<p>
+我知道， <code>Hash</code> 算法耗费算力， 但我平时用 <code>Hash</code> 算法的时候， 花费的时间也不多啊 ！
+</p>
+
+<p>
+在看了这篇博客之后， 突然明白， <code>Hash</code> 计算并不是只有一次， 而是由很多次计算得来的。
+</p>
+
+<p>
+而 <code>难度系数</code> 影响了计算所需要的次数。
+</p>
+
+<p>
+终于， 一个一直困惑我的部分得到了解答。
+</p>
+
+<p>
+但是， 我还是想尝试一下， 具体怎么个耗时法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3f93a24" class="outline-2">
+<h2 id="org3f93a24"><span class="section-number-2">2</span> 代码尝试</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+得益于看到的博客， 我从相关链接中， 看到了一篇很简洁但很精辟的示例：
+<a href="https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d">How does blockchain really work? I built an app to show you.</a>
+</p>
+
+<p>
+这是一篇很好的文章， 模仿文中的代码， 我用 <code>Python</code> 写了一个小脚本来测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">-*- coding: utf-8 -*-</span>
+
+<span style="font-weight: bold;">from</span> __future__ <span style="font-weight: bold;">import</span> print_function
+
+<span style="font-weight: bold;">import</span> time, random
+
+<span style="font-weight: bold;">from</span> hashlib <span style="font-weight: bold;">import</span> sha256
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BlockChain</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-style: italic;">""" &#21306;&#22359;.</span>
+
+<span style="font-style: italic;">    :param index: &#24403;&#21069;&#21306;&#22359;&#30340; `index`.</span>
+<span style="font-style: italic;">    :type index: int</span>
+<span style="font-style: italic;">    :param pre_hash: &#21069;&#19968;&#20010;&#21306;&#22359;&#30340; `hash`.</span>
+<span style="font-style: italic;">    :type pre_hash: str</span>
+<span style="font-style: italic;">    :param data: &#24403;&#21069;&#21306;&#22359;&#35201;&#20648;&#23384;&#30340;&#20449;&#24687;.</span>
+<span style="font-style: italic;">    :type data: str</span>
+<span style="font-style: italic;">    """</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, index, pre_hash, data):
+        <span style="font-weight: bold;">self</span>.index = index
+        <span style="font-weight: bold;">self</span>.pre_hash = pre_hash
+        <span style="font-weight: bold;">self</span>.time = time.ctime()
+        <span style="font-weight: bold;">self</span>.data = data
+        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = <span style="font-weight: bold; text-decoration: underline;">None</span>
+        <span style="font-weight: bold;">self</span>.nonce = 0      <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639; `hash` &#30340;&#27425;&#25968;</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">calc_hash</span>(<span style="font-weight: bold;">self</span>, difficulty):
+        <span style="font-style: italic;">""" &#35745;&#31639; `hash`.</span>
+
+<span style="font-style: italic;">        :pparam difficulty: &#35745;&#31639;&#38590;&#24230;.</span>
+<span style="font-style: italic;">        :type difficulty: int</span>
+<span style="font-style: italic;">        """</span>
+        <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">is_vaild_hash</span>(<span style="font-weight: bold;">hash</span>, difficulty):
+            <span style="font-style: italic;">""" &#21028;&#26029;&#31639;&#30340;&#30340; `hash` &#26159;&#21542;&#26377;&#25928;.</span>
+<span style="font-style: italic;">            """</span>
+            <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(<span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">hash</span>)):
+                <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">hash</span>[i] == <span style="font-style: italic;">'0'</span>:
+                    <span style="font-weight: bold;">break</span>
+            <span style="font-weight: bold;">return</span> i &gt;= difficulty
+
+        <span style="font-weight: bold;">input</span> = <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.index) + <span style="font-weight: bold;">self</span>.pre_hash + \
+                <span style="font-weight: bold;">self</span>.time + <span style="font-weight: bold;">self</span>.data + <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.nonce)
+        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = sha256(<span style="font-weight: bold;">input</span>).hexdigest()
+
+        <span style="font-weight: bold;">while</span> <span style="font-weight: bold;">not</span> is_vaild_hash(<span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span>, difficulty):
+            <span style="font-weight: bold;">self</span>.nonce += 1
+            <span style="font-weight: bold;">input</span> = <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.index) + <span style="font-weight: bold;">self</span>.pre_hash + \
+                    <span style="font-weight: bold;">self</span>.time + <span style="font-weight: bold;">self</span>.data + <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.nonce)
+            <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = sha256(<span style="font-weight: bold;">input</span>).hexdigest()
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">genesis_block</span>():
+    <span style="font-style: italic;">""" &#33719;&#21462;&#21019;&#19990;&#21306;&#22359;.</span>
+<span style="font-style: italic;">    """</span>
+    <span style="font-weight: bold; font-style: italic;">first_block</span> = BlockChain(0, <span style="font-style: italic;">'0'</span>, <span style="font-style: italic;">'My first block'</span>)
+    first_block.calc_hash(random.randint(1, 4))
+    <span style="font-weight: bold;">return</span> first_block
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">print_block</span>(block):
+    <span style="font-style: italic;">""" &#36755;&#20986;&#21306;&#22359;&#20449;&#24687;.</span>
+<span style="font-style: italic;">    """</span>
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'index: %s'</span> % block.index)
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'hash: %s'</span> % block.<span style="font-weight: bold;">hash</span>)
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'nonce: %s\n'</span> % block.nonce)
+
+
+<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">__name__</span> == <span style="font-style: italic;">'__main__'</span>:
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Genesis block:'</span>)
+    <span style="font-weight: bold; font-style: italic;">first_block</span> = genesis_block()
+    print_block(first_block)
+
+    <span style="font-weight: bold; font-style: italic;">pre_block</span> = first_block
+
+    <span style="font-weight: bold;">while</span> <span style="font-weight: bold; text-decoration: underline;">True</span>:
+        <span style="font-weight: bold; font-style: italic;">data</span> = <span style="font-weight: bold;">raw_input</span>(<span style="font-style: italic;">'Input data: '</span>)
+        <span style="font-weight: bold;">if</span> data:
+            <span style="font-weight: bold; font-style: italic;">cur_block</span> = BlockChain(pre_block.index + 1, pre_block.<span style="font-weight: bold;">hash</span>, data)
+
+            <span style="font-weight: bold; font-style: italic;">difficulty</span> = random.randint(1, 4)    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">..., &#38590;&#24230;&#31245;&#24494;&#22823;&#19968;&#28857;&#23621;&#28982;&#37117;&#35201;&#31639;&#21322;&#22825;...</span>
+            <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'difficulty: %s'</span> % difficulty)
+
+            cur_block.calc_hash(difficulty)
+            print_block(cur_block)
+
+            <span style="font-weight: bold; font-style: italic;">pre_block</span> = cur_block
+
+        <span style="font-weight: bold;">else</span>:
+            <span style="font-weight: bold;">break</span>
+
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'over'</span>)
+</pre>
+</div>
+
+<p>
+代码比较粗糙， 但是并不妨碍我进行测试：
+</p>
+<pre class="example">
+Genesis block:
+index: 0
+hash: 000a630deaf076650dc5ee90490ee1d16b3bc5a36ababcce68b807a32f16bfbd
+nonce: 491
+
+Input data: 第二个区块
+difficulty: 3
+index: 1
+hash: 000da279af9350e82481bbcfbdec65ba47b5f79fbfb3439734cae69056bc8315
+nonce: 6947
+
+Input data: 难度是 ？
+difficulty: 3
+index: 2
+hash: 000a4699eb0d5e74d15833c383a6c191a40fee89b804a792aa1ecbfecc3cf98a
+nonce: 3725
+
+Input data: 再一次测试
+difficulty: 4
+index: 3
+hash: 0000f2d8aadd829dadb048d2624d155729d06b258dc7013ac31621ac515eb644
+nonce: 37817
+
+Input data: 再来一次
+difficulty: 4
+index: 4
+hash: 00002863448497e9e4028d0875b7624d5172e952fc0ab128b336b20abe7df95e
+nonce: 84479
+
+Input data: github
+difficulty: 4
+index: 5
+hash: 00001c6ce47f2e7d66f7a75a12f5de390a8456cfb734c3679af3750ee2917425
+nonce: 53565
+</pre>
+
+<p>
+这是测试过程， 当然不是最开始的。
+</p>
+
+<p>
+最开始的时候， 难度系数生成的代码是： <code>random.randint(1, 24)</code>.
+</p>
+
+<p>
+然后， 上来就是一个难度 7， 结果便是， 我去上了个厕所回来那一个区块还没出来&#x2026;&#x2026;
+</p>
+
+<p>
+于是， 我默默的将代码改为了： <code>random.randint(1, 4)</code>.
+</p>
+
+<p>
+但是， 这个计算次数还是让我很惊讶。轻轻松松上万。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf7d1aef" class="outline-2">
+<h2 id="orgf7d1aef"><span class="section-number-2">3</span> 相关链接</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li><a href="http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html">Bitcoin mining the hard way: the algorithms, protocols, and bytes.</a></li>
+<li><a href="https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d">How does blockchain really work? I built an app to show you.</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html?20180205184433">区块链入门教程</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-06 周二 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

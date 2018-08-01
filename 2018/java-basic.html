@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java 基础梳理</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java 基础梳理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga57623c">1. 前言</a></li>
+<li><a href="#org882be6f">2. 语法无关内容</a></li>
+<li><a href="#orgc6ff75a">3. 原始数据类型和引用</a></li>
+<li><a href="#orgbc4fca8">4. 数组和字符串</a></li>
+<li><a href="#org3f06b33">5. 继承和多态</a></li>
+<li><a href="#org0c9b6cd">6. 重载</a></li>
+<li><a href="#orgf584db3">7. 抽象类</a></li>
+<li><a href="#org1ce7885">8. 接口</a></li>
+<li><a href="#orgb19cf1f">9. 异常</a></li>
+<li><a href="#orga1b73c9">10. 静态成员和常量</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga57623c" class="outline-2">
+<h2 id="orga57623c"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本篇博客主要是对 <code>Java</code> 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容
+的一次汇总。
+</p>
+
+<p>
+如果你是来找基础教程的， 建议还是买本书或者在网上找一篇更详细的教程， 那会比我描述的清楚的多。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org882be6f" class="outline-2">
+<h2 id="org882be6f"><span class="section-number-2">2</span> 语法无关内容</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>Java</code> 学习中有一些容易让人疑惑而与语法无关的内容， 这些内容教材上提到的少， 而平时又经常接触。
+</p>
+
+<p>
+这里列出来我接触到的内容， 首先是 <code>Java</code> 版本和 <code>JDK</code> 版本的关系。
+</p>
+
+<p>
+<code>Java</code> 版本和 <code>JDK</code> 版本并不是直接对应的关系， 这里是几个例子：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Java 版本</th>
+<th scope="col" class="org-left">JDK 版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Java</td>
+<td class="org-left">1.02 - 1.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Java 2</td>
+<td class="org-left">1.2, 1.3, 1.4</td>
+</tr>
+
+<tr>
+<td class="org-left">Java 5.0</td>
+<td class="org-left">1.5</td>
+</tr>
+
+<tr>
+<td class="org-left">Java 8</td>
+<td class="org-left">1.8</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+感觉目前常用的应该是 <code>Java 8</code>, 所以记住 <code>Java 8</code> 对应的 <code>JDK</code> 版本是 <code>1.8</code> 就好。
+</p>
+
+<p>
+然后是几个名词和它们之间的关系：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名词</th>
+<th scope="col" class="org-left">完整名称</th>
+<th scope="col" class="org-left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">JVM</td>
+<td class="org-left">Java Virtual Machine</td>
+<td class="org-left">Java 虚拟机</td>
+</tr>
+
+<tr>
+<td class="org-left">JRE</td>
+<td class="org-left">Java Runtime Environment</td>
+<td class="org-left">Java 运行环境， 包含了 <b>JVM</b></td>
+</tr>
+
+<tr>
+<td class="org-left">JDK</td>
+<td class="org-left">Java Development Kit</td>
+<td class="org-left">Java 开发工具包， 包含了 <b>JRE</b></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+从这张图看的话就更直观：
+</p>
+
+
+<div class="figure">
+<p><img src="img/java-env.jpg" alt="java-env.jpg" />
+</p>
+</div>
+
+<p>
+最后是 <b>文件命名规则</b>, <code>Java</code> 文件命名不能随便命名， 需要遵循以下规则：
+</p>
+<ul class="org-ul">
+<li>Java 保存的文件名必须与类名一致</li>
+<li>如果文件中只有一个类， 文件名必须与类名一致</li>
+<li>一个 Java 文件中只能有一个 public 类</li>
+<li>如果文件中不止一个类， 文件名必须与 public 类名一致</li>
+<li>如果文件中不止一个类， 而且没有 public 类， 文件名可与任一类名一致</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc6ff75a" class="outline-2">
+<h2 id="orgc6ff75a"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Java</code> 关键字中有 <code>8</code> 个代表 <b>原始数据类型</b>, 这些原始数据类型在 <code>java.lang</code> 还存在与之对应的 <b>包装类型</b>.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">数据类型</th>
+<th scope="col" class="org-left">包装类型</th>
+<th scope="col" class="org-right">位数</th>
+<th scope="col" class="org-left">值域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">boolean</td>
+<td class="org-left">Boolean</td>
+<td class="org-right">?</td>
+<td class="org-left">true/false</td>
+</tr>
+
+<tr>
+<td class="org-left">char</td>
+<td class="org-left">Character</td>
+<td class="org-right">16</td>
+<td class="org-left">0 ~ 65535</td>
+</tr>
+
+<tr>
+<td class="org-left">byte</td>
+<td class="org-left">Byte</td>
+<td class="org-right">8</td>
+<td class="org-left">-128 ~ 127</td>
+</tr>
+
+<tr>
+<td class="org-left">short</td>
+<td class="org-left">Short</td>
+<td class="org-right">16</td>
+<td class="org-left">-32768 ~ 32767</td>
+</tr>
+
+<tr>
+<td class="org-left">int</td>
+<td class="org-left">Integer</td>
+<td class="org-right">32</td>
+<td class="org-left">-2147483648 ~ 2147483647</td>
+</tr>
+
+<tr>
+<td class="org-left">long</td>
+<td class="org-left">Long</td>
+<td class="org-right">64</td>
+<td class="org-left">-很大 ~ +很大</td>
+</tr>
+
+<tr>
+<td class="org-left">float</td>
+<td class="org-left">Float</td>
+<td class="org-right">32</td>
+<td class="org-left">范围规模可变</td>
+</tr>
+
+<tr>
+<td class="org-left">double</td>
+<td class="org-left">Double</td>
+<td class="org-right">64</td>
+<td class="org-left">范围规模可变</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+与 <b>原始数据类型</b> 相对应的是 <b>引用</b>, 两者的主要区别是： <b>原始数据类型</b> 保存实际的值，
+而 <b>引用</b> 保存 <b>对象的引用</b>.
+</p>
+
+<p>
+复杂举例说明：
+</p>
+<ol class="org-ol">
+<li>假设存在 <b>原始数据类型</b> 变量 <code>A</code> 和 <b>引用</b> 变量 <code>B</code>.</li>
+<li>保存变量 <code>A</code> 的值的内存为 <code>A_RAM</code>, 而保存变量 <code>B</code> 的值的内存为 <code>B_RAM</code>.</li>
+<li>当我们赋值给变量 <code>A</code> 时， 赋予的值会保存到 <code>A_RAM</code> 中。</li>
+<li>当我们赋值给变量 <code>B</code> 时， 会在内存中创建一个区域用于保存我们要赋予的值， 假设这个区域叫做 <code>O_RAM</code>.
+然后 <code>Java</code> 会把代表 <code>O_RAM</code> 的引用的 <b>值</b> 保存到 <code>B_RAM</code> 中。</li>
+</ol>
+
+<p>
+可以看到， 和变量 <code>A</code> 相关的内存只有 <code>A_RAM</code>, 而和变量 <code>B</code> 相关的有 <code>B_RAM</code> 和 <code>O_RAM</code>.
+</p>
+
+<p>
+<b>原始数据类型</b> 和 <b>引用</b> 变量的行为也因此存在区别：
+</p>
+<ul class="org-ul">
+<li>两个原始数据类型的变量是互不干扰的， 修改一个的值不会影响到另一个</li>
+<li>假如两个引用变量引用的是同一个对象， 如果其中一个引用变量操作对象修改了它的值， 那么另一个引用也会发生修改</li>
+</ul>
+
+<p>
+这有好处也有坏处， 当然了， 只要在使用的时候明白这一点， 应该也容易避免意外情况的发生。
+</p>
+
+<p>
+<b>一些注意事项：</b>
+</p>
+<ul class="org-ul">
+<li><code>Java</code> 没有无符号数， 因此无符号右移请使用 <code>&gt;&gt;&gt;</code>.</li>
+
+<li>定义 <code>float</code> 类型的变量需要加 <code>f</code> 后缀， 如： <code>float f = 32.45f</code>, 否则小数会默认当做 <code>double</code> 处理</li>
+
+<li>布尔类型变量的值只有 <code>true/false</code>, 不能使用 <code>0, 1, null</code> 等值代替。 需要布尔值的地方只能使用布尔类型的值或
+使用布尔表达式</li>
+
+<li>数值类型(包括 char)的默认值为 <code>0</code>, 布尔类型默认为 <code>false</code>, 引用默认为 <code>null</code></li>
+
+<li>使用 <code>==</code> 判断两个原始数据类型的 <b>值</b> 是否相同， 判断两个引用是否为引用 <b>同一个对象</b></li>
+
+<li>如果要比较两个引用的对象的值是否相等， 请使用 <code>equals</code> 方法</li>
+
+<li>隐式类型转换 <b>只能</b> 发生在 <b>小 =&gt; 大</b> 的情况下， 比如 <code>byte =&gt; int</code></li>
+
+<li>原始数据类型没有方法， 如果需要使用相关的方法， 请使用对应的 <b>包装类型</b></li>
+
+<li><code>Java 5.0</code> 开始引入了 <code>autoboxing</code> 机制， 允许在 参数、 返回值、布尔表达式、 数值运算 和 赋值等地方自动完成
+原始数据类型和对应的包装对象的转换</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbc4fca8" class="outline-2">
+<h2 id="orgbc4fca8"><span class="section-number-2">4</span> 数组和字符串</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>Java</code> 中数组类型的变量属于 <b>引用</b>, 有如下几种声明和创建方式：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22768;&#26126;&#25968;&#32452;</span>
+<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#39318;&#36873;&#30340;&#26041;&#27861;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">dataType</span> <span style="font-weight: bold; font-style: italic;">arrayRefVar</span>[];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25928;&#26524;&#30456;&#21516;&#65292;&#20294;&#19981;&#26159;&#39318;&#36873;&#26041;&#27861;</span>
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21019;&#24314;&#25968;&#32452;</span>
+<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dataType</span>[arraySize];
+
+<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = {value0, value1, ..., valuek};  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21482;&#33021;&#22312;&#22768;&#26126;&#30340;&#21516;&#26102;&#20351;&#29992;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dataType</span>[]{value0, value1, ..., valuek};
+</pre>
+</div>
+
+<p>
+数组的 <code>length</code> 属性表示这个数组中元素的个数。
+</p>
+
+<p>
+而 <code>Java</code> 中 <b>字符串</b> 不是 <b>数组</b>, 不能像 <code>str[i]</code> 这样操作。
+</p>
+
+<p>
+同时 <code>String</code> 也不是关键字， 而是一种类型， 位于 <code>java.lang</code> 中的类型。
+</p>
+
+<p>
+<code>Java</code> 中字符串的一个强大的特性就是可以直接和其他类型的变量相 <b>加</b>, 如：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">String</span>[] <span style="font-weight: bold; font-style: italic;">args</span>) {
+    <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">str</span> = <span style="font-style: italic;">"123"</span> + 45 + <span style="font-weight: bold; text-decoration: underline;">true</span> + 3.4 + <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>();
+    System.out.println(str);
+  }
+}
+</pre>
+</div>
+
+<p>
+上述代码的输出为：
+</p>
+<pre class="example">
+12345true3.4Test@15db9742
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3f06b33" class="outline-2">
+<h2 id="org3f06b33"><span class="section-number-2">5</span> 继承和多态</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>Java</code> 中的继承机制并不复杂， 一般语法就是 <code>class A extends B</code>.
+</p>
+
+<p>
+一些基本规则和其他语言也差不多， 比如子类可以继承父类的公有或保护成员等。
+</p>
+
+<p>
+但是也还有一些我在其他语言中没有接触到的东西：
+</p>
+<ul class="org-ul">
+<li>可以通过将类声明为 <code>final</code> 的或者让类只拥有 <code>private</code> 的构造方法可以让类无法继承</li>
+</ul>
+
+<p>
+<b>PS:</b> 只有 <code>private</code> 的构造方法的类也不能实例化
+</p>
+
+<p>
+同时， 子类可以覆盖父类的 <b>方法</b>, 要求是：
+</p>
+<ol class="org-ol">
+<li>要覆盖的方法的参数和返回值类型都必须和父类的相同</li>
+<li>不能降低方法的存取权限， 只能保持一样或更加开放</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Parent</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() {}
+}
+
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Child</span> <span style="font-weight: bold;">extends</span> <span style="font-weight: bold; text-decoration: underline;">Parent</span> {
+  <span style="font-weight: bold; text-decoration: underline;">@Override</span>
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() {}
+}
+</pre>
+</div>
+
+<p>
+如上， <code>Child</code> 继承并覆盖了父类的 <code>method</code>, <code>@Override</code> 是一个注释类， 不要也没有问题， 但是加上更清楚。
+</p>
+
+<p>
+<b>PS:</b> <code>java</code> 不允许多重继承， 也就是说一个类只能继承一个类
+</p>
+
+<p>
+对于 <b>多态</b>, 其实并不复杂， 简单的说的话就是允许 <b>父类类型</b> 的引用引用 <b>子类类型</b> 的对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Parent</span> <span style="font-weight: bold; font-style: italic;">obj</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Child</span>();
+</pre>
+</div>
+
+<p>
+就是这样， 这就是多态， 在函数参数， 赋值， 返回值等地方都可以使用多态。
+</p>
+
+<p>
+多态使用中需要注意的问题：
+</p>
+<ul class="org-ul">
+<li>父类类型的引用只能调用父类中存在的那些方法， 不能调用子类中新增的方法</li>
+</ul>
+
+<p>
+编译器根据 <b>引用类型</b> 来判断有哪些 <code>method</code> 可以调用， 而不是 <code>Object</code> 实际的类型。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0c9b6cd" class="outline-2">
+<h2 id="org0c9b6cd"><span class="section-number-2">6</span> 重载</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+首先需要明白的一点是： <b>重载不是多态</b>.
+</p>
+
+<p>
+重载运行一个类中存在两个 <b>名称</b> 相同的方法， 这两个方法的 <b>参数</b> 必然不一样。
+</p>
+
+<p>
+重载的基本规则：
+</p>
+<ol class="org-ol">
+<li>可以修改返回值类型</li>
+<li>不能只修改返回值类型</li>
+<li>可以修改存取权限</li>
+</ol>
+
+<p>
+如果你只修改了参数的 <b>名字</b> 而没有更改 <b>类型</b> 或 <b>顺序</b> 或 <b>数量</b> 是没有用的， 编译器不关心参数的名字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf584db3" class="outline-2">
+<h2 id="orgf584db3"><span class="section-number-2">7</span> 抽象类</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+假如你希望一个 <b>方法</b> 必须被子类覆盖， 那么你可以用 <code>abstract</code> 这个关键字来修饰它。
+</p>
+
+<p>
+<b>PS:</b> 可以通过将子类也声明为 <code>abstract</code> 的而不去实现抽象方法， 放到这个子类的子类去实现（迟早都要实现的）
+</p>
+
+<p>
+但是， 只有 <b>抽象类</b> 才能拥有 <b>抽象方法</b>.
+</p>
+
+<p>
+<b>抽象方法</b> 不能有实体， 需要这样定义：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">abstract</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Example</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">abstract</span> <span style="font-weight: bold;">method</span>();
+}
+</pre>
+</div>
+
+<p>
+你需要省略抽象方法的 <b>方法主体</b>.
+</p>
+
+<p>
+<b>PS:</b> 只有抽象方法允许这样做， 其他的方法和类的定义， 既是主体为空也必须写出来， 不能省略 <code>{}</code>
+</p>
+
+<p>
+而 <b>抽象类</b> 不能被实例化， 但是你依然可以在抽象类中定义 <b>构造方法</b>, 这些构造方法绘制子类实例化时调用。
+</p>
+
+<p>
+<b>子类</b> 实例化时， 会先调用 <b>父类</b> 的构造方法， 然后在调用自己的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ce7885" class="outline-2">
+<h2 id="org1ce7885"><span class="section-number-2">8</span> 接口</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<b>接口不是类</b>.
+</p>
+
+<p>
+由于 <code>java</code> 不允许多重继承， 因此需要一些特殊的方式来扩展 <code>java</code> 的类型系统。
+</p>
+
+<p>
+而 <b>接口</b> 可以起到这一作用， 虽然 <b>接口不是类</b>, 但是 <b>接口</b> 可以使用多态。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">interface</span> <span style="font-weight: bold; text-decoration: underline;">Pet</span> {
+  <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">beFriendly</span>();
+  <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">play</span>();
+}
+
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span> <span style="font-weight: bold;">implements</span> <span style="font-weight: bold; text-decoration: underline;">Pet</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">beFriendly</span>() {}
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">play</span>() {}
+}
+
+<span style="font-weight: bold; text-decoration: underline;">Pet</span> <span style="font-weight: bold; font-style: italic;">p</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">A</span>();  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22810;&#24577;&#30340;&#20351;&#29992;</span>
+</pre>
+</div>
+
+<p>
+接口的声明方式和 <b>类</b> 很相似， 但是两者是不同的。 同时 <b>接口</b> 内部的方法默认为 <code>public abstract</code> 型的。
+</p>
+
+<p>
+<b>实现接口</b> 的类必须实现 <b>接口</b> 中定义的方法， 和继承不一样， 一个类可以实现 <b>多个接口</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span> <span style="font-weight: bold;">implements</span> <span style="font-weight: bold; text-decoration: underline;">IA</span>, <span style="font-weight: bold; text-decoration: underline;">IB</span>, <span style="font-weight: bold; text-decoration: underline;">IC</span> {}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb19cf1f" class="outline-2">
+<h2 id="orgb19cf1f"><span class="section-number-2">9</span> 异常</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<code>java</code> 中使用 <code>throw</code> 抛出异常， 使用 <code>throws</code> 声明要抛出的远程， 使用 <code>try/catch</code> 捕获处理异常。
+</p>
+
+<p>
+所有的异常都是 <code>Exception</code> 的子类， 除了 <code>RuntimeException</code> 及其子类类型的异常以外， 其他类型的异常都要
+求捕获处理
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Example</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">ExceptionA</span>, <span style="font-weight: bold; text-decoration: underline;">ExceptionB</span> {
+    <span style="font-weight: bold;">throw</span> ExceptionA();
+    <span style="font-weight: bold;">throw</span> ExceptionB();
+  }
+}
+</pre>
+</div>
+
+<p>
+这是声明可能要抛出的异常的方式， 如果 <code>ExceptionA</code> 是 <code>ExceptionB</code> 的父类， 那么可以只声明 <code>ExceptionA</code>.
+</p>
+
+<p>
+当你在其他方法中使用 <code>Example.method</code> 时， 你必须使用 <code>try/catch</code> 捕获可能要抛出的异常并进行处理。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">try</span> {
+  e = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Example</span>();
+  e.method();
+} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">ExcepthonA</span> <span style="font-weight: bold; font-style: italic;">ex</span>) {
+} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">ExcepthonB</span> <span style="font-weight: bold; font-style: italic;">ex</span>) {
+}
+</pre>
+</div>
+
+<p>
+如果你不想自己处理异常， 你也可以将可能要抛出的异常写在你的方法声明上， 这样， 你就可以让你的函数的调用者去处理这些异常了 @_@
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">myMethod</span>() <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">ExceptionA</span>, <span style="font-weight: bold; text-decoration: underline;">ExceptionB</span> {
+  e = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Example</span>();
+  e.method();
+}
+</pre>
+</div>
+
+<p>
+另外， <code>try/catch</code> 语句后还可以接 <code>finally</code> 块， <code>finally</code> 块中的内容必然会执行， 哪怕 <code>try/catch</code> 中存在 <code>return</code> 语句。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga1b73c9" class="outline-2">
+<h2 id="orga1b73c9"><span class="section-number-2">10</span> 静态成员和常量</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+<code>Java</code> 中， 你可以使用 <code>static</code> 修饰类的 <b>内部成员</b>, 被 <code>static</code> 修饰的内部成员属于 <b>静态成员</b>.
+</p>
+
+<p>
+<b>PS:</b> 没有静态类， 但可以有静态内部类
+</p>
+
+<p>
+其中：
+</p>
+<ol class="org-ol">
+<li>静态变量被所有实例共享</li>
+<li>静态方法不能访问非静态成员</li>
+</ol>
+
+<p>
+<b>静态成员</b> 可以通过 <b>类名.成员名</b> 的方式调用， 也可以用 <b>实例引用名.成员名</b> 的方式调用。
+</p>
+
+<p>
+但是都声明为 <b>静态</b> 了， 一般还是用 <b>类名</b> 访问比较好。
+</p>
+
+<p>
+使用关键字 <code>final</code> 修饰的变量不能被修改：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">size</span> = 3;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-07-17 周二 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

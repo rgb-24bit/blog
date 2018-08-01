@@ -1,0 +1,1310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 13:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python3.0-3.6的版本变化</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python3.0-3.6的版本变化</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge57004d">1. 前言</a></li>
+<li><a href="#org825d1ad">2. Python3.0</a>
+<ul>
+<li><a href="#orgd008e53">2.1. 简单的变化</a></li>
+<li><a href="#orgaeb355d">2.2. 语法的变化</a>
+<ul>
+<li><a href="#org4052a30">2.2.1. 新语法</a></li>
+<li><a href="#org6bf3ae3">2.2.2. 改动的语法</a></li>
+</ul>
+</li>
+<li><a href="#orgf135fa1">2.3. 剩下的变化</a></li>
+</ul>
+</li>
+<li><a href="#org6d3c9de">3. Python3.1</a></li>
+<li><a href="#org82b48bc">4. Python3.2</a></li>
+<li><a href="#orgc1b9667">5. Python3.3</a></li>
+<li><a href="#org52f314f">6. Python3.4</a></li>
+<li><a href="#org05c61d6">7. Python3.5</a></li>
+<li><a href="#orgd63d875">8. Python3.6</a></li>
+<li><a href="#org93bf4ad">9. 完结撒花</a></li>
+<li><a href="#org6b59db0">10. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge57004d" class="outline-2">
+<h2 id="orge57004d"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+我记得上次整理 <code>2.5-2.7</code> 的版本变化的时候还是寒假， 结果这个暑假有轮到 <code>3.0-3.6</code> 了。
+</p>
+
+<p>
+虽然已经用了一段时间的 <code>Python3</code> 了， 感觉也还可以， 但是还是没有对 <code>Python3</code> 的新特性进行系统的了解。
+</p>
+
+<p>
+前段时间 <code>Python3.7</code> 横空出世， 看了看我电脑上的 <code>Python3.6</code>, 觉得有必要对 <code>Python3</code> 的特性进行一下了解了。
+</p>
+
+<p>
+<code>3.0-3.6</code> 一共七个版本， 估计要花不少时间， 准备慢慢搞了， 一天弄一点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org825d1ad" class="outline-2">
+<h2 id="org825d1ad"><span class="section-number-2">2</span> Python3.0</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgd008e53" class="outline-3">
+<h3 id="orgd008e53"><span class="section-number-3">2.1</span> 简单的变化</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><p>
+<b>Print Is A Function</b>
+</p>
+
+<p>
+<code>print</code> 现在是一个 <code>function</code> 而不是一个关键字了， 对于这个变化我只能说 ⑥
+</p></li>
+
+<li><p>
+<b>Views And Iterators Instead Of Lists</b>
+</p>
+
+<p>
+某些接口的返回值由 <code>List</code> 替换为了 <code>View</code> 或 <code>Iterators</code>:
+</p>
+<ul class="org-ul">
+<li>字典 <code>dict</code> 的方法 <code>dict.keys()</code>, <code>dict.items()</code> 和 <code>dict.values()</code> 现在返回的是 <code>View</code> 而不是 <code>List</code> 了</li>
+
+<li>内置函数 <code>map()</code> 和 <code>filter()</code> 现在返回 <code>Iterators</code> 而不是返回 <code>List</code></li>
+
+<li><code>range()</code> 的行为变得和 <code>xrange()</code> 一样， 而 <code>xrange()</code> 惨遭移除 QAQ</li>
+
+<li><code>zip()</code> 现在返回的也是 <code>Iterators</code> 了</li>
+</ul>
+
+<p>
+感觉这些变化适应了就挺好的， 还可以在一定程度上提升 <code>Python</code> 的性能， 就是苦了那些需要兼容 <code>Python2</code> 的程序 @_@
+</p></li>
+
+<li><b>Ordering Comparisons</b>
+
+<ul class="org-ul">
+<li><p>
+比较操作符 <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code> 和 <code>&gt;</code> 现在比较两个无法比较的对象时会引发 <code>TypeError</code>, 比如 <code>0 &gt; None</code> 之类的操作。 不包括 <code>!=</code> 和 <code>==</code>
+这两个操作符。
+</p>
+
+<p>
+<code>Python2</code> 居然可以这样比较&#x2026;&#x2026;
+</p></li>
+
+<li><p>
+内置函数 <code>builtin.sorted()</code> 和 <code>list.sort()</code> 不在支持 <code>cmp</code> 参数。
+</p>
+
+<p>
+让坑过&#x2026;&#x2026;
+</p></li>
+
+<li><p>
+不在支持 <code>cmp()</code> 和 <code>__cmp__()</code>, 现在使用 <code>__lt__()</code> 进行排序， <code>__eq__()</code> 和 <code>__hash__()</code> 用于比较。
+</p>
+
+<p>
+这个没啥存在感 @_@
+</p></li>
+</ul></li>
+
+<li><p>
+<b>Text Vs. Data Instead Of Unicode Vs. 8-bit</b>
+</p>
+
+<p>
+老话题了， <code>byte</code> 变成了 <code>unicode</code>, 不过用起来感觉不错
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgaeb355d" class="outline-3">
+<h3 id="orgaeb355d"><span class="section-number-3">2.2</span> 语法的变化</h3>
+<div class="outline-text-3" id="text-2-2">
+</div>
+<div id="outline-container-org4052a30" class="outline-4">
+<h4 id="org4052a30"><span class="section-number-4">2.2.1</span> 新语法</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3107/">PEP 3107 &#x2013; Function Annotations</a>
+</p>
+
+<p>
+现在函数的参数和返回值都可以有注释了， 但是貌似没看到有人用， 有兴趣的可以了解一下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">compile</span>(source: <span style="font-style: italic;">"something compilable"</span>,
+            filename: <span style="font-style: italic;">"where the compilable thing comes from"</span>,
+            mode: <span style="font-style: italic;">"is this a single statement or a suite?"</span>):
+    ...
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">haul</span>(item: Haulable, *vargs: PackAnimal) -&gt; Distance:
+    ...
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3102/">PEP 3102 &#x2013; Keyword-Only Arguments</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">compare</span>(a, b, *ignore, key=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+    <span style="font-weight: bold;">if</span> ignore:  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">If ignore is not empty</span>
+        <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">TypeError</span>
+</pre>
+</div>
+
+<p>
+类似上面代码的代码现在可以用如下方式代替：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">compare</span>(a, b, *, key=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+    ...
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3104/">PEP 3104 &#x2013; Access to Names in Outer Scopes</a>
+</p>
+
+<p>
+新的关键字 <code>nonlocal</code>, 可以声明一个变量不是本地变量， 具体使用可以去看文档。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3132/">PEP 3132 &#x2013; Extended Iterable Unpacking</a>
+</p>
+
+<p>
+扩展的可迭代包， 原来这样的语法是 <code>3.0</code> 出来的：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">(a, *rest, b) = <span style="font-weight: bold;">range</span>(5)
+</pre>
+</div>
+
+<p>
+其实感觉用的也不多， 但是确实是一个很不错的特性
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0274/">PEP 274 &#x2013; Dict Comprehensions</a>
+</p>
+
+<p>
+<b>字典推导式</b> 的正确证明， 莫非当初只是提出了 <code>PEP 274</code> 但一时没实现 ？
+</p>
+
+<p>
+反正感觉编写文档的作者挺搞笑的 &lt;_&lt;
+</p></li>
+
+<li><p>
+<b>集合字面值</b>
+</p>
+
+<p>
+也就是说类似下面的字面值表示一个集合：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">{1, 2}
+</pre>
+</div>
+
+<p>
+同时， <b>集合推导式</b> 也自然而然的出现了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">{x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> stuff} 
+</pre>
+</div></li>
+
+<li><p>
+<b>新的八进制字面值</b>
+</p>
+
+<p>
+类似 <code>0o720</code> 的数字代表八进制数字， 早在 <code>2.6</code> 就有了
+</p></li>
+
+<li><p>
+<b>新的二进制字面值</b>
+</p>
+
+<p>
+类似 <code>0b1010</code> 的数字代表二进制数字， 也是 <code>2.6</code> 就有了， 同时新增内置函数 <code>bin()</code>
+</p></li>
+
+<li><p>
+<b>字节字符串</b>
+</p>
+
+<p>
+现在使用前导字符 <code>b</code> 或 <code>B</code> 来表示一个字节字符串：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">b<span style="font-style: italic;">'123456'</span>
+</pre>
+</div>
+
+<p>
+同时， 新增内置函数 <code>bytes()</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6bf3ae3" class="outline-4">
+<h4 id="org6bf3ae3"><span class="section-number-4">2.2.2</span> 改动的语法</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<ul class="org-ul">
+<li><p>
+<b>新的 <code>raise</code> 语法</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">raise</span> [expr [<span style="font-weight: bold;">from</span> expr]]
+</pre>
+</div>
+
+<p>
+额， 感觉没人用的样子
+</p></li>
+
+<li>这些东西现在是保留字： <code>True</code>, <code>False</code>, <code>None</code>, <code>with</code>, <code>as</code></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3110/">PEP 3110 &#x2013; Catching Exceptions in Python 3000</a>
+</p>
+
+<p>
+就是这个：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    try_body
+<span style="font-weight: bold;">except</span> E, N:
+    except_body
+</pre>
+</div>
+
+<p>
+变成了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    try_body
+<span style="font-weight: bold;">except</span> E <span style="font-weight: bold;">as</span> N:
+    except_body
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3115/">PEP 3115 &#x2013; Metaclasses in Python 3000</a>
+</p>
+
+<p>
+元类的指定方式变了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python2</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>:
+    <span style="font-weight: bold; font-style: italic;">__metaclass__</span> = M
+    ...
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python3</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(metaclass=M):
+    ...
+</pre>
+</div>
+
+<p>
+贼坑， 如果要兼容可以使用 <code>with_metaclass</code>
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf135fa1" class="outline-3">
+<h3 id="orgf135fa1"><span class="section-number-3">2.3</span> 剩下的变化</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+这次的整理主要是了解一些新特性和常用的变化， 对于哪些说出去基本没人知道的特性的变化还是算了吧&#x2026;&#x2026;
+</p>
+
+<p>
+因此， 剩下的变化我选择省略， 如果你有兴趣的话， 可以到 <a href="https://docs.python.org/3/whatsnew/3.0.html">官方文档</a> 了解一波。
+</p>
+
+<p>
+另外， 这里有一个很有趣的事情：
+</p>
+
+
+<div class="figure">
+<p><img src="img/PEP-3101.png" alt="PEP-3101.png" />
+</p>
+</div>
+
+
+<pre class="example">
+Python 3.6.2 (v3.6.2:5fd33b5, Jul  8 2017, 04:14:34) [MSC v.1900 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; "%s" % 123456
+'123456'
+</pre>
+
+<p>
+@_@
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6d3c9de" class="outline-2">
+<h2 id="org6d3c9de"><span class="section-number-2">3</span> Python3.1</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+相对 <code>3.0</code> 来说， <code>3.1</code> 的变化不是很多， 简单来看看。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0372">PEP 372 &#x2013; Adding an ordered dictionary to collections</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">In [1]: <span style="font-weight: bold;">from</span> collections <span style="font-weight: bold;">import</span> OrderedDict
+
+In [2]: <span style="font-weight: bold; font-style: italic;">d</span> = OrderedDict()
+
+In [3]: <span style="font-weight: bold; font-style: italic;">d</span>[<span style="font-style: italic;">'parrot'</span>] = <span style="font-style: italic;">'dead'</span>
+
+In [4]: <span style="font-weight: bold; font-style: italic;">d</span>[<span style="font-style: italic;">'penguin'</span>] = <span style="font-style: italic;">'exploded'</span>
+
+In [5]: d.items()
+Out[5]: odict_items([(<span style="font-style: italic;">'parrot'</span>, <span style="font-style: italic;">'dead'</span>), (<span style="font-style: italic;">'penguin'</span>, <span style="font-style: italic;">'exploded'</span>)])
+</pre>
+</div>
+
+<p>
+有序字典， 这个在一些需要保持原有顺序的地方很有用。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0378">PEP 378: Format Specifier for Thousands Separator</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">In [1]: <span style="font-weight: bold;">format</span>(1234567, <span style="font-style: italic;">',d'</span>)
+Out[1]: <span style="font-style: italic;">'1,234,567'</span>
+
+In [2]: <span style="font-weight: bold;">format</span>(1234567.89, <span style="font-style: italic;">',.2f'</span>)
+Out[2]: <span style="font-style: italic;">'1,234,567.89'</span>
+
+In [3]: <span style="font-weight: bold;">format</span>(12345.6 + 8901234.12j, <span style="font-style: italic;">',f'</span>)
+Out[3]: <span style="font-style: italic;">'12,345.600000+8,901,234.120000j'</span>
+</pre>
+</div>
+
+<p>
+都快忘记有 <code>format</code> 这个内置函数了 QAQ
+</p>
+
+<p>
+感觉这个特性还是挺好的， 用到的时候可以省不少劲。
+</p></li>
+
+<li><p>
+<b>new method bit<sub>length</sub>() for int type</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">n</span> = 37
+&gt;&gt;&gt; <span style="font-weight: bold;">bin</span>(n)
+<span style="font-style: italic;">'0b100101'</span>
+&gt;&gt;&gt; n.bit_length()
+6
+</pre>
+</div></li>
+</ul>
+
+<p>
+虽然还有一些其他的变化， 但我觉得剩下的变化简单了解一下就好， 就不列出来了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org82b48bc" class="outline-2">
+<h2 id="org82b48bc"><span class="section-number-2">4</span> Python3.2</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+和 <code>3.1</code> 一样， 变换不是很多， 简单看一下就好。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3147">PEP 3147: PYC Repository Directories</a>
+</p>
+
+<p>
+新的缓存机制， 以前的缓存方案为 <code>.pyc</code> 文件， 但是这个方案在安装了多个 <code>Python</code> 的机器上
+运行的不太好。
+</p>
+
+<p>
+于是现在更换的缓存机制， 将缓存保存在了 <code>__pycache__</code> 目录中， 同时根据 <code>Python</code> 版本命名缓存文件。
+</p>
+
+<p>
+目录 <code>__pycache__</code> 基本上一出现我就直接删除了 QAQ
+</p></li>
+
+<li><p>
+<b>new start option -q</b>
+</p>
+
+<p>
+使用 <code>Python -q</code> 启动解释器可以不显示版本信息， 感觉对我来说暂时没啥用。
+</p></li>
+
+<li><p>
+<b>range objects now support index and count methods</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">range</span>(0, 100, 2).count(10)
+1
+&gt;&gt;&gt; <span style="font-weight: bold;">range</span>(0, 100, 2).index(10)
+5
+&gt;&gt;&gt; <span style="font-weight: bold;">range</span>(0, 100, 2)[5]
+10
+&gt;&gt;&gt; <span style="font-weight: bold;">range</span>(0, 100, 2)[0:5]
+<span style="font-weight: bold;">range</span>(0, 10, 2)
+</pre>
+</div>
+
+<p>
+我觉得这是一个很棒的特性 (￣▽￣)／
+</p></li>
+
+<li><p>
+<b>The callable() builtin function from Py2.x was resurrected</b>
+</p>
+
+<p>
+什么， <code>callable()</code> GG 过 !!!∑(ﾟДﾟノ)ノ
+</p></li>
+</ul>
+
+<p>
+剩下的变化主要是关于内置模块和低层接口的， 这些东西还是在实践中看相关的文档好了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc1b9667" class="outline-2">
+<h2 id="orgc1b9667"><span class="section-number-2">5</span> Python3.3</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+和前面两个版本一样， 核心的语法变化不是很多， 简单来看一下就好。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0397/">PEP 397 &#x2013; Python launcher for Windows</a>
+</p>
+
+<p>
+如果你的操作系统是 <code>Windows</code>, 并且安装了不止一个版本的 <code>Python</code>, 那么这个特性应该不陌生。
+</p>
+
+<p>
+通过如下的指令来启动指定版本的 <code>Python</code> 解释器：
+</p>
+<pre class="example">
+py -2.7
+py -3.6
+</pre></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0380/">PEP 380 &#x2013; Syntax for Delegating to a Subgenerator</a>
+</p>
+
+<p>
+我觉的这是个好东西， 通过文档中的一个例子来看：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">g</span>(x):
+...     <span style="font-weight: bold;">yield</span> <span style="font-weight: bold;">from</span> <span style="font-weight: bold;">range</span>(x, 0, -1)
+...     <span style="font-weight: bold;">yield</span> <span style="font-weight: bold;">from</span> <span style="font-weight: bold;">range</span>(x)
+...
+&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(g(5))
+[5, 4, 3, 2, 1, 0, 1, 2, 3, 4]
+</pre>
+</div>
+
+<p>
+这个很爽啊， 又可以少写几行代码 @_@
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0409/">PEP 409 &#x2013; Suppressing exception context</a>
+</p>
+
+<p>
+这个特性可以让异常的输出更加清楚 ？
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">D</span>:
+...     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, extra):
+...         <span style="font-weight: bold;">self</span>._extra_attributes = extra
+...     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattr__</span>(<span style="font-weight: bold;">self</span>, attr):
+...         <span style="font-weight: bold;">try</span>:
+...             <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._extra_attributes[attr]
+...         <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">KeyError</span>:
+...             <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>(attr) <span style="font-weight: bold;">from</span> <span style="font-weight: bold; text-decoration: underline;">None</span>
+...
+&gt;&gt;&gt; D({}).x
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 8, <span style="font-weight: bold;">in</span> __getattr__
+<span style="font-weight: bold; text-decoration: underline;">AttributeError</span>: x
+</pre>
+</div>
+
+<p>
+关键点在 <code>from None</code> 上， 没有这个 <code>from None</code> 的话，  抛出的异常会是这样的：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 6, <span style="font-weight: bold;">in</span> __getattr__
+<span style="font-weight: bold; text-decoration: underline;">KeyError</span>: <span style="font-style: italic;">'x'</span>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 8, <span style="font-weight: bold;">in</span> __getattr__
+<span style="font-weight: bold; text-decoration: underline;">AttributeError</span>: x
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0414/">PEP 414 &#x2013; Explicit Unicode Literal for Python 3.3</a>
+</p>
+
+<p>
+这个特性运行在 <code>Python3</code> 的版本环境中使用 <code>u</code> 前缀显示的声明 <code>unicode</code> 字符串：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">u<span style="font-style: italic;">'text'</span>
+U<span style="font-style: italic;">'text'</span>
+</pre>
+</div>
+
+<p>
+虽然已经习惯了， 但还是想吐槽 <code>2 -&gt; 3</code> 的版本变化是真的阔怕&#x2026;&#x2026;
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-3155/">PEP 3155 &#x2013; Qualified name for classes and functions</a>
+</p>
+
+<p>
+函数和类对象的新属性： <code>__qualname__</code>, 效果看代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>:
+...     <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">D</span>:
+...         <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">meth</span>(<span style="font-weight: bold;">self</span>):
+...             <span style="font-weight: bold;">pass</span>
+...
+&gt;&gt;&gt; C.D.<span style="font-weight: bold;">__name__</span>
+<span style="font-style: italic;">'D'</span>
+&gt;&gt;&gt; C.D.__qualname__
+<span style="font-style: italic;">'C.D'</span>
+&gt;&gt;&gt; C.D.meth.<span style="font-weight: bold;">__name__</span>
+<span style="font-style: italic;">'meth'</span>
+&gt;&gt;&gt; C.D.meth.__qualname__
+<span style="font-style: italic;">'C.D.meth'</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org52f314f" class="outline-2">
+<h2 id="org52f314f"><span class="section-number-2">6</span> Python3.4</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+这个版本的文档结构比前面几个版本清楚多了， 简单看一下新特性。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0453/">PEP 453 &#x2013; Explicit bootstrapping of pip in Python installations</a>
+</p>
+
+<p>
+这个特性很好， 很 <code>nice</code>, 现在你可以通过这样的命令来安装 <code>pip</code> 了：
+</p>
+<pre class="example">
+python -m ensurepip 
+</pre>
+
+<p>
+之前我的 <code>pip</code> 因为一天命令 GG, 也因为一条指令还原 QAQ
+</p></li>
+</ul>
+
+<p>
+emmmm, 剩下的变化对我们写代码的影响不大， 省略。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org05c61d6" class="outline-2">
+<h2 id="org05c61d6"><span class="section-number-2">7</span> Python3.5</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0492/">PEP 492 &#x2013; Coroutines with async and await syntax</a>
+</p>
+
+<p>
+针对 <b>协程</b> 的新关键字 <code>async</code> 和 <code>await</code>, 官网的例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> asyncio
+
+<span style="font-weight: bold;">async def</span> <span style="font-weight: bold;">coro</span>(name, lock):
+    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'coro {}: waiting for lock'</span>.<span style="font-weight: bold;">format</span>(name))
+    <span style="font-weight: bold;">async with</span> lock:
+        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'coro {}: holding the lock'</span>.<span style="font-weight: bold;">format</span>(name))
+        <span style="font-weight: bold;">await</span> asyncio.sleep(1)
+        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'coro {}: releasing the lock'</span>.<span style="font-weight: bold;">format</span>(name))
+
+<span style="font-weight: bold; font-style: italic;">loop</span> = asyncio.get_event_loop()
+<span style="font-weight: bold; font-style: italic;">lock</span> = asyncio.Lock()
+<span style="font-weight: bold; font-style: italic;">coros</span> = asyncio.gather(coro(1, lock), coro(2, lock))
+<span style="font-weight: bold;">try</span>:
+    loop.run_until_complete(coros)
+<span style="font-weight: bold;">finally</span>:
+    loop.close()
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">results</span>
+coro 2: waiting <span style="font-weight: bold;">for</span> lock
+coro 2: holding the lock
+coro 1: waiting <span style="font-weight: bold;">for</span> lock
+coro 2: releasing the lock
+coro 1: holding the lock
+coro 1: releasing the lock
+</pre>
+</div>
+
+<p>
+我觉得这是一个很重要的新特性， 目前在 <code>Github</code> 上已经可以看到一些只针对高版本 <code>Python</code> 开发的库，
+其中就用到了这一特性。
+</p>
+
+<p>
+当然了， 目前我对协程的了解并不多， 因此也更应该去了解。 嗯， 现在知道这么一个特性了。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0465/">PEP 465 &#x2013; A dedicated infix operator for matrix multiplication</a>
+</p>
+
+<p>
+这应该算是语言的应用场景反过来影响语法开发的一个实例吧， 针对 <b>矩阵运算</b> 的操作符 <code>@</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> numpy
+
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">x</span> = numpy.ones(3)
+&gt;&gt;&gt; x
+array([ 1., 1., 1.])
+
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m</span> = numpy.eye(3)
+&gt;&gt;&gt; m
+array([[ 1., 0., 0.],
+       [ 0., 1., 0.],
+       [ 0., 0., 1.]])
+
+&gt;&gt;&gt; x @ m
+array([ 1., 1., 1.])
+</pre>
+</div>
+
+<p>
+这些东西都没用过， 不做评价。 有兴趣的可以了解一下。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0448/">PEP 448 &#x2013; Additional Unpacking Generalizations</a>
+</p>
+
+<p>
+扩展了 <code>*iterable</code> 和 <code>**dictionary</code> 拆包操作符的允许用法， 现在可以在函数中调用任意数量的拆包：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">print</span>(*[1], *[2], 3, *[4, 5])
+1 2 3 4 5
+
+&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">fn</span>(a, b, c, d):
+...     <span style="font-weight: bold;">print</span>(a, b, c, d)
+...
+
+&gt;&gt;&gt; fn(**{<span style="font-style: italic;">'a'</span>: 1, <span style="font-style: italic;">'c'</span>: 3}, **{<span style="font-style: italic;">'b'</span>: 2, <span style="font-style: italic;">'d'</span>: 4})
+1 2 3 4
+</pre>
+</div>
+
+<p>
+同时， 元组， 列表， 集合， 字典等允许同时多个解包：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; *<span style="font-weight: bold;">range</span>(4), 4
+(0, 1, 2, 3, 4)
+
+&gt;&gt;&gt; [*<span style="font-weight: bold;">range</span>(4), 4]
+[0, 1, 2, 3, 4]
+
+&gt;&gt;&gt; {*<span style="font-weight: bold;">range</span>(4), 4, *(5, 6, 7)}
+{0, 1, 2, 3, 4, 5, 6, 7}
+
+&gt;&gt;&gt; {<span style="font-style: italic;">'x'</span>: 1, **{<span style="font-style: italic;">'y'</span>: 2}}
+{<span style="font-style: italic;">'x'</span>: 1, <span style="font-style: italic;">'y'</span>: 2}
+</pre>
+</div>
+
+<p>
+恐怖如斯 ！
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0484">PEP 484 &#x2013; Type Hints</a>
+</p>
+
+<p>
+和这个特性有关的一个特性： <a href="https://www.python.org/dev/peps/pep-3107">PEP 3107</a>. 我觉得， 只要看了它的表现形式你也应该明白是和什么有关了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">greeting</span>(name: <span style="font-weight: bold;">str</span>) -&gt; <span style="font-weight: bold;">str</span>:
+    <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'Hello '</span> + name
+</pre>
+</div>
+
+<p>
+通过注释来表示参数和返回值的类型。
+</p>
+
+<p>
+效果：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">greeting</span>(name: <span style="font-weight: bold;">str</span>) -&gt; <span style="font-weight: bold;">str</span>:
+...     <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'Hello '</span> + name
+...
+&gt;&gt;&gt; greeting(10)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 2, <span style="font-weight: bold;">in</span> greeting
+<span style="font-weight: bold; text-decoration: underline;">TypeError</span>: must be <span style="font-weight: bold;">str</span>, <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">int</span>
+</pre>
+</div>
+
+<p>
+感觉 <code>Python</code> 代码长得越来越奇怪了 QAQ
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd63d875" class="outline-2">
+<h2 id="orgd63d875"><span class="section-number-2">8</span> Python3.6</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0498/">PEP 498 &#x2013; Literal String Interpolation</a>
+</p>
+
+<p>
+现在我学过的脚本语言都会这一套了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">name</span> = <span style="font-style: italic;">"Fred"</span>
+&gt;&gt;&gt; f<span style="font-style: italic;">"He said his name is {name}."</span>
+<span style="font-style: italic;">'He said his name is Fred.'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">width</span> = 10
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">precision</span> = 4
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">value</span> = decimal.Decimal(<span style="font-style: italic;">"12.34567"</span>)
+&gt;&gt;&gt; f<span style="font-style: italic;">"result: {value:{width}.{precision}}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">nested fields</span>
+<span style="font-style: italic;">'result:      12.35'</span>
+</pre>
+</div>
+
+<p>
+感觉通过 <code>Python</code> 的 <b>名称空间</b> 来实现这个特性还是很方便的， 不知道是不是这样来实现的。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0526/">PEP 526 &#x2013; Syntax for Variable Annotations</a>
+</p>
+
+<p>
+通过特殊的语法来对变量的类型进行注释：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">primes: <span style="font-weight: bold; font-style: italic;">List</span>[<span style="font-weight: bold;">int</span>] = []
+
+captain: <span style="font-weight: bold;">str</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Note: no initial value!</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Starship</span>:
+    stats: <span style="font-weight: bold; font-style: italic;">Dict</span>[<span style="font-weight: bold;">str</span>, <span style="font-weight: bold;">int</span>] = {}
+</pre>
+</div>
+
+<p>
+其他的注释也可以：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">name: <span style="font-style: italic;">'your name'</span>
+</pre>
+</div>
+
+<p>
+但似乎就只有注释的作用 ？
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; name: <span style="font-weight: bold;">str</span> = 10
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0515/">PEP 515 &#x2013; Underscores in Numeric Literals</a>
+</p>
+
+<p>
+通过在数字中添加下划线来提高可读性：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; 1_000_000_000_000_000
+1000000000000000
+&gt;&gt;&gt; 0x_FF_FF_FF_FF
+4294967295
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0525/">PEP 525 &#x2013; Asynchronous Generators</a>
+</p>
+
+<p>
+<code>3.5</code> 引入了关键字 <code>async</code> 和 <code>await</code>, 但是， 通过 <code>async</code> 修饰的函数内部不能在使用 <code>yield</code>, 现在， 这个限制
+解除了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">async def</span> <span style="font-weight: bold;">ticker</span>(delay, to):
+    <span style="font-style: italic;">"""Yield numbers from 0 to *to* every *delay* seconds."""</span>
+    <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(to):
+        <span style="font-weight: bold;">yield</span> i
+        <span style="font-weight: bold;">await</span> asyncio.sleep(delay)
+</pre>
+</div>
+
+<p>
+代码更难懂了&#x2026;&#x2026;
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0530/">PEP 530 &#x2013; Asynchronous Comprehensions</a>
+</p>
+
+<p>
+现在在各种推导式， 生成式中都可以用 <code>async</code> 了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">result</span> = [i <span style="font-weight: bold;">async for</span> i <span style="font-weight: bold;">in</span> aiter() <span style="font-weight: bold;">if</span> i % 2]
+<span style="font-weight: bold; font-style: italic;">result</span> = [<span style="font-weight: bold;">await</span> fun() <span style="font-weight: bold;">for</span> fun <span style="font-weight: bold;">in</span> funcs <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">await</span> condition()]
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0487/">PEP 487 &#x2013; Simpler customisation of class creation</a>
+</p>
+
+<p>
+现在可以在不使用元类的情况下自定义子类创建， 通过方法 <code>__init_subclass__</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">QuestBase</span>:
+...    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this is implicitly a @classmethod (see below for motivation)</span>
+...    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init_subclass__</span>(cls, swallow, **kwargs):
+...        <span style="font-weight: bold; font-style: italic;">cls.swallow</span> = swallow
+...        <span style="font-weight: bold;">super</span>().__init_subclass__(**kwargs)
+
+&gt;&gt;&gt; <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Quest</span>(QuestBase, swallow=<span style="font-style: italic;">"african"</span>):
+...    <span style="font-weight: bold;">pass</span>
+
+&gt;&gt;&gt; Quest.swallow
+<span style="font-style: italic;">'african'</span>
+</pre>
+</div></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0487/">PEP 487 &#x2013; Simpler customisation of class creation</a>
+</p>
+
+<p>
+<code>PEP 487</code> 除了前面那个特性以外， 还增强了 <b>描述器</b> 协议 (ノ｀Д)ノ
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">IntField</span>:
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__get__</span>(<span style="font-weight: bold;">self</span>, instance, owner):
+        <span style="font-weight: bold;">return</span> instance.__dict__[<span style="font-weight: bold;">self</span>.name]
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__set__</span>(<span style="font-weight: bold;">self</span>, instance, value):
+        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">isinstance</span>(value, <span style="font-weight: bold;">int</span>):
+            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">ValueError</span>(f<span style="font-style: italic;">'expecting integer in {self.name}'</span>)
+        <span style="font-weight: bold; font-style: italic;">instance.__dict__</span>[<span style="font-weight: bold;">self</span>.name] = value
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this is the new initializer:</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__set_name__</span>(<span style="font-weight: bold;">self</span>, owner, name):
+        <span style="font-weight: bold;">self</span>.name = name
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Model</span>:
+    <span style="font-weight: bold; font-style: italic;">int_field</span> = IntField()
+</pre>
+</div>
+
+<p>
+<code>__set_name__</code> 这个方法会在描述器定义时自动定义， <code>owner</code> 是这个描述器的拥有者， <code>name</code> 则是
+描述器在 <code>owner</code> 中的名称。
+</p>
+
+<p>
+在上述例子中， <code>name</code> 就是 <code>int_field</code>.
+</p></li>
+
+<li><b>PEP 529: Change Windows filesystem encoding to UTF-8</b></li>
+
+<li><b>PEP 528: Change Windows console encoding to UTF-8</b></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0520/">PEP 520 &#x2013; Preserving Class Attribute Definition Order</a>
+</p>
+
+<p>
+现在类的 <code>__dict__</code> 中的属性顺序和定义顺序保持一致了。
+</p></li>
+
+<li><p>
+<a href="https://www.python.org/dev/peps/pep-0468/">PEP 468 &#x2013; Preserving the order of **kwargs in a function</a>
+</p>
+
+<p>
+<code>**kwargs</code> 形式的参数现在会保持传入的顺序：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(**kwargs):
+...     <span style="font-weight: bold;">print</span>(kwargs)
+...
+&gt;&gt;&gt; func(a=1, b=2, c=3, ab=4)
+{<span style="font-style: italic;">'a'</span>: 1, <span style="font-style: italic;">'b'</span>: 2, <span style="font-style: italic;">'c'</span>: 3, <span style="font-style: italic;">'ab'</span>: 4}
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org93bf4ad" class="outline-2">
+<h2 id="org93bf4ad"><span class="section-number-2">9</span> 完结撒花</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+了解这些版本特性变化的过程中， 虽然已经省略了相等一部分的内容， 但还是花了我不少时间。
+</p>
+
+<p>
+并且， 这次只是知道了有什么新特性， 不代表会用了 @_@
+</p>
+
+<p>
+感觉 <code>Python</code> 的特性是越来越多， 可以说， 我学过的所有语言中， <code>Python</code> 的特性是最多的。
+</p>
+
+<p>
+想起前几天 <code>Guido van Rossum</code> 退出核心决策圈的原因， 还有已经发布的 <code>Python3.7</code>&#x2026;
+</p>
+
+<p>
+&lt;・)))&gt;&lt;&lt;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6b59db0" class="outline-2">
+<h2 id="org6b59db0"><span class="section-number-2">10</span> 相关链接</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/3/whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li><a href="https://docs.python.org/3/whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 13:08</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

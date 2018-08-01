@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs Org 搭建 GTD 系统</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Emacs Org 搭建 GTD 系统</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org609700c">1. 前言</a></li>
+<li><a href="#org166b76e">2. 文件结构</a>
+<ul>
+<li><a href="#orga748a84">2.1. log</a></li>
+<li><a href="#org353111d">2.2. inbox.org</a></li>
+<li><a href="#org0b9c4ec">2.3. task.org</a></li>
+<li><a href="#orgd32662e">2.4. project.org</a></li>
+<li><a href="#org03e98fd">2.5. routine.org</a></li>
+<li><a href="#org63b1cdc">2.6. plan.org</a></li>
+</ul>
+</li>
+<li><a href="#org30e3362">3. Org 使用</a></li>
+<li><a href="#orgea47329">4. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org609700c" class="outline-2">
+<h2 id="org609700c"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+使用 <code>Emacs Org</code> 来搭建 <code>GTD</code> 系统是很安逸的， 这里简单分享一下自己的 <code>GTD</code> 系统的结构。
+</p>
+
+<p>
+强烈推荐一篇博客： <a href="http://blog.csdn.net/u014801157/article/details/24372485">Emacs月月积累（终结篇）：熟练使用org-mode管理日常事务</a>.
+</p>
+
+<p>
+写的真的很棒， 很多细节内容在里面都有提及。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org166b76e" class="outline-2">
+<h2 id="org166b76e"><span class="section-number-2">2</span> 文件结构</h2>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+/---log/
+|   |---2017/
+|       |---dec.org
+|       |---2017.org
+|---inbox.org
+|---task.org
+|---project.org
+|---routine.org
+|---plan.org
+</pre>
+</div>
+
+<div id="outline-container-orga748a84" class="outline-3">
+<h3 id="orga748a84"><span class="section-number-3">2.1</span> log</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+日志文件夹， 根据年份建立子文件夹， 如： <code>2017</code>, <code>2018</code>.
+</p>
+
+<p>
+子文件夹内， 根据月份建立子文件， 如： <code>dec.org</code>.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">月份</th>
+<th scope="col" class="org-left">一</th>
+<th scope="col" class="org-left">二</th>
+<th scope="col" class="org-left">三</th>
+<th scope="col" class="org-left">四</th>
+<th scope="col" class="org-left">五</th>
+<th scope="col" class="org-left">六</th>
+<th scope="col" class="org-left">七</th>
+<th scope="col" class="org-left">八</th>
+<th scope="col" class="org-left">九</th>
+<th scope="col" class="org-left">十</th>
+<th scope="col" class="org-left">十一</th>
+<th scope="col" class="org-left">十二</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">简写</td>
+<td class="org-left"><code>Jan.</code></td>
+<td class="org-left"><code>Feb.</code></td>
+<td class="org-left"><code>Mar.</code></td>
+<td class="org-left"><code>Apr.</code></td>
+<td class="org-left"><code>May.</code></td>
+<td class="org-left"><code>Jun.</code></td>
+<td class="org-left"><code>Jul.</code></td>
+<td class="org-left"><code>Aug.</code></td>
+<td class="org-left"><code>Sec.</code></td>
+<td class="org-left"><code>Oct.</code></td>
+<td class="org-left"><code>Nov.</code></td>
+<td class="org-left"><code>Dec.</code></td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li><p>
+<b>日志文件：</b> 每周记录一次， 跨月时， 哪一周的周日在那个月算那个月的。
+</p>
+
+<p>
+<b>内容结构：</b>
+</p>
+
+
+<div class="figure">
+<p><img src="img/log.png" alt="log.png" />
+</p>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org353111d" class="outline-3">
+<h3 id="org353111d"><span class="section-number-3">2.2</span> inbox.org</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+收集箱， 收集一些想法和需要完成的任务， 每周清理一次。
+</p>
+
+<p>
+<b>Update 2018-04-30:</b> 现在感觉收集箱的作用不是很明显了， 很多事情都是直接
+丢进 <code>task</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b9c4ec" class="outline-3">
+<h3 id="org0b9c4ec"><span class="section-number-3">2.3</span> task.org</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+列举相对独立的任务， 每周清理一次， 将完成状态的任务移入日志文件。
+</p>
+
+<p>
+<b>内容结构：</b>
+</p>
+
+
+<div class="figure">
+<p><img src="img/task.png" alt="task.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd32662e" class="outline-3">
+<h3 id="orgd32662e"><span class="section-number-3">2.4</span> project.org</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+列举的项目任务， 每个项目由多个子任务组成， 每周清理一次， 将完成状态的任务移入日志文件
+</p>
+
+<p>
+<b>内容结构：</b>
+</p>
+
+
+<div class="figure">
+<p><img src="img/project.png" alt="project.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03e98fd" class="outline-3">
+<h3 id="org03e98fd"><span class="section-number-3">2.5</span> routine.org</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+列举日常任务， 这些任务可能需要较长时间的循环完成， 每周清理一次， 将 <b>完成信息</b> 移入日志文件
+</p>
+
+<p>
+<b>内容结构：</b>
+</p>
+
+
+<div class="figure">
+<p><img src="img/routine.png" alt="routine.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org63b1cdc" class="outline-3">
+<h3 id="org63b1cdc"><span class="section-number-3">2.6</span> plan.org</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+计划也是规范， 改动频率较低， 也没有固定的结构。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org30e3362" class="outline-2">
+<h2 id="org30e3362"><span class="section-number-2">3</span> Org 使用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+对于 <code>Org</code> 的使用， 网上有很多详细的教程了， 这里简单列举一些常用的快捷键：
+</p>
+
+<ul class="org-ul">
+<li><b>org-mode:</b>
+<ul class="org-ul">
+<li><code>C-c C-s</code> 设置任务开始时间</li>
+<li><code>C-c C-d</code> 设置任务截止时间</li>
+<li><code>C-c C-t</code> 改变任务状态</li>
+<li><code>S-Up/Down</code> 设置任务优先级 <code>[#A]</code>, <code>[#B]</code>, <code>[#C]</code></li>
+<li><code>C-c C-x C-i</code> 开始任务计时</li>
+<li><code>C-c C-x C-o</code> 终止任务计时</li>
+<li><code>C-c [</code> 将当前文件加入 <code>Org-Agenda</code></li>
+<li><code>C-c ]</code> 将当前文件从 <code>Org-Agenda</code> 移除</li>
+<li><code>C-c .</code></li>
+</ul></li>
+<li><b>org-agenda:</b>
+<ul class="org-ul">
+<li><code>C-c a</code> 打开 <code>Org-Agenda</code> 视图选择页面</li>
+<li><code>C-c a a</code> 打开 <code>Org-Agenda</code> 视图， 任务根据日期列出</li>
+<li><code>C-v</code> 在 <code>Org-Agenda</code> 视图中， 选择其他显示方式</li>
+<li><code>I</code> 在 <code>Org-Agenda</code> 的任务条目上， 开始计时</li>
+<li><code>O</code> 在 <code>Org-Agenda</code> 的任务条目上， 终止计时</li>
+<li><code>t</code> 在 <code>Org-Agenda</code> 的任务条目上， 修改任务状态</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgea47329" class="outline-2">
+<h2 id="orgea47329"><span class="section-number-2">4</span> 参考链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>维基百科
+<ul class="org-ul">
+<li><a href="https://zh.wikipedia.org/wiki/%E5%B0%BD%E7%AE%A1%E5%8E%BB%E5%81%9A">尽管去做</a></li>
+</ul></li>
+<li>个人博客
+<ul class="org-ul">
+<li><a href="http://www.cnblogs.com/qlwy/archive/2012/06/15/2551034.html">神器中的神器org-mode之入门篇</a></li>
+<li><a href="http://blog.csdn.net/u014801157/article/details/24372485">Emacs月月积累（终结篇）：熟练使用org-mode管理日常事务</a></li>
+<li><a href="http://www.cnblogs.com/holbrook/archive/2012/04/17/2454619.html">用Org-mode实现GTD</a></li>
+<li><a href="http://blog.csdn.net/dc_726/article/details/8623879">用Org-mode实践《奇特的一生》</a></li>
+</ul></li>
+<li>官方网页
+<ul class="org-ul">
+<li><a href="http://orgmode.org/">Org mode for Emacs – Your Life in Plain Text</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2017-12-27 周三 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

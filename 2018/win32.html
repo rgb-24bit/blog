@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:58 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Win32 API 窗口程序</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb_24bit24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Win32 API 窗口程序</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org46680f3">1. 前言</a></li>
+<li><a href="#org904109b">2. 基本内容</a>
+<ul>
+<li><a href="#org811d8c2">2.1. 类型定义</a></li>
+<li><a href="#org9a91c8f">2.2. 匈牙利命名法</a></li>
+<li><a href="#orgef93225">2.3. 使用字符串</a></li>
+<li><a href="#org55cf150">2.4. 应用程序入口: WinMain</a></li>
+<li><a href="#orgc6ebf78">2.5. 关于句柄</a></li>
+</ul>
+</li>
+<li><a href="#orgab9f2a2">3. 简单的窗口程序</a>
+<ul>
+<li><a href="#orga529e74">3.1. 代码理解</a></li>
+</ul>
+</li>
+<li><a href="#org1437875">4. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org46680f3" class="outline-2">
+<h2 id="org46680f3"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+之前因为一些原因放弃了学习 <code>Win32 API</code> 来编写图形程序， 虽然还是不打算深入学习
+<code>Win32 API</code>, 但还是感觉有必要对 <code>Win32 API</code> 进行一定的了解和学习。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org904109b" class="outline-2">
+<h2 id="org904109b"><span class="section-number-2">2</span> 基本内容</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org811d8c2" class="outline-3">
+<h3 id="org811d8c2"><span class="section-number-3">2.1</span> 类型定义</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>Win32 API</code> 预先定义了一些类型， 编写程序之前了解这些是很有必要的。
+</p>
+
+<ul class="org-ul">
+<li><b>整数类型：</b></li>
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Data type</th>
+<th scope="col" class="org-left">Size</th>
+<th scope="col" class="org-left">Signed?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">BYTE</td>
+<td class="org-left">8 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">DWORD</td>
+<td class="org-left">32 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">INT32</td>
+<td class="org-left">32 bits</td>
+<td class="org-left">Signed</td>
+</tr>
+
+<tr>
+<td class="org-left">INT64</td>
+<td class="org-left">64 bits</td>
+<td class="org-left">Signed</td>
+</tr>
+
+<tr>
+<td class="org-left">LONG</td>
+<td class="org-left">32 bits</td>
+<td class="org-left">Signed</td>
+</tr>
+
+<tr>
+<td class="org-left">LONGLONG</td>
+<td class="org-left">64 bits</td>
+<td class="org-left">Signed</td>
+</tr>
+
+<tr>
+<td class="org-left">UINT32</td>
+<td class="org-left">32 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">UINT64</td>
+<td class="org-left">64 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">ULONG</td>
+<td class="org-left">32 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">ULONGLONG</td>
+<td class="org-left">64 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+
+<tr>
+<td class="org-left">WORD</td>
+<td class="org-left">16 bits</td>
+<td class="org-left">Unsigned</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li><p>
+<b>布尔类型：</b>
+</p>
+
+<p>
+<code>Win32 API</code> 中， 布尔类型为 <code>BOOL</code>, 只有两个值， 分别为 <code>FALSE</code> 和 <code>TRUE</code>.
+</p>
+
+<p>
+需要注意的是， <code>Win32 API</code> 中的 <code>BOOL</code> 是整数类型， 不能和 <code>C++</code> 中的 <code>bool</code> 互换。
+</p></li>
+
+<li><p>
+<b>指针类型：</b>
+</p>
+
+<p>
+<code>Win32 APi</code> 中预定义了许多如 <code>P-</code> 或 <code>LP-</code> 形式的指针类型。 其中 <code>P</code> 代表 <code>pointer</code>, <code>LP</code> 代表 <code>long pointer</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">RECT</span>*  <span style="font-weight: bold; font-style: italic;">rect</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">RECT &#31867;&#22411;&#25351;&#38024;</span>
+<span style="font-weight: bold; text-decoration: underline;">LPRECT</span> <span style="font-weight: bold; font-style: italic;">rect</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">RECT &#31867;&#22411;&#25351;&#38024; LP-</span>
+<span style="font-weight: bold; text-decoration: underline;">PRECT</span>  <span style="font-weight: bold; font-style: italic;">rect</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">RECT &#31867;&#22411;&#25351;&#38024; P-</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>精确指针类型：</b>
+</p>
+
+<p>
+以下类型的指针的大小是确定的， <code>32</code> 位机上是 <code>32</code> 位， <code>64</code> 位机上是 <code>64</code> 位。 当程序被编译时，
+指针的大小便被固定下来。 也就是说， 在 <code>32</code> 位机上编译的程序， 指针大小便固定在 <code>32</code> 位。即使是在
+<code>64</code> 位机上。
+</p>
+
+<ul class="org-ul">
+<li><b>DWORD<sub>PTR</sub></b></li>
+<li><b>INT<sub>PTR</sub></b></li>
+<li><b>LONG<sub>PTR</sub></b></li>
+<li><b>ULONG<sub>PTR</sub></b></li>
+<li><b>UINT<sub>PTR</sub></b></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9a91c8f" class="outline-3">
+<h3 id="org9a91c8f"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>Win32 API</code> 中采用 <a href="https://zh.wikipedia.org/wiki/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95">匈牙利命名法</a>, 每个变量名由一个或多个小写字母开始。 这些字母有助于记忆变量的类型和用途。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">DWORD</span> <span style="font-weight: bold; font-style: italic;">dwNumber</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">dw -- DWORD</span>
+<span style="font-weight: bold; text-decoration: underline;">WORD</span> <span style="font-weight: bold; font-style: italic;">wNumber</span>;    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">w -- worDWORD</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef93225" class="outline-3">
+<h3 id="orgef93225"><span class="section-number-3">2.3</span> 使用字符串</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<code>Windows</code> 系统的使用者遍布全世界， 仅仅使用 <code>ANSI</code> 字符是满足不了需求的。
+</p>
+
+<p>
+因此， <code>Win32 API</code> 定义了新的字符类型以支持 <code>Unicode</code>. 其中宽字符 <code>WCHAR</code> 源自 <code>C++</code> 的 <code>wchar_t</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">typedef</span> <span style="font-weight: bold; text-decoration: underline;">wchar_t</span> <span style="font-weight: bold; text-decoration: underline;">WCHAR</span>;
+</pre>
+</div>
+
+<p>
+声明宽字符或宽字符串时， 应该在前面添加 <code>L</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">wchar_t</span> <span style="font-weight: bold; font-style: italic;">a</span> = L<span style="font-style: italic;">'a'</span>;
+<span style="font-weight: bold; text-decoration: underline;">wchar_t</span> *<span style="font-weight: bold; font-style: italic;">str</span> = L<span style="font-style: italic;">"hello"</span>;
+</pre>
+</div>
+
+<p>
+除了 <code>WCHAR</code> 的类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Typedef</th>
+<th scope="col" class="org-left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">CHAR</td>
+<td class="org-left">char</td>
+</tr>
+
+<tr>
+<td class="org-left">PSTR or LPSTR</td>
+<td class="org-left">char*</td>
+</tr>
+
+<tr>
+<td class="org-left">PCSTR or LPCSTR</td>
+<td class="org-left">const char*</td>
+</tr>
+
+<tr>
+<td class="org-left">PWSTR or LPWSTR</td>
+<td class="org-left">wchar<sub>t</sub>*</td>
+</tr>
+
+<tr>
+<td class="org-left">PCWSTR or LPCWSTR</td>
+<td class="org-left">const wchar<sub>t</sub>*</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>Win32 API</code> 还提供了两组 <code>API</code> 来缓解 <code>Unicode</code> 和 <code>ANSI</code> 的转化。 并通过宏来统一这两组 <code>API</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#ifdef</span> UNICODE
+<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">SetWindowText</span>  SetWindowTextW
+<span style="font-weight: bold;">#else</span>
+<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">SetWindowText</span>  SetWindowTextA
+<span style="font-weight: bold;">#endif</span>
+</pre>
+</div>
+
+<p>
+这是一个例子， <code>SetWindowTextA</code> 用于 <code>ANSI</code>, <code>SetWindowTextW</code> 用于 <code>Unicode</code>, 通过宏统一为 <code>SetWindowText</code>.
+</p>
+
+<p>
+虽然统一了 <code>API</code>, 但是字符的定义还是很麻烦， 因此 <code>Win32 API</code> 还定义了宏 <code>TCHAR</code> 和 <code>TEXT</code> 来统一字符类型：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Macro</th>
+<th scope="col" class="org-left">Unicode</th>
+<th scope="col" class="org-left">ANSI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">TCHAR</td>
+<td class="org-left">wchar<sub>t</sub></td>
+<td class="org-left">char</td>
+</tr>
+
+<tr>
+<td class="org-left">TEXT("x")</td>
+<td class="org-left">L"x"</td>
+<td class="org-left">"x"</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这样一来， 下面的代码是等效的：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">SetWindowText</span>(TEXT(<span style="font-style: italic;">"My Application"</span>));  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Unicode or ANSI</span>
+
+<span style="font-weight: bold;">SetWindowTextW</span>(L<span style="font-style: italic;">"My Application"</span>);      <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Unicode.</span>
+
+SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);       <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">ANSI.</span>
+</pre>
+</div>
+
+<p>
+计算字符串的长度是常用的一个功能， <code>Win32 API</code> 通过宏统一了它们：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#ifdef</span> _UNICODE
+<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">_tcslen</span>     wcslen
+<span style="font-weight: bold;">#else</span>
+<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">_tcslen</span>     strlen
+<span style="font-weight: bold;">#endif</span>
+</pre>
+</div>
+
+<p>
+可以发现， 部分宏通过 <code>UNICODE</code> 定义， 部分通过 <code>_UNICODE</code> 定义。 因此在编写 <code>Unicode</code> 程序的时候， 这
+两个宏都应该定义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org55cf150" class="outline-3">
+<h3 id="org55cf150"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+<code>C</code> 语言的入口函数是 <code>main</code>, 而 <code>Win32 Api</code> 程序的入口函数应该是 <code>WinMain</code>.
+</p>
+
+<p>
+这个函数的定义格式应该是：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">WINAPI</span> wWinMain(<span style="font-weight: bold; text-decoration: underline;">HINSTANCE</span> <span style="font-weight: bold; font-style: italic;">hInstance</span>, <span style="font-weight: bold; text-decoration: underline;">HINSTANCE</span> <span style="font-weight: bold; font-style: italic;">hPrevInstance</span>, <span style="font-weight: bold; text-decoration: underline;">PWSTR</span> <span style="font-weight: bold; font-style: italic;">pCmdLine</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">nCmdShow</span>);
+</pre>
+</div>
+
+<p>
+参数解释：
+</p>
+<ul class="org-ul">
+<li><i>hInstance</i>: 实例句柄， 操作系统通过这个值来标识应用程序</li>
+<li><i>hPrevInstance</i>: <code>16</code> 系统的遗留， 现在默认置为 <code>0</code></li>
+<li><i>pCmdLine</i>: 包含作为 <code>Unicode</code> 字符串的命令行参数</li>
+<li><i>nCmdShow</i>: 一个标志，说明主应用程序窗口是最小化，最大化还是正常显示</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc6ebf78" class="outline-3">
+<h3 id="orgc6ebf78"><span class="section-number-3">2.5</span> 关于句柄</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+<b>句柄</b> 在 <code>Windows</code> 中应该是一个比较重要的概念， 当初在学习的时候把我绕了一圈还晕乎乎的。
+</p>
+
+<p>
+现在， 感觉 <b>句柄</b> 这个概念要容易理解的多了。
+</p>
+
+<p>
+首先需要清楚的是： <code>Windows</code> 操作系统内核中有一个全局句柄表。而每个进程都有自己的一个句柄表。
+</p>
+
+<p>
+<code>Windows</code> 通过 <b>句柄</b> 来标识 <b>内核对象</b>. <code>Win32 API</code> 编程中， 很多函数都需要用到一个对象的 <b>句柄</b>. 我们
+通过这个 <b>句柄</b> 来访问这个对象。
+</p>
+
+<p>
+简单来说， <b>句柄</b> 就是一把钥匙， 我们通过这把钥匙来访问内存中的 <b>内核对象</b>. 如果我们失去了这把钥匙， 
+我们便失去了访问那个 <b>内核对象</b> 的能力。
+</p>
+
+<p>
+调用 <code>Win32 API</code> 创建的对象会返回那个对象的 <b>句柄</b>, 拿到钥匙的我们便可以通过其他 <code>Win32 API</code> 来操作那个对象。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab9f2a2" class="outline-2">
+<h2 id="orgab9f2a2"><span class="section-number-2">3</span> 简单的窗口程序</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;windows.h&gt;</span>
+
+<span style="font-weight: bold;">#pragma</span> comment(lib, <span style="font-style: italic;">"gdi32.lib"</span>)
+<span style="font-weight: bold;">#pragma</span> comment(lib, <span style="font-style: italic;">"user32.lib"</span>)
+<span style="font-weight: bold;">#pragma</span> comment(lib, <span style="font-style: italic;">"Shell32.lib"</span>)
+
+LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</span> <span style="font-weight: bold;">WndProc</span>(HWND, UINT, WPARAM, LPARAM);
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">WINAPI</span> WinMain(<span style="font-weight: bold; text-decoration: underline;">HINSTANCE</span> <span style="font-weight: bold; font-style: italic;">hInstance</span>, <span style="font-weight: bold; text-decoration: underline;">HINSTANCE</span> <span style="font-weight: bold; font-style: italic;">hPrevInstance</span>,
+    <span style="font-weight: bold; text-decoration: underline;">PSTR</span> <span style="font-weight: bold; font-style: italic;">pCmdLine</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">nCmdShow</span>) {
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20381;&#27425;&#20026;&#31383;&#21475;&#31867;&#21517;&#12289;&#31383;&#21475;&#21477;&#26564;&#12289;&#28040;&#24687;&#32467;&#26500;&#12289;&#31383;&#21475;&#31867;</span>
+    <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">TCHAR</span> <span style="font-weight: bold; font-style: italic;">szAppName</span>[] = TEXT(<span style="font-style: italic;">"WAS"</span>);
+    <span style="font-weight: bold; text-decoration: underline;">HWND</span> <span style="font-weight: bold; font-style: italic;">hwnd</span>;
+    <span style="font-weight: bold; text-decoration: underline;">MSG</span> <span style="font-weight: bold; font-style: italic;">msg</span>;
+    <span style="font-weight: bold; text-decoration: underline;">WNDCLASS</span> <span style="font-weight: bold; font-style: italic;">wndclass</span>;
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#31383;&#21475;&#31867;&#21021;&#22987;&#21270;</span>
+    wndclass.style = CS_HREDRAW | CS_VREDRAW;
+    wndclass.lpfnWndProc = WndProc;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#32465;&#23450;&#28040;&#24687;&#22788;&#29702;&#36807;&#31243;</span>
+    wndclass.cbClsExtra = 0;
+    wndclass.cbWndExtra = 0;
+    wndclass.hInstance = hInstance;
+    wndclass.hIcon = LoadIcon(<span style="font-weight: bold; text-decoration: underline;">NULL</span>, IDI_APPLICATION);
+    wndclass.hCursor = LoadCursor(<span style="font-weight: bold; text-decoration: underline;">NULL</span>, IDC_ARROW);
+    wndclass.hbrBackground = (<span style="font-weight: bold; text-decoration: underline;">HBRUSH</span>)GetStockObject(WHITE_BRUSH);
+    wndclass.lpszMenuName = <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+    wndclass.lpszClassName = szAppName;
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#27880;&#20876;&#31383;&#21475;</span>
+    <span style="font-weight: bold;">if</span> (!RegisterClass(&amp;wndclass)) {
+        MessageBox(<span style="font-weight: bold; text-decoration: underline;">NULL</span>, TEXT(<span style="font-style: italic;">"This progrma requires Windows NT !"</span>),
+                   szAppName, MB_ICONERROR);
+        <span style="font-weight: bold;">return</span> 0;
+    }
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21019;&#24314;&#31383;&#21475;&#24182;&#33719;&#21462;&#31383;&#21475;&#21477;&#26564;</span>
+    hwnd = CreateWindow(szAppName,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">window class name</span>
+                        TEXT(<span style="font-style: italic;">"Title"</span>),    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">window caption(&#26631;&#39064;)</span>
+                        WS_OVERLAPPEDWINDOW,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">window style</span>
+                        CW_USEDEFAULT,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">initial x position</span>
+                        CW_USEDEFAULT,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">initial y position</span>
+                        CW_USEDEFAULT,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">initial x size</span>
+                        CW_USEDEFAULT,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">initial y size</span>
+                        <span style="font-weight: bold; text-decoration: underline;">NULL</span>,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">parent window handle</span>
+                        <span style="font-weight: bold; text-decoration: underline;">NULL</span>,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">window menu handle</span>
+                        hInstance,    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">program instance handle</span>
+                        <span style="font-weight: bold; text-decoration: underline;">NULL</span>);    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">creation parameters</span>
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26174;&#31034;&#31383;&#21475;&#24182;&#26356;&#26032;</span>
+    ShowWindow(hwnd, nCmdShow);
+    UpdateWindow(hwnd);
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#28040;&#24687;&#22788;&#29702;</span>
+    <span style="font-weight: bold;">while</span> (GetMessage(&amp;msg, <span style="font-weight: bold; text-decoration: underline;">NULL</span>, 0, 0)) {
+        TranslateMessage(&amp;msg);
+        DispatchMessage(&amp;msg);
+    }
+
+    <span style="font-weight: bold;">return</span> msg.wParam;
+}
+
+LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</span> <span style="font-weight: bold;">WndProc</span>(<span style="font-weight: bold; text-decoration: underline;">HWND</span> <span style="font-weight: bold; font-style: italic;">hwnd</span>, <span style="font-weight: bold; text-decoration: underline;">UINT</span> <span style="font-weight: bold; font-style: italic;">message</span>, <span style="font-weight: bold; text-decoration: underline;">WPARAM</span> <span style="font-weight: bold; font-style: italic;">wParam</span>, <span style="font-weight: bold; text-decoration: underline;">LPARAM</span> <span style="font-weight: bold; font-style: italic;">lParam</span>) {
+    <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">cxClient</span>, <span style="font-weight: bold; font-style: italic;">cyClient</span>;
+    <span style="font-weight: bold; text-decoration: underline;">HDC</span> <span style="font-weight: bold; font-style: italic;">hdc</span>;
+    <span style="font-weight: bold; text-decoration: underline;">PAINTSTRUCT</span> <span style="font-weight: bold; font-style: italic;">ps</span>;
+
+    <span style="font-weight: bold;">switch</span> (message) {
+    <span style="font-weight: bold;">case</span> WM_SIZE:
+        cxClient = LOWORD(lParam);
+        cyClient = HIWORD(lParam);
+        <span style="font-weight: bold;">return</span> 0;
+
+    <span style="font-weight: bold;">case</span> WM_PAINT:
+        hdc = BeginPaint(hwnd, &amp;ps);
+        EndPaint(hwnd, &amp;ps);
+        <span style="font-weight: bold;">return</span> 0;
+
+    <span style="font-weight: bold;">case</span> WM_DESTROY:
+        PostQuitMessage(0);
+        <span style="font-weight: bold;">return</span> 0;
+    }
+
+    <span style="font-weight: bold;">return</span> DefWindowProc(hwnd, message, wParam, lParam);
+}
+</pre>
+</div>
+
+<p>
+这是一个简单的窗口程序， 运行后的样子应该类似于：
+</p>
+
+
+<div class="figure">
+<p><img src="img/win32.png" alt="win32.png" />
+</p>
+</div>
+
+<p>
+对于头部的 <code>#pragma comment</code> 是编译这个程序依赖的静态库， 如果使用 <code>VS</code>, 可以省略。
+</p>
+
+<p>
+代码理解部分只有对程序基本流程的解释， <code>Win32 API</code> 接口的参数和程序的具体编写并没有
+详细的描述。 如果需要了解可以看一看 <a href="https://msdn.microsoft.com/zh-cn/library/windows/desktop/ff381409.aspx">官方教程</a>.
+</p>
+</div>
+
+<div id="outline-container-orga529e74" class="outline-3">
+<h3 id="orga529e74"><span class="section-number-3">3.1</span> 代码理解</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+虽然是一个简单的窗口程序， 但是 <code>Win32</code> 窗口程序的基本框架和这个程序是基本相同的， 基本流程就是：
+</p>
+<ol class="org-ol">
+<li>创建初始化窗口类</li>
+<li>注册窗口类</li>
+<li>创建窗口并获取窗口句柄</li>
+<li>显示窗口</li>
+<li>窗口消息处理</li>
+</ol>
+
+<p>
+解释：
+</p>
+
+<dl class="org-dl">
+<dt>创建初始化窗口类</dt><dd>窗口类 <code>WNDCLASS</code> 用于定义窗口的样式。 如窗口的 <code>ICON</code>, 窗口的背景色等</dd>
+
+<dt>注册窗口类</dt><dd>虽然创建初始化了窗口类， 但是操作系统还不知道这个窗口类， 因此需要将这个窗口
+类注册到操作系统， 然后创建窗口时就可以根据这个注册了的窗口类创建窗口了。</dd>
+
+<dt>创建窗口并获取窗口句柄</dt><dd>创建窗口的 <code>Win32 API</code> 是 <code>CreateWindow</code>. 这个函数的第一个参数为 <b>窗口类</b> 的名称。
+创建的窗口便是基于注册的这个窗口类的。 创建好窗口后， <code>CreateWindow</code> 会返回
+创建的窗口的 <b>句柄</b>, 后面的操作便根据这个句柄进行。</dd>
+
+<dt>显示窗口</dt><dd>创建窗口后并不会立即显示， 而是在调用 <code>ShowWindow</code> 后进行显示。</dd>
+
+<dt>窗口消息处理</dt><dd><p>
+<code>Windows</code> 的消息机制是编写 <code>Win32 API</code> 程序的重要一环。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">while</span> (GetMessage(&amp;msg, <span style="font-weight: bold; text-decoration: underline;">NULL</span>, 0, 0)) {
+  TranslateMessage(&amp;msg);
+  DispatchMessage(&amp;msg);
+}
+</pre>
+</div>
+
+<p>
+<code>GetMessage</code> 从消息队列中获取消息存入 <code>msg</code> 中。 <code>msg</code> 的类型是 <code>MSG</code>, 用于储存获取的消息。
+</p>
+
+<p>
+<code>TranslateMessage</code> 对消息进行简单的处理， 转化为消息处理过程可辨认的类型。
+</p>
+
+<p>
+<code>DispatchMessage</code> 调用这个程序的消息处理进程过程这个消息。
+</p></dd>
+
+<dt>消息处理过程</dt><dd><p>
+<code>Windows</code> 消息处理过程对获取的消息进行处理。
+</p>
+
+<p>
+过程的定义类似于：
+</p>
+<div class="org-src-container">
+<pre class="src src-C">LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</span> <span style="font-weight: bold;">WndProc</span>(<span style="font-weight: bold; text-decoration: underline;">HWND</span> <span style="font-weight: bold; font-style: italic;">hwnd</span>, <span style="font-weight: bold; text-decoration: underline;">UINT</span> <span style="font-weight: bold; font-style: italic;">message</span>, <span style="font-weight: bold; text-decoration: underline;">WPARAM</span> <span style="font-weight: bold; font-style: italic;">wParam</span>, <span style="font-weight: bold; text-decoration: underline;">LPARAM</span> <span style="font-weight: bold; font-style: italic;">lParam</span>)
+</pre>
+</div>
+
+<p>
+消息处理过程中， 通过 <code>switch...case...</code> 的方式选择需要处理的消息， 其他消息通过 <code>DefWindowProc</code> 进行
+默认的处理。
+</p></dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1437875" class="outline-2">
+<h2 id="org1437875"><span class="section-number-2">4</span> 参考链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://msdn.microsoft.com/library/windows/desktop/bg126470.aspx?f=255&amp;MSPPError=-2147217396">Desktop Programming</a></li>
+<li><a href="https://msdn.microsoft.com/zh-cn/library/windows/desktop/ff381399.aspx">Learn to Program for Windows in C++</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-03-25 周日 00:00</p>
+<p class="author">Author: rgb<sub>24bit</sub></p>
+<p class="date">Created: 2018-08-01 周三 12:58</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

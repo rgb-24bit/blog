@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 编码问题</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 编码问题</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org40950a4">1. Unicode &amp; UTF-8</a></li>
+<li><a href="#orgf405a75">2. 编码格式转化</a></li>
+<li><a href="#orgc046643">3. Python2</a></li>
+<li><a href="#org4e6d789">4. Python3</a></li>
+<li><a href="#orgf057cf6">5. 编写程序</a></li>
+<li><a href="#org6d7d881">6. 代码样例</a></li>
+<li><a href="#orgda1aa0f">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org40950a4" class="outline-2">
+<h2 id="org40950a4"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><p>
+<code>Unicode</code>, 一个字符集， 将世界上所有的字符都纳入其中， 并给予每一个字符
+一个独一无二的编码。
+</p>
+
+<p>
+表示方式： <code>U+XXXX</code>, <code>X</code> 代表一个十六进制数字。
+</p>
+
+<p>
+<b>注：</b> <code>Unicode</code> 只是一个字符集， 只规定了一个字符的二进制编码， 没有规定这个二进制编码
+的储存方式。
+</p></li>
+
+<li><code>UTF-8</code>, <code>Unicode</code> 的 <b>一种</b> 实现方式， 规定了二进制编码的储存方式， 可以由计算机识别。</li>
+</ul>
+
+<p>
+<b>PS:</b> 不同的编码方式对同一字符的编码很有可能是不一样的， 所以按照错误的编码方式
+显示数据时， 会导致乱码。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf405a75" class="outline-2">
+<h2 id="orgf405a75"><span class="section-number-2">2</span> 编码格式转化</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>目前存在有很多种编码方式， 如 <code>UTF-8</code>, <code>cp936</code> 等</li>
+<li>很多编码方式都向下兼容 <code>ASCII</code></li>
+<li>不同编码方式在其他字符的表示上很可能不兼容</li>
+<li>我们可以用 <code>Unicode</code> 来映射不同字符集中的字符编码</li>
+<li>因此， 我们可以将一个编码方式 <b>解码</b> 为 <code>Unicode</code>, 对应 <code>Python</code> 的 <code>decode()</code></li>
+<li>然后， 通过 <code>Unicode</code> 映射出另一编码方式中的字符的编码， 对应 <code>Python</code> 的 <code>encode()</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc046643" class="outline-2">
+<h2 id="orgc046643"><span class="section-number-2">3</span> Python2</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Python2</code> 中的两种字符串数据类型：
+</p>
+<ul class="org-ul">
+<li><code>str</code>, 存储 <code>bytes</code>, 对应编码方式中 <b>二进制编码</b> 的存储格式</li>
+<li><code>unicode</code>, 存储 <code>Unicode</code> 编码， 如: <code>u'\u7f16\u7801'</code> 对应 <code>U+7F16</code> - 编， <code>U+7801</code> - 码</li>
+</ul>
+
+<p>
+<b>注:</b> 类似 <code>u'abcd'</code> 的字符串是一个 <code>Unicode</code> 对象， 之前我一直认为还是 <code>str</code>.
+</p>
+
+<p>
+两者的转化方式为：
+</p>
+<pre class="example">
+str -&gt; decode -&gt; unicode
+unicode -&gt; encode -&gt; str
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
+&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'str'</span>&gt;
+&gt;&gt;&gt; s.decode(<span style="font-style: italic;">'cp936'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35299;&#30721;</span>
+u<span style="font-style: italic;">'\u7f16\u7801'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s.decode(<span style="font-style: italic;">'cp936'</span>))
+&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'unicode'</span>&gt;
+&gt;&gt;&gt; u<span style="font-style: italic;">'&#32534;&#30721;'</span>
+u<span style="font-style: italic;">'\u7f16\u7801'</span>
+&gt;&gt;&gt; u<span style="font-style: italic;">'&#32534;&#30721;'</span>.encode(<span style="font-style: italic;">'cp936'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#32534;&#30721;</span>
+<span style="font-style: italic;">'\xb1\xe0\xc2\xeb'</span>
+</pre>
+</div>
+
+<p>
+<code>Python2</code> 中， 组合 <code>str</code> 和 <code>unicode</code> 对象的时候， 会自动尝试将 <code>str</code> 解码为 <code>unicode</code>, 解码中使用的
+字符集的值与 <code>sys.getdefaultencoding()</code> 的值相等。
+</p>
+
+<p>
+然而， 这个值通常为 <code>ascii</code>, 如果你的 <code>str</code> 中包含非 <code>str</code> 字符的话， 就会出现 <code>UnicodeDecodeError</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; u<span style="font-style: italic;">'abc'</span> + <span style="font-style: italic;">'def'</span>
+u<span style="font-style: italic;">'abcdef'</span>
+&gt;&gt;&gt; u<span style="font-style: italic;">'abc'</span> + <span style="font-style: italic;">'&#32534;&#30721;'</span>
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">UnicodeDecodeError</span>: <span style="font-style: italic;">'ascii'</span> codec can<span style="font-style: italic;">'t decode byte 0xb1 in position 0: ordinal not in range(128)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e6d789" class="outline-2">
+<h2 id="org4e6d789"><span class="section-number-2">4</span> Python3</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+和 <code>Python2</code> 中不同的是， <code>Python3</code> 默认的字符串类型变为了 <code>unicode</code>, 而字节字符串的定义需要通过 <code>b'abc'</code> 的方式。
+</p>
+
+<p>
+这是一个坑， 很多时候， <code>Python2</code> 的程序中会存在类似 <code>str.decode()</code> 的代码， 然后到了 <code>Python3</code>, 你就会发现， <code>GG</code> 了。
+</p>
+
+<p>
+<code>unicode</code> 是不存在 <code>decode</code> 方法的， <code>unicode</code> 很明显已经不能再解码了， 应该 <code>encode</code>.
+</p>
+
+<p>
+同时， 不在对 <code>bytes</code> 和 <code>unicode</code> 进行隐式处理。
+</p>
+
+<p>
+所以， 直接组合 <code>unicode</code> 和 <code>bytes</code> 将会报错。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
+&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'str'</span>&gt;
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = u<span style="font-style: italic;">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
+&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'str'</span>&gt;
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = b<span style="font-style: italic;">'&#32534;&#30721;'</span>
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1
+<span style="font-weight: bold; text-decoration: underline;">SyntaxError</span>: <span style="font-weight: bold;">bytes</span> can only contain ASCII literal characters.
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>.encode(<span style="font-style: italic;">'cp936'</span>)
+&gt;&gt;&gt; s
+b<span style="font-style: italic;">'\xb1\xe0\xc2\xeb'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
+&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'bytes'</span>&gt;
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>.decode(<span style="font-style: italic;">'cp936'</span>)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">AttributeError</span>: <span style="font-style: italic;">'str'</span> <span style="font-weight: bold;">object</span> has no attribute <span style="font-style: italic;">'decode'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf057cf6" class="outline-2">
+<h2 id="orgf057cf6"><span class="section-number-2">5</span> 编写程序</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<b>无法改变的五个事实：</b>
+</p>
+<ol class="org-ol">
+<li>程序的所有输入输出均为 <code>byte(二进制数据)</code></li>
+<li>世界上的文本需要比 <code>256</code> 更多的符号来表现</li>
+<li>你的程序必须处理 <code>byte</code> 和 <code>unicode</code></li>
+<li><code>byte</code> 流中不会包含编码信息</li>
+<li>指明的编码有可能是错误的</li>
+</ol>
+
+<p>
+<b>编程建议：</b>
+</p>
+<ol class="org-ol">
+<li><code>Unicode</code> 三明治： 尽可能的让程序处理的文本都为 <code>Unicode</code></li>
+<li>了解程序中的字符串， 哪些是 <code>unicode</code>, 哪些是 <code>byte</code>, 对于这些 <code>byte</code> 串，知道他们的编码是什么</li>
+<li>测试 <code>Unicode</code> 支持。使用一些奇怪的符号来测试是否已经做到了以上几点</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6d7d881" class="outline-2">
+<h2 id="org6d7d881"><span class="section-number-2">6</span> 代码样例</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+在阅读 <a href="https://github.com/webpy/webpy">webpy</a> 源码的过程中， 发现了在 <code>utils.py</code> 中的一段处理这个问题的代码， 感觉很有用：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">safeunicode</span>(obj, encoding=<span style="font-style: italic;">'utf-8'</span>):
+    r<span style="font-style: italic;">"""</span>
+<span style="font-style: italic;">    Converts any given object to unicode string.</span>
+
+<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode('hello')</span>
+<span style="font-style: italic;">        u'hello'</span>
+<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode(2)</span>
+<span style="font-style: italic;">        u'2'</span>
+<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode('\xe1\x88\xb4')</span>
+<span style="font-style: italic;">        u'\u1234'</span>
+<span style="font-style: italic;">    """</span>
+    <span style="font-weight: bold; font-style: italic;">t</span> = <span style="font-weight: bold;">type</span>(obj)
+    <span style="font-weight: bold;">if</span> t <span style="font-weight: bold;">is</span> text_type:
+        <span style="font-weight: bold;">return</span> obj
+    <span style="font-weight: bold;">elif</span> t <span style="font-weight: bold;">is</span> <span style="font-weight: bold;">bytes</span>:
+        <span style="font-weight: bold;">return</span> obj.decode(encoding)
+    <span style="font-weight: bold;">elif</span> t <span style="font-weight: bold;">in</span> [<span style="font-weight: bold;">int</span>, <span style="font-weight: bold;">float</span>, <span style="font-weight: bold;">bool</span>]:
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">unicode</span>(obj)
+    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">elif hasattr(obj, '__unicode__') or isinstance(obj, unicode):</span>
+    <span style="font-weight: bold; font-style: italic;">#    </span><span style="font-weight: bold; font-style: italic;">return unicode(obj)</span>
+    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">else:</span>
+    <span style="font-weight: bold; font-style: italic;">#    </span><span style="font-weight: bold; font-style: italic;">return str(obj).decode(encoding)</span>
+    <span style="font-weight: bold;">else</span>:
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">unicode</span>(obj)
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">safestr</span>(obj, encoding=<span style="font-style: italic;">'utf-8'</span>):
+    r<span style="font-style: italic;">"""</span>
+<span style="font-style: italic;">    Converts any given object to utf-8 encoded string. </span>
+
+<span style="font-style: italic;">        &gt;&gt;&gt; safestr('hello')</span>
+<span style="font-style: italic;">        'hello'</span>
+<span style="font-style: italic;">        &gt;&gt;&gt; safestr(2)</span>
+<span style="font-style: italic;">        '2'</span>
+<span style="font-style: italic;">    """</span>
+
+    <span style="font-weight: bold;">if</span> PY2 <span style="font-weight: bold;">and</span> <span style="font-weight: bold;">isinstance</span>(obj, <span style="font-weight: bold;">unicode</span>):
+        <span style="font-weight: bold;">return</span> obj.encode(encoding)
+    <span style="font-weight: bold;">elif</span> is_iter(obj):
+        <span style="font-weight: bold;">return</span> imap(safestr, obj)
+    <span style="font-weight: bold;">else</span>:
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">str</span>(obj)
+
+<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> PY2:
+    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">Since Python3, utf-8 encoded strings and unicode strings are the same thing</span>
+    <span style="font-weight: bold; font-style: italic;">safeunicode</span> = safestr
+</pre>
+</div>
+
+<p>
+笔记链接： <a href="https://github.com/rgb-24bit/read-source-code/blob/master/webpy/utils.org#function-safeunicode">function safeunicode</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda1aa0f" class="outline-2">
+<h2 id="orgda1aa0f"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html">unicode 之痛</a> - 推荐</li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">字符编码笔记：ASCII，Unicode 和 UTF-8</a> - 阮一峰</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-26 周一 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

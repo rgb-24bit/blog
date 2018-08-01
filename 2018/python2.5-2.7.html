@@ -1,0 +1,2129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python2.5-2.7的版本变化</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python2.5-2.7的版本变化</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org996721d">1. 前言</a></li>
+<li><a href="#orgcbf7f36">2. Python2.5</a>
+<ul>
+<li><a href="#orge378344">2.1. 主要语言变化</a></li>
+<li><a href="#org36628a5">2.2. 核心语言变化</a></li>
+<li><a href="#org95014fd">2.3. 其他内容</a></li>
+</ul>
+</li>
+<li><a href="#orgd834e09">3. Python2.6</a>
+<ul>
+<li><a href="#org450e27d">3.1. 主要语言变化</a></li>
+<li><a href="#orgad12a65">3.2. 核心语言变化</a></li>
+<li><a href="#orgb7c1f99">3.3. 其他内容</a></li>
+</ul>
+</li>
+<li><a href="#orge41cb4c">4. Python2.7</a>
+<ul>
+<li><a href="#orga11474d">4.1. 主要变化之前</a></li>
+<li><a href="#org2ec5f7b">4.2. 主要语言变化</a></li>
+<li><a href="#org005a3eb">4.3. 核心语言变化</a></li>
+<li><a href="#org16aa7fc">4.4. 其他内容</a></li>
+</ul>
+</li>
+<li><a href="#org47f8ea4">5. 完结感言</a></li>
+<li><a href="#org11d35f0">6. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org996721d" class="outline-2">
+<h2 id="org996721d"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在学习 <code>Python</code> 之前就纠结过到底是先学 <code>Python2</code> 好还是先学 <code>Python3</code> 好.
+</p>
+
+<p>
+后来, 考虑了一下, 决定先学 <code>Python2</code>, 这时我选择的教材是 《Python基础教程》.
+</p>
+
+<p>
+这本书在网上评价很好, 同时也让我受益匪浅, 但是唯一的缺陷是, 这本书讲解的 <code>Python版本</code>
+是 <code>Python2.5</code>, 而目前主流的 <code>Python版本</code> 是 <code>2.7</code>, 和 <code>3.6</code>.
+</p>
+
+<p>
+所以为了进一步了解和学习 <code>Python</code>, 我决定通过官方文档来了解 <code>2.5-&gt;2.7</code> 这几个版本的
+变化. (<code>3.x</code> 的留待以后)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcbf7f36" class="outline-2">
+<h2 id="orgcbf7f36"><span class="section-number-2">2</span> Python2.5</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+虽然 《Python基础教程》 讲解的便是 <code>Python2.5</code>, 但我还是感觉有必要来了解一下
+<code>2.5</code> 版本的内容.
+</p>
+</div>
+
+<div id="outline-container-orge378344" class="outline-3">
+<h3 id="orge378344"><span class="section-number-3">2.1</span> 主要语言变化</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>2.5</code> 对比 <code>2.4</code> 有了这些变化.
+</p>
+
+<ol class="org-ol">
+<li><p>
+<b>Conditional Expressions</b>
+</p>
+
+<p>
+即条件表达式, 从众多选择中脱颖而出的是这样的: <code>x = true_value if condition else false_value</code>
+(编辑文档的作者貌似对这一选择感到惊讶)
+</p>
+
+<p>
+这里有两种书写方式:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">First version -- no parens</span>
+<span style="font-weight: bold; font-style: italic;">level</span> = 1 <span style="font-weight: bold;">if</span> logging <span style="font-weight: bold;">else</span> 0
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Second version -- with parens</span>
+<span style="font-weight: bold; font-style: italic;">level</span> = (1 <span style="font-weight: bold;">if</span> logging <span style="font-weight: bold;">else</span> 0)
+</pre>
+</div>
+
+<p>
+第二种貌似要清楚一些 ?
+</p></li>
+
+<li><p>
+<b>Partial Function Application</b>
+</p>
+
+<p>
+这个功能包含在 <code>functools</code> 模块中. 这个模块有个函数 <code>partial()</code>.
+</p>
+
+<p>
+<code>partial()</code> 的使用方式为: <code>partial(function, arg1, arg2, ... kwarg1=value1, kwarg2=value2)</code>
+</p>
+
+<p>
+示例代码:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> functools
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">log</span> (message, subsystem):
+    <span style="font-style: italic;">"Write the contents of 'message' to the specified subsystem."</span>
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'%s: %s'</span> % (subsystem, message)
+    ...
+
+<span style="font-weight: bold; font-style: italic;">server_log</span> = functools.partial(log, subsystem=<span style="font-style: italic;">'server'</span>)
+server_log(<span style="font-style: italic;">'Unable to open socket'</span>)
+</pre>
+</div>
+
+<p>
+个人理解: 这个功能允许通过现有的函数来构造一个具有该函数部分功能的新函数.
+构造新函数时, 指定 <code>旧函数参数的值</code>, 使得新函数使用时不需要在手动传入 <code>指定的参数</code>.
+</p></li>
+
+<li><p>
+<b>Metadata for Python Software Packages</b>
+</p>
+
+<p>
+<code>setup()</code> 函数新增了 <code>requires</code>, <code>provides</code>, <code>obsoletes</code> 关键字参数.
+使用 <code>sdist</code> 命令构建你的包的时候, 依赖信息会保存在 <code>PKG-INFO</code> 中.
+</p>
+
+<p>
+还有一个关键字参数 <code>download_url</code>, 用于设置包的 <code>源码</code> 链接.
+</p>
+
+<p>
+more&#x2026;
+</p></li>
+
+<li><p>
+<b>Absolute and Relative Imports</b>
+</p>
+
+<p>
+相对和绝对导入.
+</p>
+
+<p>
+假设有这样一个目录:
+</p>
+
+<pre class="example">
+pkg/
+pkg/__init__.py
+pkg/main.py
+pkg/string.py
+</pre>
+
+<p>
+你可以这样导入模块:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Import names from pkg.string</span>
+<span style="font-weight: bold;">from</span> .string <span style="font-weight: bold;">import</span> name1, name2
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Import pkg.string</span>
+<span style="font-weight: bold;">from</span> . <span style="font-weight: bold;">import</span> string
+</pre>
+</div>
+
+<p>
+这在 <code>2.7</code> 版本中已经是默认特性了, 但是在 <code>2.5</code> 中使用还需要:
+</p>
+<pre class="example">
+from __future__ import absolute_import
+
+</pre></li>
+
+<li><p>
+<b>Executing Modules as Scripts</b>
+</p>
+
+<p>
+<code>python -m module</code>, <code>-m</code> 参数的由来
+</p></li>
+
+<li><p>
+<b>Unified try/except/finally</b>
+</p>
+
+<p>
+直到 <code>2.5</code> 版本, <code>try</code> 才可以同时使用: <code>except</code>, <code>finally</code>.
+</p>
+
+<p>
+即, 你可以这样写了:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    block-1 ...
+<span style="font-weight: bold;">except</span> Exception1:
+    handler-1 ...
+<span style="font-weight: bold;">except</span> Exception2:
+    handler-2 ...
+<span style="font-weight: bold;">else</span>:
+    <span style="font-weight: bold;">else</span>-block
+<span style="font-weight: bold;">finally</span>:
+    final-block
+</pre>
+</div>
+
+<p>
+<code>2.5</code> 以前不行, 貌似这是 <code>Python</code> 的作者从 <code>Java</code> 获取的灵感.
+</p></li>
+
+<li><p>
+<b>New Generator Features</b>
+</p>
+
+<p>
+<code>2.5</code> 版本对 <code>yield</code> 进行了一些修改, 使得它可以返回值了(之前不可以)
+</p>
+
+<p>
+于是, 我们的生成器便成了这样:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">counter</span> (maximum):
+    <span style="font-weight: bold; font-style: italic;">i</span> = 0
+    <span style="font-weight: bold;">while</span> i &lt; maximum:
+        <span style="font-weight: bold;">yield</span> i
+        <span style="font-weight: bold; font-style: italic;">i</span> += 1
+</pre>
+</div>
+
+<p>
+对现在的我们来说, <code>yield</code> 似乎就是一个这样, 所以这里就不多讲了.
+</p></li>
+
+<li><p>
+<b>The ‘with’ statement</b>
+</p>
+
+<p>
+<code>2.5</code> 版本新增了 <code>with</code> 结构, 你可以这样使用它:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">with</span> expression [<span style="font-weight: bold;">as</span> variable]:
+    <span style="font-weight: bold;">with</span>-block
+</pre>
+</div>
+
+<p>
+这里的 <code>expression</code> 返回的结果应该是一个上下文对象, 即这个对象至少包含:
+<code>__enter__()</code>  和 <code>__exit__()</code> 方法.
+</p>
+
+<p>
+<code>__enter__()</code> 在 <code>with-block</code> 代码块之前调用, <code>__exit__()</code> 在 <code>with-block</code>
+代码块执行完成后调用.
+</p>
+
+<p>
+当然, 如果你要使用这个功能在 <code>2.5</code> 版本, 你还需要这样的代码:
+</p>
+<pre class="example">
+from __future__ import with_statement
+
+</pre>
+
+<ul class="org-ul">
+<li><p>
+<b>Writing Context Managers</b>
+</p>
+
+<p>
+如果你要自己便写一个上下文对象, 需要注意以下细节:
+</p>
+
+<ul class="org-ul">
+<li>表达式返回的对象应该是一个上下文对象, 这个对象至少包含有: <code>__enter__()</code>
+和 <code>__exit__()</code> 方法.</li>
+
+<li>上下文对象的 <code>__enter__()</code> 方法被调用, 返回值被分配给 <code>as variable</code> 指定的值.
+如果没有指定值, 那么值将会被简单的丢弃.</li>
+
+<li>代码块将被执行</li>
+
+<li>如果代码块抛出一个异常, 那么 <code>__exit__(type, value, traceback)</code> 将被执行.</li>
+
+<li>如果代码块没有抛出异常, 那么 <code>__exit__()</code> 仍然会执行, 只不过 <code>type</code>, <code>value</code>, <code>traceback</code> 都将是 <code>None</code></li>
+</ul>
+
+<p>
+这里是一个例子:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20551;&#35774;&#25105;&#20204;&#23450;&#20041;&#20102;&#19968;&#20010;&#21517;&#20026; DatabaseConnection &#30340;&#19978;&#19979;&#25991;&#23545;&#35937;</span>
+<span style="font-weight: bold; font-style: italic;">db_connection</span> = DatabaseConnection()
+<span style="font-weight: bold;">with</span> db_connection <span style="font-weight: bold;">as</span> cursor:
+    cursor.execute(<span style="font-style: italic;">'insert into ...'</span>)
+    cursor.execute(<span style="font-style: italic;">'delete from ...'</span>)
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">... more operations ...</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36825;&#20010;&#19978;&#19979;&#25991;&#23545;&#35937;&#30340;&#22522;&#26412;&#26041;&#27861;&#26377;</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">DatabaseConnection</span>:
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Database interface</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">cursor</span> (<span style="font-weight: bold;">self</span>):
+        <span style="font-style: italic;">"Returns a cursor object and starts a new transaction"</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">commit</span> (<span style="font-weight: bold;">self</span>):
+        <span style="font-style: italic;">"Commits current transaction"</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">rollback</span> (<span style="font-weight: bold;">self</span>):
+        <span style="font-style: italic;">"Rolls back current transaction"</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#29616;&#22312;&#23450;&#20041;&#23427;&#30340; __enter__() &#26041;&#27861;</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">DatabaseConnection</span>:
+    ...
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__enter__</span> (<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Code to start a new transaction</span>
+        <span style="font-weight: bold; font-style: italic;">cursor</span> = <span style="font-weight: bold;">self</span>.cursor()
+        <span style="font-weight: bold;">return</span> cursor
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#29616;&#22312;&#23450;&#20041;&#23427;&#30340; __exit__() &#26041;&#27861;</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">DatabaseConnection</span>:
+    ...
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__exit__</span> (<span style="font-weight: bold;">self</span>, <span style="font-weight: bold;">type</span>, value, tb):
+        <span style="font-weight: bold;">if</span> tb <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
+            <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">No exception, so commit</span>
+            <span style="font-weight: bold;">self</span>.commit()
+        <span style="font-weight: bold;">else</span>:
+            <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Exception occurred, so rollback.</span>
+            <span style="font-weight: bold;">self</span>.rollback()
+            <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">return False</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>The contextlib module</b>
+</p>
+
+<p>
+<code>2.5</code> 版本的一个新模块 <code>contextlib</code> 提供了一些 <b>函数</b> 和 一个 <b>装饰器</b>.
+这些函数和装饰器对便写一个上下文对象很有帮助.
+</p>
+
+<p>
+这个装饰器是: <code>contextmanager()</code>. 这个装饰器允许让你编写一个 <b>生成器</b> 来而不是编写一个 <b>类.</b>
+</p>
+
+<p>
+你编写的 <b>生成器</b> 应该只返回 <b>一个值</b>.
+</p>
+
+<p>
+这个生成器的 <b>yield</b> 将会被当做 <code>__enter__()</code> 方法执行. 而 <b>yield</b> 之后的代码将会当做 <code>__exit__()</code> 方法执行.
+</p>
+
+<p>
+代码示例:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> contextlib <span style="font-weight: bold;">import</span> contextmanager
+
+<span style="font-weight: bold; text-decoration: underline;">@contextmanager</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">db_transaction</span> (connection):
+    <span style="font-weight: bold; font-style: italic;">cursor</span> = connection.cursor()
+    <span style="font-weight: bold;">try</span>:
+        <span style="font-weight: bold;">yield</span> cursor
+    <span style="font-weight: bold;">except</span>:
+        connection.rollback()
+        <span style="font-weight: bold;">raise</span>
+    <span style="font-weight: bold;">else</span>:
+        connection.commit()
+
+<span style="font-weight: bold; font-style: italic;">db</span> = DatabaseConnection()
+<span style="font-weight: bold;">with</span> db_transaction(db) <span style="font-weight: bold;">as</span> cursor:
+    ...
+</pre>
+</div>
+
+<p>
+另外, <code>contextlib</code> 模块包含了 <code>nested(mgr1, mgr2, ...)</code> 和 <code>closing(object)</code> 函数.
+</p>
+
+<p>
+<code>nested</code> 允许你同时结合 <b>多个</b> 上下文管理器(而不是编写嵌套的 <b>with</b>).
+</p>
+
+<p>
+而 <code>closing(object)</code> 返回 <code>object</code>, 所以可以被绑定到一个变量上. 并且在代码块执行完后会调用
+<code>object.close</code> 方法.
+</p>
+
+<p>
+使用例:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">nested</span>
+<span style="font-weight: bold; font-style: italic;">lock</span> = threading.Lock()
+<span style="font-weight: bold;">with</span> nested (db_transaction(db), lock) <span style="font-weight: bold;">as</span> (cursor, locked):
+    ...
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">closing</span>
+<span style="font-weight: bold;">with</span> closing(urllib.urlopen(<span style="font-style: italic;">'http://www.yahoo.com'</span>)) <span style="font-weight: bold;">as</span> f:
+    <span style="font-weight: bold;">for</span> line <span style="font-weight: bold;">in</span> f:
+        sys.stdout.write(line)
+</pre>
+</div></li>
+</ul></li>
+
+<li><p>
+<b>Exceptions as New-Style Classes</b>
+</p>
+
+<p>
+<code>2.5</code> 版本的异常的继承层次被重新安排了一下， 现在是这样的:
+</p>
+
+<pre class="example">
+BaseException       # New in Python 2.5
+|- KeyboardInterrupt
+|- SystemExit
+|- Exception
+   |- (all other current built-in exceptions)
+</pre>
+
+<p>
+所以现在可以使用: <code>except:</code> 来捕获 <b>所有的</b> 异常了(以前的版本啥样的&#x2026;)
+</p></li>
+
+<li><p>
+<b>Using ssize<sub>t</sub> as the index type</b>
+</p>
+
+<p>
+这个是针对 <code>Python's C API</code> 的, 使用一个新的类型 <code>Py_ssize_t</code> 来替代 <code>int</code>.
+好方便 <code>Python</code> 在 <code>64</code> 位机上处理更多的数据, 而不影响 <code>32</code> 位机.
+</p>
+
+<p>
+嗯&#x2026; 没感觉
+</p></li>
+
+<li><p>
+<b>The ‘_<sub>index</sub>__’ method</b>
+</p>
+
+<p>
+<code>2.5</code> 版本添加了 <code>__index__()</code> 方法, 这个方法不接受参数并且返回一个整型的数字,
+用于分片索引的使用.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>:
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__index__</span> (<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>.value
+</pre>
+</div>
+
+<p>
+值得注意的是, 这个返回值的类型必须是一个 python 整型/长整型, 否则会出现 <code>TypeError</code> 错误.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org36628a5" class="outline-3">
+<h3 id="org36628a5"><span class="section-number-3">2.2</span> 核心语言变化</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+以下是Python 2.5对Python核心语言所做的更改.
+</p>
+
+<ul class="org-ul">
+<li><p>
+字典类型 <code>dict</code> 多了一个新的方法 <code>__missing__(key)</code>. 当访问的键不存在在时, 让子类的
+<code>__missing__(key)</code> 方法提供值.
+</p>
+
+<p>
+代码示例:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">zerodict</span> (<span style="font-weight: bold;">dict</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__missing__</span> (<span style="font-weight: bold;">self</span>, key):
+        <span style="font-weight: bold;">return</span> 0
+
+<span style="font-weight: bold; font-style: italic;">d</span> = zerodict({1:1, 2:2})
+<span style="font-weight: bold;">print</span> d[1], d[2]   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Prints 1, 2</span>
+<span style="font-weight: bold;">print</span> d[3], d[4]   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Prints 0, 0</span>
+</pre>
+</div></li>
+
+<li><p>
+所有的 8-bit 字符和 Unicode 字符都有了新的 <code>partition(sep)</code> 和 <code>rpartition(sep)</code> 方法来
+简化常见用例.
+</p>
+
+<p>
+这两个方法返回一个三元组, 根据 <code>sep</code> 指定的分隔符分割, 如果 <code>sep</code> 为找的, 那么
+元组的另外两个值为 <code>''</code>
+</p>
+
+<p>
+代码说明一切:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; (<span style="font-style: italic;">'http://www.python.org'</span>).partition(<span style="font-style: italic;">'://'</span>)
+(<span style="font-style: italic;">'http'</span>, <span style="font-style: italic;">'://'</span>, <span style="font-style: italic;">'www.python.org'</span>)
+&gt;&gt;&gt; (<span style="font-style: italic;">'file:/usr/share/doc/index.html'</span>).partition(<span style="font-style: italic;">'://'</span>)
+(<span style="font-style: italic;">'file:/usr/share/doc/index.html'</span>, <span style="font-style: italic;">''</span>, <span style="font-style: italic;">''</span>)
+&gt;&gt;&gt; (u<span style="font-style: italic;">'Subject: a quick question'</span>).partition(<span style="font-style: italic;">':'</span>)
+(u<span style="font-style: italic;">'Subject'</span>, u<span style="font-style: italic;">':'</span>, u<span style="font-style: italic;">' a quick question'</span>)
+&gt;&gt;&gt; <span style="font-style: italic;">'www.python.org'</span>.rpartition(<span style="font-style: italic;">'.'</span>)
+(<span style="font-style: italic;">'www.python'</span>, <span style="font-style: italic;">'.'</span>, <span style="font-style: italic;">'org'</span>)
+&gt;&gt;&gt; <span style="font-style: italic;">'www.python.org'</span>.rpartition(<span style="font-style: italic;">':'</span>)
+(<span style="font-style: italic;">''</span>, <span style="font-style: italic;">''</span>, <span style="font-style: italic;">'www.python.org'</span>)
+</pre>
+</div>
+
+<p>
+<code>r</code> 代表反向.
+</p></li>
+
+<li><p>
+字符串类型的 <code>startswith()</code> 和 <code>endswith()</code> 方法支持元组作为参数.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">is_image_file</span> (filename):
+    <span style="font-weight: bold;">return</span> filename.endswith((<span style="font-style: italic;">'.gif'</span>, <span style="font-style: italic;">'.jpg'</span>, <span style="font-style: italic;">'.tiff'</span>))
+</pre>
+</div></li>
+
+<li><p>
+内建函数 <code>min()</code> 和 <code>max()</code> 增加了关键字参数 <code>key</code>, 用于对值排序.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">L</span> = [<span style="font-style: italic;">'medium'</span>, <span style="font-style: italic;">'longest'</span>, <span style="font-style: italic;">'short'</span>]
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Prints 'longest'</span>
+<span style="font-weight: bold;">print</span> <span style="font-weight: bold;">max</span>(L, key=<span style="font-weight: bold;">len</span>)
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Prints 'short', because lexicographically 'short' has the largest value</span>
+<span style="font-weight: bold;">print</span> <span style="font-weight: bold;">max</span>(L)
+</pre>
+</div></li>
+
+<li>新的内建函数 <code>any()</code> 和 <code>all()</code>.
+<code>any()</code>: 如果迭代器有元素为 <code>True</code> 便返回 <code>True</code>
+<code>all()</code>: 迭代器所有元素为 <code>True</code> 才返回 <code>True</code></li>
+
+<li>类的 <code>__hash__()</code> 方法现在可以返回一个长整数会常规整数</li>
+
+<li><p>
+ASCII现在是模块的默认编码.
+</p>
+
+<p>
+所有我们要在文件顶部加:
+</p>
+<pre class="example">
+# -*- coding: utf-8 -*-
+
+</pre></li>
+
+<li><p>
+一个新的警告 <code>UnicodeWarning</code>, 怎么样? 是不是有点熟悉&#x2026;
+</p>
+
+<p>
+警告发生在你尝试比较一个 <b>ASCII</b> 字符串和一个 <b>Unicode</b> 字符串, 而 Unicode 字符串
+<span class="underline">不能转化为 ASCII 字符串</span> 的时候
+</p></li>
+
+<li>从 <code>2.5</code> 版本开始, 如果你的包里没有 <code>__init__.py</code>, 将会出现 <code>ImportWarning</code></li>
+
+<li><p>
+你现在可以定义一个这样的类了:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>():
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+<a href="https://docs.python.org/2/whatsnew/2.5.html#interactive-interpreter-changes">more&#x2026;</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org95014fd" class="outline-3">
+<h3 id="org95014fd"><span class="section-number-3">2.3</span> 其他内容</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+其他的内容包括: <a href="https://docs.python.org/2/whatsnew/2.5.html#new-improved-and-removed-modules">新增, 改进, 移除的模块</a>, <a href="https://docs.python.org/2/whatsnew/2.5.html#build-and-c-api-changes">Python 构建过程和 C API 的变化</a> &#x2026;
+</p>
+
+<p>
+感觉这些内容还是看现在的文档吧 !
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd834e09" class="outline-2">
+<h2 id="orgd834e09"><span class="section-number-2">3</span> Python2.6</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
+</p>
+
+<p>
+通过文档发现, <code>2.6</code> 版本的主题是向 <code>3.0</code> 迁移. 所以这个版本就已经在尽可能的
+适应可能的 <code>3.0</code> 版本可能拥有的特性了.
+</p>
+
+<p>
+<code>3.0</code> 版本和 <code>2.6</code> 版本居然是同步开发, 难怪现在就是 <code>3.6</code> 了&#x2026;
+</p>
+
+<p>
+好了, 直接开始正题了 ！
+</p>
+</div>
+
+<div id="outline-container-org450e27d" class="outline-3">
+<h3 id="org450e27d"><span class="section-number-3">3.1</span> 主要语言变化</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+对比 <code>2.5</code>, <code>2.6</code> 版本的 Python 多了这些变化.
+</p>
+
+<ol class="org-ol">
+<li><p>
+<b>The ‘with’ statement</b>
+</p>
+
+<p>
+嗯, 也就是说在 <code>2.6</code> 版本使用 <code>with</code> 就不需要这样了:
+</p>
+<pre class="example">
+from __future__ import with_statement
+
+</pre>
+
+<p>
+可喜可贺, 但是其他内容貌似没有太多变化 !
+</p></li>
+
+<li><p>
+<b>Explicit Relative Imports From a Main Module</b>
+</p>
+
+<p>
+<code>2.5</code> 版本的 <code>-m</code> 参数虽然允许了像运行一个脚本那样运行一个模块,
+但是如果运行一个 <b>包</b> 内的模块的时候, <b>相对导入</b> 会出现错误.
+</p>
+
+<p>
+为了修复这个 <b>bug</b>, <code>2.6</code> 版本为模块添加了 <code>__package__</code> 属性.
+当这个属性存在的时候, 相对导入将依据这个属性的值而不是 <code>__name__</code> 的值.
+</p></li>
+
+<li><p>
+<b>The multiprocessing Package</b>
+</p>
+
+<p>
+这个新的多进程的包允许 Python 程序创建新的进程, 执行计算并将结果返回给父进程.
+</p>
+
+<p>
+父进程和子进程通过 <b>管道</b> 和 <b>队列</b> 进行通信.
+</p>
+
+<p>
+这里有几个类, 分别是: <code>Process</code>, <code>Queue</code>, <code>Pool</code>, <code>Manager</code>.
+</p>
+
+<ul class="org-ul">
+<li><code>Process</code> 的 <code>start()</code> 方法启动一个子进程, <code>is_alive()</code> 方法判断进程是否存活,
+<code>join()</code> 方法等待子进程退出.</li>
+
+<li><code>Queue</code> 对象储存在 <b>全局变量</b> 之中, 所以父进程和子进程可以通过队列来传递信息.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> time
+<span style="font-weight: bold;">from</span> multiprocessing <span style="font-weight: bold;">import</span> Process, Queue
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">factorial</span>(queue, N):
+    <span style="font-style: italic;">"Compute a factorial."</span>
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">If N is a multiple of 4, this function will take much longer.</span>
+    <span style="font-weight: bold;">if</span> (N % 4) == 0:
+        time.sleep(.05 * N/4)
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Calculate the result</span>
+    <span style="font-weight: bold; font-style: italic;">fact</span> = 1L
+    <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, N+1):
+        <span style="font-weight: bold; font-style: italic;">fact</span> = fact * i
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Put the result on the queue</span>
+    queue.put(fact)
+
+<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">__name__</span> == <span style="font-style: italic;">'__main__'</span>:
+    <span style="font-weight: bold; font-style: italic;">queue</span> = Queue()
+
+    <span style="font-weight: bold; font-style: italic;">N</span> = 5
+
+    <span style="font-weight: bold; font-style: italic;">p</span> = Process(target=factorial, args=(queue, N))
+    p.start()
+    p.join()
+
+    <span style="font-weight: bold; font-style: italic;">result</span> = queue.get()
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Factorial'</span>, N, <span style="font-style: italic;">'='</span>, result
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>Pool</code> 提供更高级的接口. <code>Pool</code> 可以创建固定数量的 <code>工作进程</code>, 可以通过 <code>apply()</code> 或 <code>apply_async()</code> 方法来
+请求使用. 也可以使用 <code>map()</code> 或 <code>map_async()</code> 来添加一些请求.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> multiprocessing <span style="font-weight: bold;">import</span> Pool
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">factorial</span>(N, dictionary):
+    <span style="font-style: italic;">"Compute a factorial."</span>
+    ...
+    <span style="font-weight: bold; font-style: italic;">p</span> = Pool(5)
+    <span style="font-weight: bold; font-style: italic;">result</span> = p.<span style="font-weight: bold;">map</span>(factorial, <span style="font-weight: bold;">range</span>(1, 1000, 10))
+<span style="font-weight: bold;">for</span> v <span style="font-weight: bold;">in</span> result:
+    <span style="font-weight: bold;">print</span> v
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#30340;&#32467;&#26524;:</span>
+1
+39916800
+51090942171709440000
+8222838654177922817725562880000000
+33452526613163807108170062053440751665152000000000
+...
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><p>
+<code>Manager</code> 同样提供高级的接口. <code>Manager</code> 会创建一个单独的服务器进程，可以保存Python数据结构的主副本.
+其他进程可以使用代理对象访问和修改这些数据结构.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> time
+<span style="font-weight: bold;">from</span> multiprocessing <span style="font-weight: bold;">import</span> Pool, Manager
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">factorial</span>(N, dictionary):
+    <span style="font-style: italic;">"Compute a factorial."</span>
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Calculate the result</span>
+    <span style="font-weight: bold; font-style: italic;">fact</span> = 1L
+    <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, N+1):
+        <span style="font-weight: bold; font-style: italic;">fact</span> = fact * i
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Store result in dictionary</span>
+    <span style="font-weight: bold; font-style: italic;">dictionary</span>[N] = fact
+
+<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">__name__</span> == <span style="font-style: italic;">'__main__'</span>:
+    <span style="font-weight: bold; font-style: italic;">p</span> = Pool(5)
+    <span style="font-weight: bold; font-style: italic;">mgr</span> = Manager()
+    <span style="font-weight: bold; font-style: italic;">d</span> = mgr.<span style="font-weight: bold;">dict</span>()         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create shared dictionary</span>
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Run tasks using the pool</span>
+    <span style="font-weight: bold;">for</span> N <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, 1000, 10):
+        p.apply_async(factorial, (N, d))
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Mark pool as closed -- no more tasks can be added.</span>
+    p.close()
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Wait for tasks to exit</span>
+    p.join()
+
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Output results</span>
+    <span style="font-weight: bold;">for</span> k, v <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">sorted</span>(d.items()):
+        <span style="font-weight: bold;">print</span> k, v
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#30340;&#32467;&#26524;:</span>
+1 1
+11 39916800
+21 51090942171709440000
+31 8222838654177922817725562880000000
+41 33452526613163807108170062053440751665152000000000
+51 15511187532873822802242430164693032110632597200169861120000...
+</pre>
+</div></li>
+</ul>
+
+<p>
+详细的使用还是查阅文档吧&#x2026;
+</p>
+
+<p>
+<a href="https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing">multiprocessing</a>
+</p></li>
+
+<li><p>
+<b>Advanced String Formatting</b>
+</p>
+
+<p>
+嗯, 字符串对象新增了 <code>format()</code> 方法, 因为 <code>3.0</code> 版本的 <code>%</code> 有了更强大的方法 <code>format()</code> 方法
+作为补充.
+</p>
+
+<p>
+据说未来的版本中 操作符 <code>%</code> 可能要废除, 所以可以考虑一下在代码编写的过程中更多的使用 <code>format()</code>.
+</p></li>
+
+<li><p>
+<b>print As a Function</b>
+</p>
+
+<p>
+<code>print</code> 从关键字变成函数了.(<code>3.x</code> 版本默认如此)
+</p>
+
+<p>
+如果要在 <code>2.6, 2.7</code> 使用的话, 还需要这样:
+</p>
+<pre class="example">
+from __future__ import print_function
+
+</pre>
+
+<p>
+<code>print</code> 函数是这样的:
+</p>
+<pre class="example">
+def print(*args, sep=' ', end='\n', file=None)
+
+</pre>
+
+<p>
+参数说明:
+</p>
+
+<ul class="org-ul">
+<li>args: 将值打印出来的位置参数</li>
+
+<li>sep: 分隔符, 将在参数之间打印</li>
+
+<li>end: 结束文本, 在所有参数打印完成后输出, 默认是换行.</li>
+
+<li>file: 输出将被发送到的文件对象.</li>
+</ul></li>
+
+<li><p>
+<b>Exception-Handling Changes</b>
+</p>
+
+<p>
+因为Python程序员有时会犯这样的错误:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    ...
+<span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">TypeError</span>, <span style="font-weight: bold; text-decoration: underline;">ValueError</span>:  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Wrong!</span>
+    ...
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#27491;&#30830;&#20889;&#27861;:</span>
+<span style="font-weight: bold;">try</span>:
+    ...
+<span style="font-weight: bold;">except</span> (<span style="font-weight: bold; text-decoration: underline;">TypeError</span>, <span style="font-weight: bold; text-decoration: underline;">ValueError</span>):
+    ...
+</pre>
+</div>
+
+<p>
+为了减少这样的错误, <code>3.0</code> 版本开始异常的捕获必须这样写了:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    ...
+<span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">TypeError</span> <span style="font-weight: bold;">as</span> exc:
+    ...
+</pre>
+</div>
+
+<p>
+当然, 在 <code>2.6</code> 版本, 中间是逗号或as的版本都可以用, 但很明显, 你更应该选择 <code>as</code>
+</p></li>
+
+<li><p>
+<b>Byte Literals</b>
+</p>
+
+<p>
+<code>3.0</code> 版本开始, 文本字符串的类型便默认为 <code>Unicode</code> 了.并使用不同的方法来表示
+8位字符. 如 <code>b'string'</code> 或 <code>bytes</code> 构造函数.
+</p>
+
+<p>
+为了向前兼容, <code>2.6</code> 版本添加了 <code>bytes</code> 作为 <code>str</code> 的同义字. 并同样支持 <code>b</code> 符号.
+</p>
+
+<p>
+但是 <code>2.6</code> 版本的 <code>str</code> 和 <code>3.0</code> 版本的 <code>bytes</code> 还是有很多不同. 最特别的是:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">2.6 &#29256;&#26412;&#20363;:</span>
+
+&gt;&gt;&gt; <span style="font-weight: bold;">bytes</span>([65, 66, 67])
+<span style="font-style: italic;">'[65, 66, 67]'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">3.0 &#29256;&#26412;&#20363;</span>
+
+&gt;&gt;&gt; <span style="font-weight: bold;">bytes</span>([65, 66, 67])
+b<span style="font-style: italic;">'ABC'</span>
+</pre>
+</div>
+
+<p>
+差别很明显了. <code>2.6</code> 版本中的 <code>bytes</code> 还是主要用于编写像 <code>isinstance(x, bytes)</code> 的类型
+检测器. 方便 <code>2.x</code> 版本向 <code>3.x</code> 版本转化.
+</p>
+
+<p>
+另外, 你还可以从 <code>__future__</code> 导入 <code>unicode_literals</code>, 这将使得所有字符串变为 <code>Unicode</code> 字符串.
+这意味着 <code>\u</code> 转义序列可以用来包含 <code>Unicode</code> 字符:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> __future__ <span style="font-weight: bold;">import</span> unicode_literals
+
+<span style="font-weight: bold; font-style: italic;">s</span> = (<span style="font-style: italic;">'\u751f\u3080\u304e\u3000\u751f\u3054'</span>
+     <span style="font-style: italic;">'\u3081\u3000\u751f\u305f\u307e\u3054'</span>)
+
+<span style="font-weight: bold;">print</span> <span style="font-weight: bold;">len</span>(s)               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">12 Unicode characters</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>New I/O Library</b>
+</p>
+
+<p>
+这方面的内容在使用过程中实在没有太多感触, 有兴趣的可以了解一下.
+</p>
+
+<p>
+传送门: <a href="https://docs.python.org/2/whatsnew/2.6.html#pep-3116-new-i-o-library">PEP 3116: New I/O Library</a>
+</p></li>
+
+<li><p>
+<b>Revised Buffer Protocol</b>
+</p>
+
+<p>
+偏向于 <code>C API</code> 的内容. 这个还是参照现在的文档吧.
+</p></li>
+
+<li><p>
+<b>Abstract Base Classes</b>
+</p>
+
+<p>
+如果你学过 Java, C++, C# 等中的任何一门, 那么这个更新应该不难理解.
+</p>
+
+<p>
+<code>ABCs(Abstract Base Classes)</code> 类似于其他语言中的 <code>接口或抽象类</code> 的概念. 你可以定义一个
+基本的类, 而继承这个类的子类可能必须实现这个基类定义的某些方法. 另一方面, 你可以继承一些现成
+的 <code>ABC(Abstract Base Classe)</code> 来实现一些功能而非手动定义.
+</p>
+
+<p>
+<code>2.6</code> 版本存在一个模块 <code>collections</code>, 这个模块定义了一些基类, 比如说 <code>Iterable</code> 表示一个类定义了 <code>__iter__()</code>,
+<code>Container</code> 说明一个类定义了 <code>__contains__()</code>, 即支持: <code>x in y</code> 表达式. 而 <code>MutableMapping</code> 表名这个类支持字典类型的基础功能, 如:
+<code>keys(), values(), items()</code>.
+</p>
+
+<p>
+这些类有两种使用方式:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> collections
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Storage</span>(collections.MutableMapping):
+    ...
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25110;</span>
+
+<span style="font-weight: bold;">import</span> collections
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Storage</span>:
+    ...
+
+collections.MutableMapping.register(Storage)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31532;&#19968;&#31181;&#26041;&#24335;&#35201;&#31616;&#27905;&#19968;&#20123;, &#20294;&#31532;&#20108;&#31181;&#22312;&#26576;&#20123;&#26102;&#20505;&#21487;&#33021;&#24456;&#26377;&#29992;</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#27604;&#22914;&#20320;&#23450;&#20041;&#20102;&#33258;&#24049;&#30340; ABC &#30340;&#26102;&#20505;&#65292; &#22914; PrintableType</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Register Python's types</span>
+PrintableType.register(<span style="font-weight: bold;">int</span>)
+PrintableType.register(<span style="font-weight: bold;">float</span>)
+PrintableType.register(<span style="font-weight: bold;">str</span>)
+</pre>
+</div>
+
+<p>
+如果要检查一个类是否支持某个接口, 可以这样做:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(d):
+    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">isinstance</span>(d, collections.MutableMapping):
+        <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">ValueError</span>(<span style="font-style: italic;">"Mapping object expected, not %r"</span> % d)
+</pre>
+</div>
+
+<p>
+当然, 你不必时时刻刻进行类型检查, 只需要在必须的时候做好这一点即可.
+</p>
+
+<p>
+你可以使用 <code>abc.ABCMeta</code> 作为类定义中的元类来编写自己的ABCs:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> abc <span style="font-weight: bold;">import</span> ABCMeta, abstractmethod
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Drawable</span>():
+    <span style="font-weight: bold; font-style: italic;">__metaclass__</span> = ABCMeta
+
+    <span style="font-weight: bold; text-decoration: underline;">@abstractmethod</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">draw</span>(<span style="font-weight: bold;">self</span>, x, y, scale=1.0):
+        <span style="font-weight: bold;">pass</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">draw_doubled</span>(<span style="font-weight: bold;">self</span>, x, y):
+        <span style="font-weight: bold;">self</span>.draw(x, y, scale=2.0)
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Square</span>(Drawable):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">draw</span>(<span style="font-weight: bold;">self</span>, x, y, scale):
+        ...
+</pre>
+</div>
+
+<p>
+由装饰器 <code>@abstractmethod</code> 修饰的方法在子类继承的时候必须实现, 如 <code>draw</code>.
+而 <code>draw_double</code> 并不需要.
+</p>
+
+<p>
+抽象的属性通过 <code>@abstractproperty</code> 实现.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> abc <span style="font-weight: bold;">import</span> abstractproperty
+...
+
+<span style="font-weight: bold; text-decoration: underline;">@abstractproperty</span>
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">readonly</span>(<span style="font-weight: bold;">self</span>):
+   <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+</pre>
+</div>
+
+<p>
+ps: 亏得我一直以为python没有这个功能&#x2026;.
+</p></li>
+
+<li><p>
+<b>Integer Literal Support and Syntax</b>
+</p>
+
+<p>
+来自 <code>3.0</code> 版本的变化, <code>2.6</code> 版本支持 <code>0o</code> 和 <code>0b</code> 作为前导字符的 八进制和二进制数字.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; 0o21, 2*8 + 1
+(17, 17)
+&gt;&gt;&gt; 0b101111
+47
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20869;&#24314;&#20989;&#25968; 0ct() &#20173;&#28982;&#36820;&#22238;&#21069;&#23548; 0 &#30340;&#23383;&#31526;.</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26032;&#22686;&#20869;&#24314;&#20989;&#25968; bin() &#36820;&#22238;&#20108;&#36827;&#21046;&#20018;.</span>
+
+&gt;&gt;&gt; <span style="font-weight: bold;">oct</span>(42)
+<span style="font-style: italic;">'052'</span>
+&gt;&gt;&gt; future_builtins.<span style="font-weight: bold;">oct</span>(42)
+<span style="font-style: italic;">'0o52'</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">bin</span>(173)
+<span style="font-style: italic;">'0b10101101'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20989;&#25968; int() &#21644; long() &#24320;&#22987;&#25903;&#25345; '0o' &#20010; '0b' &#24320;&#22836;&#30340;&#23383;&#31526;&#20018;.</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25110;&#32773;&#21363;&#20415;&#21442;&#25968;&#20026; 0 &#30340;&#26102;&#20505;(&#34920;&#31034;&#25152;&#20351;&#29992;&#30340;&#22522;&#25968;&#20174;&#23383;&#31526;&#20018;&#30830;&#23450;)</span>
+
+&gt;&gt;&gt; <span style="font-weight: bold;">int</span> (<span style="font-style: italic;">'0o52'</span>, 0)
+42
+&gt;&gt;&gt; <span style="font-weight: bold;">int</span>(<span style="font-style: italic;">'1101'</span>, 2)
+13
+&gt;&gt;&gt; <span style="font-weight: bold;">int</span>(<span style="font-style: italic;">'0b1101'</span>, 2)
+13
+&gt;&gt;&gt; <span style="font-weight: bold;">int</span>(<span style="font-style: italic;">'0b1101'</span>, 0)
+13
+</pre>
+</div></li>
+
+<li><p>
+<b>Class Decorators</b>
+</p>
+
+<p>
+类装饰器 ?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; text-decoration: underline;">@foo</span>
+<span style="font-weight: bold; text-decoration: underline;">@bar</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span>:
+  <span style="font-weight: bold;">pass</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;:</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span>:
+  <span style="font-weight: bold;">pass</span>
+
+<span style="font-weight: bold; font-style: italic;">A</span> = foo(bar(A))
+</pre>
+</div></li>
+
+<li><p>
+<b>A Type Hierarchy for Numbers</b>
+</p>
+
+<p>
+数字类型的继承关系:
+</p>
+
+<pre class="example">
+Number  -- 基类
+`-- Complex  -- 继承自 Number, 代表复数类
+    `-- Real -- 继承自 Complex, 代表实数类
+        `-- Rational -- 继承自 Real, 代表有理数类(可以被转化为 floats)
+            `-- Integral -- 继承自 Rational, 代表整数类, 支持 &lt;&lt;, &gt;&gt;, |, &amp; 运算
+</pre>
+
+<p>
+额, 厉害 ！
+</p>
+
+<ul class="org-ul">
+<li><p>
+<b>The fractions Module</b>
+</p>
+
+<p>
+<code>2.6</code> 版本新增了 <code>fractions</code> 模块来更好的表示有理数. 这需要用到这个模块的
+<code>Fraction</code> 类.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">from</span> fractions <span style="font-weight: bold;">import</span> Fraction
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">a</span> = Fraction(2, 3)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">b</span> = Fraction(2, 5)
+&gt;&gt;&gt; <span style="font-weight: bold;">float</span>(a), <span style="font-weight: bold;">float</span>(b)
+(0.66666666666666663, 0.40000000000000002)
+&gt;&gt;&gt; a+b
+Fraction(16, 15)
+&gt;&gt;&gt; a/b
+Fraction(5, 3)
+</pre>
+</div>
+
+<p>
+另外可以通过 <code>as_integer_ratio()</code> 方法将浮点数转化为有理数.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; (2.5) .as_integer_ratio()
+(5, 2)
+&gt;&gt;&gt; (3.1415) .as_integer_ratio()
+(7074029114692207L, 2251799813685248L)
+&gt;&gt;&gt; (1./3) .as_integer_ratio()
+(6004799503160661L, 18014398509481984L)
+</pre>
+</div>
+
+<p>
+注意第三个例子, 这个函数的转化是通过近似的值来完成的(不是近似的样子)
+</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgad12a65" class="outline-3">
+<h3 id="orgad12a65"><span class="section-number-3">3.2</span> 核心语言变化</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+以下是python核心语言的小变动.
+</p>
+
+<ul class="org-ul">
+<li>包含 <code>__main__.py</code> 的目录或 zip archives 现在可以直接将其名字传递给解释器执行了.
+其路径将会直接插入 <code>sys.path</code>.</li>
+
+<li><code>hasattr()</code> 现在捕获并忽略所有的错误.</li>
+
+<li><p>
+使用 <code>**</code> 提供关键字参数的时候, 不需要在使用python字典, 任何 <code>映射</code> 都将工作.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">f</span>(**kw):
+...    <span style="font-weight: bold;">print</span> <span style="font-weight: bold;">sorted</span>(kw)
+...
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">ud</span>=UserDict.UserDict()
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">ud</span>[<span style="font-style: italic;">'a'</span>] = 1
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">ud</span>[<span style="font-style: italic;">'b'</span>] = <span style="font-style: italic;">'string'</span>
+&gt;&gt;&gt; f(**ud)
+[<span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'b'</span>]
+</pre>
+</div>
+
+<p>
+另外, 这样写是合法的了:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">f</span>(*args, **kw):
+...     <span style="font-weight: bold;">print</span> args, kw
+...
+&gt;&gt;&gt; f(1,2,3, *(4,5,6), keyword=13)
+(1, 2, 3, 4, 5, 6) {<span style="font-style: italic;">'keyword'</span>: 13}
+</pre>
+</div>
+
+<p>
+&#x2026;, 这样写没毛病.
+</p></li>
+
+<li>新的内建 <code>next(iterator, [default]</code>, 当迭代器耗尽的时候, <code>default</code> 将被返回.
+如果 <code>default</code> 没有定义, 将会出现 <code>StopIteration</code> 异常.</li>
+
+<li>元组现在有了 <code>index()</code> 和 <code>count()</code> 方法.</li>
+
+<li>内建类型的切片操作支持 <code>(start, stop, step)</code> 的任意组合.</li>
+
+<li><p>
+属性(Properties) 现在有三个 属性(attributes). <code>getter, setter, deleter</code>, 它们是装饰器.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold; text-decoration: underline;">@property</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+
+    <span style="font-weight: bold; text-decoration: underline;">@x.setter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>, value):
+        <span style="font-weight: bold;">self</span>._x = value
+
+    <span style="font-weight: bold; text-decoration: underline;">@x.deleter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">del</span> <span style="font-weight: bold;">self</span>._x
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">D</span>(C):
+    <span style="font-weight: bold; text-decoration: underline;">@C.x.getter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x * 2
+
+    <span style="font-weight: bold; text-decoration: underline;">@x.setter</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>, value):
+        <span style="font-weight: bold;">self</span>._x = value / 2
+</pre>
+</div></li>
+
+<li><p>
+内置类型 <code>set</code> 的几个方法现在接受多个迭代. <code>intersection(), intersection_update(), union(), update(), difference()</code> 和 <code>difference_update()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span>=<span style="font-weight: bold;">set</span>(<span style="font-style: italic;">'1234567890'</span>)
+&gt;&gt;&gt; s.intersection(<span style="font-style: italic;">'abc123'</span>, <span style="font-style: italic;">'cdf246'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Intersection between all inputs</span>
+<span style="font-weight: bold;">set</span>([<span style="font-style: italic;">'2'</span>])
+&gt;&gt;&gt; s.difference(<span style="font-style: italic;">'246'</span>, <span style="font-style: italic;">'789'</span>)
+<span style="font-weight: bold;">set</span>([<span style="font-style: italic;">'1'</span>, <span style="font-style: italic;">'0'</span>, <span style="font-style: italic;">'3'</span>, <span style="font-style: italic;">'5'</span>])
+</pre>
+</div></li>
+
+<li>在支持 <code>+0</code> 和 <code>-0</code> 的系统上创建复数时, <code>complex()</code> 的构造器将保留 <code>0</code> 的符号.</li>
+
+<li>从父类继承 <code>__hash__()</code> 方法的类可以设置 <code>__hash__ = None</code> 来指示该类不可散列.</li>
+
+<li>生成器对象现在有了 <code>gi_code</code> 属性, 引用支持生成器的原始代码对象</li>
+
+<li>内建函数 <code>compile()</code> 现在支持关键字参数和位置参数.</li>
+
+<li><code>complex()</code> 构造函数现在支持带括号的复杂的表达式.</li>
+
+<li>字符串的 <code>translate()</code> 现在支持 <code>None</code> 作为参数.</li>
+
+<li>内建函数 <code>dir()</code> 现在检查接受对象的 <code>__dir__()</code> 方法. 此方法必须返回包含该对象的有效属性名称的字符串列表，并让该对象控制 <code>dir()</code> 生成的值.</li>
+
+<li>当你在一个类语句中使用 <code>locals()</code> 函数时，结果字典不再返回自由变量.</li>
+</ul>
+
+<p>
+<a href="https://docs.python.org/2/whatsnew/2.6.html#interpreter-changes">more&#x2026;</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7c1f99" class="outline-3">
+<h3 id="orgb7c1f99"><span class="section-number-3">3.3</span> 其他内容</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+同上, 文档链接:
+<a href="https://docs.python.org/2/whatsnew/2.6.html#new-and-improved-modules">新增和改进模块</a>, <a href="https://docs.python.org/2/whatsnew/2.6.html#deprecations-and-removals">弃用和移除</a>, <a href="https://docs.python.org/2/whatsnew/2.6.html#build-and-c-api-changes">Python 构建过程和 C API 的变化</a> &#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge41cb4c" class="outline-2">
+<h2 id="orge41cb4c"><span class="section-number-2">4</span> Python2.7</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+终于 <code>2.7</code> 了&#x2026;
+</p>
+
+<p>
+<code>2.7</code> 是 <code>2.x</code> 的最后一个版本, 如同 <code>2.6</code>, <code>2.7</code> 也包含了一部分 <code>3.x</code> 版本的功能.
+而 <code>2.7</code> 某种程度上对应于 <code>3.1</code> 版本.
+</p>
+</div>
+
+<div id="outline-container-orga11474d" class="outline-3">
+<h3 id="orga11474d"><span class="section-number-3">4.1</span> 主要变化之前</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+官方文档在正式讲解 <code>2.7</code> 版本的新功能前, 还讲了一些其他的东西 !
+如果你有兴趣的话, 可以看一看:
+</p>
+
+<p>
+<a href="https://docs.python.org/2/whatsnew/2.7.html#the-future-for-python-2-x">The Future for Python 2.x</a>
+</p>
+
+<p>
+<a href="https://docs.python.org/2/whatsnew/2.7.html#changes-to-the-handling-of-deprecation-warnings">Changes to the Handling of Deprecation Warnings</a>
+</p>
+
+<p>
+<a href="https://docs.python.org/2/whatsnew/2.7.html#python-3-1-features">Python 3.1 Features</a>
+</p>
+
+<p>
+PS: 写程序的时候尽可能的考虑与 <code>3.x</code> 版本兼容吧 !
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2ec5f7b" class="outline-3">
+<h3 id="org2ec5f7b"><span class="section-number-3">4.2</span> 主要语言变化</h3>
+<div class="outline-text-3" id="text-4-2">
+<ol class="org-ol">
+<li><p>
+<b>Adding an Ordered Dictionary to collections</b>
+</p>
+
+<p>
+居然有有序字典, 之前就在想要是有有序字典多好&#x2026;
+</p>
+
+<p>
+有序字典类 <code>OrderedDict</code> 位于 <code>collections</code> 模块. 简单使用如下:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">from</span> collections <span style="font-weight: bold;">import</span> OrderedDict
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = OrderedDict([(<span style="font-style: italic;">'first'</span>, 1),
+                     ...                  (<span style="font-style: italic;">'second'</span>, 2),
+                     ...                  (<span style="font-style: italic;">'third'</span>, 3)])
+&gt;&gt;&gt; d.items()
+[(<span style="font-style: italic;">'first'</span>, 1), (<span style="font-style: italic;">'second'</span>, 2), (<span style="font-style: italic;">'third'</span>, 3)]
+</pre>
+</div>
+
+<p>
+需要注意的是, 有序字典的排序依据是一个键的插入时间. 插入越早, 排名越前.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26356;&#25913;&#38190;&#30340;&#20540;&#20301;&#32622;&#20445;&#25345;&#19981;&#21464;</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span>[<span style="font-style: italic;">'second'</span>] = 4
+&gt;&gt;&gt; d.items()
+[(<span style="font-style: italic;">'first'</span>, 1), (<span style="font-style: italic;">'second'</span>, 4), (<span style="font-style: italic;">'third'</span>, 3)]
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21024;&#38500;&#19968;&#20010;&#38190;&#21448;&#37325;&#26032;&#25554;&#20837;&#20250;&#25913;&#21464;&#39034;&#24207;</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">del</span> d[<span style="font-style: italic;">'second'</span>]
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span>[<span style="font-style: italic;">'second'</span>] = 5
+&gt;&gt;&gt; d.items()
+[(<span style="font-style: italic;">'first'</span>, 1), (<span style="font-style: italic;">'third'</span>, 3), (<span style="font-style: italic;">'second'</span>, 5)]
+</pre>
+</div>
+
+<p>
+另外, <code>popitem()</code> 方法将会默认返回最后一个元素, 如果设置 <code>last</code> 参数为 <code>False</code> 的
+话, 将从头开始返回元素.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">od</span> = OrderedDict([(x,0) <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(20)])
+&gt;&gt;&gt; od.popitem()
+(19, 0)
+&gt;&gt;&gt; od.popitem()
+(18, 0)
+&gt;&gt;&gt; od.popitem(last=<span style="font-weight: bold; text-decoration: underline;">False</span>)
+(0, 0)
+&gt;&gt;&gt; od.popitem(last=<span style="font-weight: bold; text-decoration: underline;">False</span>)
+(1, 0)
+</pre>
+</div>
+
+<p>
+比较两个字典的话, 如果是两个有序字典相比较, 这必须保证 <code>键值</code> 及 <code>顺序</code> 都一样才为相等.
+如果是 一个有序字典 和 一个普通字典, 那么保证 <code>键值</code> 相同即可.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">od1</span> = OrderedDict([(<span style="font-style: italic;">'first'</span>, 1),
+                       ...                    (<span style="font-style: italic;">'second'</span>, 2),
+                       ...                    (<span style="font-style: italic;">'third'</span>, 3)])
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">od2</span> = OrderedDict([(<span style="font-style: italic;">'third'</span>, 3),
+                       ...                    (<span style="font-style: italic;">'first'</span>, 1),
+                       ...                    (<span style="font-style: italic;">'second'</span>, 2)])
+&gt;&gt;&gt; od1 == od2
+<span style="font-weight: bold; text-decoration: underline;">False</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Move 'third' key to the end</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">del</span> od2[<span style="font-style: italic;">'third'</span>]; <span style="font-weight: bold; font-style: italic;">od2</span>[<span style="font-style: italic;">'third'</span>] = 3
+&gt;&gt;&gt; od1 == od2
+<span style="font-weight: bold; text-decoration: underline;">True</span>
+</pre>
+</div>
+
+<p>
+<a href="https://www.python.org/dev/peps/pep-0372">more&#x2026;</a>
+</p></li>
+
+<li><p>
+<b>Format Specifier for Thousands Separator</b>
+</p>
+
+<p>
+为了让我们的程序的输出更美观, <code>str.format()</code> 支持通过这种方式来输出更好看的数字:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#28014;&#28857;&#25968;, &#22312;&#23485;&#24230;&#21644;&#31934;&#24230;&#20043;&#38388;&#21152;&#20010; ',' &#21495;</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{:20,.2f}'</span>.<span style="font-weight: bold;">format</span>(18446744073709551616.0)
+<span style="font-style: italic;">'18,446,744,073,709,551,616.00'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25972;&#25968;, &#22312;&#23485;&#24230;&#21518;&#38754;&#21152;&#20010; ',' &#21495;.</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{:20,d}'</span>.<span style="font-weight: bold;">format</span>(18446744073709551616)
+<span style="font-style: italic;">'18,446,744,073,709,551,616'</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>The argparse Module for Parsing Command Lines</b>
+</p>
+
+<p>
+在 <code>2.7</code> 版本之前, 你可以使用 <code>getopt()</code> 和 <code>optparse</code> 来接受和处理命令行参数.
+</p>
+
+<p>
+现在, <code>python</code> 在此添加了一个名为 <code>argparse</code> 的模块, 这个模块同样用于处理命令行参数.
+用法和 <code>optparse</code> 类似, 但功能更加强大.(意思就是前段时间刚学的 <code>optparse</code> 可以换了&#x2026;)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> argparse
+
+<span style="font-weight: bold; font-style: italic;">parser</span> = argparse.ArgumentParser(description=<span style="font-style: italic;">'Command-line example.'</span>)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Add optional switches</span>
+parser.add_argument(<span style="font-style: italic;">'-v'</span>, action=<span style="font-style: italic;">'store_true'</span>, dest=<span style="font-style: italic;">'is_verbose'</span>,
+                    <span style="font-weight: bold;">help</span>=<span style="font-style: italic;">'produce verbose output'</span>)
+parser.add_argument(<span style="font-style: italic;">'-o'</span>, action=<span style="font-style: italic;">'store'</span>, dest=<span style="font-style: italic;">'output'</span>,
+                    metavar=<span style="font-style: italic;">'FILE'</span>,
+                    <span style="font-weight: bold;">help</span>=<span style="font-style: italic;">'direct output to FILE instead of stdout'</span>)
+parser.add_argument(<span style="font-style: italic;">'-C'</span>, action=<span style="font-style: italic;">'store'</span>, <span style="font-weight: bold;">type</span>=<span style="font-weight: bold;">int</span>, dest=<span style="font-style: italic;">'context'</span>,
+                    metavar=<span style="font-style: italic;">'NUM'</span>, default=0,
+                    <span style="font-weight: bold;">help</span>=<span style="font-style: italic;">'display NUM lines of added context'</span>)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Allow any number of additional arguments.</span>
+parser.add_argument(nargs=<span style="font-style: italic;">'*'</span>, action=<span style="font-style: italic;">'store'</span>, dest=<span style="font-style: italic;">'inputs'</span>,
+                    <span style="font-weight: bold;">help</span>=<span style="font-style: italic;">'input filenames (default is stdin)'</span>)
+
+<span style="font-weight: bold; font-style: italic;">args</span> = parser.parse_args()
+<span style="font-weight: bold;">print</span> args.__dict__
+</pre>
+</div>
+
+<p>
+和 <code>optparse</code> 一样, <code>-h, --help</code> 指令会自动添加.
+</p>
+
+<p>
+<a href="https://www.python.org/dev/peps/pep-0389">more&#x2026;</a>
+</p></li>
+
+<li><p>
+<b>Dictionary-Based Configuration For Logging</b>
+</p>
+
+<p>
+日志的打印是一个问题. 日志打印的配置也同样是一个问题. <code>2.7</code> 版本开始 <code>logging</code> 模块便可以通过
+<code>dictConfig</code> 函数设置日志打印. 例:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<span style="font-weight: bold;">import</span> logging.config
+
+<span style="font-weight: bold; font-style: italic;">configdict</span> = {
+    <span style="font-style: italic;">'version'</span>: 1,    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Configuration schema in use; must be 1 for now</span>
+    <span style="font-style: italic;">'formatters'</span>: {
+        <span style="font-style: italic;">'standard'</span>: {
+            <span style="font-style: italic;">'format'</span>: (<span style="font-style: italic;">'%(asctime)s %(name)-15s '</span>
+                       <span style="font-style: italic;">'%(levelname)-8s %(message)s'</span>)}},
+
+ <span style="font-style: italic;">'handlers'</span>: {<span style="font-style: italic;">'netlog'</span>: {<span style="font-style: italic;">'backupCount'</span>: 10,
+                         <span style="font-style: italic;">'class'</span>: <span style="font-style: italic;">'logging.handlers.RotatingFileHandler'</span>,
+                         <span style="font-style: italic;">'filename'</span>: <span style="font-style: italic;">'/logs/network.log'</span>,
+                         <span style="font-style: italic;">'formatter'</span>: <span style="font-style: italic;">'standard'</span>,
+                         <span style="font-style: italic;">'level'</span>: <span style="font-style: italic;">'INFO'</span>,
+                         <span style="font-style: italic;">'maxBytes'</span>: 1000000},
+              <span style="font-style: italic;">'syslog'</span>: {<span style="font-style: italic;">'class'</span>: <span style="font-style: italic;">'logging.handlers.SysLogHandler'</span>,
+                         <span style="font-style: italic;">'formatter'</span>: <span style="font-style: italic;">'standard'</span>,
+                         <span style="font-style: italic;">'level'</span>: <span style="font-style: italic;">'ERROR'</span>}},
+
+ <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Specify all the subordinate loggers</span>
+ <span style="font-style: italic;">'loggers'</span>: {
+     <span style="font-style: italic;">'network'</span>: {
+         <span style="font-style: italic;">'handlers'</span>: [<span style="font-style: italic;">'netlog'</span>]
+     }
+ },
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Specify properties of the root logger</span>
+ <span style="font-style: italic;">'root'</span>: {
+     <span style="font-style: italic;">'handlers'</span>: [<span style="font-style: italic;">'syslog'</span>]
+ },
+}
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Set up configuration</span>
+logging.config.dictConfig(configdict)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">As an example, log two error messages</span>
+<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(<span style="font-style: italic;">'/'</span>)
+logger.error(<span style="font-style: italic;">'Database not found'</span>)
+
+<span style="font-weight: bold; font-style: italic;">netlogger</span> = logging.getLogger(<span style="font-style: italic;">'network'</span>)
+netlogger.error(<span style="font-style: italic;">'Connection failed'</span>)
+</pre>
+</div>
+
+<p>
+额, 详细的配置方法还是看文档吧: <a href="https://docs.python.org/2/library/logging.config.html#logging-config-api">logging-configuration</a>
+</p></li>
+
+<li><p>
+<b>Dictionary Views</b>
+</p>
+
+<p>
+由于在 <code>3.x</code> 版本 <code>dict()</code> 的 <code>keys()</code>, <code>values()</code>, <code>items()</code> 返回一个名为视图(view)的对象，而不是完全的列表.
+</p>
+
+<p>
+所以为了向 <code>3.x</code> 版本兼容, 同时又不至于修改大量的核心代码, <code>2.7</code> 的 <code>dict</code> 添加了 <code>viewkeys()</code>, <code>viewvalues()</code>, <code>viewitems()</code>
+三个方法.
+</p>
+
+<p>
+<code>view</code> 可以迭代, 但是 <b>键</b> 和 <b>值</b> 视图也可以使用类似于 <b>集合(set)</b> 的 <code>&amp;</code> 和 <code>|</code> 操作.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = <span style="font-weight: bold;">dict</span>((i*10, <span style="font-weight: bold;">chr</span>(65+i)) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(26))
+&gt;&gt;&gt; d
+{0: <span style="font-style: italic;">'A'</span>, 130: <span style="font-style: italic;">'N'</span>, 10: <span style="font-style: italic;">'B'</span>, 140: <span style="font-style: italic;">'O'</span>, 20: ..., 250: <span style="font-style: italic;">'Z'</span>}
+&gt;&gt;&gt; d.viewkeys()
+dict_keys([0, 130, 10, 140, 20, 150, 30, ..., 250])
+
+
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d1</span> = <span style="font-weight: bold;">dict</span>((i*10, <span style="font-weight: bold;">chr</span>(65+i)) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(26))
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d2</span> = <span style="font-weight: bold;">dict</span>((i**.5, i) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1000))
+&gt;&gt;&gt; d1.viewkeys() &amp; d2.viewkeys()
+<span style="font-weight: bold;">set</span>([0.0, 10.0, 20.0, 30.0])
+&gt;&gt;&gt; d1.viewkeys() | <span style="font-weight: bold;">range</span>(0, 30)
+<span style="font-weight: bold;">set</span>([0, 1, 130, 3, 4, 5, 6, ..., 120, 250])
+</pre>
+</div>
+
+<p>
+视图的内容跟随字典变化而变化, 然而你并不能通过更改视图来更改字典&#x2026;(咋那么像数据库呢&#x2026;)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26356;&#25913;&#23383;&#20856;&#25913;&#21464;&#35270;&#22270;</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">vk</span> = d.viewkeys()
+&gt;&gt;&gt; vk
+dict_keys([0, 130, 10, ..., 250])
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span>[260] = <span style="font-style: italic;">'&amp;'</span>
+&gt;&gt;&gt; vk
+dict_keys([0, 130, 260, 10, ..., 250])
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26356;&#25913;&#35270;&#22270;&#21457;&#29983;&#38169;&#35823;</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">for</span> k <span style="font-weight: bold;">in</span> vk:
+...     <span style="font-weight: bold; font-style: italic;">d</span>[k*2] = k
+...
+Traceback (most recent call last):
+File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">RuntimeError</span>: dictionary changed size during iteration
+</pre>
+</div>
+
+<p>
+PS: <code>3.x</code> 版本的 <code>keys()</code>, <code>values()</code>, <code>items()</code> 默认返回的就是视图.
+</p></li>
+
+<li><p>
+<b>The memoryview Object</b>
+</p>
+
+<p>
+<code>memoryview</code> 对象提供了与字节类型的接口相匹配的另一个对象的 <b>内存内容</b> 的 <b>视图</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> string
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m</span> = <span style="font-weight: bold;">memoryview</span>(string.letters)
+&gt;&gt;&gt; m
+&lt;memory at 0x37f850&gt;
+&gt;&gt;&gt; <span style="font-weight: bold;">len</span>(m)           <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Returns length of underlying object</span>
+52
+&gt;&gt;&gt; m[0], m[25], m[26]   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Indexing returns one byte</span>
+(<span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'z'</span>, <span style="font-style: italic;">'A'</span>)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m2</span> = m[0:26]         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Slicing returns another memoryview</span>
+&gt;&gt;&gt; m2
+&lt;memory at 0x37f080&gt;
+</pre>
+</div>
+
+<p>
+视图的内容可以被转换成一个 <b>字节串</b> 或一个 <b>整数列表</b>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; m2.tobytes()
+<span style="font-style: italic;">'abcdefghijklmnopqrstuvwxyz'</span>
+&gt;&gt;&gt; m2.tolist()
+[97, 98, 99, 100, 101, 102, 103, ... 121, 122]
+&gt;&gt;&gt;
+</pre>
+</div>
+
+<p>
+<code>memoryview</code> 对象允许修改底层对象，如果它是一个可变的对象.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m2</span>[0] = 75
+Traceback (most recent call last):
+File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">TypeError</span>: cannot modify read-only memory
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">b</span> = <span style="font-weight: bold;">bytearray</span>(string.letters)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Creating a mutable object</span>
+&gt;&gt;&gt; b
+<span style="font-weight: bold;">bytearray</span>(b<span style="font-style: italic;">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">mb</span> = <span style="font-weight: bold;">memoryview</span>(b)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">mb</span>[0] = <span style="font-style: italic;">'*'</span>         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Assign to view, changing the bytearray.</span>
+&gt;&gt;&gt; b[0:5]              <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">The bytearray has been changed.</span>
+<span style="font-weight: bold;">bytearray</span>(b<span style="font-style: italic;">'*bcde'</span>)
+&gt;&gt;&gt;
+</pre>
+</div>
+
+<p>
+PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是可以更改的.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org005a3eb" class="outline-3">
+<h3 id="org005a3eb"><span class="section-number-3">4.3</span> 核心语言变化</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li><p>
+通过 <code>{}</code> 来常见集合, 空集合使用 <code>set()</code> 创建, <code>{}</code> 继续代表空字典.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; {1, 2, 3, 4, 5}
+<span style="font-weight: bold;">set</span>([1, 2, 3, 4, 5])
+&gt;&gt;&gt; <span style="font-weight: bold;">set</span>() <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">empty set</span>
+<span style="font-weight: bold;">set</span>([])
+&gt;&gt;&gt; {}    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">empty dict</span>
+{}
+</pre>
+</div></li>
+
+<li><p>
+可以使用列表推导式来生成 <code>字典</code> 和 <code>集合</code> 了.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; {x: x*x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(6)}
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+&gt;&gt;&gt; {(<span style="font-style: italic;">'a'</span>*x) <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(6)}
+<span style="font-weight: bold;">set</span>([<span style="font-style: italic;">''</span>, <span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'aa'</span>, <span style="font-style: italic;">'aaa'</span>, <span style="font-style: italic;">'aaaa'</span>, <span style="font-style: italic;">'aaaaa'</span>])
+</pre>
+</div></li>
+
+<li><p>
+<code>with</code> 语句现在可以同时创建多个上下文管理器. 这些对象从左到右进行管理.
+嗯, <code>contextlib.nested()</code> 提供类似的功能, 所以它被弃用了.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">with</span> A() <span style="font-weight: bold;">as</span> a, B() <span style="font-weight: bold;">as</span> b:
+    ... suite of statements ...
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;</span>
+<span style="font-weight: bold;">with</span> A() <span style="font-weight: bold;">as</span> a:
+    <span style="font-weight: bold;">with</span> B() <span style="font-weight: bold;">as</span> b:
+        ... suite of statements ...
+</pre>
+</div></li>
+
+<li><p>
+对长整数, 浮点数的转化进行了优化.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">2.6</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">n</span> = 295147905179352891391
+&gt;&gt;&gt; <span style="font-weight: bold;">float</span>(n)
+2.9514790517935283e+20
+&gt;&gt;&gt; n - <span style="font-weight: bold;">long</span>(<span style="font-weight: bold;">float</span>(n))
+65535L
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">2.7</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">n</span> = 295147905179352891391
+&gt;&gt;&gt; <span style="font-weight: bold;">float</span>(n)
+2.9514790517935289e+20
+&gt;&gt;&gt; n - <span style="font-weight: bold;">long</span>(<span style="font-weight: bold;">float</span>(n))
+-1L
+</pre>
+</div></li>
+
+<li><p>
+<code>str.format()</code> 现在可以使用自动编号替换字段l. 既可以这样:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{}:{}:{}'</span>.<span style="font-weight: bold;">format</span>(2009, 04, <span style="font-style: italic;">'Sunday'</span>)
+<span style="font-style: italic;">'2009:4:Sunday'</span>
+&gt;&gt;&gt; <span style="font-style: italic;">'{}:{}:{day}'</span>.<span style="font-weight: bold;">format</span>(2009, 4, day=<span style="font-style: italic;">'Sunday'</span>)
+<span style="font-style: italic;">'2009:4:Sunday'</span>
+</pre>
+</div></li>
+
+<li><p>
+<code>int()</code> 和 <code>long()</code> 添加了 <code>bit_length()</code> 方法来获取对应数字的二进制位数.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">n</span> = 37
+&gt;&gt;&gt; <span style="font-weight: bold;">bin</span>(n)
+<span style="font-style: italic;">'0b100101'</span>
+&gt;&gt;&gt; n.bit_length()
+6
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">n</span> = 2**123-1
+&gt;&gt;&gt; n.bit_length()
+123
+&gt;&gt;&gt; (n+1).bit_length()
+124
+</pre>
+</div></li>
+
+<li><code>bytearray</code> 类型的 <code>translate()</code> 方法现在接受 <code>None</code> 作为其第一个参数</li>
+
+<li><a href="https://docs.python.org/2/whatsnew/2.7.html#other-language-changes">more&#x2026;</a></li>
+
+<li><p>
+<b>Interpreter Changes</b>
+</p>
+
+<p>
+新增环境变量 <code>PYTHONWARNINGS</code> 来控制输出的警告信息.
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org16aa7fc" class="outline-3">
+<h3 id="org16aa7fc"><span class="section-number-3">4.4</span> 其他内容</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+同上上: <a href="https://docs.python.org/2/whatsnew/2.7.html#new-and-improved-modules">新增和改进模块</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#build-and-c-api-changes">构建过程和 C API</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#porting-to-python-2-7">迁移到2.7</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org47f8ea4" class="outline-2">
+<h2 id="org47f8ea4"><span class="section-number-2">5</span> 完结感言</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+终于&#x2026;
+</p>
+
+<p>
+基本完成了&#x2026;
+</p>
+
+<p>
+本来还说一下午搞定这一切&#x2026;
+</p>
+
+<p>
+事实证明我想多了&#x2026;..
+</p>
+
+<p>
+嗯, 在看文档前我是没想到每个版本之间的变化有这么多的, 这篇文章里我还省略了一部分&#x2026;
+</p>
+
+<p>
+本来是想看看 <code>set</code> 这个类型的相关内容才来翻文档的(买的书对 <code>set</code> 的讲解很少), 结果 <code>set</code> 的内容
+没有多少, 到是其他内容收获不少&#x2026;
+</p>
+
+<p>
+果然, 官方的文档才是最好的教程么&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org11d35f0" class="outline-2">
+<h2 id="org11d35f0"><span class="section-number-2">6</span> 相关链接</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/2/whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li><a href="https://docs.python.org/2/whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li><a href="https://docs.python.org/2/whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-01-23 周二 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

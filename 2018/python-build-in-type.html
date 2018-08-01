@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 13:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 内置类型</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 内置类型</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf6632f7">1. 简介</a></li>
+<li><a href="#org52df8d2">2. bool</a></li>
+<li><a href="#org935e205">3. 数值类型</a>
+<ul>
+<li><a href="#org67a9299">3.1. 方法</a></li>
+</ul>
+</li>
+<li><a href="#org503dde5">4. 序列类型</a></li>
+<li><a href="#org24c945a">5. 文本序列类型</a></li>
+<li><a href="#orgba9591d">6. 集合类型</a></li>
+<li><a href="#orgd5a29ae">7. 映射类型</a></li>
+<li><a href="#orgd869bff">8. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf6632f7" class="outline-2">
+<h2 id="orgf6632f7"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这篇博客是对 <code>Python</code> 内置类型的简单汇总， 省略了很多内容。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org52df8d2" class="outline-2">
+<h2 id="org52df8d2"><span class="section-number-2">2</span> bool</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>Python</code> 中， <code>bool</code> 类型属于 <code>int</code> 的子类， 只存在 <code>True</code> 和 <code>False</code> 这两个实例。
+</p>
+
+<p>
+<code>Python2</code> 中可以对 <code>True</code> 或 <code>False</code> 赋值搞出 <code>True = False</code> 的操作， 这一点在 <code>Python3</code> 中得到
+了修改。
+</p>
+
+<p>
+知道在什么情况下 <code>bool</code> 判断为 <code>False</code> 是很有用的：
+</p>
+<ul class="org-ul">
+<li><code>None</code></li>
+<li><code>False</code></li>
+<li>任何数值类型的零</li>
+<li>任何空序列</li>
+<li>任何空映射</li>
+</ul>
+
+<p>
+对于比较操作符， 我觉得需要注意的是： <code>is not</code>.
+</p>
+
+<p>
+初学的时候， 经常写成 <code>not is</code> 出错。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org935e205" class="outline-2">
+<h2 id="org935e205"><span class="section-number-2">3</span> 数值类型</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持
+复数运算。 另外， <code>Python2</code> 还有一个 <code>long</code> 类型。
+</p>
+
+<p>
+对于数值类型， 有一些通用的操作， 如 <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> 等。
+</p>
+
+<p>
+详细了解可以看一下文档： <a href="https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex">Numeric Types — int, float, complex</a>
+</p>
+
+<p>
+这里列举出需要注意的一点：
+</p>
+<ul class="org-ul">
+<li><p>
+除法 <code>/</code>: <code>Python2</code> 中的除法默认是地板除， 而在 <code>Python3</code> 中地板除是 <code>//</code>. 当然， <code>Python2</code>
+中也可以使用 <code>//</code>, 但是这和 <code>/</code> 没有区别。 如果想要 <code>Python2</code> 中的除法和 <code>Python3</code> 中的
+行为保持一致， 可以：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> __future__ <span style="font-weight: bold;">import</span> division
+</pre>
+</div></li>
+</ul>
+
+<p>
+另外， <code>int</code> 类型是支持位运算的。
+</p>
+</div>
+
+<div id="outline-container-org67a9299" class="outline-3">
+<h3 id="org67a9299"><span class="section-number-3">3.1</span> 方法</h3>
+<div class="outline-text-3" id="text-3-1">
+<dl class="org-dl">
+<dt>int.bit<sub>length</sub>()</dt><dd>返回整数的二进制长度。</dd>
+
+<dt>int.to<sub>bytes</sub>(length, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回表示整数的字节数组。
+效果和 <code>hex(x)</code> 有点像， 但更高级</dd>
+
+<dt>int.from<sub>bytes</sub>(bytes, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回给定字节数组所表示的整数。</dd>
+
+<dt>float.as<sub>integer</sub><sub>ratio</sub>()</dt><dd><p>
+返回一对整数，其比例与原始浮点数完全相等，并带有一个正的分母。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">x</span> = 3.3
+&gt;&gt;&gt; x.as_integer_ratio()
+(3715469692580659L, 1125899906842624L)
+</pre>
+</div></dd>
+
+<dt>float.is<sub>integer</sub>()</dt><dd>如果小数点后全是 <code>0</code>, 返回 <code>True</code>, 否则返回 <code>False</code></dd>
+
+<dt>float.hex()</dt><dd>将浮点数的表示形式返回为十六进制字符串。</dd>
+
+<dt>float.fromhex(s)</dt><dd><p>
+返回由十六进制字符串 <code>s</code> 表示的 <code>float</code>.
+</p>
+
+<p>
+字符串格式： <code>[sign] ['0x'] integer ['.' fraction] ['p' exponent]</code>
+</p></dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org503dde5" class="outline-2">
+<h2 id="org503dde5"><span class="section-number-2">4</span> 序列类型</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里
+采取 <code>Python3</code> 的类型划分。
+</p>
+
+<p>
+序列类型有： <code>list</code>, <code>tuple</code>, <code>range</code>. 当然了， <code>Python2</code> 应该是 <code>xrange</code>.
+</p>
+
+<p>
+其中， <code>tuple</code> 属于不可变序列类型， 即不能进行修改。
+</p>
+
+<p>
+对于序列类型来说， 它们都拥有一定数量的方法， 具有一些很强大的功能。
+</p>
+
+<p>
+比如对 <b>切片</b> 操作的支持， 可以说这些功能足够满足我们的基本需求。
+</p>
+
+<p>
+鉴于各个类型的方法数量， 如果想要了解的话， 建议 <code>help(type)</code>. 这里就不多说了。
+</p>
+
+<p>
+但是， 还是有几个地方需要注意以下：
+</p>
+<dl class="org-dl">
+<dt>sort(*, key=None, reverse=False)</dt><dd><p>
+<code>Python2</code> 还有一个 <code>cmp</code> 参数， 这个参数
+在 <code>Python3</code> 已经被废除了， 可以的话， 就不用 <code>cmp</code> 参数了。
+</p>
+
+<p>
+另外， <code>sort()</code> 是没有返回值的， 如果想当然的希望 <code>list.sort()</code> 返回排序后的列表
+的话， 你将得到一个 <code>None</code>. 
+</p>
+
+<p>
+对此， 建议使用内置函数 <code>sorted</code>.
+</p></dd>
+
+<dt>切片</dt><dd>可以通过切片来转置序列， <code>x[::-1]</code> 即可。以前我是 <code>x[-1::-1]</code> 这样操作的&#x2026;&#x2026;</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org24c945a" class="outline-2">
+<h2 id="org24c945a"><span class="section-number-2">5</span> 文本序列类型</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+万恶之源 <code>str</code>. <code>Python2</code> 和 <code>Python3</code> 的不兼容相当难受。
+</p>
+
+<p>
+但是， 依然需要记清楚：
+</p>
+<ul class="org-ul">
+<li><code>Python2 str</code> 是 <code>bytes</code></li>
+<li><code>Python3 str</code> 是 <code>unicode</code></li>
+</ul>
+
+<p>
+除此之外， <code>bytes</code> 和 <code>str</code> 的方法基本相同。
+</p>
+
+<p>
+但是需要注意的一点： 由于在 <code>Python2</code> 中同时操作 <code>unicode</code> 和 <code>bytes</code> 会对
+<code>bytes</code> 进行隐式的 <code>decode</code> 操作。 这就导致当字符串只存在 <code>ASCII</code> 字符时，
+<code>Python2</code> 中的字符串就像同时存在 <code>encode</code> 和 <code>decode</code> 的方法一样。 但是这只是
+<code>Python2</code> 自动帮你完成了 <code>decode</code> 的操作。
+</p>
+
+<p>
+而 <code>Python3</code> 中是不允许同时操作 <code>unicode</code> 和 <code>bytes</code> 的， 所以， 要明白：
+</p>
+<ul class="org-ul">
+<li><code>bytes</code> 有 <code>decode</code> 方法</li>
+<li><code>unicode</code> 有 <code>encode</code> 方法</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgba9591d" class="outline-2">
+<h2 id="orgba9591d"><span class="section-number-2">6</span> 集合类型</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>Python</code> 中的集合类型有 <code>set</code> 和 <code>frozenset</code> 两种。
+</p>
+
+<p>
+其中， <code>frozenset</code> 是 <code>set</code> 的不可变类型。
+</p>
+
+<p>
+对于 <code>set</code>, 我觉的用代码来说明是最合适的：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23450;&#20041; set</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">x</span> = <span style="font-weight: bold;">set</span>([1,2,2,3,4,5,5,6])
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">y</span> = {1, 2, 3, 7, 9, 10}
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">set &#20250;&#33258;&#21160;&#36807;&#28388;&#37325;&#22797;&#30340;&#20803;&#32032;</span>
+&gt;&gt;&gt; x
+<span style="font-weight: bold;">set</span>([1, 2, 3, 4, 5, 6])
+&gt;&gt;&gt; y
+<span style="font-weight: bold;">set</span>([1, 2, 3, 7, 9, 10])
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#38656;&#35201;&#27880;&#24847;&#30340;&#26159; {} &#26159; dict &#32780;&#19981;&#26159; set, &#22914;&#26524;&#35201;&#21019;&#24314;&#31354; set &#24212;&#35813;&#20351;&#29992; set()</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">z</span> = {}
+&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(z)
+&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'dict'</span>&gt;
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">set &#25903;&#25345;&#24120;&#29992;&#30340;&#38598;&#21512;&#36816;&#31639;</span>
+&gt;&gt;&gt; x &amp; y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20132;&#38598;</span>
+<span style="font-weight: bold;">set</span>([1, 2, 3])
+
+&gt;&gt;&gt; x | y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24182;&#38598;</span>
+<span style="font-weight: bold;">set</span>([1, 2, 3, 4, 5, 6, 7, 9, 10])
+
+&gt;&gt;&gt; x - y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24046;&#38598;</span>
+<span style="font-weight: bold;">set</span>([4, 5, 6])
+
+&gt;&gt;&gt; x ^ y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23545;&#31216;&#24046;&#38598;</span>
+<span style="font-weight: bold;">set</span>([4, 5, 6, 7, 9, 10])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd5a29ae" class="outline-2">
+<h2 id="orgd5a29ae"><span class="section-number-2">7</span> 映射类型</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<code>Python</code> 的映射类型无疑是 <code>dict</code> 了。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">help</span>(<span style="font-weight: bold;">dict</span>)
+Help on <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">dict</span> <span style="font-weight: bold;">in</span> module __builtin__:
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">dict</span>(<span style="font-weight: bold;">object</span>)
+ |  <span style="font-weight: bold;">dict</span>() -&gt; new empty dictionary
+ |  <span style="font-weight: bold;">dict</span>(mapping) -&gt; new dictionary initialized <span style="font-weight: bold;">from</span> a mapping <span style="font-weight: bold;">object</span><span style="font-style: italic;">'s</span>
+<span style="font-style: italic;"> |      (key, value) pairs</span>
+<span style="font-style: italic;"> |  dict(iterable) -&gt; new dictionary initialized as if via:</span>
+<span style="font-style: italic;"> |      d = {}</span>
+<span style="font-style: italic;"> |      for k, v in iterable:</span>
+<span style="font-style: italic;"> |          d[k] = v</span>
+<span style="font-style: italic;"> |  dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs</span>
+<span style="font-style: italic;"> |      in the keyword argument list.  For example:  dict(one=1, two=2)</span>
+</pre>
+</div>
+
+<p>
+对于 <code>dict</code>, <code>help</code> 已说明了一切 ！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd869bff" class="outline-2">
+<h2 id="orgd869bff"><span class="section-number-2">8</span> 参考链接</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/3/library/stdtypes.html">Python3</a></li>
+<li><a href="https://docs.python.org/2.7/library/stdtypes.html">Python2</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-03-23 周五 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 13:08</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

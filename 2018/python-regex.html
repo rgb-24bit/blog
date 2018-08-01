@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 正则表达式</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 正则表达式</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org47d8a7b">1. 简介</a></li>
+<li><a href="#org3766ab0">2. 模块和对象</a></li>
+<li><a href="#org529d7e6">3. 模块对象和正则表达式对象</a></li>
+<li><a href="#org4219ea8">4. 正则表达式匹配对象</a></li>
+<li><a href="#org06800c3">5. 语法扩展和原始字符串</a></li>
+<li><a href="#org8ebb5b1">6. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org47d8a7b" class="outline-2">
+<h2 id="org47d8a7b"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+处理复杂的文本的时候， 使用 <b>正则表达式</b> 能够很大程度上减轻我们的工作量。
+</p>
+
+<p>
+这篇博客的主要内容是针对 <code>Python</code> 的正则表达式模块 <code>re</code> 的理解和使用， 有关正则表达式
+语法的内容可以查看 <a href="https://github.com/rgb-24bit/blog/blob/master/2018/regex.org">正则表达式</a>.
+</p>
+
+<p>
+本篇博客未列举出来的内容可查阅 <a href="https://docs.python.org/3/library/re.html">官方文档</a> 进行了解.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3766ab0" class="outline-2">
+<h2 id="org3766ab0"><span class="section-number-2">2</span> 模块和对象</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+为了更好的理解 <code>re</code> 模块的使用， 我们首先将 <code>re</code> 模块涉及到的 <b>三个对象</b> 列举出来：
+</p>
+<ul class="org-ul">
+<li><b>模块对象</b>: 模块对象指的就是 <code>re</code> 模块本身。</li>
+<li><b>正则表达式对象</b>: 通常为调用 <code>re.compile</code> 编译正则表达式模式后返回的对象。</li>
+<li><b>正则表达式匹配对象</b>: 通常为调用 <code>re.match</code> 或 <code>re.search</code> 后返回的对象。</li>
+</ul>
+
+<p>
+将 <b>三个对象</b> 列举出来的原因是需要 <b>分清楚</b> 我们调用的 <b>方法</b> 或 <b>函数</b> 到底是属于那一个对象。
+</p>
+
+<p>
+我就在错误的对象身上调用过的正确的方法并得到了合适一个异常。
+</p>
+
+<p>
+首先， <b>模块对象</b> 和 <b>正则表达式对象</b> 的方法基本相同， 一定程度上， <b>模块对象</b> 的是对
+<b>正则表达式对象</b> 的一层封装。
+</p>
+
+<p>
+然后， <b>正则表达式匹配对象</b> 的对象和另外两者的区别很大， 使用的时候需要分清楚。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org529d7e6" class="outline-2">
+<h2 id="org529d7e6"><span class="section-number-2">3</span> 模块对象和正则表达式对象</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+由于 <b>模块对象</b> 和 <b>正则表达式</b> 对象的使用十分接近， 就把两者
+的内容放在一起了。
+</p>
+
+<dl class="org-dl">
+<dt>re.compile(pattern, flags=0)</dt><dd><p>
+       这个方法只适用于 <b>模块对象</b>, 使用任何可选的 <code>flag</code> 来编译正则表达式模式，
+并返回一个 <b>正则表达式对象</b>.
+</p>
+
+<p>
+多个标记可以通过按位或操作符 <code>|</code> 合并.
+</p>
+
+<p>
+详细的 <code>flags</code> 可以参考官方文档： <a href="https://docs.python.org/3/library/re.html#module-contents">Module Contents</a>
+</p></dd>
+
+<dt>match(pattern, string, flags=0)</dt><dd><p>
+       尝试从字符串的 <b>起始部分</b> 对模式进行匹配， 如果匹配成功就返回一个 <b>匹配对象</b>, 
+匹配失败返回 <code>None</code>.
+</p>
+
+<p>
+<b>注意:</b> 是从起始部分进行匹配。
+</p></dd>
+
+<dt>search(pattern, string, flags=0)</dt><dd><p>
+       这个方法的工作方式和 <code>match</code> 基本相同， 不同之处在于 <code>search</code> 会在字符串的 <b>任意位置</b>
+尝试对模式进行匹配。 匹配成功返回 <b>匹配对象</b>, 匹配失败返回 <code>None</code>.
+</p>
+
+<p>
+<b>注意:</b> 是任意位置进行匹配。
+</p></dd>
+
+<dt>findall(pattern, string, [,flags])</dt><dd><p>
+       这个方法查找字符串中 <b>所有</b> 非重复出现的正则表达式模式， 并返回一个列表。 如果没有
+匹配到的话就返回一个 <b>空的</b> 列表。
+</p>
+
+<p>
+需要注意的一种情况是匹配模式的 <b>分组多于 1</b> 的时候的匹配结果：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [2]: re.findall(r<span style="font-style: italic;">'\w+'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
+Out[2]: [<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'operations'</span>]
+
+In [3]: re.findall(r<span style="font-style: italic;">'(\w+)'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
+Out[3]: [<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'operations'</span>]
+
+In [5]: re.findall(r<span style="font-style: italic;">'(\w+).(\w+)'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
+Out[5]: [(<span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>), (<span style="font-style: italic;">'operatio'</span>, <span style="font-style: italic;">'s'</span>)]
+</pre>
+</div>
+
+<p>
+上面三个语句分别对应分组为 <code>0</code>, <code>1</code>, <code>2</code> 时的执行情况.
+</p>
+
+<p>
+分组为 <code>0</code> 或 <code>1</code> 时， 返回的 <b>列表</b> 中的元素都是匹配的 <b>字符串</b>.
+</p>
+
+<p>
+当分组为 <code>2</code> 时， 返回的 <b>列表</b> 中的元素就变为了 <b>元组</b>.
+</p>
+
+<p>
+<b>元组</b> 内的元素的顺序对应每个 <b>组</b> 的匹配结果。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">In [6]: re.findall(r<span style="font-style: italic;">'(\w+(\w))'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
+Out[6]: [(<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'e'</span>), (<span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'r'</span>), (<span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'n'</span>), (<span style="font-style: italic;">'operations'</span>, <span style="font-style: italic;">'s'</span>)]
+</pre>
+</div>
+
+<p>
+对于匹配模式 <code>(\w+(\w))</code> 来说， <code>(\w+(\w))</code> 是分组 <code>1</code>, 而 <code>(\w)</code> 是分组 <code>2</code>.
+</p></dd>
+
+<dt>finditer(pattern, string, [,flags])</dt><dd>与 <code>findall</code> 相同， 只不过返回的是一个 <b>迭代器</b>, 而不是 <b>列表</b>.</dd>
+
+<dt>split(pattern, string, max=0)</dt><dd><p>
+       参考 <code>sstr.split</code>, 作用是类似的。 只不过分割字符串的参考依据由单个字符变为了 <b>匹配模式</b>.
+</p>
+
+<p>
+可以通过 <code>max</code> 指定最大分割次数：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [13]: re.split(r<span style="font-style: italic;">'\w\s\w'</span>, <span style="font-style: italic;">'Hello World !'</span>)
+Out[13]: [<span style="font-style: italic;">'Hell'</span>, <span style="font-style: italic;">'orld !'</span>]
+</pre>
+</div></dd>
+
+<dt>sub(pattern, repl, string, count=0)</dt><dd><p>
+       使用 <code>repl</code> 替换 <code>string</code> 中出现的和 <code>pattern</code> 相匹配的字符串， 通过 <code>count</code> 指定替换次数， 默认
+为替换所有。
+</p>
+
+<p>
+<b>注:</b> <code>repl</code> 中可以使用 <b>回溯引用</b>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [18]: re.sub(r<span style="font-style: italic;">'\w+?(T)\w'</span>, r<span style="font-style: italic;">'\1'</span>, <span style="font-style: italic;">'asdTgdfTdgfhTdsfgTf'</span>)
+Out[18]: <span style="font-style: italic;">'TTTT'</span>
+</pre>
+</div></dd>
+</dl>
+
+<p>
+<b>PS:</b> 如无特殊说明， 那么该方法同时适用于 <b>模块对象</b> 和 <b>正则表达式对象</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4219ea8" class="outline-2">
+<h2 id="org4219ea8"><span class="section-number-2">4</span> 正则表达式匹配对象</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>匹配对象</b> 通常为 <code>re.match</code> 或 <code>re.search</code> 返回的对象。
+</p>
+
+<p>
+在涉及 <b>匹配对象</b> 的方法之前， 需要了解的一个东西是 <b>正则表达式的分组</b>.
+</p>
+
+<p>
+通常， 我们可以在 <b>匹配模式</b> 中使用 <code>()</code> 来定义 <b>元组(子组)</b>. 这些 <b>元组</b> 会根据
+定义的顺序被设置一个 <b>编号</b>.
+</p>
+
+<p>
+这个 <b>编号</b> 被用来代表那个 <b>分组</b>, 正则表达式中的 <b>回溯引用</b> 等也会用到那个编号。
+</p>
+
+<p>
+首先， 最基本的一点是： 整个匹配模式的编号是 <code>0</code>.
+</p>
+
+<p>
+对于剩下的分组， 可以通过网站 <a href="https://jex.im/regulex/#">JavaScript Regular Expression Visualizer.</a> 进行可视化分析.
+</p>
+
+<p>
+虽然是 <code>JavaScript</code> 的正则表达式， 但是道理是通的.
+</p>
+
+<p>
+比如： <code>^(\w+)\s+(\w{3}(\w{2}))+$</code> 的分组可以表示为：
+</p>
+
+
+<div class="figure">
+<p><img src="img/group.png" alt="group.png" />
+</p>
+</div>
+
+<p>
+明白了分组的概念， 再来理解 <b>匹配对象</b> 的方法就容易很多了：
+</p>
+<dl class="org-dl">
+<dt>group(num=0)</dt><dd>返回整个匹配对象或编号为 <code>num</code> 的特定子组</dd>
+
+<dt>groups(default=None)</dt><dd>返回一个包含所有匹配子组的元组</dd>
+
+<dt>groupdict(default=None)</dt><dd>返回一个包含所有匹配的 <b>命名子组</b> (Python 语法扩展) 的字典，
+所有的子组名作为字典的键。</dd>
+</dl>
+
+<p>
+需要注意的是， 如果 <code>re.match</code> 或 <code>re.search</code> 的匹配不成功， 那么返回的结果就是 <code>None</code>, 
+而不是 <b>匹配对象</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org06800c3" class="outline-2">
+<h2 id="org06800c3"><span class="section-number-2">5</span> 语法扩展和原始字符串</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>Python</code> 对正则表达式的语法做了一些扩展：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">扩展表示法</th>
+<th scope="col" class="org-left">作用</th>
+<th scope="col" class="org-left">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>(?iLmsux)</code></td>
+<td class="org-left">放在匹配模式的 <b>开头</b>, 相当于 <code>flags</code> 参数</td>
+<td class="org-left"><code>(?i)\w+</code> 不区分大小写</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>(?:...)</code></td>
+<td class="org-left">表示一个匹配 <b>不用保存</b> 的分组</td>
+<td class="org-left"><code>(?:\w+)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>(?P&lt;name&gt;...)</code></td>
+<td class="org-left">定义一个 <b>命名分组</b></td>
+<td class="org-left"><code>(?P&lt;word&gt;\w+)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>(?P=name)</code></td>
+<td class="org-left">命名分组的 <b>回溯引用</b></td>
+<td class="org-left"><code>(P=word)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>(?#...)</code></td>
+<td class="org-left">注释</td>
+<td class="org-left"><code>(?#comment)</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+适当程度上的使用 <b>扩展语法</b> 可以节约一定的工作量。
+</p>
+
+<p>
+<b>原始字符串:</b>
+</p>
+
+<p>
+在正则表达式中， <code>\</code> 是转义字符。
+</p>
+
+<p>
+在 <code>Python</code> 中， <code>\</code> 也是转义字符。
+</p>
+
+<p>
+这时， 如果不使用原始字符串， 那么匹配模式中的 <code>\</code> 就需要写为 <code>\\</code>.
+</p>
+
+<p>
+如果要匹配 <code>\</code>, 那么匹配模式就成了 <code>\\\\</code>.
+</p>
+
+<p>
+这样十分影响匹配模式的阅读理解， 还容易出错。
+</p>
+
+<p>
+此时， 使用原始字符串解决这一问题：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">r<span style="font-style: italic;">'string'</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#22312;&#23383;&#31526;&#20018;&#21069;&#38754;&#21152;&#19978; r &#21363;&#21487;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ebb5b1" class="outline-2">
+<h2 id="org8ebb5b1"><span class="section-number-2">6</span> 参考链接</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html">Python正则表达式指南</a></li>
+<li><a href="https://docs.python.org/3/library/re.html">re — Regular expression operations</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-05-20 周日 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 内置异常</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 内置异常</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd7e4e0f">1. 简介</a></li>
+<li><a href="#orgfb74fbb">2. 常见异常</a></li>
+<li><a href="#org583991d">3. 自定义异常</a></li>
+<li><a href="#org374da3c">4. Python2 内置异常</a>
+<ul>
+<li><a href="#org9027d72">4.1. 完整异常列表</a></li>
+<li><a href="#org120b1ef">4.2. 异常层次结构</a></li>
+</ul>
+</li>
+<li><a href="#org3188613">5. Python3 内置异常</a>
+<ul>
+<li><a href="#org0f9a8c1">5.1. 完整异常列表</a></li>
+<li><a href="#org52066e5">5.2. 异常层次结构</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd7e4e0f" class="outline-2">
+<h2 id="orgd7e4e0f"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
+的异常类型而直接对所有异常进行处理。 这样虽然让程序运行了起来， 但是很明显，
+这样做是不合适的。
+</p>
+
+<p>
+所以， 准备通过官方文档来了解内置的异常类型。
+</p>
+<ul class="org-ul">
+<li><a href="https://docs.python.org/2/library/exceptions.html">Python2 Built-in Exceptions</a></li>
+<li><a href="https://docs.python.org/3.6/library/exceptions.html">Python3 Built-in Exceptions</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfb74fbb" class="outline-2">
+<h2 id="orgfb74fbb"><span class="section-number-2">2</span> 常见异常</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+网上有人总结了 <code>Python</code> 的常见异常， 这里记录下来：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">异常</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>AssertionError</code></td>
+<td class="org-left">assert 语句失败</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>AttributeError</code></td>
+<td class="org-left">试图访问一个对象没有的属性</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IOError</code></td>
+<td class="org-left">输入/输出异常， 基本上是无法打开文件。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ImportError</code></td>
+<td class="org-left">无法引入模块或者包， 基本上是路径问题</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IndentationError</code></td>
+<td class="org-left">语法错误， 代码没有正确对齐</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IndexError</code></td>
+<td class="org-left">下标索引超出序列边界， 比如当 l 只有三个元素， 却试图访问 l[5]</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>KeyError</code></td>
+<td class="org-left">试图访问字典里不存在的键</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>KerboardInterrupt</code></td>
+<td class="org-left">Ctrl + C 被按下</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NameError</code></td>
+<td class="org-left">使用一个还未被赋值予对象的变量</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SyntaxError</code></td>
+<td class="org-left">Python 代码非法， 代码不能解释</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>TypeError</code></td>
+<td class="org-left">传入对象类型与要求的不符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>UnboundLocalError</code></td>
+<td class="org-left">试图访问一个还未被设置的局部变量， 基本上是由于另一个同名的全局变量，导致你以为正在访问它</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ValueError</code></td>
+<td class="org-left">传入一个调用者不期望的值， 即使值的类型是正确的</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org583991d" class="outline-2">
+<h2 id="org583991d"><span class="section-number-2">3</span> 自定义异常</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+定义自己的异常是很有用的， 能够提供更清楚的 <b>异常信息</b>, 也能添加内置异常不具有的功能。
+</p>
+
+<p>
+首先， 自定义异常类应该总是继承自内置的 <code>Exception</code> 类， 
+或者是继承自那些本身就是从 <code>Exception</code> 继承而来的类。
+</p>
+
+<p>
+既然自定义异常类继承自 <code>Exception</code>, 那么应该先了解一下 <code>Exception</code> 的内容：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">help</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span>)
+Help on <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">in</span> module builtins:
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-weight: bold; text-decoration: underline;">BaseException</span>)
+ |  Common base <span style="font-weight: bold;">class</span> <span style="font-weight: bold;">for</span> <span style="font-weight: bold;">all</span> non-<span style="font-weight: bold; text-decoration: underline;">exit</span> exceptions.
+ |
+ |  __init__(<span style="font-weight: bold;">self</span>, /, *args, **kwargs)
+ |      Initialize <span style="font-weight: bold;">self</span>.  See <span style="font-weight: bold;">help</span>(<span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)) <span style="font-weight: bold;">for</span> accurate signature.
+</pre>
+</div>
+
+<p>
+这里截取了一部分 <code>Exception</code> 的帮助文档， 可以看到， <code>Exception</code> 的参数包含：
+<code>*args</code>, <code>**kwargs</code>.
+</p>
+
+<p>
+先来测试一下这些参数的作用：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">Exception</span>: exception
+
+&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>, 2)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">Exception</span>: (<span style="font-style: italic;">'exception'</span>, 2)
+
+&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>, 2, name=<span style="font-style: italic;">'Test'</span>)
+Traceback (most recent call last):
+  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
+<span style="font-weight: bold; text-decoration: underline;">TypeError</span>: exceptions.<span style="font-weight: bold; text-decoration: underline;">Exception</span> does <span style="font-weight: bold;">not</span> take keyword arguments
+</pre>
+</div>
+
+<p>
+这是测试过程， 很明显， <code>Exception</code> 可以接受任意数量的 <b>位置参数</b>, 而 <b>关键字</b> 参数不会被使用。
+</p>
+
+<p>
+同时， 所有的参数会保存在名为 <code>args</code> 元组中：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">try</span>:
+...     <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(1, 2, 3)
+... <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">as</span> ex:
+...     <span style="font-weight: bold;">print</span>(ex.args)
+...
+(1, 2, 3)
+</pre>
+</div>
+
+<p>
+现在， 可以来定义自己的异常了。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyException</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span>):
+    <span style="font-style: italic;">""" My Exception."""</span>
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init</span>(<span style="font-weight: bold;">self</span>, message, status, more=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+        <span style="font-weight: bold; text-decoration: underline;">Exception</span>.__init__(<span style="font-weight: bold;">self</span>, message, status, more)
+        <span style="font-weight: bold;">self</span>.message = message
+        <span style="font-weight: bold;">self</span>.status = status
+</pre>
+</div>
+
+<p>
+一个简单的自定义异常， 包含了 <code>message</code> 及 <code>status</code> 属性。
+还有 <code>more</code> 参数， 可以通过 <code>args</code> 属性获取其值。
+</p>
+
+<p>
+这样， 当遇到 <code>MyException</code> 时的处理方式可以更加丰富：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+    ...
+<span style="font-weight: bold;">except</span> MyException <span style="font-weight: bold;">as</span> ex:
+    <span style="font-weight: bold;">if</span> ex.status &gt; 500:
+        <span style="font-weight: bold;">print</span>(ex.message)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org374da3c" class="outline-2">
+<h2 id="org374da3c"><span class="section-number-2">4</span> Python2 内置异常</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org9027d72" class="outline-3">
+<h3 id="org9027d72"><span class="section-number-3">4.1</span> 完整异常列表</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li><b>BaseException</b> &#x2013; 所有内建的异常的基类
+<ul class="org-ul">
+<li><b>SystemExit</b> &#x2013; 由 <code>sys.exit()</code> 函数引发此异常。如果不处理这个异常， <code>Python</code> 解释器退出</li>
+<li><b>KeyboardInterrupt</b> &#x2013; 当用户按下中断键（通常是 <code>Ctrl-C</code> 或 <code>Delete</code> ）时引发</li>
+<li><b>GeneratorExit</b> &#x2013; 当调用一个 <code>generator</code> 对象的 <code>close()</code> 方法时引发</li>
+<li><b>Exception</b> &#x2013; 所有内建的、非系统退出的异常，都是从该类派生的。此外， <span class="underline">应该从该类派生所有用户定义的异常</span>
+<ul class="org-ul">
+<li><b>StopIteration</b> &#x2013; 当一个 <code>iterator</code> 的 <code>next()</code> 方法发出信号， 表示没有更多的值时引发</li>
+<li><b>StandardError</b> &#x2013; 除 <code>StopIteration</code>, <code>GeneratorExit</code>, <code>KeyboardInterrupt</code> 和 <code>SystemExit</code> 以外的所有内建异常的基类
+<ul class="org-ul">
+<li><b>BufferError</b> &#x2013; 当 <code>buffer</code> 相关的操作无法执行时引发</li>
+<li><b>ArithmeticError</b> &#x2013; 各种算术错误引发的内建异常的基类
+<ul class="org-ul">
+<li><b>FloatingPointError</b> &#x2013; 当浮点数操作失败时引发</li>
+<li><b>OverflowError</b> &#x2013; 当要表示算术运算的结果太大时引发， 长整型不会引发该异常</li>
+<li><b>ZeroDivisionError</b> &#x2013; 当除法或取模运算的第 <b>2</b> 个参数为 <b>0</b> 时引发</li>
+</ul></li>
+<li><b>AssertionError</b> &#x2013; 当 <code>assert</code> 语句失败时引发</li>
+<li><b>AttributeError</b> &#x2013; 当属性引用或赋值失败时引发。当对象根本不支持属性引用或属性赋值时，将引发 <code>TypeError</code></li>
+<li><b>EnvironmentError</b> &#x2013; <code>Python</code> 系统以外发生的异常的基类
+<ul class="org-ul">
+<li><b>IOError</b> &#x2013; 当一个 <code>I/O</code> 操作， 由于 <code>I/O</code> 相关原因导致失败时（未找到文件 或 磁盘已满）</li>
+<li><b>OSError</b> &#x2013; 当一个函数返回系统相关的错误时引发
+<ul class="org-ul">
+<li><b>WindowsError</b> &#x2013; 当 <code>Windows</code> 特定的错误发生时， 或者当错误号码与 <code>errno</code> 值不对应时引发。</li>
+<li><b>VMSError</b> &#x2013; 仅在 <code>VMS</code> 上可用。当发生 <code>VMS</code> 特定错误时引发</li>
+</ul></li>
+</ul></li>
+<li><b>EOFError</b> &#x2013; 当内建函数 <code>input()</code> 或 <code>raw_input()</code> 的其中之一，在触及文件结尾 (<code>EOF</code>) 情形，而没有读取到任何数据时引发</li>
+<li><b>ImportError</b> &#x2013; 当 <code>import</code> 语句无法找到模块定义，或者当 <code>from ... import</code> 语句未能找到要导入的名称时引发</li>
+<li><b>LookupError</b> &#x2013; 当用于映射或序列的键或索引无效时引发的异常的基类
+<ul class="org-ul">
+<li><b>IndexError</b> &#x2013; 当序列下标超出取值范围时引发。（切片索引会被静默地截取到允许范围内；如果索引不是一个普通整数，则引发 <code>TypeError</code> ）</li>
+<li><b>KeyError</b> &#x2013;  当在现有键的集合中找不到映射的键时引发</li>
+</ul></li>
+<li><b>MemoryError</b> &#x2013; 当一个操作将内存耗尽，但情况仍可挽救时（通过删除某些对象）时引发</li>
+<li><b>NameError</b> &#x2013; 当找不到本地或全局名称时引发
+<ul class="org-ul">
+<li><b>UnboundLocalError</b> &#x2013; 当引用函数或方法局部变量，但变量没有绑定值时引发</li>
+</ul></li>
+<li><b>ReferenceError</b> &#x2013; 当用一个由 <code>weakref.proxy()</code> 函数创建的弱引用代理，去访问引用者的属性，而该引用者已经被垃圾回收时，会引发此异常</li>
+<li><b>RuntimeError</b> &#x2013; 当检出错误不属于任何其它类别时引发</li>
+<li><b>SyntaxError</b> &#x2013; 当解析器遇到语法错误时引发
+<ul class="org-ul">
+<li><b>IndentationError</b> &#x2013; 与不正确的缩进相关的语法错误的基类
+<ul class="org-ul">
+<li><b>TabError</b> &#x2013; 当缩进中包含对制表符和空格的混用时引发</li>
+</ul></li>
+</ul></li>
+<li><b>SystemError</b> &#x2013; 当解释器发现内部错误，但情况并没有看起来那么严重，不至于到要放弃所有希望的地步，此时会引发本异常</li>
+<li><b>TypeError</b> &#x2013; 当操作或函数应用于不合适类型的对象时引发</li>
+<li><b>ValueError</b> &#x2013; 当内建操作或函数，接收到类型正确，但值不正确的参数，而且这种情况不能用诸如 <code>IndexError</code> 这样的更精确的异常进行描述时引发
+<ul class="org-ul">
+<li><b>UnicodeError</b> &#x2013; 当有关 <code>Unicode</code> 编码或解码错误出现时引发
+<ul class="org-ul">
+<li><b>UnicodeDecodeError</b> &#x2013; 当解码过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+<li><b>UnicodeEncodeError</b> &#x2013; 当编码过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+<li><b>UnicodeTranslateError</b> &#x2013;  当翻译过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><b>Warning</b> &#x2013; 警告类别基类
+<ul class="org-ul">
+<li><b>DeprecationWarning</b> &#x2013; 弃用特性警告基类</li>
+<li><b>PendingDeprecationWarning</b> &#x2013; 将来会被弃用特性的警告基类</li>
+<li><b>RuntimeWarning</b> &#x2013; 可疑 <code>Runtime</code> 行为警告基类</li>
+<li><b>SyntaxWarning</b> &#x2013; 可疑句法警告基类</li>
+<li><b>UserWarning</b> &#x2013; 用户代码生成警告基类</li>
+<li><b>FutureWarning</b> &#x2013; 将来会改变语义结构的警告基类</li>
+</ul></li>
+<li><b>ImportWarning</b> &#x2013; 可能弄错模块导入警告基类</li>
+<li><b>UnicodeWarning</b> &#x2013; <code>Unicode</code> 相关的警告基类</li>
+<li><b>BytesWarning</b></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org120b1ef" class="outline-3">
+<h3 id="org120b1ef"><span class="section-number-3">4.2</span> 异常层次结构</h3>
+<div class="outline-text-3" id="text-4-2">
+<pre class="example">
+BaseException
+ +-- SystemExit
+ +-- KeyboardInterrupt
+ +-- GeneratorExit
+ +-- Exception
+      +-- StopIteration
+      +-- StandardError
+      |    +-- BufferError
+      |    +-- ArithmeticError
+      |    |    +-- FloatingPointError
+      |    |    +-- OverflowError
+      |    |    +-- ZeroDivisionError
+      |    +-- AssertionError
+      |    +-- AttributeError
+      |    +-- EnvironmentError
+      |    |    +-- IOError
+      |    |    +-- OSError
+      |    |         +-- WindowsError (Windows)
+      |    |         +-- VMSError (VMS)
+      |    +-- EOFError
+      |    +-- ImportError
+      |    +-- LookupError
+      |    |    +-- IndexError
+      |    |    +-- KeyError
+      |    +-- MemoryError
+      |    +-- NameError
+      |    |    +-- UnboundLocalError
+      |    +-- ReferenceError
+      |    +-- RuntimeError
+      |    |    +-- NotImplementedError
+      |    +-- SyntaxError
+      |    |    +-- IndentationError
+      |    |         +-- TabError
+      |    +-- SystemError
+      |    +-- TypeError
+      |    +-- ValueError
+      |         +-- UnicodeError
+      |              +-- UnicodeDecodeError
+      |              +-- UnicodeEncodeError
+      |              +-- UnicodeTranslateError
+      +-- Warning
+           +-- DeprecationWarning
+           +-- PendingDeprecationWarning
+           +-- RuntimeWarning
+           +-- SyntaxWarning
+           +-- UserWarning
+           +-- FutureWarning
+     +-- ImportWarning
+     +-- UnicodeWarning
+     +-- BytesWarning
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3188613" class="outline-2">
+<h2 id="org3188613"><span class="section-number-2">5</span> Python3 内置异常</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>Python3</code> 和 <code>Python2</code> 不兼容， 异常处理方面， <code>Python3</code> 也对异常结构进行了一些调整。
+</p>
+
+<ul class="org-ul">
+<li>移除了 <code>StandardError</code>, 继承自 <code>StandardError</code> 的异常变为继承自 <code>Exception</code></li>
+<li><code>OSError</code> 直接继承自 <code>Exception</code> 并且极大的扩充的子类的数量， 对异常情况可以更细致的处理</li>
+<li>所有警告现在都继承自 <code>Warning</code></li>
+<li>more&#x2026;</li>
+</ul>
+</div>
+
+<div id="outline-container-org0f9a8c1" class="outline-3">
+<h3 id="org0f9a8c1"><span class="section-number-3">5.1</span> 完整异常列表</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><b>BaseException</b> &#x2013; 所有内建的异常的基类
+<ul class="org-ul">
+<li><b>SystemExit</b> &#x2013; 由 <code>sys.exit()</code> 函数引发此异常。如果不处理这个异常， <code>Python</code> 解释器退出</li>
+<li><b>KeyboardInterrupt</b> &#x2013; 当用户按下中断键（通常是 <code>Ctrl-C</code> 或 <code>Delete</code> ）时引发</li>
+<li><b>GeneratorExit</b> &#x2013; 当调用一个 <code>generator</code> 对象的 <code>close()</code> 方法时引发</li>
+<li><b>Exception</b> &#x2013; 所有内建的、非系统退出的异常，都是从该类派生的。此外， <span class="underline">应该从该类派生所有用户定义的异常</span>
+<ul class="org-ul">
+<li><b>StopIteration</b> &#x2013; 当一个 <code>iterator</code> 的 <code>next()</code> 方法发出信号， 表示没有更多的值时引发</li>
+<li><b>StopAsyncIteration</b></li>
+<li><b>ArithmeticError</b> &#x2013; 各种算术错误引发的内建异常的基类
+<ul class="org-ul">
+<li><b>FloatingPointError</b> &#x2013; 当浮点数操作失败时引发</li>
+<li><b>OverflowError</b> &#x2013; 当要表示算术运算的结果太大时引发， 长整型不会引发该异常</li>
+<li><b>ZeroDivisionError</b> &#x2013; 当除法或取模运算的第 <b>2</b> 个参数为 <b>0</b> 时引发</li>
+</ul></li>
+<li><b>AssertionError</b> &#x2013; 当 <code>assert</code> 语句失败时引发</li>
+<li><b>AttributeError</b> &#x2013; 当属性引用或赋值失败时引发。当对象根本不支持属性引用或属性赋值时，将引发 <code>TypeError</code></li>
+<li><b>BufferError</b> &#x2013; 当 <code>buffer</code> 相关的操作无法执行时引发</li>
+<li><b>EOFError</b> &#x2013; 当内建函数 <code>input()</code> 或 <code>raw_input()</code> 的其中之一，在触及文件结尾 (<code>EOF</code>) 情形，而没有读取到任何数据时引发</li>
+<li><b>ImportError</b> &#x2013; 当 <code>import</code> 语句无法找到模块定义，或者当 <code>from ... import</code> 语句未能找到要导入的名称时引发
+<ul class="org-ul">
+<li><b>ModuleNotFoundError</b> &#x2013; 导入的模块不存在</li>
+</ul></li>
+<li><b>LookupError</b> &#x2013; 当用于映射或序列的键或索引无效时引发的异常的基类
+<ul class="org-ul">
+<li><b>IndexError</b> &#x2013; 当序列下标超出取值范围时引发。（切片索引会被静默地截取到允许范围内；如果索引不是一个普通整数，则引发 <code>TypeError</code> ）</li>
+<li><b>KeyError</b> &#x2013;  当在现有键的集合中找不到映射的键时引发</li>
+</ul></li>
+<li><b>MemoryError</b> &#x2013; 当一个操作将内存耗尽，但情况仍可挽救时（通过删除某些对象）时引发</li>
+<li><b>NameError</b> &#x2013; 当找不到本地或全局名称时引发
+<ul class="org-ul">
+<li><b>UnboundLocalError</b> &#x2013; 当引用函数或方法局部变量，但变量没有绑定值时引发</li>
+</ul></li>
+<li><b>OSError</b>
+<ul class="org-ul">
+<li><b>BlockingIOError</b> &#x2013; 当一个操作阻塞一个设置为非阻塞操作的对象（例如套接字）时引发</li>
+<li><b>ChildProcessError</b> &#x2013; 在对子进程执行操作失败时引发</li>
+<li><b>ConnectionError</b> &#x2013; 连接相关问题的基类
+<ul class="org-ul">
+<li><b>BrokenPipeError</b> &#x2013; 当试图在管道上写入而另一端已关闭时尝试写入，或试图写入已关闭写入的套接字时引发</li>
+<li><b>ConnectionAbortedError</b> &#x2013; 当连接尝试被同伴中止时引发</li>
+<li><b>ConnectionRefusedError</b> &#x2013; 当连接尝试被同伴拒绝时引发</li>
+<li><b>ConnectionResetError</b> &#x2013; 当连接被同伴重置时引发</li>
+</ul></li>
+<li><b>FileExistsError</b> &#x2013; 尝试创建已存在的文件或目录时引发</li>
+<li><b>FileNotFoundError</b> &#x2013; 当请求文件或目录但不存在时引发</li>
+<li><b>InterruptedError</b> &#x2013; 当系统调用被传入信号中断时引发</li>
+<li><b>IsADirectoryError</b> &#x2013; 在目录上请求文件操作时引发</li>
+<li><b>NotADirectoryError</b> &#x2013; 当目录操作被请求的目录不是目录时引发</li>
+<li><b>PermissionError</b> &#x2013; 当尝试运行没有足够访问权限的操作时引发</li>
+<li><b>ProcessLookupError</b> &#x2013; 当一个给定的过程不存在时引发</li>
+<li><b>TimeoutError</b> &#x2013; 当系统功能在系统级别超时时引发</li>
+</ul></li>
+<li><b>ReferenceError</b> &#x2013; 当用一个由 <code>weakref.proxy()</code> 函数创建的弱引用代理，去访问引用者的属性，而该引用者已经被垃圾回收时，会引发此异常</li>
+<li><b>RuntimeError</b> &#x2013; 当检出错误不属于任何其它类别时引发
+<ul class="org-ul">
+<li><b>NotImplementedError</b></li>
+<li><b>RecursionError</b></li>
+</ul></li>
+<li><b>SyntaxError</b> &#x2013; 当解析器遇到语法错误时引发
+<ul class="org-ul">
+<li><b>IndentationError</b> &#x2013; 与不正确的缩进相关的语法错误的基类
+<ul class="org-ul">
+<li><b>TabError</b> &#x2013; 当缩进中包含对制表符和空格的混用时引发</li>
+</ul></li>
+</ul></li>
+<li><b>SystemError</b> &#x2013; 当解释器发现内部错误，但情况并没有看起来那么严重，不至于到要放弃所有希望的地步，此时会引发本异常</li>
+<li><b>TypeError</b> &#x2013; 当操作或函数应用于不合适类型的对象时引发</li>
+<li><b>ValueError</b> &#x2013; 当内建操作或函数，接收到类型正确，但值不正确的参数，而且这种情况不能用诸如 <code>IndexError</code> 这样的更精确的异常进行描述时引发
+<ul class="org-ul">
+<li><b>UnicodeError</b> &#x2013; 当有关 <code>Unicode</code> 编码或解码错误出现时引发
+<ul class="org-ul">
+<li><b>UnicodeDecodeError</b> &#x2013; 当解码过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+<li><b>UnicodeEncodeError</b> &#x2013; 当编码过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+<li><b>UnicodeTranslateError</b> &#x2013;  当翻译过程中出现的一个 <code>Unicode</code> 相关的错误时引发</li>
+</ul></li>
+</ul></li>
+<li><b>Warning</b> &#x2013; 警告类别基类
+<ul class="org-ul">
+<li><b>DeprecationWarning</b> &#x2013; 弃用特性警告基类</li>
+<li><b>PendingDeprecationWarning</b> &#x2013; 将来会被弃用特性的警告基类</li>
+<li><b>RuntimeWarning</b> &#x2013; 可疑 <code>Runtime</code> 行为警告基类</li>
+<li><b>SyntaxWarning</b> &#x2013; 可疑句法警告基类</li>
+<li><b>UserWarning</b> &#x2013; 用户代码生成警告基类</li>
+<li><b>FutureWarning</b> &#x2013; 将来会改变语义结构的警告基类</li>
+<li><b>ImportWarning</b> &#x2013; 可能弄错模块导入警告基类</li>
+<li><b>UnicodeWarning</b> &#x2013; <code>Unicode</code> 相关的警告基类</li>
+<li><b>BytesWarning</b></li>
+<li><b>ResourceWarninf</b></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org52066e5" class="outline-3">
+<h3 id="org52066e5"><span class="section-number-3">5.2</span> 异常层次结构</h3>
+<div class="outline-text-3" id="text-5-2">
+<pre class="example">
+BaseException
+ +-- SystemExit
+ +-- KeyboardInterrupt
+ +-- GeneratorExit
+ +-- Exception
+      +-- StopIteration
+      +-- StopAsyncIteration
+      +-- ArithmeticError
+      |    +-- FloatingPointError
+      |    +-- OverflowError
+      |    +-- ZeroDivisionError
+      +-- AssertionError
+      +-- AttributeError
+      +-- BufferError
+      +-- EOFError
+      +-- ImportError
+      |    +-- ModuleNotFoundError
+      +-- LookupError
+      |    +-- IndexError
+      |    +-- KeyError
+      +-- MemoryError
+      +-- NameError
+      |    +-- UnboundLocalError
+      +-- OSError
+      |    +-- BlockingIOError
+      |    +-- ChildProcessError
+      |    +-- ConnectionError
+      |    |    +-- BrokenPipeError
+      |    |    +-- ConnectionAbortedError
+      |    |    +-- ConnectionRefusedError
+      |    |    +-- ConnectionResetError
+      |    +-- FileExistsError
+      |    +-- FileNotFoundError
+      |    +-- InterruptedError
+      |    +-- IsADirectoryError
+      |    +-- NotADirectoryError
+      |    +-- PermissionError
+      |    +-- ProcessLookupError
+      |    +-- TimeoutError
+      +-- ReferenceError
+      +-- RuntimeError
+      |    +-- NotImplementedError
+      |    +-- RecursionError
+      +-- SyntaxError
+      |    +-- IndentationError
+      |         +-- TabError
+      +-- SystemError
+      +-- TypeError
+      +-- ValueError
+      |    +-- UnicodeError
+      |         +-- UnicodeDecodeError
+      |         +-- UnicodeEncodeError
+      |         +-- UnicodeTranslateError
+      +-- Warning
+           +-- DeprecationWarning
+           +-- PendingDeprecationWarning
+           +-- RuntimeWarning
+           +-- SyntaxWarning
+           +-- UserWarning
+           +-- FutureWarning
+           +-- ImportWarning
+           +-- UnicodeWarning
+           +-- BytesWarning
+           +-- ResourceWarning
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-18 周日 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

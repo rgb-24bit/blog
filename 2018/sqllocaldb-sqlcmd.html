@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-01 周三 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SqlLocalDB 和 Sqlcmd</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">SqlLocalDB 和 Sqlcmd</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7b4a2c2">1. 简介</a>
+<ul>
+<li><a href="#org04b27cc">1.1. sqllocaldb 介绍</a></li>
+<li><a href="#org1777320">1.2. sqlcmd 介绍</a></li>
+</ul>
+</li>
+<li><a href="#org44f8cc4">2. 安装</a>
+<ul>
+<li><a href="#orgc7844a5">2.1. 通过VS安装</a></li>
+<li><a href="#orge879fb2">2.2. 通过安装包安装</a></li>
+</ul>
+</li>
+<li><a href="#org134f203">3. 使用</a>
+<ul>
+<li><a href="#org3412074">3.1. 使用sqllocaldb</a></li>
+<li><a href="#org848871c">3.2. 使用sqlcmd</a></li>
+</ul>
+</li>
+<li><a href="#org860576f">4. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7b4a2c2" class="outline-2">
+<h2 id="org7b4a2c2"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本文介绍如何通过 <code>sqllocaldb</code>, <code>sqlcmd</code> 搭建一个 <b>简单</b> 的 <code>sql server</code> 学习开发环境.
+</p>
+</div>
+
+<div id="outline-container-org04b27cc" class="outline-3">
+<h3 id="org04b27cc"><span class="section-number-3">1.1</span> sqllocaldb 介绍</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<b>sqllocaldb</b> 是微软为开发者量身定制了一款专门用于编程开发的小数据库.
+</p>
+
+<p>
+<b>sqllocaldb</b> 具有完整 <b>sql server</b> 的基本功能, 足够用于基本的学习和开发使用.
+</p>
+
+<ul class="org-ul">
+<li>优点:
+<ul class="org-ul">
+<li>体量小, 安装包只有 <b>44M</b></li>
+<li>安装方便, 完整版可能因为各种各样的原有安装失败, 而这个版本双击安装即可.
+(卸载双击安装包即可卸载)</li>
+</ul></li>
+<li>缺点:
+<ul class="org-ul">
+<li>只能创建基本的数据库实例, 连执行 <b>SQL</b> 指令的地方都没有</li>
+<li>命令行界面 (这个看个人喜好了, 我个人还是比较喜欢的&#x2026;)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1777320" class="outline-3">
+<h3 id="org1777320"><span class="section-number-3">1.2</span> sqlcmd 介绍</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<b>sqlcmd</b> 在老版本的 <b>sqlserver</b> 中叫做 <b>osql</b>.
+</p>
+
+<p>
+可以通过 <b>sqlcmd</b> 在命令行界面下输入 <b>SQL, T-SQL</b> 指令来操作数据库, 比如:
+<b>sqllocaldb</b> 创建的数据库实例.
+</p>
+
+<ul class="org-ul">
+<li>优点:
+<ul class="org-ul">
+<li>体量小, 安装包只有 <b>2M</b>, 对, 只有 <b>2M</b></li>
+<li>使用方便, 该有的功能基本都有</li>
+</ul></li>
+<li>缺点:
+<ul class="org-ul">
+<li>具有依赖环境: <b>sql native client</b></li>
+<li>命令行界面 (同上)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44f8cc4" class="outline-2">
+<h2 id="org44f8cc4"><span class="section-number-2">2</span> 安装</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgc7844a5" class="outline-3">
+<h3 id="orgc7844a5"><span class="section-number-3">2.1</span> 通过VS安装</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+这是最简单直接的安装方式, 只需要勾选几个选项就够了.
+</p>
+
+<p>
+VS 2017 示例:
+<img src="img/mssql_setup.png" alt="mssql_setup.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge879fb2" class="outline-3">
+<h3 id="orge879fb2"><span class="section-number-3">2.2</span> 通过安装包安装</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+这个安装方式相对麻烦一些, 如果你没有安装 VS 的话, 可以这样安装.
+</p>
+
+<ul class="org-ul">
+<li>下载链接:
+<ul class="org-ul">
+<li><a href="https://www.microsoft.com/zh-CN/download/details.aspx?id=43339">sqlclient</a>  下载时选择对应版本(x86, x64) 的 <b>sqlncli.msi</b> 即可</li>
+<li><a href="https://www.microsoft.com/en-us/download/details.aspx?id=53591">sqlcmd</a>     下载选择对应的版本即可(x86, amd64)</li>
+<li><a href="https://www.microsoft.com/zh-CN/download/details.aspx?id=46697">sqllocaldb</a> 下载的时候选择对应版本(x86, x64)的 <b>sqllocaldb.msi</b> 即可</li>
+</ul></li>
+</ul>
+
+<p>
+注: 在安装 <b>sqlcmd</b> 之前请先安装 <b>sqlclient</b>
+</p>
+
+<p>
+注: 安装时应该会自动添加环境变量, 如果没有添加, 安装路径默认为:
+</p>
+<pre class="example">
+C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
+
+</pre>
+<p>
+其中: 根据版本, 可能位于 <code>File(x86)</code>, <code>110...</code> 等位置. 找到 <code>SQLCMD.exe</code> 和
+<code>sqllocaldb.exe</code> 添加到环境变量即可
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org134f203" class="outline-2">
+<h2 id="org134f203"><span class="section-number-2">3</span> 使用</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org3412074" class="outline-3">
+<h3 id="org3412074"><span class="section-number-3">3.1</span> 使用sqllocaldb</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>sqllocaldb -?</code> 查看使用帮助
+</p>
+
+<p>
+几个常用的指令:
+</p>
+<pre class="example">
+sqllocaldb c instance_name [-s]    -- 创建实例 instance_name, 加 -s 创建后启动实例
+
+sqllocaldb d instance_name         -- 删除实例
+
+sqllocaldb s instance_name         -- 启动实例
+
+sqllocaldb p instance_name [-i|-k] -- 关闭实例, -i 直接关闭, -k 等待所有链接关闭后关闭
+
+sqllocaldb i                       -- 列出当前用户所拥有的所有现有 LocalDB 实例以及所有共享的 LocalDB 实例
+
+sqllocaldb i instance_name         -- 打印有关指定的 LocalDB 实例的信息
+
+sqllocaldb v                       -- 列出在计算机上安装的所有 LocalDB 版本
+</pre>
+
+<p>
+注: sqllocaldb 将空格作为分隔符处理, 需要用引号将包含空格和特殊字符的实例名称引起来
+注: 只列举了几个常用的指令, 完整信息请通过 <code>sqllocaldb -?</code> 查看
+</p>
+
+<p>
+默认实例: <b>MSSQLLocalDB</b>
+实例目录: <b>C:\Users\Administrator\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org848871c" class="outline-3">
+<h3 id="org848871c"><span class="section-number-3">3.2</span> 使用sqlcmd</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<b>sqlcmd</b> 的指令还是比较多的, 这里只列举几个常用的指令.
+完整文档请看: <a href="https://docs.microsoft.com/zh-cn/sql/relational-databases/scripting/sqlcmd-use-the-utility">sqlcmd - 使用实用工具</a>
+</p>
+
+<pre class="example">
+链接数据库:
+sqlcmd -S 实例名                                -- sqllocaldb的实例名格式: (localdb)\instance_name
+sqlcmd -S 实例名 -E sql_file                    -- 链接服务成功后执行 sql 脚本
+sqlcmd -S 实例名 -U username -P password        -- 根据用户名和密码链接数据库
+
+链接成功后:
+:help              -- 查看帮助
+:!! command        -- 执行 shell 指令
+:r sql_file        -- 执行 sql 脚本, 可以内嵌在 sql 脚本中连续执行脚本
+go                 -- 执行输入的 sql 指令
+exit               -- 退出 sqlcmd
+</pre>
+
+<p>
+注: 列举了几个常用的指令, 简单使用应该够了
+注: 如果链接 <b>sqllocaldb</b> 实例因未启动失败, 请通过 <code>sqllocaldb s instance_name</code> 启动实例
+注: <b>sql</b> 指令的执行是在 <b>go</b> 指令之后
+</p>
+
+<p>
+示例:
+<img src="img/sqlcmd_example.png" alt="sqlcmd_example.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org860576f" class="outline-2">
+<h2 id="org860576f"><span class="section-number-2">4</span> 结语</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+通过 <b>sqllocaldb</b> 和 <b>sqlcmd</b> 可以简单搭建用于 <b>sql</b> 学习的环境.
+</p>
+
+<p>
+本文仅对两者的安装和使用进行了简单说明, 如果需要更详细的了解, 
+可以根据文内的文档链接来进行探索.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-01-04 周四 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
