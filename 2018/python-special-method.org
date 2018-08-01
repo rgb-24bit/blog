@@ -308,8 +308,6 @@
 * 更多的方法
   ~Python~ 的魔法方法还有不少， ~Python2~ 和 ~Python3~ 在这方面也有一定的区别。
 
-  部分内容会在后面进行补充， 详细内容可以参考 [[#参考链接][参考链接]].
-
 * 参考链接
   + [[https://docs.python.org/2.7/reference/datamodel.html#special-method-names][Python2.7 Special method names]]
   + [[https://docs.python.org/3/reference/datamodel.html#special-method-names][Python3.6 Special method names]]
