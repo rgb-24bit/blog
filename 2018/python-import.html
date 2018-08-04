@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
+<!-- 2018-08-04 周六 09:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 导入相关</title>
@@ -234,24 +234,24 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3bcbab3">1. 简介</a></li>
-<li><a href="#orgae51c09">2. import 语法</a></li>
-<li><a href="#org1f9852e">3. 相对导入和绝对导入</a>
+<li><a href="#orgcb1caf2">1. 简介</a></li>
+<li><a href="#orgbc09ef8">2. import 语法</a></li>
+<li><a href="#orgb556703">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#orga8e1291">3.1. 相对导入</a></li>
-<li><a href="#org5e2832e">3.2. 绝对导入</a></li>
+<li><a href="#org608a1c5">3.1. 相对导入</a></li>
+<li><a href="#org111b274">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#org78163e9">4. 同名的包和模块</a></li>
-<li><a href="#org09e6715">5. 执行一次导入后</a></li>
-<li><a href="#orgc6d8186">6. 更多</a></li>
-<li><a href="#org62e829a">7. 参考链接</a></li>
+<li><a href="#org9945d1e">4. 同名的包和模块</a></li>
+<li><a href="#org34498fb">5. 执行一次导入后</a></li>
+<li><a href="#org0d8b1fc">6. 其他使用细节</a></li>
+<li><a href="#orgef4ee96">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3bcbab3" class="outline-2">
-<h2 id="org3bcbab3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgcb1caf2" class="outline-2">
+<h2 id="orgcb1caf2"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
@@ -272,8 +272,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgae51c09" class="outline-2">
-<h2 id="orgae51c09"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-orgbc09ef8" class="outline-2">
+<h2 id="orgbc09ef8"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -304,12 +304,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1f9852e" class="outline-2">
-<h2 id="org1f9852e"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-orgb556703" class="outline-2">
+<h2 id="orgb556703"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orga8e1291" class="outline-3">
-<h3 id="orga8e1291"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-org608a1c5" class="outline-3">
+<h3 id="org608a1c5"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -338,8 +338,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5e2832e" class="outline-3">
-<h3 id="org5e2832e"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org111b274" class="outline-3">
+<h3 id="org111b274"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -536,8 +536,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-org78163e9" class="outline-2">
-<h2 id="org78163e9"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org9945d1e" class="outline-2">
+<h2 id="org9945d1e"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -619,8 +619,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org09e6715" class="outline-2">
-<h2 id="org09e6715"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-org34498fb" class="outline-2">
+<h2 id="org34498fb"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -666,8 +666,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgc6d8186" class="outline-2">
-<h2 id="orgc6d8186"><span class="section-number-2">6</span> 更多</h2>
+<div id="outline-container-org0d8b1fc" class="outline-2">
+<h2 id="org0d8b1fc"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -676,12 +676,32 @@ pkg/
 <li><code>from xxx import *</code> 会导入除了以 <code>_</code> 开头的所有变量，但是如果定义了 <code>__all__</code>, 那么会导入 <code>__all__</code> 中列出的东西</li>
 <li><code>import xxx.object</code> 的方式不能直接使用 <code>object</code>, 仍然需要通过 <code>xxx.object</code> 的方式使用</li>
 <li><code>import xxx.object as obj</code> 的方式可以直接使用 <code>obj</code></li>
+<li><code>Python3.4</code> 之后的版本中， 内置函数 <code>reload</code> 被移除了， 要使用可以通过 <code>from importlib import reload</code> 导入</li>
+<li><p>
+还可以这样导入：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> click <span style="font-weight: bold;">import</span> (
+    argument,
+    command,
+    echo,
+    edit,
+    group,
+    Group,
+    option,
+    pass_context,
+    Option,
+    version_option,
+    BadParameter,
+)
+</pre>
+</div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org62e829a" class="outline-2">
-<h2 id="org62e829a"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgef4ee96" class="outline-2">
+<h2 id="orgef4ee96"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>
@@ -693,7 +713,7 @@ pkg/
 <div id="postamble" class="status">
 <p class="date">Date: 2018-04-15 周日 00:00</p>
 <p class="author">Author: rgb<sub>24bit</sub></p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
+<p class="date">Created: 2018-08-04 周六 09:54</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

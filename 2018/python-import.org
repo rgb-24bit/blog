@@ -11,7 +11,7 @@
   - [[#绝对导入][绝对导入]]
 - [[#同名的包和模块][同名的包和模块]]
 - [[#执行一次导入后][执行一次导入后]]
-- [[#更多][更多]]
+- [[#其他使用细节][其他使用细节]]
 - [[#参考链接][参考链接]]
 
 * 简介
@@ -217,14 +217,31 @@
 
   但是， 对于其他的 *引用* 对象以及像 ~module.num~ 这样进行的修改会影响到其他地方。
 
-* 更多
+* 其他使用细节
   + ~import~ 会生成 ~.pyc~ 文件, ~.pyc~ 文件的执行速度不比 ~.py~ 快， 但是加载速度更快
   + 重复 ~import~ 只会执行第一次 ~import~
   + 如果在 *执行过程中* 中 ~import~ 的模块发生改动，可以通过 ~reload~ 函数重新加载
   + ~from xxx import *~ 会导入除了以 ~_~ 开头的所有变量，但是如果定义了 ~__all__~, 那么会导入 ~__all__~ 中列出的东西
   + ~import xxx.object~ 的方式不能直接使用 ~object~, 仍然需要通过 ~xxx.object~ 的方式使用
   + ~import xxx.object as obj~ 的方式可以直接使用 ~obj~
-  
+  + ~Python3.4~ 之后的版本中， 内置函数 ~reload~ 被移除了， 要使用可以通过 ~from importlib import reload~ 导入
+  + 还可以这样导入：
+    #+BEGIN_SRC python
+      from click import (
+          argument,
+          command,
+          echo,
+          edit,
+          group,
+          Group,
+          option,
+          pass_context,
+          Option,
+          version_option,
+          BadParameter,
+      )
+    #+END_SRC
+
 * 参考链接
   + [[https://loggerhead.me/posts/python-de-import-ji-zhi.html][Python 的 import 机制]]
   + [[http://codingpy.com/article/python-import-101/][Python导入模块的几种姿势]]
