@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>正则表达式</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -250,40 +248,44 @@ for the JavaScript code in this tag.
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">正则表达式</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc196058">1. 简介</a></li>
-<li><a href="#orgccaac00">2. 简单的匹配</a></li>
-<li><a href="#org4117afc">3. 子表达式</a></li>
-<li><a href="#orgf9bc934">4. 回溯引用</a>
+<li><a href="#org6ea7d8f">1. 简介</a></li>
+<li><a href="#org1956d28">2. 简单的匹配</a></li>
+<li><a href="#org0b43798">3. 子表达式</a></li>
+<li><a href="#org10f080f">4. 回溯引用</a>
 <ul>
-<li><a href="#org976e3e1">4.1. 回溯引用在替换操作中的使用</a></li>
+<li><a href="#orgfabe443">4.1. 回溯引用在替换操作中的使用</a></li>
 </ul>
 </li>
-<li><a href="#orgaa97389">5. 前后查找</a>
+<li><a href="#org08d2806">5. 前后查找</a>
 <ul>
-<li><a href="#orge0d9ed2">5.1. 向前查找</a></li>
-<li><a href="#orgedcb299">5.2. 向后查找</a></li>
-<li><a href="#org288ebc3">5.3. 对前后查找取非</a></li>
+<li><a href="#org57dd90a">5.1. 向前查找</a></li>
+<li><a href="#orgcfde82a">5.2. 向后查找</a></li>
+<li><a href="#org6752696">5.3. 对前后查找取非</a></li>
 </ul>
 </li>
-<li><a href="#orgc744d89">6. 嵌入条件</a>
+<li><a href="#orgb2a89a9">6. 嵌入条件</a>
 <ul>
-<li><a href="#orgbb2d33d">6.1. 回溯引用条件</a></li>
-<li><a href="#orgdecfb83">6.2. 前后查找条件</a></li>
+<li><a href="#orgedadada">6.1. 回溯引用条件</a></li>
+<li><a href="#orgc5daf49">6.2. 前后查找条件</a></li>
 </ul>
 </li>
-<li><a href="#orgf2f550b">7. 正则表达式在线测试</a></li>
+<li><a href="#org2576ecb">7. 正则表达式在线测试</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc196058" class="outline-2">
-<h2 id="orgc196058"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org6ea7d8f" class="outline-2">
+<h2 id="org6ea7d8f"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 正则表达式(regular expression, 缩写regex) 是文本处理方面功能最强大的工具之一.
@@ -295,8 +297,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgccaac00" class="outline-2">
-<h2 id="orgccaac00"><span class="section-number-2">2</span> 简单的匹配</h2>
+<div id="outline-container-org1956d28" class="outline-2">
+<h2 id="org1956d28"><span class="section-number-2">2</span> 简单的匹配</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 有时, 简单的组合正则表达式的 <b>元字符</b> 和 <b>纯文本</b> 便足够解决很多问题.
@@ -306,13 +308,13 @@ for the JavaScript code in this tag.
 <li><p>
 <b>基本的元字符</b>
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -355,13 +357,13 @@ for the JavaScript code in this tag.
 <li><p>
 <b>数量元字符</b>
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -425,13 +427,13 @@ for the JavaScript code in this tag.
 <li><p>
 <b>位置元字符</b>
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -485,13 +487,13 @@ for the JavaScript code in this tag.
 <li><p>
 <b>特殊字符元字符</b>
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -584,13 +586,13 @@ for the JavaScript code in this tag.
 <li><p>
 <b>POSIX字符类</b>
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -673,8 +675,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4117afc" class="outline-2">
-<h2 id="org4117afc"><span class="section-number-2">3</span> 子表达式</h2>
+<div id="outline-container-org0b43798" class="outline-2">
+<h2 id="org0b43798"><span class="section-number-2">3</span> 子表达式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 子表达式可以对表达式进行 <b>分组</b> 和 <b>归类</b>.
@@ -737,8 +739,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-orgf9bc934" class="outline-2">
-<h2 id="orgf9bc934"><span class="section-number-2">4</span> 回溯引用</h2>
+<div id="outline-container-org10f080f" class="outline-2">
+<h2 id="org10f080f"><span class="section-number-2">4</span> 回溯引用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>回溯引用</b> 允许正则表达式模式引用前面部分中定义的 <b>子表达式</b> 匹配的 <b>结果</b>.
@@ -774,8 +776,8 @@ The ip address is: [12.159.46.200]
 </p>
 </div>
 
-<div id="outline-container-org976e3e1" class="outline-3">
-<h3 id="org976e3e1"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
+<div id="outline-container-orgfabe443" class="outline-3">
+<h3 id="orgfabe443"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 你可以在替换时引用匹配时使用的子表达式.
@@ -820,13 +822,13 @@ The ip address is: [12.159.46.200]
 <p>
 部分正则表达式允许使用以下元字符对字母进行大小写转换:
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -896,8 +898,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-orgaa97389" class="outline-2">
-<h2 id="orgaa97389"><span class="section-number-2">5</span> 前后查找</h2>
+<div id="outline-container-org08d2806" class="outline-2">
+<h2 id="org08d2806"><span class="section-number-2">5</span> 前后查找</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 使用正则表达式标记要匹配的文本的位置, 对该位置的前后内容进行查找.
@@ -913,8 +915,8 @@ The ip address is: [12.159.46.200]
 </p>
 </div>
 
-<div id="outline-container-orge0d9ed2" class="outline-3">
-<h3 id="orge0d9ed2"><span class="section-number-3">5.1</span> 向前查找</h3>
+<div id="outline-container-org57dd90a" class="outline-3">
+<h3 id="org57dd90a"><span class="section-number-3">5.1</span> 向前查找</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 向前查找指定了一个必须匹配但不在结果中返回的模式.
@@ -952,8 +954,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orgedcb299" class="outline-3">
-<h3 id="orgedcb299"><span class="section-number-3">5.2</span> 向后查找</h3>
+<div id="outline-container-orgcfde82a" class="outline-3">
+<h3 id="orgcfde82a"><span class="section-number-3">5.2</span> 向后查找</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 向后查找类似于向前查找, 操作符是: <code>?&lt;=</code>
@@ -969,8 +971,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org288ebc3" class="outline-3">
-<h3 id="org288ebc3"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
+<div id="outline-container-org6752696" class="outline-3">
+<h3 id="org6752696"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 前面两种查找方式为: <code>正向前查找</code> 和 <code>正向后查找</code>.
@@ -996,8 +998,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orgc744d89" class="outline-2">
-<h2 id="orgc744d89"><span class="section-number-2">6</span> 嵌入条件</h2>
+<div id="outline-container-orgb2a89a9" class="outline-2">
+<h2 id="orgb2a89a9"><span class="section-number-2">6</span> 嵌入条件</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>注</b>: 并非所有正则表达式实现都支持条件处理.
@@ -1016,8 +1018,8 @@ ftp
 </ul>
 </div>
 
-<div id="outline-container-orgbb2d33d" class="outline-3">
-<h3 id="orgbb2d33d"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
+<div id="outline-container-orgedadada" class="outline-3">
+<h3 id="orgedadada"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 回溯引用条件只在前面的子表达式匹配取得成功的情况下才允许使用一个表达式.
@@ -1047,8 +1049,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orgdecfb83" class="outline-3">
-<h3 id="orgdecfb83"><span class="section-number-3">6.2</span> 前后查找条件</h3>
+<div id="outline-container-orgc5daf49" class="outline-3">
+<h3 id="orgc5daf49"><span class="section-number-3">6.2</span> 前后查找条件</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 前后查找条件只在一个向前查找或一个向后查找取得成功的情况下才允许使用一个表达式.
@@ -1066,20 +1068,14 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orgf2f550b" class="outline-2">
-<h2 id="orgf2f550b"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
+<div id="outline-container-org2576ecb" class="outline-2">
+<h2 id="org2576ecb"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://c.runoob.com/front-end/854">正则表达式在线测试|菜鸟教程</a></li>
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-01-04 周四 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

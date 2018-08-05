@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-04 周六 09:54 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 导入相关</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb_24bit24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb_24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,30 +226,34 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 导入相关</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcb1caf2">1. 简介</a></li>
-<li><a href="#orgbc09ef8">2. import 语法</a></li>
-<li><a href="#orgb556703">3. 相对导入和绝对导入</a>
+<li><a href="#org451e503">1. 简介</a></li>
+<li><a href="#orgf4589cf">2. import 语法</a></li>
+<li><a href="#org5c73093">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#org608a1c5">3.1. 相对导入</a></li>
-<li><a href="#org111b274">3.2. 绝对导入</a></li>
+<li><a href="#orgd01a760">3.1. 相对导入</a></li>
+<li><a href="#org80bbf47">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#org9945d1e">4. 同名的包和模块</a></li>
-<li><a href="#org34498fb">5. 执行一次导入后</a></li>
-<li><a href="#org0d8b1fc">6. 其他使用细节</a></li>
-<li><a href="#orgef4ee96">7. 参考链接</a></li>
+<li><a href="#org5276193">4. 同名的包和模块</a></li>
+<li><a href="#org1543bf8">5. 执行一次导入后</a></li>
+<li><a href="#orgdbff5c3">6. 其他使用细节</a></li>
+<li><a href="#org5c148ef">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcb1caf2" class="outline-2">
-<h2 id="orgcb1caf2"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org451e503" class="outline-2">
+<h2 id="org451e503"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
@@ -272,8 +274,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbc09ef8" class="outline-2">
-<h2 id="orgbc09ef8"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-orgf4589cf" class="outline-2">
+<h2 id="orgf4589cf"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -304,12 +306,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb556703" class="outline-2">
-<h2 id="orgb556703"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-org5c73093" class="outline-2">
+<h2 id="org5c73093"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org608a1c5" class="outline-3">
-<h3 id="org608a1c5"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-orgd01a760" class="outline-3">
+<h3 id="orgd01a760"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -338,8 +340,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org111b274" class="outline-3">
-<h3 id="org111b274"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org80bbf47" class="outline-3">
+<h3 id="org80bbf47"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -396,15 +398,15 @@ pkg/
 <p>
 执行结果：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -464,15 +466,15 @@ Desktop/
 <p>
 执行结果：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -536,8 +538,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-org9945d1e" class="outline-2">
-<h2 id="org9945d1e"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org5276193" class="outline-2">
+<h2 id="org5276193"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -574,13 +576,13 @@ pkg/
 <p>
 执行结果：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -619,8 +621,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org34498fb" class="outline-2">
-<h2 id="org34498fb"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-org1543bf8" class="outline-2">
+<h2 id="org1543bf8"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -666,8 +668,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org0d8b1fc" class="outline-2">
-<h2 id="org0d8b1fc"><span class="section-number-2">6</span> 其他使用细节</h2>
+<div id="outline-container-orgdbff5c3" class="outline-2">
+<h2 id="orgdbff5c3"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -700,8 +702,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgef4ee96" class="outline-2">
-<h2 id="orgef4ee96"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org5c148ef" class="outline-2">
+<h2 id="org5c148ef"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>
@@ -709,12 +711,6 @@ pkg/
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-04-15 周日 00:00</p>
-<p class="author">Author: rgb<sub>24bit</sub></p>
-<p class="date">Created: 2018-08-04 周六 09:54</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

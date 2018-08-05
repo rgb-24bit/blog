@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python2.5-2.7的版本变化</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,43 +226,47 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python2.5-2.7的版本变化</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org996721d">1. 前言</a></li>
-<li><a href="#orgcbf7f36">2. Python2.5</a>
+<li><a href="#org4fcc79a">1. 前言</a></li>
+<li><a href="#org009f4eb">2. Python2.5</a>
 <ul>
-<li><a href="#orge378344">2.1. 主要语言变化</a></li>
-<li><a href="#org36628a5">2.2. 核心语言变化</a></li>
-<li><a href="#org95014fd">2.3. 其他内容</a></li>
+<li><a href="#orga9e806f">2.1. 主要语言变化</a></li>
+<li><a href="#orgfff5d72">2.2. 核心语言变化</a></li>
+<li><a href="#org16172c0">2.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#orgd834e09">3. Python2.6</a>
+<li><a href="#org3190976">3. Python2.6</a>
 <ul>
-<li><a href="#org450e27d">3.1. 主要语言变化</a></li>
-<li><a href="#orgad12a65">3.2. 核心语言变化</a></li>
-<li><a href="#orgb7c1f99">3.3. 其他内容</a></li>
+<li><a href="#orgc719ade">3.1. 主要语言变化</a></li>
+<li><a href="#orga1e741d">3.2. 核心语言变化</a></li>
+<li><a href="#org2a2e4c3">3.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#orge41cb4c">4. Python2.7</a>
+<li><a href="#org464ff2a">4. Python2.7</a>
 <ul>
-<li><a href="#orga11474d">4.1. 主要变化之前</a></li>
-<li><a href="#org2ec5f7b">4.2. 主要语言变化</a></li>
-<li><a href="#org005a3eb">4.3. 核心语言变化</a></li>
-<li><a href="#org16aa7fc">4.4. 其他内容</a></li>
+<li><a href="#orgb78848d">4.1. 主要变化之前</a></li>
+<li><a href="#orga6477b4">4.2. 主要语言变化</a></li>
+<li><a href="#org90f0742">4.3. 核心语言变化</a></li>
+<li><a href="#org5b8cfd8">4.4. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#org47f8ea4">5. 完结感言</a></li>
-<li><a href="#org11d35f0">6. 相关链接</a></li>
+<li><a href="#orge49dd2a">5. 完结感言</a></li>
+<li><a href="#orgc5d48e9">6. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org996721d" class="outline-2">
-<h2 id="org996721d"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org4fcc79a" class="outline-2">
+<h2 id="org4fcc79a"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <code>Python</code> 之前就纠结过到底是先学 <code>Python2</code> 好还是先学 <code>Python3</code> 好.
@@ -286,8 +288,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcbf7f36" class="outline-2">
-<h2 id="orgcbf7f36"><span class="section-number-2">2</span> Python2.5</h2>
+<div id="outline-container-org009f4eb" class="outline-2">
+<h2 id="org009f4eb"><span class="section-number-2">2</span> Python2.5</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 虽然 《Python基础教程》 讲解的便是 <code>Python2.5</code>, 但我还是感觉有必要来了解一下
@@ -295,8 +297,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orge378344" class="outline-3">
-<h3 id="orge378344"><span class="section-number-3">2.1</span> 主要语言变化</h3>
+<div id="outline-container-orga9e806f" class="outline-3">
+<h3 id="orga9e806f"><span class="section-number-3">2.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>2.5</code> 对比 <code>2.4</code> 有了这些变化.
@@ -678,7 +680,7 @@ BaseException       # New in Python 2.5
 </p></li>
 
 <li><p>
-<b>Using ssize<sub>t</sub> as the index type</b>
+<b>Using ssize_t as the index type</b>
 </p>
 
 <p>
@@ -691,7 +693,7 @@ BaseException       # New in Python 2.5
 </p></li>
 
 <li><p>
-<b>The ‘_<sub>index</sub>__’ method</b>
+<b>The ‘__index__’ method</b>
 </p>
 
 <p>
@@ -713,8 +715,8 @@ BaseException       # New in Python 2.5
 </div>
 </div>
 
-<div id="outline-container-org36628a5" class="outline-3">
-<h3 id="org36628a5"><span class="section-number-3">2.2</span> 核心语言变化</h3>
+<div id="outline-container-orgfff5d72" class="outline-3">
+<h3 id="orgfff5d72"><span class="section-number-3">2.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 以下是Python 2.5对Python核心语言所做的更改.
@@ -842,8 +844,8 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-org95014fd" class="outline-3">
-<h3 id="org95014fd"><span class="section-number-3">2.3</span> 其他内容</h3>
+<div id="outline-container-org16172c0" class="outline-3">
+<h3 id="org16172c0"><span class="section-number-3">2.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 其他的内容包括: <a href="https://docs.python.org/2/whatsnew/2.5.html#new-improved-and-removed-modules">新增, 改进, 移除的模块</a>, <a href="https://docs.python.org/2/whatsnew/2.5.html#build-and-c-api-changes">Python 构建过程和 C API 的变化</a> &#x2026;
@@ -856,8 +858,8 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-orgd834e09" class="outline-2">
-<h2 id="orgd834e09"><span class="section-number-2">3</span> Python2.6</h2>
+<div id="outline-container-org3190976" class="outline-2">
+<h2 id="org3190976"><span class="section-number-2">3</span> Python2.6</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
@@ -877,8 +879,8 @@ ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
 </p>
 </div>
 
-<div id="outline-container-org450e27d" class="outline-3">
-<h3 id="org450e27d"><span class="section-number-3">3.1</span> 主要语言变化</h3>
+<div id="outline-container-orgc719ade" class="outline-3">
+<h3 id="orgc719ade"><span class="section-number-3">3.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 对比 <code>2.5</code>, <code>2.6</code> 版本的 Python 多了这些变化.
@@ -1452,8 +1454,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orgad12a65" class="outline-3">
-<h3 id="orgad12a65"><span class="section-number-3">3.2</span> 核心语言变化</h3>
+<div id="outline-container-orga1e741d" class="outline-3">
+<h3 id="orga1e741d"><span class="section-number-3">3.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 以下是python核心语言的小变动.
@@ -1570,8 +1572,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orgb7c1f99" class="outline-3">
-<h3 id="orgb7c1f99"><span class="section-number-3">3.3</span> 其他内容</h3>
+<div id="outline-container-org2a2e4c3" class="outline-3">
+<h3 id="org2a2e4c3"><span class="section-number-3">3.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 同上, 文档链接:
@@ -1581,8 +1583,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orge41cb4c" class="outline-2">
-<h2 id="orge41cb4c"><span class="section-number-2">4</span> Python2.7</h2>
+<div id="outline-container-org464ff2a" class="outline-2">
+<h2 id="org464ff2a"><span class="section-number-2">4</span> Python2.7</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 终于 <code>2.7</code> 了&#x2026;
@@ -1594,8 +1596,8 @@ Fraction(5, 3)
 </p>
 </div>
 
-<div id="outline-container-orga11474d" class="outline-3">
-<h3 id="orga11474d"><span class="section-number-3">4.1</span> 主要变化之前</h3>
+<div id="outline-container-orgb78848d" class="outline-3">
+<h3 id="orgb78848d"><span class="section-number-3">4.1</span> 主要变化之前</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 官方文档在正式讲解 <code>2.7</code> 版本的新功能前, 还讲了一些其他的东西 !
@@ -1620,8 +1622,8 @@ PS: 写程序的时候尽可能的考虑与 <code>3.x</code> 版本兼容吧 !
 </div>
 </div>
 
-<div id="outline-container-org2ec5f7b" class="outline-3">
-<h3 id="org2ec5f7b"><span class="section-number-3">4.2</span> 主要语言变化</h3>
+<div id="outline-container-orga6477b4" class="outline-3">
+<h3 id="orga6477b4"><span class="section-number-3">4.2</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-4-2">
 <ol class="org-ol">
 <li><p>
@@ -1953,8 +1955,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org005a3eb" class="outline-3">
-<h3 id="org005a3eb"><span class="section-number-3">4.3</span> 核心语言变化</h3>
+<div id="outline-container-org90f0742" class="outline-3">
+<h3 id="org90f0742"><span class="section-number-3">4.3</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-4-3">
 <ul class="org-ul">
 <li><p>
@@ -2065,8 +2067,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org16aa7fc" class="outline-3">
-<h3 id="org16aa7fc"><span class="section-number-3">4.4</span> 其他内容</h3>
+<div id="outline-container-org5b8cfd8" class="outline-3">
+<h3 id="org5b8cfd8"><span class="section-number-3">4.4</span> 其他内容</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 同上上: <a href="https://docs.python.org/2/whatsnew/2.7.html#new-and-improved-modules">新增和改进模块</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#build-and-c-api-changes">构建过程和 C API</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#porting-to-python-2-7">迁移到2.7</a>
@@ -2074,8 +2076,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 </div>
-<div id="outline-container-org47f8ea4" class="outline-2">
-<h2 id="org47f8ea4"><span class="section-number-2">5</span> 完结感言</h2>
+<div id="outline-container-orge49dd2a" class="outline-2">
+<h2 id="orge49dd2a"><span class="section-number-2">5</span> 完结感言</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 终于&#x2026;
@@ -2108,8 +2110,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org11d35f0" class="outline-2">
-<h2 id="org11d35f0"><span class="section-number-2">6</span> 相关链接</h2>
+<div id="outline-container-orgc5d48e9" class="outline-2">
+<h2 id="orgc5d48e9"><span class="section-number-2">6</span> 相关链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/whatsnew/2.5.html">What’s New in Python 2.5</a></li>
@@ -2118,12 +2120,6 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-01-23 周二 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 13:08 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 魔法方法</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb_24bit24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb_24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,35 +226,39 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 魔法方法</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge5c70ae">1. 简介</a></li>
-<li><a href="#orgbce93eb">2. 构造和初始化</a></li>
-<li><a href="#orgb1a37fe">3. 比较和数值运算</a>
+<li><a href="#orgc7437af">1. 简介</a></li>
+<li><a href="#org1786772">2. 构造和初始化</a></li>
+<li><a href="#org8ff1510">3. 比较和数值运算</a>
 <ul>
-<li><a href="#org316bcf3">3.1. 用于比较的魔法方法</a></li>
-<li><a href="#org99fd53c">3.2. 数值处理的魔法方法</a></li>
+<li><a href="#org8a67613">3.1. 用于比较的魔法方法</a></li>
+<li><a href="#orgf856d71">3.2. 数值处理的魔法方法</a></li>
 </ul>
 </li>
-<li><a href="#org29d3ee3">4. 类型转化</a></li>
-<li><a href="#org3707175">5. 表现类</a></li>
-<li><a href="#org3f22818">6. 属性访问控制</a></li>
-<li><a href="#orge03ebf5">7. 创建定制的序列</a></li>
-<li><a href="#orgdcdcf77">8. 反射</a></li>
-<li><a href="#org9f832d9">9. 可以调用的对象</a></li>
-<li><a href="#org747e2bf">10. 上下文管理器</a></li>
-<li><a href="#orge98f25b">11. 更多的方法</a></li>
-<li><a href="#org22ca96c">12. 参考链接</a></li>
+<li><a href="#org0c4a482">4. 类型转化</a></li>
+<li><a href="#orgd6ae2dc">5. 表现类</a></li>
+<li><a href="#org2dc5855">6. 属性访问控制</a></li>
+<li><a href="#orgfa194ac">7. 创建定制的序列</a></li>
+<li><a href="#org5becef6">8. 反射</a></li>
+<li><a href="#org5cb4642">9. 可以调用的对象</a></li>
+<li><a href="#org90f5ac1">10. 上下文管理器</a></li>
+<li><a href="#orgb1a69d4">11. 更多的方法</a></li>
+<li><a href="#orga09c227">12. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge5c70ae" class="outline-2">
-<h2 id="orge5c70ae"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgc7437af" class="outline-2">
+<h2 id="orgc7437af"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 <code>Python</code> 中， 你可以通过定义一些特殊的方法来控制一个对象的行为。
@@ -276,8 +278,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbce93eb" class="outline-2">
-<h2 id="orgbce93eb"><span class="section-number-2">2</span> 构造和初始化</h2>
+<div id="outline-container-org1786772" class="outline-2">
+<h2 id="org1786772"><span class="section-number-2">2</span> 构造和初始化</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 一个对象实例化到销毁调用的方法的顺序是：
@@ -293,13 +295,13 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </p>
 
 <dl class="org-dl">
-<dt>_<sub>new</sub>_<sub>(cls[,&#x2026;])</sub>)</dt><dd>对象实例化的时候所调用的第一个方法， 它的第一个参数是这个类，
+<dt>__new__(cls[,&#x2026;]))</dt><dd>对象实例化的时候所调用的第一个方法， 它的第一个参数是这个类，
 其他的参数是用来直接传递给 <code>__init__()</code> 方法。</dd>
 
-<dt>_<sub>init</sub>_<sub>(self[, &#x2026;])</sub></dt><dd>类的初始化方法。 可以说是最常用的方法了。 调用构造函数时
+<dt>__init__(self[, &#x2026;])</dt><dd>类的初始化方法。 可以说是最常用的方法了。 调用构造函数时
 的参数就是传给它的。</dd>
 
-<dt>_<sub>del</sub>_<sub>(self)</sub></dt><dd>当实例即将被销毁时调用， 也被叫做析构函数。 <b>没有参数</b>.</dd>
+<dt>__del__(self)</dt><dd>当实例即将被销毁时调用， 也被叫做析构函数。 <b>没有参数</b>.</dd>
 </dl>
 
 <div class="org-src-container">
@@ -317,8 +319,8 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </div>
 </div>
 
-<div id="outline-container-orgb1a37fe" class="outline-2">
-<h2 id="orgb1a37fe"><span class="section-number-2">3</span> 比较和数值运算</h2>
+<div id="outline-container-org8ff1510" class="outline-2">
+<h2 id="org8ff1510"><span class="section-number-2">3</span> 比较和数值运算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一个有趣的例子：
@@ -356,20 +358,20 @@ Traceback (most recent call last):
 </p>
 </div>
 
-<div id="outline-container-org316bcf3" class="outline-3">
-<h3 id="org316bcf3"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
+<div id="outline-container-org8a67613" class="outline-3">
+<h3 id="org8a67613"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
-<dt>_<sub>cmp</sub>_<sub>(self, other)</sub></dt><dd>最基本的用于比较的魔法方法， 现了所有的比较符号 <b>(&lt;,==,!=,etc.)</b>. 如果 <code>self &lt; other</code> 应该返回一个 <b>负数</b>, 如果
+<dt>__cmp__(self, other)</dt><dd>最基本的用于比较的魔法方法， 现了所有的比较符号 <b>(&lt;,==,!=,etc.)</b>. 如果 <code>self &lt; other</code> 应该返回一个 <b>负数</b>, 如果
 <code>self == other</code> 应该返回 <b>0</b>, 如果 <code>self &gt; other</code> 应该返回一个 <b>正数</b>.</dd>
 
-<dt>_<sub>eq</sub>_<sub>(self, other)</sub></dt><dd>定义了 <code>==</code> 行为， 相等返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
+<dt>__eq__(self, other)</dt><dd>定义了 <code>==</code> 行为， 相等返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
 
-<dt>_<sub>ne</sub>_<sub>(self, other)</sub></dt><dd>定义了 <code>!=</code> 行为， 不等返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
+<dt>__ne__(self, other)</dt><dd>定义了 <code>!=</code> 行为， 不等返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
 
-<dt>_<sub>lt</sub>_<sub>(self, other)</sub></dt><dd>定义了 <code>&lt;</code> 行为， 小于返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
+<dt>__lt__(self, other)</dt><dd>定义了 <code>&lt;</code> 行为， 小于返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
 
-<dt>_<sub>gt</sub>_<sub>(self, other)</sub></dt><dd>定义了 <code>&gt;</code> 行为， 大于返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
+<dt>__gt__(self, other)</dt><dd>定义了 <code>&gt;</code> 行为， 大于返回 <code>True</code>, 反之返回 <code>False</code>.</dd>
 </dl>
 
 <div class="org-src-container">
@@ -401,40 +403,40 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org99fd53c" class="outline-3">
-<h3 id="org99fd53c"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
+<div id="outline-container-orgf856d71" class="outline-3">
+<h3 id="orgf856d71"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li><b>一元操作符和函数</b> 
 <dl class="org-dl">
-<dt>_<sub>pos</sub>_<sub>(self)</sub></dt><dd>实现正号的特性, 如 <code>+object</code></dd>
-<dt>_<sub>neg</sub>_<sub>(self)</sub></dt><dd>实现负号的特性, 如 <code>-object</code></dd>
-<dt>_<sub>abs</sub>_<sub>(self)</sub></dt><dd>实现内置 <code>abs()</code> 函数的特性, 如 <code>abs(object)</code></dd>
-<dt>_<sub>invert</sub>_<sub>(self)</sub></dt><dd>实现 <code>~</code> 符号的特性, 参考文章: <a href="https://en.wikipedia.org/wiki/Bitwise_operation#NOT">Bitwise operation</a></dd>
+<dt>__pos__(self)</dt><dd>实现正号的特性, 如 <code>+object</code></dd>
+<dt>__neg__(self)</dt><dd>实现负号的特性, 如 <code>-object</code></dd>
+<dt>__abs__(self)</dt><dd>实现内置 <code>abs()</code> 函数的特性, 如 <code>abs(object)</code></dd>
+<dt>__invert__(self)</dt><dd>实现 <code>~</code> 符号的特性, 参考文章: <a href="https://en.wikipedia.org/wiki/Bitwise_operation#NOT">Bitwise operation</a></dd>
 </dl></li>
 
 <li><b>普通算数操作符</b>
 <dl class="org-dl">
-<dt>_<sub>add</sub>_<sub>(self, other)</sub></dt><dd>实现加法, 如 <code>A + B</code></dd>
-<dt>_<sub>sub</sub>_<sub>(self, other)</sub></dt><dd>实现减法, 如 <code>A - B</code></dd>
-<dt>_<sub>mul</sub>_<sub>(self, other)</sub></dt><dd>实现乘法, 如 <code>A * B</code></dd>
-<dt>_<sub>floordiv</sub>_<sub>(self, other)</sub></dt><dd>实现 <code>//</code> 除, 如 <code>A // B</code></dd>
-<dt>_<sub>div</sub>_<sub>(self, other)</sub></dt><dd>实现 <code>/</code> 除, 如 <code>A / B</code></dd>
-<dt>_<sub>truediv</sub>_<sub>(self, other)</sub></dt><dd><p>
+<dt>__add__(self, other)</dt><dd>实现加法, 如 <code>A + B</code></dd>
+<dt>__sub__(self, other)</dt><dd>实现减法, 如 <code>A - B</code></dd>
+<dt>__mul__(self, other)</dt><dd>实现乘法, 如 <code>A * B</code></dd>
+<dt>__floordiv__(self, other)</dt><dd>实现 <code>//</code> 除, 如 <code>A // B</code></dd>
+<dt>__div__(self, other)</dt><dd>实现 <code>/</code> 除, 如 <code>A / B</code></dd>
+<dt>__truediv__(self, other)</dt><dd><p>
 实现真除法， 需要：
 </p>
 <pre class="example">
 from __future__ import division
 
 </pre></dd>
-<dt>_<sub>mod</sub>_<sub>(self, other)</sub></dt><dd>实现取模运算, 如 <code>A % B</code></dd>
-<dt>_<sub>divmod</sub>__<sub>(self, other)</sub></dt><dd>实现内置函数 <code>divmod()</code> 运算, 如 <code>divmod(obj)</code></dd>
-<dt>_<sub>pow</sub>__<sub>(self, other[, modulo])</sub></dt><dd>实现使用 <code>**</code> 的指数运算, 如 <code>A**2</code></dd>
-<dt>_<sub>lshift</sub>_<sub>(self, other)</sub></dt><dd>实现使用 <code>&lt;&lt;</code> 的按位左移运算, 如 <code>A &lt;&lt; B</code></dd>
-<dt>_<sub>rshift</sub>_<sub>(self, other)</sub></dt><dd>实现使用 <code>&gt;&gt;</code> 的按位右移运算, 如 <code>A &gt;&gt; B</code></dd>
-<dt>_<sub>and</sub>_<sub>(self, other)</sub></dt><dd>实现使用 <code>&amp;</code> 的按位与运算, 如 <code>A &amp; B</code></dd>
-<dt>_<sub>or</sub>_<sub>(self, other)</sub></dt><dd>实现使用 <code>|</code> 的按位或运算, 如 <code>A | B</code></dd>
-<dt>_<sub>xor</sub>_<sub>(self, other)</sub></dt><dd>实现使用 <code>^</code> 的按位异或运算, 如 <code>A ^ B</code></dd>
+<dt>__mod__(self, other)</dt><dd>实现取模运算, 如 <code>A % B</code></dd>
+<dt>__divmod___(self, other)</dt><dd>实现内置函数 <code>divmod()</code> 运算, 如 <code>divmod(obj)</code></dd>
+<dt>__pow___(self, other[, modulo])</dt><dd>实现使用 <code>**</code> 的指数运算, 如 <code>A**2</code></dd>
+<dt>__lshift__(self, other)</dt><dd>实现使用 <code>&lt;&lt;</code> 的按位左移运算, 如 <code>A &lt;&lt; B</code></dd>
+<dt>__rshift__(self, other)</dt><dd>实现使用 <code>&gt;&gt;</code> 的按位右移运算, 如 <code>A &gt;&gt; B</code></dd>
+<dt>__and__(self, other)</dt><dd>实现使用 <code>&amp;</code> 的按位与运算, 如 <code>A &amp; B</code></dd>
+<dt>__or__(self, other)</dt><dd>实现使用 <code>|</code> 的按位或运算, 如 <code>A | B</code></dd>
+<dt>__xor__(self, other)</dt><dd>实现使用 <code>^</code> 的按位异或运算, 如 <code>A ^ B</code></dd>
 </dl></li>
 
 <li><p>
@@ -495,22 +497,22 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org29d3ee3" class="outline-2">
-<h2 id="org29d3ee3"><span class="section-number-2">4</span> 类型转化</h2>
+<div id="outline-container-org0c4a482" class="outline-2">
+<h2 id="org0c4a482"><span class="section-number-2">4</span> 类型转化</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 可以通过一些 <b>魔法方法</b> 来实现内置类型类型转换， 注意， 是转换为 <b>内置类型</b>. 
 </p>
 <dl class="org-dl">
-<dt>_<sub>int</sub>_<sub>(self)</sub></dt><dd>实现整形的强制转换</dd>
-<dt>_<sub>long</sub>_<sub>(self)</sub></dt><dd>实现长整形的强制转换, 当然， 这应该是 <code>Python2</code> 的</dd>
-<dt>_<sub>float</sub>_<sub>(self)</sub></dt><dd>实现浮点型的强制转换</dd>
-<dt>_<sub>complex</sub>_<sub>(self)</sub></dt><dd>实现复数的强制转换</dd>
-<dt>_<sub>oct</sub>_<sub>(self)</sub></dt><dd>实现八进制的强制转换</dd>
-<dt>_<sub>hex</sub>_<sub>(self)</sub></dt><dd>实现二进制的强制转换</dd>
-<dt>_<sub>index</sub>_<sub>(self)</sub></dt><dd>当对象是被应用在 <b>切片表达式</b> 中时，实现整形强制转换</dd>
-<dt>_<sub>trunc</sub>_<sub>(self)</sub></dt><dd>当使用 <code>math.trunc(self)</code> 的时候被调用, 应该返回数值被截取成整形的值</dd>
-<dt>_<sub>coerce</sub>_<sub>(self, other)</sub></dt><dd>实现混合模式算数, 也是 <code>Python2</code> 的</dd>
+<dt>__int__(self)</dt><dd>实现整形的强制转换</dd>
+<dt>__long__(self)</dt><dd>实现长整形的强制转换, 当然， 这应该是 <code>Python2</code> 的</dd>
+<dt>__float__(self)</dt><dd>实现浮点型的强制转换</dd>
+<dt>__complex__(self)</dt><dd>实现复数的强制转换</dd>
+<dt>__oct__(self)</dt><dd>实现八进制的强制转换</dd>
+<dt>__hex__(self)</dt><dd>实现二进制的强制转换</dd>
+<dt>__index__(self)</dt><dd>当对象是被应用在 <b>切片表达式</b> 中时，实现整形强制转换</dd>
+<dt>__trunc__(self)</dt><dd>当使用 <code>math.trunc(self)</code> 的时候被调用, 应该返回数值被截取成整形的值</dd>
+<dt>__coerce__(self, other)</dt><dd>实现混合模式算数, 也是 <code>Python2</code> 的</dd>
 </dl>
 
 <p>
@@ -519,22 +521,22 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org3707175" class="outline-2">
-<h2 id="org3707175"><span class="section-number-2">5</span> 表现类</h2>
+<div id="outline-container-orgd6ae2dc" class="outline-2">
+<h2 id="orgd6ae2dc"><span class="section-number-2">5</span> 表现类</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
-<dt>_<sub>str</sub>_<sub>(self)</sub></dt><dd>使用 <code>str(obj)</code> 会调用这个方法</dd>
-<dt>_<sub>repr</sub>_<sub>(self)</sub></dt><dd>使用 <code>repr(obj)</code> 会调用这个方法</dd>
-<dt>_<sub>unicode</sub>(self)</dt><dd>使用 <code>unicode(obj)</code> 会调用这个方法， 当然这也是 <code>Python2</code> 的</dd>
-<dt>_<sub>hash</sub>_<sub>(self)</sub></dt><dd>使用 <code>hash(obj)</code> 会调用这个方法， 应该返回一个 <b>整型</b></dd>
-<dt>_<sub>nonzero</sub>(self)</dt><dd>使用 <code>bool(obj)</code> 会调用这个方法， 应该返回 <code>True</code> 或 <code>False</code>.
+<dt>__str__(self)</dt><dd>使用 <code>str(obj)</code> 会调用这个方法</dd>
+<dt>__repr__(self)</dt><dd>使用 <code>repr(obj)</code> 会调用这个方法</dd>
+<dt>__unicode(self)</dt><dd>使用 <code>unicode(obj)</code> 会调用这个方法， 当然这也是 <code>Python2</code> 的</dd>
+<dt>__hash__(self)</dt><dd>使用 <code>hash(obj)</code> 会调用这个方法， 应该返回一个 <b>整型</b></dd>
+<dt>__nonzero(self)</dt><dd>使用 <code>bool(obj)</code> 会调用这个方法， 应该返回 <code>True</code> 或 <code>False</code>.
 在 <code>Python3</code> 中改为了 <code>__bool__().</code></dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-org3f22818" class="outline-2">
-<h2 id="org3f22818"><span class="section-number-2">6</span> 属性访问控制</h2>
+<div id="outline-container-org2dc5855" class="outline-2">
+<h2 id="org2dc5855"><span class="section-number-2">6</span> 属性访问控制</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 作为动态语言， <code>Python</code> 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
@@ -542,10 +544,10 @@ from __future__ import division
 </p>
 
 <dl class="org-dl">
-<dt>_<sub>getattr</sub>_<sub>(self, name)</sub></dt><dd>获取不存在的属性的值时会调用这个方法， 所以在这个方法内可以
+<dt>__getattr__(self, name)</dt><dd>获取不存在的属性的值时会调用这个方法， 所以在这个方法内可以
 获取正常属性的值。</dd>
 
-<dt>_<sub>getattribute</sub>_<sub>(self, name)</sub></dt><dd><p>
+<dt>__getattribute__(self, name)</dt><dd><p>
 获取对象的属性时调用， 不管属性存不存在。 同时如果定义了这个方法， <code>__getattr__</code> 将
 不起作用， 除非显示调用或引发 <code>AttributeError</code>.
 </p>
@@ -564,7 +566,7 @@ from __future__ import division
 </pre>
 </div></dd>
 
-<dt>_<sub>setattr</sub>_<sub>(self, name, value)</sub></dt><dd><p>
+<dt>__setattr__(self, name, value)</dt><dd><p>
 定义设置对象的属性时的行为， 即 <code>obj.xxx = xxx</code> 时会调用这个方法
 </p>
 
@@ -587,18 +589,18 @@ from __future__ import division
 设置 <b>实例</b> 属性会调用这个方法， 包括在 <code>__init__</code> 中设置属性。 但类属性不受影响。
 </p></dd>
 
-<dt>_<sub>delattr</sub>_<sub>(self, name)</sub></dt><dd>定义删除对象的属性时的行为， 即 <code>del obj.xxx</code> 时会调用这个方法</dd>
+<dt>__delattr__(self, name)</dt><dd>定义删除对象的属性时的行为， 即 <code>del obj.xxx</code> 时会调用这个方法</dd>
 </dl>
 
 <p>
 对于这一部分的 <b>魔法方法</b>, 每个 <b>对象</b> 的 <code>__dict__</code> 属性应该是一个很重要的内容， 有兴趣可以
-了解一下 ☞ <a href="https://docs.python.org/3/library/stdtypes.html?highlight=__dict__#object.__dict__">object._<sub>dict</sub>__</a>.
+了解一下 ☞ <a href="https://docs.python.org/3/library/stdtypes.html?highlight=__dict__#object.__dict__">object.__dict__</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge03ebf5" class="outline-2">
-<h2 id="orge03ebf5"><span class="section-number-2">7</span> 创建定制的序列</h2>
+<div id="outline-container-orgfa194ac" class="outline-2">
+<h2 id="orgfa194ac"><span class="section-number-2">7</span> 创建定制的序列</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 中的序列有 <b>可变</b> 和 <b>不可变</b> 的区分， 比如 <code>tuple</code> 和 <code>list</code>.
@@ -617,40 +619,40 @@ from __future__ import division
 这些魔法方法的具体作用：
 </p>
 <dl class="org-dl">
-<dt>_<sub>len</sub>_<sub>(self)</sub></dt><dd>使用 <code>len(obj)</code> 的时候调用， 返回序列的长度</dd>
-<dt>_<sub>getitem</sub>_<sub>(self, key)</sub></dt><dd>使用 <code>obj[key]</code> 时调用， 返回序列指定键的值</dd>
-<dt>_<sub>setitem</sub>_<sub>(self, key, value)</sub></dt><dd>使用 <code>obj[key] = value</code> 时调用， 设置序列指定键的值</dd>
-<dt>_<sub>delitem</sub>_<sub>(self, key)</sub></dt><dd>使用 <code>del obj[key]</code> 时调用， 删除序列指定条目</dd>
-<dt>_<sub>iter</sub>_<sub>(self)</sub></dt><dd>返回迭代器， <code>iter(obj)</code></dd>
-<dt>_<sub>reversed</sub>_<sub>(self)</sub></dt><dd>使用 <code>reversed(obi)</code> 时调用， 反转序列</dd>
-<dt>_<sub>contains</sub>_<sub>(self, item)</sub></dt><dd>使用 <code>item in obj</code> 和 <code>item not in obj</code> 时调用， 检测成员是否存在</dd>
-<dt>_<sub>concat</sub>_<sub>(self, other)</sub></dt><dd>连接两个序列的时候调用</dd>
+<dt>__len__(self)</dt><dd>使用 <code>len(obj)</code> 的时候调用， 返回序列的长度</dd>
+<dt>__getitem__(self, key)</dt><dd>使用 <code>obj[key]</code> 时调用， 返回序列指定键的值</dd>
+<dt>__setitem__(self, key, value)</dt><dd>使用 <code>obj[key] = value</code> 时调用， 设置序列指定键的值</dd>
+<dt>__delitem__(self, key)</dt><dd>使用 <code>del obj[key]</code> 时调用， 删除序列指定条目</dd>
+<dt>__iter__(self)</dt><dd>返回迭代器， <code>iter(obj)</code></dd>
+<dt>__reversed__(self)</dt><dd>使用 <code>reversed(obi)</code> 时调用， 反转序列</dd>
+<dt>__contains__(self, item)</dt><dd>使用 <code>item in obj</code> 和 <code>item not in obj</code> 时调用， 检测成员是否存在</dd>
+<dt>__concat__(self, other)</dt><dd>连接两个序列的时候调用</dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-orgdcdcf77" class="outline-2">
-<h2 id="orgdcdcf77"><span class="section-number-2">8</span> 反射</h2>
+<div id="outline-container-org5becef6" class="outline-2">
+<h2 id="org5becef6"><span class="section-number-2">8</span> 反射</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 通过魔法方法控制使用 <code>isinstance</code> 和 <code>issubclass</code> 的反射行为：
 </p>
 <dl class="org-dl">
-<dt>_<sub>instancecheck</sub>_<sub>(self, instance)</sub></dt><dd>检查一个实例是不是定义的类的实例, 对应 <code>isinstance</code></dd>
-<dt>_<sub>subclasscheck</sub>_<sub>(self, subclass)</sub></dt><dd>检查一个类是不是定义的类的子类, 对应 <code>issubclass</code></dd>
+<dt>__instancecheck__(self, instance)</dt><dd>检查一个实例是不是定义的类的实例, 对应 <code>isinstance</code></dd>
+<dt>__subclasscheck__(self, subclass)</dt><dd>检查一个类是不是定义的类的子类, 对应 <code>issubclass</code></dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-org9f832d9" class="outline-2">
-<h2 id="org9f832d9"><span class="section-number-2">9</span> 可以调用的对象</h2>
+<div id="outline-container-org5cb4642" class="outline-2">
+<h2 id="org5cb4642"><span class="section-number-2">9</span> 可以调用的对象</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 如果你希望可以向调用函数那样调用你的 <b>对象</b>, 那么你可以定义那个对象的 <code>__call__</code> 方法。
 </p>
 
 <dl class="org-dl">
-<dt>_<sub>call</sub>_<sub>(self, [args&#x2026;])</sub></dt><dd>使用 <code>obj(...)</code> 时调用</dd>
+<dt>__call__(self, [args&#x2026;])</dt><dd>使用 <code>obj(...)</code> 时调用</dd>
 </dl>
 
 <div class="org-src-container">
@@ -668,8 +670,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org747e2bf" class="outline-2">
-<h2 id="org747e2bf"><span class="section-number-2">10</span> 上下文管理器</h2>
+<div id="outline-container-org90f5ac1" class="outline-2">
+<h2 id="org90f5ac1"><span class="section-number-2">10</span> 上下文管理器</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Python</code> 中使用 <code>with</code> 可以写出更加简洁高效的代码， 而能够使用 <code>with</code> 的对象需要支持上下文管理器。
@@ -686,8 +688,8 @@ t()
 </div>
 
 <dl class="org-dl">
-<dt>_<sub>enter</sub>_<sub>(self)</sub></dt><dd>这个方法在进入 <code>with-block</code> 之前调用, 返回值被 <code>with</code> 的目标或 <code>as</code> 后的名字绑定</dd>
-<dt>_<sub>exit</sub>_<sub>(self, exception<sub>type</sub>, exception<sub>value</sub>, traceback)</sub></dt><dd>这个方法在退出 <code>with-block</code> 时调用</dd>
+<dt>__enter__(self)</dt><dd>这个方法在进入 <code>with-block</code> 之前调用, 返回值被 <code>with</code> 的目标或 <code>as</code> 后的名字绑定</dd>
+<dt>__exit__(self, exception_type, exception_value, traceback)</dt><dd>这个方法在退出 <code>with-block</code> 时调用</dd>
 </dl>
 
 <div class="org-src-container">
@@ -711,8 +713,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-orge98f25b" class="outline-2">
-<h2 id="orge98f25b"><span class="section-number-2">11</span> 更多的方法</h2>
+<div id="outline-container-orgb1a69d4" class="outline-2">
+<h2 id="orgb1a69d4"><span class="section-number-2">11</span> 更多的方法</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <code>Python</code> 的魔法方法还有不少， <code>Python2</code> 和 <code>Python3</code> 在这方面也有一定的区别。
@@ -720,8 +722,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org22ca96c" class="outline-2">
-<h2 id="org22ca96c"><span class="section-number-2">12</span> 参考链接</h2>
+<div id="outline-container-orga09c227" class="outline-2">
+<h2 id="orga09c227"><span class="section-number-2">12</span> 参考链接</h2>
 <div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2.7/reference/datamodel.html#special-method-names">Python2.7 Special method names</a></li>
@@ -730,12 +732,6 @@ t()
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-04-03 周二 00:00</p>
-<p class="author">Author: rgb<sub>24bit</sub></p>
-<p class="date">Created: 2018-08-01 周三 13:08</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

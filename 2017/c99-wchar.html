@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C99 宽字符</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,28 +226,32 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">C99 宽字符</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3189f1f">1. 前言</a></li>
-<li><a href="#orga7f4175">2. 头文件</a></li>
-<li><a href="#org1673d1a">3. 宽字符及本地化支持</a>
+<li><a href="#org8eb78eb">1. 前言</a></li>
+<li><a href="#org4fcacd4">2. 头文件</a></li>
+<li><a href="#org6ee00f6">3. 宽字符及本地化支持</a>
 <ul>
-<li><a href="#orgfac1391">3.1. 本地化支持</a></li>
-<li><a href="#orgd5ca97b">3.2. 文件编码格式设置</a></li>
-<li><a href="#org76e99e1">3.3. 代码编写</a></li>
+<li><a href="#orgaf75c6e">3.1. 本地化支持</a></li>
+<li><a href="#org2800cf6">3.2. 文件编码格式设置</a></li>
+<li><a href="#org8fb6aad">3.3. 代码编写</a></li>
 </ul>
 </li>
-<li><a href="#org0cdfb3a">4. 相关链接</a></li>
+<li><a href="#org3eb18f9">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3189f1f" class="outline-2">
-<h2 id="org3189f1f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org8eb78eb" class="outline-2">
+<h2 id="org8eb78eb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这两天学习 <code>C99标准</code> 的过程中, 宽字符的问题可是花了我不少时间。
@@ -261,8 +263,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga7f4175" class="outline-2">
-<h2 id="orga7f4175"><span class="section-number-2">2</span> 头文件</h2>
+<div id="outline-container-org4fcacd4" class="outline-2">
+<h2 id="org4fcacd4"><span class="section-number-2">2</span> 头文件</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><p>
@@ -279,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1673d1a" class="outline-2">
-<h2 id="org1673d1a"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
+<div id="outline-container-org6ee00f6" class="outline-2">
+<h2 id="org6ee00f6"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一段简单的代码:
@@ -327,8 +329,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgfac1391" class="outline-3">
-<h3 id="orgfac1391"><span class="section-number-3">3.1</span> 本地化支持</h3>
+<div id="outline-container-orgaf75c6e" class="outline-3">
+<h3 id="orgaf75c6e"><span class="section-number-3">3.1</span> 本地化支持</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 在使用宽字符之前，我们需要了解一些相关的内容。
@@ -385,8 +387,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd5ca97b" class="outline-3">
-<h3 id="orgd5ca97b"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
+<div id="outline-container-org2800cf6" class="outline-3">
+<h3 id="org2800cf6"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 完成了本地化支持的设置，那么还有一个关键内容便是 <code>文件编码格式</code> 了。
@@ -441,8 +443,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org76e99e1" class="outline-3">
-<h3 id="org76e99e1"><span class="section-number-3">3.3</span> 代码编写</h3>
+<div id="outline-container-org8fb6aad" class="outline-3">
+<h3 id="org8fb6aad"><span class="section-number-3">3.3</span> 代码编写</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 前面两个步骤完成了基础设置， 这时候便需要了解一些在编程过程中需要注意的一些问题了。
@@ -456,8 +458,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0cdfb3a" class="outline-2">
-<h2 id="org0cdfb3a"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org3eb18f9" class="outline-2">
+<h2 id="org3eb18f9"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>维基百科:
@@ -476,12 +478,6 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2017-12-26 周二 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

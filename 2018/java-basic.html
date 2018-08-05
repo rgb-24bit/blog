@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 基础梳理</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,28 +226,32 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Java 基础梳理</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga57623c">1. 前言</a></li>
-<li><a href="#org882be6f">2. 语法无关内容</a></li>
-<li><a href="#orgc6ff75a">3. 原始数据类型和引用</a></li>
-<li><a href="#orgbc4fca8">4. 数组和字符串</a></li>
-<li><a href="#org3f06b33">5. 继承和多态</a></li>
-<li><a href="#org0c9b6cd">6. 重载</a></li>
-<li><a href="#orgf584db3">7. 抽象类</a></li>
-<li><a href="#org1ce7885">8. 接口</a></li>
-<li><a href="#orgb19cf1f">9. 异常</a></li>
-<li><a href="#orga1b73c9">10. 静态成员和常量</a></li>
+<li><a href="#org4efdb74">1. 前言</a></li>
+<li><a href="#org74bdecd">2. 语法无关内容</a></li>
+<li><a href="#orga6c08fb">3. 原始数据类型和引用</a></li>
+<li><a href="#orgf97a9da">4. 数组和字符串</a></li>
+<li><a href="#orgca10186">5. 继承和多态</a></li>
+<li><a href="#org270eeb3">6. 重载</a></li>
+<li><a href="#orgea3db65">7. 抽象类</a></li>
+<li><a href="#org5619d62">8. 接口</a></li>
+<li><a href="#orgc65a617">9. 异常</a></li>
+<li><a href="#org1f8d142">10. 静态成员和常量</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga57623c" class="outline-2">
-<h2 id="orga57623c"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org4efdb74" class="outline-2">
+<h2 id="org4efdb74"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本篇博客主要是对 <code>Java</code> 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容
@@ -262,8 +264,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org882be6f" class="outline-2">
-<h2 id="org882be6f"><span class="section-number-2">2</span> 语法无关内容</h2>
+<div id="outline-container-org74bdecd" class="outline-2">
+<h2 id="org74bdecd"><span class="section-number-2">2</span> 语法无关内容</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Java</code> 学习中有一些容易让人疑惑而与语法无关的内容， 这些内容教材上提到的少， 而平时又经常接触。
@@ -276,13 +278,13 @@ for the JavaScript code in this tag.
 <p>
 <code>Java</code> 版本和 <code>JDK</code> 版本并不是直接对应的关系， 这里是几个例子：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -320,15 +322,15 @@ for the JavaScript code in this tag.
 <p>
 然后是几个名词和它们之间的关系：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -364,7 +366,7 @@ for the JavaScript code in this tag.
 
 
 <div class="figure">
-<p><img src="img/java-env.jpg" alt="java-env.jpg" />
+<p><img src="img/java-env.jpg" alt="java-env.jpg">
 </p>
 </div>
 
@@ -381,24 +383,24 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc6ff75a" class="outline-2">
-<h2 id="orgc6ff75a"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
+<div id="outline-container-orga6c08fb" class="outline-2">
+<h2 id="orga6c08fb"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Java</code> 关键字中有 <code>8</code> 个代表 <b>原始数据类型</b>, 这些原始数据类型在 <code>java.lang</code> 还存在与之对应的 <b>包装类型</b>.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-right" />
+<col  class="org-right">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -526,8 +528,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbc4fca8" class="outline-2">
-<h2 id="orgbc4fca8"><span class="section-number-2">4</span> 数组和字符串</h2>
+<div id="outline-container-orgf97a9da" class="outline-2">
+<h2 id="orgf97a9da"><span class="section-number-2">4</span> 数组和字符串</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Java</code> 中数组类型的变量属于 <b>引用</b>, 有如下几种声明和创建方式：
@@ -581,8 +583,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3f06b33" class="outline-2">
-<h2 id="org3f06b33"><span class="section-number-2">5</span> 继承和多态</h2>
+<div id="outline-container-orgca10186" class="outline-2">
+<h2 id="orgca10186"><span class="section-number-2">5</span> 继承和多态</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Java</code> 中的继承机制并不复杂， 一般语法就是 <code>class A extends B</code>.
@@ -657,8 +659,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0c9b6cd" class="outline-2">
-<h2 id="org0c9b6cd"><span class="section-number-2">6</span> 重载</h2>
+<div id="outline-container-org270eeb3" class="outline-2">
+<h2 id="org270eeb3"><span class="section-number-2">6</span> 重载</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 首先需要明白的一点是： <b>重载不是多态</b>.
@@ -683,8 +685,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf584db3" class="outline-2">
-<h2 id="orgf584db3"><span class="section-number-2">7</span> 抽象类</h2>
+<div id="outline-container-orgea3db65" class="outline-2">
+<h2 id="orgea3db65"><span class="section-number-2">7</span> 抽象类</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 假如你希望一个 <b>方法</b> 必须被子类覆盖， 那么你可以用 <code>abstract</code> 这个关键字来修饰它。
@@ -726,8 +728,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1ce7885" class="outline-2">
-<h2 id="org1ce7885"><span class="section-number-2">8</span> 接口</h2>
+<div id="outline-container-org5619d62" class="outline-2">
+<h2 id="org5619d62"><span class="section-number-2">8</span> 接口</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <b>接口不是类</b>.
@@ -771,8 +773,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb19cf1f" class="outline-2">
-<h2 id="orgb19cf1f"><span class="section-number-2">9</span> 异常</h2>
+<div id="outline-container-orgc65a617" class="outline-2">
+<h2 id="orgc65a617"><span class="section-number-2">9</span> 异常</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 <code>java</code> 中使用 <code>throw</code> 抛出异常， 使用 <code>throws</code> 声明要抛出的远程， 使用 <code>try/catch</code> 捕获处理异常。
@@ -829,8 +831,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga1b73c9" class="outline-2">
-<h2 id="orga1b73c9"><span class="section-number-2">10</span> 静态成员和常量</h2>
+<div id="outline-container-org1f8d142" class="outline-2">
+<h2 id="org1f8d142"><span class="section-number-2">10</span> 静态成员和常量</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Java</code> 中， 你可以使用 <code>static</code> 修饰类的 <b>内部成员</b>, 被 <code>static</code> 修饰的内部成员属于 <b>静态成员</b>.
@@ -865,12 +867,6 @@ for the JavaScript code in this tag.
 </div>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-07-17 周二 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

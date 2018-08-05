@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>操作系统之异常控制流</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,24 +226,28 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">操作系统之异常控制流</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgac1b0c7">1. 简介</a></li>
-<li><a href="#org6afc499">2. 异常控制流</a></li>
-<li><a href="#org2d4b305">3. 异常</a></li>
-<li><a href="#org83d1199">4. 信号</a></li>
-<li><a href="#org191bb44">5. 非本地跳转</a></li>
-<li><a href="#org13955e4">6. 参考链接</a></li>
+<li><a href="#orgdf469ee">1. 简介</a></li>
+<li><a href="#org88a7d8e">2. 异常控制流</a></li>
+<li><a href="#org2ed7200">3. 异常</a></li>
+<li><a href="#org0134ff2">4. 信号</a></li>
+<li><a href="#org24131d4">5. 非本地跳转</a></li>
+<li><a href="#orge524a43">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgac1b0c7" class="outline-2">
-<h2 id="orgac1b0c7"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgdf469ee" class="outline-2">
+<h2 id="orgdf469ee"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>CSAPP</code> - 深入理解计算机系统这本书断断续续的看了部分章节了， 但是在看到 <b>异常控制流</b> 这一章之前，
@@ -279,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6afc499" class="outline-2">
-<h2 id="org6afc499"><span class="section-number-2">2</span> 异常控制流</h2>
+<div id="outline-container-org88a7d8e" class="outline-2">
+<h2 id="org88a7d8e"><span class="section-number-2">2</span> 异常控制流</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 如果学过其他高级语言， 那么 <b>异常</b> 这个词应该不陌生， 或者说很熟悉。
@@ -313,8 +315,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2d4b305" class="outline-2">
-<h2 id="org2d4b305"><span class="section-number-2">3</span> 异常</h2>
+<div id="outline-container-org2ed7200" class="outline-2">
+<h2 id="org2ed7200"><span class="section-number-2">3</span> 异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>异常</b> 是 <b>异常控制流</b> 的一种 <b>表现形式</b>, 也就是说异常就是异常控制流。
@@ -375,8 +377,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org83d1199" class="outline-2">
-<h2 id="org83d1199"><span class="section-number-2">4</span> 信号</h2>
+<div id="outline-container-org0134ff2" class="outline-2">
+<h2 id="org0134ff2"><span class="section-number-2">4</span> 信号</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在原书上， 信号前还有一节的内容是 <b>进程</b>, <b>进程</b> 属于 <b>异常</b> 的一种应用方式， 需要详细了解的话可以查阅相关资料。
@@ -418,8 +420,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org191bb44" class="outline-2">
-<h2 id="org191bb44"><span class="section-number-2">5</span> 非本地跳转</h2>
+<div id="outline-container-org24131d4" class="outline-2">
+<h2 id="org24131d4"><span class="section-number-2">5</span> 非本地跳转</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;setjmp.h&gt;</span>
@@ -556,20 +558,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org13955e4" class="outline-2">
-<h2 id="org13955e4"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-orge524a43" class="outline-2">
+<h2 id="orge524a43"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.di.unipi.it/~nids/docs/longjump_try_trow_catch.html">Exceptions in C with Longjmp and Setjmp</a></li>
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-07-01 周日 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置函数</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,25 +226,29 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 内置函数</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf498e42">1. 简介</a></li>
-<li><a href="#orgc9aa3b4">2. 数值计算相关</a></li>
-<li><a href="#orga0c57aa">3. 可迭代对象相关</a></li>
-<li><a href="#orga818065">4. 进制和编码转化</a></li>
-<li><a href="#orgddbad16">5. 类和属性相关</a></li>
-<li><a href="#org6f07b1a">6. 命名空间相关</a></li>
-<li><a href="#org06e5c78">7. 其他内置函数</a></li>
+<li><a href="#org48d8c0c">1. 简介</a></li>
+<li><a href="#org1022d96">2. 数值计算相关</a></li>
+<li><a href="#orgb8a94c3">3. 可迭代对象相关</a></li>
+<li><a href="#org7f0c9b5">4. 进制和编码转化</a></li>
+<li><a href="#orgbfaeba4">5. 类和属性相关</a></li>
+<li><a href="#orgeeb6bbe">6. 命名空间相关</a></li>
+<li><a href="#orgc603908">7. 其他内置函数</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf498e42" class="outline-2">
-<h2 id="orgf498e42"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org48d8c0c" class="outline-2">
+<h2 id="org48d8c0c"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 具有众多的内置函数， <code>Python2</code> 和 <code>Python3</code> 在这方面也具有一定的区别。
@@ -255,19 +257,19 @@ for the JavaScript code in this tag.
 <p>
 <code>Python2</code> 内置函数：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -415,19 +417,19 @@ for the JavaScript code in this tag.
 <p>
 <code>Python3</code> 内置函数：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -568,8 +570,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc9aa3b4" class="outline-2">
-<h2 id="orgc9aa3b4"><span class="section-number-2">2</span> 数值计算相关</h2>
+<div id="outline-container-org1022d96" class="outline-2">
+<h2 id="org1022d96"><span class="section-number-2">2</span> 数值计算相关</h2>
 <div class="outline-text-2" id="text-2">
 <dl class="org-dl">
 <dt>abs(x)</dt><dd>获取 <code>x</code> 的绝对值， 如果 <code>x</code> 是复数， 则返回其大小。</dd>
@@ -583,8 +585,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga0c57aa" class="outline-2">
-<h2 id="orga0c57aa"><span class="section-number-2">3</span> 可迭代对象相关</h2>
+<div id="outline-container-orgb8a94c3" class="outline-2">
+<h2 id="orgb8a94c3"><span class="section-number-2">3</span> 可迭代对象相关</h2>
 <div class="outline-text-2" id="text-3">
 <dl class="org-dl">
 <dt>all(iterable)</dt><dd>如果所有元素为 <code>True</code> 则返回 <code>True</code>, 否则返回 <code>False</code>.</dd>
@@ -705,8 +707,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-orga818065" class="outline-2">
-<h2 id="orga818065"><span class="section-number-2">4</span> 进制和编码转化</h2>
+<div id="outline-container-org7f0c9b5" class="outline-2">
+<h2 id="org7f0c9b5"><span class="section-number-2">4</span> 进制和编码转化</h2>
 <div class="outline-text-2" id="text-4">
 <dl class="org-dl">
 <dt>bin(x)</dt><dd>将一个整数转化为二进制字符串， 如果 <code>x</code> 不是整数， 那么它必须定义了 <code>__index__()</code> 方法。</dd>
@@ -735,8 +737,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-orgddbad16" class="outline-2">
-<h2 id="orgddbad16"><span class="section-number-2">5</span> 类和属性相关</h2>
+<div id="outline-container-orgbfaeba4" class="outline-2">
+<h2 id="orgbfaeba4"><span class="section-number-2">5</span> 类和属性相关</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
 <dt>callable(object)</dt><dd><p>
@@ -868,8 +870,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-org6f07b1a" class="outline-2">
-<h2 id="org6f07b1a"><span class="section-number-2">6</span> 命名空间相关</h2>
+<div id="outline-container-orgeeb6bbe" class="outline-2">
+<h2 id="orgeeb6bbe"><span class="section-number-2">6</span> 命名空间相关</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 使用叫做 <b>命名空间</b> 的东西来记录变量的轨迹。命名空间是一个 <b>字典</b>, 
@@ -911,8 +913,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-org06e5c78" class="outline-2">
-<h2 id="org06e5c78"><span class="section-number-2">7</span> 其他内置函数</h2>
+<div id="outline-container-orgc603908" class="outline-2">
+<h2 id="orgc603908"><span class="section-number-2">7</span> 其他内置函数</h2>
 <div class="outline-text-2" id="text-7">
 <dl class="org-dl">
 <dt>type(object)</dt><dd></dd>
@@ -984,12 +986,6 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </dl>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-02-14 周三 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

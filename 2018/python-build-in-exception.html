@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置异常</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,33 +226,37 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 内置异常</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd7e4e0f">1. 简介</a></li>
-<li><a href="#orgfb74fbb">2. 常见异常</a></li>
-<li><a href="#org583991d">3. 自定义异常</a></li>
-<li><a href="#org374da3c">4. Python2 内置异常</a>
+<li><a href="#orgdb1e54c">1. 简介</a></li>
+<li><a href="#orgc8fa1ad">2. 常见异常</a></li>
+<li><a href="#org425ffac">3. 自定义异常</a></li>
+<li><a href="#org11bd75a">4. Python2 内置异常</a>
 <ul>
-<li><a href="#org9027d72">4.1. 完整异常列表</a></li>
-<li><a href="#org120b1ef">4.2. 异常层次结构</a></li>
+<li><a href="#orgc67633a">4.1. 完整异常列表</a></li>
+<li><a href="#org6bd081a">4.2. 异常层次结构</a></li>
 </ul>
 </li>
-<li><a href="#org3188613">5. Python3 内置异常</a>
+<li><a href="#org4172ae3">5. Python3 内置异常</a>
 <ul>
-<li><a href="#org0f9a8c1">5.1. 完整异常列表</a></li>
-<li><a href="#org52066e5">5.2. 异常层次结构</a></li>
+<li><a href="#orgd415d10">5.1. 完整异常列表</a></li>
+<li><a href="#org60219fb">5.2. 异常层次结构</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd7e4e0f" class="outline-2">
-<h2 id="orgd7e4e0f"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgdb1e54c" class="outline-2">
+<h2 id="orgdb1e54c"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
@@ -272,19 +274,19 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfb74fbb" class="outline-2">
-<h2 id="orgfb74fbb"><span class="section-number-2">2</span> 常见异常</h2>
+<div id="outline-container-orgc8fa1ad" class="outline-2">
+<h2 id="orgc8fa1ad"><span class="section-number-2">2</span> 常见异常</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 网上有人总结了 <code>Python</code> 的常见异常， 这里记录下来：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -362,8 +364,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org583991d" class="outline-2">
-<h2 id="org583991d"><span class="section-number-2">3</span> 自定义异常</h2>
+<div id="outline-container-org425ffac" class="outline-2">
+<h2 id="org425ffac"><span class="section-number-2">3</span> 自定义异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 定义自己的异常是很有用的， 能够提供更清楚的 <b>异常信息</b>, 也能添加内置异常不具有的功能。
@@ -465,12 +467,12 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org374da3c" class="outline-2">
-<h2 id="org374da3c"><span class="section-number-2">4</span> Python2 内置异常</h2>
+<div id="outline-container-org11bd75a" class="outline-2">
+<h2 id="org11bd75a"><span class="section-number-2">4</span> Python2 内置异常</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org9027d72" class="outline-3">
-<h3 id="org9027d72"><span class="section-number-3">4.1</span> 完整异常列表</h3>
+<div id="outline-container-orgc67633a" class="outline-3">
+<h3 id="orgc67633a"><span class="section-number-3">4.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -552,8 +554,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org120b1ef" class="outline-3">
-<h3 id="org120b1ef"><span class="section-number-3">4.2</span> 异常层次结构</h3>
+<div id="outline-container-org6bd081a" class="outline-3">
+<h3 id="org6bd081a"><span class="section-number-3">4.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-4-2">
 <pre class="example">
 BaseException
@@ -611,8 +613,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org3188613" class="outline-2">
-<h2 id="org3188613"><span class="section-number-2">5</span> Python3 内置异常</h2>
+<div id="outline-container-org4172ae3" class="outline-2">
+<h2 id="org4172ae3"><span class="section-number-2">5</span> Python3 内置异常</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python3</code> 和 <code>Python2</code> 不兼容， 异常处理方面， <code>Python3</code> 也对异常结构进行了一些调整。
@@ -626,8 +628,8 @@ BaseException
 </ul>
 </div>
 
-<div id="outline-container-org0f9a8c1" class="outline-3">
-<h3 id="org0f9a8c1"><span class="section-number-3">5.1</span> 完整异常列表</h3>
+<div id="outline-container-orgd415d10" class="outline-3">
+<h3 id="orgd415d10"><span class="section-number-3">5.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -726,8 +728,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org52066e5" class="outline-3">
-<h3 id="org52066e5"><span class="section-number-3">5.2</span> 异常层次结构</h3>
+<div id="outline-container-org60219fb" class="outline-3">
+<h3 id="org60219fb"><span class="section-number-3">5.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-5-2">
 <pre class="example">
 BaseException
@@ -798,12 +800,6 @@ BaseException
 </div>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-02-18 周日 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

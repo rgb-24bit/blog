@@ -40,9 +40,24 @@
   (rename-file "README.html" "index.html" t))
 
 (defun init-export-env ()
+  ;; Dependency
   (load-file "htmlize.el")
+
+  ;; No backup file
   (setq make-backup-files nil)
-  (setq inhibit-message t))
+
+  ;; Do not output the message
+  (setq inhibit-message t)
+
+  ;; Export settings
+  (setq org-export-default-language "zh-CN")
+  (setq org-export-with-sub-superscripts nil)
+  (setq org-html-postamble nil)
+
+  ;; HTML Specific export settings
+  (setq org-html-doctype "html5")
+  (setq org-html-link-home "https://rgb-24bit.github.io")
+  (setq org-html-link-up "https://rgb-24bit.github.io/blog/"))
 
 (progn
   (init-export-env)

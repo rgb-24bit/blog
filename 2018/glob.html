@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glob 语法及解析</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,22 +226,26 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Glob 语法及解析</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org20b88aa">1. glob 简介</a></li>
-<li><a href="#orgbdfd4d6">2. glob 语法</a></li>
-<li><a href="#orgd4ff3b8">3. .gitignore</a></li>
-<li><a href="#org50c718b">4. Python glob</a></li>
+<li><a href="#orgf302ea3">1. glob 简介</a></li>
+<li><a href="#org5063b87">2. glob 语法</a></li>
+<li><a href="#org4d9870f">3. .gitignore</a></li>
+<li><a href="#org3dfb6a8">4. Python glob</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org20b88aa" class="outline-2">
-<h2 id="org20b88aa"><span class="section-number-2">1</span> glob 简介</h2>
+<div id="outline-container-orgf302ea3" class="outline-2">
+<h2 id="orgf302ea3"><span class="section-number-2">1</span> glob 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>glob</code> 是用于匹配符合指定模式的文件集合的一种语言， 类似于正则表达式， 但更加简单。
@@ -251,26 +253,26 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbdfd4d6" class="outline-2">
-<h2 id="orgbdfd4d6"><span class="section-number-2">2</span> glob 语法</h2>
+<div id="outline-container-org5063b87" class="outline-2">
+<h2 id="org5063b87"><span class="section-number-2">2</span> glob 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>glob</code> 的语法很简单：
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -342,8 +344,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd4ff3b8" class="outline-2">
-<h2 id="orgd4ff3b8"><span class="section-number-2">3</span> .gitignore</h2>
+<div id="outline-container-org4d9870f" class="outline-2">
+<h2 id="org4d9870f"><span class="section-number-2">3</span> .gitignore</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>git</code> 的 <code>.gitignore</code> 文件可以使用 <code>glob</code> 模式匹配， 另外还有一些规则：
@@ -357,8 +359,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org50c718b" class="outline-2">
-<h2 id="org50c718b"><span class="section-number-2">4</span> Python glob</h2>
+<div id="outline-container-org3dfb6a8" class="outline-2">
+<h2 id="org3dfb6a8"><span class="section-number-2">4</span> Python glob</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Python</code> 有进行 <code>glob</code> 匹配的标准库， 使用也很简单：
@@ -381,12 +383,6 @@ glob.iglob(<span style="font-style: italic;">'*/'</span>)  <span style="font-wei
 </p>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-03-20 周二 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

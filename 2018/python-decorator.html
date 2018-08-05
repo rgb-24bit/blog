@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 闭包和装饰器</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,26 +226,30 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 闭包和装饰器</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org28435c9">1. 简介</a></li>
-<li><a href="#orgd160eb1">2. 闭包</a></li>
-<li><a href="#org8693bea">3. 装饰器</a>
+<li><a href="#org1d03ea3">1. 简介</a></li>
+<li><a href="#org49f997c">2. 闭包</a></li>
+<li><a href="#orga07669a">3. 装饰器</a>
 <ul>
-<li><a href="#org18022ff">3.1. 多重装饰器</a></li>
+<li><a href="#org95d69ae">3.1. 多重装饰器</a></li>
 </ul>
 </li>
-<li><a href="#orgebf0865">4. 参考链接</a></li>
+<li><a href="#org4852608">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org28435c9" class="outline-2">
-<h2 id="org28435c9"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org1d03ea3" class="outline-2">
+<h2 id="org1d03ea3"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时
@@ -260,8 +262,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd160eb1" class="outline-2">
-<h2 id="orgd160eb1"><span class="section-number-2">2</span> 闭包</h2>
+<div id="outline-container-org49f997c" class="outline-2">
+<h2 id="org49f997c"><span class="section-number-2">2</span> 闭包</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
@@ -365,8 +367,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-org8693bea" class="outline-2">
-<h2 id="org8693bea"><span class="section-number-2">3</span> 装饰器</h2>
+<div id="outline-container-orga07669a" class="outline-2">
+<h2 id="orga07669a"><span class="section-number-2">3</span> 装饰器</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的
@@ -495,8 +497,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </ul>
 </div>
 
-<div id="outline-container-org18022ff" class="outline-3">
-<h3 id="org18022ff"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div id="outline-container-org95d69ae" class="outline-3">
+<h3 id="org95d69ae"><span class="section-number-3">3.1</span> 多重装饰器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
@@ -532,8 +534,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-orgebf0865" class="outline-2">
-<h2 id="orgebf0865"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org4852608" class="outline-2">
+<h2 id="org4852608"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>
@@ -541,12 +543,6 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-05-16 周三 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

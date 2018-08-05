@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HTTP 协议相关</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,29 +226,33 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">HTTP 协议相关</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1d61d6e">1. 前言</a></li>
-<li><a href="#org82292a0">2. URL 相关</a></li>
-<li><a href="#org8cf2ae9">3. HTTP 概览</a>
+<li><a href="#org91a466f">1. 前言</a></li>
+<li><a href="#org2a483a2">2. URL 相关</a></li>
+<li><a href="#org60b2657">3. HTTP 概览</a>
 <ul>
-<li><a href="#org7165123">3.1. HTTP 报文</a></li>
-<li><a href="#org16dfa24">3.2. HTTP 消息头</a></li>
-<li><a href="#org2d0a92e">3.3. HTTP Cookie</a></li>
-<li><a href="#org2583daf">3.4. HTTP 身份验证</a></li>
+<li><a href="#orgef65135">3.1. HTTP 报文</a></li>
+<li><a href="#org94fc406">3.2. HTTP 消息头</a></li>
+<li><a href="#orgf77da4e">3.3. HTTP Cookie</a></li>
+<li><a href="#orgd7e379c">3.4. HTTP 身份验证</a></li>
 </ul>
 </li>
-<li><a href="#org443933d">4. 参考链接</a></li>
+<li><a href="#org40b7f9b">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1d61d6e" class="outline-2">
-<h2 id="org1d61d6e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org91a466f" class="outline-2">
+<h2 id="org91a466f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最近在阅读源码的过程中， 因为对 <code>HTTP</code> 协议了解的太少， 使得源码的阅读难以推进。
@@ -266,8 +268,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org82292a0" class="outline-2">
-<h2 id="org82292a0"><span class="section-number-2">2</span> URL 相关</h2>
+<div id="outline-container-org2a483a2" class="outline-2">
+<h2 id="org2a483a2"><span class="section-number-2">2</span> URL 相关</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先来看 <b>统一资源定位符 URL</b>.
@@ -295,15 +297,15 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 <p>
 其它组成的含义如下：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -376,8 +378,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org8cf2ae9" class="outline-2">
-<h2 id="org8cf2ae9"><span class="section-number-2">3</span> HTTP 概览</h2>
+<div id="outline-container-org60b2657" class="outline-2">
+<h2 id="org60b2657"><span class="section-number-2">3</span> HTTP 概览</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 首先， <code>HTTP</code> 是一个协议， 主要规定了 <b>客户端</b> 和 <b>服务端</b> 之间数据传输的 <b>格式</b>.
@@ -389,8 +391,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 </div>
 
-<div id="outline-container-org7165123" class="outline-3">
-<h3 id="org7165123"><span class="section-number-3">3.1</span> HTTP 报文</h3>
+<div id="outline-container-orgef65135" class="outline-3">
+<h3 id="orgef65135"><span class="section-number-3">3.1</span> HTTP 报文</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>HTTP 报文</b> 在一定程度是就是 <code>HTTP</code> 协议的数据结构。
@@ -406,7 +408,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 
 
 <div class="figure">
-<p><img src="https://mdn.mozillademos.org/files/13687/HTTP_Request.png" alt="HTTP_Request.png" />
+<p><img src="https://mdn.mozillademos.org/files/13687/HTTP_Request.png" alt="HTTP_Request.png">
 </p>
 </div></dd>
 
@@ -416,14 +418,14 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 
 
 <div class="figure">
-<p><img src="https://mdn.mozillademos.org/files/13691/HTTP_Response.png" alt="HTTP_Response.png" />
+<p><img src="https://mdn.mozillademos.org/files/13691/HTTP_Response.png" alt="HTTP_Response.png">
 </p>
 </div></dd>
 </dl>
 
 
 <div class="figure">
-<p><img src="https://mdn.mozillademos.org/files/13827/HTTPMsgStructure2.png" alt="HTTPMsgStructure2.png" />
+<p><img src="https://mdn.mozillademos.org/files/13827/HTTPMsgStructure2.png" alt="HTTPMsgStructure2.png">
 </p>
 </div>
 
@@ -442,13 +444,13 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 <p>
 常用的 <b>请求方法</b>:
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -472,17 +474,17 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 <p>
 创建的 <b>状态码</b>:
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-right" />
+<col  class="org-right">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -536,8 +538,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org16dfa24" class="outline-3">
-<h3 id="org16dfa24"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
+<div id="outline-container-org94fc406" class="outline-3">
+<h3 id="org94fc406"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>HTTP 消息头</b> 的格式为 <code>Name: Value</code>.
@@ -573,8 +575,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org2d0a92e" class="outline-3">
-<h3 id="org2d0a92e"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
+<div id="outline-container-orgf77da4e" class="outline-3">
+<h3 id="orgf77da4e"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 由于 <code>HTTP</code> 是 <b>无状态</b> 的协议， 因此无法直接判断两个 <b>请求</b> 之间的关系。
@@ -640,8 +642,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org2583daf" class="outline-3">
-<h3 id="org2583daf"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
+<div id="outline-container-orgd7e379c" class="outline-3">
+<h3 id="orgd7e379c"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，
@@ -650,7 +652,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 
 
 <div class="figure">
-<p><img src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png" alt="HTTPAuth.png" />
+<p><img src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png" alt="HTTPAuth.png">
 </p>
 </div>
 
@@ -692,8 +694,8 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 </div>
 
-<div id="outline-container-org443933d" class="outline-2">
-<h2 id="org443933d"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org40b7f9b" class="outline-2">
+<h2 id="org40b7f9b"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP</a></li>
@@ -706,12 +708,6 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-05-03 周四 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:58 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Win32 API 窗口程序</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb_24bit24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb_24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,34 +226,38 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Win32 API 窗口程序</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org46680f3">1. 前言</a></li>
-<li><a href="#org904109b">2. 基本内容</a>
+<li><a href="#org9a4eb31">1. 前言</a></li>
+<li><a href="#org519b8d9">2. 基本内容</a>
 <ul>
-<li><a href="#org811d8c2">2.1. 类型定义</a></li>
-<li><a href="#org9a91c8f">2.2. 匈牙利命名法</a></li>
-<li><a href="#orgef93225">2.3. 使用字符串</a></li>
-<li><a href="#org55cf150">2.4. 应用程序入口: WinMain</a></li>
-<li><a href="#orgc6ebf78">2.5. 关于句柄</a></li>
+<li><a href="#org1c9abef">2.1. 类型定义</a></li>
+<li><a href="#org002322b">2.2. 匈牙利命名法</a></li>
+<li><a href="#orgd37c5cc">2.3. 使用字符串</a></li>
+<li><a href="#org4accc00">2.4. 应用程序入口: WinMain</a></li>
+<li><a href="#org3928eea">2.5. 关于句柄</a></li>
 </ul>
 </li>
-<li><a href="#orgab9f2a2">3. 简单的窗口程序</a>
+<li><a href="#orgaae3a50">3. 简单的窗口程序</a>
 <ul>
-<li><a href="#orga529e74">3.1. 代码理解</a></li>
+<li><a href="#org2f7682a">3.1. 代码理解</a></li>
 </ul>
 </li>
-<li><a href="#org1437875">4. 参考链接</a></li>
+<li><a href="#orgb1d3bfa">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org46680f3" class="outline-2">
-<h2 id="org46680f3"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org9a4eb31" class="outline-2">
+<h2 id="org9a4eb31"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 之前因为一些原因放弃了学习 <code>Win32 API</code> 来编写图形程序， 虽然还是不打算深入学习
@@ -264,12 +266,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org904109b" class="outline-2">
-<h2 id="org904109b"><span class="section-number-2">2</span> 基本内容</h2>
+<div id="outline-container-org519b8d9" class="outline-2">
+<h2 id="org519b8d9"><span class="section-number-2">2</span> 基本内容</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org811d8c2" class="outline-3">
-<h3 id="org811d8c2"><span class="section-number-3">2.1</span> 类型定义</h3>
+<div id="outline-container-org1c9abef" class="outline-3">
+<h3 id="org1c9abef"><span class="section-number-3">2.1</span> 类型定义</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Win32 API</code> 预先定义了一些类型， 编写程序之前了解这些是很有必要的。
@@ -278,15 +280,15 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li><b>整数类型：</b></li>
 </ul>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -403,18 +405,18 @@ for the JavaScript code in this tag.
 </p>
 
 <ul class="org-ul">
-<li><b>DWORD<sub>PTR</sub></b></li>
-<li><b>INT<sub>PTR</sub></b></li>
-<li><b>LONG<sub>PTR</sub></b></li>
-<li><b>ULONG<sub>PTR</sub></b></li>
-<li><b>UINT<sub>PTR</sub></b></li>
+<li><b>DWORD_PTR</b></li>
+<li><b>INT_PTR</b></li>
+<li><b>LONG_PTR</b></li>
+<li><b>ULONG_PTR</b></li>
+<li><b>UINT_PTR</b></li>
 </ul></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9a91c8f" class="outline-3">
-<h3 id="org9a91c8f"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
+<div id="outline-container-org002322b" class="outline-3">
+<h3 id="org002322b"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Win32 API</code> 中采用 <a href="https://zh.wikipedia.org/wiki/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95">匈牙利命名法</a>, 每个变量名由一个或多个小写字母开始。 这些字母有助于记忆变量的类型和用途。
@@ -428,8 +430,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgef93225" class="outline-3">
-<h3 id="orgef93225"><span class="section-number-3">2.3</span> 使用字符串</h3>
+<div id="outline-container-orgd37c5cc" class="outline-3">
+<h3 id="orgd37c5cc"><span class="section-number-3">2.3</span> 使用字符串</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>Windows</code> 系统的使用者遍布全世界， 仅仅使用 <code>ANSI</code> 字符是满足不了需求的。
@@ -455,13 +457,13 @@ for the JavaScript code in this tag.
 <p>
 除了 <code>WCHAR</code> 的类型：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -487,12 +489,12 @@ for the JavaScript code in this tag.
 
 <tr>
 <td class="org-left">PWSTR or LPWSTR</td>
-<td class="org-left">wchar<sub>t</sub>*</td>
+<td class="org-left">wchar_t*</td>
 </tr>
 
 <tr>
 <td class="org-left">PCWSTR or LPCWSTR</td>
-<td class="org-left">const wchar<sub>t</sub>*</td>
+<td class="org-left">const wchar_t*</td>
 </tr>
 </tbody>
 </table>
@@ -517,15 +519,15 @@ for the JavaScript code in this tag.
 <p>
 虽然统一了 <code>API</code>, 但是字符的定义还是很麻烦， 因此 <code>Win32 API</code> 还定义了宏 <code>TCHAR</code> 和 <code>TEXT</code> 来统一字符类型：
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -537,7 +539,7 @@ for the JavaScript code in this tag.
 <tbody>
 <tr>
 <td class="org-left">TCHAR</td>
-<td class="org-left">wchar<sub>t</sub></td>
+<td class="org-left">wchar_t</td>
 <td class="org-left">char</td>
 </tr>
 
@@ -580,8 +582,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-org55cf150" class="outline-3">
-<h3 id="org55cf150"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
+<div id="outline-container-org4accc00" class="outline-3">
+<h3 id="org4accc00"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>C</code> 语言的入口函数是 <code>main</code>, 而 <code>Win32 Api</code> 程序的入口函数应该是 <code>WinMain</code>.
@@ -607,8 +609,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-orgc6ebf78" class="outline-3">
-<h3 id="orgc6ebf78"><span class="section-number-3">2.5</span> 关于句柄</h3>
+<div id="outline-container-org3928eea" class="outline-3">
+<h3 id="org3928eea"><span class="section-number-3">2.5</span> 关于句柄</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <b>句柄</b> 在 <code>Windows</code> 中应该是一个比较重要的概念， 当初在学习的时候把我绕了一圈还晕乎乎的。
@@ -639,8 +641,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-orgab9f2a2" class="outline-2">
-<h2 id="orgab9f2a2"><span class="section-number-2">3</span> 简单的窗口程序</h2>
+<div id="outline-container-orgaae3a50" class="outline-2">
+<h2 id="orgaae3a50"><span class="section-number-2">3</span> 简单的窗口程序</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;windows.h&gt;</span>
@@ -737,7 +739,7 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 
 
 <div class="figure">
-<p><img src="img/win32.png" alt="win32.png" />
+<p><img src="img/win32.png" alt="win32.png">
 </p>
 </div>
 
@@ -751,8 +753,8 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 </p>
 </div>
 
-<div id="outline-container-orga529e74" class="outline-3">
-<h3 id="orga529e74"><span class="section-number-3">3.1</span> 代码理解</h3>
+<div id="outline-container-org2f7682a" class="outline-3">
+<h3 id="org2f7682a"><span class="section-number-3">3.1</span> 代码理解</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 虽然是一个简单的窗口程序， 但是 <code>Win32</code> 窗口程序的基本框架和这个程序是基本相同的， 基本流程就是：
@@ -826,8 +828,8 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 </div>
 </div>
 
-<div id="outline-container-org1437875" class="outline-2">
-<h2 id="org1437875"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orgb1d3bfa" class="outline-2">
+<h2 id="orgb1d3bfa"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://msdn.microsoft.com/library/windows/desktop/bg126470.aspx?f=255&amp;MSPPError=-2147217396">Desktop Programming</a></li>
@@ -835,12 +837,6 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-03-25 周日 00:00</p>
-<p class="author">Author: rgb<sub>24bit</sub></p>
-<p class="date">Created: 2018-08-01 周三 12:58</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:10 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 构造对象实例</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,23 +226,27 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 构造对象实例</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc38555f">1. 前言</a></li>
-<li><a href="#orgdfd4cb5">2. 使用</a></li>
-<li><a href="#orge3be58c">3. 关系</a></li>
-<li><a href="#orgd107dfa">4. 元类</a></li>
-<li><a href="#org19461a3">5. 参考链接</a></li>
+<li><a href="#org9d0597b">1. 前言</a></li>
+<li><a href="#org487122b">2. 使用</a></li>
+<li><a href="#org684bdab">3. 关系</a></li>
+<li><a href="#org01e0bb3">4. 元类</a></li>
+<li><a href="#org70af7c6">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc38555f" class="outline-2">
-<h2 id="orgc38555f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org9d0597b" class="outline-2">
+<h2 id="org9d0597b"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中我们常用的一个特殊方法为 <code>__init__</code>, 曾经， 我认为这个方法是用于构造对象实例的方法。
@@ -269,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdfd4cb5" class="outline-2">
-<h2 id="orgdfd4cb5"><span class="section-number-2">2</span> 使用</h2>
+<div id="outline-container-org487122b" class="outline-2">
+<h2 id="org487122b"><span class="section-number-2">2</span> 使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 对于 <code>__init__</code>, 相信只要使用过 <code>Python</code>, 应该都不陌生， 其一般形式为：
@@ -345,8 +347,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orge3be58c" class="outline-2">
-<h2 id="orge3be58c"><span class="section-number-2">3</span> 关系</h2>
+<div id="outline-container-org684bdab" class="outline-2">
+<h2 id="org684bdab"><span class="section-number-2">3</span> 关系</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>__new__</code> 和 <code>__init__</code> 两者之间存在很紧密的关系， 简单的概括一下就是：
@@ -470,8 +472,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orgd107dfa" class="outline-2">
-<h2 id="orgd107dfa"><span class="section-number-2">4</span> 元类</h2>
+<div id="outline-container-org01e0bb3" class="outline-2">
+<h2 id="org01e0bb3"><span class="section-number-2">4</span> 元类</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>__new__</code> 的一大使用场景就是元类了， 和一般的 <code>__new__</code> 不一样， 由于 <b>元类</b> 的实例是 <b>类</b>, 因此 <b>元类</b> 的 <code>__new__</code> 方法
@@ -501,20 +503,14 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-org19461a3" class="outline-2">
-<h2 id="org19461a3"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-org70af7c6" class="outline-2">
+<h2 id="org70af7c6"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://amir.rachum.com/blog/2016/10/03/understanding-python-class-instantiation/">Understanding Python Class Instantiation</a></li>
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-07-31 周二 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

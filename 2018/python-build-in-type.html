@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 13:08 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置类型</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,30 +226,34 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 内置类型</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf6632f7">1. 简介</a></li>
-<li><a href="#org52df8d2">2. bool</a></li>
-<li><a href="#org935e205">3. 数值类型</a>
+<li><a href="#org979b735">1. 简介</a></li>
+<li><a href="#orgf68df0a">2. bool</a></li>
+<li><a href="#org74e8531">3. 数值类型</a>
 <ul>
-<li><a href="#org67a9299">3.1. 方法</a></li>
+<li><a href="#orgc8b1bd9">3.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#org503dde5">4. 序列类型</a></li>
-<li><a href="#org24c945a">5. 文本序列类型</a></li>
-<li><a href="#orgba9591d">6. 集合类型</a></li>
-<li><a href="#orgd5a29ae">7. 映射类型</a></li>
-<li><a href="#orgd869bff">8. 参考链接</a></li>
+<li><a href="#org969e9c9">4. 序列类型</a></li>
+<li><a href="#org7256df8">5. 文本序列类型</a></li>
+<li><a href="#org771411e">6. 集合类型</a></li>
+<li><a href="#org279ad2b">7. 映射类型</a></li>
+<li><a href="#org752a93a">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf6632f7" class="outline-2">
-<h2 id="orgf6632f7"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org979b735" class="outline-2">
+<h2 id="org979b735"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客是对 <code>Python</code> 内置类型的简单汇总， 省略了很多内容。
@@ -259,8 +261,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org52df8d2" class="outline-2">
-<h2 id="org52df8d2"><span class="section-number-2">2</span> bool</h2>
+<div id="outline-container-orgf68df0a" class="outline-2">
+<h2 id="orgf68df0a"><span class="section-number-2">2</span> bool</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 中， <code>bool</code> 类型属于 <code>int</code> 的子类， 只存在 <code>True</code> 和 <code>False</code> 这两个实例。
@@ -292,8 +294,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org935e205" class="outline-2">
-<h2 id="org935e205"><span class="section-number-2">3</span> 数值类型</h2>
+<div id="outline-container-org74e8531" class="outline-2">
+<h2 id="org74e8531"><span class="section-number-2">3</span> 数值类型</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持
@@ -329,18 +331,18 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org67a9299" class="outline-3">
-<h3 id="org67a9299"><span class="section-number-3">3.1</span> 方法</h3>
+<div id="outline-container-orgc8b1bd9" class="outline-3">
+<h3 id="orgc8b1bd9"><span class="section-number-3">3.1</span> 方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
-<dt>int.bit<sub>length</sub>()</dt><dd>返回整数的二进制长度。</dd>
+<dt>int.bit_length()</dt><dd>返回整数的二进制长度。</dd>
 
-<dt>int.to<sub>bytes</sub>(length, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回表示整数的字节数组。
+<dt>int.to_bytes(length, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回表示整数的字节数组。
 效果和 <code>hex(x)</code> 有点像， 但更高级</dd>
 
-<dt>int.from<sub>bytes</sub>(bytes, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回给定字节数组所表示的整数。</dd>
+<dt>int.from_bytes(bytes, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回给定字节数组所表示的整数。</dd>
 
-<dt>float.as<sub>integer</sub><sub>ratio</sub>()</dt><dd><p>
+<dt>float.as_integer_ratio()</dt><dd><p>
 返回一对整数，其比例与原始浮点数完全相等，并带有一个正的分母。
 </p>
 
@@ -351,7 +353,7 @@ for the JavaScript code in this tag.
 </pre>
 </div></dd>
 
-<dt>float.is<sub>integer</sub>()</dt><dd>如果小数点后全是 <code>0</code>, 返回 <code>True</code>, 否则返回 <code>False</code></dd>
+<dt>float.is_integer()</dt><dd>如果小数点后全是 <code>0</code>, 返回 <code>True</code>, 否则返回 <code>False</code></dd>
 
 <dt>float.hex()</dt><dd>将浮点数的表示形式返回为十六进制字符串。</dd>
 
@@ -367,8 +369,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org503dde5" class="outline-2">
-<h2 id="org503dde5"><span class="section-number-2">4</span> 序列类型</h2>
+<div id="outline-container-org969e9c9" class="outline-2">
+<h2 id="org969e9c9"><span class="section-number-2">4</span> 序列类型</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里
@@ -418,8 +420,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org24c945a" class="outline-2">
-<h2 id="org24c945a"><span class="section-number-2">5</span> 文本序列类型</h2>
+<div id="outline-container-org7256df8" class="outline-2">
+<h2 id="org7256df8"><span class="section-number-2">5</span> 文本序列类型</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 万恶之源 <code>str</code>. <code>Python2</code> 和 <code>Python3</code> 的不兼容相当难受。
@@ -454,8 +456,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgba9591d" class="outline-2">
-<h2 id="orgba9591d"><span class="section-number-2">6</span> 集合类型</h2>
+<div id="outline-container-org771411e" class="outline-2">
+<h2 id="org771411e"><span class="section-number-2">6</span> 集合类型</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 中的集合类型有 <code>set</code> 和 <code>frozenset</code> 两种。
@@ -504,8 +506,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd5a29ae" class="outline-2">
-<h2 id="orgd5a29ae"><span class="section-number-2">7</span> 映射类型</h2>
+<div id="outline-container-org279ad2b" class="outline-2">
+<h2 id="org279ad2b"><span class="section-number-2">7</span> 映射类型</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 的映射类型无疑是 <code>dict</code> 了。
@@ -534,8 +536,8 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 </div>
 </div>
 
-<div id="outline-container-orgd869bff" class="outline-2">
-<h2 id="orgd869bff"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org752a93a" class="outline-2">
+<h2 id="org752a93a"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/stdtypes.html">Python3</a></li>
@@ -543,12 +545,6 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-03-23 周五 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 13:08</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

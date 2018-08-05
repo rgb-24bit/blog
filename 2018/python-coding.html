@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<!-- 2018-08-01 周三 12:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 2018-08-05 周日 18:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 编码问题</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="rgb-24bit" />
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,25 +226,29 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
 <h1 class="title">Python 编码问题</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org40950a4">1. Unicode &amp; UTF-8</a></li>
-<li><a href="#orgf405a75">2. 编码格式转化</a></li>
-<li><a href="#orgc046643">3. Python2</a></li>
-<li><a href="#org4e6d789">4. Python3</a></li>
-<li><a href="#orgf057cf6">5. 编写程序</a></li>
-<li><a href="#org6d7d881">6. 代码样例</a></li>
-<li><a href="#orgda1aa0f">7. 参考链接</a></li>
+<li><a href="#orgd08ec0f">1. Unicode &amp; UTF-8</a></li>
+<li><a href="#orgfd4bddc">2. 编码格式转化</a></li>
+<li><a href="#orgb0e03a3">3. Python2</a></li>
+<li><a href="#org424b739">4. Python3</a></li>
+<li><a href="#org3e339d9">5. 编写程序</a></li>
+<li><a href="#org4427321">6. 代码样例</a></li>
+<li><a href="#orga950c43">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org40950a4" class="outline-2">
-<h2 id="org40950a4"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
+<div id="outline-container-orgd08ec0f" class="outline-2">
+<h2 id="orgd08ec0f"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
@@ -273,8 +275,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf405a75" class="outline-2">
-<h2 id="orgf405a75"><span class="section-number-2">2</span> 编码格式转化</h2>
+<div id="outline-container-orgfd4bddc" class="outline-2">
+<h2 id="orgfd4bddc"><span class="section-number-2">2</span> 编码格式转化</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>目前存在有很多种编码方式， 如 <code>UTF-8</code>, <code>cp936</code> 等</li>
@@ -287,8 +289,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc046643" class="outline-2">
-<h2 id="orgc046643"><span class="section-number-2">3</span> Python2</h2>
+<div id="outline-container-orgb0e03a3" class="outline-2">
+<h2 id="orgb0e03a3"><span class="section-number-2">3</span> Python2</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python2</code> 中的两种字符串数据类型：
@@ -346,8 +348,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org4e6d789" class="outline-2">
-<h2 id="org4e6d789"><span class="section-number-2">4</span> Python3</h2>
+<div id="outline-container-org424b739" class="outline-2">
+<h2 id="org424b739"><span class="section-number-2">4</span> Python3</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 和 <code>Python2</code> 中不同的是， <code>Python3</code> 默认的字符串类型变为了 <code>unicode</code>, 而字节字符串的定义需要通过 <code>b'abc'</code> 的方式。
@@ -393,8 +395,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgf057cf6" class="outline-2">
-<h2 id="orgf057cf6"><span class="section-number-2">5</span> 编写程序</h2>
+<div id="outline-container-org3e339d9" class="outline-2">
+<h2 id="org3e339d9"><span class="section-number-2">5</span> 编写程序</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b>无法改变的五个事实：</b>
@@ -418,8 +420,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org6d7d881" class="outline-2">
-<h2 id="org6d7d881"><span class="section-number-2">6</span> 代码样例</h2>
+<div id="outline-container-org4427321" class="outline-2">
+<h2 id="org4427321"><span class="section-number-2">6</span> 代码样例</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在阅读 <a href="https://github.com/webpy/webpy">webpy</a> 源码的过程中， 发现了在 <code>utils.py</code> 中的一段处理这个问题的代码， 感觉很有用：
@@ -480,8 +482,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgda1aa0f" class="outline-2">
-<h2 id="orgda1aa0f"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orga950c43" class="outline-2">
+<h2 id="orga950c43"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html">unicode 之痛</a> - 推荐</li>
@@ -489,12 +491,6 @@ Traceback (most recent call last):
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2018-02-26 周一 00:00</p>
-<p class="author">Author: rgb-24bit</p>
-<p class="date">Created: 2018-08-01 周三 12:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
