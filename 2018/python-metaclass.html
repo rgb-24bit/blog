@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-05 周日 11:11 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 元类</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="rgb-24bit" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 元类</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge5f68f9">1. 前言</a></li>
+<li><a href="#orgf82d36b">2. type</a></li>
+<li><a href="#org053a56d">3. 元类的定义</a></li>
+<li><a href="#orgc942a05">4. 类属性和实例属性</a></li>
+<li><a href="#orgd43b2f8">5. 元类的使用</a></li>
+<li><a href="#org3f93ee1">6. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge5f68f9" class="outline-2">
+<h2 id="orge5f68f9"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>元类</b> 在 <code>Python</code> 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 <b>创建类</b> 时的行为，
+有趣在于通过元类你可以体会到 <b>类和实例</b> 之间奇妙的关系。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf82d36b" class="outline-2">
+<h2 id="orgf82d36b"><span class="section-number-2">2</span> type</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>Python</code> 作为动态语言， 类型是在运行时创建和确定的， 默认情况下， 用于创建类的就是 <code>type</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">type</span>(name, bases, <span style="font-weight: bold;">dict</span>) -&gt; a new <span style="font-weight: bold;">type</span>
+</pre>
+</div>
+
+<p>
+当 <code>type</code> 用于创建类时， 参数分别为：
+</p>
+<ul class="org-ul">
+<li><b>name</b> - 类名</li>
+<li><b>bases</b> - 基类元组</li>
+<li><b>dict</b> - 属性字典</li>
+</ul>
+
+<p>
+举个栗子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__repr__</span>(<span style="font-weight: bold;">self</span>):
+    <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'The type of this instance is %s.'</span> % <span style="font-weight: bold;">self</span>.__class__
+
+
+<span style="font-weight: bold; font-style: italic;">TestClass</span> = <span style="font-weight: bold;">type</span>(<span style="font-style: italic;">'TestClass'</span>, (<span style="font-weight: bold;">object</span>,), {<span style="font-style: italic;">'__repr__'</span>: __repr__})
+
+<span style="font-weight: bold;">print</span>(TestClass())
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">The type of this instance is &lt;class '__main__.TestClass'&gt;.</span>
+</pre>
+</div>
+
+<p>
+这个例子中， 创建了名为 <code>TestClass</code> 的类， 其基类为 <code>object</code>, 只定义了方法 <code>__repr__</code>.
+</p>
+
+<p>
+等价于以下定义：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__repr__</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'The type of this instance is %s.'</span> % <span style="font-weight: bold;">self</span>.__class__
+</pre>
+</div>
+
+<p>
+在这种情况下， <code>type</code> 相当于一个 <b>类</b>, 因此我们可以继承 <code>type</code>, 然后使用 <code>type</code> 的子类即 <b>元类</b> 
+来创建类。
+</p>
+
+<p>
+此时， 我们需要关注元类的几个方法： <code>__new__</code>, <code>__init__</code>, <code>__call__</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org053a56d" class="outline-2">
+<h2 id="org053a56d"><span class="section-number-2">3</span> 元类的定义</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>元类(metaclass)</b> 属于 <code>type</code> 的子类， 而 <b>类</b> 属于 <b>元类</b> 的 <b>实例</b>.
+</p>
+
+<p>
+使用 <b>元类</b> 创建类， 就是创建 <b>元类的实例</b>.
+</p>
+
+<p>
+和创建实例密切相关的两个方法为 <code>__new__</code> 和 <code>__init__</code>. 对于这两者的关系与使用可以查看博客： <a href="python-new-instance.html">Python 构造对象实例</a>.
+</p>
+
+<p>
+这里来看它们在 <b>元类</b> 中的使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyMetaClass</span>(<span style="font-weight: bold;">type</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__new__</span>(metaclass, name, bases, attrs):
+        <span style="font-weight: bold; font-style: italic;">attrs</span>[<span style="font-style: italic;">'creator'</span>] = metaclass.<span style="font-weight: bold;">__name__</span>
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>.__new__(metaclass, name, bases, attrs)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(cls, name, bases, attrs):
+        <span style="font-weight: bold; font-style: italic;">cls.name</span> = cls.creator + <span style="font-style: italic;">'.'</span> + name
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__call__</span>(cls, *args, **kwargs):
+        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Create an instance with type %s.'</span> % cls.name)
+        <span style="font-weight: bold; font-style: italic;">obj</span> = cls.__new__(cls, *args, **kwargs)
+        obj.__init__(*args, **kwargs)
+        <span style="font-weight: bold;">return</span> obj
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, name):
+        <span style="font-weight: bold;">self</span>.name = name
+
+
+<span style="font-weight: bold;">print</span>(TestClass(<span style="font-style: italic;">'job'</span>).name)
+
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create an instance with type MyMetaClass.TestClass.</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">job</span>
+</pre>
+</div>
+
+<p>
+对于 <code>__new__</code> 和 <code>__init__</code> 其实没有什么好说的， <code>__new__</code> 创建元类的实例 <b>类</b>,  <code>__init__</code> 中设置创建的 <b>类</b> 的属性。
+</p>
+
+<p>
+比较有趣的方法是元类中的 <code>__call__</code> 方法。
+</p>
+
+<p>
+当我们将一个实例当做函数使用时， 会调用方法 <code>__call__</code>. 而 <b>元类</b> 的实例是 <b>类</b>, 什么时候我们会把 <b>类</b> 当做函数使用 ？
+</p>
+
+<p>
+<b>创建类的实例的时候</b>.
+</p>
+
+<p>
+因此， <code>MyMetaClass.__call__</code> 会在创建 <code>TestClass</code> 的实例的时候调用， 因此我们会在上面那个例子中看到输出：
+</p>
+<pre class="example">
+Create an instance with type MyMetaClass.TestClass.
+</pre>
+
+<p>
+创建实例的过程可以参考 <a href="python-new-instance.html">Python 构造对象实例</a> 中的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">create_instance</span>(obj_type, *args, **kwargs):
+    <span style="font-weight: bold; font-style: italic;">obj</span> = obj_type.__new__(*args, **kwargs)
+    <span style="font-weight: bold;">if</span> obj <span style="font-weight: bold;">is</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold; text-decoration: underline;">None</span> <span style="font-weight: bold;">and</span> <span style="font-weight: bold;">issubclass</span>(obj, obj_type):
+        obj.__init__(*args, **kwargs)
+    <span style="font-weight: bold;">return</span> obj
+</pre>
+</div>
+
+<p>
+这个时候， 我们就得到了这样一条关系链条：
+</p>
+<pre class="example">
+    元类 --&gt; 类 --&gt; 类的实例
+</pre>
+
+<p>
+到了这个地方， 我觉得需要讨论一下 <b>类属性</b> 和 <b>实例属性</b> 的关系。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc942a05" class="outline-2">
+<h2 id="orgc942a05"><span class="section-number-2">4</span> 类属性和实例属性</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+搞清楚 <b>类属性</b> 和 <b>实例属性</b> 的关系之前， 需要明确的两点是：
+</p>
+<ul class="org-ul">
+<li><code>Python</code> 之中， 一切皆是对象</li>
+<li><b>获取属性</b> 和 <b>设置属性</b> 的行为不同</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">OneClass</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold; font-style: italic;">num</span> = 10
+
+
+<span style="font-weight: bold; font-style: italic;">A</span> = OneClass()
+<span style="font-weight: bold; font-style: italic;">B</span> = OneClass()
+<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+
+<span style="font-weight: bold; font-style: italic;">A.num</span> += 2
+<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+
+<span style="font-weight: bold; font-style: italic;">OneClass.num</span> += 2
+<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+</pre>
+</div>
+
+<p>
+以上代码的执行结果为：
+</p>
+<pre class="example">
+10 10 10
+12 10 10
+12 12 12
+</pre>
+
+<p>
+<b>对此的理解</b>:
+</p>
+<ol class="org-ol">
+<li><b>类</b> 是一个对象， <b>实例</b> 也是一个对象</li>
+<li>通过类似 <code>self.xxx = xxx</code> 的方式设置的属性直接 <b>绑定</b> 到 <b>实例对象</b></li>
+<li>直接在 <b>类</b> 内部定义的属性 <b>没有绑定</b> 到 <b>实例</b>, 而是 <b>绑定</b> 到 <b>类</b> 对象</li>
+<li>访问一个 <b>实例对象</b> 不存在的 <b>属性</b> 的时候会尝试从 <b>类对象</b> 获去那个属性</li>
+<li>设置 一个 <b>实例对象</b> 不存在的 <b>属性</b> 的值的时候， 会尝试从 <b>类对象</b> 获取属性的值，
+然后将运算后的结果 <b>绑定</b> 到 <b>实例</b> 上， 使之成为 <b>实例属性</b></li>
+</ol>
+
+<p>
+这里需要明白的是： <b>元类和类</b>, <b>类和实例</b>, 都满足这一关系。
+</p>
+
+<p>
+即： 获取 <b>类</b> 不存在的属性会尝试获取 <b>元类</b> 的属性。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyMetaClass</span>(<span style="font-weight: bold;">type</span>):
+    <span style="font-weight: bold; font-style: italic;">language</span> = <span style="font-style: italic;">'English'</span>
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
+    <span style="font-weight: bold;">pass</span>
+
+
+<span style="font-weight: bold;">print</span>(TestClass.language)
+<span style="font-weight: bold;">print</span>(TestClass().language)
+
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">English</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">AttributeError: 'TestClass' object has no attribute 'language'</span>
+</pre>
+</div>
+
+<p>
+这个例子中， 获取 <code>TestClass</code> 的实例的 <code>language</code> 属性出错， 但获取 <code>TestClass</code> 的 <code>language</code> 属性没有问题。
+</p>
+
+<p>
+所以， 获取 <b>类的实例</b> 不存在的属性不会传递到 <b>元类</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd43b2f8" class="outline-2">
+<h2 id="orgd43b2f8"><span class="section-number-2">5</span> 元类的使用</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+元类的使用我也没有多少经验， 只能简单的列出一些自己尝试的结果。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<b>_<sub>new</sub>__</b> 方法的参数
+</p>
+
+<p>
+一般情况下， 我们使用元类都是这样使用的：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+这种情况下， 类的创建是隐式完成的， 参数应该和 <code>type</code> 相同， 否则会出错。
+</p>
+
+<p>
+另一种情况， 显示创建类时， 我们可以定义自己的参数：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">TestClass</span> = MyMetaClass(...)
+</pre>
+</div>
+
+<p>
+这种情况下， 我们需要保证的是在 <code>MyMetaClass</code> 的 <code>__new__</code> 方法中保证使用 <code>type.__new__</code> 创建
+类的参数正确。
+</p>
+
+<p>
+当然， 个人十分不推荐这种用法。
+</p></li>
+
+<li><p>
+<b>_<sub>init</sub>__</b> 和 <b>_<sub>new</sub>__</b> 参数的一致性
+</p>
+
+<p>
+创建类时， 得到元类的实例 <b>类</b> 后调用 <b>_<sub>init</sub>__</b> 方法的过程我们无法插手， 因此需要保证
+<b>_<sub>init</sub>__</b> 的参数比 <b>_<sub>new</sub>__</b> 具有更高的 <b>包容性</b>.
+</p>
+
+<p>
+最低限度是能够容纳所有的 <b>name</b>, <b>bases</b> 和 <b>attrs</b> 这三个参数。
+</p>
+
+<p>
+这一点对于 <b>类</b> 和 <b>类的实例</b> 也是基本适用的， 特殊情况就是在 <b>元类</b> 的 <b>_<sub>call</sub>__</b> 方法中进行调整。
+</p>
+
+<p>
+当然， 我同样十分不推荐这种做法。
+</p></li>
+
+<li><p>
+<b>Python2</b> 和 <b>Python3</b> 的兼容
+</p>
+
+<p>
+<code>Python2</code> 和 <code>Python3</code> 中定义元类的方式不同：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python2</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold; font-style: italic;">__metaclass__</span> = MyMetaClass
+
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python3</span>
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+如果需要兼容， 可以这样做：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> six <span style="font-weight: bold;">import</span> with_metaclass
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Meta</span>(<span style="font-weight: bold;">type</span>):
+    <span style="font-weight: bold;">pass</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Base</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">pass</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyClass</span>(with_metaclass(Meta, Base)):
+    <span style="font-weight: bold;">pass</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3f93ee1" class="outline-2">
+<h2 id="org3f93ee1"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>Python</code> 给了我们很大程度上的自由， 我们可以运用各种奇淫技巧写出各种神奇的代码。
+</p>
+
+<p>
+但是， 我感觉有一句话还是很有道理的： <b>如非必要, 勿增实体.</b>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-08-05 周日 00:00</p>
+<p class="author">Author: rgb-24bit</p>
+<p class="date">Created: 2018-08-05 周日 11:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 08-05 -- [[file:2018/python-metaclass.org][Python 元类]] ::
   - 07-31 -- [[file:2018/python-new-instance.org][Python 构造对象实例]] ::
   - 07-26 -- [[file:2018/python3.0-3.6.org][Python3.0-3.6的版本变化]] ::
   - 07-17 -- [[file:2018/java-basic.org][Java 基础梳理]] ::

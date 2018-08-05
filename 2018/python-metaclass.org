@@ -1,0 +1,252 @@
+#+TITLE:      Python 元类
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-08-05 周日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#type][type]]
+- [[#元类的定义][元类的定义]]
+- [[#类属性和实例属性][类属性和实例属性]]
+- [[#元类的使用][元类的使用]]
+- [[#结语][结语]]
+
+* 前言
+  *元类* 在 ~Python~ 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 *创建类* 时的行为，
+  有趣在于通过元类你可以体会到 *类和实例* 之间奇妙的关系。
+
+* type
+  ~Python~ 作为动态语言， 类型是在运行时创建和确定的， 默认情况下， 用于创建类的就是 ~type~.
+
+  #+BEGIN_SRC python
+    type(name, bases, dict) -> a new type
+  #+END_SRC
+
+  当 ~type~ 用于创建类时， 参数分别为：
+  + *name* - 类名
+  + *bases* - 基类元组
+  + *dict* - 属性字典
+
+  举个栗子：
+  #+BEGIN_SRC python
+    def __repr__(self):
+        return 'The type of this instance is %s.' % self.__class__
+
+
+    TestClass = type('TestClass', (object,), {'__repr__': __repr__})
+
+    print(TestClass())
+
+    ## output ##
+    # The type of this instance is <class '__main__.TestClass'>.
+  #+END_SRC
+
+  这个例子中， 创建了名为 ~TestClass~ 的类， 其基类为 ~object~, 只定义了方法 ~__repr__~.
+
+  等价于以下定义：
+  #+BEGIN_SRC python
+    class TestClass(object):
+        def __repr__(self):
+            return 'The type of this instance is %s.' % self.__class__
+  #+END_SRC
+
+  在这种情况下， ~type~ 相当于一个 *类*, 因此我们可以继承 ~type~, 然后使用 ~type~ 的子类即 *元类* 
+  来创建类。
+
+  此时， 我们需要关注元类的几个方法： ~__new__~, ~__init__~, ~__call__~.
+
+* 元类的定义
+  *元类(metaclass)* 属于 ~type~ 的子类， 而 *类* 属于 *元类* 的 *实例*.
+
+  使用 *元类* 创建类， 就是创建 *元类的实例*.
+
+  和创建实例密切相关的两个方法为 ~__new__~ 和 ~__init__~. 对于这两者的关系与使用可以查看博客： [[file:python-new-instance.org][Python 构造对象实例]].
+
+  这里来看它们在 *元类* 中的使用：
+  #+BEGIN_SRC python
+    class MyMetaClass(type):
+        def __new__(metaclass, name, bases, attrs):
+            attrs['creator'] = metaclass.__name__
+            return type.__new__(metaclass, name, bases, attrs)
+
+        def __init__(cls, name, bases, attrs):
+            cls.name = cls.creator + '.' + name
+
+        def __call__(cls, *args, **kwargs):
+            print('Create an instance with type %s.' % cls.name)
+            obj = cls.__new__(cls, *args, **kwargs)
+            obj.__init__(*args, **kwargs)
+            return obj
+
+
+    class TestClass(object, metaclass=MyMetaClass):
+        def __init__(self, name):
+            self.name = name
+
+
+    print(TestClass('job').name)
+
+
+    ## output ##
+    # Create an instance with type MyMetaClass.TestClass.
+    # job
+  #+END_SRC
+
+  对于 ~__new__~ 和 ~__init__~ 其实没有什么好说的， ~__new__~ 创建元类的实例 *类*,  ~__init__~ 中设置创建的 *类* 的属性。
+
+  比较有趣的方法是元类中的 ~__call__~ 方法。
+
+  当我们将一个实例当做函数使用时， 会调用方法 ~__call__~. 而 *元类* 的实例是 *类*, 什么时候我们会把 *类* 当做函数使用 ？
+
+  *创建类的实例的时候*.
+
+  因此， ~MyMetaClass.__call__~ 会在创建 ~TestClass~ 的实例的时候调用， 因此我们会在上面那个例子中看到输出：
+  #+BEGIN_EXAMPLE
+    Create an instance with type MyMetaClass.TestClass.
+  #+END_EXAMPLE
+
+  创建实例的过程可以参考 [[file:python-new-instance.org][Python 构造对象实例]] 中的代码：
+  #+BEGIN_SRC python
+    def create_instance(obj_type, *args, **kwargs):
+        obj = obj_type.__new__(*args, **kwargs)
+        if obj is not None and issubclass(obj, obj_type):
+            obj.__init__(*args, **kwargs)
+        return obj
+  #+END_SRC
+
+  这个时候， 我们就得到了这样一条关系链条：
+  #+BEGIN_EXAMPLE
+    元类 --> 类 --> 类的实例
+  #+END_EXAMPLE
+  
+  到了这个地方， 我觉得需要讨论一下 *类属性* 和 *实例属性* 的关系。
+
+* 类属性和实例属性
+  搞清楚 *类属性* 和 *实例属性* 的关系之前， 需要明确的两点是：
+  + ~Python~ 之中， 一切皆是对象
+  + *获取属性* 和 *设置属性* 的行为不同
+
+  #+BEGIN_SRC python
+    class OneClass(object):
+        num = 10
+
+
+    A = OneClass()
+    B = OneClass()
+    print(A.num, B.num, OneClass.num)
+
+    A.num += 2
+    print(A.num, B.num, OneClass.num)
+
+    OneClass.num += 2
+    print(A.num, B.num, OneClass.num)
+  #+END_SRC
+  
+  以上代码的执行结果为：
+  #+BEGIN_EXAMPLE
+    10 10 10
+    12 10 10
+    12 12 12
+  #+END_EXAMPLE
+
+  *对此的理解*:
+  1. *类* 是一个对象， *实例* 也是一个对象
+  2. 通过类似 ~self.xxx = xxx~ 的方式设置的属性直接 *绑定* 到 *实例对象*
+  3. 直接在 *类* 内部定义的属性 *没有绑定* 到 *实例*, 而是 *绑定* 到 *类* 对象
+  4. 访问一个 *实例对象* 不存在的 *属性* 的时候会尝试从 *类对象* 获去那个属性
+  5. 设置 一个 *实例对象* 不存在的 *属性* 的值的时候， 会尝试从 *类对象* 获取属性的值，
+     然后将运算后的结果 *绑定* 到 *实例* 上， 使之成为 *实例属性*
+  
+  这里需要明白的是： *元类和类*, *类和实例*, 都满足这一关系。
+
+  即： 获取 *类* 不存在的属性会尝试获取 *元类* 的属性。
+
+  #+BEGIN_SRC python
+    class MyMetaClass(type):
+        language = 'English'
+
+
+    class TestClass(object, metaclass=MyMetaClass):
+        pass
+
+
+    print(TestClass.language)
+    print(TestClass().language)
+
+
+    ## output ##
+    # English
+    # AttributeError: 'TestClass' object has no attribute 'language'
+  #+END_SRC
+
+  这个例子中， 获取 ~TestClass~ 的实例的 ~language~ 属性出错， 但获取 ~TestClass~ 的 ~language~ 属性没有问题。
+
+  所以， 获取 *类的实例* 不存在的属性不会传递到 *元类*.
+
+* 元类的使用
+  元类的使用我也没有多少经验， 只能简单的列出一些自己尝试的结果。
+
+  + *__new__* 方法的参数
+
+    一般情况下， 我们使用元类都是这样使用的：
+    #+BEGIN_SRC python
+      class TestClass(object, metaclass=MyMetaClass):
+          pass
+    #+END_SRC
+    
+    这种情况下， 类的创建是隐式完成的， 参数应该和 ~type~ 相同， 否则会出错。
+
+    另一种情况， 显示创建类时， 我们可以定义自己的参数：
+    #+BEGIN_SRC python
+      TestClass = MyMetaClass(...)
+    #+END_SRC
+
+    这种情况下， 我们需要保证的是在 ~MyMetaClass~ 的 ~__new__~ 方法中保证使用 ~type.__new__~ 创建
+    类的参数正确。
+
+    当然， 个人十分不推荐这种用法。
+
+  + *__init__* 和 *__new__* 参数的一致性
+
+   创建类时， 得到元类的实例 *类* 后调用 *__init__* 方法的过程我们无法插手， 因此需要保证
+   *__init__* 的参数比 *__new__* 具有更高的 *包容性*.
+
+   最低限度是能够容纳所有的 *name*, *bases* 和 *attrs* 这三个参数。
+
+   这一点对于 *类* 和 *类的实例* 也是基本适用的， 特殊情况就是在 *元类* 的 *__call__* 方法中进行调整。
+
+   当然， 我同样十分不推荐这种做法。
+
+  + *Python2* 和 *Python3* 的兼容
+
+    ~Python2~ 和 ~Python3~ 中定义元类的方式不同：
+    #+BEGIN_SRC python
+      # Python2
+      class TestClass(object):
+          __metaclass__ = MyMetaClass
+
+
+      # Python3
+      class TestClass(object, metaclass=MyMetaClass):
+          pass
+    #+END_SRC
+
+    如果需要兼容， 可以这样做：
+    #+BEGIN_SRC python
+      from six import with_metaclass
+
+      class Meta(type):
+          pass
+
+      class Base(object):
+          pass
+
+      class MyClass(with_metaclass(Meta, Base)):
+          pass
+    #+END_SRC
+
+* 结语
+  ~Python~ 给了我们很大程度上的自由， 我们可以运用各种奇淫技巧写出各种神奇的代码。
+
+  但是， 我感觉有一句话还是很有道理的： *如非必要, 勿增实体.*
+
