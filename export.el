@@ -2,18 +2,20 @@
 
 ;; Copyright (C) 2018 by rgb-24bit
 
-;; Usage: emacs --srcipt export.el
+;; Usage: emacs --srcipt export.el [all]
 
 ;;; Code:
 
 (require 'org)
 
 (defvar file-list nil)
+(defvar directory-list '("./2017" "./2018"))
 
 (defun get-export-file-list (&optional ALL)
   "Get a list of files to export."
-  (if ALL (setq file-list (append (directory-files "./2017" t "\\.org$")
-                              (directory-files "./2018" t "\\.org$")))
+  (if ALL
+      (dolist (directory directory-list)
+        (setq file-list (append file-list (directory-files directory t "\\.org$"))))
 
     ;; new or modified file
     (let ((status (shell-command-to-string "git status"))
@@ -61,7 +63,7 @@
 
 (progn
   (init-export-env)
-  (get-export-file-list)
+  (get-export-file-list (string= "all" (format "%s" (elt argv 0))))
   (while (setq file-name (car file-list))
     (export-html-by-file-name file-name)
     (setq file-list (cdr file-list)))
