@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-08-11 周六 17:18 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 核心集合接口</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Java 核心集合接口</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org86f5df0">1. 简介</a></li>
+<li><a href="#orgc0be452">2. Collection</a>
+<ul>
+<li><a href="#orgaec4c0d">2.1. Collection 基本操作</a></li>
+<li><a href="#org4a85853">2.2. Collection 遍历操作</a></li>
+<li><a href="#orgbb5e82a">2.3. Collection 批量操作</a></li>
+<li><a href="#orgfd01894">2.4. Collection 数组操作</a></li>
+</ul>
+</li>
+<li><a href="#org5dfd36c">3. Set</a></li>
+<li><a href="#org9cc1876">4. List</a>
+<ul>
+<li><a href="#orgd2bb7a1">4.1. 集合操作</a></li>
+<li><a href="#orgf934bd7">4.2. 位置访问和搜索操作</a></li>
+<li><a href="#org588339b">4.3. 迭代器</a></li>
+<li><a href="#org8ee4e3c">4.4. 范围视图操作</a></li>
+<li><a href="#org1f73ac2">4.5. 列表算法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org86f5df0" class="outline-2">
+<h2 id="org86f5df0"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+除了 <code>C</code> 语言以外，我学过的语言基本上都封装了常用的 <b>数据结构</b> 方便使用。
+</p>
+
+<p>
+<code>Java</code> 同样封装了这些常用的数据结构，但是由于 <code>Java</code> 的语言机制的原因， <code>Java</code> 提供这些数据
+结构的多种实现。
+</p>
+
+<p>
+虽然实现很多， 但不同的实现之间主要是 <b>实现算法</b> 的区别，使用上，只要只要掌握了 <b>共同</b> 的特性，
+剩下的就好处理的多了。
+</p>
+
+<p>
+核心集合接口之间的关系图：
+</p>
+
+<img src="https://docs.oracle.com/javase/tutorial/figures/collections/colls-coreInterfaces.gif" alt="The core collection interfaces">
+
+<p>
+<b>注</b>: 由于还不是很熟悉 <code>Java8</code>, 所以本篇博客不会涉及集合的 <a href="https://docs.oracle.com/javase/tutorial/collections/streams/index.html">聚合操作</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0be452" class="outline-2">
+<h2 id="orgc0be452"><span class="section-number-2">2</span> Collection</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>Collection</code> 通常用于保存一组对象，保存的这些对象称为它的 <b>元素</b> 或 <b>成员</b>.
+</p>
+
+<p>
+虽然 <code>Collection</code> 接口没有具体的实现，但是所有通用集合类型实现都有一个带 <code>Collection</code> 参数的 <b>构造函数</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt; <span style="font-weight: bold; font-style: italic;">list</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;(collection);
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgaec4c0d" class="outline-3">
+<h3 id="orgaec4c0d"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>Collection</code> 常用的基本操作方法有：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>int size()</code></td>
+<td class="org-left">获取集合的大小</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean isEmpty()</code></td>
+<td class="org-left">判断集合是否为空</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean contains(Object element)</code></td>
+<td class="org-left">判断集合中是否存在指定元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean add(E element)</code></td>
+<td class="org-left">添加指定元素到集合中</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean remove(Object element)</code></td>
+<td class="org-left">从集合中移除指定元素，如果指定元素不存在就返回 false</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Iterator&lt;E&gt; iterator()</code></td>
+<td class="org-left">获取此集合中元素的迭代器</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这些操作的使用应该不需要我说明了，十分简单明了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4a85853" class="outline-3">
+<h3 id="org4a85853"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+除去 <b>聚合操作</b> 的话，用于遍历 <code>Collection</code> 的方式有两种：
+</p>
+
+<p>
+最常用的可能是 <code>for-each</code> 循环了，也很简单：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Object</span> <span style="font-weight: bold; font-style: italic;">o</span> : collection)
+  System.out.println(o);
+</pre>
+</div>
+
+<p>
+另外一个不是很常用的就是 <code>Iterators</code>, <code>Iterators</code> 允许你遍历整个集合并有选择的删除集合中的元素。
+</p>
+
+<p>
+<code>Iterator</code> 接口：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">interface</span> <span style="font-weight: bold; text-decoration: underline;">Iterator</span>&lt;<span style="font-weight: bold; text-decoration: underline;">E</span>&gt; {
+  <span style="font-weight: bold; text-decoration: underline;">boolean</span> <span style="font-weight: bold;">hasNext</span>();
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold;">next</span>();
+  <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">remove</span>(); <span style="font-weight: bold; font-style: italic;">//</span><span style="font-weight: bold; font-style: italic;">optional</span>
+}
+</pre>
+</div>
+
+<p>
+方法 <code>remove</code> 会删除当前遍历到的元素，因此只能调用一次，不能重复删除。
+</p>
+
+<p>
+你可以通过 <code>Collection</code> 的 <code>iterator()</code> 方法来获取该集合的 <code>Iterator</code> 对象。 
+</p>
+
+<p>
+比如通过这个方法有选择的过滤集合中的元素：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">filter</span>(<span style="font-weight: bold; text-decoration: underline;">Collection</span>&lt;?&gt; <span style="font-weight: bold; font-style: italic;">collection</span>) {
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Iterator</span>&lt;?&gt; <span style="font-weight: bold; font-style: italic;">it</span> = collection.iterator(); it.hasNext(); )
+    <span style="font-weight: bold;">if</span> (!cond(it.next()))
+      it.remove();
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb5e82a" class="outline-3">
+<h3 id="orgbb5e82a"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<b>批量操作</b> 允许我们一次性操作多个元素，以下是批量操作方法：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>boolean containsAll(Collection&lt;?&gt; c)</code></td>
+<td class="org-left">判断当前集合是否包含指定集合中的所有元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean addAll(Collection&lt;? extends E&gt; c)</code></td>
+<td class="org-left">将指定集合中的所有元素添加到当前集合</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean removeAll(Collection&lt;?&gt; c)</code></td>
+<td class="org-left">根据指定集合移除当前集合中的元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean retainAll(Collection&lt;?&gt; c)</code></td>
+<td class="org-left">从当前集合中删除所有未包含在指定集合中的元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>void clear()</code></td>
+<td class="org-left">移除当前集合中的所有元素</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgfd01894" class="outline-3">
+<h3 id="orgfd01894"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+通过使用方法 <code>Collection.toArray()</code> 可以将一个 <code>Collection</code> 转换一个数组。
+</p>
+
+<p>
+不带参数调用 <code>Collection.toArray()</code> 时返回一个 <code>Object</code> 数组：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Object</span>[] <span style="font-weight: bold; font-style: italic;">a</span> = c.toArray();
+</pre>
+</div>
+
+<p>
+如果集合中的元素只有一种类型，那么你可以指定要返回的数组的类型：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">String</span>[] <span style="font-weight: bold; font-style: italic;">a</span> = c.toArray(<span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">String</span>[0]);
+</pre>
+</div>
+
+<p>
+注意，如果集合元素类型为 <b>原始数据类型</b>, 那么对应的参数应该是 <b>包装类数组类型</b>.
+</p>
+
+<p>
+比如： <code>new Integer[0]</code>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5dfd36c" class="outline-2">
+<h2 id="org5dfd36c"><span class="section-number-2">3</span> Set</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Set</code> 是一个不包含重复元素的 <code>Collection</code>.
+</p>
+
+<p>
+实现有：
+</p>
+<ul class="org-ul">
+<li><code>HashSet</code> - 元素储存在一个哈希表中，性能最好，但是不保证元素的迭代顺序</li>
+<li><code>TreeSet</code> - 元素储存在一个红黑树中，元素按值排序，速度比 <code>HashSet</code> 慢很多</li>
+<li><code>LinkedHashSet</code> - 元素储存在一个链表中，元素按添加的属性排序，书的比 <code>HashSet</code> 慢</li>
+</ul>
+
+<p>
+<code>Set</code> 的操作和 <code>Collection</code> 基本相同，特殊之处在于如果向 <code>Set</code> 中添加已存在的元素会失败，
+因为 <code>Set</code> 不允许存在重复的元素。
+</p>
+
+<p>
+一些简单的操作：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21435;&#38500;&#37325;&#22797;&#20803;&#32032;</span>
+<span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Integer</span>&gt; <span style="font-weight: bold; font-style: italic;">lst</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Integer</span>&gt;(<span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashSet</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Integer</span>&gt;(oneList));
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">s1, s2 &#30340;&#24182;&#38598;</span>
+<span style="font-weight: bold; text-decoration: underline;">Set</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt; <span style="font-weight: bold; font-style: italic;">union</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashSet</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt;(s1).addAll(s2);
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">s1, s2 &#30340;&#20132;&#38598;</span>
+<span style="font-weight: bold; text-decoration: underline;">Set</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt; <span style="font-weight: bold; font-style: italic;">intersection</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashSet</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt;(s1).retainAll(s2);
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">s1, s2 &#30340;&#19981;&#30456;&#20132;&#38598;</span>
+<span style="font-weight: bold; text-decoration: underline;">Set</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt; <span style="font-weight: bold; font-style: italic;">difference</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashSet</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt;(s1).removeAll(s2);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9cc1876" class="outline-2">
+<h2 id="org9cc1876"><span class="section-number-2">4</span> List</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>List</code> 是一个有序的 <code>Collection</code>.
+</p>
+
+<p>
+实现有：
+</p>
+<ul class="org-ul">
+<li><code>ArrayList</code> - 通常使用的就是这个</li>
+<li><code>LinkedList</code> - 在某些情况下可以提供比 <code>ArrayList</code> 更好的性能</li>
+</ul>
+</div>
+
+<div id="outline-container-orgd2bb7a1" class="outline-3">
+<h3 id="orgd2bb7a1"><span class="section-number-3">4.1</span> 集合操作</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+毫无疑问， <code>List</code> 包含继承了所有 <code>Collection</code> 的操作，如添加删除元素等。
+</p>
+
+<p>
+特别的， <code>add</code> 和 <code>addAll</code> 默认情况下会将元素添加到集合的 <b>末尾</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf934bd7" class="outline-3">
+<h3 id="orgf934bd7"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<code>get</code> 和 <code>set</code> 可以获取值设置指定位置的元素的值， 而 <code>add</code>, <code>addAll</code>, <code>remove</code> 都有一个可以指定
+位置的 <b>重载</b>, 允许你指定要操作的元素的位置。
+</p>
+
+<p>
+交换两个元素的位置：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> &lt;<span style="font-weight: bold; text-decoration: underline;">E</span>&gt; <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">swap</span>(<span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">E</span>&gt; <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">j</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold; font-style: italic;">tmp</span> = a.get(i);
+  a.set(i, a.get(j));
+  a.set(j, tmp);
+}
+</pre>
+</div>
+
+<p>
+<code>indexOf</code> 和 <code>lastIndexOf</code> 获取指定元素在集合中 <b>首次</b> 和 <b>最后一次</b> 出现的位置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org588339b" class="outline-3">
+<h3 id="org588339b"><span class="section-number-3">4.3</span> 迭代器</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<code>List</code> 除了继承自 <code>Collection</code> 的迭代器以外，还提供了一个功能更强大的迭代器 <code>ListIterator</code>.
+</p>
+
+<p>
+<code>ListIterator</code> 继承了 <code>Iterator</code> 的方法 <code>hasNext</code>, <code>next</code> 和 <code>remove</code>, 还提供了新的方法 <code>hasPrevious</code> 和 <code>previous</code>.
+</p>
+
+<p>
+也就是说，通过 <code>ListIterator</code> 你可以向前向后迭代 <code>List</code> 中的元素。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">ListIterator</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt; <span style="font-weight: bold; font-style: italic;">it</span> = list.listIterator(list.size()); it.hasPrevious(); ) {
+  <span style="font-weight: bold; text-decoration: underline;">Type</span> <span style="font-weight: bold; font-style: italic;">t</span> = it.previous();
+  ...
+}
+</pre>
+</div>
+
+<p>
+特别的， <code>ListIterator</code> 有两种创建方式， 默认情况下初始位置位于 <code>List</code> 头部， 也可以指定初始的索引。
+</p>
+
+<p>
+如果倒序迭代的话，应该将索引设置为 <code>List</code> 的 <b>大小</b>, 因为 <code>previous</code> 将索引 <b>减一</b>, <code>List.size() - 1</code> 正好是最后一个
+元素的位置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8ee4e3c" class="outline-3">
+<h3 id="org8ee4e3c"><span class="section-number-3">4.4</span> 范围视图操作</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<code>List</code> 的方法 <code>subList(int fromIndex, int toIndex)</code> 返回指定范围的 <b>列表视图</b>.
+</p>
+
+<p>
+范围指定如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = fromIndex; i &lt; <span style="font-weight: bold; text-decoration: underline;">toIndex</span>; i++) {
+  ...
+}
+</pre>
+</div>
+
+<p>
+<b>注：</b> <code>subList</code> 返回的是一个 <b>视图</b>, 所有对这个 <b>视图</b> 的操作都会反应到原列表上
+</p>
+
+<p>
+比如，删除指定范围内的所有元素：
+</p>
+<div class="org-src-container">
+<pre class="src src-java">list.subList(<span style="font-weight: bold; text-decoration: underline;">fromIndex</span>, <span style="font-weight: bold; text-decoration: underline;">toIndex</span>).clear();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f73ac2" class="outline-3">
+<h3 id="org1f73ac2"><span class="section-number-3">4.5</span> 列表算法</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+<code>Collections</code> 提供了一些很有用的算法， 这里列出来：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">算法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>sort</code></td>
+<td class="org-left">排序</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>shuffle</code></td>
+<td class="org-left">随机置换列表中的元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>reverse</code></td>
+<td class="org-left">反转列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>rotate</code></td>
+<td class="org-left">将列表中的所有元素旋转指定的距离</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>swap</code></td>
+<td class="org-left">交换指定列表中指定位置的元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>replaceAll</code></td>
+<td class="org-left">将所有出现的一个指定值替换为另一个</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>fill</code></td>
+<td class="org-left">用指定的值覆盖列表中的每个元素</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>copy</code></td>
+<td class="org-left">将源列表复制到目标列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>binarySearch</code></td>
+<td class="org-left">使用二分查找法在列表中查找指定元素（列表需要排序）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>indexOfSubList</code></td>
+<td class="org-left">获取指定元素在子列表中首次出现的位置</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>lastIndexOfSubList</code></td>
+<td class="org-left">获取指定元素在子列表中最后一次出现的位置</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>注：</b> 是 <code>Collections</code> 不是 <code>Collection</code>.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

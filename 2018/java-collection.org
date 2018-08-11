@@ -1,0 +1,230 @@
+#+TITLE:      Java 核心集合接口
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-08-11 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#collection][Collection]]
+  - [[#collection-基本操作][Collection 基本操作]]
+  - [[#collection-遍历操作][Collection 遍历操作]]
+  - [[#collection-批量操作][Collection 批量操作]]
+  - [[#collection-数组操作][Collection 数组操作]]
+- [[#set][Set]]
+- [[#list][List]]
+  - [[#集合操作][集合操作]]
+  - [[#位置访问和搜索操作][位置访问和搜索操作]]
+  - [[#迭代器][迭代器]]
+  - [[#范围视图操作][范围视图操作]]
+  - [[#列表算法][列表算法]]
+
+* 简介
+  除了 ~C~ 语言以外，我学过的语言基本上都封装了常用的 *数据结构* 方便使用。
+
+  ~Java~ 同样封装了这些常用的数据结构，但是由于 ~Java~ 的语言机制的原因， ~Java~ 提供这些数据
+  结构的多种实现。
+
+  虽然实现很多， 但不同的实现之间主要是 *实现算法* 的区别，使用上，只要只要掌握了 *共同* 的特性，
+  剩下的就好处理的多了。
+
+  核心集合接口之间的关系图：
+
+  #+HTML: <img src="https://docs.oracle.com/javase/tutorial/figures/collections/colls-coreInterfaces.gif" alt="The core collection interfaces">
+
+  *注*: 由于还不是很熟悉 ~Java8~, 所以本篇博客不会涉及集合的 [[https://docs.oracle.com/javase/tutorial/collections/streams/index.html][聚合操作]].
+
+* Collection
+  ~Collection~ 通常用于保存一组对象，保存的这些对象称为它的 *元素* 或 *成员*.
+
+  虽然 ~Collection~ 接口没有具体的实现，但是所有通用集合类型实现都有一个带 ~Collection~ 参数的 *构造函数*.
+
+  #+BEGIN_SRC java
+    List<String> list = new ArrayList<String>(collection);
+  #+END_SRC
+
+** Collection 基本操作
+   ~Collection~ 常用的基本操作方法有：
+   |----------------------------------+------------------------------------------------------|
+   | 方法                             | 作用                                                 |
+   |----------------------------------+------------------------------------------------------|
+   | ~int size()~                       | 获取集合的大小                                       |
+   | ~boolean isEmpty()~                | 判断集合是否为空                                     |
+   | ~boolean contains(Object element)~ | 判断集合中是否存在指定元素                           |
+   | ~boolean add(E element)~           | 添加指定元素到集合中                                 |
+   | ~boolean remove(Object element)~   | 从集合中移除指定元素，如果指定元素不存在就返回 false |
+   | ~Iterator<E> iterator()~           | 获取此集合中元素的迭代器                             |
+   |----------------------------------+------------------------------------------------------|
+
+   这些操作的使用应该不需要我说明了，十分简单明了。
+
+** Collection 遍历操作
+   除去 *聚合操作* 的话，用于遍历 ~Collection~ 的方式有两种：
+   
+   最常用的可能是 ~for-each~ 循环了，也很简单：
+   #+BEGIN_SRC java
+     for (Object o : collection)
+       System.out.println(o);
+   #+END_SRC
+
+   另外一个不是很常用的就是 ~Iterators~, ~Iterators~ 允许你遍历整个集合并有选择的删除集合中的元素。
+
+   ~Iterator~ 接口：
+   #+BEGIN_SRC java
+     public interface Iterator<E> {
+       boolean hasNext();
+       E next();
+       void remove(); //optional
+     }
+   #+END_SRC
+
+   方法 ~remove~ 会删除当前遍历到的元素，因此只能调用一次，不能重复删除。
+
+   你可以通过 ~Collection~ 的 ~iterator()~ 方法来获取该集合的 ~Iterator~ 对象。 
+
+   比如通过这个方法有选择的过滤集合中的元素：
+   #+BEGIN_SRC java
+     static void filter(Collection<?> collection) {
+       for (Iterator<?> it = collection.iterator(); it.hasNext(); )
+         if (!cond(it.next()))
+           it.remove();
+     }
+   #+END_SRC
+
+** Collection 批量操作
+   *批量操作* 允许我们一次性操作多个元素，以下是批量操作方法：
+   |-------------------------------------------+----------------------------------------------|
+   | 方法                                      | 作用                                         |
+   |-------------------------------------------+----------------------------------------------|
+   | ~boolean containsAll(Collection<?> c)~      | 判断当前集合是否包含指定集合中的所有元素     |
+   | ~boolean addAll(Collection<? extends E> c)~ | 将指定集合中的所有元素添加到当前集合         |
+   | ~boolean removeAll(Collection<?> c)~        | 根据指定集合移除当前集合中的元素             |
+   | ~boolean retainAll(Collection<?> c)~        | 从当前集合中删除所有未包含在指定集合中的元素 |
+   | ~void clear()~                              | 移除当前集合中的所有元素                     |
+   |-------------------------------------------+----------------------------------------------|
+
+** Collection 数组操作
+   通过使用方法 ~Collection.toArray()~ 可以将一个 ~Collection~ 转换一个数组。
+
+   不带参数调用 ~Collection.toArray()~ 时返回一个 ~Object~ 数组：
+   #+BEGIN_SRC java
+     Object[] a = c.toArray();
+   #+END_SRC
+
+   如果集合中的元素只有一种类型，那么你可以指定要返回的数组的类型：
+   #+BEGIN_SRC java
+     String[] a = c.toArray(new String[0]);
+   #+END_SRC
+
+   注意，如果集合元素类型为 *原始数据类型*, 那么对应的参数应该是 *包装类数组类型*.
+
+   比如： ~new Integer[0]~
+
+* Set
+  ~Set~ 是一个不包含重复元素的 ~Collection~.
+
+  实现有：
+  + ~HashSet~ - 元素储存在一个哈希表中，性能最好，但是不保证元素的迭代顺序
+  + ~TreeSet~ - 元素储存在一个红黑树中，元素按值排序，速度比 ~HashSet~ 慢很多
+  + ~LinkedHashSet~ - 元素储存在一个链表中，元素按添加的属性排序，书的比 ~HashSet~ 慢
+
+  ~Set~ 的操作和 ~Collection~ 基本相同，特殊之处在于如果向 ~Set~ 中添加已存在的元素会失败，
+  因为 ~Set~ 不允许存在重复的元素。
+
+  一些简单的操作：
+  #+BEGIN_SRC java
+    // 去除重复元素
+    List<Integer> lst = new ArrayList<Integer>(new HashSet<Integer>(oneList));
+
+    // s1, s2 的并集
+    Set<Type> union = new HashSet<Type>(s1).addAll(s2);
+
+    // s1, s2 的交集
+    Set<Type> intersection = new HashSet<Type>(s1).retainAll(s2);
+
+    // s1, s2 的不相交集
+    Set<Type> difference = new HashSet<Type>(s1).removeAll(s2);
+  #+END_SRC
+
+* List   
+  ~List~ 是一个有序的 ~Collection~.
+
+  实现有：
+  + ~ArrayList~ - 通常使用的就是这个
+  + ~LinkedList~ - 在某些情况下可以提供比 ~ArrayList~ 更好的性能
+
+** 集合操作
+   毫无疑问， ~List~ 包含继承了所有 ~Collection~ 的操作，如添加删除元素等。
+
+   特别的， ~add~ 和 ~addAll~ 默认情况下会将元素添加到集合的 *末尾*.
+
+** 位置访问和搜索操作
+   ~get~ 和 ~set~ 可以获取值设置指定位置的元素的值， 而 ~add~, ~addAll~, ~remove~ 都有一个可以指定
+   位置的 *重载*, 允许你指定要操作的元素的位置。
+
+   交换两个元素的位置：
+   #+BEGIN_SRC java
+     public static <E> void swap(List<E> a, int i, int j) {
+       E tmp = a.get(i);
+       a.set(i, a.get(j));
+       a.set(j, tmp);
+     }
+   #+END_SRC
+
+   ~indexOf~ 和 ~lastIndexOf~ 获取指定元素在集合中 *首次* 和 *最后一次* 出现的位置。
+
+** 迭代器
+   ~List~ 除了继承自 ~Collection~ 的迭代器以外，还提供了一个功能更强大的迭代器 ~ListIterator~.
+
+   ~ListIterator~ 继承了 ~Iterator~ 的方法 ~hasNext~, ~next~ 和 ~remove~, 还提供了新的方法 ~hasPrevious~ 和 ~previous~.
+
+   也就是说，通过 ~ListIterator~ 你可以向前向后迭代 ~List~ 中的元素。
+
+   #+BEGIN_SRC java
+     for (ListIterator<Type> it = list.listIterator(list.size()); it.hasPrevious(); ) {
+       Type t = it.previous();
+       ...
+     }
+   #+END_SRC
+
+   特别的， ~ListIterator~ 有两种创建方式， 默认情况下初始位置位于 ~List~ 头部， 也可以指定初始的索引。
+
+   如果倒序迭代的话，应该将索引设置为 ~List~ 的 *大小*, 因为 ~previous~ 将索引 *减一*, ~List.size() - 1~ 正好是最后一个
+   元素的位置。
+
+** 范围视图操作
+   ~List~ 的方法 ~subList(int fromIndex, int toIndex)~ 返回指定范围的 *列表视图*.
+
+   范围指定如下：
+   #+BEGIN_SRC java
+     for (int i = fromIndex; i < toIndex; i++) {
+       ...
+     }
+   #+END_SRC
+
+   *注：* ~subList~ 返回的是一个 *视图*, 所有对这个 *视图* 的操作都会反应到原列表上
+
+   比如，删除指定范围内的所有元素：
+   #+BEGIN_SRC java
+     list.subList(fromIndex, toIndex).clear();
+   #+END_SRC
+
+** 列表算法
+   ~Collections~ 提供了一些很有用的算法， 这里列出来：
+   |--------------------+----------------------------------------------------|
+   | 算法               | 作用                                               |
+   |--------------------+----------------------------------------------------|
+   | ~sort~               | 排序                                               |
+   | ~shuffle~            | 随机置换列表中的元素                               |
+   | ~reverse~            | 反转列表                                           |
+   | ~rotate~             | 将列表中的所有元素旋转指定的距离                   |
+   | ~swap~               | 交换指定列表中指定位置的元素                       |
+   | ~replaceAll~         | 将所有出现的一个指定值替换为另一个                 |
+   | ~fill~               | 用指定的值覆盖列表中的每个元素                     |
+   | ~copy~               | 将源列表复制到目标列表                             |
+   | ~binarySearch~       | 使用二分查找法在列表中查找指定元素（列表需要排序） |
+   | ~indexOfSubList~     | 获取指定元素在子列表中首次出现的位置               |
+   | ~lastIndexOfSubList~ | 获取指定元素在子列表中最后一次出现的位置           |
+   |--------------------+----------------------------------------------------|
+
+   *注：* 是 ~Collections~ 不是 ~Collection~.
+
