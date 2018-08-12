@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-12 周日 11:30 -->
+<!-- 2018-08-12 周日 16:04 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 核心集合接口</title>
@@ -237,31 +237,42 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb70438b">1. 简介</a></li>
-<li><a href="#orgce4bdb3">2. Collection</a>
+<li><a href="#orga575424">1. 简介</a></li>
+<li><a href="#orgfdfe8b6">2. Collection</a>
 <ul>
-<li><a href="#orgde56901">2.1. Collection 基本操作</a></li>
-<li><a href="#org67c476c">2.2. Collection 遍历操作</a></li>
-<li><a href="#org43a8698">2.3. Collection 批量操作</a></li>
-<li><a href="#org2e6a164">2.4. Collection 数组操作</a></li>
+<li><a href="#org051b79e">2.1. Collection 基本操作</a></li>
+<li><a href="#org692a188">2.2. Collection 遍历操作</a></li>
+<li><a href="#org3ec1ba6">2.3. Collection 批量操作</a></li>
+<li><a href="#orgb080ad2">2.4. Collection 数组操作</a></li>
 </ul>
 </li>
-<li><a href="#org8a259b7">3. Set</a></li>
-<li><a href="#org38b917c">4. List</a>
+<li><a href="#orgfd8b9b0">3. Set</a></li>
+<li><a href="#orgb1f0d60">4. List</a>
 <ul>
-<li><a href="#orga3bf44d">4.1. 集合操作</a></li>
-<li><a href="#org6c011c4">4.2. 位置访问和搜索操作</a></li>
-<li><a href="#org0734645">4.3. 迭代器</a></li>
-<li><a href="#org356f15d">4.4. 范围视图操作</a></li>
-<li><a href="#org7880c10">4.5. 列表算法</a></li>
+<li><a href="#org469ada0">4.1. 集合操作</a></li>
+<li><a href="#orge915425">4.2. 位置访问和搜索操作</a></li>
+<li><a href="#orgfd49aba">4.3. 迭代器</a></li>
+<li><a href="#org6d1c115">4.4. 范围视图操作</a></li>
+<li><a href="#orgb948c1f">4.5. 列表算法</a></li>
 </ul>
 </li>
+<li><a href="#org420eea7">5. Queue</a></li>
+<li><a href="#org921f1bb">6. Deque</a></li>
+<li><a href="#org6446c2d">7. Map</a>
+<ul>
+<li><a href="#org88049ee">7.1. Map 基本操作</a></li>
+<li><a href="#orgb3cdc11">7.2. Map 批量操作</a></li>
+<li><a href="#org4724f4f">7.3. 集合视图</a></li>
+</ul>
+</li>
+<li><a href="#orge458ebe">8. 结尾</a></li>
+<li><a href="#orgb2213da">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb70438b" class="outline-2">
-<h2 id="orgb70438b"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orga575424" class="outline-2">
+<h2 id="orga575424"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 除了 <code>C</code> 语言以外，我学过的语言基本上都封装了常用的 <b>数据结构</b> 方便使用。
@@ -289,8 +300,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgce4bdb3" class="outline-2">
-<h2 id="orgce4bdb3"><span class="section-number-2">2</span> Collection</h2>
+<div id="outline-container-orgfdfe8b6" class="outline-2">
+<h2 id="orgfdfe8b6"><span class="section-number-2">2</span> Collection</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Collection</code> 通常用于保存一组对象，保存的这些对象称为它的 <b>元素</b> 或 <b>成员</b>.
@@ -306,8 +317,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgde56901" class="outline-3">
-<h3 id="orgde56901"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
+<div id="outline-container-org051b79e" class="outline-3">
+<h3 id="org051b79e"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Collection</code> 常用的基本操作方法有：
@@ -365,8 +376,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org67c476c" class="outline-3">
-<h3 id="org67c476c"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
+<div id="outline-container-org692a188" class="outline-3">
+<h3 id="org692a188"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 除去 <b>聚合操作</b> 的话，用于遍历 <code>Collection</code> 的方式有两种：
@@ -419,8 +430,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org43a8698" class="outline-3">
-<h3 id="org43a8698"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
+<div id="outline-container-org3ec1ba6" class="outline-3">
+<h3 id="org3ec1ba6"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <b>批量操作</b> 允许我们一次性操作多个元素，以下是批量操作方法：
@@ -469,8 +480,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2e6a164" class="outline-3">
-<h3 id="org2e6a164"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
+<div id="outline-container-orgb080ad2" class="outline-3">
+<h3 id="orgb080ad2"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 通过使用方法 <code>Collection.toArray()</code> 可以将一个 <code>Collection</code> 转换一个数组。
@@ -503,8 +514,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8a259b7" class="outline-2">
-<h2 id="org8a259b7"><span class="section-number-2">3</span> Set</h2>
+<div id="outline-container-orgfd8b9b0" class="outline-2">
+<h2 id="orgfd8b9b0"><span class="section-number-2">3</span> Set</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Set</code> 是一个不包含重复元素的 <code>Collection</code>.
@@ -544,8 +555,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org38b917c" class="outline-2">
-<h2 id="org38b917c"><span class="section-number-2">4</span> List</h2>
+<div id="outline-container-orgb1f0d60" class="outline-2">
+<h2 id="orgb1f0d60"><span class="section-number-2">4</span> List</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>List</code> 是一个有序的 <code>Collection</code>.
@@ -560,8 +571,8 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 
-<div id="outline-container-orga3bf44d" class="outline-3">
-<h3 id="orga3bf44d"><span class="section-number-3">4.1</span> 集合操作</h3>
+<div id="outline-container-org469ada0" class="outline-3">
+<h3 id="org469ada0"><span class="section-number-3">4.1</span> 集合操作</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 毫无疑问， <code>List</code> 包含继承了所有 <code>Collection</code> 的操作，如添加删除元素等。
@@ -573,8 +584,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6c011c4" class="outline-3">
-<h3 id="org6c011c4"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
+<div id="outline-container-orge915425" class="outline-3">
+<h3 id="orge915425"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>get</code> 和 <code>set</code> 可以获取值设置指定位置的元素的值， 而 <code>add</code>, <code>addAll</code>, <code>remove</code> 都有一个可以指定
@@ -599,8 +610,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0734645" class="outline-3">
-<h3 id="org0734645"><span class="section-number-3">4.3</span> 迭代器</h3>
+<div id="outline-container-orgfd49aba" class="outline-3">
+<h3 id="orgfd49aba"><span class="section-number-3">4.3</span> 迭代器</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 <code>List</code> 除了继承自 <code>Collection</code> 的迭代器以外，还提供了一个功能更强大的迭代器 <code>ListIterator</code>.
@@ -633,8 +644,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org356f15d" class="outline-3">
-<h3 id="org356f15d"><span class="section-number-3">4.4</span> 范围视图操作</h3>
+<div id="outline-container-org6d1c115" class="outline-3">
+<h3 id="org6d1c115"><span class="section-number-3">4.4</span> 范围视图操作</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 <code>List</code> 的方法 <code>subList(int fromIndex, int toIndex)</code> 返回指定范围的 <b>列表视图</b>.
@@ -664,8 +675,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7880c10" class="outline-3">
-<h3 id="org7880c10"><span class="section-number-3">4.5</span> 列表算法</h3>
+<div id="outline-container-orgb948c1f" class="outline-3">
+<h3 id="orgb948c1f"><span class="section-number-3">4.5</span> 列表算法</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 <code>Collections</code> 提供了一些很有用的算法， 这里列出来：
@@ -746,6 +757,364 @@ for the JavaScript code in this tag.
 <b>注：</b> 是 <code>Collections</code> 不是 <code>Collection</code>.
 </p>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org420eea7" class="outline-2">
+<h2 id="org420eea7"><span class="section-number-2">5</span> Queue</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>Queue</code> 是在处理之前保存元素的 <code>Collection</code>.
+</p>
+
+<p>
+除了 <code>Collection</code> 的所有操作以外， <code>Queue</code> 接口还有：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">interface</span> <span style="font-weight: bold; text-decoration: underline;">Queue</span>&lt;<span style="font-weight: bold; text-decoration: underline;">E</span>&gt; <span style="font-weight: bold;">extends</span> <span style="font-weight: bold; text-decoration: underline;">Collection</span>&lt;<span style="font-weight: bold; text-decoration: underline;">E</span>&gt; {
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold;">element</span>();
+  <span style="font-weight: bold; text-decoration: underline;">boolean</span> <span style="font-weight: bold;">offer</span>(<span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold; font-style: italic;">e</span>);
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold;">peek</span>();
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold;">poll</span>();
+  <span style="font-weight: bold; text-decoration: underline;">E</span> <span style="font-weight: bold;">remove</span>();
+}
+</pre>
+</div>
+
+<p>
+每个 <b>Queue</b> 操作都有两种表现形式：
+</p>
+<ol class="org-ol">
+<li>操作失败抛出异常</li>
+<li>操作失败返回特殊值(<code>null</code> or <code>false</code>)</li>
+</ol>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">操作类型</th>
+<th scope="col" class="org-left">抛出异常</th>
+<th scope="col" class="org-left">返回特殊值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Insert</code></td>
+<td class="org-left"><code>add(e)</code></td>
+<td class="org-left"><code>offer(e)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Remove</code></td>
+<td class="org-left"><code>remove()</code></td>
+<td class="org-left"><code>poll()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Examine</code></td>
+<td class="org-left"><code>element()</code></td>
+<td class="org-left"><code>peek()</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>队列</b> 的特性是 <b>先进先出</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org921f1bb" class="outline-2">
+<h2 id="org921f1bb"><span class="section-number-2">6</span> Deque</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>Deque</code> 是一个 <b>双端队列</b>, 是元素的线性集合，支持在两个端点处插入和移除元素。
+</p>
+
+<p>
+<code>Deque</code> 操作：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">操作类型</th>
+<th scope="col" class="org-left">双端队列头</th>
+<th scope="col" class="org-left">双端队列尾</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Insert</code></td>
+<td class="org-left"><code>addFirst(e)</code> <code>offerFirst(e)</code></td>
+<td class="org-left"><code>addLast(e)</code> <code>offerLast(e)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Remove</code></td>
+<td class="org-left"><code>removeFirst()</code> <code>pollFirst()</code></td>
+<td class="org-left"><code>removeLast() pollLast()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Examine</code></td>
+<td class="org-left"><code>getFirst()</code> <code>peekFirst()</code></td>
+<td class="org-left"><code>getLast()</code> <code>peekLast()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org6446c2d" class="outline-2">
+<h2 id="org6446c2d"><span class="section-number-2">7</span> Map</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<code>Map</code> 是将键映射到值的对象。 不属于 <code>Collection</code>.
+</p>
+
+<p>
+<code>Map</code> 的 <b>键</b> 不能重复， 同时每个 <b>键</b> 只能映射一个值。
+</p>
+
+<p>
+<code>Map</code> 的实现有： <code>HashMap</code>, <code>TreeMap</code> 和 <code>LinkedHashMap</code>. 它们的行为类似于 <code>HashSet</code>, <code>TreeSet</code>
+和 <code>LinkedHashSet</code>.
+</p>
+</div>
+
+<div id="outline-container-org88049ee" class="outline-3">
+<h3 id="org88049ee"><span class="section-number-3">7.1</span> Map 基本操作</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+<code>Map</code> 的基本操作包括以下几个：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">操作</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>put</code></td>
+<td class="org-left">将指定的值与此映射中的指定键相关联</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>get</code></td>
+<td class="org-left">返回指定键映射到的值，如果此映射不包含键的映射，则返回 <code>null</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>containsKey</code></td>
+<td class="org-left">如果此映射包含指定键的映射，则返回 <code>true</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>containsValue</code></td>
+<td class="org-left">如果此映射将一个或多个键映射到指定值，则返回 <code>true</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>size</code></td>
+<td class="org-left">返回此映射中键 - 值映射的数量</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>isEmpty</code></td>
+<td class="org-left">如果此映射不包含键 - 值映射，则返回 <code>true</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>List</code> 和 <code>Map</code> 应该是我最常用的两个数据结构， <code>Map</code> 的值可以为一个 <code>List</code>, 通过这种方式间接达成
+一个 <b>键</b> 映射多个 <b>值</b>.
+</p>
+
+<p>
+统计命令行参数的出现频率：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Freq</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">String</span>[] <span style="font-weight: bold; font-style: italic;">args</span>) {
+    <span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">Integer</span>&gt; <span style="font-weight: bold; font-style: italic;">m</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">Integer</span>&gt;();
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Initialize frequency table from command line</span>
+    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">a</span> : args) {
+      <span style="font-weight: bold; text-decoration: underline;">Integer</span> <span style="font-weight: bold; font-style: italic;">freq</span> = m.get(a);
+      m.put(a, (freq == <span style="font-weight: bold; text-decoration: underline;">null</span>) ? 1 : freq + 1);
+    }
+
+    System.out.println(m.size() + <span style="font-style: italic;">" distinct words:"</span>);
+    System.out.println(m);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb3cdc11" class="outline-3">
+<h3 id="orgb3cdc11"><span class="section-number-3">7.2</span> Map 批量操作</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+方法 <code>clear</code> 可以清除 <code>Map</code> 中的所有映射关系，而 <code>putAll</code> 可以使用另一个 <code>Map</code> 来更新当前的 <code>Map</code>, 覆盖存在的关系，添加新的关系。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">static</span> &lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt; <span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt; <span style="font-weight: bold;">newAttributeMap</span>(<span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt;<span style="font-weight: bold; font-style: italic;">defaults</span>, <span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt; <span style="font-weight: bold; font-style: italic;">overrides</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt; <span style="font-weight: bold; font-style: italic;">result</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;<span style="font-weight: bold; text-decoration: underline;">K</span>, <span style="font-weight: bold; text-decoration: underline;">V</span>&gt;(defaults);
+  result.putAll(overrides);
+  <span style="font-weight: bold;">return</span> result;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4724f4f" class="outline-3">
+<h3 id="org4724f4f"><span class="section-number-3">7.3</span> 集合视图</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+通过如下三个方法获取 <code>Map</code> 的 <b>集合视图</b>:
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>keySet</code></td>
+<td class="org-left">一个 <code>Set</code> 包含 <code>Map</code> 的所有键</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>values</code></td>
+<td class="org-left">一个 <code>Collection</code> 包含 <code>Map</code> 的所有值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>entrySet</code></td>
+<td class="org-left">一个 <code>Set</code> 包含 <code>Map</code> 中所有的键值对</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+对这三个方法的返回只进行修改会反应到 <code>Map</code> 上， 对 <code>Map</code> 的修改也会反应到 <b>返回值</b> 上。
+</p>
+
+<p>
+通过 <code>Jython</code> 进行的测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">from</span> java.util <span style="font-weight: bold;">import</span> *
+&gt;&gt;&gt; <span style="font-weight: bold;">map</span> = HashMap()
+&gt;&gt;&gt; <span style="font-weight: bold;">map</span>.put(1, 2)
+&gt;&gt;&gt; <span style="font-weight: bold;">map</span>.put(2, 3)
+&gt;&gt;&gt; <span style="font-weight: bold;">map</span>.put(4, 5)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">key</span> = <span style="font-weight: bold;">map</span>.keySet()
+&gt;&gt;&gt; key
+[1, 2, 4]
+&gt;&gt;&gt; key.remove(4)
+<span style="font-weight: bold; text-decoration: underline;">True</span>
+&gt;&gt;&gt; <span style="font-weight: bold;">map</span>
+{1: 2, 2: 3}
+</pre>
+</div>
+
+<p>
+遍历 <code>Map</code> 的每一个键：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">KeyType</span> <span style="font-weight: bold;">key</span> : m.keySet())
+  System.out.println(key);
+</pre>
+</div>
+
+<p>
+根据 <b>键</b> 过滤 <code>Map</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Iterator</span>&lt;<span style="font-weight: bold; text-decoration: underline;">Type</span>&gt; <span style="font-weight: bold; font-style: italic;">it</span> = m.keySet().iterator(); it.hasNext(); )
+  <span style="font-weight: bold;">if</span> (it.next().isBogus())
+    it.remove();
+</pre>
+</div>
+
+<p>
+<code>entrySet</code> 常和 <code>Map.Entry</code> 一块使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Map</span>.<span style="font-weight: bold; text-decoration: underline;">Entry</span>&lt;<span style="font-weight: bold; text-decoration: underline;">KeyType</span>, <span style="font-weight: bold; text-decoration: underline;">ValType</span>&gt; <span style="font-weight: bold;">e</span> : m.entrySet())
+  System.out.println(e.getKey() + <span style="font-style: italic;">": "</span> + e.getValue());
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge458ebe" class="outline-2">
+<h2 id="orge458ebe"><span class="section-number-2">8</span> 结尾</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+核心接口中还有 <code>SortedSet</code> 和 <code>SortedMap</code>, 它们都会对内部的元素进行排序，其余行为和它们的父接口基本一致。
+</p>
+
+<p>
+在 <code>Python</code> 中，我常用的数据结构对应到 <code>Java</code> 中应该为： <code>ArrayList</code>, <code>HashSet</code>, <code>HashMap</code> 和 <code>LinkedHashMap</code>.
+</p>
+
+<p>
+不得不说， <code>Java</code> 的数据结构实现很多，这篇博客只是简单列举出来这些数据结构可以执行的操作，具体的使用还是实践中尝试吧！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb2213da" class="outline-2">
+<h2 id="orgb2213da"><span class="section-number-2">9</span> 参考链接</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li><a href="https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html">Lesson: Interfaces (The Java™ Tutorials &gt; Collections)</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/overview-summary.html">Overview (Java Platform SE 8 )</a></li>
+</ul>
 </div>
 </div>
 </div>

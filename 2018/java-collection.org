@@ -17,6 +17,14 @@
   - [[#迭代器][迭代器]]
   - [[#范围视图操作][范围视图操作]]
   - [[#列表算法][列表算法]]
+- [[#queue][Queue]]
+- [[#deque][Deque]]
+- [[#map][Map]]
+  - [[#map-基本操作][Map 基本操作]]
+  - [[#map-批量操作][Map 批量操作]]
+  - [[#集合视图][集合视图]]
+- [[#结尾][结尾]]
+- [[#参考链接][参考链接]]
 
 * 简介
   除了 ~C~ 语言以外，我学过的语言基本上都封装了常用的 *数据结构* 方便使用。
@@ -227,4 +235,155 @@
    |--------------------+----------------------------------------------------|
 
    *注：* 是 ~Collections~ 不是 ~Collection~.
+
+* Queue
+  ~Queue~ 是在处理之前保存元素的 ~Collection~.
+
+  除了 ~Collection~ 的所有操作以外， ~Queue~ 接口还有：
+  #+BEGIN_SRC java
+    public interface Queue<E> extends Collection<E> {
+      E element();
+      boolean offer(E e);
+      E peek();
+      E poll();
+      E remove();
+    }
+  #+END_SRC
+
+  每个 *Queue* 操作都有两种表现形式：
+  1. 操作失败抛出异常
+  2. 操作失败返回特殊值(~null~ or ~false~)
+
+  |----------+-----------+------------|
+  | 操作类型 | 抛出异常  | 返回特殊值 |
+  |----------+-----------+------------|
+  | ~Insert~   | ~add(e)~    | ~offer(e)~   |
+  | ~Remove~   | ~remove()~  | ~poll()~     |
+  | ~Examine~  | ~element()~ | ~peek()~     |
+  |----------+-----------+------------|
+
+  *队列* 的特性是 *先进先出*.
+
+* Deque
+  ~Deque~ 是一个 *双端队列*, 是元素的线性集合，支持在两个端点处插入和移除元素。
+
+  ~Deque~ 操作：
+  |----------+---------------------------+-------------------------|
+  | 操作类型 | 双端队列头                | 双端队列尾              |
+  |----------+---------------------------+-------------------------|
+  | ~Insert~   | ~addFirst(e)~ ~offerFirst(e)~ | ~addLast(e)~ ~offerLast(e)~ |
+  | ~Remove~   | ~removeFirst()~ ~pollFirst()~ | ~removeLast() pollLast()~ |
+  | ~Examine~  | ~getFirst()~ ~peekFirst()~    | ~getLast()~ ~peekLast()~    |
+  |----------+---------------------------+-------------------------|
+ 
+* Map
+  ~Map~ 是将键映射到值的对象。 不属于 ~Collection~.
+
+  ~Map~ 的 *键* 不能重复， 同时每个 *键* 只能映射一个值。
+
+  ~Map~ 的实现有： ~HashMap~, ~TreeMap~ 和 ~LinkedHashMap~. 它们的行为类似于 ~HashSet~, ~TreeSet~
+  和 ~LinkedHashSet~.
+
+** Map 基本操作
+   ~Map~ 的基本操作包括以下几个：
+   |---------------+-------------------------------------------------------------|
+   | 操作          | 作用                                                        |
+   |---------------+-------------------------------------------------------------|
+   | ~put~           | 将指定的值与此映射中的指定键相关联                          |
+   | ~get~           | 返回指定键映射到的值，如果此映射不包含键的映射，则返回 ~null~ |
+   | ~containsKey~   | 如果此映射包含指定键的映射，则返回 ~true~                     |
+   | ~containsValue~ | 如果此映射将一个或多个键映射到指定值，则返回 ~true~           |
+   | ~size~          | 返回此映射中键 - 值映射的数量                               |
+   | ~isEmpty~       | 如果此映射不包含键 - 值映射，则返回 ~true~                    |
+   |---------------+-------------------------------------------------------------|
+
+   ~List~ 和 ~Map~ 应该是我最常用的两个数据结构， ~Map~ 的值可以为一个 ~List~, 通过这种方式间接达成
+   一个 *键* 映射多个 *值*.
+
+   统计命令行参数的出现频率：
+   #+BEGIN_SRC java
+     public class Freq {
+       public static void main(String[] args) {
+         Map<String, Integer> m = new HashMap<String, Integer>();
+
+         // Initialize frequency table from command line
+         for (String a : args) {
+           Integer freq = m.get(a);
+           m.put(a, (freq == null) ? 1 : freq + 1);
+         }
+
+         System.out.println(m.size() + " distinct words:");
+         System.out.println(m);
+       }
+     }
+   #+END_SRC
+
+** Map 批量操作
+   方法 ~clear~ 可以清除 ~Map~ 中的所有映射关系，而 ~putAll~ 可以使用另一个 ~Map~ 来更新当前的 ~Map~, 覆盖存在的关系，添加新的关系。
+   
+   #+BEGIN_SRC java
+     static <K, V> Map<K, V> newAttributeMap(Map<K, V>defaults, Map<K, V> overrides) {
+       Map<K, V> result = new HashMap<K, V>(defaults);
+       result.putAll(overrides);
+       return result;
+     }
+   #+END_SRC
+
+** 集合视图
+   通过如下三个方法获取 ~Map~ 的 *集合视图*:
+   |----------+-----------------------------------|
+   | 方法     | 返回值                            |
+   |----------+-----------------------------------|
+   | ~keySet~   | 一个 ~Set~ 包含 ~Map~ 的所有键        |
+   | ~values~   | 一个 ~Collection~ 包含 ~Map~ 的所有值 |
+   | ~entrySet~ | 一个 ~Set~ 包含 ~Map~ 中所有的键值对  |
+   |----------+-----------------------------------|
+
+   对这三个方法的返回只进行修改会反应到 ~Map~ 上， 对 ~Map~ 的修改也会反应到 *返回值* 上。
+
+   通过 ~Jython~ 进行的测试：
+   #+BEGIN_SRC python
+     >>> from java.util import *
+     >>> map = HashMap()
+     >>> map.put(1, 2)
+     >>> map.put(2, 3)
+     >>> map.put(4, 5)
+     >>> key = map.keySet()
+     >>> key
+     [1, 2, 4]
+     >>> key.remove(4)
+     True
+     >>> map
+     {1: 2, 2: 3}
+   #+END_SRC
+
+   遍历 ~Map~ 的每一个键：
+   #+BEGIN_SRC java
+     for (KeyType key : m.keySet())
+       System.out.println(key);
+   #+END_SRC
+
+   根据 *键* 过滤 ~Map~:
+   #+BEGIN_SRC java
+     for (Iterator<Type> it = m.keySet().iterator(); it.hasNext(); )
+       if (it.next().isBogus())
+         it.remove();
+   #+END_SRC
+
+   ~entrySet~ 常和 ~Map.Entry~ 一块使用：
+   #+BEGIN_SRC java
+     for (Map.Entry<KeyType, ValType> e : m.entrySet())
+       System.out.println(e.getKey() + ": " + e.getValue());
+   #+END_SRC
+   
+* 结尾
+  核心接口中还有 ~SortedSet~ 和 ~SortedMap~, 它们都会对内部的元素进行排序，其余行为和它们的父接口基本一致。
+
+  在 ~Python~ 中，我常用的数据结构对应到 ~Java~ 中应该为： ~ArrayList~, ~HashSet~, ~HashMap~ 和 ~LinkedHashMap~.
+
+  不得不说， ~Java~ 的数据结构实现很多，这篇博客只是简单列举出来这些数据结构可以执行的操作，具体的使用还是实践中尝试吧！
+
+* 参考链接
+  + [[https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html][Lesson: Interfaces (The Java™ Tutorials > Collections)]]
+  + [[https://docs.oracle.com/javase/8/docs/api/overview-summary.html][Overview (Java Platform SE 8 )]]
 
