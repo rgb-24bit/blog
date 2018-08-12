@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:09 -->
+<!-- 2018-08-12 周日 11:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置类型</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,24 +237,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org979b735">1. 简介</a></li>
-<li><a href="#orgf68df0a">2. bool</a></li>
-<li><a href="#org74e8531">3. 数值类型</a>
+<li><a href="#org9ff3014">1. 简介</a></li>
+<li><a href="#orgf4278ec">2. bool</a></li>
+<li><a href="#org164a660">3. 数值类型</a>
 <ul>
-<li><a href="#orgc8b1bd9">3.1. 方法</a></li>
+<li><a href="#org25a750c">3.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#org969e9c9">4. 序列类型</a></li>
-<li><a href="#org7256df8">5. 文本序列类型</a></li>
-<li><a href="#org771411e">6. 集合类型</a></li>
-<li><a href="#org279ad2b">7. 映射类型</a></li>
-<li><a href="#org752a93a">8. 参考链接</a></li>
+<li><a href="#org345fd8e">4. 序列类型</a></li>
+<li><a href="#org47ed0dd">5. 文本序列类型</a></li>
+<li><a href="#orgd6b79bc">6. 集合类型</a></li>
+<li><a href="#orgd0e4524">7. 映射类型</a></li>
+<li><a href="#org6314e4a">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org979b735" class="outline-2">
-<h2 id="org979b735"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org9ff3014" class="outline-2">
+<h2 id="org9ff3014"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客是对 <code>Python</code> 内置类型的简单汇总， 省略了很多内容。
@@ -261,8 +262,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf68df0a" class="outline-2">
-<h2 id="orgf68df0a"><span class="section-number-2">2</span> bool</h2>
+<div id="outline-container-orgf4278ec" class="outline-2">
+<h2 id="orgf4278ec"><span class="section-number-2">2</span> bool</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 中， <code>bool</code> 类型属于 <code>int</code> 的子类， 只存在 <code>True</code> 和 <code>False</code> 这两个实例。
@@ -294,8 +295,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org74e8531" class="outline-2">
-<h2 id="org74e8531"><span class="section-number-2">3</span> 数值类型</h2>
+<div id="outline-container-org164a660" class="outline-2">
+<h2 id="org164a660"><span class="section-number-2">3</span> 数值类型</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持
@@ -331,8 +332,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgc8b1bd9" class="outline-3">
-<h3 id="orgc8b1bd9"><span class="section-number-3">3.1</span> 方法</h3>
+<div id="outline-container-org25a750c" class="outline-3">
+<h3 id="org25a750c"><span class="section-number-3">3.1</span> 方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>int.bit_length()</dt><dd>返回整数的二进制长度。</dd>
@@ -369,8 +370,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org969e9c9" class="outline-2">
-<h2 id="org969e9c9"><span class="section-number-2">4</span> 序列类型</h2>
+<div id="outline-container-org345fd8e" class="outline-2">
+<h2 id="org345fd8e"><span class="section-number-2">4</span> 序列类型</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里
@@ -420,8 +421,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7256df8" class="outline-2">
-<h2 id="org7256df8"><span class="section-number-2">5</span> 文本序列类型</h2>
+<div id="outline-container-org47ed0dd" class="outline-2">
+<h2 id="org47ed0dd"><span class="section-number-2">5</span> 文本序列类型</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 万恶之源 <code>str</code>. <code>Python2</code> 和 <code>Python3</code> 的不兼容相当难受。
@@ -456,8 +457,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org771411e" class="outline-2">
-<h2 id="org771411e"><span class="section-number-2">6</span> 集合类型</h2>
+<div id="outline-container-orgd6b79bc" class="outline-2">
+<h2 id="orgd6b79bc"><span class="section-number-2">6</span> 集合类型</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 中的集合类型有 <code>set</code> 和 <code>frozenset</code> 两种。
@@ -506,8 +507,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org279ad2b" class="outline-2">
-<h2 id="org279ad2b"><span class="section-number-2">7</span> 映射类型</h2>
+<div id="outline-container-orgd0e4524" class="outline-2">
+<h2 id="orgd0e4524"><span class="section-number-2">7</span> 映射类型</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 的映射类型无疑是 <code>dict</code> 了。
@@ -536,8 +537,8 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 </div>
 </div>
 
-<div id="outline-container-org752a93a" class="outline-2">
-<h2 id="org752a93a"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org6314e4a" class="outline-2">
+<h2 id="org6314e4a"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/stdtypes.html">Python3</a></li>
@@ -545,6 +546,18 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

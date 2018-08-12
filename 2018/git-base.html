@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:09 -->
+<!-- 2018-08-12 周日 11:29 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Git 基础使用</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,33 +237,33 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4f35ee4">1. 前言</a></li>
-<li><a href="#orga77779a">2. 基本概念</a></li>
-<li><a href="#org7ac64d2">3. 配置 Git</a></li>
-<li><a href="#org6bd2cda">4. 常用指令</a>
+<li><a href="#org6c45af9">1. 前言</a></li>
+<li><a href="#org3868470">2. 基本概念</a></li>
+<li><a href="#org0e40509">3. 配置 Git</a></li>
+<li><a href="#orgac0ba07">4. 常用指令</a>
 <ul>
-<li><a href="#org64e0409">4.1. 忽略文件</a></li>
-<li><a href="#org47eeaa3">4.2. 常用别名设置</a></li>
+<li><a href="#org703883e">4.1. 忽略文件</a></li>
+<li><a href="#orgc335274">4.2. 常用别名设置</a></li>
 </ul>
 </li>
-<li><a href="#orgce90b97">5. 撤销操作</a></li>
-<li><a href="#org884a973">6. 远程仓库</a></li>
-<li><a href="#org3920c84">7. 打标签</a></li>
-<li><a href="#org93ea6c0">8. 分支</a>
+<li><a href="#org102508f">5. 撤销操作</a></li>
+<li><a href="#org8095294">6. 远程仓库</a></li>
+<li><a href="#orgd377ff6">7. 打标签</a></li>
+<li><a href="#org6249487">8. 分支</a>
 <ul>
-<li><a href="#org86b3631">8.1. 概念</a></li>
-<li><a href="#orgefc01cb">8.2. 操作</a></li>
-<li><a href="#org2935bbe">8.3. 远程分支</a></li>
-<li><a href="#org33ec136">8.4. 变基</a></li>
+<li><a href="#orged02355">8.1. 概念</a></li>
+<li><a href="#org2ef0f4c">8.2. 操作</a></li>
+<li><a href="#org8d289d9">8.3. 远程分支</a></li>
+<li><a href="#org9033625">8.4. 变基</a></li>
 </ul>
 </li>
-<li><a href="#org1c51d3e">9. 参考链接</a></li>
+<li><a href="#org725cf0e">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4f35ee4" class="outline-2">
-<h2 id="org4f35ee4"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6c45af9" class="outline-2">
+<h2 id="org6c45af9"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 使用 <code>Git</code> 也有一段时间了， 最初只是随便找了一个教程看了一下， 便将就着用了。
@@ -286,8 +287,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga77779a" class="outline-2">
-<h2 id="orga77779a"><span class="section-number-2">2</span> 基本概念</h2>
+<div id="outline-container-org3868470" class="outline-2">
+<h2 id="org3868470"><span class="section-number-2">2</span> 基本概念</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Git</code> 项目有三个工作区域， 分别对应了三种状态：
@@ -328,8 +329,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7ac64d2" class="outline-2">
-<h2 id="org7ac64d2"><span class="section-number-2">3</span> 配置 Git</h2>
+<div id="outline-container-org0e40509" class="outline-2">
+<h2 id="org0e40509"><span class="section-number-2">3</span> 配置 Git</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>配置</b> 这个问题不是问题， 很多教程都对初步使用 <code>Git</code> 需要进行配置进行了详细的解说。
@@ -400,8 +401,8 @@ $ git config &lt;key&gt;
 </div>
 </div>
 
-<div id="outline-container-org6bd2cda" class="outline-2">
-<h2 id="org6bd2cda"><span class="section-number-2">4</span> 常用指令</h2>
+<div id="outline-container-orgac0ba07" class="outline-2">
+<h2 id="orgac0ba07"><span class="section-number-2">4</span> 常用指令</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Git</code> 有着很多的指令， 对于不清楚功能的指令， 可以通过 <code>git help &lt;cmd&gt;</code> 的方式来获取帮助。
@@ -456,8 +457,8 @@ $ git config --global alias.xx &lt;cmd&gt;
 </div>
 </div>
 
-<div id="outline-container-org64e0409" class="outline-3">
-<h3 id="org64e0409"><span class="section-number-3">4.1</span> 忽略文件</h3>
+<div id="outline-container-org703883e" class="outline-3">
+<h3 id="org703883e"><span class="section-number-3">4.1</span> 忽略文件</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 通过 <code>.gitignore</code> 文件列出需要忽略的文件， 这些文件不会纳入 <code>Git</code> 的管理。
@@ -474,8 +475,8 @@ $ git config --global alias.xx &lt;cmd&gt;
 </div>
 </div>
 
-<div id="outline-container-org47eeaa3" class="outline-3">
-<h3 id="org47eeaa3"><span class="section-number-3">4.2</span> 常用别名设置</h3>
+<div id="outline-container-orgc335274" class="outline-3">
+<h3 id="orgc335274"><span class="section-number-3">4.2</span> 常用别名设置</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-bash">$ git config --global alias.co checkout
@@ -489,8 +490,8 @@ $ git config --global alias.lg = log --color --graph --pretty=format:<span style
 </div>
 </div>
 
-<div id="outline-container-orgce90b97" class="outline-2">
-<h2 id="orgce90b97"><span class="section-number-2">5</span> 撤销操作</h2>
+<div id="outline-container-org102508f" class="outline-2">
+<h2 id="org102508f"><span class="section-number-2">5</span> 撤销操作</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 人总是会犯错的， 而 <code>Git</code> 允许我们对做错了的事进行弥补。
@@ -530,8 +531,8 @@ $ git commit --amend
 </div>
 </div>
 
-<div id="outline-container-org884a973" class="outline-2">
-<h2 id="org884a973"><span class="section-number-2">6</span> 远程仓库</h2>
+<div id="outline-container-org8095294" class="outline-2">
+<h2 id="org8095294"><span class="section-number-2">6</span> 远程仓库</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>远程仓库</b> 是一个好东西， <code>push</code> 之后感觉都会安全不少。
@@ -564,8 +565,8 @@ $ git commit --amend
 </div>
 </div>
 
-<div id="outline-container-org3920c84" class="outline-2">
-<h2 id="org3920c84"><span class="section-number-2">7</span> 打标签</h2>
+<div id="outline-container-orgd377ff6" class="outline-2">
+<h2 id="orgd377ff6"><span class="section-number-2">7</span> 打标签</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 对某个特定版本打标签是很有用的。
@@ -603,8 +604,8 @@ $ git tag version
 </div>
 </div>
 
-<div id="outline-container-org93ea6c0" class="outline-2">
-<h2 id="org93ea6c0"><span class="section-number-2">8</span> 分支</h2>
+<div id="outline-container-org6249487" class="outline-2">
+<h2 id="org6249487"><span class="section-number-2">8</span> 分支</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <code>Git</code> 中的分支操作很方便， 同时分支也是一个很重要的功能。 新的想法可以通过一个临时
@@ -613,8 +614,8 @@ $ git tag version
 </p>
 </div>
 
-<div id="outline-container-org86b3631" class="outline-3">
-<h3 id="org86b3631"><span class="section-number-3">8.1</span> 概念</h3>
+<div id="outline-container-orged02355" class="outline-3">
+<h3 id="orged02355"><span class="section-number-3">8.1</span> 概念</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 首先， 是 <b>提交对象</b> 这一概念。 每一次提交都会创建一个 <b>提交对象</b>. 这个提交对象可以代表
@@ -645,8 +646,8 @@ $ git tag version
 </div>
 </div>
 
-<div id="outline-container-orgefc01cb" class="outline-3">
-<h3 id="orgefc01cb"><span class="section-number-3">8.2</span> 操作</h3>
+<div id="outline-container-org2ef0f4c" class="outline-3">
+<h3 id="org2ef0f4c"><span class="section-number-3">8.2</span> 操作</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 分支的基本操作很简单：
@@ -684,8 +685,8 @@ $ git branch -d &lt;name&gt;
 </div>
 </div>
 
-<div id="outline-container-org2935bbe" class="outline-3">
-<h3 id="org2935bbe"><span class="section-number-3">8.3</span> 远程分支</h3>
+<div id="outline-container-org8d289d9" class="outline-3">
+<h3 id="org8d289d9"><span class="section-number-3">8.3</span> 远程分支</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 <b>远程分支不等于当前分支</b>.
@@ -766,8 +767,8 @@ $ git push [remote] [branch]  <span style="font-weight: bold; font-style: italic
 </div>
 </div>
 
-<div id="outline-container-org33ec136" class="outline-3">
-<h3 id="org33ec136"><span class="section-number-3">8.4</span> 变基</h3>
+<div id="outline-container-org9033625" class="outline-3">
+<h3 id="org9033625"><span class="section-number-3">8.4</span> 变基</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 这不是一个好名字。
@@ -792,14 +793,26 @@ $ git rebase &lt;branch&gt;
 </div>
 </div>
 
-<div id="outline-container-org1c51d3e" class="outline-2">
-<h2 id="org1c51d3e"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org725cf0e" class="outline-2">
+<h2 id="org725cf0e"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://git-scm.com/book/zh/v2">Git-Book</a></li>
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:10 -->
+<!-- 2018-08-12 周日 11:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SqlLocalDB 和 Sqlcmd</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -258,39 +259,39 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4d404d1">1. 简介</a>
+<li><a href="#org4b65c5b">1. 简介</a>
 <ul>
-<li><a href="#org53b23fc">1.1. sqllocaldb 介绍</a></li>
-<li><a href="#orgd055821">1.2. sqlcmd 介绍</a></li>
+<li><a href="#orgfd8fa23">1.1. sqllocaldb 介绍</a></li>
+<li><a href="#orge8e6148">1.2. sqlcmd 介绍</a></li>
 </ul>
 </li>
-<li><a href="#org9316d02">2. 安装</a>
+<li><a href="#orgfc26661">2. 安装</a>
 <ul>
-<li><a href="#org26e0c9f">2.1. 通过VS安装</a></li>
-<li><a href="#org42517b4">2.2. 通过安装包安装</a></li>
+<li><a href="#org44217a4">2.1. 通过VS安装</a></li>
+<li><a href="#org36cff77">2.2. 通过安装包安装</a></li>
 </ul>
 </li>
-<li><a href="#org2850f4c">3. 使用</a>
+<li><a href="#org42ab118">3. 使用</a>
 <ul>
-<li><a href="#orge78bf4f">3.1. 使用sqllocaldb</a></li>
-<li><a href="#org92ff91c">3.2. 使用sqlcmd</a></li>
+<li><a href="#orge17d807">3.1. 使用sqllocaldb</a></li>
+<li><a href="#org3dbd498">3.2. 使用sqlcmd</a></li>
 </ul>
 </li>
-<li><a href="#org399180e">4. 结语</a></li>
+<li><a href="#org7bed7f6">4. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4d404d1" class="outline-2">
-<h2 id="org4d404d1"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org4b65c5b" class="outline-2">
+<h2 id="org4b65c5b"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本文介绍如何通过 <code>sqllocaldb</code>, <code>sqlcmd</code> 搭建一个 <b>简单</b> 的 <code>sql server</code> 学习开发环境.
 </p>
 </div>
 
-<div id="outline-container-org53b23fc" class="outline-3">
-<h3 id="org53b23fc"><span class="section-number-3">1.1</span> sqllocaldb 介绍</h3>
+<div id="outline-container-orgfd8fa23" class="outline-3">
+<h3 id="orgfd8fa23"><span class="section-number-3">1.1</span> sqllocaldb 介绍</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 <b>sqllocaldb</b> 是微软为开发者量身定制了一款专门用于编程开发的小数据库.
@@ -316,8 +317,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd055821" class="outline-3">
-<h3 id="orgd055821"><span class="section-number-3">1.2</span> sqlcmd 介绍</h3>
+<div id="outline-container-orge8e6148" class="outline-3">
+<h3 id="orge8e6148"><span class="section-number-3">1.2</span> sqlcmd 介绍</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 <b>sqlcmd</b> 在老版本的 <b>sqlserver</b> 中叫做 <b>osql</b>.
@@ -344,12 +345,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9316d02" class="outline-2">
-<h2 id="org9316d02"><span class="section-number-2">2</span> 安装</h2>
+<div id="outline-container-orgfc26661" class="outline-2">
+<h2 id="orgfc26661"><span class="section-number-2">2</span> 安装</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org26e0c9f" class="outline-3">
-<h3 id="org26e0c9f"><span class="section-number-3">2.1</span> 通过VS安装</h3>
+<div id="outline-container-org44217a4" class="outline-3">
+<h3 id="org44217a4"><span class="section-number-3">2.1</span> 通过VS安装</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 这是最简单直接的安装方式, 只需要勾选几个选项就够了.
@@ -362,8 +363,8 @@ VS 2017 示例:
 </div>
 </div>
 
-<div id="outline-container-org42517b4" class="outline-3">
-<h3 id="org42517b4"><span class="section-number-3">2.2</span> 通过安装包安装</h3>
+<div id="outline-container-org36cff77" class="outline-3">
+<h3 id="org36cff77"><span class="section-number-3">2.2</span> 通过安装包安装</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个安装方式相对麻烦一些, 如果你没有安装 VS 的话, 可以这样安装.
@@ -397,12 +398,12 @@ C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
 </div>
 </div>
 
-<div id="outline-container-org2850f4c" class="outline-2">
-<h2 id="org2850f4c"><span class="section-number-2">3</span> 使用</h2>
+<div id="outline-container-org42ab118" class="outline-2">
+<h2 id="org42ab118"><span class="section-number-2">3</span> 使用</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orge78bf4f" class="outline-3">
-<h3 id="orge78bf4f"><span class="section-number-3">3.1</span> 使用sqllocaldb</h3>
+<div id="outline-container-orge17d807" class="outline-3">
+<h3 id="orge17d807"><span class="section-number-3">3.1</span> 使用sqllocaldb</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>sqllocaldb -?</code> 查看使用帮助
@@ -439,8 +440,8 @@ sqllocaldb v                       -- 列出在计算机上安装的所有 Local
 </div>
 </div>
 
-<div id="outline-container-org92ff91c" class="outline-3">
-<h3 id="org92ff91c"><span class="section-number-3">3.2</span> 使用sqlcmd</h3>
+<div id="outline-container-org3dbd498" class="outline-3">
+<h3 id="org3dbd498"><span class="section-number-3">3.2</span> 使用sqlcmd</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>sqlcmd</b> 的指令还是比较多的, 这里只列举几个常用的指令.
@@ -475,8 +476,8 @@ exit               -- 退出 sqlcmd
 </div>
 </div>
 
-<div id="outline-container-org399180e" class="outline-2">
-<h2 id="org399180e"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org7bed7f6" class="outline-2">
+<h2 id="org7bed7f6"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 通过 <b>sqllocaldb</b> 和 <b>sqlcmd</b> 可以简单搭建用于 <b>sql</b> 学习的环境.
@@ -488,6 +489,18 @@ exit               -- 退出 sqlcmd
 </p>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

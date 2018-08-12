@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:10 -->
+<!-- 2018-08-12 周日 11:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 导入相关</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,24 +237,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org451e503">1. 简介</a></li>
-<li><a href="#orgf4589cf">2. import 语法</a></li>
-<li><a href="#org5c73093">3. 相对导入和绝对导入</a>
+<li><a href="#org9e2eabe">1. 简介</a></li>
+<li><a href="#org3afd113">2. import 语法</a></li>
+<li><a href="#orgda0dde5">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#orgd01a760">3.1. 相对导入</a></li>
-<li><a href="#org80bbf47">3.2. 绝对导入</a></li>
+<li><a href="#orgd87e55a">3.1. 相对导入</a></li>
+<li><a href="#org179ec8c">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#org5276193">4. 同名的包和模块</a></li>
-<li><a href="#org1543bf8">5. 执行一次导入后</a></li>
-<li><a href="#orgdbff5c3">6. 其他使用细节</a></li>
-<li><a href="#org5c148ef">7. 参考链接</a></li>
+<li><a href="#org4f60b99">4. 同名的包和模块</a></li>
+<li><a href="#org0c30154">5. 执行一次导入后</a></li>
+<li><a href="#orgc64ad49">6. 其他使用细节</a></li>
+<li><a href="#orgbe47725">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org451e503" class="outline-2">
-<h2 id="org451e503"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org9e2eabe" class="outline-2">
+<h2 id="org9e2eabe"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
@@ -274,8 +275,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf4589cf" class="outline-2">
-<h2 id="orgf4589cf"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-org3afd113" class="outline-2">
+<h2 id="org3afd113"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -306,12 +307,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5c73093" class="outline-2">
-<h2 id="org5c73093"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-orgda0dde5" class="outline-2">
+<h2 id="orgda0dde5"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd01a760" class="outline-3">
-<h3 id="orgd01a760"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-orgd87e55a" class="outline-3">
+<h3 id="orgd87e55a"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -340,8 +341,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org80bbf47" class="outline-3">
-<h3 id="org80bbf47"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org179ec8c" class="outline-3">
+<h3 id="org179ec8c"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -538,8 +539,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-org5276193" class="outline-2">
-<h2 id="org5276193"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org4f60b99" class="outline-2">
+<h2 id="org4f60b99"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -621,8 +622,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org1543bf8" class="outline-2">
-<h2 id="org1543bf8"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-org0c30154" class="outline-2">
+<h2 id="org0c30154"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -668,8 +669,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgdbff5c3" class="outline-2">
-<h2 id="orgdbff5c3"><span class="section-number-2">6</span> 其他使用细节</h2>
+<div id="outline-container-orgc64ad49" class="outline-2">
+<h2 id="orgc64ad49"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -702,8 +703,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org5c148ef" class="outline-2">
-<h2 id="org5c148ef"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgbe47725" class="outline-2">
+<h2 id="orgbe47725"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>
@@ -711,6 +712,18 @@ pkg/
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

@@ -54,12 +54,25 @@
   ;; Export settings
   (setq org-export-default-language "zh-CN")
   (setq org-export-with-sub-superscripts nil)
-  (setq org-html-postamble nil)
+  (setq org-html-postamble t)
+  (setq org-html-postamble-format
+        '(("en"
+           "版权声明:自由转载-非商用-非衍生-保持署名(<a href=\"http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh\">创意共享3.0许可证</a>)
+           <div id=\"disqus_thread\"></div>
+           <script type=\"text/javascript\">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>")))
 
   ;; HTML Specific export settings
   (setq org-html-doctype "html5")
   (setq org-html-link-home "https://rgb-24bit.github.io")
-  (setq org-html-link-up "https://rgb-24bit.github.io/blog/"))
+  (setq org-html-link-up "https://rgb-24bit.github.io/blog/")
+  (setq org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css\"/>"))
 
 (progn
   (init-export-env)

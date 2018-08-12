@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:10 -->
+<!-- 2018-08-12 周日 11:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 元类</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,18 +237,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9de6bf6">1. 前言</a></li>
-<li><a href="#orgcc5e2a7">2. type</a></li>
-<li><a href="#orgf10fdbf">3. 元类的定义</a></li>
-<li><a href="#org51eaa8e">4. 类属性和实例属性</a></li>
-<li><a href="#org94ed661">5. 元类的使用</a></li>
-<li><a href="#org17cdd7b">6. 结语</a></li>
+<li><a href="#orgd427f00">1. 前言</a></li>
+<li><a href="#orgd0b21b4">2. type</a></li>
+<li><a href="#org7ac2735">3. 元类的定义</a></li>
+<li><a href="#org740b059">4. 类属性和实例属性</a></li>
+<li><a href="#orgd875a2f">5. 元类的使用</a></li>
+<li><a href="#orgb3a1bd9">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9de6bf6" class="outline-2">
-<h2 id="org9de6bf6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd427f00" class="outline-2">
+<h2 id="orgd427f00"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>元类</b> 在 <code>Python</code> 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 <b>创建类</b> 时的行为，
@@ -256,8 +257,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcc5e2a7" class="outline-2">
-<h2 id="orgcc5e2a7"><span class="section-number-2">2</span> type</h2>
+<div id="outline-container-orgd0b21b4" class="outline-2">
+<h2 id="orgd0b21b4"><span class="section-number-2">2</span> type</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 作为动态语言， 类型是在运行时创建和确定的， 默认情况下， 用于创建类的就是 <code>type</code>.
@@ -319,8 +320,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf10fdbf" class="outline-2">
-<h2 id="orgf10fdbf"><span class="section-number-2">3</span> 元类的定义</h2>
+<div id="outline-container-org7ac2735" class="outline-2">
+<h2 id="org7ac2735"><span class="section-number-2">3</span> 元类的定义</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>元类(metaclass)</b> 属于 <code>type</code> 的子类， 而 <b>类</b> 属于 <b>元类</b> 的 <b>实例</b>.
@@ -415,8 +416,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-org51eaa8e" class="outline-2">
-<h2 id="org51eaa8e"><span class="section-number-2">4</span> 类属性和实例属性</h2>
+<div id="outline-container-org740b059" class="outline-2">
+<h2 id="org740b059"><span class="section-number-2">4</span> 类属性和实例属性</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 搞清楚 <b>类属性</b> 和 <b>实例属性</b> 的关系之前， 需要明确的两点是：
@@ -501,8 +502,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-org94ed661" class="outline-2">
-<h2 id="org94ed661"><span class="section-number-2">5</span> 元类的使用</h2>
+<div id="outline-container-orgd875a2f" class="outline-2">
+<h2 id="orgd875a2f"><span class="section-number-2">5</span> 元类的使用</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 元类的使用我也没有多少经验， 只能简单的列出一些自己尝试的结果。
@@ -603,8 +604,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-org17cdd7b" class="outline-2">
-<h2 id="org17cdd7b"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgb3a1bd9" class="outline-2">
+<h2 id="orgb3a1bd9"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 给了我们很大程度上的自由， 我们可以运用各种奇淫技巧写出各种神奇的代码。
@@ -615,6 +616,18 @@ Create an instance with type MyMetaClass.TestClass.
 </p>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

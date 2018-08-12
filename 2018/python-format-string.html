@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:10 -->
+<!-- 2018-08-12 周日 11:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 格式化字符串</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,21 +237,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7ad5dad">1. 简介</a></li>
-<li><a href="#orgfb2d684">2. 使用 str.format()</a>
+<li><a href="#org7e52e07">1. 简介</a></li>
+<li><a href="#orgd6d53c9">2. 使用 str.format()</a>
 <ul>
-<li><a href="#org82753be">2.1. 格式化字符串语法</a></li>
-<li><a href="#org5d2f586">2.2. 格式说明符</a></li>
+<li><a href="#orgc45819f">2.1. 格式化字符串语法</a></li>
+<li><a href="#org9bad120">2.2. 格式说明符</a></li>
 </ul>
 </li>
-<li><a href="#orgf3b4afa">3. 使用 %</a></li>
-<li><a href="#orga8836a6">4. Update: 2018-04-18</a></li>
+<li><a href="#org21ecaed">3. 使用 %</a></li>
+<li><a href="#orge5d0d18">4. Update: 2018-04-18</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7ad5dad" class="outline-2">
-<h2 id="org7ad5dad"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org7e52e07" class="outline-2">
+<h2 id="org7e52e07"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 目前有两种进行格式化字符串的方式：
@@ -274,12 +275,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfb2d684" class="outline-2">
-<h2 id="orgfb2d684"><span class="section-number-2">2</span> 使用 str.format()</h2>
+<div id="outline-container-orgd6d53c9" class="outline-2">
+<h2 id="orgd6d53c9"><span class="section-number-2">2</span> 使用 str.format()</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org82753be" class="outline-3">
-<h3 id="org82753be"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
+<div id="outline-container-orgc45819f" class="outline-3">
+<h3 id="orgc45819f"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>format</code> 字符串包含由 <code>{}</code> 括起来的替换字段， 不包含在 <code>{}</code> 中的内容不做处理。
@@ -346,8 +347,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5d2f586" class="outline-3">
-<h3 id="org5d2f586"><span class="section-number-3">2.2</span> 格式说明符</h3>
+<div id="outline-container-org9bad120" class="outline-3">
+<h3 id="org9bad120"><span class="section-number-3">2.2</span> 格式说明符</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>format_spec</code> 允许定义该替换字段的表现形式， 如左右对齐， 宽度等。
@@ -742,8 +743,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgf3b4afa" class="outline-2">
-<h2 id="orgf3b4afa"><span class="section-number-2">3</span> 使用 %</h2>
+<div id="outline-container-org21ecaed" class="outline-2">
+<h2 id="org21ecaed"><span class="section-number-2">3</span> 使用 %</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>注：</b> 这个方式不被推荐， 如果可以的话， 还是尽量使用 <code>str.format()</code>
@@ -944,8 +945,8 @@ Python has 002 quote types.
 </div>
 </div>
 
-<div id="outline-container-orga8836a6" class="outline-2">
-<h2 id="orga8836a6"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
+<div id="outline-container-orge5d0d18" class="outline-2">
+<h2 id="orge5d0d18"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这次更新是关于使用 <code>str.format</code> 的过程中包含 <code>{}</code> 的问题的。
@@ -1016,6 +1017,18 @@ Python has 002 quote types.
 </p>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>

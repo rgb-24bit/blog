@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-05 周日 18:09 -->
+<!-- 2018-08-12 周日 11:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 编码问题</title>
@@ -178,6 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -236,19 +237,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd08ec0f">1. Unicode &amp; UTF-8</a></li>
-<li><a href="#orgfd4bddc">2. 编码格式转化</a></li>
-<li><a href="#orgb0e03a3">3. Python2</a></li>
-<li><a href="#org424b739">4. Python3</a></li>
-<li><a href="#org3e339d9">5. 编写程序</a></li>
-<li><a href="#org4427321">6. 代码样例</a></li>
-<li><a href="#orga950c43">7. 参考链接</a></li>
+<li><a href="#org9898265">1. Unicode &amp; UTF-8</a></li>
+<li><a href="#orgbec4883">2. 编码格式转化</a></li>
+<li><a href="#org1ca7355">3. Python2</a></li>
+<li><a href="#org87cce84">4. Python3</a></li>
+<li><a href="#org7a3647c">5. 编写程序</a></li>
+<li><a href="#org0147b54">6. 代码样例</a></li>
+<li><a href="#orgc20d1ac">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd08ec0f" class="outline-2">
-<h2 id="orgd08ec0f"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
+<div id="outline-container-org9898265" class="outline-2">
+<h2 id="org9898265"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
@@ -275,8 +276,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfd4bddc" class="outline-2">
-<h2 id="orgfd4bddc"><span class="section-number-2">2</span> 编码格式转化</h2>
+<div id="outline-container-orgbec4883" class="outline-2">
+<h2 id="orgbec4883"><span class="section-number-2">2</span> 编码格式转化</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>目前存在有很多种编码方式， 如 <code>UTF-8</code>, <code>cp936</code> 等</li>
@@ -289,8 +290,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb0e03a3" class="outline-2">
-<h2 id="orgb0e03a3"><span class="section-number-2">3</span> Python2</h2>
+<div id="outline-container-org1ca7355" class="outline-2">
+<h2 id="org1ca7355"><span class="section-number-2">3</span> Python2</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python2</code> 中的两种字符串数据类型：
@@ -348,8 +349,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org424b739" class="outline-2">
-<h2 id="org424b739"><span class="section-number-2">4</span> Python3</h2>
+<div id="outline-container-org87cce84" class="outline-2">
+<h2 id="org87cce84"><span class="section-number-2">4</span> Python3</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 和 <code>Python2</code> 中不同的是， <code>Python3</code> 默认的字符串类型变为了 <code>unicode</code>, 而字节字符串的定义需要通过 <code>b'abc'</code> 的方式。
@@ -395,8 +396,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org3e339d9" class="outline-2">
-<h2 id="org3e339d9"><span class="section-number-2">5</span> 编写程序</h2>
+<div id="outline-container-org7a3647c" class="outline-2">
+<h2 id="org7a3647c"><span class="section-number-2">5</span> 编写程序</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b>无法改变的五个事实：</b>
@@ -420,8 +421,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org4427321" class="outline-2">
-<h2 id="org4427321"><span class="section-number-2">6</span> 代码样例</h2>
+<div id="outline-container-org0147b54" class="outline-2">
+<h2 id="org0147b54"><span class="section-number-2">6</span> 代码样例</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在阅读 <a href="https://github.com/webpy/webpy">webpy</a> 源码的过程中， 发现了在 <code>utils.py</code> 中的一段处理这个问题的代码， 感觉很有用：
@@ -482,8 +483,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orga950c43" class="outline-2">
-<h2 id="orga950c43"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgc20d1ac" class="outline-2">
+<h2 id="orgc20d1ac"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html">unicode 之痛</a> - 推荐</li>
@@ -491,6 +492,18 @@ Traceback (most recent call last):
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+           <div id="disqus_thread"></div>
+           <script type="text/javascript">
+             var disqus_shortname = 'rgb-24bit';
+             (function() {
+               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+           </script>
 </div>
 </body>
 </html>
