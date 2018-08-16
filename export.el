@@ -41,6 +41,12 @@
   (export-html-by-file-name "README.org")
   (rename-file "README.html" "index.html" t))
 
+(defun read-file-text (file-name)
+  "read file content as text."
+  (with-temp-buffer
+    (insert-file-contents-literally file-name)
+    (decode-coding-region (point-min) (point-max) 'utf-8 t)))
+
 (defun init-export-env ()
   ;; Dependency
   (load-file "htmlize.el")
@@ -55,18 +61,7 @@
   (setq org-export-default-language "zh-CN")
   (setq org-export-with-sub-superscripts nil)
   (setq org-html-postamble t)
-  (setq org-html-postamble-format
-        '(("en"
-           "版权声明:自由转载-非商用-非衍生-保持署名(<a href=\"http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh\">创意共享3.0许可证</a>)
-           <div id=\"disqus_thread\"></div>
-           <script type=\"text/javascript\">
-             var disqus_shortname = 'rgb-24bit';
-             (function() {
-               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-             })();
-           </script>")))
+  (setq org-html-postamble (read-file-text "postamble.html"))
 
   ;; HTML Specific export settings
   (setq org-html-doctype "html5")
