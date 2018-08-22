@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-22 周三 16:19 -->
+<!-- 2018-08-22 周三 16:24 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python I/O</title>
@@ -237,30 +237,30 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcf4b033">1. 简介</a></li>
-<li><a href="#org7a39490">2. I/O 类型</a></li>
-<li><a href="#orga6193aa">3. Base Class</a>
+<li><a href="#org8aa91ca">1. 简介</a></li>
+<li><a href="#orge971207">2. I/O 类型</a></li>
+<li><a href="#org5bffb70">3. Base Class</a>
 <ul>
-<li><a href="#orgf628ec8">3.1. IOBase</a></li>
-<li><a href="#org7ad19bd">3.2. RawIOBase</a></li>
-<li><a href="#org847ebfa">3.3. BufferedIOBase</a></li>
-<li><a href="#org7163d98">3.4. TextIOBase</a></li>
+<li><a href="#org6178b01">3.1. IOBase</a></li>
+<li><a href="#orgf8c77cb">3.2. RawIOBase</a></li>
+<li><a href="#org09b699d">3.3. BufferedIOBase</a></li>
+<li><a href="#org4edadb1">3.4. TextIOBase</a></li>
 </ul>
 </li>
-<li><a href="#orgc468bc0">4. 具体实现</a>
+<li><a href="#orgb227fad">4. 具体实现</a>
 <ul>
-<li><a href="#orga38d35d">4.1. BytesIO</a></li>
-<li><a href="#org0acc7ee">4.2. StringIO</a></li>
-<li><a href="#org67a3a63">4.3. TextIOWrapper</a></li>
+<li><a href="#org0c85761">4.1. BytesIO</a></li>
+<li><a href="#org5f4a636">4.2. StringIO</a></li>
+<li><a href="#org5db4e9e">4.3. TextIOWrapper</a></li>
 </ul>
 </li>
-<li><a href="#org7b9fe93">5. 相关链接</a></li>
+<li><a href="#org6d3623d">5. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcf4b033" class="outline-2">
-<h2 id="orgcf4b033"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org8aa91ca" class="outline-2">
+<h2 id="org8aa91ca"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python I/O</code> 操作主要由模块 <code>io</code> 提供支持，在 <code>Python3</code> 中，内置函数 <code>open</code> 甚至就是 <code>io.open</code> 的别名。
@@ -272,8 +272,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7a39490" class="outline-2">
-<h2 id="org7a39490"><span class="section-number-2">2</span> I/O 类型</h2>
+<div id="outline-container-orge971207" class="outline-2">
+<h2 id="orge971207"><span class="section-number-2">2</span> I/O 类型</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>I/O</code> 主要有三种类型，分别为：
@@ -320,8 +320,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga6193aa" class="outline-2">
-<h2 id="orga6193aa"><span class="section-number-2">3</span> Base Class</h2>
+<div id="outline-container-org5bffb70" class="outline-2">
+<h2 id="org5bffb70"><span class="section-number-2">3</span> Base Class</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>io</code> 模块通过类的层次结构实现这些 <code>I/O</code> 类型，最基本的四个类为： <code>IOBase</code>, <code>RawIOBase</code>, <code>BufferedIOBase</code>
@@ -329,7 +329,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-它们之间的关系可以通过源码直观的获得：
+它们之间的关系可以通过源码获得（文档也行）：
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">IOBase</span>(_io._IOBase, metaclass=abc.ABCMeta):
@@ -386,8 +386,8 @@ for the JavaScript code in this tag.
 </table>
 </div>
 
-<div id="outline-container-orgf628ec8" class="outline-3">
-<h3 id="orgf628ec8"><span class="section-number-3">3.1</span> IOBase</h3>
+<div id="outline-container-org6178b01" class="outline-3">
+<h3 id="org6178b01"><span class="section-number-3">3.1</span> IOBase</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>IOBase</code> 是所有 <code>I/O</code> 类的抽象基类，作用于字节流。我们不直接使用这个类，但可以了解这个类的字段和方法。
@@ -504,8 +504,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7ad19bd" class="outline-3">
-<h3 id="org7ad19bd"><span class="section-number-3">3.2</span> RawIOBase</h3>
+<div id="outline-container-orgf8c77cb" class="outline-3">
+<h3 id="orgf8c77cb"><span class="section-number-3">3.2</span> RawIOBase</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <code>RawIOBase</code> 继承了 <code>IOBase</code>, 因此拥有 <code>IOBase</code> 的所有字段和方法，除此以外还提供一下方法：
@@ -558,8 +558,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org847ebfa" class="outline-3">
-<h3 id="org847ebfa"><span class="section-number-3">3.3</span> BufferedIOBase</h3>
+<div id="outline-container-org09b699d" class="outline-3">
+<h3 id="org09b699d"><span class="section-number-3">3.3</span> BufferedIOBase</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>BufferedIOBase</code> 同样继承自 <code>IOBase</code>, 是支持某种缓冲的二进制流的基类。
@@ -620,8 +620,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7163d98" class="outline-3">
-<h3 id="org7163d98"><span class="section-number-3">3.4</span> TextIOBase</h3>
+<div id="outline-container-org4edadb1" class="outline-3">
+<h3 id="org4edadb1"><span class="section-number-3">3.4</span> TextIOBase</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <code>TextIOBase</code> 支持的是 <b>字符流</b>, 方法和字段如下：
@@ -697,22 +697,22 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc468bc0" class="outline-2">
-<h2 id="orgc468bc0"><span class="section-number-2">4</span> 具体实现</h2>
+<div id="outline-container-orgb227fad" class="outline-2">
+<h2 id="orgb227fad"><span class="section-number-2">4</span> 具体实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这三种 <code>I/O</code> 的具体实现还是不少的，这里不可能一一列举说明。但还是可以从源码了解具体实现有哪些：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">RawIOBase.register(FileIO)
+<pre class="src src-python">RawIOBase.register(FileIO)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">RawIOBase</span>
 
 <span style="font-weight: bold;">for</span> klass <span style="font-weight: bold;">in</span> (BytesIO, BufferedReader, BufferedWriter, BufferedRandom,
               BufferedRWPair):
-    BufferedIOBase.register(klass)
+    BufferedIOBase.register(klass)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">BufferedIOBase</span>
 
 <span style="font-weight: bold;">for</span> klass <span style="font-weight: bold;">in</span> (StringIO, TextIOWrapper):
-    TextIOBase.register(klass)
+    TextIOBase.register(klass)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">TextIOBase</span>
 <span style="font-weight: bold;">del</span> klass
 
 <span style="font-weight: bold;">try</span>:
@@ -725,7 +725,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-类之间的层次结构图了：
+类之间的层次结构图：
 </p>
 
 
@@ -739,8 +739,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orga38d35d" class="outline-3">
-<h3 id="orga38d35d"><span class="section-number-3">4.1</span> BytesIO</h3>
+<div id="outline-container-org0c85761" class="outline-3">
+<h3 id="org0c85761"><span class="section-number-3">4.1</span> BytesIO</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <code>BytesIO</code> 是 <code>BufferedIOBase</code> 的实现，除了继承自 <code>BufferedIOBase</code> 的内容外，还有：
@@ -768,8 +768,8 @@ b<span style="font-style: italic;">'ab56ef'</span>
 </div>
 </div>
 
-<div id="outline-container-org0acc7ee" class="outline-3">
-<h3 id="org0acc7ee"><span class="section-number-3">4.2</span> StringIO</h3>
+<div id="outline-container-org5f4a636" class="outline-3">
+<h3 id="org5f4a636"><span class="section-number-3">4.2</span> StringIO</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>StringIO</code> 是 <code>TextIOBase</code> 的实现，你可想操作文件那样操作它，它的方法 <code>getvalue</code> 会返回包含
@@ -798,8 +798,8 @@ output.close()
 </div>
 </div>
 
-<div id="outline-container-org67a3a63" class="outline-3">
-<h3 id="org67a3a63"><span class="section-number-3">4.3</span> TextIOWrapper</h3>
+<div id="outline-container-org5db4e9e" class="outline-3">
+<h3 id="org5db4e9e"><span class="section-number-3">4.3</span> TextIOWrapper</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 <code>TextIOWrapper</code> 是一个很重要的对象，平时我们通过 <code>open('xxx')</code> 获得就是这个对象。
@@ -833,8 +833,8 @@ output.close()
 </div>
 </div>
 
-<div id="outline-container-org7b9fe93" class="outline-2">
-<h2 id="org7b9fe93"><span class="section-number-2">5</span> 相关链接</h2>
+<div id="outline-container-org6d3623d" class="outline-2">
+<h2 id="org6d3623d"><span class="section-number-2">5</span> 相关链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/io.html">io — Core tools for working with streams</a></li>

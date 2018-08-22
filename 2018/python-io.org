@@ -41,7 +41,7 @@
   ~io~ 模块通过类的层次结构实现这些 ~I/O~ 类型，最基本的四个类为： ~IOBase~, ~RawIOBase~, ~BufferedIOBase~
   和 ~TextIOBase~.
 
-  它们之间的关系可以通过源码直观的获得：
+  它们之间的关系可以通过源码获得（文档也行）：
   #+BEGIN_SRC python
     class IOBase(_io._IOBase, metaclass=abc.ABCMeta):
         __doc__ = _io._IOBase.__doc__
@@ -158,14 +158,14 @@
   这三种 ~I/O~ 的具体实现还是不少的，这里不可能一一列举说明。但还是可以从源码了解具体实现有哪些：
 
   #+BEGIN_SRC python
-    RawIOBase.register(FileIO)
+    RawIOBase.register(FileIO)  # RawIOBase
 
     for klass in (BytesIO, BufferedReader, BufferedWriter, BufferedRandom,
                   BufferedRWPair):
-        BufferedIOBase.register(klass)
+        BufferedIOBase.register(klass)  # BufferedIOBase
 
     for klass in (StringIO, TextIOWrapper):
-        TextIOBase.register(klass)
+        TextIOBase.register(klass)  # TextIOBase
     del klass
 
     try:
@@ -176,7 +176,7 @@
         RawIOBase.register(_WindowsConsoleIO)
   #+END_SRC
 
-  类之间的层次结构图了：
+  类之间的层次结构图：
 
   [[file:img/python-io.png]]
 
