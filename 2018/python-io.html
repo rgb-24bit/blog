@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-08-22 周三 16:19 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python I/O</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Python I/O</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcf4b033">1. 简介</a></li>
+<li><a href="#org7a39490">2. I/O 类型</a></li>
+<li><a href="#orga6193aa">3. Base Class</a>
+<ul>
+<li><a href="#orgf628ec8">3.1. IOBase</a></li>
+<li><a href="#org7ad19bd">3.2. RawIOBase</a></li>
+<li><a href="#org847ebfa">3.3. BufferedIOBase</a></li>
+<li><a href="#org7163d98">3.4. TextIOBase</a></li>
+</ul>
+</li>
+<li><a href="#orgc468bc0">4. 具体实现</a>
+<ul>
+<li><a href="#orga38d35d">4.1. BytesIO</a></li>
+<li><a href="#org0acc7ee">4.2. StringIO</a></li>
+<li><a href="#org67a3a63">4.3. TextIOWrapper</a></li>
+</ul>
+</li>
+<li><a href="#org7b9fe93">5. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcf4b033" class="outline-2">
+<h2 id="orgcf4b033"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>Python I/O</code> 操作主要由模块 <code>io</code> 提供支持，在 <code>Python3</code> 中，内置函数 <code>open</code> 甚至就是 <code>io.open</code> 的别名。
+</p>
+
+<p>
+这篇博客的主要内容就是对 <code>io</code> 模块的了解学习，并以 <code>Python3</code> 为主。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7a39490" class="outline-2">
+<h2 id="org7a39490"><span class="section-number-2">2</span> I/O 类型</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>I/O</code> 主要有三种类型，分别为：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Text I/O</code></td>
+<td class="org-left">操作 <b>字符</b> 流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Binary I/O</code></td>
+<td class="org-left">操作 <b>字节</b> 流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Raw I/O</code></td>
+<td class="org-left">操作 <b>字节</b> 流， <b>无缓冲区</b></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>Raw I/O</code> 和另外两种 <code>I/O</code> 直观的区别就是是否存在 <b>缓冲区</b>, 因此，你可以通过禁用缓冲区来创建原始流：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">f</span> = <span style="font-weight: bold;">open</span>(<span style="font-style: italic;">"myfile.jpg"</span>, <span style="font-style: italic;">"rb"</span>, buffering=0)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6193aa" class="outline-2">
+<h2 id="orga6193aa"><span class="section-number-2">3</span> Base Class</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>io</code> 模块通过类的层次结构实现这些 <code>I/O</code> 类型，最基本的四个类为： <code>IOBase</code>, <code>RawIOBase</code>, <code>BufferedIOBase</code>
+和 <code>TextIOBase</code>.
+</p>
+
+<p>
+它们之间的关系可以通过源码直观的获得：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">IOBase</span>(_io._IOBase, metaclass=abc.ABCMeta):
+    <span style="font-weight: bold;">__doc__</span> = _io._IOBase.<span style="font-weight: bold;">__doc__</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">RawIOBase</span>(_io._RawIOBase, IOBase):
+    <span style="font-weight: bold;">__doc__</span> = _io._RawIOBase.<span style="font-weight: bold;">__doc__</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BufferedIOBase</span>(_io._BufferedIOBase, IOBase):
+    <span style="font-weight: bold;">__doc__</span> = _io._BufferedIOBase.<span style="font-weight: bold;">__doc__</span>
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TextIOBase</span>(_io._TextIOBase, IOBase):
+    <span style="font-weight: bold;">__doc__</span> = _io._TextIOBase.<span style="font-weight: bold;">__doc__</span>
+</pre>
+</div>
+
+<p>
+可以看到， <code>IOBase</code> 是一个 <b>抽象类</b>, <code>RawIOBase</code>, <code>BufferedIOBase</code> 和 <code>TextIOBase</code> 都继承自 <code>IOBase</code>.
+</p>
+
+<p>
+对应到 <code>I/O</code> 类型的关系如下：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">基类</th>
+<th scope="col" class="org-left">I/O 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>RawIOBase</code></td>
+<td class="org-left"><code>Raw I/O</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>BufferedIOBase</code></td>
+<td class="org-left"><code>Binary I/O</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>TextIOBase</code></td>
+<td class="org-left"><code>Text I/O</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgf628ec8" class="outline-3">
+<h3 id="orgf628ec8"><span class="section-number-3">3.1</span> IOBase</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>IOBase</code> 是所有 <code>I/O</code> 类的抽象基类，作用于字节流。我们不直接使用这个类，但可以了解这个类的字段和方法。
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">字段/方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>closed</code></td>
+<td class="org-left">如果流已关闭，则为 <code>True</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>close()</code></td>
+<td class="org-left">刷新缓冲区（如果存在）并关闭流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>fileno()</code></td>
+<td class="org-left">获取流的 <b>文件描述符</b>, 不存在便抛出 <code>OSError</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>flush()</code></td>
+<td class="org-left">刷新流的写缓冲区</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>isatty()</code></td>
+<td class="org-left">如果流是交互式的，则返回 <code>True</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readable()</code></td>
+<td class="org-left">如果可以读取流，则返回 <code>True</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readline(size=-1)</code></td>
+<td class="org-left">从流中读取并返回一行， <code>size</code> 限定读取字节大小</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readlines(hint=-1)</code></td>
+<td class="org-left">从流中读取并返回行列表， <code>hint</code> 现在读取的行数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>seek(offset[, whence])</code></td>
+<td class="org-left">更改流当前的字节偏移量</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>seekable()</code></td>
+<td class="org-left">如果流支持随机访问，则返回 <code>True</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tell()</code></td>
+<td class="org-left">返回当前流的位置（字节偏移量）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>truncate(size=None)</code></td>
+<td class="org-left">将流大小调整为给定大小，单位为字节，默认为流的当前位置</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>writable()</code></td>
+<td class="org-left">如果流支持写入，则返回 True</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>writelines(lines)</code></td>
+<td class="org-left">写一个行列表到流（换行符需要自己添加）</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+另外， <code>IOBase</code> 支持 <b>上下文管理器</b>, 即可以使用 <code>with</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">with</span> <span style="font-weight: bold;">open</span>(<span style="font-style: italic;">'spam.txt'</span>, <span style="font-style: italic;">'w'</span>) <span style="font-weight: bold;">as</span> <span style="font-weight: bold;">file</span>:
+    <span style="font-weight: bold;">file</span>.write(<span style="font-style: italic;">'Spam and eggs!'</span>)
+</pre>
+</div>
+
+<p>
+对于 <code>seek</code>, <code>Python I/O</code> 由 <code>C</code> 实现，因此和 <code>C</code> 基本一致：
+</p>
+<ul class="org-ul">
+<li><code>SEEK_SET(0)</code> - 流的开始</li>
+<li><code>SEEK_CUR(1)</code> - 当前流的位置</li>
+<li><code>SEEK_END(2)</code> - 流的结束</li>
+</ul>
+
+<p>
+<code>seek</code> 的参数 <code>offset</code> 指定相对于 <code>whence</code> 指定的位置的 <b>字节偏移量</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7ad19bd" class="outline-3">
+<h3 id="org7ad19bd"><span class="section-number-3">3.2</span> RawIOBase</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<code>RawIOBase</code> 继承了 <code>IOBase</code>, 因此拥有 <code>IOBase</code> 的所有字段和方法，除此以外还提供一下方法：
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>read(size=-1)</code></td>
+<td class="org-left">读取指定字节大小的内容，默认返回所有</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readall()</code></td>
+<td class="org-left">读取并返回流中的所有字节</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readinto(b)</code></td>
+<td class="org-left">将读取的字节存入对象 <code>b</code>, 并返回读取的字节数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>write(b)</code></td>
+<td class="org-left">将对象 <code>b</code> 中的字节写入流，并返回写入的字节数</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>Raw I/O</code> 操作的是 <b>字节流</b>, 因此无论是写入还是读取的内容都是 <b>类字节对象</b>.
+</p>
+
+<p>
+错误的数据会导致异常，如 <code>str</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org847ebfa" class="outline-3">
+<h3 id="org847ebfa"><span class="section-number-3">3.3</span> BufferedIOBase</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<code>BufferedIOBase</code> 同样继承自 <code>IOBase</code>, 是支持某种缓冲的二进制流的基类。
+</p>
+
+<p>
+<code>BufferedIOBase</code> 的方法和字段：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">字段/方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>raw</code></td>
+<td class="org-left"><code>BufferedIOBase</code> 内部处理的 <code>Raw I/O</code> 流(<code>RawIOBase</code>)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>detach()</code></td>
+<td class="org-left">将基础原始流与缓冲区分开并返回</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>read(size=-1)</code></td>
+<td class="org-left">读取指定字节大小的内容，默认返回所有</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readinto(b)</code></td>
+<td class="org-left">将读取的字节存入对象 <code>b</code>, 并返回读取的字节数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>write(b)</code></td>
+<td class="org-left">将对象 <code>b</code> 中的字节写入流，并返回写入的字节数</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+方法 <code>read</code> 和 <code>readinto</code> 都有一个在后面加一个 <code>1</code> 的变形，分别为 <code>read1</code> 和 <code>readinto1</code>.
+</p>
+
+<p>
+这两个变形进行 <code>I/O</code> 操作是最多只调用一次 <code>Raw I/O</code> 操作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7163d98" class="outline-3">
+<h3 id="org7163d98"><span class="section-number-3">3.4</span> TextIOBase</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+<code>TextIOBase</code> 支持的是 <b>字符流</b>, 方法和字段如下：
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">字段/方法</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>encoding</code></td>
+<td class="org-left">字符编码格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>errors</code></td>
+<td class="org-left">解码器或编码器的错误设置</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>newlines</code></td>
+<td class="org-left">到目前为止已翻译的换行符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>buffer</code></td>
+<td class="org-left"><code>TextIOBase</code> 内部处理的 <code>BufferedIOBase</code> 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>detach()</code></td>
+<td class="org-left">将基础二进制缓冲区与TextIOBase分开并返回</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>read(size=-1)</code></td>
+<td class="org-left">从流中读取指定数量的字符，默认读取所有</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>readline(size=-1)</code></td>
+<td class="org-left">读取一行内容， <code>size</code> 指定最多读取的字符数量</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>seek(offset[, whence])</code></td>
+<td class="org-left">将流位置更改为给定的偏移量</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tell()</code></td>
+<td class="org-left">获取流的当前位置</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>write(s)</code></td>
+<td class="org-left">将字符串写入流并返回写入字符数</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc468bc0" class="outline-2">
+<h2 id="orgc468bc0"><span class="section-number-2">4</span> 具体实现</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这三种 <code>I/O</code> 的具体实现还是不少的，这里不可能一一列举说明。但还是可以从源码了解具体实现有哪些：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">RawIOBase.register(FileIO)
+
+<span style="font-weight: bold;">for</span> klass <span style="font-weight: bold;">in</span> (BytesIO, BufferedReader, BufferedWriter, BufferedRandom,
+              BufferedRWPair):
+    BufferedIOBase.register(klass)
+
+<span style="font-weight: bold;">for</span> klass <span style="font-weight: bold;">in</span> (StringIO, TextIOWrapper):
+    TextIOBase.register(klass)
+<span style="font-weight: bold;">del</span> klass
+
+<span style="font-weight: bold;">try</span>:
+    <span style="font-weight: bold;">from</span> _io <span style="font-weight: bold;">import</span> _WindowsConsoleIO
+<span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">ImportError</span>:
+    <span style="font-weight: bold;">pass</span>
+<span style="font-weight: bold;">else</span>:
+    RawIOBase.register(_WindowsConsoleIO)
+</pre>
+</div>
+
+<p>
+类之间的层次结构图了：
+</p>
+
+
+<div class="figure">
+<p><img src="img/python-io.png" alt="python-io.png">
+</p>
+</div>
+
+<p>
+剩下的内容简单介绍一下 <code>BytesIO</code>, <code>StringIO</code> 和 <code>TextIOWrapper</code>.
+</p>
+</div>
+
+<div id="outline-container-orga38d35d" class="outline-3">
+<h3 id="orga38d35d"><span class="section-number-3">4.1</span> BytesIO</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>BytesIO</code> 是 <code>BufferedIOBase</code> 的实现，除了继承自 <code>BufferedIOBase</code> 的内容外，还有：
+</p>
+
+<dl class="org-dl">
+<dt>getbuffer()</dt><dd><p>
+获取缓冲区内容的可读写 <b>视图</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">b</span> = io.BytesIO(b<span style="font-style: italic;">"abcdef"</span>)
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">view</span> = b.getbuffer()
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">view</span>[2:4] = b<span style="font-style: italic;">"56"</span>
+&gt;&gt;&gt; b.getvalue()
+b<span style="font-style: italic;">'ab56ef'</span>
+</pre>
+</div></dd>
+
+<dt>getvalue()</dt><dd>获取包含缓冲区全部内容的 <code>bytes</code> 对象</dd>
+</dl>
+
+<p>
+<code>BytesIO</code> 属于 <code>I/O</code> 对象，数据保存在 <b>内存</b> 中，有时，使用 <code>BytesIO</code> 来保存数据是一个很好的选择。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0acc7ee" class="outline-3">
+<h3 id="org0acc7ee"><span class="section-number-3">4.2</span> StringIO</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<code>StringIO</code> 是 <code>TextIOBase</code> 的实现，你可想操作文件那样操作它，它的方法 <code>getvalue</code> 会返回包含
+缓冲区全部内容的 <b>字符串</b>.
+</p>
+
+<p>
+使用例：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> io
+
+<span style="font-weight: bold; font-style: italic;">output</span> = io.StringIO()
+output.write(<span style="font-style: italic;">'First line.\n'</span>)
+<span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Second line.'</span>, <span style="font-weight: bold;">file</span>=output)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Retrieve file contents -- this will be</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">'First line.\nSecond line.\n'</span>
+<span style="font-weight: bold; font-style: italic;">contents</span> = output.getvalue()
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Close object and discard memory buffer --</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">.getvalue() will now raise an exception.</span>
+output.close()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org67a3a63" class="outline-3">
+<h3 id="org67a3a63"><span class="section-number-3">4.3</span> TextIOWrapper</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<code>TextIOWrapper</code> 是一个很重要的对象，平时我们通过 <code>open('xxx')</code> 获得就是这个对象。
+</p>
+
+<p>
+它的第一个参数为一个 <code>BufferedIOBase</code> 对象，第二个参数为 <code>encoding</code>, 指定 <b>编码格式</b>.
+</p>
+
+<p>
+通过使用 <code>TextIOWrapper</code>, 我们可以将一个 <b>字节流</b> 包装，指定 <b>编码</b>, 从而直接读写 <b>字节流</b>.
+</p>
+
+<p>
+<code>flask</code> 的 <code>json</code> 实现中就有一段这样的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">_wrap_writer_for_text</span>(fp, encoding):
+    <span style="font-weight: bold;">try</span>:
+        fp.write(<span style="font-style: italic;">''</span>)
+    <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">TypeError</span>:
+        <span style="font-weight: bold; font-style: italic;">fp</span> = io.TextIOWrapper(fp, encoding)
+    <span style="font-weight: bold;">return</span> fp
+</pre>
+</div>
+
+<p>
+通过这样的方式，我们可以方便而安全的操作 <code>I/O</code> 对象。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b9fe93" class="outline-2">
+<h2 id="org7b9fe93"><span class="section-number-2">5</span> 相关链接</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/3/library/io.html">io — Core tools for working with streams</a></li>
+<li><a href="https://github.com/python/cpython/blob/master/Lib/io.py">cpython - io.py</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
