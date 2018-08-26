@@ -356,3 +356,17 @@
   + hash(object) :: 返回一个 *对象* 的 ~hash value~, 如果存在的话。 可以通过定义 ~__hash__~ 来
                     影响这个函数的行为， 但是 ~__hash__~ 的返回值应该是一个 *整数*.
 
+  + format(value, format_spec) :: 大致等价于如下代码
+       #+BEGIN_SRC python
+         '{:format_spec}'.format(value)
+       #+END_SRC
+
+       比如说：
+       #+BEGIN_SRC python
+         >>> value = 'text'
+         >>> '{:>20}'.format(value)
+         '                text'
+         >>> format(value, '>20')
+         '                text'
+       #+END_SRC
+
