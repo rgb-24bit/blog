@@ -1,0 +1,223 @@
+#+TITLE:      Python 生成器
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-08-28 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#简介][简介]]
+- [[#创建生成器][创建生成器]]
+- [[#简单的使用][简单的使用]]
+- [[#生成器对象][生成器对象]]
+
+* 简介
+  *生成器* 这个对于 ~Python~ 使用者来说应该并不陌生，毕竟现在的 ~Python3~ 中部分内置函数的返回值都是一个 *生成器*.
+
+  然而前段时间学习 *协程* 的过程中才发现，虽然 *生成器* 对于我来说并不陌生，但也算不上熟悉。
+
+* 创建生成器
+  创建生成器的方式有两种：
+  1. 通过 *生成器表达式*
+  2. 通过 *生成器函数*
+
+  *生成器表达式* 简单快捷，足以胜任简单的生成器创建工作，其形式和 *列表推导式* 类似，
+  只不过将中括号 ~[]~ 替换成了小括号 ~()~.
+
+  #+BEGIN_SRC python
+    In [1]: generator = (x * x for x in range(10))
+
+    In [2]: type(generator)
+    Out[2]: generator
+
+    In [3]: lst = [x * x for x in range(10)]
+
+    In [4]: type(lst)
+    Out[4]: list
+  #+END_SRC
+
+  *生成器表达式* 虽然简单，但是难以胜任复杂的工作，这时就需要通过 *生成器函数* 来创建生成器。
+
+  +内置函数中类似 ~range()~ 的函数都是一个生成器函数+, 调用这些 *生成器函数* 是返回的是一个 *生成器对象*.
+
+  要让一个 *函数* 成为 *生成器函数* 很简单，只需要将函数中的 ~return~ 替换为 ~yield~.
+
+  #+BEGIN_SRC python
+    In [1]: def fib(max):
+       ...:     n, a, b = 0, 0, 1
+       ...:     while n < max:
+       ...:         yield b
+       ...:         a, b = b, a + 1
+       ...:         n = n + 1
+       ...:     return 'done'
+       ...:
+
+    In [2]: f = fib(6)
+
+    In [3]: type(f)
+    Out[3]: generator
+  #+END_SRC
+
+  *NOTE:* ~Python2~ 中生成器函数不允许存在 ~return~ 语句
+
+  生成器函数中，每次执行到 ~yield~ 语句就会返回，再次执行时从上次返回的 ~yield~ 语句处继续执行。
+
+* 简单的使用
+  我们可以通过内置函数 ~next()~ 获取 *生成器* 的下一个返回值，如果没有更多的返回值时，
+  调用 ~next()~ 就会抛出 ~StopIteration~.
+
+  #+BEGIN_SRC python
+    In [4]: generator = (x * x for x in range(3))
+
+    In [5]: next(generator)
+    Out[5]: 0
+
+    In [6]: next(generator)
+    Out[6]: 1
+
+    In [7]: next(generator)
+    Out[7]: 4
+
+    In [8]: next(generator)
+    ---------------------------------------------------------------------------
+    StopIteration                             Traceback (most recent call last)
+    <ipython-input-8-1d0a8ea12077> in <module>()
+    ----> 1 next(generator)
+
+    StopIteration:
+  #+END_SRC
+
+  但更一般的使用方法是将 *生成器* 当做一个 *可迭代* 对象使用，将之放入 ~for~ 循环或者用做 *函数参数*.
+
+  #+BEGIN_SRC python
+    In [19]: def fib(max):
+        ...:     n, a, b = 0, 0, 1
+        ...:     while n < max:
+        ...:         yield b
+        ...:         a, b = b, a + 1
+        ...:         n = n + 1
+        ...:     return 'done'
+        ...:
+
+    In [20]: f = fib(10)
+
+    In [21]: lst = []
+
+    In [22]: for val in f:
+        ...:     lst.append(val)
+        ...:
+
+    In [23]: lst
+    Out[23]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
+
+    In [24]: list(fib(10))
+    Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
+  #+END_SRC
+
+  这样一来就不需要担心会遇到 ~StopIteration~ 了。
+
+* 生成器对象
+  生成器的完整名称应该是生成器 *对象*, 既然是一个对象，那么自然有 *方法* 和 *属性*.
+
+  #+BEGIN_SRC python
+    In [45]: g = (x for x in range(10))
+
+    In [46]: help(g)
+    Help on generator object:
+
+    <genexpr> = class generator(object)
+     |  Methods defined here:
+     |
+     |  close(...)
+     |      close() -> raise GeneratorExit inside generator.
+     |
+     |  send(...)
+     |      send(arg) -> send 'arg' into generator,
+     |      return next yielded value or raise StopIteration.
+     |
+     |  throw(...)
+     |      throw(typ[,val[,tb]]) -> raise exception in generator,
+     |      return next yielded value or raise StopIteration.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  gi_code
+     |
+     |  gi_frame
+     |
+     |  gi_running
+     |
+     |  gi_yieldfrom
+     |      object being iterated by yield from, or None
+  #+END_SRC
+
+  通过万能的 ~help~ 我们获得了 *生成器对象* 的 *方法* 和 *属性*. 现在的主要问题就是它们的 *作用*.
+
+  方法 ~close~ 会在生成器内部抛出一个 ~GeneratorExit~ 异常：
+  #+BEGIN_SRC python
+    In [54]: def gen():
+        ...:     try:
+        ...:         for i in range(10):
+        ...:             yield i
+        ...:     except GeneratorExit:
+        ...:         print('close generator')
+        ...:
+
+    In [55]: g = gen()
+
+    In [56]: next(g)
+    Out[56]: 0
+
+    In [57]: g.close()
+    close generator
+
+    In [58]: next(g)
+    ---------------------------------------------------------------------------
+    StopIteration                             Traceback (most recent call last)
+    <ipython-input-58-5f315c5de15b> in <module>()
+    ----> 1 next(g)
+
+    StopIteration:
+  #+END_SRC
+
+  方法 ~send~ 一个参数到 *生成器内部*, 那么问题来了，这个参数是怎样传递的呢？
+
+  #+BEGIN_SRC python
+    In [65]: def gen():
+        ...:     for i in range(10):
+        ...:         arg = yield i
+        ...:         print(arg)
+        ...:
+
+    In [66]: g = gen()
+
+    In [67]: g.send(None)
+    Out[67]: 0
+
+    In [69]: g.send(10)
+    10
+    Out[69]: 1
+
+    In [70]: next(g)
+    None
+    Out[70]: 2
+  #+END_SRC
+
+  生成器通过 ~yield~ 语句返回值，同时也通过 ~yield~ 语句传递 ~send()~ 的参数。
+  #+BEGIN_SRC python
+    arg = yield i
+  #+END_SRC
+
+  需要注意的是： 生成器启动的时候传递的参数必须是 ~None~, 否则会出错。
+  #+BEGIN_SRC python
+    g.send(None)
+  #+END_SRC
+
+  因为在生成器启动的时候，函数内部还没有执行到 ~yield~ 语句，自然也就无法传递参数。
+
+  同时， ~yield~ 的返回值默认为 ~None~.
+  #+BEGIN_SRC python
+    In [70]: next(g)
+    None
+    Out[70]: 2
+  #+END_SRC
+

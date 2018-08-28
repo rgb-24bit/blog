@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 08-28 -- [[file:2018/python-generator.org][Python 生成器]] ::
   - 08-22 -- [[file:2018/python-io.org][Python I/O]] ::
   - 08-11 -- [[file:2018/java-collection.org][Java 核心集合接口]] ::
   - 08-05 -- [[file:2018/python-metaclass.org][Python 元类]] ::
