@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-28 周二 17:08 -->
+<!-- 2018-08-29 周三 09:15 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 生成器</title>
@@ -237,19 +237,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6d71e0f">1. 简介</a></li>
-<li><a href="#org427ac50">2. 创建生成器</a></li>
-<li><a href="#orgbc052eb">3. 简单的使用</a></li>
-<li><a href="#orgd55304f">4. 生成器对象</a></li>
+<li><a href="#org7a926f1">1. 简介</a></li>
+<li><a href="#org46f8b6c">2. 创建生成器</a></li>
+<li><a href="#orge553d8a">3. 简单的使用</a></li>
+<li><a href="#orgd10ba6c">4. 生成器对象</a></li>
+<li><a href="#org435512c">5. 新的特性</a></li>
+<li><a href="#org048cdf1">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6d71e0f" class="outline-2">
-<h2 id="org6d71e0f"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org7a926f1" class="outline-2">
+<h2 id="org7a926f1"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<b>生成器</b> 这个对于 <code>Python</code> 使用者来说应该并不陌生，毕竟现在的 <code>Python3</code> 中部分内置函数的返回值都是一个 <b>生成器</b>.
+<b>生成器</b> 这个对于 <code>Python</code> 使用者来说应该并不陌生， <del>毕竟现在的 <code>Python3</code> 中部分内置函数的返回值就是一个 <b>生成器</b>.</del>
 </p>
 
 <p>
@@ -258,8 +260,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org427ac50" class="outline-2">
-<h2 id="org427ac50"><span class="section-number-2">2</span> 创建生成器</h2>
+<div id="outline-container-org46f8b6c" class="outline-2">
+<h2 id="org46f8b6c"><span class="section-number-2">2</span> 创建生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 创建生成器的方式有两种：
@@ -326,8 +328,8 @@ Out[3]: generator
 </div>
 </div>
 
-<div id="outline-container-orgbc052eb" class="outline-2">
-<h2 id="orgbc052eb"><span class="section-number-2">3</span> 简单的使用</h2>
+<div id="outline-container-orge553d8a" class="outline-2">
+<h2 id="orge553d8a"><span class="section-number-2">3</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们可以通过内置函数 <code>next()</code> 获取 <b>生成器</b> 的下一个返回值，如果没有更多的返回值时，
@@ -392,8 +394,8 @@ Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 </div>
 </div>
 
-<div id="outline-container-orgd55304f" class="outline-2">
-<h2 id="orgd55304f"><span class="section-number-2">4</span> 生成器对象</h2>
+<div id="outline-container-orgd10ba6c" class="outline-2">
+<h2 id="orgd10ba6c"><span class="section-number-2">4</span> 生成器对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 生成器的完整名称应该是生成器 <b>对象</b>, 既然是一个对象，那么自然有 <b>方法</b> 和 <b>属性</b>.
@@ -468,9 +470,8 @@ In [58]: <span style="font-weight: bold;">next</span>(g)
 </div>
 
 <p>
-方法 <code>send</code> 一个参数到 <b>生成器内部</b>, 那么问题来了，这个参数是怎样传递的呢？
+方法 <code>send</code> 传递一个参数到 <b>生成器内部</b>, 那么问题来了，这个参数是怎样传递的呢？
 </p>
-
 <div class="org-src-container">
 <pre class="src src-python">In [65]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
     ...:     <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
@@ -522,6 +523,91 @@ Out[70]: 2
 Out[70]: 2
 </pre>
 </div>
+
+<p>
+然后是方法 <code>throw</code>, 在 <b>生成器</b> 内部抛出一个异常，然后返回下一个值或抛出 <code>StopIteration</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
+   ...:     <span style="font-weight: bold;">try</span>:
+   ...:         <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
+   ...:             <span style="font-weight: bold;">yield</span> i * i
+   ...:     <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">as</span> ex:
+   ...:         <span style="font-weight: bold;">print</span>(ex)
+   ...:     <span style="font-weight: bold;">yield</span> -1
+   ...:
+
+In [2]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+
+In [3]: <span style="font-weight: bold;">next</span>(g)
+Out[3]: 0
+
+In [4]: <span style="font-weight: bold;">next</span>(g)
+Out[4]: 1
+
+In [5]: g.throw(<span style="font-weight: bold; text-decoration: underline;">Exception</span>, <span style="font-style: italic;">'throw'</span>)
+throw
+Out[5]: -1
+</pre>
+</div>
+
+<p>
+虽然知道了这些方法的作用，但一般的使用估计都用不上这些方法 QAQ
+</p>
+
+<p>
+对于剩下的几个属性，说实话，暂时还不知道这几个属性是干啥的， <code>gi_yieldfrom</code> 和 <code>gi_running</code> 还有所猜测
+但是其他几个就完成不清楚了。
+</p>
+
+<p>
+谷歌也没有找到答案，也许是方式不对，等知道了在补上。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org435512c" class="outline-2">
+<h2 id="org435512c"><span class="section-number-2">5</span> 新的特性</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+从 <code>3.3</code> 开始， <code>yield</code> 语句可以这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [8]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
+   ...:     <span style="font-weight: bold;">yield</span> <span style="font-weight: bold;">from</span> <span style="font-weight: bold;">range</span>(10)
+   ...:
+
+In [9]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+
+In [10]: <span style="font-weight: bold;">next</span>(g)
+Out[10]: 0
+</pre>
+</div>
+
+<p>
+这个需要 <code>yield from</code> 后面跟的对象是一个 <b>可迭代</b> 对象。
+</p>
+
+<p>
+相关的文档： <a href="https://www.python.org/dev/peps/pep-0380/">PEP 380 &#x2013; Syntax for Delegating to a Subgenerator</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org048cdf1" class="outline-2">
+<h2 id="org048cdf1"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+在学习 <b>协程</b> 之前我是万万没想到生成器对象居然存在方法和属性，毕竟平时还是简单的使用为主。
+</p>
+
+<p>
+然而事实证明， <code>Python</code> 果然是一个神奇的语言，鬼知道在什么地方藏了什么奇葩的特性。
+</p>
+
+<p>
+坑！！！
+</p>
 </div>
 </div>
 </div>

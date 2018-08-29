@@ -8,9 +8,11 @@
 - [[#创建生成器][创建生成器]]
 - [[#简单的使用][简单的使用]]
 - [[#生成器对象][生成器对象]]
+- [[#新的特性][新的特性]]
+- [[#结语][结语]]
 
 * 简介
-  *生成器* 这个对于 ~Python~ 使用者来说应该并不陌生，毕竟现在的 ~Python3~ 中部分内置函数的返回值都是一个 *生成器*.
+  *生成器* 这个对于 ~Python~ 使用者来说应该并不陌生， +毕竟现在的 ~Python3~ 中部分内置函数的返回值就是一个 *生成器*.+
 
   然而前段时间学习 *协程* 的过程中才发现，虽然 *生成器* 对于我来说并不陌生，但也算不上熟悉。
 
@@ -179,8 +181,7 @@
     StopIteration:
   #+END_SRC
 
-  方法 ~send~ 一个参数到 *生成器内部*, 那么问题来了，这个参数是怎样传递的呢？
-
+  方法 ~send~ 传递一个参数到 *生成器内部*, 那么问题来了，这个参数是怎样传递的呢？
   #+BEGIN_SRC python
     In [65]: def gen():
         ...:     for i in range(10):
@@ -220,4 +221,59 @@
     None
     Out[70]: 2
   #+END_SRC
+  
+  然后是方法 ~throw~, 在 *生成器* 内部抛出一个异常，然后返回下一个值或抛出 ~StopIteration~.
+  #+BEGIN_SRC python
+    In [1]: def gen():
+       ...:     try:
+       ...:         for i in range(10):
+       ...:             yield i * i
+       ...:     except Exception as ex:
+       ...:         print(ex)
+       ...:     yield -1
+       ...:
+
+    In [2]: g = gen()
+
+    In [3]: next(g)
+    Out[3]: 0
+
+    In [4]: next(g)
+    Out[4]: 1
+
+    In [5]: g.throw(Exception, 'throw')
+    throw
+    Out[5]: -1
+  #+END_SRC
+
+  虽然知道了这些方法的作用，但一般的使用估计都用不上这些方法 QAQ
+
+  对于剩下的几个属性，说实话，暂时还不知道这几个属性是干啥的， ~gi_yieldfrom~ 和 ~gi_running~ 还有所猜测
+  但是其他几个就完成不清楚了。
+  
+  谷歌也没有找到答案，也许是方式不对，等知道了在补上。
+
+* 新的特性
+  从 ~3.3~ 开始， ~yield~ 语句可以这样：
+  #+BEGIN_SRC python
+    In [8]: def gen():
+       ...:     yield from range(10)
+       ...:
+
+    In [9]: g = gen()
+
+    In [10]: next(g)
+    Out[10]: 0
+  #+END_SRC
+
+  这个需要 ~yield from~ 后面跟的对象是一个 *可迭代* 对象。
+
+  相关的文档： [[https://www.python.org/dev/peps/pep-0380/][PEP 380 -- Syntax for Delegating to a Subgenerator]]
+
+* 结语
+  在学习 *协程* 之前我是万万没想到生成器对象居然存在方法和属性，毕竟平时还是简单的使用为主。
+
+  然而事实证明， ~Python~ 果然是一个神奇的语言，鬼知道在什么地方藏了什么奇葩的特性。
+
+  坑！！！
 
