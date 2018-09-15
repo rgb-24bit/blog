@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-09-15 周六 22:07 -->
+<!-- 2018-09-15 周六 22:12 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linux 文件权限</title>
@@ -237,26 +237,26 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfcd72cc">1. 简介</a></li>
-<li><a href="#orge726f88">2. 用户与用户组</a></li>
-<li><a href="#org7c000a9">3. 文件属性</a></li>
-<li><a href="#org6c96993">4. 文件类型</a></li>
-<li><a href="#org417617a">5. 权限信息</a></li>
-<li><a href="#orga7c9596">6. 修改文件拥有者和所属用户组</a></li>
-<li><a href="#org1774b8e">7. 修改文件权限</a>
+<li><a href="#orgc9619b5">1. 简介</a></li>
+<li><a href="#org7081388">2. 用户与用户组</a></li>
+<li><a href="#org3f47fef">3. 文件属性</a></li>
+<li><a href="#org0a55138">4. 文件类型</a></li>
+<li><a href="#orgb340a18">5. 权限信息</a></li>
+<li><a href="#orga1273f2">6. 修改文件拥有者和所属用户组</a></li>
+<li><a href="#org0b14686">7. 修改文件权限</a>
 <ul>
-<li><a href="#org0118f1b">7.1. 数字类型改变文件权限</a></li>
-<li><a href="#orgbb646f1">7.2. 符号类型改变文件权限</a></li>
+<li><a href="#org2441a22">7.1. 数字类型改变文件权限</a></li>
+<li><a href="#orge000092">7.2. 符号类型改变文件权限</a></li>
 </ul>
 </li>
-<li><a href="#org320d8fe">8. 权限的作用</a></li>
-<li><a href="#org199a6a7">9. 参考链接</a></li>
+<li><a href="#org602a035">8. 权限的作用</a></li>
+<li><a href="#org005e666">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfcd72cc" class="outline-2">
-<h2 id="orgfcd72cc"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgc9619b5" class="outline-2">
+<h2 id="orgc9619b5"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 <code>Linux</code> 的学习过程中，文件权限是一个很重要的概念，毕竟 <code>Linux</code> 中的各种操作都离不开权限的支持。
@@ -268,8 +268,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge726f88" class="outline-2">
-<h2 id="orge726f88"><span class="section-number-2">2</span> 用户与用户组</h2>
+<div id="outline-container-org7081388" class="outline-2">
+<h2 id="org7081388"><span class="section-number-2">2</span> 用户与用户组</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Linux</code> 的文件权限是和 <b>用户与用户组</b> 密切相关的一个概念，对于一个文件来说，用户可以分为三类：
@@ -287,8 +287,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7c000a9" class="outline-2">
-<h2 id="org7c000a9"><span class="section-number-2">3</span> 文件属性</h2>
+<div id="outline-container-org3f47fef" class="outline-2">
+<h2 id="org3f47fef"><span class="section-number-2">3</span> 文件属性</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 使用命令 <code>ls -l</code> 可以得到文件的详细信息，比如：
@@ -354,8 +354,8 @@ drwxr-xr-x 9 root root 4096 Sep 11 10:19 emacs-kit
 </div>
 </div>
 
-<div id="outline-container-org6c96993" class="outline-2">
-<h2 id="org6c96993"><span class="section-number-2">4</span> 文件类型</h2>
+<div id="outline-container-org0a55138" class="outline-2">
+<h2 id="org0a55138"><span class="section-number-2">4</span> 文件类型</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Linux</code> 中文件可以分为 <code>5</code> 个类型， <code>ls -l</code> 输出的每条信息中的 <b>第一个字符</b> 就用于表示文件类型。
@@ -408,8 +408,8 @@ drwxr-xr-x 9 root root 4096 Sep 11 10:19 emacs-kit
 </div>
 </div>
 
-<div id="outline-container-org417617a" class="outline-2">
-<h2 id="org417617a"><span class="section-number-2">5</span> 权限信息</h2>
+<div id="outline-container-orgb340a18" class="outline-2">
+<h2 id="orgb340a18"><span class="section-number-2">5</span> 权限信息</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 通过 <b>用户与用户组</b> 概念可以了解到权限是相对于三类用户而言的，因此 <code>ls -l</code> 显示的权限信息也分为三组。
@@ -428,13 +428,13 @@ drwxr-xr-x 9 root root 4096 Sep 11 10:19 emacs-kit
 </p>
 
 <p>
-此时，权限信息 <code>rwxr-xr-x</code> 可以理解为： <b>拥有者</b> 具有 <b>读</b>, <b>写</b> 和 <b>执行</b> 权限，而 <b>用户组</b> 和 <b>其他人</b> 就只有 <b>读</b> 和 <b>执行</b> 的权限。
+因此，权限信息 <code>rwxr-xr-x</code> 可以理解为： <b>拥有者</b> 具有 <b>读</b>, <b>写</b> 和 <b>执行</b> 权限，而 <b>用户组</b> 和 <b>其他人</b> 就只有 <b>读</b> 和 <b>执行</b> 的权限。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga7c9596" class="outline-2">
-<h2 id="orga7c9596"><span class="section-number-2">6</span> 修改文件拥有者和所属用户组</h2>
+<div id="outline-container-orga1273f2" class="outline-2">
+<h2 id="orga1273f2"><span class="section-number-2">6</span> 修改文件拥有者和所属用户组</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 命令 <code>chown</code> 和 <code>chgrp</code> 可以用于修改文件拥有者和所属用户组，使用方式也很简单：
@@ -456,16 +456,16 @@ $ chgrp [-R] &#29992;&#25143;&#32452;&#21517;&#31216; &#25991;&#20214;&#25110;&#
 </div>
 </div>
 
-<div id="outline-container-org1774b8e" class="outline-2">
-<h2 id="org1774b8e"><span class="section-number-2">7</span> 修改文件权限</h2>
+<div id="outline-container-org0b14686" class="outline-2">
+<h2 id="org0b14686"><span class="section-number-2">7</span> 修改文件权限</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 命令 <code>chmod</code> 用于修改文件的权限，并提供了两种修改文件权限的方式。
 </p>
 </div>
 
-<div id="outline-container-org0118f1b" class="outline-3">
-<h3 id="org0118f1b"><span class="section-number-3">7.1</span> 数字类型改变文件权限</h3>
+<div id="outline-container-org2441a22" class="outline-3">
+<h3 id="org2441a22"><span class="section-number-3">7.1</span> 数字类型改变文件权限</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 我们可以用数字来代表各个权限，各个权限对应的数字为：
@@ -499,8 +499,8 @@ others = --- = 0+0+0 = 0
 </div>
 </div>
 
-<div id="outline-container-orgbb646f1" class="outline-3">
-<h3 id="orgbb646f1"><span class="section-number-3">7.2</span> 符号类型改变文件权限</h3>
+<div id="outline-container-orge000092" class="outline-3">
+<h3 id="orge000092"><span class="section-number-3">7.2</span> 符号类型改变文件权限</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 符号类型改变文件权限需要遵循一定的语法规则，分别需要了解的有 <b>身份表示符</b>, <b>操作表示符</b> 和 <b>权限表示符</b>.
@@ -601,8 +601,8 @@ others = --- = 0+0+0 = 0
 </div>
 </div>
 
-<div id="outline-container-org320d8fe" class="outline-2">
-<h2 id="org320d8fe"><span class="section-number-2">8</span> 权限的作用</h2>
+<div id="outline-container-org602a035" class="outline-2">
+<h2 id="org602a035"><span class="section-number-2">8</span> 权限的作用</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 同一个权限对于 <b>文件</b> 和 <b>目录</b> 来说，含义是不一样的，这里来了解一下。
@@ -662,8 +662,8 @@ others = --- = 0+0+0 = 0
 </div>
 </div>
 
-<div id="outline-container-org199a6a7" class="outline-2">
-<h2 id="org199a6a7"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org005e666" class="outline-2">
+<h2 id="org005e666"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="http://cn.linux.vbird.org/linux_basic/0210filepermission_1.php">使用者与群组 - 鸟哥的 Linux 私房菜</a></li>
