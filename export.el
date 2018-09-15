@@ -61,13 +61,13 @@
   (setq org-export-default-language "zh-CN")
   (setq org-export-with-sub-superscripts nil)
   (setq org-html-postamble t)
-  (setq org-html-postamble (read-file-text "postamble.html"))
+  (setq org-html-postamble (read-file-text "html/postamble.html"))
 
   ;; HTML Specific export settings
   (setq org-html-doctype "html5")
   (setq org-html-link-home "https://rgb-24bit.github.io")
   (setq org-html-link-up "https://rgb-24bit.github.io/blog/")
-  (setq org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css\"/>"))
+  (setq org-html-head (read-file-text "html/html-head.html")))
 
 (progn
   (init-export-env)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-12 周日 11:29 -->
+<!-- 2018-09-15 周六 22:38 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HTTP 协议相关</title>
@@ -178,7 +178,16 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -237,23 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge42b433">1. 前言</a></li>
-<li><a href="#org6c9cbd3">2. URL 相关</a></li>
-<li><a href="#org678ee3c">3. HTTP 概览</a>
+<li><a href="#org5ba0680">1. 前言</a></li>
+<li><a href="#orge0ca7ec">2. URL 相关</a></li>
+<li><a href="#orgd2b1982">3. HTTP 概览</a>
 <ul>
-<li><a href="#orgc3d4f3c">3.1. HTTP 报文</a></li>
-<li><a href="#org7da3e95">3.2. HTTP 消息头</a></li>
-<li><a href="#orgf9a4bd2">3.3. HTTP Cookie</a></li>
-<li><a href="#org4aa9e38">3.4. HTTP 身份验证</a></li>
+<li><a href="#orgcd189f7">3.1. HTTP 报文</a></li>
+<li><a href="#org70413f8">3.2. HTTP 消息头</a></li>
+<li><a href="#org666f051">3.3. HTTP Cookie</a></li>
+<li><a href="#orgfd76647">3.4. HTTP 身份验证</a></li>
 </ul>
 </li>
-<li><a href="#org98b02d6">4. 参考链接</a></li>
+<li><a href="#org9f03cf9">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge42b433" class="outline-2">
-<h2 id="orge42b433"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org5ba0680" class="outline-2">
+<h2 id="org5ba0680"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最近在阅读源码的过程中， 因为对 <code>HTTP</code> 协议了解的太少， 使得源码的阅读难以推进。
@@ -269,8 +278,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6c9cbd3" class="outline-2">
-<h2 id="org6c9cbd3"><span class="section-number-2">2</span> URL 相关</h2>
+<div id="outline-container-orge0ca7ec" class="outline-2">
+<h2 id="orge0ca7ec"><span class="section-number-2">2</span> URL 相关</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先来看 <b>统一资源定位符 URL</b>.
@@ -379,8 +388,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org678ee3c" class="outline-2">
-<h2 id="org678ee3c"><span class="section-number-2">3</span> HTTP 概览</h2>
+<div id="outline-container-orgd2b1982" class="outline-2">
+<h2 id="orgd2b1982"><span class="section-number-2">3</span> HTTP 概览</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 首先， <code>HTTP</code> 是一个协议， 主要规定了 <b>客户端</b> 和 <b>服务端</b> 之间数据传输的 <b>格式</b>.
@@ -392,8 +401,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 </div>
 
-<div id="outline-container-orgc3d4f3c" class="outline-3">
-<h3 id="orgc3d4f3c"><span class="section-number-3">3.1</span> HTTP 报文</h3>
+<div id="outline-container-orgcd189f7" class="outline-3">
+<h3 id="orgcd189f7"><span class="section-number-3">3.1</span> HTTP 报文</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>HTTP 报文</b> 在一定程度是就是 <code>HTTP</code> 协议的数据结构。
@@ -539,8 +548,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org7da3e95" class="outline-3">
-<h3 id="org7da3e95"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
+<div id="outline-container-org70413f8" class="outline-3">
+<h3 id="org70413f8"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>HTTP 消息头</b> 的格式为 <code>Name: Value</code>.
@@ -576,8 +585,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-orgf9a4bd2" class="outline-3">
-<h3 id="orgf9a4bd2"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
+<div id="outline-container-org666f051" class="outline-3">
+<h3 id="org666f051"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 由于 <code>HTTP</code> 是 <b>无状态</b> 的协议， 因此无法直接判断两个 <b>请求</b> 之间的关系。
@@ -643,8 +652,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org4aa9e38" class="outline-3">
-<h3 id="org4aa9e38"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
+<div id="outline-container-orgfd76647" class="outline-3">
+<h3 id="orgfd76647"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，
@@ -695,8 +704,8 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 </div>
 
-<div id="outline-container-org98b02d6" class="outline-2">
-<h2 id="org98b02d6"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org9f03cf9" class="outline-2">
+<h2 id="org9f03cf9"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP</a></li>
@@ -712,15 +721,15 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 <div id="postamble" class="status">
 版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
-           <div id="disqus_thread"></div>
-           <script type="text/javascript">
-             var disqus_shortname = 'rgb-24bit';
-             (function() {
-               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-             })();
-           </script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 </div>
 </body>
 </html>

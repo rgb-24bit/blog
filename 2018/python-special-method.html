@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-12 周日 11:30 -->
+<!-- 2018-09-15 周六 22:39 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 魔法方法</title>
@@ -178,7 +178,16 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -237,29 +246,29 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfc0afc1">1. 简介</a></li>
-<li><a href="#org4fb6290">2. 构造和初始化</a></li>
-<li><a href="#orgc66111c">3. 比较和数值运算</a>
+<li><a href="#orgf66d4b8">1. 简介</a></li>
+<li><a href="#org6d81d45">2. 构造和初始化</a></li>
+<li><a href="#org3e7ff35">3. 比较和数值运算</a>
 <ul>
-<li><a href="#org6d68f65">3.1. 用于比较的魔法方法</a></li>
-<li><a href="#org15aa7df">3.2. 数值处理的魔法方法</a></li>
+<li><a href="#org4c882e1">3.1. 用于比较的魔法方法</a></li>
+<li><a href="#orga04b3ba">3.2. 数值处理的魔法方法</a></li>
 </ul>
 </li>
-<li><a href="#orgfab7ed9">4. 类型转化</a></li>
-<li><a href="#orgc1e853f">5. 表现类</a></li>
-<li><a href="#org46b3a93">6. 属性访问控制</a></li>
-<li><a href="#org253171a">7. 创建定制的序列</a></li>
-<li><a href="#org69b2881">8. 反射</a></li>
-<li><a href="#org666421a">9. 可以调用的对象</a></li>
-<li><a href="#orge4e2adf">10. 上下文管理器</a></li>
-<li><a href="#orgbe38dfb">11. 更多的方法</a></li>
-<li><a href="#org386b808">12. 参考链接</a></li>
+<li><a href="#org8818f1c">4. 类型转化</a></li>
+<li><a href="#org5332681">5. 表现类</a></li>
+<li><a href="#org73e9e72">6. 属性访问控制</a></li>
+<li><a href="#orga453d7d">7. 创建定制的序列</a></li>
+<li><a href="#org4f86a5c">8. 反射</a></li>
+<li><a href="#org6d468a9">9. 可以调用的对象</a></li>
+<li><a href="#org6667766">10. 上下文管理器</a></li>
+<li><a href="#org983eca0">11. 更多的方法</a></li>
+<li><a href="#org290cdb2">12. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfc0afc1" class="outline-2">
-<h2 id="orgfc0afc1"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgf66d4b8" class="outline-2">
+<h2 id="orgf66d4b8"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 <code>Python</code> 中， 你可以通过定义一些特殊的方法来控制一个对象的行为。
@@ -279,8 +288,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4fb6290" class="outline-2">
-<h2 id="org4fb6290"><span class="section-number-2">2</span> 构造和初始化</h2>
+<div id="outline-container-org6d81d45" class="outline-2">
+<h2 id="org6d81d45"><span class="section-number-2">2</span> 构造和初始化</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 一个对象实例化到销毁调用的方法的顺序是：
@@ -320,8 +329,8 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </div>
 </div>
 
-<div id="outline-container-orgc66111c" class="outline-2">
-<h2 id="orgc66111c"><span class="section-number-2">3</span> 比较和数值运算</h2>
+<div id="outline-container-org3e7ff35" class="outline-2">
+<h2 id="org3e7ff35"><span class="section-number-2">3</span> 比较和数值运算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一个有趣的例子：
@@ -359,8 +368,8 @@ Traceback (most recent call last):
 </p>
 </div>
 
-<div id="outline-container-org6d68f65" class="outline-3">
-<h3 id="org6d68f65"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
+<div id="outline-container-org4c882e1" class="outline-3">
+<h3 id="org4c882e1"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>__cmp__(self, other)</dt><dd>最基本的用于比较的魔法方法， 现了所有的比较符号 <b>(&lt;,==,!=,etc.)</b>. 如果 <code>self &lt; other</code> 应该返回一个 <b>负数</b>, 如果
@@ -404,8 +413,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org15aa7df" class="outline-3">
-<h3 id="org15aa7df"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
+<div id="outline-container-orga04b3ba" class="outline-3">
+<h3 id="orga04b3ba"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li><b>一元操作符和函数</b> 
@@ -498,8 +507,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orgfab7ed9" class="outline-2">
-<h2 id="orgfab7ed9"><span class="section-number-2">4</span> 类型转化</h2>
+<div id="outline-container-org8818f1c" class="outline-2">
+<h2 id="org8818f1c"><span class="section-number-2">4</span> 类型转化</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 可以通过一些 <b>魔法方法</b> 来实现内置类型类型转换， 注意， 是转换为 <b>内置类型</b>. 
@@ -522,8 +531,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orgc1e853f" class="outline-2">
-<h2 id="orgc1e853f"><span class="section-number-2">5</span> 表现类</h2>
+<div id="outline-container-org5332681" class="outline-2">
+<h2 id="org5332681"><span class="section-number-2">5</span> 表现类</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
 <dt>__str__(self)</dt><dd>使用 <code>str(obj)</code> 会调用这个方法</dd>
@@ -536,8 +545,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org46b3a93" class="outline-2">
-<h2 id="org46b3a93"><span class="section-number-2">6</span> 属性访问控制</h2>
+<div id="outline-container-org73e9e72" class="outline-2">
+<h2 id="org73e9e72"><span class="section-number-2">6</span> 属性访问控制</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 作为动态语言， <code>Python</code> 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
@@ -600,8 +609,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org253171a" class="outline-2">
-<h2 id="org253171a"><span class="section-number-2">7</span> 创建定制的序列</h2>
+<div id="outline-container-orga453d7d" class="outline-2">
+<h2 id="orga453d7d"><span class="section-number-2">7</span> 创建定制的序列</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 中的序列有 <b>可变</b> 和 <b>不可变</b> 的区分， 比如 <code>tuple</code> 和 <code>list</code>.
@@ -632,8 +641,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org69b2881" class="outline-2">
-<h2 id="org69b2881"><span class="section-number-2">8</span> 反射</h2>
+<div id="outline-container-org4f86a5c" class="outline-2">
+<h2 id="org4f86a5c"><span class="section-number-2">8</span> 反射</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 通过魔法方法控制使用 <code>isinstance</code> 和 <code>issubclass</code> 的反射行为：
@@ -645,8 +654,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org666421a" class="outline-2">
-<h2 id="org666421a"><span class="section-number-2">9</span> 可以调用的对象</h2>
+<div id="outline-container-org6d468a9" class="outline-2">
+<h2 id="org6d468a9"><span class="section-number-2">9</span> 可以调用的对象</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 如果你希望可以向调用函数那样调用你的 <b>对象</b>, 那么你可以定义那个对象的 <code>__call__</code> 方法。
@@ -671,8 +680,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-orge4e2adf" class="outline-2">
-<h2 id="orge4e2adf"><span class="section-number-2">10</span> 上下文管理器</h2>
+<div id="outline-container-org6667766" class="outline-2">
+<h2 id="org6667766"><span class="section-number-2">10</span> 上下文管理器</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Python</code> 中使用 <code>with</code> 可以写出更加简洁高效的代码， 而能够使用 <code>with</code> 的对象需要支持上下文管理器。
@@ -714,8 +723,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-orgbe38dfb" class="outline-2">
-<h2 id="orgbe38dfb"><span class="section-number-2">11</span> 更多的方法</h2>
+<div id="outline-container-org983eca0" class="outline-2">
+<h2 id="org983eca0"><span class="section-number-2">11</span> 更多的方法</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <code>Python</code> 的魔法方法还有不少， <code>Python2</code> 和 <code>Python3</code> 在这方面也有一定的区别。
@@ -723,8 +732,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org386b808" class="outline-2">
-<h2 id="org386b808"><span class="section-number-2">12</span> 参考链接</h2>
+<div id="outline-container-org290cdb2" class="outline-2">
+<h2 id="org290cdb2"><span class="section-number-2">12</span> 参考链接</h2>
 <div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2.7/reference/datamodel.html#special-method-names">Python2.7 Special method names</a></li>
@@ -736,15 +745,15 @@ t()
 </div>
 <div id="postamble" class="status">
 版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
-           <div id="disqus_thread"></div>
-           <script type="text/javascript">
-             var disqus_shortname = 'rgb-24bit';
-             (function() {
-               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-             })();
-           </script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 </div>
 </body>
 </html>

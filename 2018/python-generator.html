@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-29 周三 09:15 -->
+<!-- 2018-09-15 周六 22:38 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 生成器</title>
@@ -178,7 +178,16 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -237,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7a926f1">1. 简介</a></li>
-<li><a href="#org46f8b6c">2. 创建生成器</a></li>
-<li><a href="#orge553d8a">3. 简单的使用</a></li>
-<li><a href="#orgd10ba6c">4. 生成器对象</a></li>
-<li><a href="#org435512c">5. 新的特性</a></li>
-<li><a href="#org048cdf1">6. 结语</a></li>
+<li><a href="#orgfe4efd3">1. 简介</a></li>
+<li><a href="#org5bbbc25">2. 创建生成器</a></li>
+<li><a href="#org5384eb4">3. 简单的使用</a></li>
+<li><a href="#org940c875">4. 生成器对象</a></li>
+<li><a href="#org67f33ad">5. 新的特性</a></li>
+<li><a href="#orgd6aabc2">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7a926f1" class="outline-2">
-<h2 id="org7a926f1"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgfe4efd3" class="outline-2">
+<h2 id="orgfe4efd3"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>生成器</b> 这个对于 <code>Python</code> 使用者来说应该并不陌生， <del>毕竟现在的 <code>Python3</code> 中部分内置函数的返回值就是一个 <b>生成器</b>.</del>
@@ -260,8 +269,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org46f8b6c" class="outline-2">
-<h2 id="org46f8b6c"><span class="section-number-2">2</span> 创建生成器</h2>
+<div id="outline-container-org5bbbc25" class="outline-2">
+<h2 id="org5bbbc25"><span class="section-number-2">2</span> 创建生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 创建生成器的方式有两种：
@@ -328,8 +337,8 @@ Out[3]: generator
 </div>
 </div>
 
-<div id="outline-container-orge553d8a" class="outline-2">
-<h2 id="orge553d8a"><span class="section-number-2">3</span> 简单的使用</h2>
+<div id="outline-container-org5384eb4" class="outline-2">
+<h2 id="org5384eb4"><span class="section-number-2">3</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们可以通过内置函数 <code>next()</code> 获取 <b>生成器</b> 的下一个返回值，如果没有更多的返回值时，
@@ -394,8 +403,8 @@ Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 </div>
 </div>
 
-<div id="outline-container-orgd10ba6c" class="outline-2">
-<h2 id="orgd10ba6c"><span class="section-number-2">4</span> 生成器对象</h2>
+<div id="outline-container-org940c875" class="outline-2">
+<h2 id="org940c875"><span class="section-number-2">4</span> 生成器对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 生成器的完整名称应该是生成器 <b>对象</b>, 既然是一个对象，那么自然有 <b>方法</b> 和 <b>属性</b>.
@@ -566,8 +575,8 @@ Out[5]: -1
 </div>
 </div>
 
-<div id="outline-container-org435512c" class="outline-2">
-<h2 id="org435512c"><span class="section-number-2">5</span> 新的特性</h2>
+<div id="outline-container-org67f33ad" class="outline-2">
+<h2 id="org67f33ad"><span class="section-number-2">5</span> 新的特性</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 从 <code>3.3</code> 开始， <code>yield</code> 语句可以这样：
@@ -594,8 +603,8 @@ Out[10]: 0
 </div>
 </div>
 
-<div id="outline-container-org048cdf1" class="outline-2">
-<h2 id="org048cdf1"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgd6aabc2" class="outline-2">
+<h2 id="orgd6aabc2"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在学习 <b>协程</b> 之前我是万万没想到生成器对象居然存在方法和属性，毕竟平时还是简单的使用为主。

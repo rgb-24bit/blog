@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-08-12 周日 11:29 -->
+<!-- 2018-09-15 周六 22:37 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Emacs Org 搭建 GTD 系统</title>
@@ -178,7 +178,16 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -237,25 +246,25 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd43655c">1. 前言</a></li>
-<li><a href="#orgc91666a">2. 文件结构</a>
+<li><a href="#org303ddf4">1. 前言</a></li>
+<li><a href="#org9ddd4ef">2. 文件结构</a>
 <ul>
-<li><a href="#orge36fd6d">2.1. log</a></li>
-<li><a href="#org8f4600c">2.2. inbox.org</a></li>
-<li><a href="#org0c40165">2.3. task.org</a></li>
-<li><a href="#org66cb2ec">2.4. project.org</a></li>
-<li><a href="#orgf3c5eaa">2.5. routine.org</a></li>
-<li><a href="#org2ed79d9">2.6. plan.org</a></li>
+<li><a href="#orgdccdf87">2.1. log</a></li>
+<li><a href="#org0eaf742">2.2. inbox.org</a></li>
+<li><a href="#org6446c7c">2.3. task.org</a></li>
+<li><a href="#org4593f21">2.4. project.org</a></li>
+<li><a href="#org01236d6">2.5. routine.org</a></li>
+<li><a href="#orge9ff3fc">2.6. plan.org</a></li>
 </ul>
 </li>
-<li><a href="#org0565fe1">3. Org 使用</a></li>
-<li><a href="#org0f07f17">4. 参考链接</a></li>
+<li><a href="#orga890cea">3. Org 使用</a></li>
+<li><a href="#orgef3e525">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd43655c" class="outline-2">
-<h2 id="orgd43655c"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org303ddf4" class="outline-2">
+<h2 id="org303ddf4"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 使用 <code>Emacs Org</code> 来搭建 <code>GTD</code> 系统是很安逸的， 这里简单分享一下自己的 <code>GTD</code> 系统的结构。
@@ -271,8 +280,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc91666a" class="outline-2">
-<h2 id="orgc91666a"><span class="section-number-2">2</span> 文件结构</h2>
+<div id="outline-container-org9ddd4ef" class="outline-2">
+<h2 id="org9ddd4ef"><span class="section-number-2">2</span> 文件结构</h2>
 <div class="outline-text-2" id="text-2">
 <pre class="example">
 /---log/
@@ -287,8 +296,8 @@ for the JavaScript code in this tag.
 </pre>
 </div>
 
-<div id="outline-container-orge36fd6d" class="outline-3">
-<h3 id="orge36fd6d"><span class="section-number-3">2.1</span> log</h3>
+<div id="outline-container-orgdccdf87" class="outline-3">
+<h3 id="orgdccdf87"><span class="section-number-3">2.1</span> log</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 日志文件夹， 根据年份建立子文件夹， 如： <code>2017</code>, <code>2018</code>.
@@ -382,8 +391,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8f4600c" class="outline-3">
-<h3 id="org8f4600c"><span class="section-number-3">2.2</span> inbox.org</h3>
+<div id="outline-container-org0eaf742" class="outline-3">
+<h3 id="org0eaf742"><span class="section-number-3">2.2</span> inbox.org</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 收集箱， 收集一些想法和需要完成的任务， 每周清理一次。
@@ -396,8 +405,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0c40165" class="outline-3">
-<h3 id="org0c40165"><span class="section-number-3">2.3</span> task.org</h3>
+<div id="outline-container-org6446c7c" class="outline-3">
+<h3 id="org6446c7c"><span class="section-number-3">2.3</span> task.org</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 列举相对独立的任务， 每周清理一次， 将完成状态的任务移入日志文件。
@@ -415,8 +424,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org66cb2ec" class="outline-3">
-<h3 id="org66cb2ec"><span class="section-number-3">2.4</span> project.org</h3>
+<div id="outline-container-org4593f21" class="outline-3">
+<h3 id="org4593f21"><span class="section-number-3">2.4</span> project.org</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 列举的项目任务， 每个项目由多个子任务组成， 每周清理一次， 将完成状态的任务移入日志文件
@@ -434,8 +443,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf3c5eaa" class="outline-3">
-<h3 id="orgf3c5eaa"><span class="section-number-3">2.5</span> routine.org</h3>
+<div id="outline-container-org01236d6" class="outline-3">
+<h3 id="org01236d6"><span class="section-number-3">2.5</span> routine.org</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 列举日常任务， 这些任务可能需要较长时间的循环完成， 每周清理一次， 将 <b>完成信息</b> 移入日志文件
@@ -453,8 +462,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2ed79d9" class="outline-3">
-<h3 id="org2ed79d9"><span class="section-number-3">2.6</span> plan.org</h3>
+<div id="outline-container-orge9ff3fc" class="outline-3">
+<h3 id="orge9ff3fc"><span class="section-number-3">2.6</span> plan.org</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 计划也是规范， 改动频率较低， 也没有固定的结构。
@@ -463,8 +472,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0565fe1" class="outline-2">
-<h2 id="org0565fe1"><span class="section-number-2">3</span> Org 使用</h2>
+<div id="outline-container-orga890cea" class="outline-2">
+<h2 id="orga890cea"><span class="section-number-2">3</span> Org 使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 对于 <code>Org</code> 的使用， 网上有很多详细的教程了， 这里简单列举一些常用的快捷键：
@@ -496,8 +505,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0f07f17" class="outline-2">
-<h2 id="org0f07f17"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orgef3e525" class="outline-2">
+<h2 id="orgef3e525"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>维基百科
@@ -521,15 +530,15 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
-           <div id="disqus_thread"></div>
-           <script type="text/javascript">
-             var disqus_shortname = 'rgb-24bit';
-             (function() {
-               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-               dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-               (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-             })();
-           </script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 </div>
 </body>
 </html>
