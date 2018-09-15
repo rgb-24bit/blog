@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-09-15 周六 22:07 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux 文件权限</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Linux 文件权限</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgfcd72cc">1. 简介</a></li>
+<li><a href="#orge726f88">2. 用户与用户组</a></li>
+<li><a href="#org7c000a9">3. 文件属性</a></li>
+<li><a href="#org6c96993">4. 文件类型</a></li>
+<li><a href="#org417617a">5. 权限信息</a></li>
+<li><a href="#orga7c9596">6. 修改文件拥有者和所属用户组</a></li>
+<li><a href="#org1774b8e">7. 修改文件权限</a>
+<ul>
+<li><a href="#org0118f1b">7.1. 数字类型改变文件权限</a></li>
+<li><a href="#orgbb646f1">7.2. 符号类型改变文件权限</a></li>
+</ul>
+</li>
+<li><a href="#org320d8fe">8. 权限的作用</a></li>
+<li><a href="#org199a6a7">9. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfcd72cc" class="outline-2">
+<h2 id="orgfcd72cc"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在 <code>Linux</code> 的学习过程中，文件权限是一个很重要的概念，毕竟 <code>Linux</code> 中的各种操作都离不开权限的支持。
+</p>
+
+<p>
+这篇博客算是对 <code>Linux</code> 文件权限学习的一个简单总结。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge726f88" class="outline-2">
+<h2 id="orge726f88"><span class="section-number-2">2</span> 用户与用户组</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>Linux</code> 的文件权限是和 <b>用户与用户组</b> 密切相关的一个概念，对于一个文件来说，用户可以分为三类：
+</p>
+
+<ul class="org-ul">
+<li>文件的 <b>拥有者</b> - <code>user</code></li>
+<li>文件的拥有者所在 <b>用户组</b> 的其他成员 - <code>group</code></li>
+<li>除 <b>拥有者</b> 和 <b>用户组</b> 成员以外的其他用户 - <code>others</code></li>
+</ul>
+
+<p>
+文件权限是相对于这三类用户而言的，不同身份的用户可以具有不同的权限。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c000a9" class="outline-2">
+<h2 id="org7c000a9"><span class="section-number-2">3</span> 文件属性</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+使用命令 <code>ls -l</code> 可以得到文件的详细信息，比如：
+</p>
+<pre class="example">
+drwxr-xr-x 5 root root 4096 Sep  7 19:52 dotemacs
+drwxr-xr-x 6 root root 4096 Sep  3 22:34 dotfiles
+drwxr-xr-x 9 root root 4096 Sep 11 10:19 emacs-kit
+</pre>
+
+<p>
+我们可以把每一条信息分为 <code>8</code> 个部分，比如上面第一条信息可以分为：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">文件类型</th>
+<th scope="col" class="org-left">权限信息</th>
+<th scope="col" class="org-left">连结数</th>
+<th scope="col" class="org-left">拥有者</th>
+<th scope="col" class="org-left">用户组</th>
+<th scope="col" class="org-left">文件容量</th>
+<th scope="col" class="org-left">修改日期</th>
+<th scope="col" class="org-left">文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left"><code>rwxr-xr-x</code></td>
+<td class="org-left"><code>5</code></td>
+<td class="org-left"><code>root</code></td>
+<td class="org-left"><code>root</code></td>
+<td class="org-left"><code>4096</code></td>
+<td class="org-left"><code>Sep  7 19:52</code></td>
+<td class="org-left"><code>dotemacs</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这里主要了解 <b>文件类型</b> 和 <b>权限信息</b>, 对其他部分有兴趣的可以自行 <code>Google</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6c96993" class="outline-2">
+<h2 id="org6c96993"><span class="section-number-2">4</span> 文件类型</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>Linux</code> 中文件可以分为 <code>5</code> 个类型， <code>ls -l</code> 输出的每条信息中的 <b>第一个字符</b> 就用于表示文件类型。
+</p>
+
+<p>
+各个文件类型及其字符表示为：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">表示字符</th>
+<th scope="col" class="org-left">文件类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left">目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l</code></td>
+<td class="org-left">符号链接等</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left">可供储存的接口设备</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">串行端口设备，如键盘、鼠标等</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org417617a" class="outline-2">
+<h2 id="org417617a"><span class="section-number-2">5</span> 权限信息</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+通过 <b>用户与用户组</b> 概念可以了解到权限是相对于三类用户而言的，因此 <code>ls -l</code> 显示的权限信息也分为三组。
+</p>
+
+<p>
+每个文件的 <b>权限信息</b> 由 <code>9</code> 个字符组成，分为三组，分别对应 <b>拥有者</b>, <b>用户组</b>, <b>其他人</b> 拥有的权限。
+</p>
+
+<p>
+对于权限信息 <code>rwxr-xr-x</code> 来说， <b>拥有者</b> 的权限为 <code>rwx</code>, <b>用户组</b> 和 <b>其他人</b> 的权限为 <code>r-x</code>.
+</p>
+
+<p>
+每组权限分为： <b>读权限</b>, <b>写权限</b> 和 <b>执行权限</b>, 分别由字符 <code>r</code>, <code>w</code>, <code>x</code> 表示。如果不具有相应的权限，就使用字符 <code>-</code> 表示。
+</p>
+
+<p>
+此时，权限信息 <code>rwxr-xr-x</code> 可以理解为： <b>拥有者</b> 具有 <b>读</b>, <b>写</b> 和 <b>执行</b> 权限，而 <b>用户组</b> 和 <b>其他人</b> 就只有 <b>读</b> 和 <b>执行</b> 的权限。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga7c9596" class="outline-2">
+<h2 id="orga7c9596"><span class="section-number-2">6</span> 修改文件拥有者和所属用户组</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+命令 <code>chown</code> 和 <code>chgrp</code> 可以用于修改文件拥有者和所属用户组，使用方式也很简单：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20462;&#25913;&#25991;&#20214;&#25317;&#26377;&#32773;</span>
+$ chown [-R] &#36134;&#21495;&#21517;&#31216; &#25991;&#20214;&#25110;&#30446;&#24405;
+$ chown [-R] &#36134;&#21495;&#21517;&#31216;:&#32452;&#21517; &#25991;&#20214;&#25110;&#30446;&#24405;
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20462;&#25913;&#25991;&#20214;&#25152;&#23646;&#29992;&#25143;&#32452;</span>
+$ chgrp [-R] &#29992;&#25143;&#32452;&#21517;&#31216; &#25991;&#20214;&#25110;&#30446;&#24405;
+</pre>
+</div>
+
+<p>
+参数 <code>-R</code> 进行递归的持续变更，即连同次目录下的所有文件都变更。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1774b8e" class="outline-2">
+<h2 id="org1774b8e"><span class="section-number-2">7</span> 修改文件权限</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+命令 <code>chmod</code> 用于修改文件的权限，并提供了两种修改文件权限的方式。
+</p>
+</div>
+
+<div id="outline-container-org0118f1b" class="outline-3">
+<h3 id="org0118f1b"><span class="section-number-3">7.1</span> 数字类型改变文件权限</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+我们可以用数字来代表各个权限，各个权限对应的数字为：
+</p>
+<pre class="example">
+r:4
+w:2
+x:1
+</pre>
+
+<p>
+每种身份各自的三个权限分数是需要累加的，例如当权限为 <code>rwxrwx---</code> 时，对应的分数为：
+</p>
+<pre class="example">
+user   = rwx = 4+2+1 = 7
+group  = rwx = 4+2+1 = 7
+others = --- = 0+0+0 = 0
+</pre>
+
+<p>
+得到的文件权限数字也就为 <code>770</code>, 修改权限时就可以使用这个数字完成：
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">$ chmod [-R] 770 &#25991;&#20214;&#25110;&#30446;&#24405;
+</pre>
+</div>
+
+<p>
+很明显，这样修改文件权限是很麻烦的，因此 <code>chmod</code> 提供了另一种更好用的方式来修改文件权限。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb646f1" class="outline-3">
+<h3 id="orgbb646f1"><span class="section-number-3">7.2</span> 符号类型改变文件权限</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+符号类型改变文件权限需要遵循一定的语法规则，分别需要了解的有 <b>身份表示符</b>, <b>操作表示符</b> 和 <b>权限表示符</b>.
+</p>
+
+<p>
+<b>身份表示符：</b>
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">表示符</th>
+<th scope="col" class="org-left">代表的身份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>u</code></td>
+<td class="org-left">文件的拥有者</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>g</code></td>
+<td class="org-left">文件的拥有者所在用户组</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>o</code></td>
+<td class="org-left">其他人</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>a</code></td>
+<td class="org-left">所有用户</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>操作表示符：</b>
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">表示符</th>
+<th scope="col" class="org-left">代表的操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">添加权限</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">去除权限</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>=</code></td>
+<td class="org-left">设定权限</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>权限表示符</b> 就是 <code>r</code>, <code>w</code> 和 <code>x</code>.
+</p>
+
+<p>
+从表示符的组成大概也可以猜到怎样修改文件权限了，比如说下面的这条指令让拥有者具有所有权限，
+而为用户组和其他人添加执行权限：
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">chmod <span style="font-weight: bold; font-style: italic;">u</span>=rwx,go+x .vimrc
+</pre>
+</div>
+
+<p>
+需要注意的是： <code>u=rwx,go+x</code> 之间没有空格。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org320d8fe" class="outline-2">
+<h2 id="org320d8fe"><span class="section-number-2">8</span> 权限的作用</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+同一个权限对于 <b>文件</b> 和 <b>目录</b> 来说，含义是不一样的，这里来了解一下。
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">权限</th>
+<th scope="col" class="org-left">文件</th>
+<th scope="col" class="org-left">目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">可以读取文件内容</td>
+<td class="org-left">可以读取目录结构列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>w</code></td>
+<td class="org-left">可以编辑修改文件内容</td>
+<td class="org-left">可以改动目录结构列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">可以被系统执行</td>
+<td class="org-left">用户可以进入目录 (<code>cd</code>)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这里需要注意的一个权限是： <b>可以改动目录结构列表</b>, 这意味着可以：
+</p>
+<ul class="org-ul">
+<li>建立新的文件与目录</li>
+<li>删除已经存在的文件与目录</li>
+<li>将已存在的文件或目录进行更名</li>
+<li>搬移该目录内的文件、目录位置</li>
+</ul>
+
+<p>
+所以 <code>w</code> 这个权限还是慎重使用好了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org199a6a7" class="outline-2">
+<h2 id="org199a6a7"><span class="section-number-2">9</span> 参考链接</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li><a href="http://cn.linux.vbird.org/linux_basic/0210filepermission_1.php">使用者与群组 - 鸟哥的 Linux 私房菜</a></li>
+<li><a href="http://cn.linux.vbird.org/linux_basic/0210filepermission_2.php">Linux 文件权限概念 - 鸟哥的 Linux 私房菜</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
