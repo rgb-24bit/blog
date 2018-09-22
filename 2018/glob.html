@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-09-20 周四 17:38 -->
+<!-- 2018-09-22 周六 16:55 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glob 语法及解析</title>
@@ -246,25 +246,33 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5da3dd6">1. glob 简介</a></li>
-<li><a href="#orgf833383">2. glob 语法</a></li>
-<li><a href="#orgb24355b">3. .gitignore</a></li>
-<li><a href="#orgdd256b9">4. Python glob</a></li>
+<li><a href="#orgc0542c6">1. glob 简介</a></li>
+<li><a href="#orge1083ae">2. glob 语法</a></li>
+<li><a href="#org4f3ee82">3. .gitignore</a></li>
+<li><a href="#org402a67d">4. Python glob</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5da3dd6" class="outline-2">
-<h2 id="org5da3dd6"><span class="section-number-2">1</span> glob 简介</h2>
+<div id="outline-container-orgc0542c6" class="outline-2">
+<h2 id="orgc0542c6"><span class="section-number-2">1</span> glob 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>glob</code> 是用于匹配符合指定模式的文件集合的一种语言， 类似于正则表达式， 但更加简单。
 </p>
+
+<p>
+<b>Update-09-22:</b> 前两天阮一峰老师更新了他的博客，内容讲的就是 <code>Glob</code>, 强烈推荐。
+</p>
+
+<ul class="org-ul">
+<li><a href="http://www.ruanyifeng.com/blog/2018/09/bash-wildcards.html">命令行通配符教程 - 阮一峰</a></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgf833383" class="outline-2">
-<h2 id="orgf833383"><span class="section-number-2">2</span> glob 语法</h2>
+<div id="outline-container-orge1083ae" class="outline-2">
+<h2 id="orge1083ae"><span class="section-number-2">2</span> glob 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>glob</code> 的语法很简单：
@@ -345,11 +353,11 @@ for the JavaScript code in this tag.
 </table>
 
 <p>
-<b>Update-07-18</b>: <del>使用 <code>**/*</code> 可以匹配当前目录树中的所有文件， 通过 <code>**/*.py</code> 匹配所有后缀名为 <code>.py</code> 的文件</del>
+<b>Update-2018-07-18</b>: <del>使用 <code>**/*</code> 可以匹配当前目录树中的所有文件， 通过 <code>**/*.py</code> 匹配所有后缀名为 <code>.py</code> 的文件</del>
 </p>
 
 <p>
-<b>Update-09-20:</b> 好像只是 <code>Python</code> 中 <code>pathlib.Path.glob</code> 支持列出所有文件，其他工具只是列出当前所有子目录中匹配的文件，
+<b>Update-2018-09-20:</b> 好像只是 <code>Python</code> 中 <code>pathlib.Path.glob</code> 支持列出所有文件，其他工具只是列出当前所有子目录中匹配的文件，
 子目录的子目录需要 <code>**/**/*</code>.
 </p>
 
@@ -359,8 +367,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb24355b" class="outline-2">
-<h2 id="orgb24355b"><span class="section-number-2">3</span> .gitignore</h2>
+<div id="outline-container-org4f3ee82" class="outline-2">
+<h2 id="org4f3ee82"><span class="section-number-2">3</span> .gitignore</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>git</code> 的 <code>.gitignore</code> 文件可以使用 <code>glob</code> 模式匹配， 另外还有一些规则：
@@ -374,8 +382,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdd256b9" class="outline-2">
-<h2 id="orgdd256b9"><span class="section-number-2">4</span> Python glob</h2>
+<div id="outline-container-org402a67d" class="outline-2">
+<h2 id="org402a67d"><span class="section-number-2">4</span> Python glob</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Python</code> 有进行 <code>glob</code> 匹配的标准库， 使用也很简单：
