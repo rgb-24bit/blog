@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-09-22 周六 17:36 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python urllib</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Python urllib</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd2680d4">1. 前言</a></li>
+<li><a href="#orgbe53836">2. Python2</a>
+<ul>
+<li><a href="#org111e640">2.1. 获取资源</a></li>
+<li><a href="#orga42ed3b">2.2. 发送数据</a></li>
+<li><a href="#orgd860f3b">2.3. 用户代理</a></li>
+<li><a href="#org6107380">2.4. 异常处理</a></li>
+<li><a href="#orgb1f4274">2.5. 超时设置</a></li>
+</ul>
+</li>
+<li><a href="#org320d07c">3. Python3</a></li>
+<li><a href="#org3bdb2ad">4. 相关链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd2680d4" class="outline-2">
+<h2 id="orgd2680d4"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这篇博客之前是发过的，当时由于太过求全，添加了不少自己不太明白的内容，
+于是便删了，将和 <code>HTTP</code> 协议相关的部分单独拿出来写了篇博客 <a href="http.html">HTTP 协议相关</a>.
+</p>
+
+<p>
+然后呢，前两天临时想写个脚本，要用到 <code>urllib</code> 的东西(平时用的都是 <code>requests</code>),
+发现，好的东西都忘完了。
+</p>
+
+<p>
+于是就从提交记录中把这篇博客刨了出来，删减了不必要的内容，重新发出来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbe53836" class="outline-2">
+<h2 id="orgbe53836"><span class="section-number-2">2</span> Python2</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+这篇博客的内容以 <code>Python2</code> 为基础， <code>Python3</code> 为补充。
+</p>
+</div>
+
+<div id="outline-container-org111e640" class="outline-3">
+<h3 id="org111e640"><span class="section-number-3">2.1</span> 获取资源</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>Python2</code> 中的 <code>urllib</code> 库分为 <code>urllib</code> 和 <code>urllib2</code>, 两者都可以用于获取 <code>URL</code> 资源， 
+但使用的更多的是 <code>urllib2</code>.
+</p>
+
+<p>
+一个简单的例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib2
+<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(<span style="font-style: italic;">'http://python.org'</span>)
+<span style="font-weight: bold; font-style: italic;">html</span> = response.read()
+</pre>
+</div>
+
+<p>
+<code>HTTP</code> 基于 <b>请求</b> 和 <b>响应</b> （客服端发出请求，服务器端进行响应）
+</p>
+
+<p>
+<code>urllib2</code> 使用一个 <code>Request</code> 对象来表示一个请求，用 <code>Request</code> 对象作为参数调用 <code>urlopen</code> 函数，
+将会返回与之对应的响应对象。响应对象类似于一个文件对象，你可以调用 <code>read</code> 方法来获取内容。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib2
+
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)
+<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
+<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga42ed3b" class="outline-3">
+<h3 id="orga42ed3b"><span class="section-number-3">2.2</span> 发送数据</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+我们可以使用 <code>POST</code> 请求向服务器发送一些数据，数据在发送之前，需要以标准方式进行编码。
+</p>
+
+<p>
+对数据编码需要使用 <code>urllib</code>, 这一点是 <code>2.7</code> 和 <code>3.x</code> 的一个很大的不同。
+</p>
+
+<p>
+在 <code>2.7</code> 版本中， <code>urllib</code> 可以对数据进行编码， <code>urllib2</code> 可以发送数据。
+</p>
+
+<p>
+在 <code>3.x</code> 版本中， <code>urllib.parse</code> 可以对数据进行编码， <code>urllib.request</code> 可以发送数据。
+</p>
+
+<p>
+一个例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib
+<span style="font-weight: bold;">import</span> urllib2
+
+<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span> : <span style="font-style: italic;">'Michael Foord'</span>,
+          <span style="font-style: italic;">'location'</span> : <span style="font-style: italic;">'Northampton'</span>,
+          <span style="font-style: italic;">'language'</span> : <span style="font-style: italic;">'Python'</span> }
+
+<span style="font-weight: bold; font-style: italic;">data</span> = urllib.urlencode(values)
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(url, data)
+<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
+<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+</pre>
+</div>
+
+<p>
+PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-html40/interact/forms.html#h-17.13">HTML Specification, Form Submission</a>
+</p>
+
+<p>
+如果构建 <code>Request</code> 时没有传递 <code>data</code> 参数， 那么默认使用 <code>GET</code> 方法。
+</p>
+
+<p>
+另外， 可以通过将数据整合到到 <code>url</code> 方式， 使用 <code>GET</code> 请求发送数据。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> urllib2
+&gt;&gt;&gt; <span style="font-weight: bold;">import</span> urllib
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span> = {}
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'name'</span>] = <span style="font-style: italic;">'Somebody Here'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'location'</span>] = <span style="font-style: italic;">'Northampton'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'language'</span>] = <span style="font-style: italic;">'Python'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">url_values</span> = urllib.urlencode(data)
+&gt;&gt;&gt; <span style="font-weight: bold;">print</span> url_values  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">The order may differ. </span>
+<span style="font-weight: bold; font-style: italic;">name</span>=Somebody+Here&amp;<span style="font-weight: bold; font-style: italic;">language</span>=Python&amp;<span style="font-weight: bold; font-style: italic;">location</span>=Northampton
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.example.com/example.cgi'</span>
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">full_url</span> = url + <span style="font-style: italic;">'?'</span> + url_values
+&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span> = urllib2.urlopen(full_url)
+</pre>
+</div>
+
+<p>
+即， 使用 <code>query</code> 字符串。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd860f3b" class="outline-3">
+<h3 id="orgd860f3b"><span class="section-number-3">2.3</span> 用户代理</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器
+认可并发出响应。（比如只允许浏览器进行访问的网页）
+</p>
+
+<p>
+默认情况下， <code>urllib2</code> 对自己的标识是： <code>Python-urllib/x.y</code>, 如 <code>Python-urllib/2.7</code>.
+</p>
+
+<p>
+浏览器通过 <code>User-Agent</code> 来标识自己。但既然只是一段信息，那我们可以通过浏览器的头信息
+伪装自己。
+</p>
+
+<p>
+可以通过浏览器的 <code>NetWork</code> 面板来获取浏览器的 <code>User-Agent</code>:
+</p>
+
+
+<div class="figure">
+<p><img src="img/user-agent.png" alt="user-agent.png">
+</p>
+</div>
+
+<p>
+比如说：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib
+<span style="font-weight: bold;">import</span> urllib2
+
+<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span style="font-weight: bold; font-style: italic;">user_agent</span> = <span style="font-style: italic;">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36'</span>
+<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span>: <span style="font-style: italic;">'Michael Foord'</span>,
+          <span style="font-style: italic;">'location'</span>: <span style="font-style: italic;">'Northampton'</span>,
+          <span style="font-style: italic;">'language'</span>: <span style="font-style: italic;">'Python'</span> }
+<span style="font-weight: bold; font-style: italic;">headers</span> = {<span style="font-style: italic;">'User-Agent'</span>: user_agent}
+
+<span style="font-weight: bold; font-style: italic;">data</span> = urllib.urlencode(values)
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(url, data, headers)
+<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
+<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+</pre>
+</div>
+
+<p>
+PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6107380" class="outline-3">
+<h3 id="org6107380"><span class="section-number-3">2.4</span> 异常处理</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+<i>urlopen</i> 在不能处理响应的时候会抛出错误 <code>URLError</code>.
+</p>
+
+<p>
+<code>HTTPError</code> 是特定情况下引发的 <code>URLError</code> 的子类。
+</p>
+
+<ul class="org-ul">
+<li><p>
+<b>URLError</b>
+</p>
+
+<p>
+一般情况下， 如果没有网络连接或服务器不存在， 会引起 <b>URLError</b>.
+</p>
+
+<p>
+该异常具有 <code>reason</code> 属性， 一个包含错误代码和错误信息的元组。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.pretend_server.org'</span>)
+&gt;&gt;&gt; <span style="font-weight: bold;">try</span>: urllib2.urlopen(req)
+... <span style="font-weight: bold;">except</span> urllib2.URLError <span style="font-weight: bold;">as</span> e:
+...    <span style="font-weight: bold;">print</span> e.reason
+...
+(4, <span style="font-style: italic;">'getaddrinfo failed'</span>)
+</pre>
+</div></li>
+
+<li><p>
+<b>HTTPError</b>
+</p>
+
+<p>
+每个来自服务器的响应都包含一个数字 <b>状态码</b>, 有时状态码指示服务器无法完成请求。
+</p>
+
+<p>
+默认的处理程序会处理一些响应， 对于哪些不能处理的， <code>urlopen</code> 会引发一个 <code>HTTPError</code>.
+</p>
+
+<p>
+如： <code>404(找不到页面), 403(禁止请求), 401(需要身份验证)</code>.
+</p>
+
+<p>
+<b>HTTPError</b> 实例具有一个整型的 <code>code</code> 属性， 对应服务器发送的错误代码。
+</p>
+
+<p>
+另外， <code>BaseHTTPServer.BaseHTTPRequestHandler.responses</code> 是一个有用的响应码字典。
+你可以打印这个字典来了解一些响应码的含义。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> BaseHTTPServer <span style="font-weight: bold;">import</span> BaseHTTPRequestHandler.responses
+
+
+<span style="font-weight: bold;">for</span> code, info <span style="font-weight: bold;">in</span> BaseHTTPRequestHandler.responses.items():
+    <span style="font-weight: bold;">print</span>(code, info)
+</pre>
+</div>
+
+<p>
+<b>HTTPError</b> 实例可以作为服务器响应(<code>response</code>)的实例， 即其拥有 <b>read</b>, <b>geturl</b>, <b>info</b> 方法。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.python.org/fish.html'</span>)
+&gt;&gt;&gt; <span style="font-weight: bold;">try</span>:
+...     urllib2.urlopen(req)
+... <span style="font-weight: bold;">except</span> urllib2.HTTPError <span style="font-weight: bold;">as</span> e:
+...     <span style="font-weight: bold;">print</span> e.code
+...     <span style="font-weight: bold;">print</span> e.read() 
+...
+404
+&lt;!DOCTYPE html PUBLIC <span style="font-style: italic;">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
+<span style="font-style: italic;">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
+...
+&lt;title&gt;Page Not Found&lt;/title&gt;
+...
+</pre>
+</div></li>
+</ul>
+
+<p>
+现在， 有两种方式来处理这两个异常， 推荐第二种。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26041;&#24335;&#19968;</span>
+<span style="font-weight: bold;">from</span> urllib2 <span style="font-weight: bold;">import</span> Request, urlopen, URLError, HTTPError
+<span style="font-weight: bold; font-style: italic;">req</span> = Request(someurl)
+<span style="font-weight: bold;">try</span>:
+    <span style="font-weight: bold; font-style: italic;">response</span> = urlopen(req)
+<span style="font-weight: bold;">except</span> HTTPError <span style="font-weight: bold;">as</span> e:
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'The server couldn\'t fulfill the request.'</span>
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Error code: '</span>, e.code
+<span style="font-weight: bold;">except</span> URLError <span style="font-weight: bold;">as</span> e:
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'We failed to reach a server.'</span>
+    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Reason: '</span>, e.reason
+<span style="font-weight: bold;">else</span>:
+    <span style="font-weight: bold;">pass</span>
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">everything is fine</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">PS: HTTPError &#24517;&#39035;&#26159;&#31532;&#19968;&#20010;</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26041;&#24335;&#20108;</span>
+<span style="font-weight: bold;">from</span> urllib2 <span style="font-weight: bold;">import</span> Request, urlopen, URLError
+<span style="font-weight: bold; font-style: italic;">req</span> = Request(someurl)
+<span style="font-weight: bold;">try</span>:
+    <span style="font-weight: bold; font-style: italic;">response</span> = urlopen(req)
+<span style="font-weight: bold;">except</span> URLError <span style="font-weight: bold;">as</span> e:
+    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(e, <span style="font-style: italic;">'reason'</span>):
+        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'We failed to reach a server.'</span>
+        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Reason: '</span>, e.reason
+    <span style="font-weight: bold;">elif</span> <span style="font-weight: bold;">hasattr</span>(e, <span style="font-style: italic;">'code'</span>):
+        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'The server couldn\'t fulfill the request.'</span>
+        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Error code: '</span>, e.code
+<span style="font-weight: bold;">else</span>:
+    <span style="font-weight: bold;">pass</span>
+    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">everything is fine</span>
+</pre>
+</div>
+
+<p>
+<code>urlopen</code> 返回的响应实例或 <code>HTTPError</code> 实例具有 <b>geturl</b> 和 <b>info</b> 方法。
+</p>
+<ul class="org-ul">
+<li><b>geturl</b> - 获取当前返回数据的真实 <b>URL</b></li>
+<li><b>info</b> - 返回页面的描述信息， 是一个 <code>httplib.HTTPMessage</code> 实例</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb1f4274" class="outline-3">
+<h3 id="orgb1f4274"><span class="section-number-3">2.5</span> 超时设置</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+<code>urllib</code> 依赖于 <code>socket</code>, 因此可以通过 <code>socket</code> 来设置超时时间：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> socket
+<span style="font-weight: bold;">import</span> urllib2
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">timeout in seconds</span>
+<span style="font-weight: bold; font-style: italic;">timeout</span> = 10
+socket.setdefaulttimeout(timeout)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this call to urllib2.urlopen now uses the default timeout</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">we have set in the socket module</span>
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)
+<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org320d07c" class="outline-2">
+<h2 id="org320d07c"><span class="section-number-2">3</span> Python3</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+我们都知道 <code>Python3</code> 和 <code>Python2</code> 不兼容。 对于 <code>urllib</code> 来说更是如此。
+</p>
+
+<p>
+<code>3.x</code> 没有 <code>urllib2</code>, 替代它的是 <code>urllib.request</code>. 而与原有 <code>urllib</code> 对应的
+是 <code>urllib.parse</code>.
+</p>
+
+<p>
+同时， <code>3.x</code> 版本的 <code>urlopen</code> 返回的响应对象支持上下文管理器， 即可以这样
+写代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib.request
+
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib.request.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">urllib2.Request</span>
+<span style="font-weight: bold;">with</span> urllib.request.urlopen(req) <span style="font-weight: bold;">as</span> response:  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">urllib2.urlopen</span>
+   <span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+</pre>
+</div>
+
+<p>
+其他接口的调用基本上换个名字就可以了， 但需要注意的是上传数据时进行编码处理：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib.parse
+<span style="font-weight: bold;">import</span> urllib.request
+
+<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span style="font-weight: bold; font-style: italic;">user_agent</span> = <span style="font-style: italic;">'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'</span>
+<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span>: <span style="font-style: italic;">'Michael Foord'</span>,
+          <span style="font-style: italic;">'location'</span>: <span style="font-style: italic;">'Northampton'</span>,
+          <span style="font-style: italic;">'language'</span>: <span style="font-style: italic;">'Python'</span> }
+<span style="font-weight: bold; font-style: italic;">headers</span> = {<span style="font-style: italic;">'User-Agent'</span>: user_agent}
+
+<span style="font-weight: bold; font-style: italic;">data</span> = urllib.parse.urlencode(values)
+<span style="font-weight: bold; font-style: italic;">data</span> = data.encode(<span style="font-style: italic;">'ascii'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#19978;&#20256;&#30340;&#25968;&#25454;&#24212;&#35813;&#26159; bytes</span>
+<span style="font-weight: bold; font-style: italic;">req</span> = urllib.request.Request(url, data, headers)
+<span style="font-weight: bold;">with</span> urllib.request.urlopen(req) <span style="font-weight: bold;">as</span> response:
+   <span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+</pre>
+</div>
+
+<p>
+还有便是那个有用的错误码字典：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> http.server <span style="font-weight: bold;">import</span> BaseHTTPRequestHandler
+
+<span style="font-weight: bold;">for</span> code, info <span style="font-weight: bold;">in</span> BaseHTTPRequestHandler.responses.items():
+    <span style="font-weight: bold;">print</span>(code, info)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3bdb2ad" class="outline-2">
+<h2 id="org3bdb2ad"><span class="section-number-2">4</span> 相关链接</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://docs.python.org/2/howto/urllib2.html">HOWTO Fetch Internet Resources Using urllib2</a></li>
+<li><a href="https://docs.python.org/3/howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
