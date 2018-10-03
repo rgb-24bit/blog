@@ -116,7 +116,7 @@
    + Bytes :: 字节字符串类型 - ~bytes~
 
 ** Mutable sequences
-   变序列在创建后可以更改，目前有两种内置的可变序列类型：
+   可变序列在创建后可以更改，目前有两种内置的可变序列类型：
 
    + Lists :: 列表类型 - ~list~
    + Byte Arrays :: 字节数组类型 - ~bytearray~
@@ -124,9 +124,7 @@
 * Set types
   抽象基类 ~Set~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
     
-  *PS:* ~Set~ 居然不是序列！
-
-  使用内置函数 ~len~ 可以获取 ~Set~ 的长度。
+  使用内置函数 ~len~ 可以获取 ~Set~ 的成员数量。
 
   目前有两种固有的集合类型：
   + Sets :: 可变集合类型 - ~set~
@@ -137,7 +135,7 @@
 * Mappings
   抽象基类 ~Mappings~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
   
-  内置函数 ~len~ 可以用来获取映射中的成员数。
+  内置函数 ~len~ 可以用来获取映射中的成员数量。
 
   目前有一种内置映射类型：
   + Dictionaries :: 字典类型 - ~dict~
