@@ -1,0 +1,296 @@
+#+TITLE:      Python 标准类型层次结构
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-10-03 周三>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#none][None]]
+- [[#notimplemented][NotImplemented]]
+- [[#ellipsis][Ellipsis]]
+- [[#numbersnumber][numbers.Number]]
+  - [[#numbersintegral][numbers.Integral]]
+  - [[#numbersrealfloat][numbers.Real(float)]]
+  - [[#numberscomplexcomplex][numbers.Complex(complex)]]
+  - [[#relationship][relationship]]
+- [[#sequences][Sequences]]
+  - [[#immutable-sequences][Immutable sequences]]
+  - [[#mutable-sequences][Mutable sequences]]
+- [[#set-types][Set types]]
+- [[#mappings][Mappings]]
+- [[#callable-types][Callable types]]
+  - [[#user-defined-functions][User-defined functions]]
+  - [[#instance-methods][Instance methods]]
+  - [[#other][Other]]
+- [[#modules][Modules]]
+- [[#custom-classes][Custom classes]]
+- [[#class-instances][Class instances]]
+- [[#io-objects][I/O objects]]
+- [[#internal-types][Internal types]]
+  - [[#code-objects][Code objects]]
+  - [[#frame-objects][Frame objects]]
+  - [[#other-1][Other]]
+- [[#结尾][结尾]]
+
+* 前言
+  这篇博客算是 [[https://docs.python.org/3/reference/datamodel.html#the-standard-type-hierarchy][The standard type hierarchy]] 的阅读笔记，配合原文阅读效果更佳。
+
+* None
+  ~NoneType~ 具有单个值。只有一个具有此值的对象。使用内置名称 ~None~ 来访问这个对象。
+
+  *PS:* ~return None~ is better than ~return~.
+
+* NotImplemented
+  ~NotImplementedType~ 具有单个值。只有一个具有此值的对象。使用内置名称 ~NotImplemented~ 来访问这个对象。
+
+  如果数值方法和丰富的比较方法未实现所提供操作数的操作，则应返回此值。
+
+  *PS:* ~bool(NotImplemented)~ is ~True~.
+
+* Ellipsis
+  ~ellipsis~ 具有单个值。只有一个具有此值的对象。使用 ~...~ 或内置名称 ~Ellipsis~ 来访问这个对象。
+
+  对于这个对象的作用，可以看一下这篇博客： [[https://farer.org/2017/11/29/python-ellipsis-object/][Python 的 Ellipsis 对象]].
+
+  #+BEGIN_SRC python
+    >>> Ellipsis is ...
+    True
+  #+END_SRC
+
+  *PS:* ~...~ 的写法只有 ~Python3~ 支持.
+
+* numbers.Number  
+  ~numbers~ 是一个模块，详细内容可以浏览官方文档： [[https://docs.python.org/3/library/numbers.html][numbers — Numeric abstract base classes]].
+
+  ~numbers.Number~ 是所有 *数值类型* 的抽象基类，也就是说，对任意一个数字进行 ~isinstance(x, numbers.Number)~ 判断
+  得到的结果都为 ~True~.
+
+  #+BEGIN_SRC python
+    >>> nums = [1, 2.3, complex(1, 2)]
+    >>> all(map(lambda x: isinstance(x, numbers.Number), nums))
+    True
+  #+END_SRC
+  
+** numbers.Integral
+   *整数类型* 的抽象基类，其子类包括 ~Integers(int)~ 和 ~Booleans(bool)~.
+
+   ~Booleans~ 类型只有两个值 ~True~ 和 ~False~, 同时只存在两个对于的实例对象，通过内置名称 ~True~ 和 ~False~ 来访问这两个对象。
+
+** numbers.Real(float)
+   *浮点数类型* 的抽象基类。
+
+** numbers.Complex(complex)
+   *复数类型* 的抽象基类。
+
+   *PS:* 复数的字面值形式 ~1 + 2j~.
+
+** relationship
+   抽象基类和实际的类之间的关系：
+
+   #+BEGIN_EXAMPLE
+     numbers.Number
+     +-- numbers.Complex
+         +-- complex
+         +-- numbers.Real
+             +-- float
+             +-- numbers.Rational
+                 +-- numbers.Integral
+                     +-- int
+                         +-- bool
+   #+END_EXAMPLE
+
+* Sequences
+  抽象基类 ~Sequence~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
+
+  内置函数 ~len~ 可以获得序列的长度，通过 ~seq[i]~ 的形式获取索引位置 ~i~ 处的元素值。
+
+  所有序列都支持 *切片* 操作： ~seq[i:j]~.
+
+  部分序列支持 *扩展切片* 操作： ~seq[i:j:k]~.
+
+** Immutable sequences
+   不可变序列类型的对象一旦创建就不能更改，以下类型是不可变序列：
+
+   + String :: 字符串类型 - ~str~
+   + Tuples :: 元组类型 - ~tuple~
+   + Bytes :: 字节字符串类型 - ~bytes~
+
+** Mutable sequences
+   变序列在创建后可以更改，目前有两种内置的可变序列类型：
+
+   + Lists :: 列表类型 - ~list~
+   + Byte Arrays :: 字节数组类型 - ~bytearray~
+
+* Set types
+  抽象基类 ~Set~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
+    
+  *PS:* ~Set~ 居然不是序列！
+
+  使用内置函数 ~len~ 可以获取 ~Set~ 的长度。
+
+  目前有两种固有的集合类型：
+  + Sets :: 可变集合类型 - ~set~
+  + Frozen sets :: 不可变集合类型 - ~frozenset()~
+
+  *PS:* ~frozenset~ 可以用作 ~dict~ 的键，而 ~set~ 不可以。
+  
+* Mappings
+  抽象基类 ~Mappings~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
+  
+  内置函数 ~len~ 可以用来获取映射中的成员数。
+
+  目前有一种内置映射类型：
+  + Dictionaries :: 字典类型 - ~dict~
+
+* Callable types
+  抽象基类 ~Callable~ 可以在 [[https://docs.python.org/3/library/collections.abc.html][collections.abc — Abstract Base Classes for Containers]] 模块中找到。
+
+** User-defined functions
+   用户定义的函数自然是可调用对象，同时也包含了一些特殊的属性：
+   |-----------------+------------------------------------------------+-----------|
+   | 属性            | 含义                                           | 读/写权限 |
+   |-----------------+------------------------------------------------+-----------|
+   | ~__doc__~         | 文档字符串                                     | 可读可写  |
+   | ~__name__~        | 函数名称                                       | 可读可写  |
+   | ~__qualname__~    | 函数的 ~qualified name~                          | 可读可写  |
+   | ~__module__~      | 定义函数的模块的名称                           | 可读可写  |
+   | ~__defaults__~    | 默认值参数元组                                 | 可读可写  |
+   | ~__code__~        | 表示已编译的函数体                             | 可读可写  |
+   | ~__globals__~     | 对包含函数全局变量的字典的引用                 | 只读      |
+   | ~__dict__~        | 函数属性                                       | 可读可写  |
+   | ~__closure__~     | 以包含 ~cell~ 的元组形式返回闭包所包含的自由变量 | 只读      |
+   | ~__annotations__~ | 包含参数注释的字典                             | 可读可写  |
+   | ~__kwdefaults__~  | 包含强制关键字参数的默认值的字典               | 可读可写  |
+   |-----------------+------------------------------------------------+-----------|
+   
+   这些属性的使用可以参考博客： [[https://segmentfault.com/a/1190000005685090][Python 自定义函数的特殊属性（收藏专用）]]
+
+** Instance methods
+   实例方法具有用户自定义函数的大多数特殊属性，同时具有一些自己的 *只读* 特殊属性：
+   |------------+---------------------------|
+   | 属性       | 含义                      |
+   |------------+---------------------------|
+   | ~__self__~   | 实例                      |
+   | ~__func__~   | 函数对象                  |
+   | ~__doc__~    | same as ~__func__.__doc__~  |
+   | ~__name__~   | same as ~__func__.__name__~ |
+   | ~__module__~ | 定义方法的模块的名称      |
+   |------------+---------------------------|
+
+   实例方法的特殊属性可以参考博客： [[https://segmentfault.com/a/1190000005701971][Python （类）实例方法的特殊属性]]
+
+** Other
+  + Generator functions :: 使用了 ~yield~ 语句的函数为 *生成器函数*, 生成器的使用可以参考博客 [[file:python-generator.org][Python 生成器]].
+
+  + Coroutine functions :: 使用 ~async def~ 定义的函数或方法为 ~Coroutine functions~.
+
+  + Asynchronous generator functions  :: 使用 ~async def~ 定义的 *生成器函数* 为 ~Asynchronous generator functions~, 可以得到双倍的快乐。
+
+  + Built-in functions :: 内置函数对象是 ~C~ 函数的包装器，源码可见： [[https://github.com/python/cpython/blob/master/Python/bltinmodule.c][bltinmodule.c]].
+
+  + Built-in methods :: 内置函数的另一种包装，隐式传递额外的参数。
+
+  + Classes :: 类对象是可调用的，创建实例的过程就是调用类对象的过程。
+
+  + Class Instances :: 在类对象中定义 ~__call__~ 方法使得实例对象可调用。
+
+* Modules
+  模块对象由 [[https://docs.python.org/3/reference/import.html#importsystem][import system]] 创建，对模块对象的属性引用被转换为该字典中的查找。
+
+  也就是说： ~m.x~ 等价于 ~m.__dict__["x"]~.
+
+  模块对象的一些可读可写的属性：
+  |-----------------+--------------------------------------|
+  | 属性            | 含义                                 |
+  |-----------------+--------------------------------------|
+  | ~__name__~        | 模块名                               |
+  | ~__doc__~         | 模块文档字符串                       |
+  | ~__annotations__~ | 模块正文执行期间收集的变量注释的字典 |
+  | ~__file__~        | 模块文件路径                         |
+  |-----------------+--------------------------------------|
+
+  特殊的只读属性： ~__dict__~ 模块名称空间的字典对象。
+
+* Custom classes
+  自定义类也有一些特殊属性：
+  |-----------------+----------------|
+  | 属性            | 含义           |
+  |-----------------+----------------|
+  | ~__name__~        | 类名           |
+  | ~__module__~      | 定义类的模块名 |
+  | ~__dict__~        | 类名称空间字典 |
+  | ~__bases__~       | 基类元组       |
+  | ~__doc__~         | 类文档字符串   |
+  | ~__annotations__~ | 类变量注释字典 |
+  |-----------------+----------------|
+
+* Class instances
+  实例对象的属性基本上都是由我们自己管理的了，至少我不希望自己创建的实例多出了什么奇怪的属性。
+
+  和实例相关的一个有用的东西： [[file:python-special-method.org][Python 魔法方法]].
+
+* I/O objects
+  也称为 *文件对象*, 前段时间了解了一下 ~Python I/O~ 的封装层次，然后发现， ~Java~ 中也差不多。
+
+  基本的字节流，加上缓冲区的字节流，加上编码的带缓冲区的字节流。
+
+* Internal types
+  向用户公开的一些解释器内部使用的一些类型。
+
+** Code objects
+   ~Code~ 对象属于 *不可变* 对象，同时不包含任何可变对象的引用。
+
+   一些特殊的只读属性：
+   |----------------+------------------------------------------|
+   | 属性           | 含义                                     |
+   |----------------+------------------------------------------|
+   | ~co_name~        | 函数名称                                 |
+   | ~co_argcount~    | 位置参数的数量，包含具有默认值的参数     |
+   | ~co_nlocals~     | 函数使用的局部变量数，包括参数           |
+   | ~co_varnames~    | 局部变量名称的元组                       |
+   | ~co_cellvars~    | 嵌套函数引用的局部变量名称的元组         |
+   | ~co_freevars~    | 自由变量名称的元组                       |
+   | ~co_code~        | 表示字节码指令序列的字符串               |
+   | ~co_consts~      | 包含字节码使用的文字的元组               |
+   | ~co_names~       | 包含字节码使用的名称的元组               |
+   | ~co_filename~    | 编译代码的文件名                         |
+   | ~co_firstlineno~ | 函数的第一个行号                         |
+   | ~co_lnotab~      | 用于编码从字节码偏移到行号的映射的字符串 |
+   | ~co_stacksize~   | 必需的堆栈大小                           |
+   | ~co_flags~       | 用于编码解释器的整数标志                 |
+   |----------------+------------------------------------------|
+  
+** Frame objects
+   帧对象表示执行帧。它们可能出现在回溯对象中，也会传递给已注册的跟踪函数。
+
+   帧对象的一些只读的特殊属性：
+   |------------+------------------------------|
+   | 属性       | 含义                         |
+   |------------+------------------------------|
+   | ~f_back~     | 前一个帧或 ~None~              |
+   | ~f_code~     | 在此帧中执行的代码对象       |
+   | ~f_locals~   | 用于查找局部变量的字典       |
+   | ~f_globals~  | 用于全局变量                 |
+   | ~f_builtins~ | 用于内置名称                 |
+   | ~f_lasti~    | 代码对象的字节码字符串的索引 |
+   |------------+------------------------------|
+
+   特殊的可写属性： ~f_trace~, 如果不是 ~None~, 则是在代码执行期间调用各种事件的函数（由调试器使用）。
+
+   可以通过将 ~f_trace_lines~ 设置为 ~False~ 来禁用此事件。
+
+   方法 ~frame.clear()~ 清除对帧所持有的局部变量的所有引用。
+
+** Other
+   + Traceback objects :: 回溯对象，表示异常的堆栈跟踪
+   + Slice objects :: 切片对象，可以通过内置函数 ~slice~ 创建
+   + Static method objects :: 静态方法对象，可以由内置函数 ~staticmethod~ 创建
+   + Class method objects :: 类方法对象，可以由内置函数 ~classmethod~ 创建
+
+* 结尾
+  我后悔了，搞这个花的时间有点长，收获与付出的时间成本不符。
+
+  后面部分不重要的内容也花费了过多的时间，前面有几篇博客也是这种情况......
+
+  以后需要注意一下了 QAQ
+  
