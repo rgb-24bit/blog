@@ -1,0 +1,181 @@
+#+TITLE:      C# 图像处理的三种方式
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-10-12 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#像素法][像素法]]
+- [[#内存法][内存法]]
+- [[#指针法][指针法]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  这篇博客记录一下 ~C#~ 中用于处理图像的三种常规方式： *像素法*, *内存法* 和 *指针法*.
+
+* 像素法
+  *像素法* 通过 ~Bitmap~ 对象的 ~GetPixel()~ 和 ~SetPixel()~ 来直接访问操作像素点，
+  是三种方式中最简单的一种方式，但简单带来的是极其低下的处理速度。
+
+  使用 *像素法* 实现图像的灰度化：
+  #+BEGIN_SRC csharp
+    public static Image Gray(Image image) {
+      Bitmap bitmap = image.Clone() as Bitmap;
+
+      for (int x = 0; x < bitmap.Width; ++x) {
+        for (int y = 0; y < bitmap.Height; ++y) {
+          Color pixel = bitmap.GetPixel(x, y);
+
+          int gray = (pixel.R * 299 + pixel.G * 587 + pixel.B * 114 + 500) / 1000;
+
+          bitmap.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+        }
+      }
+
+      return bitmap as Image;
+    }
+  #+END_SRC
+
+* 内存法
+  *内存法* 把图像数据直接复制到内存中进行处理，可以带来比 *像素法* 快的多的处理速度。
+
+  使用内存法需要考虑的几个问题： *图片类型*, ~RGBA~ 的字节顺序 和 *字节对齐* 问题。
+
+  首先是 *图片类型*, 现在常用的图片类型，如 ~JPG~ 和 ~BMP~ 的颜色通道只有 ~RGB~ 三种，而 ~PNG~ 却具有 ~RGBA~ 四种。
+
+  *图片类型* 影响着存储每个像素点所需要的字节大小，假如 ~RGBA~ 值各占一个字节（现在常见的图片确实是这样），
+  那么存储 ~JPG~ 和 ~BMP~ 每个像素点需要 ~3~ 字节，而存储 ~PNG~ 却需要 ~4~ 字节。
+
+  为了方便获取实际存储每个像素点需要的字节大小，这里提供了一个简单的函数：
+  #+BEGIN_SRC csharp
+    public static int GetUnitPixelSize(Bitmap bitmap) {
+      return Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
+    }
+  #+END_SRC
+
+
+  然后是 ~RGBA~ 的字节顺序，使用 ~GDI+~ 获得的 ~RGBA~ 的字节排列顺序并不是按照 ~RGBA~ 的顺序排列的，而是按照 ~BGR~ 和 ~BGRA~ 的顺序排列。
+
+  假如得到了一个像素点在内存中的位置，那么它的 ~RGBA~ 值可以这样获取：
+  #+BEGIN_SRC csharp
+    byte[] rgbValues = new byte[size];  // 保存图像数据的字节数组
+    int index = 0;                      // 第一个像素点的位置
+    int b = 0, g = 1, r = 2, a = 3;     // RGBA 对应的偏移量
+    int B = rgbValues[b + index];       // 获取 B 值， GBA 以此类推
+  #+END_SRC
+
+  最后是 *字节对齐* 问题，图像数据在内存中存储时是按 ~4~ 字节对齐的，这对于只有 ~RGB~ 这三种类型颜色通道的图片来说，
+  可能使得图像每一个像素行的末尾存在一些无用的字节数据。必要时需要跳过这些无用的字节。
+
+  #+BEGIN_EXAMPLE
+    |---------Stride----------|
+    |---------Width--------|  | 
+    BGR BGR BGR BGR BGR BGR XX
+    BGR BGR BGR BGR BGR BGR XX
+    BGR BGR BGR BGR BGR BGR XX 
+    ...
+  #+END_EXAMPLE
+
+  使用 *内存法* 实现图像的灰度化：
+  #+BEGIN_SRC csharp
+    public static Image Gray(Image image) {
+      Bitmap bitmap = image.Clone() as Bitmap;
+
+      // Locks the bitmap into system memory.
+      Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+      BitmapData bmpdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+      IntPtr ptr = bmpdata.Scan0;
+
+      // Declare an array to hold the bytes of the bitmap.
+      int totalPixels = Math.Abs(bmpdata.Stride) * bitmap.Height;
+      byte[] rgbValues = new byte[totalPixels];
+
+      // Copy the RGB values into the array.
+      Marshal.Copy(ptr, rgbValues, 0, totalPixels);
+
+      int b = 0, g = 1, r = 2;  // BGR
+      int pixelSize = GetUnitPixelSize(bitmap);
+
+      int index = 0;
+      for (int row = 0; row < bitmap.Height; ++row) {
+        for (int col = 0; col < bitmap.Width; ++col) {
+          int gray = (rgbValues[r + index] * 299 + rgbValues[g + index] * 587 + rgbValues[b + index] * 114 + 500) / 1000;
+
+          rgbValues[r + index] = rgbValues[g + index] = rgbValues[b + index] = (byte) gray;
+
+          index += pixelSize;
+        }
+        // Handling byte alignment issues
+        index += bmpdata.Stride - bmpdata.Width * pixelSize;
+      }
+
+      Marshal.Copy(rgbValues, 0, ptr, totalPixels);
+      bitmap.UnlockBits(bmpdata);
+
+      return bitmap.Clone() as Image;
+    }
+  #+END_SRC
+
+  代码 ~index += bmpdata.Stride - bmpdata.Width * pixelSize~ 就是用于跳过行末尾无用的字节数据的。
+
+* 指针法
+  *指针法* 顾名思义，就是使用 *指针*, 在 ~C#~ 中使用指针需要把代码放到 ~unsafe~ 代码块中，
+  而 *指针法* 和 *内存法* 一样，需要考虑 *图片类型*, *字节顺序* 和 *字节对齐* 的问题。
+
+  解决方案和 *内存法* 类似，毕竟 *指针* 和 *数组* 在使用上的差别也不是很大。
+
+  如果你有 *C/C++* 的基础，使用 *指针法* 是绝对适合你的。
+
+  使用 *指针法* 实现图像的灰度化：
+  #+BEGIN_SRC csharp
+    public static Image Gray(Image image) {
+      Bitmap bitmap = image.Clone() as Bitmap;
+
+      // Locks the bitmap into system memory.
+      Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+      BitmapData bmpdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+      int pixelSize = GetUnitPixelSize(bitmap);
+      int b = 0, g = 1, r = 2;  // BGR
+
+      unsafe {
+        byte* ptr = (byte*) bmpdata.Scan0;
+
+        for (int row = 0; row < bitmap.Height; ++row) {
+          for (int col = 0; col < bitmap.Width; ++col) {
+            int gray = (ptr[r] * 299 + ptr[g] * 587 + ptr[b] * 114 + 500) / 1000;
+
+            ptr[r] = ptr[g] = ptr[b] = (byte) gray;
+
+            ptr += pixelSize;
+          }
+          // Handling byte alignment issues
+          ptr += bmpdata.Stride - bmpdata.Width * pixelSize;
+        }
+      }
+
+      bitmap.UnlockBits(bmpdata);
+
+      return bitmap as Image;
+    }
+  #+END_SRC
+
+  可以看到，使用 *指针法* 得到的代码其实还要比 *内存法* 简洁一些。  
+
+  对于 ~unsafe~ 代码块的安全性，可以参考 [[https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/language-specification/unsafe-code][C# 6.0 草稿规范 - Unsafe code]] 中的描述：
+  
+  #+BEGIN_QUOTE
+  Unsafe code is in fact a "safe" feature from the perspective of both developers and users. 
+
+  无论从开发人员还是从用户角度来看，不安全代码事实上都是一种 "安全" 功能.
+
+  Unsafe code must be clearly marked with the modifier unsafe, so developers can't possibly use unsafe features accidentally,
+  and the execution engine works to ensure that unsafe code cannot be executed in an untrusted environment.
+
+  不安全代码必须用修饰符 unsafe 明确地标记，这样开发人员就不会误用不安全功能，而执行引擎将确保不会在不受信任的环境中执行不安全代码。
+  #+END_QUOTE
+ 
+* 参考链接
+  + [[http://kuangqi.me/image-processing/image-processing-using-c-sharp/][使用 C# 进行图像处理的几种方法]]
+  + [[https://www.cnblogs.com/Jerry-Chou/archive/2012/03/21/2409590.html][C# 图片处理]]
+

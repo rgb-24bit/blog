@@ -4,7 +4,7 @@
 <!-- 2018-10-12 周五 15:15 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rgb-24bit's blog</title>
+<title>C# 图像处理的三种方式</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="rgb-24bit">
 <style type="text/css">
@@ -241,85 +241,261 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
 </div><div id="content">
-<h1 class="title">rgb-24bit's blog</h1>
-<ul class="org-ul">
-<li><b>2018</b>
-<dl class="org-dl">
-<dt>10-12 &#x2013; <a href="2018/csharp-image-process.html">C# 图像处理的三种方式</a></dt><dd></dd>
-
-<dt>10-03 &#x2013; <a href="2018/python-standard-type-hierarchy.html">Python 标准类型层次结构</a></dt><dd></dd>
-
-<dt>09-22 &#x2013; <a href="2018/python-urllib.html">Python urllib</a></dt><dd></dd>
-
-<dt>09-15 &#x2013; <a href="2018/linux-file-permission.html">Linux 文件权限</a></dt><dd></dd>
-
-<dt>08-28 &#x2013; <a href="2018/python-generator.html">Python 生成器</a></dt><dd></dd>
-
-<dt>08-22 &#x2013; <a href="2018/python-io.html">Python I/O</a></dt><dd></dd>
-
-<dt>08-11 &#x2013; <a href="2018/java-collection.html">Java 核心集合接口</a></dt><dd></dd>
-
-<dt>08-05 &#x2013; <a href="2018/python-metaclass.html">Python 元类</a></dt><dd></dd>
-
-<dt>07-31 &#x2013; <a href="2018/python-new-instance.html">Python 构造对象实例</a></dt><dd></dd>
-
-<dt>07-26 &#x2013; <a href="2018/python3.0-3.6.html">Python3.0-3.6的版本变化</a></dt><dd></dd>
-
-<dt>07-17 &#x2013; <a href="2018/java-basic.html">Java 基础梳理</a></dt><dd></dd>
-
-<dt>07-01 &#x2013; <a href="2018/os-exception.html">操作系统之异常控制流</a></dt><dd></dd>
-
-<dt>06-16 &#x2013; <a href="2018/python-descriptor.html">Python 描述器简述</a></dt><dd></dd>
-
-<dt>06-01 &#x2013; <a href="2018/c-pointer.html">C 语言指针和数组</a></dt><dd></dd>
-
-<dt>05-20 &#x2013; <a href="2018/python-regex.html">Python 正则表达式</a></dt><dd></dd>
-
-<dt>05-16 &#x2013; <a href="2018/python-decorator.html">Python 闭包和装饰器</a></dt><dd></dd>
-
-<dt>05-03 &#x2013; <a href="2018/http.html">HTTP 协议相关</a></dt><dd></dd>
-
-<dt>04-15 &#x2013; <a href="2018/python-import.html">Python 导入相关</a></dt><dd></dd>
-
-<dt>04-03 &#x2013; <a href="2018/python-special-method.html">Python 魔法方法</a></dt><dd></dd>
-
-<dt>03-30 &#x2013; <a href="2018/git-base.html">Git 基础使用</a></dt><dd></dd>
-
-<dt>03-25 &#x2013; <a href="2018/win32.html">Win32 API 窗口程序</a></dt><dd></dd>
-
-<dt>03-23 &#x2013; <a href="2018/python-build-in-type.html">Python 内置类型</a></dt><dd></dd>
-
-<dt>03-20 &#x2013; <a href="2018/glob.html">Glob 语法及解析</a></dt><dd></dd>
-
-<dt>03-10 &#x2013; <a href="2018/google.html">Google 搜索</a></dt><dd></dd>
-
-<dt>03-03 &#x2013; <a href="2018/python-collection.html">Python 容器</a></dt><dd></dd>
-
-<dt>02-26 &#x2013; <a href="2018/python-coding.html">Python 编码问题</a></dt><dd></dd>
-
-<dt>02-21 &#x2013; <a href="2018/python-format-string.html">Python 格式化字符串</a></dt><dd></dd>
-
-<dt>02-18 &#x2013; <a href="2018/python-build-in-exception.html">Python 内置异常</a></dt><dd></dd>
-
-<dt>02-14 &#x2013; <a href="2018/python-build-in-function.html">Python 内置函数</a></dt><dd></dd>
-
-<dt>02-06 &#x2013; <a href="2018/blockchain.html">区块链的简单尝试</a></dt><dd></dd>
-
-<dt>02-02 &#x2013; <a href="2018/pipenv.html">Pipenv 的使用</a></dt><dd></dd>
-
-<dt>01-23 &#x2013; <a href="2018/python2.5-2.7.html">Python2.5-2.7的版本变化</a></dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/regex.html">正则表达式</a></dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/sqllocaldb-sqlcmd.html">SqlLocalDB 和 Sqlcmd</a></dt><dd></dd>
-</dl></li>
-<li><b>2017</b>
-<dl class="org-dl">
-<dt>12-27 &#x2013; <a href="2017/org-gtd.html">Emacs Org 搭建 GTD 系统</a></dt><dd></dd>
-
-<dt>12-26 &#x2013; <a href="2017/c99-wchar.html">C99 宽字符</a></dt><dd></dd>
-</dl></li>
+<h1 class="title">C# 图像处理的三种方式</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2ea71a2">1. 前言</a></li>
+<li><a href="#org17aca0a">2. 像素法</a></li>
+<li><a href="#org168b0fc">3. 内存法</a></li>
+<li><a href="#orgb1abf09">4. 指针法</a></li>
+<li><a href="#orgb9bdfcb">5. 参考链接</a></li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-org2ea71a2" class="outline-2">
+<h2 id="org2ea71a2"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这篇博客记录一下 <code>C#</code> 中用于处理图像的三种常规方式： <b>像素法</b>, <b>内存法</b> 和 <b>指针法</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org17aca0a" class="outline-2">
+<h2 id="org17aca0a"><span class="section-number-2">2</span> 像素法</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>像素法</b> 通过 <code>Bitmap</code> 对象的 <code>GetPixel()</code> 和 <code>SetPixel()</code> 来直接访问操作像素点，
+是三种方式中最简单的一种方式，但简单带来的是极其低下的处理速度。
+</p>
+
+<p>
+使用 <b>像素法</b> 实现图像的灰度化：
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp">public static Image Gray(Image image) {
+  Bitmap bitmap = image.Clone() as Bitmap;
+
+  for (int x = 0; x &lt; bitmap.Width; ++x) {
+    for (int y = 0; y &lt; bitmap.Height; ++y) {
+      Color pixel = bitmap.GetPixel(x, y);
+
+      int gray = (pixel.R * 299 + pixel.G * 587 + pixel.B * 114 + 500) / 1000;
+
+      bitmap.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+    }
+  }
+
+  return bitmap as Image;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org168b0fc" class="outline-2">
+<h2 id="org168b0fc"><span class="section-number-2">3</span> 内存法</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>内存法</b> 把图像数据直接复制到内存中进行处理，可以带来比 <b>像素法</b> 快的多的处理速度。
+</p>
+
+<p>
+使用内存法需要考虑的几个问题： <b>图片类型</b>, <code>RGBA</code> 的字节顺序 和 <b>字节对齐</b> 问题。
+</p>
+
+<p>
+首先是 <b>图片类型</b>, 现在常用的图片类型，如 <code>JPG</code> 和 <code>BMP</code> 的颜色通道只有 <code>RGB</code> 三种，而 <code>PNG</code> 却具有 <code>RGBA</code> 四种。
+</p>
+
+<p>
+<b>图片类型</b> 影响着存储每个像素点所需要的字节大小，假如 <code>RGBA</code> 值各占一个字节（现在常见的图片确实是这样），
+那么存储 <code>JPG</code> 和 <code>BMP</code> 每个像素点需要 <code>3</code> 字节，而存储 <code>PNG</code> 却需要 <code>4</code> 字节。
+</p>
+
+<p>
+为了方便获取实际存储每个像素点需要的字节大小，这里提供了一个简单的函数：
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp">public static int GetUnitPixelSize(Bitmap bitmap) {
+  return Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
+}
+</pre>
+</div>
+
+
+<p>
+然后是 <code>RGBA</code> 的字节顺序，使用 <code>GDI+</code> 获得的 <code>RGBA</code> 的字节排列顺序并不是按照 <code>RGBA</code> 的顺序排列的，而是按照 <code>BGR</code> 和 <code>BGRA</code> 的顺序排列。
+</p>
+
+<p>
+假如得到了一个像素点在内存中的位置，那么它的 <code>RGBA</code> 值可以这样获取：
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp">byte[] rgbValues = new byte[size];  // 保存图像数据的字节数组
+int index = 0;                      // 第一个像素点的位置
+int b = 0, g = 1, r = 2, a = 3;     // RGBA 对应的偏移量
+int B = rgbValues[b + index];       // 获取 B 值， GBA 以此类推
+</pre>
+</div>
+
+<p>
+最后是 <b>字节对齐</b> 问题，图像数据在内存中存储时是按 <code>4</code> 字节对齐的，这对于只有 <code>RGB</code> 这三种类型颜色通道的图片来说，
+可能使得图像每一个像素行的末尾存在一些无用的字节数据。必要时需要跳过这些无用的字节。
+</p>
+
+<pre class="example">
+|---------Stride----------|
+|---------Width--------|  | 
+BGR BGR BGR BGR BGR BGR XX
+BGR BGR BGR BGR BGR BGR XX
+BGR BGR BGR BGR BGR BGR XX 
+...
+</pre>
+
+<p>
+使用 <b>内存法</b> 实现图像的灰度化：
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp">public static Image Gray(Image image) {
+  Bitmap bitmap = image.Clone() as Bitmap;
+
+  // Locks the bitmap into system memory.
+  Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+  BitmapData bmpdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+  IntPtr ptr = bmpdata.Scan0;
+
+  // Declare an array to hold the bytes of the bitmap.
+  int totalPixels = Math.Abs(bmpdata.Stride) * bitmap.Height;
+  byte[] rgbValues = new byte[totalPixels];
+
+  // Copy the RGB values into the array.
+  Marshal.Copy(ptr, rgbValues, 0, totalPixels);
+
+  int b = 0, g = 1, r = 2;  // BGR
+  int pixelSize = GetUnitPixelSize(bitmap);
+
+  int index = 0;
+  for (int row = 0; row &lt; bitmap.Height; ++row) {
+    for (int col = 0; col &lt; bitmap.Width; ++col) {
+      int gray = (rgbValues[r + index] * 299 + rgbValues[g + index] * 587 + rgbValues[b + index] * 114 + 500) / 1000;
+
+      rgbValues[r + index] = rgbValues[g + index] = rgbValues[b + index] = (byte) gray;
+
+      index += pixelSize;
+    }
+    // Handling byte alignment issues
+    index += bmpdata.Stride - bmpdata.Width * pixelSize;
+  }
+
+  Marshal.Copy(rgbValues, 0, ptr, totalPixels);
+  bitmap.UnlockBits(bmpdata);
+
+  return bitmap.Clone() as Image;
+}
+</pre>
+</div>
+
+<p>
+代码 <code>index += bmpdata.Stride - bmpdata.Width * pixelSize</code> 就是用于跳过行末尾无用的字节数据的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb1abf09" class="outline-2">
+<h2 id="orgb1abf09"><span class="section-number-2">4</span> 指针法</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>指针法</b> 顾名思义，就是使用 <b>指针</b>, 在 <code>C#</code> 中使用指针需要把代码放到 <code>unsafe</code> 代码块中，
+而 <b>指针法</b> 和 <b>内存法</b> 一样，需要考虑 <b>图片类型</b>, <b>字节顺序</b> 和 <b>字节对齐</b> 的问题。
+</p>
+
+<p>
+解决方案和 <b>内存法</b> 类似，毕竟 <b>指针</b> 和 <b>数组</b> 在使用上的差别也不是很大。
+</p>
+
+<p>
+如果你有 <b>C/C++</b> 的基础，使用 <b>指针法</b> 是绝对适合你的。
+</p>
+
+<p>
+使用 <b>指针法</b> 实现图像的灰度化：
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp">public static Image Gray(Image image) {
+  Bitmap bitmap = image.Clone() as Bitmap;
+
+  // Locks the bitmap into system memory.
+  Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+  BitmapData bmpdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+  int pixelSize = GetUnitPixelSize(bitmap);
+  int b = 0, g = 1, r = 2;  // BGR
+
+  unsafe {
+    byte* ptr = (byte*) bmpdata.Scan0;
+
+    for (int row = 0; row &lt; bitmap.Height; ++row) {
+      for (int col = 0; col &lt; bitmap.Width; ++col) {
+	int gray = (ptr[r] * 299 + ptr[g] * 587 + ptr[b] * 114 + 500) / 1000;
+
+	ptr[r] = ptr[g] = ptr[b] = (byte) gray;
+
+	ptr += pixelSize;
+      }
+      // Handling byte alignment issues
+      ptr += bmpdata.Stride - bmpdata.Width * pixelSize;
+    }
+  }
+
+  bitmap.UnlockBits(bmpdata);
+
+  return bitmap as Image;
+}
+</pre>
+</div>
+
+<p>
+可以看到，使用 <b>指针法</b> 得到的代码其实还要比 <b>内存法</b> 简洁一些。  
+</p>
+
+<p>
+对于 <code>unsafe</code> 代码块的安全性，可以参考 <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/language-specification/unsafe-code">C# 6.0 草稿规范 - Unsafe code</a> 中的描述：
+</p>
+
+<blockquote>
+<p>
+Unsafe code is in fact a "safe" feature from the perspective of both developers and users. 
+</p>
+
+<p>
+无论从开发人员还是从用户角度来看，不安全代码事实上都是一种 "安全" 功能.
+</p>
+
+<p>
+Unsafe code must be clearly marked with the modifier unsafe, so developers can't possibly use unsafe features accidentally,
+and the execution engine works to ensure that unsafe code cannot be executed in an untrusted environment.
+</p>
+
+<p>
+不安全代码必须用修饰符 unsafe 明确地标记，这样开发人员就不会误用不安全功能，而执行引擎将确保不会在不受信任的环境中执行不安全代码。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgb9bdfcb" class="outline-2">
+<h2 id="orgb9bdfcb"><span class="section-number-2">5</span> 参考链接</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="http://kuangqi.me/image-processing/image-processing-using-c-sharp/">使用 C# 进行图像处理的几种方法</a></li>
+<li><a href="https://www.cnblogs.com/Jerry-Chou/archive/2012/03/21/2409590.html">C# 图片处理</a></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
