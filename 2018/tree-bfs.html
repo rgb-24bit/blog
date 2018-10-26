@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-10-26 周五 15:35 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>树的广度优先遍历</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">树的广度优先遍历</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge28f057">1. 前言</a></li>
+<li><a href="#org8fcff87">2. 广度优先遍历的实现</a></li>
+<li><a href="#orge5abb77">3. 将树保存到文件</a></li>
+<li><a href="#org18a85d5">4. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge28f057" class="outline-2">
+<h2 id="orge28f057"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在 《数据结构与算法分析 - C 语言描述》 一书中，相当详细的介绍了 <b>树的深度优先遍历 - DFS</b>, 
+而 <b>树的广度优先遍历 - BFS</b> 却没有在 <b>树</b> 的章节做太多的描述。
+</p>
+
+<p>
+由于没有怎么看 <b>图</b> 的章节，也很少遇到需要用到 <code>BFS</code> 的情况，也就没有在意这一问题。
+</p>
+
+<p>
+直到前一段时间，遇到了和 <code>BFS</code> 相关的问题，才猛然发现，竟然不知道该如何实现。
+</p>
+
+<p>
+所以，在经历了一番学习和尝试后，用这篇博客来总结一下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8fcff87" class="outline-2">
+<h2 id="org8fcff87"><span class="section-number-2">2</span> 广度优先遍历的实现</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+虽然 《数据结构与算法分析 - C 语言描述》 一书在 <b>树</b> 的章节没有介绍 <code>BFS</code> 的实现，
+但在 <b>图</b> 的章节讲解了 <code>BFS</code> 的实现。毕竟， <b>树</b> 是 <b>图</b> 的一种。
+</p>
+
+<p>
+实现 <code>BFS</code> 其实很简单，只需要借助 <b>队列</b> 来辅助完成就可以了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">breadth_first_search</span>(root):
+    <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; font-style: italic;">result</span> = deque(), []
+
+    queue.append(root)
+
+    <span style="font-weight: bold;">while</span> <span style="font-weight: bold;">len</span>(queue) &gt; 0:
+        <span style="font-weight: bold; font-style: italic;">node</span> = queue.popleft()
+
+        result.append(node.val)
+
+        <span style="font-weight: bold;">if</span> node.left:
+                queue.append(node.left)
+
+        <span style="font-weight: bold;">if</span> node.right:
+                queue.append(node.right)
+
+    <span style="font-weight: bold;">return</span> result
+</pre>
+</div>
+
+<p>
+通过队列保存深度较低的节点，队列 <b>先进先出</b> 的特性决定了，先出来的节点绝对是深度较低的，
+而后放入的节点会放在队列尾部，也就是说，深度越深，出来的越晚。
+</p>
+
+<p>
+可以通过这张维基百科上的动图直观的看到树的遍历过程：
+</p>
+
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif" alt="Animated_BFS.gif">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5abb77" class="outline-2">
+<h2 id="orge5abb77"><span class="section-number-2">3</span> 将树保存到文件</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+这是为什么我会想到用 <code>BFS</code> 的原因，最开始只是需要将 <b>二叉树</b> 保存到文件，
+但是 <b>二叉树</b> 可以转换为 <b>数组</b>, 保存起来也不难。
+</p>
+
+<p>
+但是后来，碰到了这样的一棵树（操作系统实验需要）：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span> {
+  <span style="font-weight: bold; text-decoration: underline;">char</span> <span style="font-weight: bold; font-style: italic;">fname</span>[_MAX_NAME_LENGTH];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#21517;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fmode</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#27169;&#24335;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ftype</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#31867;&#22411;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">faddr</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fsize</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#22823;&#23567;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fparent</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#29238;&#30446;&#24405;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fsibling</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20804;&#24351;&#25991;&#20214;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fchild</span>;    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;</span>
+} <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>;
+</pre>
+</div>
+
+<p>
+我需要将这样一棵树保存到文件，然后就懵逼了。我可以用深度优先遍历的方式把它保存到文件，
+但是没法用深度优先的方法把它从文件中复原回来啊！
+</p>
+
+<p>
+一个直接的想法是 <code>XML</code>, 但是 <code>C</code> 的 <code>XML</code> 实在是没有接触过，用到外部链接库，编译链接也是一个问题。
+</p>
+
+<p>
+然后，就想到了 <b>广度优先</b>, 给这个树添加一个字段，保存必要的信息 - <b>子节点的数量</b>:
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span> {
+  <span style="font-weight: bold; text-decoration: underline;">char</span> <span style="font-weight: bold; font-style: italic;">fname</span>[_MAX_NAME_LENGTH];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#21517;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fmode</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#27169;&#24335;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ftype</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#31867;&#22411;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">faddr</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fsize</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#22823;&#23567;</span>
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fccnt</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;&#25968;&#37327;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fparent</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#29238;&#30446;&#24405;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fsibling</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20804;&#24351;&#25991;&#20214;</span>
+  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fchild</span>;    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;</span>
+} <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>;
+</pre>
+</div>
+
+<p>
+这时，通过广度优先就可以保存和复原这颗树了，当然，还需要创建一个简单的队列：
+</p>
+<ul class="org-ul">
+<li><p>
+<b>简单的队列实现 - 头文件：</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#if</span><span style="font-weight: bold;">n</span><span style="font-weight: bold;">def</span> _QUEUE_H_
+<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">_QUEUE_H_</span>
+
+<span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">Queue</span> {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">head</span>;
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">tail</span>;
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>;
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">count</span>;
+  <span style="font-weight: bold; text-decoration: underline;">void</span>** <span style="font-weight: bold; font-style: italic;">buffer</span>;
+} <span style="font-weight: bold; text-decoration: underline;">Queue</span>;
+
+<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold;">create_queue</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>);
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">enqueue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span>);
+<span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold;">dequeue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>);
+<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">destroy_queue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>);
+
+<span style="font-weight: bold;">#endif</span>  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">_QUEUE_H_</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>简单的队列实现 - 源文件：</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">"queue.h"</span>
+
+<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold;">create_queue</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = (<span style="font-weight: bold; text-decoration: underline;">Queue</span>*)malloc(<span style="font-weight: bold;">sizeof</span>(Queue));
+
+  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  }
+
+  queue-&gt;buffer = (<span style="font-weight: bold; text-decoration: underline;">void</span>**)malloc(<span style="font-weight: bold; text-decoration: underline;">capacity</span> * <span style="font-weight: bold;">sizeof</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>*));
+
+  <span style="font-weight: bold;">if</span> (queue-&gt;buffer == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+    free(queue);
+    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  }
+
+  queue-&gt;head = 0;
+  queue-&gt;tail = 0;
+  queue-&gt;count = 0;
+  queue-&gt;capacity = capacity;
+
+  <span style="font-weight: bold;">return</span> queue;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">enqueue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span>) {
+  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+    <span style="font-weight: bold;">return</span> -1;
+  }
+
+  <span style="font-weight: bold;">if</span> (queue-&gt;count == queue-&gt;capacity) {
+    <span style="font-weight: bold;">return</span> -1;
+  }
+
+  queue-&gt;buffer[queue-&gt;tail] = item;
+  queue-&gt;tail = (queue-&gt;tail + 1) % queue-&gt;capacity;
+  queue-&gt;count++;
+
+  <span style="font-weight: bold;">return</span> 0;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold;">dequeue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>) {
+  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span> || queue-&gt;count == 0) {
+    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  }
+
+  <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span> = queue-&gt;buffer[queue-&gt;head];
+  queue-&gt;head = (queue-&gt;head + 1) % queue-&gt;capacity;
+  queue-&gt;count--;
+
+  <span style="font-weight: bold;">return</span> item;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">destroy_queue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>) {
+  <span style="font-weight: bold;">if</span> (queue != <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+    <span style="font-weight: bold;">if</span> (queue-&gt;buffer != <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+      free(queue-&gt;buffer);
+    }
+    free(queue);
+  }
+}
+</pre>
+</div></li>
+
+<li><p>
+<b>树的保存与还原：</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold;">read_block</span>(<span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">in</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">parent</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">block</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)malloc(<span style="font-weight: bold;">sizeof</span>(FILE_TREE));
+
+  fread(block, <span style="font-weight: bold;">sizeof</span>(FILE_TREE), 1, in);
+
+  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25351;&#38024;&#21464;&#37327;&#25968;&#25454;&#37325;&#32622;&#20026; NULL</span>
+  block-&gt;fparent = parent;
+  block-&gt;fsibling = <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  block-&gt;fchild = <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+
+  <span style="font-weight: bold;">return</span> block;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">write_block</span>(<span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">out</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">block</span>) {
+  <span style="font-weight: bold;">return</span> fwrite(block, <span style="font-weight: bold;">sizeof</span>(FILE_TREE), 1, out);
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">serialization</span>(<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">filename</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">root</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = create_queue(100);
+
+  <span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">out</span> = fopen(filename, <span style="font-style: italic;">"wb"</span>);
+
+  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;&#65292;&#24182;&#23558;&#26681;&#32467;&#28857;&#30340;&#25968;&#25454;&#20889;&#20837;&#25991;&#20214;</span>
+  enqueue(queue, root);
+  write_block(out, root);
+
+  <span style="font-weight: bold;">while</span> (queue-&gt;count &gt; 0) {
+    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">node</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)dequeue(queue);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23558;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#20889;&#20837;&#25991;&#20214;&#65292;&#21516;&#26102;&#23558;&#23376;&#33410;&#28857;&#21152;&#20837;&#38431;&#21015;</span>
+    <span style="font-weight: bold;">for</span> (node = node-&gt;fchild; node != <span style="font-weight: bold; text-decoration: underline;">NULL</span>; node = node-&gt;fsibling) {
+      write_block(out, node);
+      enqueue(queue, node);
+    }
+  }
+
+  fclose(out);
+  destroy_queue(queue);
+
+  <span style="font-weight: bold;">return</span> 0;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold;">deserialization</span>(<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">filename</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = create_queue(100);
+
+  <span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">in</span> = fopen(filename,<span style="font-style: italic;">"rb"</span>);
+
+  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#26681;&#32467;&#28857;&#65292;&#21516;&#26102;&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
+  <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">root</span> = read_block(in, <span style="font-weight: bold; text-decoration: underline;">NULL</span>);
+  enqueue(queue, root);
+
+  <span style="font-weight: bold;">while</span> (queue-&gt;count &gt; 0) {
+    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">parent</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)dequeue(queue);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
+
+    <span style="font-weight: bold;">if</span> (parent-&gt;fccnt == 0) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35813;&#33410;&#28857;&#26080;&#23376;&#33410;&#28857;&#65292;&#36339;&#36807;</span>
+      <span style="font-weight: bold;">continue</span>;
+    }
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#35813;&#33410;&#28857;&#30340;&#31532;&#19968;&#20010;&#23376;&#33410;&#28857;&#65292;&#24182;&#23558;&#35813;&#33410;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
+    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">child</span> = read_block(in, parent);
+    parent-&gt;fchild = child;
+    enqueue(queue, child);
+
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#21097;&#19979;&#30340;&#23376;&#33410;&#28857;&#24182;&#25918;&#20837;&#38431;&#21015;</span>
+    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; parent-&gt;fccnt - 1; ++i) {
+      <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">sibling</span> = read_block(in, parent);
+      child-&gt;fsibling = sibling;
+      child = sibling;
+
+      enqueue(queue, sibling);
+    }
+  }
+
+  destroy_queue(queue);
+  fclose(in);
+
+  <span style="font-weight: bold;">return</span> root;
+}
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org18a85d5" class="outline-2">
+<h2 id="org18a85d5"><span class="section-number-2">4</span> 结语</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这次 <code>BFS</code> 的学习，收获最大的不是学会了 <code>BFS</code> 的实现，而是扩宽了思路。
+</p>
+
+<p>
+之前思考 <code>BFS</code> 的时候死活绕不开 <b>递归</b> 和 <b>表</b>, 然后翻书、查资料后看到了 <b>队列</b>, 瞬间茅塞顿开。
+</p>
+
+<p>
+<b>表、栈、队列、树、图、哈希表等</b> 众多数据结构，有时，换一种数据结构，提高的可能不仅仅是效率。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+#+TITLE:      树的广度优先遍历
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-10-26 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#广度优先遍历的实现][广度优先遍历的实现]]
+- [[#将树保存到文件][将树保存到文件]]
+- [[#结语][结语]]
+
+* 前言
+  在 《数据结构与算法分析 - C 语言描述》 一书中，相当详细的介绍了 *树的深度优先遍历 - DFS*, 
+  而 *树的广度优先遍历 - BFS* 却没有在 *树* 的章节做太多的描述。
+
+  由于没有怎么看 *图* 的章节，也很少遇到需要用到 ~BFS~ 的情况，也就没有在意这一问题。
+
+  直到前一段时间，遇到了和 ~BFS~ 相关的问题，才猛然发现，竟然不知道该如何实现。
+
+  所以，在经历了一番学习和尝试后，用这篇博客来总结一下。
+
+* 广度优先遍历的实现
+  虽然 《数据结构与算法分析 - C 语言描述》 一书在 *树* 的章节没有介绍 ~BFS~ 的实现，
+  但在 *图* 的章节讲解了 ~BFS~ 的实现。毕竟， *树* 是 *图* 的一种。
+
+  实现 ~BFS~ 其实很简单，只需要借助 *队列* 来辅助完成就可以了：
+  #+BEGIN_SRC python
+    def breadth_first_search(root):
+        queue, result = deque(), []
+
+        queue.append(root)
+
+        while len(queue) > 0:
+            node = queue.popleft()
+
+            result.append(node.val)
+
+            if node.left:
+                    queue.append(node.left)
+
+            if node.right:
+                    queue.append(node.right)
+
+        return result
+  #+END_SRC
+
+  通过队列保存深度较低的节点，队列 *先进先出* 的特性决定了，先出来的节点绝对是深度较低的，
+  而后放入的节点会放在队列尾部，也就是说，深度越深，出来的越晚。
+
+  可以通过这张维基百科上的动图直观的看到树的遍历过程：
+  
+  [[https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif]]
+
+* 将树保存到文件
+  这是为什么我会想到用 ~BFS~ 的原因，最开始只是需要将 *二叉树* 保存到文件，
+  但是 *二叉树* 可以转换为 *数组*, 保存起来也不难。
+
+  但是后来，碰到了这样的一棵树（操作系统实验需要）：
+  #+BEGIN_SRC C
+    typedef struct FILE_TREE {
+      char fname[_MAX_NAME_LENGTH];  // 文件名
+      int fmode;  // 文件模式
+      int ftype;  // 文件类型
+      int faddr;  // 文件物理地址
+      int fsize;  // 文件大小
+      struct FILE_TREE* fparent;   // 父目录
+      struct FILE_TREE* fsibling;  // 兄弟文件
+      struct FILE_TREE* fchild;    // 子文件
+    } FILE_TREE;
+  #+END_SRC
+
+  我需要将这样一棵树保存到文件，然后就懵逼了。我可以用深度优先遍历的方式把它保存到文件，
+  但是没法用深度优先的方法把它从文件中复原回来啊！
+  
+  一个直接的想法是 ~XML~, 但是 ~C~ 的 ~XML~ 实在是没有接触过，用到外部链接库，编译链接也是一个问题。
+
+  然后，就想到了 *广度优先*, 给这个树添加一个字段，保存必要的信息 - *子节点的数量*:
+  #+BEGIN_SRC C
+    typedef struct FILE_TREE {
+      char fname[_MAX_NAME_LENGTH];  // 文件名
+      int fmode;  // 文件模式
+      int ftype;  // 文件类型
+      int faddr;  // 文件物理地址
+      int fsize;  // 文件大小
+      int fccnt;  // 子文件数量
+      struct FILE_TREE* fparent;   // 父目录
+      struct FILE_TREE* fsibling;  // 兄弟文件
+      struct FILE_TREE* fchild;    // 子文件
+    } FILE_TREE;
+  #+END_SRC
+  
+  这时，通过广度优先就可以保存和复原这颗树了，当然，还需要创建一个简单的队列：
+  + *简单的队列实现 - 头文件：*
+    #+BEGIN_SRC C
+      #ifndef _QUEUE_H_
+      #define _QUEUE_H_
+
+      typedef struct Queue {
+        int head;
+        int tail;
+        int capacity;
+        int count;
+        void** buffer;
+      } Queue;
+
+      Queue* create_queue(int capacity);
+      int enqueue(Queue* queue, void* item);
+      void* dequeue(Queue* queue);
+      void destroy_queue(Queue* queue);
+
+      #endif  // _QUEUE_H_
+    #+END_SRC
+
+  + *简单的队列实现 - 源文件：*
+    #+BEGIN_SRC C
+      #include <stdlib.h>
+      #include "queue.h"
+
+      Queue* create_queue(int capacity) {
+        Queue* queue = (Queue*)malloc(sizeof(Queue));
+
+        if (queue == NULL) {
+          return NULL;
+        }
+
+        queue->buffer = (void**)malloc(capacity * sizeof(void*));
+
+        if (queue->buffer == NULL) {
+          free(queue);
+          return NULL;
+        }
+
+        queue->head = 0;
+        queue->tail = 0;
+        queue->count = 0;
+        queue->capacity = capacity;
+
+        return queue;
+      }
+
+      int enqueue(Queue* queue, void* item) {
+        if (queue == NULL) {
+          return -1;
+        }
+
+        if (queue->count == queue->capacity) {
+          return -1;
+        }
+
+        queue->buffer[queue->tail] = item;
+        queue->tail = (queue->tail + 1) % queue->capacity;
+        queue->count++;
+
+        return 0;
+      }
+
+      void* dequeue(Queue* queue) {
+        if (queue == NULL || queue->count == 0) {
+          return NULL;
+        }
+
+        void* item = queue->buffer[queue->head];
+        queue->head = (queue->head + 1) % queue->capacity;
+        queue->count--;
+
+        return item;
+      }
+
+      void destroy_queue(Queue* queue) {
+        if (queue != NULL) {
+          if (queue->buffer != NULL) {
+            free(queue->buffer);
+          }
+          free(queue);
+        }
+      }
+    #+END_SRC
+
+  + *树的保存与还原：*
+    #+BEGIN_SRC C
+      FILE_TREE* read_block(FILE* in, FILE_TREE* parent) {
+        FILE_TREE* block = (FILE_TREE*)malloc(sizeof(FILE_TREE));
+
+        fread(block, sizeof(FILE_TREE), 1, in);
+
+        // 指针变量数据重置为 NULL
+        block->fparent = parent;
+        block->fsibling = NULL;
+        block->fchild = NULL;
+
+        return block;
+      }
+
+      int write_block(FILE* out, FILE_TREE* block) {
+        return fwrite(block, sizeof(FILE_TREE), 1, out);
+      }
+
+      int serialization(const char* filename, FILE_TREE* root) {
+        Queue* queue = create_queue(100);
+
+        FILE* out = fopen(filename, "wb");
+
+        // 将根结点放入队列，并将根结点的数据写入文件
+        enqueue(queue, root);
+        write_block(out, root);
+
+        while (queue->count > 0) {
+          FILE_TREE* node = (FILE_TREE*)dequeue(queue);  // 取出队列头部保存的节点
+
+          // 将该节点的子节点写入文件，同时将子节点加入队列
+          for (node = node->fchild; node != NULL; node = node->fsibling) {
+            write_block(out, node);
+            enqueue(queue, node);
+          }
+        }
+
+        fclose(out);
+        destroy_queue(queue);
+
+        return 0;
+      }
+
+      FILE_TREE* deserialization(const char* filename) {
+        Queue* queue = create_queue(100);
+
+        FILE* in = fopen(filename,"rb");
+
+        // 读取根结点，同时将根结点放入队列
+        FILE_TREE* root = read_block(in, NULL);
+        enqueue(queue, root);
+
+        while (queue->count > 0) {
+          FILE_TREE* parent = (FILE_TREE*)dequeue(queue);  // 取出队列头部保存的节点
+
+          if (parent->fccnt == 0) {  // 该节点无子节点，跳过
+            continue;
+          }
+
+          // 读取该节点的第一个子节点，并将该节点放入队列
+          FILE_TREE* child = read_block(in, parent);
+          parent->fchild = child;
+          enqueue(queue, child);
+
+          // 读取剩下的子节点并放入队列
+          for (int i = 0; i < parent->fccnt - 1; ++i) {
+            FILE_TREE* sibling = read_block(in, parent);
+            child->fsibling = sibling;
+            child = sibling;
+
+            enqueue(queue, sibling);
+          }
+        }
+
+        destroy_queue(queue);
+        fclose(in);
+
+        return root;
+      }
+    #+END_SRC
+
+* 结语
+  这次 ~BFS~ 的学习，收获最大的不是学会了 ~BFS~ 的实现，而是扩宽了思路。
+
+  之前思考 ~BFS~ 的时候死活绕不开 *递归* 和 *表*, 然后翻书、查资料后看到了 *队列*, 瞬间茅塞顿开。
+
+  *表、栈、队列、树、图、哈希表等* 众多数据结构，有时，换一种数据结构，提高的可能不仅仅是效率。
+  
