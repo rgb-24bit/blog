@@ -1,0 +1,119 @@
+#+TITLE:      I/O 重定向
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-11-02 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#概念][概念]]
+- [[#系统级实现][系统级实现]]
+- [[#简单的使用][简单的使用]]
+- [[#用户级实现][用户级实现]]
+- [[#结语][结语]]
+
+* 前言
+  *I/O 重定向* 算是一个灰常简单的概念，《深入理解计算机系统》这本书中对它的讲解不到一页，
+  但依然很清楚的说明了 *I/O 重定向* 是怎么一回事。
+
+  当时感觉很简单，也就没在意，今天感觉可以来尝试一下，毕竟，这个东东看起来还是很有趣的。
+
+* 概念
+  通常情况下，操作系统内部使用小的非负整数 *文件描述符* 来标识打开的文件，一切对文件的操作都是通过 *文件描述符* 来完成的。
+
+  一般来说，两个不同的 *文件描述符* 标识的是不同的文件，比如：描述符 ~0~ 标识 *标准输入*, ~1~ 标识 *标准输出*.
+
+  而 *I/O 重定向* 操作，就是将一个 *文件描述符* 标识的文件替换为另一个文件。
+
+* 系统级实现
+  很明显，重定向的操作需要修改操作系统内部的数据结构，而作为操作系统使用者的我们，是无法直接操作操作系统内部的数据结构的。
+
+  要实现真正意义上的 *I/O 重定向*, 就只能通过 *系统调用* 来完成。
+
+  在 ~Unix/Linux~ 系统中，可以通过如下函数完成 *I/O 重定向操作*:
+  #+BEGIN_SRC C
+    int dup2(int oldfd, int newfd);
+  #+END_SRC
+
+  这个函数将 ~newfd~ 标识的文件替换为 ~oldfd~ 标示的文件，操作成功后，描述符 ~oldfd~ 和 ~newfd~ 两个描述符标识的文件就是同一个文件了。
+
+  如果 ~newfd~ 标识的文件未关闭， ~dup2~ 还会贴心的帮你把它关上。
+  
+  可以简单看一下这个函数的实现：
+  #+BEGIN_SRC C
+    static int dupfd(unsigned int fd, unsigned int arg)
+    {
+      ...
+      (current->filp[arg] = current->filp[fd])->f_count++;
+      return arg;
+    }
+
+    int sys_dup2(unsigned int oldfd, unsigned int newfd)
+    {
+      sys_close(newfd);
+      return dupfd(oldfd,newfd);
+    }
+  #+END_SRC
+
+  可以看到，调用 ~dup2~ 后会首先关闭 ~newfd~ 标识的文件，然后在 ~dupfd~ 函数中：
+  #+BEGIN_SRC C
+    (current->filp[arg] = current->filp[fd])->f_count++;
+  #+END_SRC
+
+  将 ~flip[arg]~ 标识的文件替换为 ~flip[fd]~ 标识的文件。
+
+  完整的源码链接： [[https://github.com/yuanxinyu/Linux-0.11/blob/c2e45a7f55ba61029be3b74cd7e72f23bbd068d6/fs/fcntl.c#L18][Linux-0.11/fs/fcntl.c#L18]].
+
+* 简单的使用
+  在 ~Shell~ 中，通过管道命令 ~|~ 可以将上一个命令的 *标准输出* 重定向为下一个命令的 *标准输入*.
+
+  相应的，我们可以在程序内部重定向 *标准输出* 到 *文件*:
+  #+BEGIN_SRC C
+    #include <stdio.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+    #include <unistd.h>
+
+    int main(int argc, char* argv[]) {
+      char input[100] = {0};
+
+      int fd = open("out.txt", O_RDWR|O_CREAT, S_IRUSR|S_IWUSR);
+      dup2(fd, 1);
+
+      fgets(input, 100, stdin);  // 从标准输入获取输入
+      printf("%s", input);  // 输出到标准输出
+
+      close(fd);
+      return 0;
+    }
+  #+END_SRC
+
+  上述代码将得到的部分标准输入重定向到文件 ~out.txt~, 当然，这并没有什么意义，
+  毕竟，完全可以用 ~>~ 操作符代替。
+
+* 用户级实现
+  对一般用户来说，重定向的具体实现是怎样的没有多大意义，只要结果正确就行了。
+
+  系统级的实现需要用到 *文件描述符* 这个非负整数值，而高级语言的标准输入输出库中的文件对象通常都不是这个整数值。
+
+  因此，与其使用 ~dup2~ 这种 *系统级* 的 *I/O 重定向* 实现，不如简单一点，直接替换 *文件对象* 的引用就行了。
+
+  #+BEGIN_SRC python
+    >>> import sys
+    >>> sys.stdout = open('out.txt', 'w')
+    >>> sys.stdout.fileno()
+
+    # $  cat out.txt
+    # 3
+  #+END_SRC
+
+  在 ~Python~ 中，像上面那样，替换了 ~stdout~ 后，虽然不是将描述符 ~1~ 标识的文件替换为 ~out.txt~, 但执行结果上，
+  效果是一样的。
+
+  *Tips*: ~C~ 语言中可以用 ~freopen()~ 替换标准 ~I/O~ 流。
+
+* 结语
+  对系统底层的了解越多，就越能感受到现在的高级语言为我们提供了多少便利。
+  
+  前人栽树后人乘凉啊！
+

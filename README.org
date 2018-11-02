@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 11-02 -- [[file:2018/io-redirect.org][I/O 重定向]] ::
   - 10-26 -- [[file:2018/tree-bfs.org][树的广度优先遍历]] ::
   - 10-21 -- [[file:2018/python-multi-threaded-usage-scenario.org][Python 多线程使用场景]] ::
   - 10-12 -- [[file:2018/csharp-image-process.org][C# 图像处理的三种方式]] ::
