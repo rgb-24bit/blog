@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 11-09 -- [[file:2018/python-logging.org][Python 日志模块]] ::
   - 11-02 -- [[file:2018/io-redirect.org][I/O 重定向]] ::
   - 10-26 -- [[file:2018/tree-bfs.org][树的广度优先遍历]] ::
   - 10-21 -- [[file:2018/python-multi-threaded-usage-scenario.org][Python 多线程使用场景]] ::

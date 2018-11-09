@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-11-09 周五 17:41 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 日志模块</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Python 日志模块</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9ed55c4">1. 前言</a></li>
+<li><a href="#org6482569">2. 简单的使用</a></li>
+<li><a href="#org976dcc0">3. 配置日志消息的格式</a></li>
+<li><a href="#orgc7b6ee0">4. 同时输出到终端和文件</a></li>
+<li><a href="#orgb9b3878">5. 日志配置</a></li>
+<li><a href="#orgfcacde6">6. 结语</a></li>
+<li><a href="#org4c30b48">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9ed55c4" class="outline-2">
+<h2 id="org9ed55c4"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟踪为耻</b>.
+</p>
+
+<p>
+<code>Python</code> 中的内置模块 <code>logging</code> 就是用来打印日志的，然而，使用这个模块的过程总是伴随着各种的不满意，
+折腾过来折腾过去，算是勉强达到了满意的效果。
+</p>
+
+<p>
+因此，用这篇博客总结一下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6482569" class="outline-2">
+<h2 id="org6482569"><span class="section-number-2">2</span> 简单的使用</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>logging</code> 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+logging.debug(<span style="font-style: italic;">'This is a debug message'</span>)
+logging.info(<span style="font-style: italic;">'This is an info message'</span>)
+logging.warning(<span style="font-style: italic;">'This is a warning message'</span>)
+logging.error(<span style="font-style: italic;">'This is an error message'</span>)
+logging.critical(<span style="font-style: italic;">'This is a critical message'</span>)
+</pre>
+</div>
+
+<p>
+上面这段代码的执行输出为：
+</p>
+<pre class="example">
+WARNING:root:This is a warning message
+ERROR:root:This is an error message
+CRITICAL:root:This is a critical message
+</pre>
+
+<p>
+调用了五个函数但只有三个输出的原因是默认的日志记录器 <code>root</code> 根据设置好的 <b>输出级别</b> 进行日志输出，
+而默认的输出级别为 <code>WARNING</code>.
+</p>
+
+<p>
+输出级别由低到高为：
+</p>
+<pre class="example">
+DEBUG --&gt; INFO --&gt; WARNING --&gt; ERROR --&gt; CRITICAL
+</pre>
+
+<p>
+可以通过 <code>logging.basicConfig()</code> 函数来配置默认日志记录器 <code>root</code> 的相关属性。
+</p>
+
+<blockquote>
+<p>
+You will notice that the logging module breaks PEP8 styleguide and uses camelCase naming conventions.
+This is because it was adopted from Log4j, a logging utility in Java.
+It is a known issue in the package but by the time it was decided to add it to the standard library,
+it had already been adopted by users and changing it to meet PEP8 requirements would cause backwards compatibility issues.
+(<a href="https://wiki.python.org/moin/LoggingPackage">Source</a>)
+</p>
+</blockquote>
+
+<p>
+该函数常用的参数有：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">参数</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>level</code></td>
+<td class="org-left">默认日志记录器的输出级别</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>filename</code></td>
+<td class="org-left">用于指定日志的输出文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>filemode</code></td>
+<td class="org-left">指定以何种方式打开日志文件，默认为 <code>a</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>format</code></td>
+<td class="org-left">用于日志消息的格式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+完整的参数文档： <a href="https://docs.python.org/3/library/logging.html#logging.basicConfig">logging.basicConfig(**kwargs)</a>.
+</p>
+
+<p>
+一个简单的例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+logging.basicConfig(level=logging.DEBUG, <span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
+logging.debug(<span style="font-style: italic;">'This will get logged'</span>)
+</pre>
+</div>
+
+<p>
+输出结果为：
+</p>
+<pre class="example">
+root - DEBUG - This will get logged
+</pre>
+
+<p>
+到目前为止，日志模块的使用还算顺畅，但奈何，很多时候，这些基本功能并不足以满足所有的需求。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org976dcc0" class="outline-2">
+<h2 id="org976dcc0"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
+</p>
+
+<p>
+比如上面的例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">logging.basicConfig(level=logging.DEBUG, <span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
+</pre>
+</div>
+
+<p>
+得到的输出比默认的配置清楚多了， <code>format</code> 字符串中所有可用的属性可以在这里找到： <a href="https://docs.python.org/3/library/logging.html#logrecord-attributes">LogRecord attributes</a>.
+</p>
+
+<p>
+值得注意的是，属性 <code>%(asctime)s</code> 的输出格式会受到 <code>datefmt</code> 的影响：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+logging.basicConfig(<span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(asctime)s - %(message)s'</span>, datefmt=<span style="font-style: italic;">'%d-%b-%y %H:%M:%S'</span>)
+logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">output</span>
+12-Jul-18 20:53:19 - Admin logged out
+</pre>
+</div>
+
+<p>
+<code>datefmt</code> 的配置指南： <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">strftime() and strptime() Behavior</a>.
+</p>
+
+<p>
+到了这里，事情逐渐复杂起来，但是只要积累一些常用的格式配置，问题也不大，更大的问题在后面。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc7b6ee0" class="outline-2">
+<h2 id="orgc7b6ee0"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
+</p>
+
+<p>
+但是，函数 <code>logging.basicConfig()</code> 是不允许同时设置参数 stream(终端) 和 filename(文件) 的，这意味着，
+如果要想让日志同时输出到终端和文件，就不得不使用一些更底层的接口。
+</p>
+
+<p>
+曾经，我就在这一步倒下，前段时间，又从新爬了起来。
+</p>
+
+<p>
+简单来说，你需要使用的主要是三个类：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Logger</code></td>
+<td class="org-left">该类型的对象用于直接在应用程序代码中调用函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Handler</code></td>
+<td class="org-left">该类型的对象将日志发送到目标输出，常用的有 <code>StreamHandler</code> 和 <code>FileHandler</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Formatter</code></td>
+<td class="org-left">该类型的对象用于指定日志的输出格式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+可以通过源码直观的了解这三个类之间的关系：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Logger</span>(Filterer):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, name, level=NOTSET):
+        ...
+        <span style="font-weight: bold;">self</span>.handlers = []
+        ...
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Handler</span>(Filterer):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, level=NOTSET):
+        ...
+        <span style="font-weight: bold;">self</span>.formatter = <span style="font-weight: bold; text-decoration: underline;">None</span>
+        ...
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Formatter</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, datefmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, style=<span style="font-style: italic;">'%'</span>, validate=<span style="font-weight: bold; text-decoration: underline;">True</span>):
+        ...
+</pre>
+</div>
+
+<p>
+由此可以得到创建一个 <code>Logger</code> 的一般流程为：
+</p>
+<ol class="org-ol">
+<li>创建一个 <code>Logger</code> 对象</li>
+<li>创建 <code>Handler</code> 对象</li>
+<li>创建 <code>Formatter</code> 对象</li>
+<li>设置 <code>Handler</code> 对象的 <code>formatter</code></li>
+<li>将 <code>Handler</code> 添加到 <code>Logger</code></li>
+</ol>
+
+<p>
+特别的， <code>Logger</code> 对象通常用 <code>logging.getLogger(name)</code> 方法来获取创建：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(<span style="font-style: italic;">'example_logger'</span>)
+logger.warning(<span style="font-style: italic;">'This is a warning'</span>)
+</pre>
+</div>
+
+<p>
+假如你希望每个模块单独使用一个 <code>Logger</code>, 那么你可以使用 <code>__name__</code> 作为 <code>name</code> 参数。
+</p>
+
+<p>
+对于 <code>Handler</code> 和 <code>Formatter</code>, 不同的 <code>Handler</code> 需要的参数不一样，而 <code>Formatter</code> 不存在子类，因此只有一种形式：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StreamHandler</span>(Handler):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, stream=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+        ...
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">FileHandler</span>(StreamHandler):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, filename, mode=<span style="font-style: italic;">'a'</span>, encoding=<span style="font-weight: bold; text-decoration: underline;">None</span>, delay=<span style="font-weight: bold; text-decoration: underline;">False</span>):
+        ...
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Formatter</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, datefmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, style=<span style="font-style: italic;">'%'</span>, validate=<span style="font-weight: bold; text-decoration: underline;">True</span>):
+        ...
+</pre>
+</div>
+
+<p>
+这些参数的含义，其实和 <code>logging.basicConfig()</code> 函数中的参数大致相同，而 <code>basicConfig()</code> 还提供了一个参数 <code>handlers</code> 
+允许你同时为默认日志记录器 <code>root</code> 设置多个 <code>handlers</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create a custom logger</span>
+<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(<span style="font-weight: bold;">__name__</span>)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create handlers</span>
+<span style="font-weight: bold; font-style: italic;">c_handler</span> = logging.StreamHandler()  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">default is sys.stderr</span>
+<span style="font-weight: bold; font-style: italic;">f_handler</span> = logging.FileHandler(<span style="font-style: italic;">'file.log'</span>)
+c_handler.setLevel(logging.WARNING)
+f_handler.setLevel(logging.ERROR)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create formatters and add it to handlers</span>
+<span style="font-weight: bold; font-style: italic;">c_format</span> = logging.Formatter(<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
+<span style="font-weight: bold; font-style: italic;">f_format</span> = logging.Formatter(<span style="font-style: italic;">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)
+c_handler.setFormatter(c_format)
+f_handler.setFormatter(f_format)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Add handlers to the logger</span>
+logger.addHandler(c_handler)
+logger.addHandler(f_handler)
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Add handlers to the root</span>
+logging.basicConfig(handlers=[c_handler, f_handler])
+</pre>
+</div>
+
+<p>
+虽然到这里已经解决了如何将日志消息同时输出到终端和文件的问题，但是，随之而来的还有其他的问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb9b3878" class="outline-2">
+<h2 id="orgb9b3878"><span class="section-number-2">5</span> 日志配置</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+可以看到，创建和配置 <code>Logger</code> 的过程较为繁琐，因此 <code>Python</code> 为我们提供了 <code>logging.config</code> 模块来简化创建和配置 <code>Logger</code> 的过程。
+</p>
+
+<p>
+<code>logging.config</code> 也是一个较为复杂的模块，这里就不多说了，想要了解可以查阅以下链接：
+</p>
+<ul class="org-ul">
+<li>完整文档 - <a href="https://docs.python.org/3.7/library/logging.config.html">logging.config — Logging configuration</a></li>
+<li>文件配置格式 - <a href="https://docs.python.org/3.7/library/logging.config.html#logging-config-fileformat">Configuration file format</a></li>
+<li>字典配置格式 - <a href="https://docs.python.org/3.7/library/logging.config.html#logging-config-dictschema">Dictionary Schema Details</a></li>
+</ul>
+
+<p>
+虽然我们可以通过 <code>logging.config</code> 模块简化创建和配置 <code>Logger</code> 的过程，但需要考虑的一个问题是， <code>Logger</code> 的获取和使用的方式。
+</p>
+
+<p>
+诚然，我们可以通过 <code>logging.getLogger(name)</code> 的方式获取创建和配置好的 <code>Logger</code>, 但是，在此之前依然存在一个加载配置的过程。
+</p>
+
+<p>
+我不想在每个模块的开头都加载一次配置，因此，一个直接的想法是，将配置加载的过程放到一个单独的模块中，比如 <code>__init__.py</code>.
+</p>
+
+<p>
+但只是这样还是不够，这意味着你还是需要在每个模块的开头做这样的事：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(...)
+</pre>
+</div>
+
+<p>
+也许还可以把 <code>logger</code> 的获取也放到 <code>__init__.py</code> 里面去，这样就只需要：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">from</span> pkg <span style="font-weight: bold;">import</span> logger
+</pre>
+</div>
+
+<p>
+然而，我不是很喜欢这种方式，我更喜欢 <code>logging</code> 模块那种原生的使用方式：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+
+logging.debug(...)
+</pre>
+</div>
+
+<p>
+当然，这可以通过配置默认的日志记录器 <code>root</code> 完成，然而，强迫症的我还是觉得不够完美。
+</p>
+
+<p>
+因此，我选择了和 <code>logging</code> 类似的方式，用一个模块封装一个 <code>logger</code>, 该模块就叫做 <code>logger</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<span style="font-weight: bold;">import</span> logging.config
+
+
+...
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Load config</span>
+...
+
+
+<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(...)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">critical</span>(msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'CRITICAL' on the root logger."""</span>
+    logger.critical(msg, *args, **kwargs)
+
+
+<span style="font-weight: bold; font-style: italic;">fatal</span> = critical
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">error</span>(msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'ERROR' on the root logger. """</span>
+    logger.error(msg, *args, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">exception</span>(msg, *args, exc_info=<span style="font-weight: bold; text-decoration: underline;">True</span>, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'ERROR' on the root logger, with exception</span>
+<span style="font-style: italic;">    information.</span>
+<span style="font-style: italic;">    """</span>
+    error(msg, *args, exc_info=exc_info, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">warning</span>(msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'WARNING' on the root logger."""</span>
+    logger.warning(msg, *args, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">info</span>(msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'INFO' on the root logger."""</span>
+    logger.info(msg, *args, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">debug</span>(msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log a message with severity 'DEBUG' on the root logger."""</span>
+    logger.debug(msg, *args, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">log</span>(level, msg, *args, **kwargs):
+    <span style="font-style: italic;">"""Log 'msg % args' with the integer severity 'level' on the root logger."""</span>
+    logger.log(level, msg, *args, **kwargs)
+
+
+<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">disable</span>(level=logging.CRITICAL):
+    <span style="font-style: italic;">"""Disable all logging calls of severity 'level' and below."""</span>
+    <span style="font-weight: bold; font-style: italic;">logger.manager.disable</span> = level
+    logger.manager._clear_cache()
+</pre>
+</div>
+
+<p>
+如此，便可以这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">import</span> logger
+
+logger.info(...)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfcacde6" class="outline-2">
+<h2 id="orgfcacde6"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+总感觉日志配置部分做了一些多于的事情 QAQ
+</p>
+
+<p>
+我也不知道这样做对不对，不过，自己心里舒坦了是最重要的 @_@
+</p>
+
+<p>
+另外， <code>logging.config</code> 模块的使用挺麻烦的，建议直接找一个模板抄抄抄。
+</p>
+
+<p>
+Over !
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4c30b48" class="outline-2">
+<h2 id="org4c30b48"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="https://realpython.com/python-logging/">Logging in Python - Real Python</a></li>
+<li><a href="https://github.com/python/cpython/tree/master/Lib/logging">logging module source code - Github</a></li>
+<li><a href="https://stackoverflow.com/questions/50302365/logging-module-sample-code-repeats-messages-n-times-each-call">Logging module sample code repeats messages n-times-each call - StackOverflow</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

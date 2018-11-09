@@ -1,0 +1,330 @@
+#+TITLE:      Python 日志模块
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-11-09 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#简单的使用][简单的使用]]
+- [[#配置日志消息的格式][配置日志消息的格式]]
+- [[#同时输出到终端和文件][同时输出到终端和文件]]
+- [[#日志配置][日志配置]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  Python 八荣八耻中的一句就是： *以打印日志为荣 , 以单步跟踪为耻*.
+
+  ~Python~ 中的内置模块 ~logging~ 就是用来打印日志的，然而，使用这个模块的过程总是伴随着各种的不满意，
+  折腾过来折腾过去，算是勉强达到了满意的效果。
+
+  因此，用这篇博客总结一下。
+
+* 简单的使用
+  ~logging~ 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
+  #+BEGIN_SRC python
+    import logging
+
+    logging.debug('This is a debug message')
+    logging.info('This is an info message')
+    logging.warning('This is a warning message')
+    logging.error('This is an error message')
+    logging.critical('This is a critical message')
+  #+END_SRC
+
+  上面这段代码的执行输出为：
+  #+BEGIN_EXAMPLE
+    WARNING:root:This is a warning message
+    ERROR:root:This is an error message
+    CRITICAL:root:This is a critical message
+  #+END_EXAMPLE
+
+  调用了五个函数但只有三个输出的原因是默认的日志记录器 ~root~ 根据设置好的 *输出级别* 进行日志输出，
+  而默认的输出级别为 ~WARNING~.
+
+  输出级别由低到高为：
+  #+BEGIN_EXAMPLE
+    DEBUG --> INFO --> WARNING --> ERROR --> CRITICAL
+  #+END_EXAMPLE
+
+  可以通过 ~logging.basicConfig()~ 函数来配置默认日志记录器 ~root~ 的相关属性。
+
+  #+BEGIN_QUOTE
+  You will notice that the logging module breaks PEP8 styleguide and uses camelCase naming conventions.
+  This is because it was adopted from Log4j, a logging utility in Java.
+  It is a known issue in the package but by the time it was decided to add it to the standard library,
+  it had already been adopted by users and changing it to meet PEP8 requirements would cause backwards compatibility issues.
+  ([[https://wiki.python.org/moin/LoggingPackage][Source]])
+  #+END_QUOTE
+
+  该函数常用的参数有：
+  |----------+--------------------------------------|
+  | 参数     | 作用                                 |
+  |----------+--------------------------------------|
+  | ~level~    | 默认日志记录器的输出级别             |
+  | ~filename~ | 用于指定日志的输出文件               |
+  | ~filemode~ | 指定以何种方式打开日志文件，默认为 ~a~ |
+  | ~format~   | 用于日志消息的格式                   |
+  |----------+--------------------------------------|
+
+  完整的参数文档： [[https://docs.python.org/3/library/logging.html#logging.basicConfig][logging.basicConfig(**kwargs)]].
+
+  一个简单的例子：
+  #+BEGIN_SRC python
+    import logging
+
+    logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(levelname)s - %(message)s')
+    logging.debug('This will get logged')
+  #+END_SRC
+
+  输出结果为：
+  #+BEGIN_EXAMPLE
+    root - DEBUG - This will get logged
+  #+END_EXAMPLE
+
+  到目前为止，日志模块的使用还算顺畅，但奈何，很多时候，这些基本功能并不足以满足所有的需求。
+  
+* 配置日志消息的格式
+  日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
+
+  比如上面的例子：
+  #+BEGIN_SRC python
+    logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(levelname)s - %(message)s')
+  #+END_SRC
+
+  得到的输出比默认的配置清楚多了， ~format~ 字符串中所有可用的属性可以在这里找到： [[https://docs.python.org/3/library/logging.html#logrecord-attributes][LogRecord attributes]].
+
+  值得注意的是，属性 ~%(asctime)s~ 的输出格式会受到 ~datefmt~ 的影响：
+  #+BEGIN_SRC python
+    import logging
+
+    logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.warning('Admin logged out')
+
+    # output
+    12-Jul-18 20:53:19 - Admin logged out
+  #+END_SRC
+
+  ~datefmt~ 的配置指南： [[https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior][strftime() and strptime() Behavior]].
+
+  到了这里，事情逐渐复杂起来，但是只要积累一些常用的格式配置，问题也不大，更大的问题在后面。
+
+* 同时输出到终端和文件
+  一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
+
+  但是，函数 ~logging.basicConfig()~ 是不允许同时设置参数 stream(终端) 和 filename(文件) 的，这意味着，
+  如果要想让日志同时输出到终端和文件，就不得不使用一些更底层的接口。
+
+  曾经，我就在这一步倒下，前段时间，又从新爬了起来。
+
+  简单来说，你需要使用的主要是三个类：
+  |-----------+-------------------------------------------------------------------------|
+  | 类        | 作用                                                                    |
+  |-----------+-------------------------------------------------------------------------|
+  | ~Logger~    | 该类型的对象用于直接在应用程序代码中调用函数                            |
+  | ~Handler~   | 该类型的对象将日志发送到目标输出，常用的有 ~StreamHandler~ 和 ~FileHandler~ |
+  | ~Formatter~ | 该类型的对象用于指定日志的输出格式                                      |
+  |-----------+-------------------------------------------------------------------------|
+
+  可以通过源码直观的了解这三个类之间的关系：
+  #+BEGIN_SRC python
+    class Logger(Filterer):
+        def __init__(self, name, level=NOTSET):
+            ...
+            self.handlers = []
+            ...
+
+
+    class Handler(Filterer):
+        def __init__(self, level=NOTSET):
+            ...
+            self.formatter = None
+            ...
+
+
+    class Formatter(object):
+        def __init__(self, fmt=None, datefmt=None, style='%', validate=True):
+            ...
+  #+END_SRC
+
+  由此可以得到创建一个 ~Logger~ 的一般流程为：
+  1. 创建一个 ~Logger~ 对象
+  2. 创建 ~Handler~ 对象
+  3. 创建 ~Formatter~ 对象
+  4. 设置 ~Handler~ 对象的 ~formatter~
+  5. 将 ~Handler~ 添加到 ~Logger~
+
+  特别的， ~Logger~ 对象通常用 ~logging.getLogger(name)~ 方法来获取创建：
+  #+BEGIN_SRC python
+    import logging
+
+    logger = logging.getLogger('example_logger')
+    logger.warning('This is a warning')
+  #+END_SRC
+
+  假如你希望每个模块单独使用一个 ~Logger~, 那么你可以使用 ~__name__~ 作为 ~name~ 参数。
+
+  对于 ~Handler~ 和 ~Formatter~, 不同的 ~Handler~ 需要的参数不一样，而 ~Formatter~ 不存在子类，因此只有一种形式：
+  #+BEGIN_SRC python
+    class StreamHandler(Handler):
+        def __init__(self, stream=None):
+            ...
+
+
+    class FileHandler(StreamHandler):
+        def __init__(self, filename, mode='a', encoding=None, delay=False):
+            ...
+
+        
+    class Formatter(object):
+        def __init__(self, fmt=None, datefmt=None, style='%', validate=True):
+            ...
+  #+END_SRC
+  
+  这些参数的含义，其实和 ~logging.basicConfig()~ 函数中的参数大致相同，而 ~basicConfig()~ 还提供了一个参数 ~handlers~ 
+  允许你同时为默认日志记录器 ~root~ 设置多个 ~handlers~.
+
+  #+BEGIN_SRC python
+    import logging
+
+    # Create a custom logger
+    logger = logging.getLogger(__name__)
+
+    # Create handlers
+    c_handler = logging.StreamHandler()  # default is sys.stderr
+    f_handler = logging.FileHandler('file.log')
+    c_handler.setLevel(logging.WARNING)
+    f_handler.setLevel(logging.ERROR)
+
+    # Create formatters and add it to handlers
+    c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+    f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    c_handler.setFormatter(c_format)
+    f_handler.setFormatter(f_format)
+
+    # Add handlers to the logger
+    logger.addHandler(c_handler)
+    logger.addHandler(f_handler)
+
+    # Add handlers to the root
+    logging.basicConfig(handlers=[c_handler, f_handler])
+  #+END_SRC
+
+  虽然到这里已经解决了如何将日志消息同时输出到终端和文件的问题，但是，随之而来的还有其他的问题。
+  
+* 日志配置
+  可以看到，创建和配置 ~Logger~ 的过程较为繁琐，因此 ~Python~ 为我们提供了 ~logging.config~ 模块来简化创建和配置 ~Logger~ 的过程。
+
+  ~logging.config~ 也是一个较为复杂的模块，这里就不多说了，想要了解可以查阅以下链接：
+  + 完整文档 - [[https://docs.python.org/3.7/library/logging.config.html][logging.config — Logging configuration]]
+  + 文件配置格式 - [[https://docs.python.org/3.7/library/logging.config.html#logging-config-fileformat][Configuration file format]]
+  + 字典配置格式 - [[https://docs.python.org/3.7/library/logging.config.html#logging-config-dictschema][Dictionary Schema Details]]
+  
+  虽然我们可以通过 ~logging.config~ 模块简化创建和配置 ~Logger~ 的过程，但需要考虑的一个问题是， ~Logger~ 的获取和使用的方式。
+
+  诚然，我们可以通过 ~logging.getLogger(name)~ 的方式获取创建和配置好的 ~Logger~, 但是，在此之前依然存在一个加载配置的过程。
+
+  我不想在每个模块的开头都加载一次配置，因此，一个直接的想法是，将配置加载的过程放到一个单独的模块中，比如 ~__init__.py~.
+
+  但只是这样还是不够，这意味着你还是需要在每个模块的开头做这样的事：
+  #+BEGIN_SRC python
+    import logging
+
+    logger = logging.getLogger(...)
+  #+END_SRC
+
+  也许还可以把 ~logger~ 的获取也放到 ~__init__.py~ 里面去，这样就只需要：
+  #+BEGIN_SRC python
+    from pkg import logger
+  #+END_SRC
+
+  然而，我不是很喜欢这种方式，我更喜欢 ~logging~ 模块那种原生的使用方式：
+  #+BEGIN_SRC python
+    import logging
+
+    logging.debug(...)
+  #+END_SRC
+
+  当然，这可以通过配置默认的日志记录器 ~root~ 完成，然而，强迫症的我还是觉得不够完美。
+
+  因此，我选择了和 ~logging~ 类似的方式，用一个模块封装一个 ~logger~, 该模块就叫做 ~logger~:
+  #+BEGIN_SRC python
+    import logging
+    import logging.config
+
+
+    ...
+    # Load config
+    ...
+
+
+    logger = logging.getLogger(...)
+
+
+    def critical(msg, *args, **kwargs):
+        """Log a message with severity 'CRITICAL' on the root logger."""
+        logger.critical(msg, *args, **kwargs)
+
+
+    fatal = critical
+
+
+    def error(msg, *args, **kwargs):
+        """Log a message with severity 'ERROR' on the root logger. """
+        logger.error(msg, *args, **kwargs)
+
+
+    def exception(msg, *args, exc_info=True, **kwargs):
+        """Log a message with severity 'ERROR' on the root logger, with exception
+        information.
+        """
+        error(msg, *args, exc_info=exc_info, **kwargs)
+
+
+    def warning(msg, *args, **kwargs):
+        """Log a message with severity 'WARNING' on the root logger."""
+        logger.warning(msg, *args, **kwargs)
+
+
+    def info(msg, *args, **kwargs):
+        """Log a message with severity 'INFO' on the root logger."""
+        logger.info(msg, *args, **kwargs)
+
+
+    def debug(msg, *args, **kwargs):
+        """Log a message with severity 'DEBUG' on the root logger."""
+        logger.debug(msg, *args, **kwargs)
+
+
+    def log(level, msg, *args, **kwargs):
+        """Log 'msg % args' with the integer severity 'level' on the root logger."""
+        logger.log(level, msg, *args, **kwargs)
+
+
+    def disable(level=logging.CRITICAL):
+        """Disable all logging calls of severity 'level' and below."""
+        logger.manager.disable = level
+        logger.manager._clear_cache()
+  #+END_SRC
+
+  如此，便可以这样：
+  #+BEGIN_SRC python
+    import logger
+
+    logger.info(...)
+  #+END_SRC
+
+* 结语
+  总感觉日志配置部分做了一些多于的事情 QAQ
+
+  我也不知道这样做对不对，不过，自己心里舒坦了是最重要的 @_@
+
+  另外， ~logging.config~ 模块的使用挺麻烦的，建议直接找一个模板抄抄抄。
+
+  Over !
+
+* 参考链接
+  + [[https://realpython.com/python-logging/][Logging in Python - Real Python]]
+  + [[https://github.com/python/cpython/tree/master/Lib/logging][logging module source code - Github]]
+  + [[https://stackoverflow.com/questions/50302365/logging-module-sample-code-repeats-messages-n-times-each-call][Logging module sample code repeats messages n-times-each call - StackOverflow]]
+
