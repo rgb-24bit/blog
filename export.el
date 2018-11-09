@@ -38,8 +38,8 @@
 
 (defun export-readme-to-index ()
   "export README.org as index html."
-  (export-html-by-file-name "README.org")
-  (rename-file "README.html" "index.html" t))
+  (if (file-exists-p "README.html")
+      (rename-file "README.html" "index.html" t)))
 
 (defun read-file-text (file-name)
   "read file content as text."
