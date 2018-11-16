@@ -1,0 +1,240 @@
+#+TITLE:      使用 pickle 序列化 Python 对象
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-11-16 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#pickle-的简单使用][pickle 的简单使用]]
+- [[#可序列化的对象][可序列化的对象]]
+- [[#pickle-和-json][pickle 和 json]]
+- [[#pickle-的使用技巧][pickle 的使用技巧]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  很久以前就接触过和 ~pickle~ 相关的内容了，但是因为存在 ~json~ 的原因，就没有专门去了解学习相关的内容。
+
+  而现在，因为和 *缓存* 相关的原因，使得我来了解学习一下 ~pickle~ 相关的内容。
+
+* pickle 的简单使用
+  ~pickle~ 模块的使用很简单，接口和 ~json~ 差不多，如果有 ~json~ 模块的使用经验，那么 ~pickle~ 模块的上手无疑会简单很多。
+
+  #+BEGIN_SRC python
+    import pickle
+
+    class Example(object):
+        def __init__(self, value):
+            self.value = value
+
+    with open('data.dat', 'wb') as f:
+        pickle.dump(Example(10), f)
+  #+END_SRC
+
+  上面这段代码将一个 ~Python~ 对象序列化为一个字节流，并保存到文件 ~data.dat~. 输出文件中的内容为：
+  #+BEGIN_EXAMPLE
+    b'\x80\x03c__main__\nExample\nq\x00)\x81q\x01}q\x02X\x05\x00\x00\x00valueq\x03K\nsb.'
+  #+END_EXAMPLE
+
+  与之对应的，可以通过 ~pickle.load~ 函数从文件中读取字节流并反序列化还原为 ~Python~ 对象：
+  #+BEGIN_SRC python
+    with open('data.dat', 'rb') as f:
+        obj = pickle.load(f)
+        print('obj.value: ', obj.value)
+  #+END_SRC
+    
+  输出结果为：
+  #+BEGIN_EXAMPLE
+    obj.value: 10
+  #+END_EXAMPLE
+
+  另外，可以通过函数 ~pickle.dumps~ 可以将对象序列化为一个 ~bytes~ 对象，通过 ~pickle.loads~ 将一个 ~bytes~ 对象反序列化还原为 ~Python~ 对象：
+  #+BEGIN_SRC python
+    byte_data = pickle.dumps(Example(233))
+    print('byte: ', byte_data)
+
+    obj = pickle.loads(byte_data)
+    print('obj.value: ', obj.value)
+  #+END_SRC
+
+  输出结果如下：
+  #+BEGIN_EXAMPLE
+    byte:  b'\x80\x03c__main__\nExample\nq\x00)\x81q\x01}q\x02X\x05\x00\x00\x00valueq\x03K\xe9sb.'
+    obj.value:  233
+  #+END_EXAMPLE
+
+* 可序列化的对象
+  ~Python~ 中，绝大多数对象都可以 *直接* 用 ~pickle~ 完成序列化，包括自定义的类，具体的规则如下：
+  + ~None~, ~True~ 和 ~False~
+  + ~int~, ~float~ 和 ~complex~
+  + ~str~, ~bytes~ 和 ~bytearrays~
+  + 只包含可序列化对象的 ~list~, ~tuple~, ~set~ 和 ~dict~
+  + 在模块的顶层定义的函数，不包括 ~lambda~ 表达式
+  + 在模块的顶层定义的内置函数
+  + 在模块的顶层定义的类
+
+  遵循以上规则的对象是可以直接序列化的，需要注意的是，对于 *类实例*, 还存在一些特殊的规则。
+
+  和前面的代码一样， *类实例* 对象一般不需要额外的代码就可以完成序列化，其序列化行为类似如下代码：
+  #+BEGIN_SRC python
+    def dump(obj):
+        return (obj.__class__, obj.__dict__)
+
+    def load(cls, attributes):
+        obj = cls.__new__(cls)
+        obj.__dict__.update(attributes)
+        return obj
+  #+END_SRC
+
+  可以看到，序列化 *类实例* 时会获取该实例的 *类* 和 *属性字典*, 反序列化时直接更新 *实例属性* 而不是调用 ~__init__~ 方法。
+
+  这一行为对于部分对象来说是不合适的，比如说：
+  #+BEGIN_SRC python
+    import time
+    import threading
+
+    class Countdown(object):
+        def __init__(self, n):
+            self.n = n
+            self.thr = threading.Thread(target=self.run)
+            self.thr.daemon = True
+            self.thr.start()
+
+        def run(self):
+            while self.n > 0:
+                print('T-minus', self.n)
+                self.n -= 1
+                time.sleep(5)
+  #+END_SRC
+
+  对于 ~Countdown~ 的实例，如果只是恢复自身的属性值是不够的，因为其状态还依赖于 *外部系统状态*. 对于这些对象，可以通过实现
+  ~__getstate__~ 和 ~__setstate__~ 方法来定义它们的序列化行为。
+
+  #+BEGIN_SRC python
+    class Countdown:
+        def __init__(self, n):
+            self.n = n
+            self.thr = threading.Thread(target=self.run)
+            self.thr.daemon = True
+            self.thr.start()
+
+        def run(self):
+            while self.n > 0:
+                print('T-minus', self.n)
+                self.n -= 1
+                time.sleep(5)
+
+        def __getstate__(self):
+            return self.n
+
+        def __setstate__(self, n):
+            self.__init__(n)
+  #+END_SRC
+
+  序列化时会调用 ~__getstate__~ 方法，反序列化时会调用 ~__setstate__~ 方法。
+
+* pickle 和 json
+  大多数时候，序列化一个 ~Python~ 对象我会选择 ~json~ 模块来完成，因为 ~json~ 格式更通用，更易读。
+
+  但是， ~pickle~ 也具有其优势：
+  + 能够直接序列化大多数 ~Python~ 对象，方便
+  + 能够以更快的速度序列化 ~Python~ 对象，快速
+    
+  这两点中，更吸引我的是 ~pickle~ 的 *方便*, 在不要求通用性和可读性的情况下， ~pickle~ 是一个很好的选择。
+
+  比如说，实现一个简单的内存缓存：
+
+  + [[https://github.com/pallets/werkzeug/blob/master/werkzeug/contrib/cache.py#L280][werkzeug.contrib.cache.SimpleCache]]
+
+  上面的链接是 [[https://github.com/pallets/werkzeug][werkzeug]] 中 ~SimpleCache~ 的源码链接，它的实现就使用了 ~pickle~, 部分代码如下：
+  #+BEGIN_SRC python
+    class SimpleCache(BaseCache):
+        def __init__(self, threshold=500, default_timeout=300):
+            BaseCache.__init__(self, default_timeout)
+            self._cache = {}
+            self.clear = self._cache.clear
+            self._threshold = threshold
+
+        def get(self, key):
+            try:
+                expires, value = self._cache[key]
+                if expires == 0 or expires > time():
+                    return pickle.loads(value)
+            except (KeyError, pickle.PickleError):
+                return None
+
+        def set(self, key, value, timeout=None):
+            expires = self._normalize_timeout(timeout)
+            self._prune()
+            self._cache[key] = (expires, pickle.dumps(value,
+                                                      pickle.HIGHEST_PROTOCOL))
+            return True
+  #+END_SRC
+
+  对于速度，可以用简单的代码来测试一下：
+  #+BEGIN_SRC python
+    In [1]: import json, pickle
+
+    In [2]: obj = list({val: -val} for val in range(1000000))
+
+    In [3]: %timeit json_dump = json.dumps(obj)
+    976 ms ± 43 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+    In [4]: %timeit pickle_dump = pickle.dumps(obj)
+    436 ms ± 7.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+  #+END_SRC
+
+  很明显， ~pickle~ 的速度要快不少，所以，对于一些 ~Python~ 内部的使用场景， ~pickle~ 是一个不错的选择。
+
+* pickle 的使用技巧
+   + ~pickle~ 可以很智能的处理多个对象：
+    #+BEGIN_SRC python
+      >>> import pickle
+      >>> f = open('somedata', 'wb')
+      >>> pickle.dump([1, 2, 3, 4], f)
+      >>> pickle.dump('hello', f)
+      >>> pickle.dump({'Apple', 'Pear', 'Banana'}, f)
+      >>> f.close()
+      >>> f = open('somedata', 'rb')
+      >>> pickle.load(f)
+      [1, 2, 3, 4]
+      >>> pickle.load(f)
+      'hello'
+      >>> pickle.load(f)
+      {'Apple', 'Pear', 'Banana'}
+    #+END_SRC
+
+  + 函数 ~pickle.dump~ 和 ~pickle.dumps~ 可以通过参数 ~protocol~ 来指定序列化方式，
+    该参数的取值范围为 ~[0, pickle.HIGHEST_PROTOCOL]~, 默认值为 ~pickle.DEFAULT_PROTOCOL~.
+
+    效果如下：
+    #+BEGIN_SRC python
+      >>> import pickle
+      >>> obj = list(range(1000000))
+      >>> with open('dump_min.dat', 'wb') as f:
+      ...     pickle.dump(obj, f, 0)
+      ...
+      >>> with open('dump_max.dat', 'wb') as f:
+      ...     pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+      ...
+    #+END_SRC
+    
+    #+BEGIN_EXAMPLE
+      $  du -h dump_min.dat
+      9.5M    dump_min.dat
+
+      $  du -h dump_max.dat
+      4.7M    dump_max.dat
+    #+END_EXAMPLE
+
+* 结语
+  测试的时候想创建一个够大的列表，直接顺手按了一串零，结果，电脑当场死机......
+
+  重启后算了一下，至少需要 ~37G~ 的内存来保存数据才够用 @_@
+
+  垃圾电脑 QAQ
+
+* 参考链接
+  + [[https://docs.python.org/3/library/pickle.html][pickle — Python object serialization]]
+  + [[https://python3-cookbook.readthedocs.io/zh_CN/latest/c05/p21_serializing_python_objects.html][序列化 Python 对象 - Python Cookbook]]
+
