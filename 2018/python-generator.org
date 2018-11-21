@@ -181,6 +181,29 @@
     StopIteration:
   #+END_SRC
 
+  特别的，可以不用 ~catch~ 抛出的 ~GeneratorExit~ 异常：
+  #+BEGIN_SRC python
+    In [1]: def gen():
+       ...:     for i in range(10):
+       ...:         yield i
+       ...:
+
+    In [2]: g = gen()
+
+    In [3]: next(g)
+    Out[3]: 0
+
+    In [4]: g.close()
+
+    In [5]: next(g)
+    ---------------------------------------------------------------------------
+    StopIteration                             Traceback (most recent call last)
+    <ipython-input-6-5f315c5de15b> in <module>()
+    ----> 1 next(g)
+
+    StopIteration:
+  #+END_SRC
+
   方法 ~send~ 传递一个参数到 *生成器内部*, 那么问题来了，这个参数是怎样传递的呢？
   #+BEGIN_SRC python
     In [65]: def gen():
