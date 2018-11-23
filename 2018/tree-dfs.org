@@ -8,7 +8,7 @@
 - [[#树类型][树类型]]
 - [[#使用递归的深度优先遍历][使用递归的深度优先遍历]]
 - [[#使用栈的深度优先遍历][使用栈的深度优先遍历]]
-- [[#递归与栈][递归与栈]]
+- [[#使用栈的深度优先遍历--补][使用栈的深度优先遍历 · 补]]
 - [[#结语][结语]]
 - [[#参考链接][参考链接]]
 
@@ -127,6 +127,10 @@
   #+BEGIN_SRC java
     public class StackTraversal {
       public static void traversal(GenericTree root) {
+        if (root == null) {
+          return;
+        }
+
         Deque<BinaryTree> stack = new ArrayDeque<BinaryTree>();
         BinaryTree lastVisited = null;
 
@@ -150,15 +154,59 @@
         // 访问处理节点
       }
     }
-
   #+END_SRC
 
-  道理和二叉树的一样，但感觉应该比二叉树的容易理解些。
+  道理和二叉树的差不多，但感觉应该比二叉树的容易理解些。
   
   *NOTE:* 栈是用双端队列近似模拟的，这也是 JDK 推荐的方式。
 
-* 递归与栈
-  通过 *栈* 来实现 *树的深度优先遍历* 不是什么难事，更重要的地方在于用 *栈* 来代替 *递归* 的想法。
+* 使用栈的深度优先遍历 · 补
+  想了一下，决定还是补一份使用栈实现二叉树的先序遍历和中序遍历的代码：
+  #+BEGIN_SRC java
+    public static void preOrder(BinaryTree root) {
+      if (root == null) {
+        return;
+      }
+
+      Deque<BinaryTree> stack = new ArrayDeque<BinaryTree>();
+
+      stack.addFirst(root);
+
+      while (!stack.isEmpty()) {
+        BinaryTree node = stack.removeFirst();
+
+        visit(node);
+
+        if (node.right != null) {  // 栈是后进先出的
+          stack.addFirst(node.right);
+        }
+
+        if (node.left != null) {
+          stack.addFirst(node.left);
+        }
+      }
+    }
+
+    public static void inOrder(BinaryTree root) {
+      Deque<BinaryTree> stack = new ArrayDeque<BinaryTree>();
+
+      while (!stack.isEmpty() || root != null) {
+        if (root != null) {
+          stack.addFirst(root);
+          root = root.left;
+        } else {
+          root = stack.removeFirst();
+          visit(root);
+          root = root.right;
+        }
+      }
+    }
+  #+END_SRC
+
+  总感觉代码写的有点丑 @_@
+
+* 结语
+  通过 *栈* 来实现 *树的深度优先遍历* 并不是很难，更重要的地方在于用 *栈* 来代替 *递归* 的想法。
 
   最近学习 *编译原理* 的过程中，语法分析部分提到过：递归调用的方式会 *隐式* 地维护一个栈，某些情况下，
   可以通过 *显式* 地维护一个栈来消除递归。
@@ -166,15 +214,6 @@
   递归下降预测分析器到非递归预测下降分析器就是通过这样的方式实现的。
 
   递归和栈孰优孰劣先不讨论，通过栈消除递归的做法还是很有启发性的，值得学习！
-
-* 结语
-  本来以为用栈实现深度优先遍历很简单，结果实际操作才发现不是那么容易的事。
-
-  二叉树三种遍历方式，就需要写三套代码，不像递归那样挪一下代码的位置就可以了，后序遍历的实现还不太好理解。
-
-  多叉树的实现也找不到现成的代码，上面的实现也不是很满意，只能将就着用。
-
-  是不是该找本算法书来看一下了？
 
 * 参考链接
   + [[https://en.wikipedia.org/wiki/Tree_traversal][Tree traversal - wiki]]

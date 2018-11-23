@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-11-23 周五 17:09 -->
+<!-- 2018-11-23 周五 17:30 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>树的深度优先遍历</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org202ec9d">1. 前言</a></li>
-<li><a href="#org46c8f51">2. 树类型</a></li>
-<li><a href="#org2c3be89">3. 使用递归的深度优先遍历</a></li>
-<li><a href="#org69c0300">4. 使用栈的深度优先遍历</a></li>
-<li><a href="#org21e7f80">5. 递归与栈</a></li>
-<li><a href="#orgf3998c0">6. 结语</a></li>
-<li><a href="#orgb543ef7">7. 参考链接</a></li>
+<li><a href="#orgcd2b33c">1. 前言</a></li>
+<li><a href="#orgc28c8ae">2. 树类型</a></li>
+<li><a href="#org09e9503">3. 使用递归的深度优先遍历</a></li>
+<li><a href="#org98cc4e6">4. 使用栈的深度优先遍历</a></li>
+<li><a href="#orgd0454cf">5. 使用栈的深度优先遍历 · 补</a></li>
+<li><a href="#orga02bcf4">6. 结语</a></li>
+<li><a href="#org64307bf">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org202ec9d" class="outline-2">
-<h2 id="org202ec9d"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgcd2b33c" class="outline-2">
+<h2 id="orgcd2b33c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前段时间了解到可以用 <b>队列</b> 实现 <a href="tree-bfs.html">树的广度优先遍历</a> 后，在 <a href="https://leetcode-cn.com/">LeetCode</a> 刷题的时候，
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org46c8f51" class="outline-2">
-<h2 id="org46c8f51"><span class="section-number-2">2</span> 树类型</h2>
+<div id="outline-container-orgc28c8ae" class="outline-2">
+<h2 id="orgc28c8ae"><span class="section-number-2">2</span> 树类型</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 考虑到之后的内容会用到这两个树类型，就先在这里把它们列出来好了：
@@ -304,8 +304,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2c3be89" class="outline-2">
-<h2 id="org2c3be89"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
+<div id="outline-container-org09e9503" class="outline-2">
+<h2 id="org09e9503"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 使用递归实现树的深度优先遍历实在是太简单了，随便一本教材都会讲到这一实现，就不多说了，
@@ -353,8 +353,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org69c0300" class="outline-2">
-<h2 id="org69c0300"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
+<div id="outline-container-org98cc4e6" class="outline-2">
+<h2 id="org98cc4e6"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 使用栈实现树的深度优先遍历的基本思路是利用栈 <b>后进先出</b> 的特性，将父节点保存到栈中，
@@ -411,6 +411,10 @@ for the JavaScript code in this tag.
 <div class="org-src-container">
 <pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StackTraversal</span> {
   <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      <span style="font-weight: bold;">return</span>;
+    }
+
     <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
     <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">lastVisited</span> = <span style="font-weight: bold; text-decoration: underline;">null</span>;
 
@@ -434,12 +438,11 @@ for the JavaScript code in this tag.
     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
   }
 }
-
 </pre>
 </div>
 
 <p>
-道理和二叉树的一样，但感觉应该比二叉树的容易理解些。
+道理和二叉树的差不多，但感觉应该比二叉树的容易理解些。
 </p>
 
 <p>
@@ -448,11 +451,65 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org21e7f80" class="outline-2">
-<h2 id="org21e7f80"><span class="section-number-2">5</span> 递归与栈</h2>
+<div id="outline-container-orgd0454cf" class="outline-2">
+<h2 id="orgd0454cf"><span class="section-number-2">5</span> 使用栈的深度优先遍历 · 补</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-通过 <b>栈</b> 来实现 <b>树的深度优先遍历</b> 不是什么难事，更重要的地方在于用 <b>栈</b> 来代替 <b>递归</b> 的想法。
+想了一下，决定还是补一份使用栈实现二叉树的先序遍历和中序遍历的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">preOrder</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+  <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+    <span style="font-weight: bold;">return</span>;
+  }
+
+  <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+
+  stack.addFirst(root);
+
+  <span style="font-weight: bold;">while</span> (!stack.isEmpty()) {
+    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span> = stack.removeFirst();
+
+    visit(node);
+
+    <span style="font-weight: bold;">if</span> (node.right != <span style="font-weight: bold; text-decoration: underline;">null</span>) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26632;&#26159;&#21518;&#36827;&#20808;&#20986;&#30340;</span>
+      stack.addFirst(node.right);
+    }
+
+    <span style="font-weight: bold;">if</span> (node.left != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      stack.addFirst(node.left);
+    }
+  }
+}
+
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">inOrder</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+
+  <span style="font-weight: bold;">while</span> (!stack.isEmpty() || root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+    <span style="font-weight: bold;">if</span> (root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      stack.addFirst(root);
+      root = root.left;
+    } <span style="font-weight: bold;">else</span> {
+      root = stack.removeFirst();
+      visit(root);
+      root = root.right;
+    }
+  }
+}
+</pre>
+</div>
+
+<p>
+总感觉代码写的有点丑 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga02bcf4" class="outline-2">
+<h2 id="orga02bcf4"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+通过 <b>栈</b> 来实现 <b>树的深度优先遍历</b> 并不是很难，更重要的地方在于用 <b>栈</b> 来代替 <b>递归</b> 的想法。
 </p>
 
 <p>
@@ -470,29 +527,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf3998c0" class="outline-2">
-<h2 id="orgf3998c0"><span class="section-number-2">6</span> 结语</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-本来以为用栈实现深度优先遍历很简单，结果实际操作才发现不是那么容易的事。
-</p>
-
-<p>
-二叉树三种遍历方式，就需要写三套代码，不像递归那样挪一下代码的位置就可以了，后序遍历的实现还不太好理解。
-</p>
-
-<p>
-多叉树的实现也找不到现成的代码，上面的实现也不是很满意，只能将就着用。
-</p>
-
-<p>
-是不是该找本算法书来看一下了？
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgb543ef7" class="outline-2">
-<h2 id="orgb543ef7"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org64307bf" class="outline-2">
+<h2 id="org64307bf"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Tree_traversal">Tree traversal - wiki</a></li>
