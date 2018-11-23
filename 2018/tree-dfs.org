@@ -1,0 +1,181 @@
+#+TITLE:      树的深度优先遍历
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-11-23 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#树类型][树类型]]
+- [[#使用递归的深度优先遍历][使用递归的深度优先遍历]]
+- [[#使用栈的深度优先遍历][使用栈的深度优先遍历]]
+- [[#递归与栈][递归与栈]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  前段时间了解到可以用 *队列* 实现 [[file:tree-bfs.org][树的广度优先遍历]] 后，在 [[https://leetcode-cn.com/][LeetCode]] 刷题的时候，
+  又发现可以用 *栈* 来实现 *树的深度优先遍历*.
+
+  这是一个值得思考的发现！
+
+* 树类型
+  考虑到之后的内容会用到这两个树类型，就先在这里把它们列出来好了：
+  #+BEGIN_SRC java
+    // 二叉树
+    public class BinaryTree {
+      public int val;
+      public BinaryTree left;
+      public BinaryTree right;
+
+      public BinaryTree(int val) {
+        this.val = val;
+      }
+    }
+
+    // 多叉树
+    public class GenericTree {
+      public int val;
+      public List<GenericTree> children;
+
+      public GenericTree(int val) {
+        this.val = val;
+        this.children = new ArrayList<GenericTree>();
+      }
+    }
+  #+END_SRC
+
+* 使用递归的深度优先遍历
+  使用递归实现树的深度优先遍历实在是太简单了，随便一本教材都会讲到这一实现，就不多说了，
+  直接上代码：
+  #+BEGIN_SRC java
+    public class RecursiveTraversal {
+      public static void traversal(BinaryTree root) {
+        if (root == null) {
+          return;
+        }
+
+        traversal(root.left);
+        traversal(root.right);
+
+        visit(root);
+      }
+
+      public static void traversal(GenericTree root) {
+        if (root == null) {
+          return;
+        }
+
+        for (GenericTree child : root.children) {
+          traversal(child);
+        }
+
+        visit(root);
+      }
+
+      public static void visit(BinaryTree node) {
+        // 访问处理节点
+      }
+
+      public static void visit(GenericTree node) {
+        // 访问处理节点
+      }
+    }
+  #+END_SRC
+
+  *NOTE:* 这里的实现只考虑先访问叶子节点，在访问父节点的遍历类型，对于二叉树来说，对应的就是 *后序遍历*.
+
+* 使用栈的深度优先遍历
+  使用栈实现树的深度优先遍历的基本思路是利用栈 *后进先出* 的特性，将父节点保存到栈中，
+  出栈时的节点优先为子节点。
+
+  当然，还有一个隐含的条件为：得到的节点是树的根结点。
+
+  首先是使用栈实现二叉树的深度优先遍历：
+  #+BEGIN_SRC java
+    public class StackTraversal {
+      public static void traversal(BinaryTree root) {
+        Deque<BinaryTree> stack = new ArrayDeque<BinaryTree>();
+        BinaryTree lastVisited = null;  // 最后一个访问 visit 的节点
+
+        while (!stack.isEmpty() || root != null) {
+          if (root != null) {
+            stack.addFirst(root);
+            root = root.left;
+          } else {
+            BinaryTree peekNode = stack.peekFirst();
+            if (peekNode.right != null && lastVisited != peekNode.right) {  // 判断该节点的右子节点是否已访问
+              root = peekNode.right;
+            } else {
+              visit(peekNode);
+              lastVisited = stack.removeFirst();
+            }
+          }
+        }
+      }
+
+      public static void visit(BinaryTree node) {
+        // 访问处理节点
+      }
+    }
+  #+END_SRC
+
+  这里实现的依旧是二叉树的 *后序遍历*, 实现难度是三种遍历方式中最大的，所以直接看代码可能不太容易理解。
+
+  算法可视化的工具也没找到合适的，就先将就着看吧 @_@
+
+  然后是使用栈实现多叉树的深度优先遍历：
+  #+BEGIN_SRC java
+    public class StackTraversal {
+      public static void traversal(GenericTree root) {
+        Deque<BinaryTree> stack = new ArrayDeque<BinaryTree>();
+        BinaryTree lastVisited = null;
+
+        stack.addFirst(root);
+
+        while (!stack.isEmpty()) {
+          BinaryTree peekNode = stack.peekFirst();
+
+          if (peekNode.children.size() != 0 && lastVisited != peekNode.children.get(0)) {  // 判断该节点的子节点是否已访问
+            for (GenericTree child : peekNode.children) {
+              stack.addFirst(child);
+            }
+          } else {
+            visit(peekNode);
+            lastVisited = stack.removeFirst();
+          }
+        }
+      }
+
+      public static void visit(GenericTree node) {
+        // 访问处理节点
+      }
+    }
+
+  #+END_SRC
+
+  道理和二叉树的一样，但感觉应该比二叉树的容易理解些。
+  
+  *NOTE:* 栈是用双端队列近似模拟的，这也是 JDK 推荐的方式。
+
+* 递归与栈
+  通过 *栈* 来实现 *树的深度优先遍历* 不是什么难事，更重要的地方在于用 *栈* 来代替 *递归* 的想法。
+
+  最近学习 *编译原理* 的过程中，语法分析部分提到过：递归调用的方式会 *隐式* 地维护一个栈，某些情况下，
+  可以通过 *显式* 地维护一个栈来消除递归。
+
+  递归下降预测分析器到非递归预测下降分析器就是通过这样的方式实现的。
+
+  递归和栈孰优孰劣先不讨论，通过栈消除递归的做法还是很有启发性的，值得学习！
+
+* 结语
+  本来以为用栈实现深度优先遍历很简单，结果实际操作才发现不是那么容易的事。
+
+  二叉树三种遍历方式，就需要写三套代码，不像递归那样挪一下代码的位置就可以了，后序遍历的实现还不太好理解。
+
+  多叉树的实现也找不到现成的代码，上面的实现也不是很满意，只能将就着用。
+
+  是不是该找本算法书来看一下了？
+
+* 参考链接
+  + [[https://en.wikipedia.org/wiki/Tree_traversal][Tree traversal - wiki]]
+

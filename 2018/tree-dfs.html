@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-11-23 周五 17:09 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>树的深度优先遍历</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">树的深度优先遍历</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org202ec9d">1. 前言</a></li>
+<li><a href="#org46c8f51">2. 树类型</a></li>
+<li><a href="#org2c3be89">3. 使用递归的深度优先遍历</a></li>
+<li><a href="#org69c0300">4. 使用栈的深度优先遍历</a></li>
+<li><a href="#org21e7f80">5. 递归与栈</a></li>
+<li><a href="#orgf3998c0">6. 结语</a></li>
+<li><a href="#orgb543ef7">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org202ec9d" class="outline-2">
+<h2 id="org202ec9d"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+前段时间了解到可以用 <b>队列</b> 实现 <a href="tree-bfs.html">树的广度优先遍历</a> 后，在 <a href="https://leetcode-cn.com/">LeetCode</a> 刷题的时候，
+又发现可以用 <b>栈</b> 来实现 <b>树的深度优先遍历</b>.
+</p>
+
+<p>
+这是一个值得思考的发现！
+</p>
+</div>
+</div>
+
+<div id="outline-container-org46c8f51" class="outline-2">
+<h2 id="org46c8f51"><span class="section-number-2">2</span> 树类型</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+考虑到之后的内容会用到这两个树类型，就先在这里把它们列出来好了：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20108;&#21449;&#26641;</span>
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">left</span>;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">right</span>;
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">BinaryTree</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>) {
+    <span style="font-weight: bold;">this</span>.val = val;
+  }
+}
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22810;&#21449;&#26641;</span>
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">GenericTree</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">GenericTree</span>&gt; <span style="font-weight: bold; font-style: italic;">children</span>;
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">GenericTree</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>) {
+    <span style="font-weight: bold;">this</span>.val = val;
+    <span style="font-weight: bold;">this</span>.children = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">GenericTree</span>&gt;();
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c3be89" class="outline-2">
+<h2 id="org2c3be89"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+使用递归实现树的深度优先遍历实在是太简单了，随便一本教材都会讲到这一实现，就不多说了，
+直接上代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">RecursiveTraversal</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      <span style="font-weight: bold;">return</span>;
+    }
+
+    traversal(root.left);
+    traversal(root.right);
+
+    visit(root);
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      <span style="font-weight: bold;">return</span>;
+    }
+
+    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">child</span> : root.children) {
+      traversal(child);
+    }
+
+    visit(root);
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+<b>NOTE:</b> 这里的实现只考虑先访问叶子节点，在访问父节点的遍历类型，对于二叉树来说，对应的就是 <b>后序遍历</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69c0300" class="outline-2">
+<h2 id="org69c0300"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+使用栈实现树的深度优先遍历的基本思路是利用栈 <b>后进先出</b> 的特性，将父节点保存到栈中，
+出栈时的节点优先为子节点。
+</p>
+
+<p>
+当然，还有一个隐含的条件为：得到的节点是树的根结点。
+</p>
+
+<p>
+首先是使用栈实现二叉树的深度优先遍历：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StackTraversal</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+    <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">lastVisited</span> = <span style="font-weight: bold; text-decoration: underline;">null</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26368;&#21518;&#19968;&#20010;&#35775;&#38382; visit &#30340;&#33410;&#28857;</span>
+
+    <span style="font-weight: bold;">while</span> (!stack.isEmpty() || root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+      <span style="font-weight: bold;">if</span> (root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+        stack.addFirst(root);
+        root = root.left;
+      } <span style="font-weight: bold;">else</span> {
+        <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">peekNode</span> = stack.peekFirst();
+        <span style="font-weight: bold;">if</span> (peekNode.right != <span style="font-weight: bold; text-decoration: underline;">null</span> &amp;&amp; lastVisited != peekNode.right) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#21491;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
+          root = peekNode.right;
+        } <span style="font-weight: bold;">else</span> {
+          visit(peekNode);
+          lastVisited = stack.removeFirst();
+        }
+      }
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+这里实现的依旧是二叉树的 <b>后序遍历</b>, 实现难度是三种遍历方式中最大的，所以直接看代码可能不太容易理解。
+</p>
+
+<p>
+算法可视化的工具也没找到合适的，就先将就着看吧 @_@
+</p>
+
+<p>
+然后是使用栈实现多叉树的深度优先遍历：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StackTraversal</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
+    <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">lastVisited</span> = <span style="font-weight: bold; text-decoration: underline;">null</span>;
+
+    stack.addFirst(root);
+
+    <span style="font-weight: bold;">while</span> (!stack.isEmpty()) {
+      <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">peekNode</span> = stack.peekFirst();
+
+      <span style="font-weight: bold;">if</span> (peekNode.children.size() != 0 &amp;&amp; lastVisited != peekNode.children.get(0)) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
+        <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">child</span> : peekNode.children) {
+          stack.addFirst(child);
+        }
+      } <span style="font-weight: bold;">else</span> {
+        visit(peekNode);
+        lastVisited = stack.removeFirst();
+      }
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  }
+}
+
+</pre>
+</div>
+
+<p>
+道理和二叉树的一样，但感觉应该比二叉树的容易理解些。
+</p>
+
+<p>
+<b>NOTE:</b> 栈是用双端队列近似模拟的，这也是 JDK 推荐的方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org21e7f80" class="outline-2">
+<h2 id="org21e7f80"><span class="section-number-2">5</span> 递归与栈</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+通过 <b>栈</b> 来实现 <b>树的深度优先遍历</b> 不是什么难事，更重要的地方在于用 <b>栈</b> 来代替 <b>递归</b> 的想法。
+</p>
+
+<p>
+最近学习 <b>编译原理</b> 的过程中，语法分析部分提到过：递归调用的方式会 <b>隐式</b> 地维护一个栈，某些情况下，
+可以通过 <b>显式</b> 地维护一个栈来消除递归。
+</p>
+
+<p>
+递归下降预测分析器到非递归预测下降分析器就是通过这样的方式实现的。
+</p>
+
+<p>
+递归和栈孰优孰劣先不讨论，通过栈消除递归的做法还是很有启发性的，值得学习！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf3998c0" class="outline-2">
+<h2 id="orgf3998c0"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+本来以为用栈实现深度优先遍历很简单，结果实际操作才发现不是那么容易的事。
+</p>
+
+<p>
+二叉树三种遍历方式，就需要写三套代码，不像递归那样挪一下代码的位置就可以了，后序遍历的实现还不太好理解。
+</p>
+
+<p>
+多叉树的实现也找不到现成的代码，上面的实现也不是很满意，只能将就着用。
+</p>
+
+<p>
+是不是该找本算法书来看一下了？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb543ef7" class="outline-2">
+<h2 id="orgb543ef7"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Tree_traversal">Tree traversal - wiki</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

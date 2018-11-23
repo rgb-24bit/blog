@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 11-23 -- [[file:2018/tree-dfs.org][树的深度优先遍历]] ::
   - 11-16 -- [[file:2018/python-pickle.org][使用 pickle 序列化 Python 对象]] ::
   - 11-09 -- [[file:2018/python-logging.org][Python 日志模块]] ::
   - 11-02 -- [[file:2018/io-redirect.org][I/O 重定向]] ::
