@@ -1,0 +1,155 @@
+#+TITLE:      URI - 统一资源标识符
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-12-07 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#uri--url--urn][URI & URL & URN]]
+- [[#uri-通用语法][URI 通用语法]]
+- [[#uri-协议][URI 协议]]
+  - [[#file][file]]
+  - [[#mailto][mailto]]
+  - [[#data][data]]
+- [[#参考链接][参考链接]]
+
+* URI & URL & URN
+  #+BEGIN_QUOTE
+  A URI can be further classified as a locator, a name, or both. [[[http://www.faqs.org/rfcs/rfc3986.html][RFC 3986]]]
+  #+END_QUOTE
+
+  这是摘自 ~RFC 3986~ 的一段话，表明了 ~URI~, ~URL~ 和 ~URN~ 三者之间的关系，更形象一点的话，
+  可以用维基百科上的一张图来说明：
+
+  #+HTML: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/URI_Euler_Diagram_no_lone_URIs.svg/180px-URI_Euler_Diagram_no_lone_URIs.svg.png">
+
+  #+BEGIN_QUOTE
+  A URN may be compared to a person's name, while a URL may be compared to their street address. 
+  In other words, a URN identifies an item and a URL provides a method for finding it.[[[https://en.wikipedia.org/wiki/Uniform_Resource_Identifier][Wikipedia]]]
+  #+END_QUOTE
+
+  这段摘自维基百科的一段话，表明了和 ~URL~ 和 ~URN~ 的作用，URL 标识资源位置，而 URN 标识资源身份。
+
+  由于这篇博客的主题为 ~URI~, 因此只在这里简单的提及一下 ~URL~ 和 ~URN~, 如果需要详细了解，可以自己 Google 相关资料。
+
+* URI 通用语法
+  ~URI~ 的通用语法由五个组件组成：
+  #+BEGIN_EXAMPLE
+    URI = scheme:[//authority]path[?query][#fragment]
+  #+END_EXAMPLE
+
+  其中，authority 组件可以由以下三个组件组成：
+  #+BEGIN_EXAMPLE
+    authority = [userinfo@]host[:port]
+  #+END_EXAMPLE
+
+  实际的例子：
+  #+BEGIN_EXAMPLE
+              userinfo     host        port
+              ┌─┴────┐ ┌────┴────────┐ ┌┴┐ 
+      https://john.doe@www.example.com:123/forum/questions/?tag=networking&order=newest#top
+      └─┬─┘ └───────┬────────────────────┘└─┬─────────────┘└──┬───────────────────────┘└┬─┘  
+      scheme     authority                 path              query                      fragment
+
+      ldap://[2001:db8::7]/c=GB?objectClass?one
+      └─┬┘ └───────┬─────┘└─┬─┘ └──────┬──────┘
+     scheme    authority  path       query
+
+      mailto:John.Doe@example.com
+      └──┬─┘ └─────────┬────────┘
+      scheme         path
+
+      news:comp.infosystems.www.servers.unix
+      └─┬┘ └───────────────┬───────────────┘
+     scheme              path
+
+      tel:+1-816-555-1212
+      └┬┘ └──────┬──────┘
+    scheme     path
+
+      telnet://192.0.2.16:80/
+      └──┬─┘ └──────┬──────┘│
+      scheme    authority  path
+
+      urn:oasis:names:specification:docbook:dtd:xml:4.1.2
+      └┬┘ └──────────────────────┬──────────────────────┘
+    scheme                     path
+  #+END_EXAMPLE
+
+* URI 协议
+  这才是写这篇博客的主要目的，前面的内容都是顺带的，不然总感觉差点啥 @_@.
+
+** file
+   ~file~ 应该算是一个比较常用的协议了，它的格式如下：
+   #+BEGIN_EXAMPLE
+     file://host/path
+   #+END_EXAMPLE
+
+   需要注意的一点是，在 ~Windows~ 系统中，需要在实际文件路径的 *盘符* 前添加一个斜杠才能作为 ~URI~ 中的路径：
+   #+BEGIN_EXAMPLE
+     file:///C:/Users/Administrator/Desktop/example.txt
+   #+END_EXAMPLE
+
+   上面这个省略了 ~host~ 的 ~URI~ 标识的文件为：
+   #+BEGIN_EXAMPLE
+     C:/Users/Administrator/Desktop/example.txt
+   #+END_EXAMPLE
+
+   由于这种在 ~Windows~ 上不太自然的路径表示形式，是容易让人感到迷惑的。
+
+   + RFC 文档： [[http://www.faqs.org/rfcs/rfc8089.html][RFC 8089 - The "file" URI Scheme]]
+   + 维基百科： [[https://en.wikipedia.org/wiki/File_URI_scheme][file URI scheme - Wikipedia]]
+
+** mailto
+   ~mailto~ 是用来表示邮箱地址的 ~URI~ 协议，常见的形式为：
+   #+BEGIN_EXAMPLE
+     mailto:someone@example.com
+   #+END_EXAMPLE
+
+   通过 ~query~ 部分指定一些初始值：
+   #+BEGIN_EXAMPLE
+     mailto:someone@example.com?subject=xxx&cc=someone_else@example.com&body=xxx
+   #+END_EXAMPLE
+
+   指定多个邮箱地址：
+   #+BEGIN_EXAMPLE
+     mailto:someone@example.com,someoneelse@example.com
+   #+END_EXAMPLE
+  
+   ~mailto~ 的完整语法还是有点复杂的，有兴趣的可以了解一下。
+
+   + RFC 文档： [[http://www.faqs.org/rfcs/rfc6068.html][RFC 6068 - The 'mailto' URI Scheme]]
+   + 维基百科： [[https://en.wikipedia.org/wiki/Mailto][mailto - Wikipedia]]
+
+** data
+   ~data~ 在前端应该也是比较常用的一个协议了，提供了一种在网页中包含数据的方法，格式如下：
+   #+BEGIN_EXAMPLE
+     data:[<media type>][;base64],<data>
+   #+END_EXAMPLE
+
+   各部分的含义：
+   + ~media type~ - 可选，指定媒体类型，格式为 ~attribute=value~, 用 ~;~ 分隔
+   + ~base64~ - 可选，通过 ~;~ 与前面的内容分隔，表示 URI 的数据内容是二进制数据，通过 base64 将二进制数据编码为 ASCII 文本
+   + ~data~ - 包含的数据，使用 ~,~ 与前面的内容分隔
+
+   一个最小的 ~data~ URI:
+   #+BEGIN_EXAMPLE
+      data:,
+   #+END_EXAMPLE
+
+   ~data~ 协议可以包含的数据类型很多，常用的是直接在网页连接中包含图片：
+   #+BEGIN_SRC html
+     <img src="data:image/png;base64,iVBORw0KGgoAAA
+     ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
+     //8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
+     5ErkJggg==" alt="Red dot" />
+   #+END_SRC
+
+   更多的媒体类型可以通过查阅相关资料进行了解。
+
+   + RFC 文档： [[http://www.faqs.org/rfcs/rfc2397.html][RFC 2397 - The "data" URL scheme]]
+   + 维基百科： [[https://en.wikipedia.org/wiki/Data_URI_scheme][Data URI scheme - Wikipedia]]
+
+* 参考链接
+  + [[https://en.wikipedia.org/wiki/Uniform_Resource_Identifier][Uniform Resource Identifier - Wikipedia]]
+  + [[http://www.faqs.org/rfcs/rfc3986.html][RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax]]
+
