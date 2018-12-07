@@ -13,21 +13,21 @@
 - [[#参考链接][参考链接]]
 
 * URI & URL & URN
+  URI, URL 和 URN 是三个经常放在一起的概念，下面这段摘自 RFC 文档的一段话描述了它们之间的关系：
   #+BEGIN_QUOTE
   A URI can be further classified as a locator, a name, or both. [[[http://www.faqs.org/rfcs/rfc3986.html][RFC 3986]]]
   #+END_QUOTE
 
-  这是摘自 ~RFC 3986~ 的一段话，表明了 ~URI~, ~URL~ 和 ~URN~ 三者之间的关系，更形象一点的话，
-  可以用维基百科上的一张图来说明：
+  更形象地，可以用维基百科上的一张图来说明：
 
   #+HTML: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/URI_Euler_Diagram_no_lone_URIs.svg/180px-URI_Euler_Diagram_no_lone_URIs.svg.png">
+  
+  而下面这段摘自维基百科的一段话，表明了 ~URL~ 和 ~URN~ 的作用：URL 标识资源位置，而 URN 标识资源身份。
 
   #+BEGIN_QUOTE
   A URN may be compared to a person's name, while a URL may be compared to their street address. 
   In other words, a URN identifies an item and a URL provides a method for finding it.[[[https://en.wikipedia.org/wiki/Uniform_Resource_Identifier][Wikipedia]]]
   #+END_QUOTE
-
-  这段摘自维基百科的一段话，表明了和 ~URL~ 和 ~URN~ 的作用，URL 标识资源位置，而 URN 标识资源身份。
 
   由于这篇博客的主题为 ~URI~, 因此只在这里简单的提及一下 ~URL~ 和 ~URN~, 如果需要详细了解，可以自己 Google 相关资料。
 

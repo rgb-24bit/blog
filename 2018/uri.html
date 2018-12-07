@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-12-07 周五 20:22 -->
+<!-- 2018-12-07 周五 20:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>URI - 统一资源标识符</title>
@@ -246,23 +246,26 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4d2b2fd">1. URI &amp; URL &amp; URN</a></li>
-<li><a href="#org7c6f0d6">2. URI 通用语法</a></li>
-<li><a href="#org7475d4c">3. URI 协议</a>
+<li><a href="#orgf9398fb">1. URI &amp; URL &amp; URN</a></li>
+<li><a href="#org61ee777">2. URI 通用语法</a></li>
+<li><a href="#org71de30b">3. URI 协议</a>
 <ul>
-<li><a href="#org9d42bf6">3.1. file</a></li>
-<li><a href="#org8a434b6">3.2. mailto</a></li>
-<li><a href="#org623d27e">3.3. data</a></li>
+<li><a href="#org010dbde">3.1. file</a></li>
+<li><a href="#org4bc2ec0">3.2. mailto</a></li>
+<li><a href="#org734e8ca">3.3. data</a></li>
 </ul>
 </li>
-<li><a href="#org41a7257">4. 参考链接</a></li>
+<li><a href="#orgea7f6b8">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4d2b2fd" class="outline-2">
-<h2 id="org4d2b2fd"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
+<div id="outline-container-orgf9398fb" class="outline-2">
+<h2 id="orgf9398fb"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+URI, URL 和 URN 是三个经常放在一起的概念，下面这段摘自 RFC 文档的一段话描述了它们之间的关系：
+</p>
 <blockquote>
 <p>
 A URI can be further classified as a locator, a name, or both. [<a href="http://www.faqs.org/rfcs/rfc3986.html">RFC 3986</a>]
@@ -270,11 +273,14 @@ A URI can be further classified as a locator, a name, or both. [<a href="http://
 </blockquote>
 
 <p>
-这是摘自 <code>RFC 3986</code> 的一段话，表明了 <code>URI</code>, <code>URL</code> 和 <code>URN</code> 三者之间的关系，更形象一点的话，
-可以用维基百科上的一张图来说明：
+更形象地，可以用维基百科上的一张图来说明：
 </p>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/URI_Euler_Diagram_no_lone_URIs.svg/180px-URI_Euler_Diagram_no_lone_URIs.svg.png">
+
+<p>
+而下面这段摘自维基百科的一段话，表明了 <code>URL</code> 和 <code>URN</code> 的作用：URL 标识资源位置，而 URN 标识资源身份。
+</p>
 
 <blockquote>
 <p>
@@ -284,17 +290,13 @@ In other words, a URN identifies an item and a URL provides a method for finding
 </blockquote>
 
 <p>
-这段摘自维基百科的一段话，表明了和 <code>URL</code> 和 <code>URN</code> 的作用，URL 标识资源位置，而 URN 标识资源身份。
-</p>
-
-<p>
 由于这篇博客的主题为 <code>URI</code>, 因此只在这里简单的提及一下 <code>URL</code> 和 <code>URN</code>, 如果需要详细了解，可以自己 Google 相关资料。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7c6f0d6" class="outline-2">
-<h2 id="org7c6f0d6"><span class="section-number-2">2</span> URI 通用语法</h2>
+<div id="outline-container-org61ee777" class="outline-2">
+<h2 id="org61ee777"><span class="section-number-2">2</span> URI 通用语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>URI</code> 的通用语法由五个组件组成：
@@ -347,16 +349,16 @@ scheme                     path
 </div>
 </div>
 
-<div id="outline-container-org7475d4c" class="outline-2">
-<h2 id="org7475d4c"><span class="section-number-2">3</span> URI 协议</h2>
+<div id="outline-container-org71de30b" class="outline-2">
+<h2 id="org71de30b"><span class="section-number-2">3</span> URI 协议</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 这才是写这篇博客的主要目的，前面的内容都是顺带的，不然总感觉差点啥 @_@.
 </p>
 </div>
 
-<div id="outline-container-org9d42bf6" class="outline-3">
-<h3 id="org9d42bf6"><span class="section-number-3">3.1</span> file</h3>
+<div id="outline-container-org010dbde" class="outline-3">
+<h3 id="org010dbde"><span class="section-number-3">3.1</span> file</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>file</code> 应该算是一个比较常用的协议了，它的格式如下：
@@ -390,8 +392,8 @@ C:/Users/Administrator/Desktop/example.txt
 </div>
 </div>
 
-<div id="outline-container-org8a434b6" class="outline-3">
-<h3 id="org8a434b6"><span class="section-number-3">3.2</span> mailto</h3>
+<div id="outline-container-org4bc2ec0" class="outline-3">
+<h3 id="org4bc2ec0"><span class="section-number-3">3.2</span> mailto</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <code>mailto</code> 是用来表示邮箱地址的 <code>URI</code> 协议，常见的形式为：
@@ -425,8 +427,8 @@ mailto:someone@example.com,someoneelse@example.com
 </div>
 </div>
 
-<div id="outline-container-org623d27e" class="outline-3">
-<h3 id="org623d27e"><span class="section-number-3">3.3</span> data</h3>
+<div id="outline-container-org734e8ca" class="outline-3">
+<h3 id="org734e8ca"><span class="section-number-3">3.3</span> data</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>data</code> 在前端应该也是比较常用的一个协议了，提供了一种在网页中包含数据的方法，格式如下：
@@ -474,8 +476,8 @@ data:,
 </div>
 </div>
 
-<div id="outline-container-org41a7257" class="outline-2">
-<h2 id="org41a7257"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orgea7f6b8" class="outline-2">
+<h2 id="orgea7f6b8"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">Uniform Resource Identifier - Wikipedia</a></li>
