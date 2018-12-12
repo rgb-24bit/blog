@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-09-15 周六 22:38 -->
+<!-- 2018-12-12 周三 13:01 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 核心集合接口</title>
@@ -246,42 +246,42 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7974f32">1. 简介</a></li>
-<li><a href="#orgcaa35e6">2. Collection</a>
+<li><a href="#org7a33e5f">1. 简介</a></li>
+<li><a href="#org49db423">2. Collection</a>
 <ul>
-<li><a href="#org9e983bd">2.1. Collection 基本操作</a></li>
-<li><a href="#orga18f486">2.2. Collection 遍历操作</a></li>
-<li><a href="#org93a5297">2.3. Collection 批量操作</a></li>
-<li><a href="#orge14a57a">2.4. Collection 数组操作</a></li>
+<li><a href="#org9bb454f">2.1. Collection 基本操作</a></li>
+<li><a href="#orgf8f199c">2.2. Collection 遍历操作</a></li>
+<li><a href="#org0e9e7d4">2.3. Collection 批量操作</a></li>
+<li><a href="#orgd97c081">2.4. Collection 数组操作</a></li>
 </ul>
 </li>
-<li><a href="#org7c523cf">3. Set</a></li>
-<li><a href="#orgf397a3f">4. List</a>
+<li><a href="#orgb1fce59">3. Set</a></li>
+<li><a href="#orgeda60f8">4. List</a>
 <ul>
-<li><a href="#org744a7a6">4.1. 集合操作</a></li>
-<li><a href="#org466451e">4.2. 位置访问和搜索操作</a></li>
-<li><a href="#orgf8e16cb">4.3. 迭代器</a></li>
-<li><a href="#orgdcce45f">4.4. 范围视图操作</a></li>
-<li><a href="#orgc47adce">4.5. 列表算法</a></li>
+<li><a href="#org8476d9a">4.1. 集合操作</a></li>
+<li><a href="#orgc9b54b9">4.2. 位置访问和搜索操作</a></li>
+<li><a href="#org342dd4e">4.3. 迭代器</a></li>
+<li><a href="#orgc41d5b8">4.4. 范围视图操作</a></li>
+<li><a href="#org70845e8">4.5. 列表算法</a></li>
 </ul>
 </li>
-<li><a href="#org5468a7a">5. Queue</a></li>
-<li><a href="#org7b83ab9">6. Deque</a></li>
-<li><a href="#org8959323">7. Map</a>
+<li><a href="#org681f5ad">5. Queue</a></li>
+<li><a href="#orge8bf254">6. Deque</a></li>
+<li><a href="#org9eb1ca5">7. Map</a>
 <ul>
-<li><a href="#org4cc8ee1">7.1. Map 基本操作</a></li>
-<li><a href="#org346910c">7.2. Map 批量操作</a></li>
-<li><a href="#org490e355">7.3. 集合视图</a></li>
+<li><a href="#org629964e">7.1. Map 基本操作</a></li>
+<li><a href="#orgab19edb">7.2. Map 批量操作</a></li>
+<li><a href="#org0f878ef">7.3. 集合视图</a></li>
 </ul>
 </li>
-<li><a href="#org2face24">8. 结尾</a></li>
-<li><a href="#orgbbd441d">9. 参考链接</a></li>
+<li><a href="#orgf6f1c92">8. 结尾</a></li>
+<li><a href="#orgb2506b2">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7974f32" class="outline-2">
-<h2 id="org7974f32"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org7a33e5f" class="outline-2">
+<h2 id="org7a33e5f"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 除了 <code>C</code> 语言以外，我学过的语言基本上都封装了常用的 <b>数据结构</b> 方便使用。
@@ -309,8 +309,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcaa35e6" class="outline-2">
-<h2 id="orgcaa35e6"><span class="section-number-2">2</span> Collection</h2>
+<div id="outline-container-org49db423" class="outline-2">
+<h2 id="org49db423"><span class="section-number-2">2</span> Collection</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Collection</code> 通常用于保存一组对象，保存的这些对象称为它的 <b>元素</b> 或 <b>成员</b>.
@@ -326,8 +326,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9e983bd" class="outline-3">
-<h3 id="org9e983bd"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
+<div id="outline-container-org9bb454f" class="outline-3">
+<h3 id="org9bb454f"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Collection</code> 常用的基本操作方法有：
@@ -385,8 +385,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga18f486" class="outline-3">
-<h3 id="orga18f486"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
+<div id="outline-container-orgf8f199c" class="outline-3">
+<h3 id="orgf8f199c"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 除去 <b>聚合操作</b> 的话，用于遍历 <code>Collection</code> 的方式有两种：
@@ -439,8 +439,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org93a5297" class="outline-3">
-<h3 id="org93a5297"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
+<div id="outline-container-org0e9e7d4" class="outline-3">
+<h3 id="org0e9e7d4"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <b>批量操作</b> 允许我们一次性操作多个元素，以下是批量操作方法：
@@ -489,8 +489,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge14a57a" class="outline-3">
-<h3 id="orge14a57a"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
+<div id="outline-container-orgd97c081" class="outline-3">
+<h3 id="orgd97c081"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 通过使用方法 <code>Collection.toArray()</code> 可以将一个 <code>Collection</code> 转换一个数组。
@@ -523,8 +523,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7c523cf" class="outline-2">
-<h2 id="org7c523cf"><span class="section-number-2">3</span> Set</h2>
+<div id="outline-container-orgb1fce59" class="outline-2">
+<h2 id="orgb1fce59"><span class="section-number-2">3</span> Set</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Set</code> 是一个不包含重复元素的 <code>Collection</code>.
@@ -536,7 +536,7 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li><code>HashSet</code> - 元素储存在一个哈希表中，性能最好，但是不保证元素的迭代顺序</li>
 <li><code>TreeSet</code> - 元素储存在一个红黑树中，元素按值排序，速度比 <code>HashSet</code> 慢很多</li>
-<li><code>LinkedHashSet</code> - 元素储存在一个链表中，元素按添加的属性排序，书的比 <code>HashSet</code> 慢</li>
+<li><code>LinkedHashSet</code> - 元素储存在一个链表中，元素按添加的属性排序，速度比 <code>HashSet</code> 慢</li>
 </ul>
 
 <p>
@@ -564,8 +564,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf397a3f" class="outline-2">
-<h2 id="orgf397a3f"><span class="section-number-2">4</span> List</h2>
+<div id="outline-container-orgeda60f8" class="outline-2">
+<h2 id="orgeda60f8"><span class="section-number-2">4</span> List</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>List</code> 是一个有序的 <code>Collection</code>.
@@ -580,8 +580,8 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 
-<div id="outline-container-org744a7a6" class="outline-3">
-<h3 id="org744a7a6"><span class="section-number-3">4.1</span> 集合操作</h3>
+<div id="outline-container-org8476d9a" class="outline-3">
+<h3 id="org8476d9a"><span class="section-number-3">4.1</span> 集合操作</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 毫无疑问， <code>List</code> 包含继承了所有 <code>Collection</code> 的操作，如添加删除元素等。
@@ -593,8 +593,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org466451e" class="outline-3">
-<h3 id="org466451e"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
+<div id="outline-container-orgc9b54b9" class="outline-3">
+<h3 id="orgc9b54b9"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>get</code> 和 <code>set</code> 可以获取值设置指定位置的元素的值， 而 <code>add</code>, <code>addAll</code>, <code>remove</code> 都有一个可以指定
@@ -619,8 +619,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf8e16cb" class="outline-3">
-<h3 id="orgf8e16cb"><span class="section-number-3">4.3</span> 迭代器</h3>
+<div id="outline-container-org342dd4e" class="outline-3">
+<h3 id="org342dd4e"><span class="section-number-3">4.3</span> 迭代器</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 <code>List</code> 除了继承自 <code>Collection</code> 的迭代器以外，还提供了一个功能更强大的迭代器 <code>ListIterator</code>.
@@ -653,8 +653,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdcce45f" class="outline-3">
-<h3 id="orgdcce45f"><span class="section-number-3">4.4</span> 范围视图操作</h3>
+<div id="outline-container-orgc41d5b8" class="outline-3">
+<h3 id="orgc41d5b8"><span class="section-number-3">4.4</span> 范围视图操作</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 <code>List</code> 的方法 <code>subList(int fromIndex, int toIndex)</code> 返回指定范围的 <b>列表视图</b>.
@@ -684,8 +684,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc47adce" class="outline-3">
-<h3 id="orgc47adce"><span class="section-number-3">4.5</span> 列表算法</h3>
+<div id="outline-container-org70845e8" class="outline-3">
+<h3 id="org70845e8"><span class="section-number-3">4.5</span> 列表算法</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 <code>Collections</code> 提供了一些很有用的算法， 这里列出来：
@@ -769,8 +769,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5468a7a" class="outline-2">
-<h2 id="org5468a7a"><span class="section-number-2">5</span> Queue</h2>
+<div id="outline-container-org681f5ad" class="outline-2">
+<h2 id="org681f5ad"><span class="section-number-2">5</span> Queue</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Queue</code> 是在处理之前保存元素的 <code>Collection</code>.
@@ -842,8 +842,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7b83ab9" class="outline-2">
-<h2 id="org7b83ab9"><span class="section-number-2">6</span> Deque</h2>
+<div id="outline-container-orge8bf254" class="outline-2">
+<h2 id="orge8bf254"><span class="section-number-2">6</span> Deque</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Deque</code> 是一个 <b>双端队列</b>, 是元素的线性集合，支持在两个端点处插入和移除元素。
@@ -892,8 +892,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8959323" class="outline-2">
-<h2 id="org8959323"><span class="section-number-2">7</span> Map</h2>
+<div id="outline-container-org9eb1ca5" class="outline-2">
+<h2 id="org9eb1ca5"><span class="section-number-2">7</span> Map</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Map</code> 是将键映射到值的对象。 不属于 <code>Collection</code>.
@@ -909,8 +909,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org4cc8ee1" class="outline-3">
-<h3 id="org4cc8ee1"><span class="section-number-3">7.1</span> Map 基本操作</h3>
+<div id="outline-container-org629964e" class="outline-3">
+<h3 id="org629964e"><span class="section-number-3">7.1</span> Map 基本操作</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 <code>Map</code> 的基本操作包括以下几个：
@@ -990,8 +990,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org346910c" class="outline-3">
-<h3 id="org346910c"><span class="section-number-3">7.2</span> Map 批量操作</h3>
+<div id="outline-container-orgab19edb" class="outline-3">
+<h3 id="orgab19edb"><span class="section-number-3">7.2</span> Map 批量操作</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 方法 <code>clear</code> 可以清除 <code>Map</code> 中的所有映射关系，而 <code>putAll</code> 可以使用另一个 <code>Map</code> 来更新当前的 <code>Map</code>, 覆盖存在的关系，添加新的关系。
@@ -1008,8 +1008,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org490e355" class="outline-3">
-<h3 id="org490e355"><span class="section-number-3">7.3</span> 集合视图</h3>
+<div id="outline-container-org0f878ef" class="outline-3">
+<h3 id="org0f878ef"><span class="section-number-3">7.3</span> 集合视图</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 通过如下三个方法获取 <code>Map</code> 的 <b>集合视图</b>:
@@ -1100,8 +1100,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2face24" class="outline-2">
-<h2 id="org2face24"><span class="section-number-2">8</span> 结尾</h2>
+<div id="outline-container-orgf6f1c92" class="outline-2">
+<h2 id="orgf6f1c92"><span class="section-number-2">8</span> 结尾</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 核心接口中还有 <code>SortedSet</code> 和 <code>SortedMap</code>, 它们都会对内部的元素进行排序，其余行为和它们的父接口基本一致。
@@ -1117,8 +1117,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbbd441d" class="outline-2">
-<h2 id="orgbbd441d"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-orgb2506b2" class="outline-2">
+<h2 id="orgb2506b2"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html">Lesson: Interfaces (The Java™ Tutorials &gt; Collections)</a></li>
