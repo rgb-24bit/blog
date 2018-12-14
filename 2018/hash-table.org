@@ -1,0 +1,203 @@
+#+TITLE:      散列表的简单实现
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2018-12-14 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#概念][概念]]
+- [[#散列函数][散列函数]]
+- [[#冲突][冲突]]
+- [[#分离链接法][分离链接法]]
+- [[#简单的实现][简单的实现]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  当初学数据结构的时候，只有列表、栈、队列和树跟着书上的代码敲过一次。
+
+  以致于后来看到散列表的时候，都忘记了它的实现方式，只感觉 O(1) 的插入、删除和查找操作很神奇。
+
+  前几天，终于又重新翻开了书，研究了一下散列表的实现方式，发现，好像还挺简单的 @_@
+
+* 概念
+  #+BEGIN_QUOTE
+  In computing, a hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
+  A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.([[https://en.wikipedia.org/wiki/Hash_table][Hash table]])
+  #+END_QUOTE
+
+  上面这段英文是摘自维基百科的对散列表的定义，可以看到，散列表的英文表达为 ~Hash table~, 音译过来的话，就是国内常用的 *哈希表* 了。
+
+  简单来说，散列表可以通过 *散列函数* 来建立 *键* 到 *值* 的一个 *映射*, 保存这些值的通常是一个数组（表），因而这个数据结构被叫做 *散列表*.
+  
+  大多数情况下，数组不需要我们自己来实现，因为主流编程语言基本上都直接支持数组或类似数组的结构，因此，实现散列表的关键就落在了 *散列函数* 上。
+
+* 散列函数
+  散列函数的作用是：通过一系列的计算来将 *键* 映射到 *表* 的某一个位置上，然后通过那个位置来存储键对应的 *值*.
+
+  一个简单的想法是：通过一系列的计算将 *键* 转换为一个 *整数*, 然后用这个 *整数* 来模 *表的大小*, 得到的 *余数* 就是该键映射到表中的位置：
+  #+BEGIN_SRC python
+    table[hash(key) % table.size()] = value;
+  #+end_SRC
+
+  在高级语言中，你可以直接把一个对象的 *Hash* 方法当做散列函数使用：
+  #+BEGIN_SRC python
+    >>> import ctypes
+    >>> ctypes.c_size_t(hash('key')).value
+    2932490076
+    >>> ctypes.c_size_t(hash('key')).value
+    2932490076
+    >>> ctypes.c_size_t(hash('key')).value
+    2932490076
+  #+END_SRC
+
+  对于 ~C~ 语言，可以参考《数据结构与算法分析 - C 语言描述》中的一个例子：
+  #+BEGIN_SRC C
+    Index Hash(const char* key, int TableSize) {
+      unsigned int HashVal = 0;
+
+      while (*Key != '\0') {
+        HashVal = (HashVal << 5) + *Key++;
+      }
+
+      return HashVal % TableSize;
+    }
+  #+END_SRC
+
+  
+  由于散列函数的具体实现我目前还只是 *只知其用法而不知其原理* 的状态，因此和实现散列函数相关的内容就到此结束，如果你有兴趣，可以到网上找找相关资料。
+
+* 冲突
+  确定了散列函数后还需要解决的一个问题是：冲突 - 两个不同的键经过散列函数计算后得到了相同的值。
+
+  冲突的产生会受到 *表的大小* 的影响：
+  |-----------+-----+-------|
+  | TableSize | Key | Index |
+  |-----------+-----+-------|
+  |        ~10~ |   ~1~ |     ~1~ |
+  |        ~10~ |  ~11~ |     ~1~ |
+  |-----------+-----+-------|
+  |        ~20~ |   ~1~ |     ~1~ |
+  |        ~20~ |  ~11~ |    ~11~ |
+  |-----------+-----+-------|
+
+  选择一个大一点的表可以缓解这一问题，但是过大的表会造成内存的浪费，因为散列函数计算的值可能会较为密集的分布在某一区间，
+  虽然可以通过 *散列函数的选择* 来缓解这一问题，但是依然可能会有冲突的产生。
+
+  *PS:* 表的大小最好选择为 *质数*.
+
+  既然无法完全避免冲突，那么就只好寻找一个解决冲突的方法，为了简单，这里选择了 *分离链接法*, 更多的解决方法可以参考 [[https://en.wikipedia.org/wiki/Hash_table#Collision_resolution][Collision resolution - Wikipedia]].
+
+* 分离链接法
+  分离链接法解决冲突的办法是：将散列到同一个值的所有元素保存到一个 *表* 中，而数组中保存的则是这些表的 *表头*.
+
+  同时，为了方便，可以为这些表设置一个空的头结点：
+  #+BEGIN_SRC python
+    array = [Node(None, None) for i in range(23)]
+  #+END_SRC
+
+  保存元素的结构可以通过 *Key* 字段来保存散列到该值的键，通过 *Val* 字段来保存该键对应的值：
+  #+BEGIN_SRC python
+    class Node(object):
+        def __init__(self, key val):
+            self.key = key
+            self.val = val
+            self.next = None
+  #+END_SRC
+
+  这样一来，产生冲突的时候，就可以将产生冲突的新建保存到链表头部或尾部。
+  
+* 简单的实现
+  通过 ~Python~ 实现的一个简单的散列表：
+  #+BEGIN_SRC python
+    # -*- coding: utf-8 -*-
+
+    import ctypes
+
+
+    class HashTable(object):
+        class Node(object):
+            def __init__(self, key, val):
+                self.key = key
+                self.val = val
+                self.next = None
+
+        def __init__(self, table_size):
+            self.table_size = table_size
+            self.table = [HashTable.Node(None, None) for i in range(table_size)]
+
+        def _hash(self, key):
+            return ctypes.c_size_t(hash(key)).value % self.table_size
+
+        def __setitem__(self, key, val):
+            node = self.table[self._hash(key)]
+            while node.next:
+                node = node.next
+                if node.key == key:
+                    node.val = val
+                    break
+            else:
+                node.next = HashTable.Node(key, val)
+
+        def __getitem__(self, key):
+            node = self.table[self._hash(key)]
+            while node.next:
+                node = node.next
+                if node.key == key:
+                    return node.val
+            return None
+
+        def __delitem__(self, key):
+            node = self.table[self._hash(key)]
+            prev, curr = node, node.next
+            while curr:
+                if curr.key == key:
+                    prev.next = curr.next
+                    break
+                prev, curr = curr, curr.next
+
+        def __repr__(self):
+            dt = dict()
+            for node in self.table:
+                while node.next:
+                    node = node.next
+                    dt[node.key] = node.val
+            return repr(dt)
+  #+END_SRC
+
+  测试：
+  #+BEGIN_SRC python
+    In [1]: from hashtbl import HashTable
+
+    In [2]: ht = HashTable(27)
+
+    In [3]: for i in range(30):
+       ...:     ht[i] = i
+       ...:
+
+    In [4]: sum(range(30)) == sum([ht[i] for i in range(30)])
+    Out[4]: True
+
+    In [5]: for i in range(0, 30, 2):
+       ...:     ht[i] = i * i
+       ...:
+
+    In [6]: for i in range(1, 30, 2):
+       ...:     del ht[i]
+       ...:
+
+    In [7]: ht
+    Out[7]: {0: 0, 28: 784, 2: 4, 4: 16, 6: 36, 8: 64, 10: 100, 12: 144, 14: 196, 16: 256, 18: 324, 20: 400, 22: 484, 24: 576, 26: 676}
+  #+END_SRC
+  
+* 结语
+  通过上面那个简陋的实现可以看到，只有有了现成的散列函数和冲突解决方法，散列表的实现就不是很难。
+
+  散列表的真正重点在于散列函数和冲突解决，这篇博客对于这两点的涉及很少，有兴趣的可以去了解一下。
+
+  另外，这是 Java HashMap 的源码链接，可以学习一下： [[http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/HashMap.java][OpenJDK/jdk8/jdk8/jdk]].
+
+* 参考链接
+  + [[http://www.nowamagic.net/academy/part/30/185/][数据结构：查找篇 -- 简明现代魔法]]
+  + [[https://en.wikipedia.org/wiki/Hash_table][Hash table - Wikipedia]]
+

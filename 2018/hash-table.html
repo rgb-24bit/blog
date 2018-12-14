@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-12-14 周五 16:53 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>散列表的简单实现</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">散列表的简单实现</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdb2e48f">1. 前言</a></li>
+<li><a href="#org0558976">2. 概念</a></li>
+<li><a href="#orgfb467a1">3. 散列函数</a></li>
+<li><a href="#org93045ed">4. 冲突</a></li>
+<li><a href="#org3865d4b">5. 分离链接法</a></li>
+<li><a href="#org7c6f35c">6. 简单的实现</a></li>
+<li><a href="#org6cff4f0">7. 结语</a></li>
+<li><a href="#orga392ce4">8. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdb2e48f" class="outline-2">
+<h2 id="orgdb2e48f"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+当初学数据结构的时候，只有列表、栈、队列和树跟着书上的代码敲过一次。
+</p>
+
+<p>
+以致于后来看到散列表的时候，都忘记了它的实现方式，只感觉 O(1) 的插入、删除和查找操作很神奇。
+</p>
+
+<p>
+前几天，终于又重新翻开了书，研究了一下散列表的实现方式，发现，好像还挺简单的 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0558976" class="outline-2">
+<h2 id="org0558976"><span class="section-number-2">2</span> 概念</h2>
+<div class="outline-text-2" id="text-2">
+<blockquote>
+<p>
+In computing, a hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
+A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.(<a href="https://en.wikipedia.org/wiki/Hash_table">Hash table</a>)
+</p>
+</blockquote>
+
+<p>
+上面这段英文是摘自维基百科的对散列表的定义，可以看到，散列表的英文表达为 <code>Hash table</code>, 音译过来的话，就是国内常用的 <b>哈希表</b> 了。
+</p>
+
+<p>
+简单来说，散列表可以通过 <b>散列函数</b> 来建立 <b>键</b> 到 <b>值</b> 的一个 <b>映射</b>, 保存这些值的通常是一个数组（表），因而这个数据结构被叫做 <b>散列表</b>.
+</p>
+
+<p>
+大多数情况下，数组不需要我们自己来实现，因为主流编程语言基本上都直接支持数组或类似数组的结构，因此，实现散列表的关键就落在了 <b>散列函数</b> 上。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfb467a1" class="outline-2">
+<h2 id="orgfb467a1"><span class="section-number-2">3</span> 散列函数</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+散列函数的作用是：通过一系列的计算来将 <b>键</b> 映射到 <b>表</b> 的某一个位置上，然后通过那个位置来存储键对应的 <b>值</b>.
+</p>
+
+<p>
+一个简单的想法是：通过一系列的计算将 <b>键</b> 转换为一个 <b>整数</b>, 然后用这个 <b>整数</b> 来模 <b>表的大小</b>, 得到的 <b>余数</b> 就是该键映射到表中的位置：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">table</span>[<span style="font-weight: bold;">hash</span>(key) % table.size()] = value;
+</pre>
+</div>
+
+<p>
+在高级语言中，你可以直接把一个对象的 <b>Hash</b> 方法当做散列函数使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> ctypes
+&gt;&gt;&gt; ctypes.c_size_t(<span style="font-weight: bold;">hash</span>(<span style="font-style: italic;">'key'</span>)).value
+2932490076
+&gt;&gt;&gt; ctypes.c_size_t(<span style="font-weight: bold;">hash</span>(<span style="font-style: italic;">'key'</span>)).value
+2932490076
+&gt;&gt;&gt; ctypes.c_size_t(<span style="font-weight: bold;">hash</span>(<span style="font-style: italic;">'key'</span>)).value
+2932490076
+</pre>
+</div>
+
+<p>
+对于 <code>C</code> 语言，可以参考《数据结构与算法分析 - C 语言描述》中的一个例子：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">Index</span> <span style="font-weight: bold;">Hash</span>(<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">key</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">TableSize</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">HashVal</span> = 0;
+
+  <span style="font-weight: bold;">while</span> (*Key != <span style="font-style: italic;">'\0'</span>) {
+    HashVal = (HashVal &lt;&lt; 5) + *Key++;
+  }
+
+  <span style="font-weight: bold;">return</span> HashVal % TableSize;
+}
+</pre>
+</div>
+
+
+<p>
+由于散列函数的具体实现我目前还只是 <b>只知其用法而不知其原理</b> 的状态，因此和实现散列函数相关的内容就到此结束，如果你有兴趣，可以到网上找找相关资料。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org93045ed" class="outline-2">
+<h2 id="org93045ed"><span class="section-number-2">4</span> 冲突</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+确定了散列函数后还需要解决的一个问题是：冲突 - 两个不同的键经过散列函数计算后得到了相同的值。
+</p>
+
+<p>
+冲突的产生会受到 <b>表的大小</b> 的影响：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">TableSize</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>10</code></td>
+<td class="org-left"><code>1</code></td>
+<td class="org-left"><code>1</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>10</code></td>
+<td class="org-left"><code>11</code></td>
+<td class="org-left"><code>1</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>20</code></td>
+<td class="org-left"><code>1</code></td>
+<td class="org-left"><code>1</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>20</code></td>
+<td class="org-left"><code>11</code></td>
+<td class="org-left"><code>11</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+选择一个大一点的表可以缓解这一问题，但是过大的表会造成内存的浪费，因为散列函数计算的值可能会较为密集的分布在某一区间，
+虽然可以通过 <b>散列函数的选择</b> 来缓解这一问题，但是依然可能会有冲突的产生。
+</p>
+
+<p>
+<b>PS:</b> 表的大小最好选择为 <b>质数</b>.
+</p>
+
+<p>
+既然无法完全避免冲突，那么就只好寻找一个解决冲突的方法，为了简单，这里选择了 <b>分离链接法</b>, 更多的解决方法可以参考 <a href="https://en.wikipedia.org/wiki/Hash_table#Collision_resolution">Collision resolution - Wikipedia</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3865d4b" class="outline-2">
+<h2 id="org3865d4b"><span class="section-number-2">5</span> 分离链接法</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+分离链接法解决冲突的办法是：将散列到同一个值的所有元素保存到一个 <b>表</b> 中，而数组中保存的则是这些表的 <b>表头</b>.
+</p>
+
+<p>
+同时，为了方便，可以为这些表设置一个空的头结点：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">array</span> = [Node(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold; text-decoration: underline;">None</span>) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(23)]
+</pre>
+</div>
+
+<p>
+保存元素的结构可以通过 <b>Key</b> 字段来保存散列到该值的键，通过 <b>Val</b> 字段来保存该键对应的值：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Node</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, key val):
+        <span style="font-weight: bold;">self</span>.key = key
+        <span style="font-weight: bold;">self</span>.val = val
+        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">next</span> = <span style="font-weight: bold; text-decoration: underline;">None</span>
+</pre>
+</div>
+
+<p>
+这样一来，产生冲突的时候，就可以将产生冲突的新建保存到链表头部或尾部。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c6f35c" class="outline-2">
+<h2 id="org7c6f35c"><span class="section-number-2">6</span> 简单的实现</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+通过 <code>Python</code> 实现的一个简单的散列表：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">-*- coding: utf-8 -*-</span>
+
+<span style="font-weight: bold;">import</span> ctypes
+
+
+<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">HashTable</span>(<span style="font-weight: bold;">object</span>):
+    <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Node</span>(<span style="font-weight: bold;">object</span>):
+        <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, key, val):
+            <span style="font-weight: bold;">self</span>.key = key
+            <span style="font-weight: bold;">self</span>.val = val
+            <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">next</span> = <span style="font-weight: bold; text-decoration: underline;">None</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, table_size):
+        <span style="font-weight: bold;">self</span>.table_size = table_size
+        <span style="font-weight: bold;">self</span>.table = [HashTable.Node(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold; text-decoration: underline;">None</span>) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(table_size)]
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">_hash</span>(<span style="font-weight: bold;">self</span>, key):
+        <span style="font-weight: bold;">return</span> ctypes.c_size_t(<span style="font-weight: bold;">hash</span>(key)).value % <span style="font-weight: bold;">self</span>.table_size
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__setitem__</span>(<span style="font-weight: bold;">self</span>, key, val):
+        <span style="font-weight: bold; font-style: italic;">node</span> = <span style="font-weight: bold;">self</span>.table[<span style="font-weight: bold;">self</span>._hash(key)]
+        <span style="font-weight: bold;">while</span> node.<span style="font-weight: bold;">next</span>:
+            <span style="font-weight: bold; font-style: italic;">node</span> = node.<span style="font-weight: bold;">next</span>
+            <span style="font-weight: bold;">if</span> node.key == key:
+                <span style="font-weight: bold; font-style: italic;">node.val</span> = val
+                <span style="font-weight: bold;">break</span>
+        <span style="font-weight: bold;">else</span>:
+            node.<span style="font-weight: bold;">next</span> = HashTable.Node(key, val)
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getitem__</span>(<span style="font-weight: bold;">self</span>, key):
+        <span style="font-weight: bold; font-style: italic;">node</span> = <span style="font-weight: bold;">self</span>.table[<span style="font-weight: bold;">self</span>._hash(key)]
+        <span style="font-weight: bold;">while</span> node.<span style="font-weight: bold;">next</span>:
+            <span style="font-weight: bold; font-style: italic;">node</span> = node.<span style="font-weight: bold;">next</span>
+            <span style="font-weight: bold;">if</span> node.key == key:
+                <span style="font-weight: bold;">return</span> node.val
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">None</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__delitem__</span>(<span style="font-weight: bold;">self</span>, key):
+        <span style="font-weight: bold; font-style: italic;">node</span> = <span style="font-weight: bold;">self</span>.table[<span style="font-weight: bold;">self</span>._hash(key)]
+        <span style="font-weight: bold; font-style: italic;">prev</span>, <span style="font-weight: bold; font-style: italic;">curr</span> = node, node.<span style="font-weight: bold;">next</span>
+        <span style="font-weight: bold;">while</span> curr:
+            <span style="font-weight: bold;">if</span> curr.key == key:
+                prev.<span style="font-weight: bold;">next</span> = curr.<span style="font-weight: bold;">next</span>
+                <span style="font-weight: bold;">break</span>
+            <span style="font-weight: bold; font-style: italic;">prev</span>, <span style="font-weight: bold; font-style: italic;">curr</span> = curr, curr.<span style="font-weight: bold;">next</span>
+
+    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__repr__</span>(<span style="font-weight: bold;">self</span>):
+        <span style="font-weight: bold; font-style: italic;">dt</span> = <span style="font-weight: bold;">dict</span>()
+        <span style="font-weight: bold;">for</span> node <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">self</span>.table:
+            <span style="font-weight: bold;">while</span> node.<span style="font-weight: bold;">next</span>:
+                <span style="font-weight: bold; font-style: italic;">node</span> = node.<span style="font-weight: bold;">next</span>
+                <span style="font-weight: bold; font-style: italic;">dt</span>[node.key] = node.val
+        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">repr</span>(dt)
+</pre>
+</div>
+
+<p>
+测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">In [1]: <span style="font-weight: bold;">from</span> hashtbl <span style="font-weight: bold;">import</span> HashTable
+
+In [2]: <span style="font-weight: bold; font-style: italic;">ht</span> = HashTable(27)
+
+In [3]: <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(30):
+   ...:     <span style="font-weight: bold; font-style: italic;">ht</span>[i] = i
+   ...:
+
+In [4]: <span style="font-weight: bold;">sum</span>(<span style="font-weight: bold;">range</span>(30)) == <span style="font-weight: bold;">sum</span>([ht[i] <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(30)])
+Out[4]: <span style="font-weight: bold; text-decoration: underline;">True</span>
+
+In [5]: <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(0, 30, 2):
+   ...:     <span style="font-weight: bold; font-style: italic;">ht</span>[i] = i * i
+   ...:
+
+In [6]: <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, 30, 2):
+   ...:     <span style="font-weight: bold;">del</span> ht[i]
+   ...:
+
+In [7]: ht
+Out[7]: {0: 0, 28: 784, 2: 4, 4: 16, 6: 36, 8: 64, 10: 100, 12: 144, 14: 196, 16: 256, 18: 324, 20: 400, 22: 484, 24: 576, 26: 676}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6cff4f0" class="outline-2">
+<h2 id="org6cff4f0"><span class="section-number-2">7</span> 结语</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+通过上面那个简陋的实现可以看到，只有有了现成的散列函数和冲突解决方法，散列表的实现就不是很难。
+</p>
+
+<p>
+散列表的真正重点在于散列函数和冲突解决，这篇博客对于这两点的涉及很少，有兴趣的可以去了解一下。
+</p>
+
+<p>
+另外，这是 Java HashMap 的源码链接，可以学习一下： <a href="http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/HashMap.java">OpenJDK/jdk8/jdk8/jdk</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga392ce4" class="outline-2">
+<h2 id="orga392ce4"><span class="section-number-2">8</span> 参考链接</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><a href="http://www.nowamagic.net/academy/part/30/185/">数据结构：查找篇 &#x2013; 简明现代魔法</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hash_table">Hash table - Wikipedia</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
