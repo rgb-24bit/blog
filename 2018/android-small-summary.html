@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2018-12-21 周五 19:55 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android 小总结</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Android 小总结</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge3b40ef">1. 前言</a></li>
+<li><a href="#orgffa3b9c">2. 开发环境的搭建</a></li>
+<li><a href="#org6893f0f">3. 日志工具</a></li>
+<li><a href="#orgdf3cb7f">4. 活动</a></li>
+<li><a href="#orgd0296c3">5. 广播、服务和内容提供器</a></li>
+<li><a href="#org30a13be">6. 数据持久化</a></li>
+<li><a href="#org67068a3">7. 权限问题</a></li>
+<li><a href="#orgff02a39">8. 后记</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge3b40ef" class="outline-2">
+<h2 id="orge3b40ef"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+第一次接触 Android 还在刚开始学编程的时候，那会刚学了点 C 语言的基础，除此以外什么都不会。
+</p>
+
+<p>
+因为一些原因，想要搞一个手机上的应用程序，然后折腾了几天 Eclipse、Android Studio、虚拟机，
+成功在手机上运行了 Hello World.
+</p>
+
+<p>
+然后就放弃了&#x2026;&#x2026;
+</p>
+
+<p>
+因为什么都不懂，不会 Java，不会 XML，虽然运行起了 Hello World，但那是人家自带的程序。
+</p>
+
+<p>
+这学期，为了赚点学分，选了移动开发这门课，讲的就是 Android 开发。
+</p>
+
+<p>
+拿到教材后，看了一圈，发现，当初困扰我的很多东西现在我已经可以弄明白了。
+</p>
+
+<p>
+但是呢，由于兴趣、电脑性能、时间安排等原因，结课后的一段时间内估计都不会怎么接触 Android 了，
+为了避免以后要用的时候又要重头学起，准备用这篇博客来总结一下学到的一些东西。
+</p>
+
+<details><summary><i>找教程的请点这里</i></summary>
+
+<p>
+这篇博客不是教程！这篇博客不是教程！这篇博客不是教程！
+</p>
+
+<p>
+这篇博客主要是这学期学习 Android 的一个总结，主要是给我自己看的，写成博客的原因是写博客的时候，
+我会认真一点。
+</p>
+
+<p>
+如果你是来找教程的，可以去 <a href="https://developer.android.google.cn/guide/">官网</a> 或找找其他教程。
+</p>
+
+</details>
+</div>
+</div>
+
+<div id="outline-container-orgffa3b9c" class="outline-2">
+<h2 id="orgffa3b9c"><span class="section-number-2">2</span> 开发环境的搭建</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Android 开发环境是我接触到的，最难搭建的开发环境，没有之一。
+</p>
+
+<p>
+总的来说，Android 开发环境的搭建主要需要以下三个工具：
+</p>
+<ul class="org-ul">
+<li>Android Studio</li>
+<li>Android SDK</li>
+<li>Gradle</li>
+</ul>
+
+<p>
+其中，Android Studio 可以直接在官网下载：
+</p>
+<ul class="org-ul">
+<li><a href="https://developer.android.com/studio/">下载 Android Studio 和 SDK 工具 | Android Developers</a></li>
+</ul>
+
+<p>
+然后是 SDK，建议到 Android Studio 中文社区下载<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>：
+</p>
+<ul class="org-ul">
+<li><a href="http://tools.android-studio.org/index.php/sdk">ANDROID SDK R24.4.1-里程碑版本</a></li>
+</ul>
+
+<p>
+最后是 Gradle，建议手动下载好对应版本的压缩包放到 <code>C:\Users\UserName\.gradle\wrapper\dists</code> 下，
+等 Android Studio 自己下载真的很绝望。
+</p>
+
+<p>
+下载链接： <a href="https://gradle.org/releases/">Gradle | Releases</a>.
+</p>
+
+<p>
+这三个东西配置好了以后，如果需要配置镜像的话，可以试试东软的：
+</p>
+<ul class="org-ul">
+<li><a href="http://mirrors.neusoft.edu.cn/more.we#android">配置说明 - 开源镜像站 | We-Cloud 维云技术小组 - 东软校园内的云服务平台</a></li>
+</ul>
+
+<p>
+其他和开发环境的搭建相关的问题就不多说了，因人而异，相同的步骤在不同的电脑上可能遇到不同的问题，
+多谷歌或百度，总能解决的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6893f0f" class="outline-2">
+<h2 id="org6893f0f"><span class="section-number-2">3</span> 日志工具</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Android 的日志工具使用起来是真的省心，不需要自己去配置什么，默认的格式基本就足够了。
+</p>
+
+<p>
+唯一比较纠结的是常用的一个参数： <b>TAG</b>.
+</p>
+
+<p>
+常见的做法是在类开头的第一个字段定义它：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyActivity</span> <span style="font-weight: bold;">extends</span> <span style="font-weight: bold; text-decoration: underline;">Activity</span> {
+  <span style="font-weight: bold;">private</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">TAG</span> = <span style="font-style: italic;">"MyActivity"</span>;
+  <span style="font-weight: bold; font-style: italic;">//</span><span style="font-weight: bold; font-style: italic;">...</span>
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span> () {
+    <span style="font-weight: bold; font-style: italic;">//</span><span style="font-weight: bold; font-style: italic;">...</span>
+    Log.d(TAG, <span style="font-style: italic;">"Some logging"</span>);
+  }
+}
+</pre>
+</div>
+
+<p>
+然而，这样的方式依然有些让人不爽，存在硬编码，手写字符串也很不方便。
+</p>
+
+<p>
+<a href="https://stackoverflow.com/questions/8355632/how-do-you-usually-tag-log-entries-android">Stack Overflow</a> 有人提出了相关的问题，接受的解决方案是这样的：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">private</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">TAG</span> = MyActivity.<span style="font-weight: bold;">class</span>.getName();
+</pre>
+</div>
+
+<p>
+还有一个问题就是日志工具的定制，如果开发和生产环境中需要不同级别的日志打印，
+可以通过定制日志工具实现<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">LogUtil</span> {
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">VERBOSE</span> = 1;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">DEBUG</span> = 2;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">INFO</span> = 3;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">WARN</span> = 4;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ERROR</span> = 5;
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">NOTHING</span> = 6;
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">level</span> = VERBOSE;
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">v</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
+    <span style="font-weight: bold;">if</span> (level &lt;= VERBOSE) {
+      log.v(tag, msg);
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">d</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
+    <span style="font-weight: bold;">if</span> (level &lt;= DEBUG) {
+      log.d(tag, msg);
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">i</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
+    <span style="font-weight: bold;">if</span> (level &lt;= INFO) {
+      log.i(tag, msg);
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">w</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
+    <span style="font-weight: bold;">if</span> (level &lt;= WARN) {
+      log.w(tag, msg);
+    }
+  }
+
+  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">e</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
+    <span style="font-weight: bold;">if</span> (level &lt;= ERROR) {
+      log.e(tag, msg);
+    }
+  }
+}
+</pre>
+</div>
+
+<p>
+只需要指定 <code>level</code> 来确定需要打印那些级别的日志就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdf3cb7f" class="outline-2">
+<h2 id="orgdf3cb7f"><span class="section-number-2">4</span> 活动</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+活动属于 Android 四大组件之一，相关的内容也很多，想要学习它们的使用可以看官方教程：
+</p>
+<ul class="org-ul">
+<li><a href="https://developer.android.google.cn/guide/components/activities">Activity | Android Developers</a></li>
+<li><a href="https://developer.android.google.cn/guide/components/intents-filters">Intent 和 Intent 过滤器 | Android Developers</a></li>
+<li><a href="https://developer.android.google.cn/guide/components/fragments">碎片 | Android Developers</a></li>
+<li><a href="https://developer.android.google.cn/guide/topics/ui/overview">UI 概览 | Android Developers</a></li>
+<li>&#x2026;</li>
+</ul>
+
+<p>
+学习过程中的疑问与解答：
+</p>
+<ul class="org-ul">
+<li><p>
+布局文件中控件的 ID 需要保证它的全局唯一性吗？
+</p>
+
+<blockquote>
+<p>
+不需要，只要保证其局部唯一就可以了，即：保证使用 <code>findViewById</code> 的地方，内部控件的 ID 是唯一的。
+</p>
+
+<p>
+对于 <code>Activity</code> 来说，它的 <code>findViewById</code> 是在整个布局文件内部寻找，因此，单个文件内部还是保证唯一比较好。
+</p>
+</blockquote></li>
+
+<li><p>
+活动与布局之间的关系？
+</p>
+
+<blockquote>
+<p>
+活动作为应用程序的门面，通过方法 <code>setContentView</code> 加载指定的布局，内部通过 <b>反射</b> 机制，
+动态创建布局文件中定义的各种控件与布局，然后按照布局文件中定义的层次结构与属性装填好显示。
+</p>
+</blockquote></li>
+
+<li><p>
+碎片与活动的兼容问题？
+</p>
+
+<blockquote>
+<p>
+老版本的 Android Studio 似乎存在的一个问题，活动默认继承自 <code>android.app.Activity</code>, 
+而碎片默认继承自 <code>android.support.v4.app.Fragment</code>, 这两者是不兼容的，程序一运行就 GG.
+</p>
+
+<p>
+解决方案是：要么用 <code>android.app.Fragment</code> 和 <code>android.app.Activity</code>, 
+要么用 <code>android.support.v7.app.AppCompatActivity</code> 和 <code>android.support.v4.app.Fragment</code>.
+</p>
+</blockquote></li>
+
+<li><p>
+R 类是怎么一回事？
+</p>
+
+<blockquote>
+<p>
+很明显，我们没有自己创建 R 类，这就意味着 Android Studio 会自主编译 R 类，
+推测是在资源文件发生修改后进行编译。
+</p>
+
+<p>
+如果你的资源文件出错，编译失败，你的代码中的 R 也许就变红了。
+</p>
+</blockquote></li>
+
+<li><p>
+布局的动态加载
+</p>
+
+<blockquote>
+<p>
+Android 可以动态的加载布局，当移动端的大小不同或横竖屏不一样是，可以自动选择相应的布局（如果有的话），
+所以说，加载了什么布局，方法 <code>findViewById</code> 就作用在什么布局上，因此编写代码是需要注意存在多种不同的布局的情况。
+</p>
+</blockquote></li>
+
+<li><p>
+相对布局的一个关键点
+</p>
+
+<blockquote>
+<p>
+名字都叫做相对布局了，那么，对于相对布局来说，十分重要的一点就是：参考对象的选择。
+</p>
+</blockquote></li>
+
+<li><p>
+Intent 传递对象
+</p>
+
+<blockquote>
+<p>
+Intent 可以传递实现了 <a href="https://developer.android.google.cn/reference/java/io/Serializable">Serializable</a> 和 <a href="https://developer.android.google.cn/reference/android/os/Parcelable">Parcelable</a> 的对象。
+</p>
+</blockquote></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd0296c3" class="outline-2">
+<h2 id="orgd0296c3"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Android 的四大组件为：活动、广播、服务和内容提供器，除了活动以外，另外三大组件都只是简单的学习了一下，
+用的还不多，就简单的一并总结了 @_@
+</p>
+
+<p>
+这是官方的教程链接：
+</p>
+<ul class="org-ul">
+<li><a href="https://developer.android.google.cn/guide/components/broadcasts">Broadcasts overview | Android Developers</a></li>
+<li><a href="https://developer.android.google.cn/guide/components/services">服务 | Android Developers</a></li>
+<li><a href="https://developer.android.google.cn/guide/topics/providers/content-provider-basics?hl=zh-cn">内容提供程序基础知识 | Android Developers</a></li>
+</ul>
+
+<p>
+简单的总结：
+</p>
+<ul class="org-ul">
+<li><p>
+广播：广播主要分为系统广播、自定义广播和本地广播，广播的接收和发送操作都是比较简单的。
+</p>
+
+<p>
+其中，系统广播和自定义广播可以在 <code>AndroidManifest.xml</code> 静态注册，而本地广播只能动态注册。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+服务：服务是 Android 运行后台任务的方式，与之相关的话题有 <b>多线程</b> 和 <b>异步消息机制</b>. 而服务本身的使用反而比较简单，
+需要注意的一点是：子线程中是不能修改 UI 内容的，如果要修改，就只能想办法告诉主线程执行相应的操作。
+</p>
+
+<p>
+一种比较简单的方式是使用 <a href="https://developer.android.google.cn/reference/android/app/Activity.html#runOnUiThread(java.lang.Runnable)">Activity.runOnUiThread</a> 方法。
+</p></li>
+
+<li>内容提供器：内容提供器通过类似数据库访问的接口提供访问与获取内容的方法，与之相关的一个话题是 <code>URI</code> 的解析与处理。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org30a13be" class="outline-2">
+<h2 id="org30a13be"><span class="section-number-2">6</span> 数据持久化</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库中，并提供了相应的，简洁的接口。
+</p>
+
+<p>
+官方的教程链接：
+</p>
+<ul class="org-ul">
+<li><a href="https://developer.android.google.cn/guide/topics/data/data-storage">存储选项 | Android Developers</a></li>
+</ul>
+
+<p>
+文件和 SharedPreferences 的使用都很简单，而 Android 也内置了 SQLite 数据库，算是比较简单的一部分内容。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org67068a3" class="outline-2">
+<h2 id="org67068a3"><span class="section-number-2">7</span> 权限问题</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+编写 Android 问题避不开的一个问题就是权限的获取，对于危险的权限来说，除了需要在 <code>AndroidManifest.xml</code> 中声明以外，
+还需要进行运行时权限申请。
+</p>
+
+<p>
+运行时权限申请的官方教程：
+</p>
+<ul class="org-ul">
+<li><a href="https://developer.android.google.cn/training/permissions/requesting">在运行时请求权限 | Android Developers</a></li>
+</ul>
+
+<p>
+运行时权限的申请不是什么困难的操作，比较让人在意的是申请权限是的 <code>requestCode</code>, 活动的 <code>startActivityForResult()</code> 也有这么一个参数。
+</p>
+
+<p>
+直接填一个整数不是很方便管理，估计过一段时间就忘了每个整数的含义。
+</p>
+
+<p>
+自己定义请求码也很麻烦，为什么 Google 不内置一个各个权限对应的请求码呢（很明显，活动没法内置）？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgff02a39" class="outline-2">
+<h2 id="orgff02a39"><span class="section-number-2">8</span> 后记</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Android 的内容是很多的，单靠一篇博客就想写完是不可能的，这里也只是拎了一些印象比较深的的内容出来总结。
+</p>
+
+<p>
+像多媒体的使用、网络访问、XML、JSON 等内容都没有提及，毕竟，用的少，没啥实感。
+</p>
+
+<p>
+博客中附了不少官方教程的链接，建议去看看，官方教程写的很全面，我的不少疑问都是通过官方教程解决的。
+</p>
+
+
+<div class="figure">
+<p><img src="img/android.png" alt="android.png">
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+下载链接其实还是 Google 官方的
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+《第一行代码 - Android》第二版，第 464 页
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
