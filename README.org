@@ -3,6 +3,7 @@
 #+EMAIL:      rgb-24bit@foxmail.com
 
 - *2018*
+  - 12-28 -- [[file:2018/msisdn.org][移动台国际用户识别码]] ::
   - 12-21 -- [[file:2018/android-small-summary.org][Android 小总结]] ::
   - 12-14 -- [[file:2018/hash-table.org][散列表的简单实现]] ::
   - 12-07 -- [[file:2018/uri.org][URI - 统一资源标识符]] ::
