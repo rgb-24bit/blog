@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-12-11 周二 19:13 -->
+<!-- 2019-01-01 周二 15:28 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 日志模块</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org764f388">1. 前言</a></li>
-<li><a href="#org0a80e53">2. 简单的使用</a></li>
-<li><a href="#org3fbf445">3. 配置日志消息的格式</a></li>
-<li><a href="#org73be0d7">4. 同时输出到终端和文件</a></li>
-<li><a href="#org908dc19">5. 日志配置</a></li>
-<li><a href="#org381c27e">6. 结语</a></li>
-<li><a href="#org23c5c1c">7. 参考链接</a></li>
+<li><a href="#orgf79bc8f">1. 前言</a></li>
+<li><a href="#org78725dc">2. 简单的使用</a></li>
+<li><a href="#org5e28ace">3. 配置日志消息的格式</a></li>
+<li><a href="#org3c3f24b">4. 同时输出到终端和文件</a></li>
+<li><a href="#org193975a">5. 日志配置</a></li>
+<li><a href="#org3ef40a6">6. 结语</a></li>
+<li><a href="#orgc11888b">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org764f388" class="outline-2">
-<h2 id="org764f388"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgf79bc8f" class="outline-2">
+<h2 id="orgf79bc8f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟踪为耻</b>.
@@ -275,8 +275,8 @@ Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟
 </div>
 </div>
 
-<div id="outline-container-org0a80e53" class="outline-2">
-<h2 id="org0a80e53"><span class="section-number-2">2</span> 简单的使用</h2>
+<div id="outline-container-org78725dc" class="outline-2">
+<h2 id="org78725dc"><span class="section-number-2">2</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>logging</code> 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
@@ -395,8 +395,8 @@ root - DEBUG - This will get logged
 </div>
 </div>
 
-<div id="outline-container-org3fbf445" class="outline-2">
-<h2 id="org3fbf445"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
+<div id="outline-container-org5e28ace" class="outline-2">
+<h2 id="org5e28ace"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
@@ -438,8 +438,8 @@ logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
 </div>
 </div>
 
-<div id="outline-container-org73be0d7" class="outline-2">
-<h2 id="org73be0d7"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
+<div id="outline-container-org3c3f24b" class="outline-2">
+<h2 id="org3c3f24b"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
@@ -597,8 +597,8 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 </div>
 </div>
 
-<div id="outline-container-org908dc19" class="outline-2">
-<h2 id="org908dc19"><span class="section-number-2">5</span> 日志配置</h2>
+<div id="outline-container-org193975a" class="outline-2">
+<h2 id="org193975a"><span class="section-number-2">5</span> 日志配置</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 可以看到，创建和配置 <code>Logger</code> 的过程较为繁琐，因此 <code>Python</code> 为我们提供了 <code>logging.config</code> 模块来简化创建和配置 <code>Logger</code> 的过程。
@@ -729,11 +729,16 @@ logging.debug(...)
 logger.info(...)
 </pre>
 </div>
+
+<ul class="org-ul">
+<li><b>Update 2019-01-01:</b>
+这里的代码其实是有问题的，更新后的代码：<a href="https://gist.github.com/rgb-24bit/e6b8ccfdd956d74cea22f55250c468ba">Python logging module wrapper configuration</a>.</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org381c27e" class="outline-2">
-<h2 id="org381c27e"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org3ef40a6" class="outline-2">
+<h2 id="org3ef40a6"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 总感觉日志配置部分做了一些多于的事情 QAQ
@@ -753,8 +758,8 @@ Over !
 </div>
 </div>
 
-<div id="outline-container-org23c5c1c" class="outline-2">
-<h2 id="org23c5c1c"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgc11888b" class="outline-2">
+<h2 id="orgc11888b"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://realpython.com/python-logging/">Logging in Python - Real Python</a></li>

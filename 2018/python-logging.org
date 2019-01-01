@@ -314,6 +314,9 @@
     logger.info(...)
   #+END_SRC
 
+  + *Update 2019-01-01:*
+    这里的代码其实是有问题的，更新后的代码：[[https://gist.github.com/rgb-24bit/e6b8ccfdd956d74cea22f55250c468ba][Python logging module wrapper configuration]].
+
 * 结语
   总感觉日志配置部分做了一些多于的事情 QAQ
 
