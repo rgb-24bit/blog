@@ -4,3 +4,237 @@
 #+DATE:       <2019-01-04 周五>
 
 * 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#算法简述][算法简述]]
+- [[#算法详述][算法详述]]
+- [[#算法实现][算法实现]]
+  - [[#简单的有向无权图][简单的有向无权图]]
+  - [[#具体的算法实现][具体的算法实现]]
+  - [[#可能的实现优化][可能的实现优化]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算法了，经常可以看到 ~Dijkstra~ 的大名。
+
+  本来去年最后一篇博客就打算写这个，结果期末事情有点多，忙不过来了，只能水一篇上去安慰自己 @_@
+
+  所以说，作为新的一年的第一篇博客你，冲鸭！！！
+
+* 算法简述
+  迪杰斯特拉算法其实是一个很简单的算法，属于典型的贪婪算法，基本思想为：
+  + 保证每个阶段选取到的顶点到起始点的路径长度都是最短的  
+
+  在这种情况下，迪杰斯特拉算法只需要不断计算更新选取的顶点到其 *邻接顶点* 的路径长度就可以了，这对于路径长度必然是递增的（无权或非负权）图来说，
+  是没有问题的，因为，对于它们来说，每一步的最优解就是整体的最优解。
+
+  然而，对于 *负权图* 来说，就不是这样的了，负权的存在，会导致一种情况的发生：
+  + 两点之间的最短路径不是直线，而是曲线，就像是虫洞一样
+
+  比如说，存在图 ~G([a, b, c], [(a, b), (a, c), (b, c)])~, 其中，各边权重如下：
+  #+BEGIN_EXAMPLE
+    a -> b = 8
+    a -> c = 6
+    b -> c = -3
+  #+END_EXAMPLE
+
+  如果按照迪杰斯特拉算法求解，选取顶点 ~a~ 作为起点，得到的最短路径将会是：
+  #+BEGIN_EXAMPLE
+    a
+    a -> b
+    a -> c
+  #+END_EXAMPLE
+
+  而实际的最短路径应该是：
+  #+BEGIN_EXAMPLE
+    a
+    a -> b
+    a -> b -> c
+  #+END_EXAMPLE
+
+  因此，在使用迪杰斯特拉算法算法时，应该保证图中不存在负权边。
+
+* 算法详述
+  前面了解了迪杰斯特拉算法的基本思想，接下来可以了解算法的详细过程了：
+  1) 算法开始时，将图中的所有顶点分为两组，一组为已知最短路径的顶点，一组为未知最短路径的顶点，
+     初始时所有顶点都属于未知最短路径的顶点，并标记每个顶点的路径长度为无穷大。
+
+  2) 将起始点的路径长度设为 0
+
+  3) 每个阶段中，选取所有未知最短路径的顶点中路径长度最短的那一个，将其标记为已知最短路径的顶点，
+
+  4) 然后计算该顶点到其邻接顶点中属于未知最短路径的顶点的路径长度，如果计算得到的路径长度比原有的长度短，
+     就更新该邻接顶点的路径长度，并将该邻接顶点的前置节点设为选取的顶点
+
+  5) 不断执行 3 - 4 操作，直到未知最短路径的顶点数量为 0
+
+  感觉有些绕的话，可以看看下面这段伪代码[fn:1]：
+  #+BEGIN_EXAMPLE
+    function Dijkstra(Graph, source):
+
+        create vertex set Q                     // 未知最短路径的顶点集合
+
+        for each vertex v in Graph:
+            dist[v] ← INFINITY                  // 起始点到该顶点的最短路径长度
+            prev[v] ← UNDEFINED                 // 最短路径中该顶点的前置顶点
+            add v to Q                          // 初始时，所有节点都是未知最短路径的顶点
+
+        dist[source] ← 0                        // 将起始点的路径长度设为 0
+    
+        while Q is not empty:
+            u ← vertex in Q with min dist[u]    // 选取路径长度最短的一个
+                                            
+            remove u from Q 
+        
+            for each adjacent v of u:           // 遍历选取的顶点的邻接顶点
+                alt ← dist[u] + length(u, v)
+                if alt < dist[v]:               // 计算得到的路径比原有的小
+                    dist[v] ← alt 
+                    prev[v] ← u 
+
+        return dist[], prev[]
+  #+END_EXAMPLE
+
+  这个过程应该足够详细了，多余的话我也不说了 @_@
+
+* 算法实现
+  事实证明，只有实际动手去敲过代码的东西印象才留的深，留的久，这里简单用 Python 实现了这一算法。
+
+** 简单的有向无权图
+   要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无项图和有权图都有点麻烦 @_@
+
+   #+BEGIN_SRC python
+     class Graph(object):
+         """Simple directed non-right graph implementation."""
+
+         def __init__(self, vertices=None, edges=None):
+             if vertices:
+                 self.vertices = {ver: set() for ver in vertices}
+             else:
+                 self.vertices = []
+             if edges:
+                 self.add_edges(edges)
+
+         def add_edges(self, edges):
+             for u, v in edges:
+                 self.vertices.setdefault(u, set())
+                 self.vertices.setdefault(v, set())
+                 self.vertices[u].add(v)
+
+         def add_edge(self, edge):
+             self.add_edges([edge])
+
+         def __repr__(self):
+             return repr(self.vertices)
+   #+END_SRC
+
+   借助 Python 内置的字典和集合可以很简单的实现这一结构，不得不说，很方便。
+
+** 具体的算法实现
+   利用 Python 来实现这一算法的思考过程：
+   + 首先，是已知和未知集合的确定，因为只有两种情况，因此只需要创建其中一个集合就足够了。
+     同时，Python 内置的集合结构可以直接拿来用，简单。
+
+   + 然后，是每个顶点距离和前置顶点的保存，Python 中可以考虑用字典来实现，建立顶点到距离和顶点到前置顶点的映射。
+     这一步也很简单。
+
+   + 其次，是选取路径长度最短的未知顶点，常规的实现就是遍历所有未知节点，找出最短的那一个。这一步较为耗时，
+
+   + 最后，是遍历更新邻接顶点的长度，需要注意过滤邻接顶点中的已知顶点。
+     
+   可以看到，算法的实现不是太难，当然，Python 的简便也提供了很大的帮助：
+
+   #+HTML: <details><summary><i>点击查看代码</i></summary>
+
+   #+BEGIN_SRC python
+     class Graph(object):
+         """Simple directed non-right graph implementation."""
+
+         def get_min(self, dv, known_vertices):
+             rver, rdis = None, float('inf')
+             for ver, dis in dv.items():
+                 if dis < rdis and ver not in known_vertices:
+                     rver, rdis = ver, dis
+             return rver
+
+         def dijkstra(self, start):
+             known_vertices = set()
+
+             dv = {ver: float('inf') for ver in self.vertices}
+             pv = {ver: None for ver in self.vertices}
+
+             dv[start] = 0
+             while not len(known_vertices) == len(self.vertices):
+                 ver = self.get_min(dv, known_vertices)
+                 known_vertices.add(ver)
+                 for adjacent in self.vertices[ver] - known_vertices:
+                     if dv[ver] + 1 < dv[adjacent]:
+                         dv[adjacent] = dv[ver] + 1
+                         pv[adjacent] = ver
+
+             result = []
+             for ver in self.vertices:
+                 path = [ver]
+                 while pv[ver]:
+                     ver = pv[ver]
+                     path.insert(0, ver)
+                 result.append(path)
+             return result
+
+         def __repr__(self):
+   #+END_SRC
+   
+   #+HTML: </details>
+
+   代码写的有点丑，凑合着看吧 @_@
+
+   执行测试：
+   #+BEGIN_SRC python
+     >>> g = Graph([1, 2, 3, 4, 5, 6, 7])
+     >>> g.add_edges([(1, 2), (1, 4)])
+     >>> g.add_edges([(2, 4), (2, 5)])
+     >>> g.add_edges([(3, 1), (3, 6)])
+     >>> g.add_edges([(4, 3), (4, 5), (4, 6), (4, 7)])
+     >>> g.add_edges([(5, 7)])
+     >>> g.add_edges([(7, 6)])
+     >>> g.dijkstra(1)
+     [[1], [1, 2], [1, 4, 3], [1, 4], [1, 2, 5], [1, 4, 6], [1, 4, 7]]
+   #+END_SRC
+
+** 可能的实现优化
+   算法的实现还是很简单的，但是很明显的，还存在优化空间，就是那个比较耗时的一步：选取最短未知顶点。
+
+   当然了，前面我写的那个代码可以优化的地方更多 QAQ
+   
+   选取最短未知顶点可以概括为：不断选取某集合中的最小成员。这一点和一个数据结构的操作很像，
+   那就是 _优先队列 - 堆_ ！
+   
+   堆的常用操作就是找出、返回、删除集合中最小的元素，这一点和选取最短未知顶点的操作不谋而合。
+
+   因此，我们可以考虑用堆来替换选取最短未知顶点的遍历操作，而这一点，也已经有很多前辈考虑到了。
+
+   在很多资料上，我也看到了利用斐波那契堆[fn:2]来提高迪杰斯特拉算法的效率的说法。
+
+   我也去简单的了解了一下斐波那契堆的实现，发现还是有点复杂的，所以这里就不多说了，只简单提一下这种可能。
+  
+   如果你有兴趣，也有能力，可以去尝试实现，当然了，Python 中其实内置了有堆结构，也可以直接拿来用 @_@
+
+* 结语
+  全程无图的博客，还是和图结构相关的博客，阅读体验估计不太好 >_>
+
+  #+HTML: <details><summary><i>隐藏内容</i></summary>
+
+  然而画图好麻烦......
+
+  #+HTML: </details>
+
+  不得不说，这个算法比我想象的简单很多，这也不是第一个认为很难其实不难的东西了。
+
+  果然，有些东西还是要去尝试一下才知道是怎么一回事！
+   
+* Footnotes
+
+[fn:1] 来自 [[https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode][Dijkstra's algorithm - Wikipedia]]
+
+[fn:2] 参考 [[https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86][斐波那契堆 - 维基百科，自由的百科全书]]     
+

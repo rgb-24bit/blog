@@ -2,51 +2,65 @@
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
-- *2018*
-  - 12-28 -- [[file:2018/msisdn.org][移动台国际用户识别码]] ::
-  - 12-21 -- [[file:2018/android-small-summary.org][Android 小总结]] ::
-  - 12-14 -- [[file:2018/hash-table.org][散列表的简单实现]] ::
-  - 12-07 -- [[file:2018/uri.org][URI - 统一资源标识符]] ::
-  - 11-23 -- [[file:2018/tree-dfs.org][树的深度优先遍历]] ::
-  - 11-16 -- [[file:2018/python-pickle.org][使用 pickle 序列化 Python 对象]] ::
-  - 11-09 -- [[file:2018/python-logging.org][Python 日志模块]] ::
-  - 11-02 -- [[file:2018/io-redirect.org][I/O 重定向]] ::
-  - 10-26 -- [[file:2018/tree-bfs.org][树的广度优先遍历]] ::
-  - 10-21 -- [[file:2018/python-multi-threaded-usage-scenario.org][Python 多线程使用场景]] ::
-  - 10-12 -- [[file:2018/csharp-image-process.org][C# 图像处理的三种方式]] ::
-  - 10-03 -- [[file:2018/python-standard-type-hierarchy.org][Python 标准类型层次结构]] ::
-  - 09-22 -- [[file:2018/python-urllib.org][Python urllib]] ::
-  - 09-15 -- [[file:2018/linux-file-permission.org][Linux 文件权限]] ::
-  - 08-28 -- [[file:2018/python-generator.org][Python 生成器]] ::
-  - 08-22 -- [[file:2018/python-io.org][Python I/O]] ::
-  - 08-11 -- [[file:2018/java-collection.org][Java 核心集合接口]] ::
-  - 08-05 -- [[file:2018/python-metaclass.org][Python 元类]] ::
-  - 07-31 -- [[file:2018/python-new-instance.org][Python 构造对象实例]] ::
-  - 07-26 -- [[file:2018/python3.0-3.6.org][Python3.0-3.6的版本变化]] ::
-  - 07-17 -- [[file:2018/java-basic.org][Java 基础梳理]] ::
-  - 07-01 -- [[file:2018/os-exception.org][操作系统之异常控制流]] ::
-  - 06-16 -- [[file:2018/python-descriptor.org][Python 描述器简述]] ::
-  - 06-01 -- [[file:2018/c-pointer.org][C 语言指针和数组]] ::
-  - 05-20 -- [[file:2018/python-regex.org][Python 正则表达式]] ::
-  - 05-16 -- [[file:2018/python-decorator.org][Python 闭包和装饰器]] ::
-  - 05-03 -- [[file:2018/http.org][HTTP 协议相关]] ::
-  - 04-15 -- [[file:2018/python-import.org][Python 导入相关]] ::
-  - 04-03 -- [[file:2018/python-special-method.org][Python 魔法方法]] ::
-  - 03-30 -- [[file:2018/git-base.org][Git 基础使用]] ::
-  - 03-25 -- [[file:2018/win32.org][Win32 API 窗口程序]] ::
-  - 03-23 -- [[file:2018/python-build-in-type.org][Python 内置类型]] ::
-  - 03-20 -- [[file:2018/glob.org][Glob 语法及解析]] ::
-  - 03-10 -- [[file:2018/google.org][Google 搜索]] ::
-  - 03-03 -- [[file:2018/python-collection.org][Python 容器]] ::
-  - 02-26 -- [[file:2018/python-coding.org][Python 编码问题]] ::
-  - 02-21 -- [[file:2018/python-format-string.org][Python 格式化字符串]] ::
-  - 02-18 -- [[file:2018/python-build-in-exception.org][Python 内置异常]] ::
-  - 02-14 -- [[file:2018/python-build-in-function.org][Python 内置函数]] ::
-  - 02-06 -- [[file:2018/blockchain.org][区块链的简单尝试]] ::
-  - 02-02 -- [[file:2018/pipenv.org][Pipenv 的使用]] ::
-  - 01-23 -- [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]] ::
-  - 01-04 -- [[file:2018/regex.org][正则表达式]] ::
-  - 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][SqlLocalDB 和 Sqlcmd]] ::
-- *2017*
-  - 12-27 -- [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]] ::
-  - 12-26 -- [[file:2017/c99-wchar.org][C99 宽字符]] ::
+#+HTML: <details open="open"><summary><i>2019</i></summary>
+
+- 01-04 -- [[file:2019/dijkstra-algorithm.org][迪杰斯特拉算法]] ::
+
+#+HTML: </details>
+
+#+HTML: <details><summary><i>2018</i></summary>
+
+- 12-28 -- [[file:2018/msisdn.org][移动台国际用户识别码]] ::
+- 12-21 -- [[file:2018/android-small-summary.org][Android 小总结]] ::
+- 12-14 -- [[file:2018/hash-table.org][散列表的简单实现]] ::
+- 12-07 -- [[file:2018/uri.org][URI - 统一资源标识符]] ::
+- 11-23 -- [[file:2018/tree-dfs.org][树的深度优先遍历]] ::
+- 11-16 -- [[file:2018/python-pickle.org][使用 pickle 序列化 Python 对象]] ::
+- 11-09 -- [[file:2018/python-logging.org][Python 日志模块]] ::
+- 11-02 -- [[file:2018/io-redirect.org][I/O 重定向]] ::
+- 10-26 -- [[file:2018/tree-bfs.org][树的广度优先遍历]] ::
+- 10-21 -- [[file:2018/python-multi-threaded-usage-scenario.org][Python 多线程使用场景]] ::
+- 10-12 -- [[file:2018/csharp-image-process.org][C# 图像处理的三种方式]] ::
+- 10-03 -- [[file:2018/python-standard-type-hierarchy.org][Python 标准类型层次结构]] ::
+- 09-22 -- [[file:2018/python-urllib.org][Python urllib]] ::
+- 09-15 -- [[file:2018/linux-file-permission.org][Linux 文件权限]] ::
+- 08-28 -- [[file:2018/python-generator.org][Python 生成器]] ::
+- 08-22 -- [[file:2018/python-io.org][Python I/O]] ::
+- 08-11 -- [[file:2018/java-collection.org][Java 核心集合接口]] ::
+- 08-05 -- [[file:2018/python-metaclass.org][Python 元类]] ::
+- 07-31 -- [[file:2018/python-new-instance.org][Python 构造对象实例]] ::
+- 07-26 -- [[file:2018/python3.0-3.6.org][Python3.0-3.6的版本变化]] ::
+- 07-17 -- [[file:2018/java-basic.org][Java 基础梳理]] ::
+- 07-01 -- [[file:2018/os-exception.org][操作系统之异常控制流]] ::
+- 06-16 -- [[file:2018/python-descriptor.org][Python 描述器简述]] ::
+- 06-01 -- [[file:2018/c-pointer.org][C 语言指针和数组]] ::
+- 05-20 -- [[file:2018/python-regex.org][Python 正则表达式]] ::
+- 05-16 -- [[file:2018/python-decorator.org][Python 闭包和装饰器]] ::
+- 05-03 -- [[file:2018/http.org][HTTP 协议相关]] ::
+- 04-15 -- [[file:2018/python-import.org][Python 导入相关]] ::
+- 04-03 -- [[file:2018/python-special-method.org][Python 魔法方法]] ::
+- 03-30 -- [[file:2018/git-base.org][Git 基础使用]] ::
+- 03-25 -- [[file:2018/win32.org][Win32 API 窗口程序]] ::
+- 03-23 -- [[file:2018/python-build-in-type.org][Python 内置类型]] ::
+- 03-20 -- [[file:2018/glob.org][Glob 语法及解析]] ::
+- 03-10 -- [[file:2018/google.org][Google 搜索]] ::
+- 03-03 -- [[file:2018/python-collection.org][Python 容器]] ::
+- 02-26 -- [[file:2018/python-coding.org][Python 编码问题]] ::
+- 02-21 -- [[file:2018/python-format-string.org][Python 格式化字符串]] ::
+- 02-18 -- [[file:2018/python-build-in-exception.org][Python 内置异常]] ::
+- 02-14 -- [[file:2018/python-build-in-function.org][Python 内置函数]] ::
+- 02-06 -- [[file:2018/blockchain.org][区块链的简单尝试]] ::
+- 02-02 -- [[file:2018/pipenv.org][Pipenv 的使用]] ::
+- 01-23 -- [[file:2018/python2.5-2.7.org][Python2.5-2.7的版本变化]] ::
+- 01-04 -- [[file:2018/regex.org][正则表达式]] ::
+- 01-04 -- [[file:2018/sqllocaldb-sqlcmd.org][SqlLocalDB 和 Sqlcmd]] ::
+
+#+HTML: </details>
+
+#+HTML: <details><summary><i>2017</i></summary>
+
+- 12-27 -- [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]] ::
+- 12-26 -- [[file:2017/c99-wchar.org][C99 宽字符]] ::
+
+#+HTML: </details>
+
