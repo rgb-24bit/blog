@@ -9,7 +9,10 @@
 (require 'org)
 
 (defvar file-list nil)
-(defvar directory-list '("./2017" "./2018"))
+(defvar directory-list
+  '("./2017"
+    "./2018"
+    "./2019"))
 
 (defun get-export-file-list (&optional ALL)
   "Get a list of files to export."

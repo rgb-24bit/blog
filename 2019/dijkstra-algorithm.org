@@ -1,0 +1,6 @@
+#+TITLE:      迪杰斯特拉算法
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-01-04 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
