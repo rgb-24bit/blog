@@ -39,11 +39,6 @@
         (with-current-buffer work-buffer (org-html-export-to-html))
         (kill-buffer work-buffer))))
 
-(defun export-readme-to-index ()
-  "export README.org as index html."
-  (if (file-exists-p "README.html")
-      (rename-file "README.html" "index.html" t)))
-
 (defun read-file-text (file-name)
   "read file content as text."
   (with-temp-buffer
@@ -64,18 +59,17 @@
   (setq org-export-default-language "zh-CN")
   (setq org-export-with-sub-superscripts nil)
   (setq org-html-postamble t)
-  (setq org-html-postamble (read-file-text "html/postamble.html"))
+  (setq org-html-postamble (read-file-text "misc/postamble.html"))
 
   ;; HTML Specific export settings
   (setq org-html-doctype "html5")
   (setq org-html-link-home "https://rgb-24bit.github.io")
   (setq org-html-link-up "https://rgb-24bit.github.io/blog/")
-  (setq org-html-head (read-file-text "html/html-head.html")))
+  (setq org-html-head (read-file-text "misc/html-head.html")))
 
 (progn
   (init-export-env)
   (get-export-file-list (string= "all" (format "%s" (elt argv 0))))
   (while (setq file-name (car file-list))
     (export-html-by-file-name file-name)
-    (setq file-list (cdr file-list)))
-  (export-readme-to-index))
+    (setq file-list (cdr file-list))))

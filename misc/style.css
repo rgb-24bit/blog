@@ -1,0 +1,524 @@
+/*******************************************************************************
+ *         My blog style base on https://github.com/ptpt/org-notes-style
+ ******************************************************************************/
+
+@import "https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i|Source+Code+Pro|Source+Sans+Pro:700,700i";
+
+/*******************************************************************************
+ *                     Base styles: opinionated defaults
+ ******************************************************************************/
+
+htmlbutton, input, select, textarea {
+  font-size: 90%;
+  color: #484C66;
+  line-height: 1.4;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  color: #00e;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Remove text-shadow in selection highlight.
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  text-shadow: none;
+  color: #FFF;
+  background: #EA4C89;
+}
+
+::selection {
+  text-shadow: none;
+  color: #FFF;
+  background: #EA4C89;
+}
+
+/**
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  padding: 0;
+  margin: 1em 0;
+  border: 0;
+  border-top: 1px dashed #CCC;
+}
+
+/**
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers.
+ */
+audio, canvas, img, video {
+  vertical-align: middle;
+}
+
+/**
+ * Remove default fieldset styles.
+ */
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+/**
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+
+/*******************************************************************************
+ *                                 Custom styles
+ ******************************************************************************/
+
+.todo, .done, .tag {
+  font-family: "Source Pro", Monaco, "Courier New", monospace;
+  background-color: #EEE;
+  padding: 0 0.3em;
+  border: 1px solid #CCC;
+}
+
+.todo {
+  color: #DD4433;
+}
+
+.done {
+  color: #44934B;
+}
+
+.tag {
+  display: none;
+  font-size: 80%;
+  font-weight: normal;
+  margin: 0 0.3em;
+}
+
+.timestamp {
+  color: #BEBEBE;
+}
+
+.timestamp-kwd {
+  color: #5F9EA0;
+}
+
+.right {
+  margin-left: auto;
+  margin-right: 0px;
+  text-align: right;
+}
+
+.left {
+  margin-left: 0px;
+  margin-right: auto;
+  text-align: left;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+#postamble p, #preamble p {
+  font-size: 90%;
+  margin: .2em;
+}
+
+pre, code {
+  font-family: "Source Pro", Monaco, "Courier New", monospace;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+
+pre {
+  word-wrap: normal;
+  font-size: 90%;
+  padding: 8pt;
+  overflow: auto;
+  white-space: pre;
+}
+
+pre.src {
+  position: relative;
+}
+
+pre.src:before {
+  display: none;
+  position: absolute;
+  background-color: #FFF;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 4px;
+  border: 1px solid #CCC;
+}
+
+pre.src-sh:before {
+  content: "Shell Script";
+}
+
+pre.src-bash:before {
+  content: "Bash Script";
+}
+
+pre.src-emacs-lisp:before {
+  content: "Emacs Lisp";
+}
+
+pre.src-R:before {
+  content: "R";
+}
+
+pre.src-perl:before {
+  content: "Perl";
+}
+
+pre.src-java:before {
+  content: "Java";
+}
+
+pre.src-sql:before {
+  content: "SQL";
+}
+
+pre.src-c:before {
+  content: "C";
+}
+
+pre.src-cpp:before {
+  content: "C++";
+}
+
+pre.src-html:before {
+  content: "HTML";
+}
+
+table {
+  overflow-x: auto;
+  display: -webkit-inline-box;
+  border-collapse: collapse;
+}
+
+caption.t-above {
+  caption-side: top;
+}
+
+caption.t-bottom {
+  caption-side: bottom;
+}
+
+td, th {
+  padding: 0.5em;
+  border: 1px solid #CCC;
+  vertical-align: top;
+}
+
+th.right {
+  text-align: center;
+}
+
+th.left {
+  text-align: center;
+}
+
+th.center {
+  text-align: center;
+}
+
+td.right {
+  text-align: right;
+}
+
+td.left {
+  text-align: left;
+}
+
+td.center {
+  text-align: center;
+}
+
+dt {
+  font-weight: bold;
+}
+
+#footnotes {
+  margin-bottom: 5em;
+  border-top: 5px solid #EA4C89;
+}
+
+#footnotes h2 {
+  display: none;
+}
+
+#text-footnotes {
+  margin-top: 1em;
+}
+
+.footpara:nth-child(2) {
+  display: inline;
+}
+
+.footpara {
+  display: block;
+}
+
+.footdef sup:before {
+  content: "[";
+}
+
+.footdef sup:after {
+  content: "]";
+}
+
+.footdef p {
+  display: inline;
+}
+
+figure {
+  margin: 0;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.inlinetask {
+  background: #ffffcc;
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid gray;
+}
+
+#org-div-home-and-up {
+  font-size: 70%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+textarea {
+  overflow-x: auto;
+}
+
+.linenr {
+  font-size: smaller;
+}
+
+.code-highlighted {
+  background-color: #ffff00;
+}
+
+.org-info-js_info-navigation {
+  border-style: none;
+}
+
+#org-info-js_console-label {
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.org-info-js_search-highlight {
+  font-weight: bold;
+  color: #000000;
+  background-color: #ffff00;
+}
+
+p.verse, blockquote {
+  padding: 0;
+  padding-left: 3%;
+  margin: 0;
+  border-left: 5px solid #EA4C89;
+}
+
+body {
+  font-family: Lora, Palatino, Georgia, serif;
+  background-color: #FFF;
+  width: 92%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+h2 {
+  line-height: 1.62em;
+}
+
+.title {
+  line-height: 2em;
+  margin: 0 0 2em 0;
+  border-bottom: 5px solid #EA4C89;
+  text-align: center;
+}
+
+#postamble {
+  font-size: 80%;
+  line-height: 1.4em;
+  text-align: right;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #222;
+}
+
+.outline-2 {
+  margin-bottom: 4em;
+}
+
+.outline-2 h2 {
+  border-bottom: 1px solid #CCC;
+}
+
+.outline-text-2 code, pre {
+  background-color: #EEE;
+}
+
+#table-of-contents {
+  display: none;
+  margin-left: 0.5em;
+}
+
+#text-table-of-contents ul {
+  padding-left: 1.8em;
+}
+
+#text-table-of-contents li {
+  margin: 0.4em 0;
+  list-style-type: circle;
+}
+
+#text-table-of-contents ul ul {
+  margin: 0;
+}
+
+#text-table-of-contents li li {
+  font-size: 90%;
+  font-weight: normal;
+  margin: 0;
+}
+
+#content {
+  *zoom: 1;
+  overflow: hidden;
+}
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print, (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+@media print {
+  * {
+    /* Black prints faster. */
+    text-shadow: none !important;
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  a, a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /* Don't show links for images, or javascript/internal links */
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+    content: "";
+  }
+
+  pre, blockquote {
+    /* border: 1px solid #999; */
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr, img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2, h3 {
+    page-break-after: avoid;
+  }
+
+  #table-of-contents {
+    display: block;
+    width: initial;
+    border: none;
+  }
+
+  #table-of-contents a {
+    text-decoration: none;
+  }
+}
+
+/* large screen */
+@media screen and (min-width: 40rem) {
+  html {
+    font-size: 100%;
+  }
+
+  #table-of-contents {
+    /* required by z-index */
+    display: block;
+    position: relative;
+    background-color: #EEE;
+    width: 32%;
+    min-width: 18em;
+    padding: 1em;
+    float: right;
+    border: 1px solid #CCC;
+    z-index: 5000;
+  }
+
+  .tag {
+    display: initial;
+  }
+}
