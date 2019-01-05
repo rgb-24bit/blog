@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-04 周五 17:43 -->
+<!-- 2019-01-05 周六 16:17 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>迪杰斯特拉算法</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,23 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org48722d7">1. 前言</a></li>
-<li><a href="#org535a20a">2. 算法简述</a></li>
-<li><a href="#org21cd8d8">3. 算法详述</a></li>
-<li><a href="#orgc5c4eac">4. 算法实现</a>
+<li><a href="#org83fafc4">1. 前言</a></li>
+<li><a href="#org4bf9861">2. 算法简述</a></li>
+<li><a href="#org79c5fa2">3. 算法详述</a></li>
+<li><a href="#org96f9db1">4. 算法实现</a>
 <ul>
-<li><a href="#org729b839">4.1. 简单的有向无权图</a></li>
-<li><a href="#org3cfcda8">4.2. 具体的算法实现</a></li>
-<li><a href="#orgf5f6f7d">4.3. 可能的实现优化</a></li>
+<li><a href="#org6594e16">4.1. 简单的有向无权图</a></li>
+<li><a href="#org809ca0c">4.2. 具体的算法实现</a></li>
+<li><a href="#org68632df">4.3. 可能的实现优化</a></li>
 </ul>
 </li>
-<li><a href="#org8a850cd">5. 结语</a></li>
+<li><a href="#orgeedad7f">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org48722d7" class="outline-2">
-<h2 id="org48722d7"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org83fafc4" class="outline-2">
+<h2 id="org83fafc4"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算法了，经常可以看到 <code>Dijkstra</code> 的大名。
@@ -278,8 +278,8 @@ Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算
 </div>
 </div>
 
-<div id="outline-container-org535a20a" class="outline-2">
-<h2 id="org535a20a"><span class="section-number-2">2</span> 算法简述</h2>
+<div id="outline-container-org4bf9861" class="outline-2">
+<h2 id="org4bf9861"><span class="section-number-2">2</span> 算法简述</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 迪杰斯特拉算法其实是一个很简单的算法，属于典型的贪婪算法，基本思想为：
@@ -333,8 +333,8 @@ a -&gt; b -&gt; c
 </div>
 </div>
 
-<div id="outline-container-org21cd8d8" class="outline-2">
-<h2 id="org21cd8d8"><span class="section-number-2">3</span> 算法详述</h2>
+<div id="outline-container-org79c5fa2" class="outline-2">
+<h2 id="org79c5fa2"><span class="section-number-2">3</span> 算法详述</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面了解了迪杰斯特拉算法的基本思想，接下来可以了解算法的详细过程了：
@@ -388,16 +388,16 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orgc5c4eac" class="outline-2">
-<h2 id="orgc5c4eac"><span class="section-number-2">4</span> 算法实现</h2>
+<div id="outline-container-org96f9db1" class="outline-2">
+<h2 id="org96f9db1"><span class="section-number-2">4</span> 算法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 事实证明，只有实际动手去敲过代码的东西印象才留的深，留的久，这里简单用 Python 实现了这一算法。
 </p>
 </div>
 
-<div id="outline-container-org729b839" class="outline-3">
-<h3 id="org729b839"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
+<div id="outline-container-org6594e16" class="outline-3">
+<h3 id="org6594e16"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无项图和有权图都有点麻烦 @_@
@@ -435,8 +435,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org3cfcda8" class="outline-3">
-<h3 id="org3cfcda8"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
+<div id="outline-container-org809ca0c" class="outline-3">
+<h3 id="org809ca0c"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 利用 Python 来实现这一算法的思考过程：
@@ -522,8 +522,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orgf5f6f7d" class="outline-3">
-<h3 id="orgf5f6f7d"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
+<div id="outline-container-org68632df" class="outline-3">
+<h3 id="org68632df"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 算法的实现还是很简单的，但是很明显的，还存在优化空间，就是那个比较耗时的一步：选取最短未知顶点。
@@ -561,8 +561,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org8a850cd" class="outline-2">
-<h2 id="org8a850cd"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-orgeedad7f" class="outline-2">
+<h2 id="orgeedad7f"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 全程无图的博客，还是和图结构相关的博客，阅读体验估计不太好 &gt;_&gt;

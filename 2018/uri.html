@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-12-07 周五 20:57 -->
+<!-- 2019-01-05 周六 16:17 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>URI - 统一资源标识符</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,22 +246,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf9398fb">1. URI &amp; URL &amp; URN</a></li>
-<li><a href="#org61ee777">2. URI 通用语法</a></li>
-<li><a href="#org71de30b">3. URI 协议</a>
+<li><a href="#org46144ee">1. URI &amp; URL &amp; URN</a></li>
+<li><a href="#org13f16c7">2. URI 通用语法</a></li>
+<li><a href="#orgd3e1197">3. URI 协议</a>
 <ul>
-<li><a href="#org010dbde">3.1. file</a></li>
-<li><a href="#org4bc2ec0">3.2. mailto</a></li>
-<li><a href="#org734e8ca">3.3. data</a></li>
+<li><a href="#org45fa294">3.1. file</a></li>
+<li><a href="#orgb055312">3.2. mailto</a></li>
+<li><a href="#orge25ad94">3.3. data</a></li>
 </ul>
 </li>
-<li><a href="#orgea7f6b8">4. 参考链接</a></li>
+<li><a href="#org0a62380">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf9398fb" class="outline-2">
-<h2 id="orgf9398fb"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
+<div id="outline-container-org46144ee" class="outline-2">
+<h2 id="org46144ee"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 URI, URL 和 URN 是三个经常放在一起的概念，下面这段摘自 RFC 文档的一段话描述了它们之间的关系：
@@ -295,8 +295,8 @@ In other words, a URN identifies an item and a URL provides a method for finding
 </div>
 </div>
 
-<div id="outline-container-org61ee777" class="outline-2">
-<h2 id="org61ee777"><span class="section-number-2">2</span> URI 通用语法</h2>
+<div id="outline-container-org13f16c7" class="outline-2">
+<h2 id="org13f16c7"><span class="section-number-2">2</span> URI 通用语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>URI</code> 的通用语法由五个组件组成：
@@ -349,16 +349,16 @@ scheme                     path
 </div>
 </div>
 
-<div id="outline-container-org71de30b" class="outline-2">
-<h2 id="org71de30b"><span class="section-number-2">3</span> URI 协议</h2>
+<div id="outline-container-orgd3e1197" class="outline-2">
+<h2 id="orgd3e1197"><span class="section-number-2">3</span> URI 协议</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 这才是写这篇博客的主要目的，前面的内容都是顺带的，不然总感觉差点啥 @_@.
 </p>
 </div>
 
-<div id="outline-container-org010dbde" class="outline-3">
-<h3 id="org010dbde"><span class="section-number-3">3.1</span> file</h3>
+<div id="outline-container-org45fa294" class="outline-3">
+<h3 id="org45fa294"><span class="section-number-3">3.1</span> file</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>file</code> 应该算是一个比较常用的协议了，它的格式如下：
@@ -392,8 +392,8 @@ C:/Users/Administrator/Desktop/example.txt
 </div>
 </div>
 
-<div id="outline-container-org4bc2ec0" class="outline-3">
-<h3 id="org4bc2ec0"><span class="section-number-3">3.2</span> mailto</h3>
+<div id="outline-container-orgb055312" class="outline-3">
+<h3 id="orgb055312"><span class="section-number-3">3.2</span> mailto</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <code>mailto</code> 是用来表示邮箱地址的 <code>URI</code> 协议，常见的形式为：
@@ -427,8 +427,8 @@ mailto:someone@example.com,someoneelse@example.com
 </div>
 </div>
 
-<div id="outline-container-org734e8ca" class="outline-3">
-<h3 id="org734e8ca"><span class="section-number-3">3.3</span> data</h3>
+<div id="outline-container-orge25ad94" class="outline-3">
+<h3 id="orge25ad94"><span class="section-number-3">3.3</span> data</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>data</code> 在前端应该也是比较常用的一个协议了，提供了一种在网页中包含数据的方法，格式如下：
@@ -476,8 +476,8 @@ data:,
 </div>
 </div>
 
-<div id="outline-container-orgea7f6b8" class="outline-2">
-<h2 id="orgea7f6b8"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org0a62380" class="outline-2">
+<h2 id="org0a62380"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">Uniform Resource Identifier - Wikipedia</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-09-15 周六 22:39 -->
+<!-- 2019-01-05 周六 16:17 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Win32 API 窗口程序</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,28 +246,28 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga5fbe2b">1. 前言</a></li>
-<li><a href="#orgddc4a9a">2. 基本内容</a>
+<li><a href="#org6c7152f">1. 前言</a></li>
+<li><a href="#org4339ec7">2. 基本内容</a>
 <ul>
-<li><a href="#org0d96206">2.1. 类型定义</a></li>
-<li><a href="#org9a6021a">2.2. 匈牙利命名法</a></li>
-<li><a href="#orge77f7ab">2.3. 使用字符串</a></li>
-<li><a href="#orgf16b228">2.4. 应用程序入口: WinMain</a></li>
-<li><a href="#org5472e81">2.5. 关于句柄</a></li>
+<li><a href="#org601758a">2.1. 类型定义</a></li>
+<li><a href="#orgd54eb50">2.2. 匈牙利命名法</a></li>
+<li><a href="#orge474a28">2.3. 使用字符串</a></li>
+<li><a href="#orgd881c65">2.4. 应用程序入口: WinMain</a></li>
+<li><a href="#orgfcc75a3">2.5. 关于句柄</a></li>
 </ul>
 </li>
-<li><a href="#org83cd437">3. 简单的窗口程序</a>
+<li><a href="#org890c0da">3. 简单的窗口程序</a>
 <ul>
-<li><a href="#org0f701c7">3.1. 代码理解</a></li>
+<li><a href="#org6eda826">3.1. 代码理解</a></li>
 </ul>
 </li>
-<li><a href="#orgeaf7af5">4. 参考链接</a></li>
+<li><a href="#orgdd7b2f7">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga5fbe2b" class="outline-2">
-<h2 id="orga5fbe2b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6c7152f" class="outline-2">
+<h2 id="org6c7152f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 之前因为一些原因放弃了学习 <code>Win32 API</code> 来编写图形程序， 虽然还是不打算深入学习
@@ -276,12 +276,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgddc4a9a" class="outline-2">
-<h2 id="orgddc4a9a"><span class="section-number-2">2</span> 基本内容</h2>
+<div id="outline-container-org4339ec7" class="outline-2">
+<h2 id="org4339ec7"><span class="section-number-2">2</span> 基本内容</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org0d96206" class="outline-3">
-<h3 id="org0d96206"><span class="section-number-3">2.1</span> 类型定义</h3>
+<div id="outline-container-org601758a" class="outline-3">
+<h3 id="org601758a"><span class="section-number-3">2.1</span> 类型定义</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Win32 API</code> 预先定义了一些类型， 编写程序之前了解这些是很有必要的。
@@ -425,8 +425,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9a6021a" class="outline-3">
-<h3 id="org9a6021a"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
+<div id="outline-container-orgd54eb50" class="outline-3">
+<h3 id="orgd54eb50"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Win32 API</code> 中采用 <a href="https://zh.wikipedia.org/wiki/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95">匈牙利命名法</a>, 每个变量名由一个或多个小写字母开始。 这些字母有助于记忆变量的类型和用途。
@@ -440,8 +440,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge77f7ab" class="outline-3">
-<h3 id="orge77f7ab"><span class="section-number-3">2.3</span> 使用字符串</h3>
+<div id="outline-container-orge474a28" class="outline-3">
+<h3 id="orge474a28"><span class="section-number-3">2.3</span> 使用字符串</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>Windows</code> 系统的使用者遍布全世界， 仅仅使用 <code>ANSI</code> 字符是满足不了需求的。
@@ -592,8 +592,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-orgf16b228" class="outline-3">
-<h3 id="orgf16b228"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
+<div id="outline-container-orgd881c65" class="outline-3">
+<h3 id="orgd881c65"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>C</code> 语言的入口函数是 <code>main</code>, 而 <code>Win32 Api</code> 程序的入口函数应该是 <code>WinMain</code>.
@@ -619,8 +619,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-org5472e81" class="outline-3">
-<h3 id="org5472e81"><span class="section-number-3">2.5</span> 关于句柄</h3>
+<div id="outline-container-orgfcc75a3" class="outline-3">
+<h3 id="orgfcc75a3"><span class="section-number-3">2.5</span> 关于句柄</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <b>句柄</b> 在 <code>Windows</code> 中应该是一个比较重要的概念， 当初在学习的时候把我绕了一圈还晕乎乎的。
@@ -651,8 +651,8 @@ SetWindowTextA(<span style="font-style: italic;">"My Application"</span>);      
 </div>
 </div>
 
-<div id="outline-container-org83cd437" class="outline-2">
-<h2 id="org83cd437"><span class="section-number-2">3</span> 简单的窗口程序</h2>
+<div id="outline-container-org890c0da" class="outline-2">
+<h2 id="org890c0da"><span class="section-number-2">3</span> 简单的窗口程序</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;windows.h&gt;</span>
@@ -763,8 +763,8 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 </p>
 </div>
 
-<div id="outline-container-org0f701c7" class="outline-3">
-<h3 id="org0f701c7"><span class="section-number-3">3.1</span> 代码理解</h3>
+<div id="outline-container-org6eda826" class="outline-3">
+<h3 id="org6eda826"><span class="section-number-3">3.1</span> 代码理解</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 虽然是一个简单的窗口程序， 但是 <code>Win32</code> 窗口程序的基本框架和这个程序是基本相同的， 基本流程就是：
@@ -838,8 +838,8 @@ LRESULT <span style="font-weight: bold; text-decoration: underline;">CALLBACK</s
 </div>
 </div>
 
-<div id="outline-container-orgeaf7af5" class="outline-2">
-<h2 id="orgeaf7af5"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orgdd7b2f7" class="outline-2">
+<h2 id="orgdd7b2f7"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://msdn.microsoft.com/library/windows/desktop/bg126470.aspx?f=255&amp;MSPPError=-2147217396">Desktop Programming</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-11-23 周五 17:30 -->
+<!-- 2019-01-05 周六 16:17 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>树的深度优先遍历</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcd2b33c">1. 前言</a></li>
-<li><a href="#orgc28c8ae">2. 树类型</a></li>
-<li><a href="#org09e9503">3. 使用递归的深度优先遍历</a></li>
-<li><a href="#org98cc4e6">4. 使用栈的深度优先遍历</a></li>
-<li><a href="#orgd0454cf">5. 使用栈的深度优先遍历 · 补</a></li>
-<li><a href="#orga02bcf4">6. 结语</a></li>
-<li><a href="#org64307bf">7. 参考链接</a></li>
+<li><a href="#org579f96f">1. 前言</a></li>
+<li><a href="#orgc6dd3e2">2. 树类型</a></li>
+<li><a href="#org39fe3cf">3. 使用递归的深度优先遍历</a></li>
+<li><a href="#org215f632">4. 使用栈的深度优先遍历</a></li>
+<li><a href="#org03920fe">5. 使用栈的深度优先遍历 · 补</a></li>
+<li><a href="#org2c6dd47">6. 结语</a></li>
+<li><a href="#orgded5fb6">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcd2b33c" class="outline-2">
-<h2 id="orgcd2b33c"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org579f96f" class="outline-2">
+<h2 id="org579f96f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前段时间了解到可以用 <b>队列</b> 实现 <a href="tree-bfs.html">树的广度优先遍历</a> 后，在 <a href="https://leetcode-cn.com/">LeetCode</a> 刷题的时候，
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc28c8ae" class="outline-2">
-<h2 id="orgc28c8ae"><span class="section-number-2">2</span> 树类型</h2>
+<div id="outline-container-orgc6dd3e2" class="outline-2">
+<h2 id="orgc6dd3e2"><span class="section-number-2">2</span> 树类型</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 考虑到之后的内容会用到这两个树类型，就先在这里把它们列出来好了：
@@ -304,8 +304,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org09e9503" class="outline-2">
-<h2 id="org09e9503"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
+<div id="outline-container-org39fe3cf" class="outline-2">
+<h2 id="org39fe3cf"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 使用递归实现树的深度优先遍历实在是太简单了，随便一本教材都会讲到这一实现，就不多说了，
@@ -353,8 +353,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org98cc4e6" class="outline-2">
-<h2 id="org98cc4e6"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
+<div id="outline-container-org215f632" class="outline-2">
+<h2 id="org215f632"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 使用栈实现树的深度优先遍历的基本思路是利用栈 <b>后进先出</b> 的特性，将父节点保存到栈中，
@@ -451,8 +451,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd0454cf" class="outline-2">
-<h2 id="orgd0454cf"><span class="section-number-2">5</span> 使用栈的深度优先遍历 · 补</h2>
+<div id="outline-container-org03920fe" class="outline-2">
+<h2 id="org03920fe"><span class="section-number-2">5</span> 使用栈的深度优先遍历 · 补</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 想了一下，决定还是补一份使用栈实现二叉树的先序遍历和中序遍历的代码：
@@ -505,8 +505,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga02bcf4" class="outline-2">
-<h2 id="orga02bcf4"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org2c6dd47" class="outline-2">
+<h2 id="org2c6dd47"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 通过 <b>栈</b> 来实现 <b>树的深度优先遍历</b> 并不是很难，更重要的地方在于用 <b>栈</b> 来代替 <b>递归</b> 的想法。
@@ -527,8 +527,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org64307bf" class="outline-2">
-<h2 id="org64307bf"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgded5fb6" class="outline-2">
+<h2 id="orgded5fb6"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Tree_traversal">Tree traversal - wiki</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-11-02 周五 17:35 -->
+<!-- 2019-01-05 周六 16:15 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>I/O 重定向</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4af55be">1. 前言</a></li>
-<li><a href="#org671c7b2">2. 概念</a></li>
-<li><a href="#org9536b55">3. 系统级实现</a></li>
-<li><a href="#org5d3c203">4. 简单的使用</a></li>
-<li><a href="#org214d932">5. 用户级实现</a></li>
-<li><a href="#org445a3bb">6. 结语</a></li>
+<li><a href="#orgfd1941e">1. 前言</a></li>
+<li><a href="#orgee78366">2. 概念</a></li>
+<li><a href="#org87ff4e3">3. 系统级实现</a></li>
+<li><a href="#org374a2c0">4. 简单的使用</a></li>
+<li><a href="#orgb33489b">5. 用户级实现</a></li>
+<li><a href="#org349ff2f">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4af55be" class="outline-2">
-<h2 id="org4af55be"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgfd1941e" class="outline-2">
+<h2 id="orgfd1941e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>I/O 重定向</b> 算是一个灰常简单的概念，《深入理解计算机系统》这本书中对它的讲解不到一页，
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org671c7b2" class="outline-2">
-<h2 id="org671c7b2"><span class="section-number-2">2</span> 概念</h2>
+<div id="outline-container-orgee78366" class="outline-2">
+<h2 id="orgee78366"><span class="section-number-2">2</span> 概念</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，操作系统内部使用小的非负整数 <b>文件描述符</b> 来标识打开的文件，一切对文件的操作都是通过 <b>文件描述符</b> 来完成的。
@@ -287,8 +287,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9536b55" class="outline-2">
-<h2 id="org9536b55"><span class="section-number-2">3</span> 系统级实现</h2>
+<div id="outline-container-org87ff4e3" class="outline-2">
+<h2 id="org87ff4e3"><span class="section-number-2">3</span> 系统级实现</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 很明显，重定向的操作需要修改操作系统内部的数据结构，而作为操作系统使用者的我们，是无法直接操作操作系统内部的数据结构的。
@@ -351,8 +351,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5d3c203" class="outline-2">
-<h2 id="org5d3c203"><span class="section-number-2">4</span> 简单的使用</h2>
+<div id="outline-container-org374a2c0" class="outline-2">
+<h2 id="org374a2c0"><span class="section-number-2">4</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在 <code>Shell</code> 中，通过管道命令 <code>|</code> 可以将上一个命令的 <b>标准输出</b> 重定向为下一个命令的 <b>标准输入</b>.
@@ -390,8 +390,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org214d932" class="outline-2">
-<h2 id="org214d932"><span class="section-number-2">5</span> 用户级实现</h2>
+<div id="outline-container-orgb33489b" class="outline-2">
+<h2 id="orgb33489b"><span class="section-number-2">5</span> 用户级实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 对一般用户来说，重定向的具体实现是怎样的没有多大意义，只要结果正确就行了。
@@ -426,8 +426,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org445a3bb" class="outline-2">
-<h2 id="org445a3bb"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org349ff2f" class="outline-2">
+<h2 id="org349ff2f"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 对系统底层的了解越多，就越能感受到现在的高级语言为我们提供了多少便利。

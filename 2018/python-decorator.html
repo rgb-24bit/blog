@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2018-09-15 周六 22:38 -->
+<!-- 2019-01-05 周六 16:16 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 闭包和装饰器</title>
@@ -178,7 +178,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/org-html-theme-list/org-note/style/main.css">
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
 <script>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org96f81f3">1. 简介</a></li>
-<li><a href="#org62096c9">2. 闭包</a></li>
-<li><a href="#org6e338c4">3. 装饰器</a>
+<li><a href="#org395502d">1. 简介</a></li>
+<li><a href="#org24ecb9e">2. 闭包</a></li>
+<li><a href="#orgccde25a">3. 装饰器</a>
 <ul>
-<li><a href="#org38a2fa0">3.1. 多重装饰器</a></li>
+<li><a href="#org198027e">3.1. 多重装饰器</a></li>
 </ul>
 </li>
-<li><a href="#org181904e">4. 参考链接</a></li>
+<li><a href="#org5c0e0b1">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org96f81f3" class="outline-2">
-<h2 id="org96f81f3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org395502d" class="outline-2">
+<h2 id="org395502d"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时
@@ -272,8 +272,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org62096c9" class="outline-2">
-<h2 id="org62096c9"><span class="section-number-2">2</span> 闭包</h2>
+<div id="outline-container-org24ecb9e" class="outline-2">
+<h2 id="org24ecb9e"><span class="section-number-2">2</span> 闭包</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
@@ -377,8 +377,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-org6e338c4" class="outline-2">
-<h2 id="org6e338c4"><span class="section-number-2">3</span> 装饰器</h2>
+<div id="outline-container-orgccde25a" class="outline-2">
+<h2 id="orgccde25a"><span class="section-number-2">3</span> 装饰器</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的
@@ -507,8 +507,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </ul>
 </div>
 
-<div id="outline-container-org38a2fa0" class="outline-3">
-<h3 id="org38a2fa0"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div id="outline-container-org198027e" class="outline-3">
+<h3 id="org198027e"><span class="section-number-3">3.1</span> 多重装饰器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
@@ -544,8 +544,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-org181904e" class="outline-2">
-<h2 id="org181904e"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org5c0e0b1" class="outline-2">
+<h2 id="org5c0e0b1"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>
