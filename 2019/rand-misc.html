@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-01-25 周五 16:50 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>随机数杂谈</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">随机数杂谈</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge3eab6a">1. 前言</a></li>
+<li><a href="#orgf6a10c3">2. 简单的伪随机数生成器</a></li>
+<li><a href="#org9259cb3">3. 蒙特卡洛方法求 π</a></li>
+<li><a href="#org7c318bf">4. 随机的 BUG</a></li>
+<li><a href="#orgbbff525">5. 洗牌算法</a></li>
+<li><a href="#orgfea466d">6. 自然底数</a></li>
+<li><a href="#org8fca6b7">7. 缘起</a></li>
+<li><a href="#orga7e8959">8. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge3eab6a" class="outline-2">
+<h2 id="orge3eab6a"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+前几天在 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上看到的一个问题再次勾起了我对随机数的兴趣，可以说，对各种和随机数相关的话题我都挺感兴趣的。
+</p>
+
+<p>
+而这篇博客的主要作用便是总结我看到过的一些和随机数相关算法与应用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf6a10c3" class="outline-2">
+<h2 id="orgf6a10c3"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+通常情况下，我们使用的随机数生成器都是 <b>伪随机数（看起来像随机数的数字序列）</b> 生成器，对于这一点我相信你并不陌生。
+</p>
+
+<p>
+毕竟，我们的程序只是按照指令一条条的执行下去，这个过程是线性的，不存在什么概率问题，因此，要生成随机数，
+也只能通过数学手段生成伪随机数。
+</p>
+
+<p>
+而简单的伪随机数生成可以通过 <b>线性同余方法(LCG)</b> 完成，其递归公式如下<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>：
+</p>
+
+<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0977413db70881e55ed0f0dd154d7314f0f4499a">
+
+<p>
+通过这个公式生成的伪随机数序列具有如下性质：
+</p>
+<ol class="org-ol">
+<li>生成的伪随机数序列是循环的，最大循环周期为 <b>M</b></li>
+<li>当前生成的伪随机数依赖于前一个伪随机数</li>
+<li>生成的伪随机数最大为 <b>M - 1</b></li>
+</ol>
+
+<p>
+而用于生成 <b>第一个</b> 伪随机数的数字就被叫做 <b>随机数种子</b>, 相同的随机数种子生成的随机数序列是相同的。
+</p>
+
+<p>
+因此，为了获取到不同的伪随机数序列，我们通常使用 <b>时间戳</b> 作为随机数种子，毕竟，不同时刻的时间戳必然是不一样的。
+</p>
+
+<p>
+《C 标准库》 一书中的伪随机生成器便是使用的这个方法，其源码如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">_Randseed</span> = 1;
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">rand</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
+  _Randseed = _Randseed * 1103515245 + 12345;
+  <span style="font-weight: bold;">return</span> ((<span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">int</span>)(_Randseed &gt;&gt; 16) &amp; RAND_MAX);
+}
+
+<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">srand</span>(<span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">seed</span>) {
+  _Randseed = seed;
+}
+</pre>
+</div>
+
+<p>
+其中， <code>RAND_MAX</code> 是由头文件 <code>&lt;stdlib.h&gt;</code> 定义的宏， 值为 <code>rand</code> 函数能够返回的最大值。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9259cb3" class="outline-2">
+<h2 id="org9259cb3"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>蒙特卡罗方法</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 是一种以概率统计理论为指导的数值计算方法，可以通过随机数（伪随机数）来解决很多计算问题。
+</p>
+
+<p>
+比如说近似计算圆周率：
+</p>
+<ol class="org-ol">
+<li>每次随机生成两个 0 到 1 之间的随机数，看以这两个实数为横纵坐标的点是否在单位圆内</li>
+<li>生成一系列随机点，统计单位圆内的点数与总点数之比</li>
+</ol>
+
+<p>
+而单位圆内的点数与总点数之比近似于圆面积和正方形面积之比即： <b>PI:4</b>, 借助这个关系我们便可以近似的求出 π 值。
+</p>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Pi_30K.gif/220px-Pi_30K.gif">
+
+<p>
+C 代码实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;time.h&gt;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">times</span> = 100000, <span style="font-weight: bold; font-style: italic;">sum</span> = 0;
+
+  srand(time(0));
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; times; ++i) {
+    <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">x</span> = (<span style="font-weight: bold; text-decoration: underline;">double</span>) rand() / RAND_MAX;
+    <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">y</span> = (<span style="font-weight: bold; text-decoration: underline;">double</span>) rand() / RAND_MAX;
+
+    <span style="font-weight: bold;">if</span> ((x * x + y * y) &lt;= 1.0) {
+      sum++;
+    }
+  }
+
+  <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">pi</span> = 4.0 * sum / times;
+  printf(<span style="font-style: italic;">"pi = %f"</span>, pi);
+
+  <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+运行结果为：
+</p>
+<pre class="example">
+pi = 3.135840
+</pre>
+
+<p>
+可以看到，运行结果还是存在不小的误差的，这与 C 语言采用的随机数生成器存在一定关系，如果用其他高级语言重写的话，
+你可以得到更准确的结果。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c318bf" class="outline-2">
+<h2 id="org7c318bf"><span class="section-number-2">4</span> 随机的 BUG</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+记不清是在什么地方看到的这个操作了，大意是如何在交付应用程序后保证甲方能够及时付清尾款。
+</p>
+
+<p>
+然后，便看到了一个优秀的操作：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">true</span> (rand() &lt; 10)
+</pre>
+</div>
+
+<p>
+我们知道，C 语言中是不存在 <code>true</code> 这个关键字的，通过这样的操作，可以使得程序运行过程中不时出现一些奇怪的问题，
+只要将概率调低点，那么 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbbff525" class="outline-2">
+<h2 id="orgbbff525"><span class="section-number-2">5</span> 洗牌算法</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+洗牌算法，顾名思义，就是和洗牌一样，打乱一个序列的顺序。这也是一个很有趣的算法不是吗？
+</p>
+
+<p>
+这里我们可以参考 <b>Fisher–Yates shuffle</b><sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> 算法来实现洗牌算法，伪码如下：
+</p>
+<pre class="example">
+for i from n−1 downto 1 do
+     j ← random integer such that 0 ≤ j ≤ i
+     exchange a[j] and a[i]
+</pre>
+
+<p>
+可以看到，这个算法的基本思想很简单，就是在指定范围内随机选择一个成员，然后将其放到尾部，缩小范围，
+循环往复。
+</p>
+
+<p>
+实现起来自然也简单：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;time.h&gt;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
+  srand(time(0));
+
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = argc - 1; i &gt;= 2; --i) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">j</span> = rand() % i + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[1, i], skip argv[0]</span>
+    <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">temp</span> = argv[j];
+    argv[j] = argv[i];
+    argv[i] = temp;
+  }
+
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 1; i &lt; argc; ++i) {
+    printf(<span style="font-style: italic;">"%s "</span>, argv[i]);
+  }
+
+  <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+执行测试：
+</p>
+<pre class="example">
+In:  0 1 2 3 4 5 6 7 8 9
+Out: 3 5 8 6 1 9 4 2 0 7
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgfea466d" class="outline-2">
+<h2 id="orgfea466d"><span class="section-number-2">6</span> 自然底数</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+之前在知乎上看到的图形学大佬 <b>Milo Yip</b> 的文章 - <a href="https://zhuanlan.zhihu.com/p/46698082">自然而然 - 知乎</a>，其中的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>() {
+  <span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; font-style: italic;">i</span>, <span style="font-weight: bold; font-style: italic;">j</span>, <span style="font-weight: bold; font-style: italic;">k</span> = 0, <span style="font-weight: bold; font-style: italic;">n</span> = 1e8;
+  <span style="font-weight: bold;">for</span> (i = 0; i &lt; n; i++)
+    <span style="font-weight: bold;">for</span> (j = 0; j &lt; RAND_MAX; j += rand())
+      k++;
+  printf(<span style="font-style: italic;">"%f\n"</span>, (<span style="font-weight: bold; text-decoration: underline;">double</span>)k / n);
+}
+</pre>
+</div>
+
+<p>
+这段代码的作用就是近似的求取自然底数的值，执行得到的结果：
+</p>
+<pre class="example">
+$ gcc -O3 a.c &amp;&amp; ./a.out
+2.718219
+</pre>
+
+<p>
+很神奇是不是 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8fca6b7" class="outline-2">
+<h2 id="org8fca6b7"><span class="section-number-2">7</span> 缘起</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+这一节的内容是关于 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上的那个问题的，问题描述为：
+</p>
+<blockquote>
+<p>
+生成 10 个随机数 [0, 100] 且最终 10 个随机数之和为 100 
+</p>
+</blockquote>
+
+<p>
+刚看到这个问题的时候，还在脑子里想了一下该怎样实现，然后，就看到了 3 楼大佬的回复：
+</p>
+
+<details><summary><i>点击查看回复内容</i></summary>
+
+<blockquote>
+<p>
+在一根 1 到 100 的数轴上，随机取 9 个点，拿到 10 个线段。计算每个线段的长度，即是取值。
+</p>
+</blockquote>
+
+</details>
+
+<p>
+现在都还记得看到这个回复以后那种茅塞顿开的感觉，简简单单，只需要一点数学知识即可。
+</p>
+
+<p>
+通过 Python 的实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">random_nums</span>():
+    <span style="font-weight: bold; font-style: italic;">nums</span> = [random.randint(0, 101) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(9)]
+    nums.extend([0, 100])
+    nums.sort()
+
+    <span style="font-weight: bold; font-style: italic;">result</span> = []
+    <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, 11):
+        result.append(nums[i] - nums[i - 1])
+
+    <span style="font-weight: bold;">return</span> result
+</pre>
+</div>
+
+<p>
+在后序的回复中还了解的这个问题和 <b>红包算法</b> 很相似，感觉可以研究一下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga7e8959" class="outline-2">
+<h2 id="orga7e8959"><span class="section-number-2">8</span> 结语</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+我一直觉得，程序代码中的那一丝不确定性是一种别样的浪漫，因此一直很好奇随机数的实现与使用。
+</p>
+
+<p>
+然而事实证明，光有兴趣是不行的，你还需要足够的 <b>数学</b> 知识才行，无论是随机数的生成还是随机数的应用，都离不开数学知识的使用。
+</p>
+
+<p>
+现在深深体会到了自身数学知识的贫乏，想起前两年还在想：需要用的时候在学，在学，学&#x2026;&#x2026;
+</p>
+
+<p>
+这就是传说中的：不听老人言，吃亏在眼前吧！
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://zh.wikipedia.org/wiki/%E7%B7%9A%E6%80%A7%E5%90%8C%E9%A4%98%E6%96%B9%E6%B3%95">线性同余方法 - 维基百科，自由的百科全书</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://zh.wikipedia.org/wiki/%E8%92%99%E5%9C%B0%E5%8D%A1%E7%BE%85%E6%96%B9%E6%B3%95">蒙特卡罗方法 - 维基百科，自由的百科全书</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle - Wikipedia</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

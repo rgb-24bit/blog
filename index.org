@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
+- 01-25 -- [[file:2019/rand-misc.org][随机数杂谈]] ::
 - 01-04 -- [[file:2019/dijkstra-algorithm.org][迪杰斯特拉算法]] ::
 
 #+HTML: </details>

@@ -1,0 +1,229 @@
+#+TITLE:      随机数杂谈
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-01-25 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#简单的伪随机数生成器][简单的伪随机数生成器]]
+- [[#蒙特卡洛方法求-π][蒙特卡洛方法求 π]]
+- [[#随机的-bug][随机的 BUG]]
+- [[#洗牌算法][洗牌算法]]
+- [[#自然底数][自然底数]]
+- [[#缘起][缘起]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  前几天在 [[https://www.v2ex.com/t/528903][V2EX]] 上看到的一个问题再次勾起了我对随机数的兴趣，可以说，对各种和随机数相关的话题我都挺感兴趣的。
+
+  而这篇博客的主要作用便是总结我看到过的一些和随机数相关算法与应用。
+  
+* 简单的伪随机数生成器
+  通常情况下，我们使用的随机数生成器都是 *伪随机数（看起来像随机数的数字序列）* 生成器，对于这一点我相信你并不陌生。
+
+  毕竟，我们的程序只是按照指令一条条的执行下去，这个过程是线性的，不存在什么概率问题，因此，要生成随机数，
+  也只能通过数学手段生成伪随机数。
+
+  而简单的伪随机数生成可以通过 *线性同余方法(LCG)* 完成，其递归公式如下[fn:1]：
+  
+  #+HTML: <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/0977413db70881e55ed0f0dd154d7314f0f4499a">
+
+  通过这个公式生成的伪随机数序列具有如下性质：
+  1) 生成的伪随机数序列是循环的，最大循环周期为 *M*
+  2) 当前生成的伪随机数依赖于前一个伪随机数
+  3) 生成的伪随机数最大为 *M - 1*
+
+  而用于生成 *第一个* 伪随机数的数字就被叫做 *随机数种子*, 相同的随机数种子生成的随机数序列是相同的。
+
+  因此，为了获取到不同的伪随机数序列，我们通常使用 *时间戳* 作为随机数种子，毕竟，不同时刻的时间戳必然是不一样的。
+  
+  《C 标准库》 一书中的伪随机生成器便是使用的这个方法，其源码如下：
+  #+BEGIN_SRC C
+    unsigned long _Randseed = 1;
+
+    int rand(void) {
+      _Randseed = _Randseed * 1103515245 + 12345;
+      return ((unsigned int)(_Randseed >> 16) & RAND_MAX);
+    }
+
+    void srand(unsigned int seed) {
+      _Randseed = seed;
+    }
+  #+END_SRC
+
+  其中， ~RAND_MAX~ 是由头文件 ~<stdlib.h>~ 定义的宏， 值为 ~rand~ 函数能够返回的最大值。
+
+* 蒙特卡洛方法求 π
+  *蒙特卡罗方法*[fn:2] 是一种以概率统计理论为指导的数值计算方法，可以通过随机数（伪随机数）来解决很多计算问题。
+
+  比如说近似计算圆周率：
+  1) 每次随机生成两个 0 到 1 之间的随机数，看以这两个实数为横纵坐标的点是否在单位圆内
+  2) 生成一系列随机点，统计单位圆内的点数与总点数之比
+
+  而单位圆内的点数与总点数之比近似于圆面积和正方形面积之比即： *PI:4*, 借助这个关系我们便可以近似的求出 π 值。
+
+  #+HTML: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Pi_30K.gif/220px-Pi_30K.gif">
+
+  C 代码实现：
+  #+BEGIN_SRC C :results output 
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <time.h>
+
+    int main(int argc, char* argv[]) {
+      int times = 100000, sum = 0;
+
+      srand(time(0));
+      for (int i = 0; i < times; ++i) {
+        double x = (double) rand() / RAND_MAX;
+        double y = (double) rand() / RAND_MAX;
+
+        if ((x * x + y * y) <= 1.0) {
+          sum++;
+        }
+      }
+
+      double pi = 4.0 * sum / times;
+      printf("pi = %f", pi);
+
+      return 0;
+    }
+  #+END_SRC
+
+  运行结果为：
+  #+BEGIN_EXAMPLE
+    pi = 3.135840
+  #+END_EXAMPLE
+
+  可以看到，运行结果还是存在不小的误差的，这与 C 语言采用的随机数生成器存在一定关系，如果用其他高级语言重写的话，
+  你可以得到更准确的结果。
+
+* 随机的 BUG
+  记不清是在什么地方看到的这个操作了，大意是如何在交付应用程序后保证甲方能够及时付清尾款。
+
+  然后，便看到了一个优秀的操作：
+  #+BEGIN_SRC C
+    #define true (rand() < 10)
+  #+END_SRC
+
+  我们知道，C 语言中是不存在 ~true~ 这个关键字的，通过这样的操作，可以使得程序运行过程中不时出现一些奇怪的问题，
+  只要将概率调低点，那么 @_@
+
+* 洗牌算法
+  洗牌算法，顾名思义，就是和洗牌一样，打乱一个序列的顺序。这也是一个很有趣的算法不是吗？
+
+  这里我们可以参考 *Fisher–Yates shuffle*[fn:3] 算法来实现洗牌算法，伪码如下：
+  #+BEGIN_EXAMPLE
+    for i from n−1 downto 1 do
+         j ← random integer such that 0 ≤ j ≤ i
+         exchange a[j] and a[i]
+  #+END_EXAMPLE
+
+  可以看到，这个算法的基本思想很简单，就是在指定范围内随机选择一个成员，然后将其放到尾部，缩小范围，
+  循环往复。
+
+  实现起来自然也简单：
+  #+BEGIN_SRC C :results output :cmdline 0 1 2 3 4 5 6 7 8 9
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <time.h>
+
+    int main(int argc, char* argv[]) {
+      srand(time(0));
+
+      for (int i = argc - 1; i >= 2; --i) {
+        int j = rand() % i + 1;  // [1, i], skip argv[0]
+        char* temp = argv[j];
+        argv[j] = argv[i];
+        argv[i] = temp;
+      }
+
+      for (int i = 1; i < argc; ++i) {
+        printf("%s ", argv[i]);
+      }
+
+      return 0;
+    }
+  #+END_SRC
+
+  执行测试：
+  #+BEGIN_EXAMPLE
+    In:  0 1 2 3 4 5 6 7 8 9
+    Out: 3 5 8 6 1 9 4 2 0 7
+  #+END_EXAMPLE
+
+* 自然底数
+  之前在知乎上看到的图形学大佬 *Milo Yip* 的文章 - [[https://zhuanlan.zhihu.com/p/46698082][自然而然 - 知乎]]，其中的代码：
+  #+BEGIN_SRC C
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main() {
+      unsigned i, j, k = 0, n = 1e8;
+      for (i = 0; i < n; i++)
+        for (j = 0; j < RAND_MAX; j += rand())
+          k++;
+      printf("%f\n", (double)k / n);
+    }
+  #+END_SRC
+
+  这段代码的作用就是近似的求取自然底数的值，执行得到的结果：
+  #+BEGIN_EXAMPLE
+    $ gcc -O3 a.c && ./a.out
+    2.718219
+  #+END_EXAMPLE
+
+  很神奇是不是 @_@
+
+* 缘起
+  这一节的内容是关于 [[https://www.v2ex.com/t/528903][V2EX]] 上的那个问题的，问题描述为：
+  #+BEGIN_QUOTE
+  生成 10 个随机数 [0, 100] 且最终 10 个随机数之和为 100 
+  #+END_QUOTE
+
+  刚看到这个问题的时候，还在脑子里想了一下该怎样实现，然后，就看到了 3 楼大佬的回复：
+
+  #+HTML: <details><summary><i>点击查看回复内容</i></summary>
+
+  #+BEGIN_QUOTE
+  在一根 1 到 100 的数轴上，随机取 9 个点，拿到 10 个线段。计算每个线段的长度，即是取值。
+  #+END_QUOTE
+
+  #+HTML: </details>
+  
+  现在都还记得看到这个回复以后那种茅塞顿开的感觉，简简单单，只需要一点数学知识即可。
+
+  通过 Python 的实现：
+  #+BEGIN_SRC python
+    def random_nums():
+        nums = [random.randint(0, 101) for i in range(9)]
+        nums.extend([0, 100])
+        nums.sort()
+
+        result = []
+        for i in range(1, 11):
+            result.append(nums[i] - nums[i - 1])
+
+        return result
+  #+END_SRC
+
+  在后序的回复中还了解的这个问题和 *红包算法* 很相似，感觉可以研究一下。
+
+* 结语
+  我一直觉得，程序代码中的那一丝不确定性是一种别样的浪漫，因此一直很好奇随机数的实现与使用。
+
+  然而事实证明，光有兴趣是不行的，你还需要足够的 *数学* 知识才行，无论是随机数的生成还是随机数的应用，都离不开数学知识的使用。
+
+  现在深深体会到了自身数学知识的贫乏，想起前两年还在想：需要用的时候在学，在学，学......
+
+  这就是传说中的：不听老人言，吃亏在眼前吧！
+
+* Footnotes
+
+[fn:1] [[https://zh.wikipedia.org/wiki/%E7%B7%9A%E6%80%A7%E5%90%8C%E9%A4%98%E6%96%B9%E6%B3%95][线性同余方法 - 维基百科，自由的百科全书]]
+
+[fn:2] [[https://zh.wikipedia.org/wiki/%E8%92%99%E5%9C%B0%E5%8D%A1%E7%BE%85%E6%96%B9%E6%B3%95][蒙特卡罗方法 - 维基百科，自由的百科全书]]
+
+[fn:3] [[https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle][Fisher–Yates shuffle - Wikipedia]]
+  
