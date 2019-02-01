@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-02-01 周五 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二分搜索算法</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">二分搜索算法</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2cb0990">1. 前言</a></li>
+<li><a href="#org33c408f">2. 中点值计算</a></li>
+<li><a href="#org4faf9aa">3. 搜索区间与终止条件</a></li>
+<li><a href="#org17a603f">4. 等于某值</a></li>
+<li><a href="#org34c1416">5. 第一个不小于</a></li>
+<li><a href="#orgdce2722">6. 第一个大于</a></li>
+<li><a href="#org979fc19">7. 最后一个不大于和最后一个小于</a></li>
+<li><a href="#orgfa914c1">8. 结尾</a></li>
+<li><a href="#org29cead2">9. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2cb0990" class="outline-2">
+<h2 id="org2cb0990"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+曾经一度觉得二分搜索算法是一个比较简单的算法，直到我看到了这样一些问题：
+</p>
+<ul class="org-ul">
+<li>查找一个已排序序列中第一个不小于某个值的元素</li>
+<li>查找一个已排序序列中最后一个不大于某个值的元素</li>
+<li>查找一个已排序序列中第一个大于某个值的元素</li>
+<li>查找一个已排序序列中最后一个小于某个值的元素</li>
+</ul>
+
+<p>
+很明显，这些问题都是可以通过二分搜索算法解决的，然而当我准备开始写的时候，才发现，我不能很好的把它们写出来。
+</p>
+
+<p>
+或者说，我只知道怎么解决：查找一个已排序序列中等于某个值的元素。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org33c408f" class="outline-2">
+<h2 id="org33c408f"><span class="section-number-2">2</span> 中点值计算</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+二分搜索算法是一个很细节的算法，中点值的计算就是其需要注意的一个地方。
+</p>
+
+<p>
+通常情况下，中点值的计算是这样的：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = (left + right) / 2;
+</pre>
+</div>
+
+<p>
+如果对二分搜索算法有一定的了解，应该知道，这样的计算可能存在溢出的问题，即：left 和 right 的和可能超出 int 类型的取值范围。
+</p>
+
+<p>
+因此，中点值的计算应该用如下算式替代：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+</pre>
+</div>
+
+<p>
+然而，中点值的计算也存在一个隐含的条件：向下取整，也就是说，我们平时写的二分搜索算法的中点值都是向 <b>左边界</b> 接近的。
+</p>
+
+<p>
+所以说，以下两者是等价的：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = (left + right) / 2;
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+</pre>
+</div>
+
+<p>
+当然了，既然存在向下取整的写法，自然也存在向上取整的写法，只不过平时我们不怎么用罢了，而这篇博客也不做讨论，
+不过还是给出中点值向上取整的写法：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = ceil((left + right) / 2);
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = right - (right - left) / 2;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4faf9aa" class="outline-2">
+<h2 id="org4faf9aa"><span class="section-number-2">3</span> 搜索区间与终止条件</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+很明显，二分搜索算法的搜索区间存在四种选择： <code>[left, right]</code>, <code>[left, right)</code>, <code>(left, right]</code>, <code>(left, right)</code>.
+</p>
+
+<p>
+这里不会讨论所有这四种区间，只讨论其中的两种： <code>[left, right]</code> 和 <code>[left, right)</code> 以及对应的终止条件选择。
+</p>
+
+<ul class="org-ul">
+<li><p>
+首先是区间 <code>[left, right]</code>, 很明显搜索这个区间时应该包括左右两端的值。
+</p>
+
+<p>
+同时，我们又了解到一般情况下，中点值的计算时向左边界接近的，因此，我们不需要担心无法搜索到左边界，
+只需要考虑怎么能够搜索到右边界。
+</p>
+
+<p>
+在中点值是向下取整的情况下，很明显，只有当 left 和 right 相等的时候，我们才能搜索到右边界，因此，循环的终止条件应该为：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">while</span> (left &lt;= right) {
+  ...
+}
+</pre>
+</div></li>
+
+<li><p>
+然后是区间 <code>[left, right)</code>, 有了前面的基础，我们可以很快的反应过来，右边界是不需要的，因此，我们只需要将终止条件修改为：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold;">while</span> (left &lt; right) {
+  ...
+}
+</pre>
+</div>
+
+<p>
+由于中点值的计算是向下取整的，而 left 和 right 相等的时候就会退出循环，所以可以保证不会使中点值和右边界值相等。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org17a603f" class="outline-2">
+<h2 id="org17a603f"><span class="section-number-2">4</span> 等于某值</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+查找一个已排序序列中等于某个值的元素是很简单的，这里就直接给出代码好了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bsearch</span>(arr, left, right, target) {
+  <span style="font-weight: bold;">while</span> (left &lt;= right) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+    <span style="font-weight: bold;">if</span> (arr[mid] == target) {
+      <span style="font-weight: bold;">return</span> mid;
+    } <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span> (arr[mid] &gt; target) {
+      right = mid - 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid - 1]</span>
+    } <span style="font-weight: bold;">else</span> {
+      left = mid + 1;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right]</span>
+    }
+  }
+  <span style="font-weight: bold;">return</span> -1;
+}
+</pre>
+</div>
+
+<p>
+这个实现是针对区间 <code>[left, right]</code> 而言的，需要注意的地方是 <b>搜索区间的缩减：</b>
+</p>
+<ul class="org-ul">
+<li>当中点值大于目标值时，说明区间 <code>[mid, right]</code> 内的元素都是我们不需要的，
+因此，执行的操作是： <code>right = mid - 1</code>.</li>
+
+<li>相应的，当中点值小于目标值时，说明区间 <code>[left, mid]</code> 内的元素都是我们不需要的，
+因此，执行的操作是： <code>left = mid + 1</code>.</li>
+</ul>
+
+<p>
+这里需要重点关注的是由边界值的变化，因为搜索的区间是 <code>[left, right]</code>, 因此，当中点值不需要时，
+可以让右边界值直接等于中点值减一。
+</p>
+
+<p>
+但是，这对于区间 <code>[left, right)</code> 来说就不一样了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bsearch</span>(arr, left, right, target) {
+  <span style="font-weight: bold;">while</span> (left &lt; right) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+    <span style="font-weight: bold;">if</span> (arr[mid] == target) {
+      <span style="font-weight: bold;">return</span> mid;
+    } <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span> (arr[mid] &gt; target) {
+      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
+    } <span style="font-weight: bold;">else</span> {
+      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right])</span>
+    }
+  }
+  <span style="font-weight: bold;">return</span> -1;
+}
+</pre>
+</div>
+
+<p>
+在这种情况下，中点值大于目标值，说明区间 <code>[mid, right]</code> 内的元素都是我们不需要的，但是，
+<code>mid - 1</code> 还是需要等待判断的。
+</p>
+
+<p>
+因此，右边界值被修改为 <code>mid</code> 而不是 <code>mid - 1</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org34c1416" class="outline-2">
+<h2 id="org34c1416"><span class="section-number-2">5</span> 第一个不小于</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+从这里开始就只讨论区间 <code>[left, right)</code> 的写法了，对于区间 <code>[left, right]</code>, 有兴趣的可以去研究一下。
+</p>
+
+<p>
+有了前面的基础，中点值的计算和终止条件的选择都不是什么问题了，因此，目前最大的问题就是搜索区间的修改问题。
+</p>
+
+<p>
+搜索区间的修改是根据中点值和搜索区间的开闭性来确定的，而区间的开闭性已经确定了，因此，现在需要考虑的是中点值的问题。
+</p>
+
+<p>
+中点值的可能情况：
+</p>
+<ol class="org-ol">
+<li>小于目标值，我们的目标是不小于目标值，因此，包括中点值在内的元素都不在我们的搜索范围内</li>
+<li>等于目标值，此时，中点值左侧可能同样存在等于目标值的元素，因此，不能贸然修改左值，那么，修改右值？</li>
+<li>大于目标值，情况和等于目标值类似</li>
+</ol>
+
+<p>
+综合上面三种情况来看，当中点值小于目标值时的处理很简单，直接修改左边界就可以了，但是对于中点值大于等于目标值时，
+是不能轻率的修改左边界的，因此，只能考虑修改右边界。
+</p>
+
+<p>
+此时，中点值有可能就是我们要的答案，因此，不可能将右边界修改为 <code>mid - 1</code>, 那么，我们需要要将右边界修改为 <code>mid + 1</code> 吗？
+</p>
+
+<p>
+这里我们可以用一个简单的程序来测试一下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">seq</span> = [2 <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10)]
+<span style="font-weight: bold; font-style: italic;">left</span>, <span style="font-weight: bold; font-style: italic;">right</span> = 0, <span style="font-weight: bold;">len</span>(seq)
+<span style="font-weight: bold;">while</span> left &lt; right:
+    <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) // 2
+    <span style="font-weight: bold;">if</span> seq[mid] &lt; 2:
+        <span style="font-weight: bold; font-style: italic;">left</span> = mid + 1
+    <span style="font-weight: bold;">else</span>:
+        <span style="font-weight: bold; font-style: italic;">right</span> = mid + 1
+    <span style="font-weight: bold;">print</span>(right)
+</pre>
+</div>
+
+<p>
+测试程序的输出为：
+</p>
+<pre class="example">
+6 4 3 2 2 2 2 2 2 2 2......
+</pre>
+
+<p>
+这是一个无限死循环，因为终止条件是 left &lt; right，而中点值的计算是趋向于左边界的，此时，如果将右边界修改为 <code>mid + 1</code>, 那么问题就变成了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">seq</span>[left] = seq[left + 1] = target;
+right = left + 1;
+mid = left + (right - left) / 2 = left + 1 / 2 = left;
+right = mid + 1 = left + 1;
+</pre>
+</div>
+
+<p>
+因此，在这种情况下，我们只能将右边界修改为 <code>mid</code>, 在这种情况下：
+</p>
+<ul class="org-ul">
+<li>假如右边界就是我们的目标，那么，右边界往左的所有元素都不是我们需要的，这就会使得做边界不断往右边界靠近，直到触发终止条件</li>
+<li>假如左边界才是我们的目标，那么，右边界就会不断往左边界靠近，直到触发终止条件</li>
+</ul>
+
+<p>
+最后，我们的实现如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lower_bound</span>(arr, left, right, target) {
+  <span style="font-weight: bold;">while</span> (left &lt; right) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+    <span style="font-weight: bold;">if</span> (arr[mid] &lt; target) {
+      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right)</span>
+    } <span style="font-weight: bold;">else</span> {
+      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
+    }
+  }
+  <span style="font-weight: bold;">return</span> left;
+}
+</pre>
+</div>
+
+<p>
+最最后，在来考虑以下两种情况：
+</p>
+<ol class="org-ol">
+<li>目标值比序列中的所有值都小，此时，左边界就是我们的结果，因为左边界的值已经不小于目标值</li>
+<li>目标值比序列中的所有值都大，此时，左边界会不断逼近右边界，这个右边界是不属于我们的搜索区间的，
+因此，当返回值等于右边界值时，说明找不到目标值</li>
+</ol>
+
+<p>
+简单来说，只要返回值比右边界值小，那么结果都是成立的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdce2722" class="outline-2">
+<h2 id="orgdce2722"><span class="section-number-2">6</span> 第一个大于</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+前面考虑了第一个不小于的情况，这里再来考虑第一个大于就容易多了，核心依然是搜索区间的修改。
+</p>
+
+<p>
+很明显，当中点值小于等于目标值时，区间 <code>[left, mid]</code> 都不是我们需要的，直接将左边界修改为 <code>mid + 1</code> 就可以了，
+右边界的修改和前面一样，因此，这里的实现只需要将前面的代码改动一点点就可以了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">upper_bound</span>(arr, left, right, target) {
+  <span style="font-weight: bold;">while</span> (left &lt; right) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+    <span style="font-weight: bold;">if</span> (arr[mid] &lt;= target) {
+      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right)</span>
+    } <span style="font-weight: bold;">else</span> {
+      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
+    }
+  }
+  <span style="font-weight: bold;">return</span> left;
+}
+</pre>
+</div>
+
+<p>
+对，没错，只需要将中间的判断条件 <code>&lt;</code> 改成 <code>&lt;=</code> 就可以了，使用上和前面的那个也是一样的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org979fc19" class="outline-2">
+<h2 id="org979fc19"><span class="section-number-2">7</span> 最后一个不大于和最后一个小于</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+这两个的实现可以取个巧，首先我们可以研究一下前面两个实现返回的结果的情况：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result] &gt;= target</span>
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result - 1] &lt; target</span>
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lower_bound</span>(arr, left, right, target) {
+  ...
+}
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result] &gt; target</span>
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result - 1] &lt;= target</span>
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">upper_bound</span>(arr, left, right, target) {
+  ...
+}
+</pre>
+</div>
+
+<p>
+很明显，最后一个不大于的意思就是：
+</p>
+<pre class="example">
+arr[result] &lt;= target
+arr[result + 1] &gt; target
+</pre>
+
+<p>
+这一点和第一个大于的返回结果很相似，因此，最后一个不大于可以借助第一个大于来实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">result</span> = upper_bound(arr, left, right, target) - 1;
+</pre>
+</div>
+
+<p>
+如果结果为 <code>-1</code> 说明目标值就不存在。
+</p>
+
+<p>
+最后一个小于也是一样的道理：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">result</span> = lower_bound(arr, left, right, target) - 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa914c1" class="outline-2">
+<h2 id="orgfa914c1"><span class="section-number-2">8</span> 结尾</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+二分搜索算法真的是一个很细节的算法，各种实现之间的区别都不大，很多就是加一减一这种程度的区别，
+但不注意还容易搞错。
+</p>
+
+<p>
+对此，我只想说，$*#&amp;*@#^&amp;&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org29cead2" class="outline-2">
+<h2 id="org29cead2"><span class="section-number-2">9</span> 参考链接</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li><a href="https://www.zhihu.com/question/36132386/answer/530313852">二分查找有几种写法？它们的区别是什么？ - Jason Li 的回答</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">Binary search algorithm - Wikipedia</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
