@@ -1,0 +1,235 @@
+#+TITLE:      大数的简单实现
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-02-09 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#字符数组的本质][字符数组的本质]]
+- [[#整数数组与-1000000000-进制][整数数组与 1000000000 进制]]
+- [[#小端模式存储][小端模式存储]]
+- [[#和-10-进制字符串之间的转换][和 10 进制字符串之间的转换]]
+- [[#大数加法][大数加法]]
+- [[#大数乘法][大数乘法]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 *大数加法* 的实现，
+  更进一步便是 *大数乘法*.
+
+  初学时解决这两个问题的一般思路就是通过 *字符数组* 来表示一个大数，然后通过模拟人工的竖式计算来实现相关运算。
+
+  我们可以基于这种思路简单扩展一下大数的实现方式。
+
+* 字符数组的本质
+  通过字符数组表示大数的本质是什么，比如像这样一个字符数组：
+  #+BEGIN_EXAMPLE
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '8', '7', '6', '5', '4', '3', '2', '1']
+  #+END_EXAMPLE
+
+  它表示大数 ~12345678987654321~, 它是通过怎样的形式来表示的呢？
+
+  答：通过 *10 进制数组* 的形式来表示的，数组中每个元素的表示范围为 ~[0, 9]~.
+
+  但是很明显，就算是在 ~C~ 语言中，存储一个字符也至少需要一个字节，而一个字节能够表示 ~[0, 255]~, 我们却只拿来存储 ~[0, 9]~ 的数字，
+  这显得有点奢侈。
+
+  而进制这个东西，是可以在计算过程中进行转换的，那么，我们是不是可以让一个字节多存储一点数据，比如说 ~[0, 99]~ 之类的？
+
+  那么更一般的，我们必须用 *字符数组* 吗？如果用 *整数数组* 又是怎样的？
+
+* 整数数组与 1000000000 进制
+  通过前面的思考，我们可以发现，通过 *字符数组* 来实现大数的方式其实就是：
+  + 通过一个 *N 进制* 的 *数组* 来表示一个大数，然后通过模拟人工的竖式计算来实现相关的大数运算
+  
+  那么，我们只需要通过一点简单的进制转换，就可以使用 *整数数组* 来替代 *字符数组*.
+
+  这里我们可以选择 *1000000000 进制* 的 *整数数组* 来实现大数，这样选择的理由：
+  + *10 进制* 的 *N* 次方可以很方便的实现和十进制之间的转换，而 *1000000000* 是一个整数能够表示的最大的 10 的 N 次方
+  + *整数数组* 的空间利用率比 *字符数组* 更高，同时用四个字节来表示大数：
+    |----------+------------+---------------------+-----------|
+    | 数组类型 |       进制 | 最大大数 - 数组形式 |  最大大数 |
+    |----------+------------+---------------------+-----------|
+    | 字符数组 |        100 | [99, 99, 99, 99]    |  99999999 |
+    | 整数数组 | 1000000000 | [999999999]         | 999999999 |
+    |----------+------------+---------------------+-----------|
+
+    可以看到，即使字符数组使用 *100* 进制来表示大数，整数数组能够表示的最大大数也是字符数组的 10 倍。
+
+  因此，整数数组和 1000000000 是一个不错的选择。
+
+* 小端模式存储
+  我们选择了整数数组和 1000000000 进制实现大数，其中，整数数组的每个元素最多存储 9 位十进制数字：
+  #+BEGIN_SRC java
+    private final static int BASE = 1000000000;
+    private final static int BASE_DECIMAL_DIGITS = 9;
+  #+END_SRC
+  
+  然后需要考虑的就是大数的存储模式，和计算机内存中数据的存储一样，这里我们有 *大端* 和 *小端* 两种存储模式可以选择，其中，大端形式可以方便人的阅读，
+  而小端可以方便相关大数计算的实现。
+
+  阅读方面可以选择通过直接将大数打印为十进制字符串，因此，这里选择小端的存储模式：
+  #+BEGIN_SRC java
+    /**
+     ,* Create large numbers based on small endian integer arrays
+     ,*
+     ,* Array [999999999, 1] representing large numbers 1999999999
+     ,*
+     ,* NOTE: The range of values ​​for each element of the array is [0, 999999999]
+     ,*/
+    public BigInteger(int... digits) {
+      if (digits.length > 0) {
+        for (int digit : digits) {
+          if (digit < 0 || digit >= BASE) {
+            throw new IllegalArgumentException(String.format("Digit %d out of range !", digit));
+          }
+        }
+        this.digits = digits.clone();
+      } else {
+        this.digits = new int[] {0};
+      }
+    }
+  #+END_SRC
+
+* 和 10 进制字符串之间的转换
+  将 10 进制字符串转换为 1000000000 进制的整数数组时，只需要按 9 个数字一组的方式分割原字符串就可以了：
+  #+BEGIN_SRC java
+    /**
+     ,* Create large numbers based on decimal strings
+     ,*/
+    public BigInteger(String digitsString) {
+      int stringLength = digitsString.length();
+      // Array size required to store large numbers, equal ceil(digitsLength / BASE_DECIMAL_DIGITS)
+      int digitsLength = (stringLength - 1) / BASE_DECIMAL_DIGITS + 1;
+      // Length of the large number of heads
+      int head = stringLength % BASE_DECIMAL_DIGITS;
+
+      this.digits = new int[digitsLength];
+      for (int i = 0; i < digitsLength; ++i) {
+        String block = digitsString.substring(Math.max(head + (i - 1) * BASE_DECIMAL_DIGITS, 0), head + i * BASE_DECIMAL_DIGITS);
+        this.digits[digitsLength - i - 1] = Integer.parseInt(block);
+      }
+    }
+  #+END_SRC
+
+  而将 1000000000 进制的整数数组转换为 10 进制字符串也可以通过格式化字符串简单实现：
+  #+BEGIN_SRC java
+    public class BigInteger {
+      public String toString() {
+        Formatter formatter = new Formatter();
+
+        formatter.format("%d", digits[digits.length - 1]);
+        for (int i = digits.length - 2; i >= 0; --i) {
+          formatter.format("%09d", digits[i]);
+        }
+
+        return formatter.toString();
+      }
+  #+END_SRC
+
+  效果：
+  #+BEGIN_SRC python
+    >>> import BigInteger
+    >>> BigInteger("1234684654687654354896735454")
+    1234684654687654354896735454
+  #+END_SRC
+
+  *注：* 这里的测试是通过 ~Jython~ 完成的，用 ~Jython~ 来进行简单的 Java 测试是一个很不错的选择
+
+* 大数加法
+  整数数组的大数加法和字符数组的大数加法在实现上是差不多的，所有就直接上代码好了：
+  #+BEGIN_SRC java
+    public BigInteger plus(BigInteger other) {
+      int[] result = new int[Math.max(this.digits.length, other.digits.length) + 1];
+      System.arraycopy(this.digits, 0, result, 0, this.digits.length);
+
+      int carry = 0;
+      for (int i = 0; i < other.digits.length; ++i) {
+        int sum = carry + result[i] + other.digits[i];
+        result[i] = sum % BASE;
+        carry = sum / BASE;
+      }
+
+      if (carry != 0) {
+        result[result.length - 1] = carry;
+      } else {
+        result = Arrays.copyOfRange(result, 0, result.length - 1);
+      }
+
+      return new BigInteger(result);
+    }
+  #+END_SRC
+
+  测试：
+  #+BEGIN_SRC python
+    >>> a = BigInteger("999999999999999999999999999999999999999999")
+    >>> b = BigInteger("111111111111111111111111111111111111111111")
+    >>> a.plus(b)
+    1111111111111111111111111111111111111111110
+  #+END_SRC
+
+* 大数乘法
+  大数乘法我们可以借助 *long* 数组来辅助实现，因为，这样就不需要担心两个 *int* 相乘的溢出问题了，
+  这也是为什么不选择 *long* 数组来实现大数的一个原因。
+
+  #+BEGIN_SRC java
+    public BigInteger mul(BigInteger other) {
+      long[] temp = new long[this.digits.length + other.digits.length];
+
+      for (int i = 0; i < this.digits.length; ++i) {
+        for (int j = 0; j < other.digits.length; ++j) {
+          temp[i + j] += (long) this.digits[i] * (long) other.digits[j];
+        }
+      }
+
+      for (int i = 0; i < temp.length; ++i) {
+        if (temp[i] >= BASE) {
+          temp[i + 1] += temp[i] / BASE;
+          temp[i] = temp[i] % BASE;
+        }
+      }
+
+      int zeroCount = 0;
+      for (int i = temp.length - 1; i >= 0; --i) {
+        if (temp[i] > 0) {
+          break;
+        }
+        zeroCount++;
+      }
+
+      int[] result = new int[temp.length - zeroCount];
+      for (int i = 0; i < result.length; ++i) {
+        result[i] = (int) temp[i];
+      }
+
+      return new BigInteger(result);
+    }
+  #+END_SRC
+
+  测试：
+  #+BEGIN_SRC python
+    >>> a = BigInteger("999999999999999999999999999999999999999999")
+    >>> b = BigInteger("111111111111111111111111111111111111111111")
+    >>> a.mul(b)
+    111111111111111111111111111111111111111110888888888888888888888888888888888888888889
+  #+END_SRC
+
+* 结语
+  这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，
+  于是就放弃了。
+
+  但是，如果真的用 2 进制流来实现的话，其实也就只是相当于 *0xff* 进制的字符数组或 *0xffffffff* 进制的整数数组，
+  主要是和十进制之间的转换有点麻烦。
+
+  而有些操作是需要用 2 进制流来实现才好完成的，比如大数的位运算。
+
+  这里的实现还没有涉及大数减法和大数除法，有兴趣的可以去尝试一下。
+
+  完整代码链接：[[https://gist.github.com/rgb-24bit/931e45660d8826fce2053c943d0b2c99][BigInteger.java]]
+
+* 参考链接
+  + [[https://www.pediy.com/kssd/pediy05/pediy50664.htm][RSA 与大数运算]]
+  + [[https://codeday.me/bug/20170818/53558.html][如何在 Java 中处理非常大的数字，而不使用 java.math.BigInteger - 代码日志]]
+  + [[http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/math/BigInteger.java][JDK 8 BigInteger 源码链接]]
+
