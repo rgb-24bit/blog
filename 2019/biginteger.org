@@ -152,8 +152,14 @@
       }
 
       if (carry != 0) {
-        result[result.length - 1] = carry;
-      } else {
+        for (int i = other.digits.length; i < result.length && carry != 0; ++i) {
+          int sum = carry + result[i];
+          result[i] = sum % BASE;
+          carry = sum / BASE;
+        }
+      }
+
+      if (result[result.length - 1] == 0) {
         result = Arrays.copyOfRange(result, 0, result.length - 1);
       }
 

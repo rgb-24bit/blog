@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-02-09 周六 16:04 -->
+<!-- 2019-02-10 周日 11:52 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>大数的简单实现</title>
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd7a33a7">1. 前言</a></li>
-<li><a href="#org3863862">2. 字符数组的本质</a></li>
-<li><a href="#org4ed6eb8">3. 整数数组与 1000000000 进制</a></li>
-<li><a href="#orgfd716de">4. 小端模式存储</a></li>
-<li><a href="#org59a4d4d">5. 和 10 进制字符串之间的转换</a></li>
-<li><a href="#org28300ed">6. 大数加法</a></li>
-<li><a href="#orgb1cf194">7. 大数乘法</a></li>
-<li><a href="#org49e8ba1">8. 结语</a></li>
-<li><a href="#org244d392">9. 参考链接</a></li>
+<li><a href="#org001c3d7">1. 前言</a></li>
+<li><a href="#org81d2190">2. 字符数组的本质</a></li>
+<li><a href="#org6bb3c05">3. 整数数组与 1000000000 进制</a></li>
+<li><a href="#org58229ff">4. 小端模式存储</a></li>
+<li><a href="#org1a44f7a">5. 和 10 进制字符串之间的转换</a></li>
+<li><a href="#orgc9bbfd0">6. 大数加法</a></li>
+<li><a href="#org3521ee6">7. 大数乘法</a></li>
+<li><a href="#org8825e26">8. 结语</a></li>
+<li><a href="#orgad936d0">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd7a33a7" class="outline-2">
-<h2 id="orgd7a33a7"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org001c3d7" class="outline-2">
+<h2 id="org001c3d7"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 <b>大数加法</b> 的实现，
@@ -277,8 +277,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3863862" class="outline-2">
-<h2 id="org3863862"><span class="section-number-2">2</span> 字符数组的本质</h2>
+<div id="outline-container-org81d2190" class="outline-2">
+<h2 id="org81d2190"><span class="section-number-2">2</span> 字符数组的本质</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通过字符数组表示大数的本质是什么，比如像这样一个字符数组：
@@ -310,11 +310,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4ed6eb8" class="outline-2">
-<h2 id="org4ed6eb8"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
+<div id="outline-container-org6bb3c05" class="outline-2">
+<h2 id="org6bb3c05"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-通过前面的思考，我们可以发现，通过 <b>字符数组</b> 来实现大数的方式其实是：
+通过前面的思考，我们可以发现，通过 <b>字符数组</b> 来实现大数的方式其实就是：
 </p>
 <ul class="org-ul">
 <li>通过一个 <b>N 进制</b> 的 <b>数组</b> 来表示一个大数，然后通过模拟人工的竖式计算来实现相关的大数运算</li>
@@ -380,8 +380,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfd716de" class="outline-2">
-<h2 id="orgfd716de"><span class="section-number-2">4</span> 小端模式存储</h2>
+<div id="outline-container-org58229ff" class="outline-2">
+<h2 id="org58229ff"><span class="section-number-2">4</span> 小端模式存储</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我们选择了整数数组和 1000000000 进制实现大数，其中，整数数组的每个元素最多存储 9 位十进制数字：
@@ -425,8 +425,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org59a4d4d" class="outline-2">
-<h2 id="org59a4d4d"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
+<div id="outline-container-org1a44f7a" class="outline-2">
+<h2 id="org1a44f7a"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 将 10 进制字符串转换为 1000000000 进制的整数数组时，只需要按 9 个数字一组的方式分割原字符串就可以了：
@@ -485,8 +485,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org28300ed" class="outline-2">
-<h2 id="org28300ed"><span class="section-number-2">6</span> 大数加法</h2>
+<div id="outline-container-orgc9bbfd0" class="outline-2">
+<h2 id="orgc9bbfd0"><span class="section-number-2">6</span> 大数加法</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 整数数组的大数加法和字符数组的大数加法在实现上是差不多的，所有就直接上代码好了：
@@ -504,8 +504,14 @@ for the JavaScript code in this tag.
   }
 
   <span style="font-weight: bold;">if</span> (carry != 0) {
-    result[result.length - 1] = carry;
-  } <span style="font-weight: bold;">else</span> {
+    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = other.digits.length; i &lt; result.<span style="font-weight: bold; text-decoration: underline;">length</span> &amp;&amp; carry != 0; ++i) {
+      <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = carry + result[i];
+      result[i] = sum % BASE;
+      carry = sum / BASE;
+    }
+  }
+
+  <span style="font-weight: bold;">if</span> (result[result.length - 1] == 0) {
     result = Arrays.copyOfRange(result, 0, result.length - 1);
   }
 
@@ -527,8 +533,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb1cf194" class="outline-2">
-<h2 id="orgb1cf194"><span class="section-number-2">7</span> 大数乘法</h2>
+<div id="outline-container-org3521ee6" class="outline-2">
+<h2 id="org3521ee6"><span class="section-number-2">7</span> 大数乘法</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 大数乘法我们可以借助 <b>long</b> 数组来辅助实现，因为，这样就不需要担心两个 <b>int</b> 相乘的溢出问题了，
@@ -583,8 +589,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org49e8ba1" class="outline-2">
-<h2 id="org49e8ba1"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org8825e26" class="outline-2">
+<h2 id="org8825e26"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，
@@ -610,8 +616,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org244d392" class="outline-2">
-<h2 id="org244d392"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-orgad936d0" class="outline-2">
+<h2 id="orgad936d0"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.pediy.com/kssd/pediy05/pediy50664.htm">RSA 与大数运算</a></li>
