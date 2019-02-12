@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-02-12 周二 16:51 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>通过位运算实现整数的加减乘除</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">通过位运算实现整数的加减乘除</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org33a9a83">1. 前言</a></li>
+<li><a href="#orgc154e33">2. 加法实现</a></li>
+<li><a href="#org7728f6b">3. 减法实现</a></li>
+<li><a href="#org0b943c9">4. 乘法实现</a></li>
+<li><a href="#orgf6b005e">5. 除法实现</a></li>
+<li><a href="#org4a921fa">6. 求余实现</a></li>
+<li><a href="#orgb566a3a">7. 结语</a></li>
+<li><a href="#org9f70eb9">8. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org33a9a83" class="outline-2">
+<h2 id="org33a9a83"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+很久以前就了解过怎样通过位运算实现整数的加减乘除，但是每次都只是大概的了解了一下加减法的实现。
+</p>
+
+<p>
+最近正好有时间就去进一步的了解了乘法和除法的实现，这里一起总结一下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc154e33" class="outline-2">
+<h2 id="orgc154e33"><span class="section-number-2">2</span> 加法实现</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+对于二进制的整数加法来说，我们需要让 <code>1</code> 和 <code>0</code> 的运算结果为 <code>1</code>, 而 <code>0</code> 和 <code>0</code> 的运算结果为 <code>0</code>,
+这和 <b>异或</b> 运算的结果刚好相同。
+</p>
+
+<pre class="example">
+1 ^ 0 = 1, 0 ^ 0 = 0
+</pre>
+
+<p>
+同时，我们需要让 <code>1</code> 和 <code>1</code> 的运算结果为 <code>10</code>, 也就是需要进位，很明显这无法用单次的位运算操作实现，因此，
+我们可以考虑通过 <b>与</b> 运算和 <b>移位</b> 运算来实现。
+</p>
+
+<pre class="example">
+(1 &amp; 1) &lt;&lt; 1 = 10
+</pre>
+
+<p>
+和竖式加法一样，如果两个数相加不发生进位，那么直接用 <b>异或</b> 就足够了，如果发生进位，
+那么我们就需要将 <b>异或</b> 的结果和 <b>进位</b> 的结果相加。
+</p>
+
+<p>
+C 语言实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">plus</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = a, <span style="font-weight: bold; font-style: italic;">carry</span> = b;
+
+  <span style="font-weight: bold;">while</span> (carry) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">temp</span> = sum;
+    sum = temp ^ carry;           <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">a ^ b</span>
+    carry = (temp &amp; carry) &lt;&lt; 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">(a &amp; b) &lt;&lt; 1</span>
+  }
+
+  <span style="font-weight: bold;">return</span> sum;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7728f6b" class="outline-2">
+<h2 id="org7728f6b"><span class="section-number-2">3</span> 减法实现</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+减去一个数其实就是加上那个数的相反数，我们可以通过如下方法得到一个数的相反数：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">negate</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span>) {
+  <span style="font-weight: bold;">return</span> plus(~num, 1);
+}
+</pre>
+</div>
+
+<p>
+然后，减法就可以很简单的实现了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">subtract</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold;">return</span> plus(a, negate(b));
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b943c9" class="outline-2">
+<h2 id="org0b943c9"><span class="section-number-2">4</span> 乘法实现</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+对于乘法来说，直接的实现就是通过很多次的加法来实现，简单粗暴：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">abs</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span>) {
+  <span style="font-weight: bold;">return</span> num &lt; 0 ? negate(num) : num;
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
+  <span style="font-weight: bold;">while</span> (multiplicand) {
+    product = plus(product, multiplier);
+    multiplicand = subtract(multiplicand, 1);
+  }
+
+  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+    product = negate(product);
+  }
+
+  <span style="font-weight: bold;">return</span> product;
+}
+</pre>
+</div>
+
+<p>
+对于符号位，可以先计算两个数绝对值的乘积，然后根据符号位修改结果。
+</p>
+
+<p>
+但是，我们也可以利用一点数学技巧来进行改进：
+</p>
+<ul class="org-ul">
+<li>当我们的乘数是一个 <b>偶数</b> 的时候，我们可以将被乘数乘 2 而乘数除 2，这不影响结果</li>
+<li>当我们的乘数是一个 <b>奇数</b> 的时候，我们可以让积加上一次被乘数，然后让乘数减 1，这同样不影响结果</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
+  <span style="font-weight: bold;">while</span> (multiplicand) {
+    <span style="font-weight: bold;">if</span> (multiplicand &amp; 0x1) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22855;&#25968;&#30340;&#26368;&#20302;&#20301;&#20026; 1</span>
+      product = plus(product, multiplier);
+      multiplicand = subtract(multiplicand, 1);
+    } <span style="font-weight: bold;">else</span> {
+      multiplier = multiplier &lt;&lt; 1;      <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">multiplier * 2;</span>
+      multiplicand = multiplicand &gt;&gt; 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">multiplicand / 2</span>
+    }
+  }
+
+  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+    product = negate(product);
+  }
+
+  <span style="font-weight: bold;">return</span> product;
+}
+</pre>
+</div>
+
+<p>
+然后我们在观察一下，当乘数是奇数的时候，我们的操作会是：
+</p>
+<ul class="org-ul">
+<li>乘数减 1，变成偶数</li>
+<li>乘数除 2</li>
+</ul>
+
+<p>
+这和除 2 并向下取整的结果是一样的，对于奇数，右移位的效果和向下取整相同，因此。我们的代码可以修改为：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
+  <span style="font-weight: bold;">while</span> (multiplicand) {
+    <span style="font-weight: bold;">if</span> (multiplicand &amp; 0x1) {
+      product = plus(product, multiplier);
+    }
+    multiplier = multiplier &lt;&lt; 1;
+    multiplicand = multiplicand &gt;&gt; 1;
+  }
+
+  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+    product = negate(product);
+  }
+
+  <span style="font-weight: bold;">return</span> product;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf6b005e" class="outline-2">
+<h2 id="orgf6b005e"><span class="section-number-2">5</span> 除法实现</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+和乘法一样，我们可以通过不断的减法来实现除法，但是，同样的，我们可以借助数学技巧来获得更好的实现。
+</p>
+
+<p>
+首先我们来看一下以下两个数的除法：
+</p>
+<pre class="example">
+                1
+        -----------------------------
+1 0 1 0 | 1 0 1 0 0 0 1 1
+        | 1 0 1 0
+</pre>
+
+<p>
+当我们像这样进行除法计算的时候，我们的下一步应该是：
+</p>
+<pre class="example">
+                1
+        -----------------------------
+1 0 1 0 | 1 0 1 0 0 0 1 1
+        | 1 0 1 0
+          ---------------------------
+          0 0 0 0
+</pre>
+
+<p>
+此时，我们进行了一次减法，我们减去的是什么数字呢？是 <code>1010</code> 吗？很明显，不是的，而是：
+</p>
+<pre class="example">
+                1
+        -----------------------------
+1 0 1 0 | 1 0 1 0 0 0 1 1
+        | 1 0 1 0 0 0 0 0
+          ---------------------------
+          0 0 0 0 0 0 1 1
+</pre>
+
+<p>
+这相当与将 <code>1010</code> 向左移了 <code>4</code> 位，我们在更换数字尝试一下：
+</p>
+<pre class="example">
+                  1
+        -----------------------------
+1 0 1 1 | 1 0 1 0 1 0 1 1
+        |   1 0 1 1 0 0 0
+          ---------------------------
+            1 0 1 0 0 1 1
+</pre>
+
+<p>
+很明显，这相当于将数字 <code>1011</code> 向左移了 <code>3</code> 位，为什么不移 <code>4</code> 位呢？因为如果移 4 位，得到的除数就比被除数大了。
+</p>
+
+<p>
+由此，我们可以归纳出除法需要进行的步骤：
+</p>
+<ul class="org-ul">
+<li>首先将除数和被除数进行对齐，即除数和被除数的第一个 1 在同一位上</li>
+<li>判断除数是否大于等于被除数，如果为否，就不断右移除数，直到为真</li>
+<li>用除数减去当前的被除数，减法的结果作为新的被除数</li>
+<li>重复前面的步骤，直到被除数为 0</li>
+</ul>
+
+<p>
+然后，我们就可以尝试实现了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639;&#25972;&#25968; a &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;</span>
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bitlength</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">length</span> = 0;
+  <span style="font-weight: bold;">while</span> (a) {
+    plus(length, 1);
+    a = a &gt;&gt; 1;
+  }
+  <span style="font-weight: bold;">return</span> length;
+}
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639;&#25972;&#25968; a &#21644; b &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;&#30340;&#24046;&#20540;</span>
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lengthdiff</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold;">return</span> subtract(bitlength(a), bitlength(b));
+}
+
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">division</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">dividend</span> = abs(a), <span style="font-weight: bold; font-style: italic;">divisor</span> = abs(b);
+
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">quotient</span> = 0;
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">r</span> = (divisor &lt;&lt; i);
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Left shift divisor until it's smaller than dividend</span>
+    <span style="font-weight: bold;">if</span> (r &lt;= dividend) {
+      quotient |= (1 &lt;&lt; i);
+      dividend = subtract(dividend, r);
+    }
+  }
+
+  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+    quotient = negate(quotient);
+  }
+
+  <span style="font-weight: bold;">return</span> quotient;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a921fa" class="outline-2">
+<h2 id="org4a921fa"><span class="section-number-2">6</span> 求余实现</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+实现了除法，求余也就差不多，直接把最后剩余的被除数返回就可以了：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">remain</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">dividend</span> = abs(a), <span style="font-weight: bold; font-style: italic;">divisor</span> = abs(b);
+
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">quotient</span> = 0;
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
+    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">r</span> = (divisor &lt;&lt; i);
+    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Left shift divisor until it's smaller than dividend</span>
+    <span style="font-weight: bold;">if</span> (r &lt;= dividend) {
+      dividend = subtract(dividend, (<span style="font-weight: bold; text-decoration: underline;">int</span>) r);
+    }
+  }
+
+  <span style="font-weight: bold;">if</span> (a &lt; 0) {
+    dividend = negate(dividend);
+  }
+
+  <span style="font-weight: bold;">return</span> dividend;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb566a3a" class="outline-2">
+<h2 id="orgb566a3a"><span class="section-number-2">7</span> 结语</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+这里尝试了通过位运算实现整数的四则运算，假如你有兴趣的话，可以试一下浮点数的 @_@
+</p>
+
+<p>
+获取浮点数的二进制表示：
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold;">float2binary</span>(<span style="font-weight: bold; text-decoration: underline;">float</span> <span style="font-weight: bold; font-style: italic;">x</span>) {
+  <span style="font-weight: bold;">return</span> ((<span style="font-weight: bold; text-decoration: underline;">unsigned</span>*)&amp;x)[0];
+}
+</pre>
+</div>
+
+<p>
+完整的代码链接：<a href="https://gist.github.com/rgb-24bit/c003e538179e8618cddbb51c5f0ba676">Incremental addition, subtraction, multiplication and division of integers by bit operations</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9f70eb9" class="outline-2">
+<h2 id="org9f70eb9"><span class="section-number-2">8</span> 参考链接</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><a href="https://www.cnblogs.com/kiven-code/archive/2012/09/15/2686922.html">用基本位运算实现加减乘除 - kiven.li - 博客园</a></li>
+<li><a href="https://stackoverflow.com/questions/5284898/implement-division-with-bit-wise-operator">bit manipulation - Implement division with bit-wise operator - Stack Overflow</a></li>
+<li><a href="https://www.quora.com/How-do-I-divide-two-numbers-using-only-bit-operations-in-Java">How to divide two numbers, using only bit operations, in Java - Quora</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

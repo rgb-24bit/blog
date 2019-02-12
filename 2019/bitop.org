@@ -1,0 +1,274 @@
+#+TITLE:      通过位运算实现整数的加减乘除
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-02-12 周二>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#加法实现][加法实现]]
+- [[#减法实现][减法实现]]
+- [[#乘法实现][乘法实现]]
+- [[#除法实现][除法实现]]
+- [[#求余实现][求余实现]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  很久以前就了解过怎样通过位运算实现整数的加减乘除，但是每次都只是大概的了解了一下加减法的实现。
+
+  最近正好有时间就去进一步的了解了乘法和除法的实现，这里一起总结一下。
+
+* 加法实现
+  对于二进制的整数加法来说，我们需要让 ~1~ 和 ~0~ 的运算结果为 ~1~, 而 ~0~ 和 ~0~ 的运算结果为 ~0~,
+  这和 *异或* 运算的结果刚好相同。
+
+  #+BEGIN_EXAMPLE
+    1 ^ 0 = 1, 0 ^ 0 = 0
+  #+END_EXAMPLE
+
+  同时，我们需要让 ~1~ 和 ~1~ 的运算结果为 ~10~, 也就是需要进位，很明显这无法用单次的位运算操作实现，因此，
+  我们可以考虑通过 *与* 运算和 *移位* 运算来实现。
+
+  #+BEGIN_EXAMPLE
+    (1 & 1) << 1 = 10
+  #+END_EXAMPLE
+
+  和竖式加法一样，如果两个数相加不发生进位，那么直接用 *异或* 就足够了，如果发生进位，
+  那么我们就需要将 *异或* 的结果和 *进位* 的结果相加。
+
+  C 语言实现：
+  #+BEGIN_SRC C
+    int plus(int a, int b) {
+      int sum = a, carry = b;
+
+      while (carry) {
+        int temp = sum;
+        sum = temp ^ carry;           // a ^ b
+        carry = (temp & carry) << 1;  // (a & b) << 1
+      }
+
+      return sum;
+    }
+  #+END_SRC
+
+* 减法实现
+  减去一个数其实就是加上那个数的相反数，我们可以通过如下方法得到一个数的相反数：
+  #+BEGIN_SRC C
+    int negate(int num) {
+      return plus(~num, 1);
+    }
+  #+END_SRC
+
+  然后，减法就可以很简单的实现了：
+  #+BEGIN_SRC C
+    int subtract(int a, int b) {
+      return plus(a, negate(b));
+    }
+  #+END_SRC
+
+* 乘法实现
+  对于乘法来说，直接的实现就是通过很多次的加法来实现，简单粗暴：
+  #+BEGIN_SRC C
+    int abs(int num) {
+      return num < 0 ? negate(num) : num;
+    }
+
+    int multiply(int a, int b) {
+      int multiplier = abs(a), multiplicand = abs(b);
+
+      int product = 0;
+      while (multiplicand) {
+        product = plus(product, multiplier);
+        multiplicand = subtract(multiplicand, 1);
+      }
+
+      if ((a ^ b) < 0) {
+        product = negate(product);
+      }
+
+      return product;
+    }
+  #+END_SRC
+
+  对于符号位，可以先计算两个数绝对值的乘积，然后根据符号位修改结果。
+
+  但是，我们也可以利用一点数学技巧来进行改进：
+  + 当我们的乘数是一个 *偶数* 的时候，我们可以将被乘数乘 2 而乘数除 2，这不影响结果
+  + 当我们的乘数是一个 *奇数* 的时候，我们可以让积加上一次被乘数，然后让乘数减 1，这同样不影响结果
+
+  #+BEGIN_SRC C
+    int multiply(int a, int b) {
+      int multiplier = abs(a), multiplicand = abs(b);
+
+      int product = 0;
+      while (multiplicand) {
+        if (multiplicand & 0x1) {  // 奇数的最低位为 1
+          product = plus(product, multiplier);
+          multiplicand = subtract(multiplicand, 1);
+        } else {
+          multiplier = multiplier << 1;      // multiplier * 2;
+          multiplicand = multiplicand >> 1;  // multiplicand / 2
+        }
+      }
+
+      if ((a ^ b) < 0) {
+        product = negate(product);
+      }
+
+      return product;
+    }
+  #+END_SRC
+ 
+  然后我们在观察一下，当乘数是奇数的时候，我们的操作会是：
+  + 乘数减 1，变成偶数
+  + 乘数除 2
+
+  这和除 2 并向下取整的结果是一样的，对于奇数，右移位的效果和向下取整相同，因此。我们的代码可以修改为：
+  #+BEGIN_SRC C
+    int multiply(int a, int b) {
+      int multiplier = abs(a), multiplicand = abs(b);
+
+      int product = 0;
+      while (multiplicand) {
+        if (multiplicand & 0x1) {
+          product = plus(product, multiplier);
+        }
+        multiplier = multiplier << 1;
+        multiplicand = multiplicand >> 1;
+      }
+
+      if ((a ^ b) < 0) {
+        product = negate(product);
+      }
+
+      return product;
+    }
+  #+END_SRC
+  
+* 除法实现
+  和乘法一样，我们可以通过不断的减法来实现除法，但是，同样的，我们可以借助数学技巧来获得更好的实现。
+
+  首先我们来看一下以下两个数的除法：
+  #+BEGIN_EXAMPLE
+                    1
+            -----------------------------
+    1 0 1 0 | 1 0 1 0 0 0 1 1
+            | 1 0 1 0
+  #+END_EXAMPLE
+
+  当我们像这样进行除法计算的时候，我们的下一步应该是：
+  #+BEGIN_EXAMPLE
+                    1
+            -----------------------------
+    1 0 1 0 | 1 0 1 0 0 0 1 1
+            | 1 0 1 0
+              ---------------------------
+              0 0 0 0
+  #+END_EXAMPLE
+  
+  此时，我们进行了一次减法，我们减去的是什么数字呢？是 ~1010~ 吗？很明显，不是的，而是：
+  #+BEGIN_EXAMPLE
+                    1
+            -----------------------------
+    1 0 1 0 | 1 0 1 0 0 0 1 1
+            | 1 0 1 0 0 0 0 0
+              ---------------------------
+              0 0 0 0 0 0 1 1
+  #+END_EXAMPLE
+
+  这相当与将 ~1010~ 向左移了 ~4~ 位，我们在更换数字尝试一下：
+  #+BEGIN_EXAMPLE
+                      1
+            -----------------------------
+    1 0 1 1 | 1 0 1 0 1 0 1 1
+            |   1 0 1 1 0 0 0
+              ---------------------------
+                1 0 1 0 0 1 1
+  #+END_EXAMPLE
+
+  很明显，这相当于将数字 ~1011~ 向左移了 ~3~ 位，为什么不移 ~4~ 位呢？因为如果移 4 位，得到的除数就比被除数大了。
+
+  由此，我们可以归纳出除法需要进行的步骤：
+  + 首先将除数和被除数进行对齐，即除数和被除数的第一个 1 在同一位上
+  + 判断除数是否大于等于被除数，如果为否，就不断右移除数，直到为真
+  + 用除数减去当前的被除数，减法的结果作为新的被除数
+  + 重复前面的步骤，直到被除数为 0
+
+  然后，我们就可以尝试实现了：
+  #+BEGIN_SRC C
+    // 计算整数 a 的有效位长度
+    int bitlength(int a) {
+      int length = 0;
+      while (a) {
+        plus(length, 1);
+        a = a >> 1;
+      }
+      return length;
+    }
+
+    // 计算整数 a 和 b 的有效位长度的差值
+    int lengthdiff(int a, int b) {
+      return subtract(bitlength(a), bitlength(b));
+    }
+
+    int division(int a, int b) {
+      int dividend = abs(a), divisor = abs(b);
+
+      int quotient = 0;
+      for (int i = lengthdiff(dividend, divisor); i >= 0; i = subtract(i, 1)) {
+        int r = (divisor << i);
+        // Left shift divisor until it's smaller than dividend
+        if (r <= dividend) {
+          quotient |= (1 << i);
+          dividend = subtract(dividend, r);
+        }
+      }
+
+      if ((a ^ b) < 0) {
+        quotient = negate(quotient);
+      }
+
+      return quotient;
+    }
+  #+END_SRC
+  
+* 求余实现
+  实现了除法，求余也就差不多，直接把最后剩余的被除数返回就可以了：
+  #+BEGIN_SRC C
+    int remain(int a, int b) {
+      int dividend = abs(a), divisor = abs(b);
+
+      int quotient = 0;
+      for (int i = lengthdiff(dividend, divisor); i >= 0; i = subtract(i, 1)) {
+        int r = (divisor << i);
+        // Left shift divisor until it's smaller than dividend
+        if (r <= dividend) {
+          dividend = subtract(dividend, (int) r);
+        }
+      }
+
+      if (a < 0) {
+        dividend = negate(dividend);
+      }
+
+      return dividend;
+    }
+  #+END_SRC
+
+* 结语
+  这里尝试了通过位运算实现整数的四则运算，假如你有兴趣的话，可以试一下浮点数的 @_@
+
+  获取浮点数的二进制表示：
+  #+BEGIN_SRC C
+    unsigned float2binary(float x) {
+      return ((unsigned*)&x)[0];
+    }
+  #+END_SRC
+
+  完整的代码链接：[[https://gist.github.com/rgb-24bit/c003e538179e8618cddbb51c5f0ba676][Incremental addition, subtraction, multiplication and division of integers by bit operations]]
+
+* 参考链接  
+  + [[https://www.cnblogs.com/kiven-code/archive/2012/09/15/2686922.html][用基本位运算实现加减乘除 - kiven.li - 博客园]]
+  + [[https://stackoverflow.com/questions/5284898/implement-division-with-bit-wise-operator][bit manipulation - Implement division with bit-wise operator - Stack Overflow]]
+  + [[https://www.quora.com/How-do-I-divide-two-numbers-using-only-bit-operations-in-Java][How to divide two numbers, using only bit operations, in Java - Quora]]
+
