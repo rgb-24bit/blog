@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-03-08 周五 15:54 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java SE 5.0 - SE 8 的功能增强</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Java SE 5.0 - SE 8 的功能增强</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org18cf9db">1. 前言</a></li>
+<li><a href="#org674aa6c">2. Java 5.0</a>
+<ul>
+<li><a href="#org5a0e55e">2.1. Generics</a></li>
+<li><a href="#org9e833b4">2.2. Enhanced for Loop</a></li>
+<li><a href="#org65a0c2d">2.3. Autoboxing</a></li>
+<li><a href="#org66f44d9">2.4. Typesafe Enums</a></li>
+<li><a href="#orgdb9c042">2.5. Varargs</a></li>
+<li><a href="#org23e13f1">2.6. Static Import</a></li>
+<li><a href="#org7eac31e">2.7. Annotations</a></li>
+</ul>
+</li>
+<li><a href="#orgc5a20ff">3. Java SE 6</a></li>
+<li><a href="#org428f1fb">4. Java SE 7</a>
+<ul>
+<li><a href="#org9b24611">4.1. Binary Literals</a></li>
+<li><a href="#org8bd3d7e">4.2. Underscores in Numeric Literals</a></li>
+<li><a href="#orgb243ab3">4.3. Strings in switch Statements</a></li>
+<li><a href="#orgaf3d356">4.4. Type Inference for Generic Instance Creation</a></li>
+<li><a href="#org5cba807">4.5. The try-with-resources Statement</a></li>
+<li><a href="#orgf370fb3">4.6. Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</a></li>
+</ul>
+</li>
+<li><a href="#orgfac0662">5. Java SE 8</a>
+<ul>
+<li><a href="#orgeb93fb8">5.1. Lambda Expressions</a></li>
+<li><a href="#org9323863">5.2. Improved Type Inference</a></li>
+<li><a href="#orgfcd774f">5.3. Annotations on Java Types</a></li>
+<li><a href="#orgf53fa09">5.4. Repeating Annotations</a></li>
+<li><a href="#orgd2b8a36">5.5. Method Parameter Reflection</a></li>
+</ul>
+</li>
+<li><a href="#org5f31e06">6. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org18cf9db" class="outline-2">
+<h2 id="org18cf9db"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在学习 <b>Python</b> 的过程中就因为不同版本之间的不同而迷惑过，现在在学习 <b>Java</b> 的过程中我也遇见了类似的问题。
+</p>
+
+<p>
+市面上的 <b>Java</b> 教材使用的 <b>Java</b> 版本各不相同，各个版本之间的语言特性来回切换，让人有点不知所措。
+</p>
+
+<p>
+这篇博客参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html">Java Programming Language Enhancements</a> 整理了一下 <b>Java 5.0 - 8</b> 的功能增强，
+希望对有相同困惑的你有所帮助。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org674aa6c" class="outline-2">
+<h2 id="org674aa6c"><span class="section-number-2">2</span> Java 5.0</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+就目前的情况来说，无论是市面上的 <b>Java</b> 书籍还是实际使用的 <b>Java</b> 版本，大多是 <b>&gt;= 5.0</b> 的，因此，
+这一节就只简单介绍一下 <b>5.0</b> 的功能增强。
+</p>
+</div>
+
+<div id="outline-container-org5a0e55e" class="outline-3">
+<h3 id="org5a0e55e"><span class="section-number-3">2.1</span> Generics</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+熟悉 <b>Java</b> 语言的同学对 <b>泛型</b> 这个特性应该并不陌生，这是一个很常用的特性，单独把这个特性拎出来讲都可以写好几篇博客了。
+</p>
+
+<p>
+这里就不过多的谈论和泛型相关的内容了，简单举个使用的例子就结束：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt; <span style="font-weight: bold; font-style: italic;">list</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e833b4" class="outline-3">
+<h3 id="org9e833b4"><span class="section-number-3">2.2</span> Enhanced for Loop</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<b>for-each</b> 循环是在 <b>5.0</b> 才可以开始使用的，凡是实现了 <code>Iterable</code> 接口的对象或 <b>数组</b> 都可以使用这一循环方式：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Type</span> <span style="font-weight: bold; font-style: italic;">item</span> : Iterable or array) {
+  ...
+}
+</pre>
+</div>
+
+<p>
+但是不得不说，这样的语法形式是真的丑，据说是为了保留 <code>System.in</code> 而没有将 <code>in</code> 作为新的循环关键字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org65a0c2d" class="outline-3">
+<h3 id="org65a0c2d"><span class="section-number-3">2.3</span> Autoboxing</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+自动装箱这一特性可谓是给编写 Java 代码的程序员带来了极大的便利，但也带来了一下其他的问题，比如：
+</p>
+<ul class="org-ul">
+<li>频繁的装箱拆箱操作带来的性能损失</li>
+</ul>
+
+<p>
+这可以说是每个 Java 程序员都需要学习的一个问题，也是容易忽视的一个问题。
+</p>
+
+<p>
+简单的提一下，各个装箱类都有这样形式的两个静态方法： <code>valueOf</code> 和 <code>parseXXX</code>, 合理使用这两个方法可以减少装箱拆箱的次数。
+</p>
+
+<p>
+比如： <code>Integer.valueOf</code> 返回的是 <code>Integer</code>, 而 <code>Integer.parseInt</code> 返回的是 <code>int</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org66f44d9" class="outline-3">
+<h3 id="org66f44d9"><span class="section-number-3">2.4</span> Typesafe Enums</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+在 Java 5.0 以前是没有枚举类型的，要使用枚举只有像这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_WINTER</span> = 0;
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_SPRING</span> = 1;
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_SUMMER</span> = 2;
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_FALL</span>   = 3;
+</pre>
+</div>
+
+<p>
+这样做会带来一些问题，因此，从 Java 5.0 开始就支持枚举类型了：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">enum</span> <span style="font-weight: bold; text-decoration: underline;">Season</span> { <span style="font-weight: bold; font-style: italic;">WINTER</span>, <span style="font-weight: bold; font-style: italic;">SPRING</span>, <span style="font-weight: bold; font-style: italic;">SUMMER</span>, <span style="font-weight: bold; font-style: italic;">FALL</span> }
+</pre>
+</div>
+
+<p>
+这里有一个很有趣的问题，虽然从 Java 5.0 开始就引入了标准的枚举类型，但是在 <code>Android SDK</code> 的源码中，依然还是在使用 <code>final int</code> 型常量的形式。
+</p>
+
+<p>
+有兴趣的话可以看看这篇文章了解为什么这么做的原因：<a href="https://android.jlelse.eu/android-performance-avoid-using-enum-on-android-326be0794dc3">Android Performance: Avoid using ENUM on Android – AndroidPub</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb9c042" class="outline-3">
+<h3 id="orgdb9c042"><span class="section-number-3">2.5</span> Varargs</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 程序员格式化字符串的时候岂不是很辛苦 @_@
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">sum</span>(<span style="font-weight: bold; text-decoration: underline;">int</span>... <span style="font-weight: bold; font-style: italic;">nums</span>) {
+  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = 0;
+  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span> : nums) {
+    sum += num;
+  }
+  <span style="font-weight: bold;">return</span> sum;
+}
+</pre>
+</div>
+
+<p>
+和大多数语言一样，虽然说是可变参数，但实际上就是一个数组。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org23e13f1" class="outline-3">
+<h3 id="org23e13f1"><span class="section-number-3">2.6</span> Static Import</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+静态导入用的好绝得是一大神器，虽然说现代 IDE 的自动补全功能已经很强大，但是，能够少写一些代码还是很好的：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">import</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">java</span>.<span style="font-weight: bold; text-decoration: underline;">lang</span>.<span style="font-weight: bold; text-decoration: underline;">Math</span>.*;
+
+<span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">r</span> = cos(PI * theta);
+</pre>
+</div>
+
+<p>
+当然了，使用的时候还是应该注意避免污染命名空间。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7eac31e" class="outline-3">
+<h3 id="org7eac31e"><span class="section-number-3">2.7</span> Annotations</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+注解机制的重要性我想要个不需要我说了，现代的各种 Java 框架，基本上都离不开这一机制的使用。
+</p>
+
+<p>
+就算不使用这一机制实现什么功能，编写 Java 代码的使用诸如 <b>@Override</b> 的注解还是少不了的。
+</p>
+
+<p>
+注解一时爽，一直注解一直爽！
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5a20ff" class="outline-2">
+<h2 id="orgc5a20ff"><span class="section-number-2">3</span> Java SE 6</h2>
+<div class="outline-text-2" id="text-3">
+<blockquote>
+<p>
+No language changes were introduced in Java SE 6.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org428f1fb" class="outline-2">
+<h2 id="org428f1fb"><span class="section-number-2">4</span> Java SE 7</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+我看过的教程还没有哪本用的是 <b>Java 7</b>, 可怜的孩子 @_@
+</p>
+</div>
+
+<div id="outline-container-org9b24611" class="outline-3">
+<h3 id="org9b24611"><span class="section-number-3">4.1</span> Binary Literals</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+二进制整数字面量，也就是说可以用类似 <code>0b1110</code> 或 <code>0B1110</code> 的形式来设置整数值，但是好像是默认为 <code>int</code> 型。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">An 8-bit 'byte' value:</span>
+<span style="font-weight: bold; text-decoration: underline;">byte</span> <span style="font-weight: bold; font-style: italic;">aByte</span> = (<span style="font-weight: bold; text-decoration: underline;">byte</span>)0b00100001;
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">A 16-bit 'short' value:</span>
+<span style="font-weight: bold; text-decoration: underline;">short</span> <span style="font-weight: bold; font-style: italic;">aShort</span> = (<span style="font-weight: bold; text-decoration: underline;">short</span>)0b1010000101000101;
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Some 32-bit 'int' values:</span>
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt1</span> = 0b10100001010001011010000101000101;
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt2</span> = 0b101;
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt3</span> = 0B101; <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">The B can be upper or lower case.</span>
+
+<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">A 64-bit 'long' value. Note the "L" suffix:</span>
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">aLong</span> = 0b1010000101000101101000010100010110100001010001011010000101000101L;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8bd3d7e" class="outline-3">
+<h3 id="org8bd3d7e"><span class="section-number-3">4.2</span> Underscores in Numeric Literals</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+数字字面量中间可以有下划线 <code>_</code> 了，在写长整数的使用利用这一特性可以很方便的分清楚现在有几个 <code>0</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">creditCardNumber</span> = 1234_5678_9012_3456L;
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">socialSecurityNumber</span> = 999_99_9999L;
+<span style="font-weight: bold; text-decoration: underline;">float</span> <span style="font-weight: bold; font-style: italic;">pi</span> =      3.14_15F;
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">hexBytes</span> = 0xFF_EC_DE_5E;
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">hexWords</span> = 0xCAFE_BABE;
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">maxLong</span> = 0x7fff_ffff_ffff_ffffL;
+<span style="font-weight: bold; text-decoration: underline;">byte</span> <span style="font-weight: bold; font-style: italic;">nybbles</span> = 0b0010_0101;
+<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">bytes</span> = 0b11010010_01101001_10010100_10010010;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb243ab3" class="outline-3">
+<h3 id="orgb243ab3"><span class="section-number-3">4.3</span> Strings in switch Statements</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+在 <code>switch</code> 语句的 <code>case</code> 选项中可以使用字符串了，由于看的第一个教材是 <code>Java 5.0</code> 版的，搞得我现在都还不怎么习惯这一特性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaf3d356" class="outline-3">
+<h3 id="orgaf3d356"><span class="section-number-3">4.4</span> Type Inference for Generic Instance Creation</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+类型推断绝对是一个很方便的功能，因为这意味着像下面这样的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt; <span style="font-weight: bold; font-style: italic;">myMap</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt;();
+</pre>
+</div>
+
+<p>
+可以写成这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt; <span style="font-weight: bold; font-style: italic;">myMap</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;&gt;();
+</pre>
+</div>
+
+<p>
+Nice!!!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5cba807" class="outline-3">
+<h3 id="org5cba807"><span class="section-number-3">4.5</span> The try-with-resources Statement</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+可以说，凡是和 <b>I/O</b> 操作相关的对象，在最后都需要调用 <b>close()</b> 方法，这是一个很繁琐的操作，但不操作还不得行！
+</p>
+
+<p>
+现在，我们可以这样，让 Java 自动帮你调用 <b>close()</b> 方法：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold;">readFirstLineFromFile</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">path</span>) <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">IOException</span> {
+  <span style="font-weight: bold;">try</span> (<span style="font-weight: bold; text-decoration: underline;">BufferedReader</span> <span style="font-weight: bold; font-style: italic;">br</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">BufferedReader</span>(<span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">FileReader</span>(path))) {
+    <span style="font-weight: bold;">return</span> br.readLine();
+  }
+}
+</pre>
+</div>
+
+<p>
+凡是实现了 <code>java.lang.AutoCloseable</code> 和 <code>java.io.Closeable</code> 接口的对象，都可以使用这种方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf370fb3" class="outline-3">
+<h3 id="orgf370fb3"><span class="section-number-3">4.6</span> Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+这里我们主要关注 <b>Catching Multiple Exception Types</b> 这一特性。
+</p>
+
+<p>
+在编写 <b>Java</b> 代码的过程中，很有可能会遇到需要捕获多个异常但是对这些异常都差不多的情况：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">try</span> {
+  ...
+} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold; font-style: italic;">e</span>) {
+  e.printStackTrace();
+}
+</pre>
+</div>
+
+<p>
+有多少个异常就写多少个 <code>catch</code> 块时很繁琐的，因此，从 Java 7 开始，就可以这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold;">catch</span> (IOException | SQLException ex) {
+  <span style="font-weight: bold;">throw</span> ex;
+}
+</pre>
+</div>
+
+<p>
+通过 <code>|</code> 操作符同时捕获多个类型的异常，很棒，不是吗？
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfac0662" class="outline-2">
+<h2 id="orgfac0662"><span class="section-number-2">5</span> Java SE 8</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版本就是这个版本，成熟的特性，丰富的类库。
+</p>
+</div>
+
+<div id="outline-container-orgeb93fb8" class="outline-3">
+<h3 id="orgeb93fb8"><span class="section-number-3">5.1</span> Lambda Expressions</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+作为函数式编程和 Lisp 的爱好者，看到 Java 支持 Lambda 表达式的时候心情是激动的，在看到 Java 中 Lambda 的使用后，
+就更激动了。
+</p>
+
+<p>
+除了 Lambda 表达式以外，还新增了方法引用、接口默认方法、Stream 库等新功能。
+</p>
+
+<p>
+可以说是打造了一个相对完善的函数式编程环境。
+</p>
+
+<p>
+当然了，Java 本身还是一个 OOP 的语言，但是，能够有地方使用 Lambda 表达式就很爽了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9323863" class="outline-3">
+<h3 id="org9323863"><span class="section-number-3">5.2</span> Improved Type Inference</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论了，反正，直接用就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfcd774f" class="outline-3">
+<h3 id="orgfcd774f"><span class="section-number-3">5.3</span> Annotations on Java Types</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 <b>任何地方</b> 使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">@NonNull</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">str</span>;
+</pre>
+</div>
+
+<p>
+这一点对于一些工具来说是很有用的，比如一些 <b>Json</b> 解析库。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf53fa09" class="outline-3">
+<h3 id="orgf53fa09"><span class="section-number-3">5.4</span> Repeating Annotations</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+现在可以在一个地方多出使用相同的注解，就像这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">@Schedule</span>(dayOfMonth=<span style="font-style: italic;">"last"</span>)
+<span style="font-weight: bold; text-decoration: underline;">@Schedule</span>(dayOfWeek=<span style="font-style: italic;">"Fri"</span>, hour=<span style="font-style: italic;">"23"</span>)
+<span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">doPeriodicCleanup</span>() { ... }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd2b8a36" class="outline-3">
+<h3 id="orgd2b8a36"><span class="section-number-3">5.5</span> Method Parameter Reflection</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+反射可以获取方法的参数了，在反射面前一个类已经没有多少隐私可言了 @_@
+</p>
+
+<p>
+还记的前一段时间看到的一个新闻，说以前一些 Android 开发者可以通过反射和 JNI 的方式调用 SDK 中的隐藏接口，
+搞得 Google 只能将那些接口变成反射不出来。
+</p>
+
+<p>
+NB!!!
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f31e06" class="outline-2">
+<h2 id="org5f31e06"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+其实直接用 Java 8 的话可以不用管那个特性是那个版本开始支持的，直接用就可以了。
+</p>
+
+<p>
+但是，感觉了解一下相关的内容会有助于 Java 的学习，于是便简单的操作了一下。
+</p>
+
+<p>
+博客中提到的一些特性只是简单的提了一下它们的名字，而没有说它们具体是怎么样的，如果要了解的话，
+可以 Google。
+</p>
+
+<p>
+还省略了一些内容，有兴趣的可以去看一下官方文档： <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html">Java Programming Language Enhancements</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

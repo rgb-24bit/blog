@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
+- 03-08 -- [[file:2019/java-enhancements.org][Java SE 5.0 - SE 8 的功能增强]] ::
 - 02-20 -- [[file:2019/regular-expressions-in-different-environments.org][不同环境下的正则表达式]] ::
 - 02-12 -- [[file:2019/bitop.org][通过位运算实现整数的加减乘除]] ::
 - 02-09 -- [[file:2019/biginteger.org][大数的简单实现]] ::

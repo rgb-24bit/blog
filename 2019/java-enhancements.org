@@ -1,0 +1,263 @@
+#+TITLE:      Java SE 5.0 - SE 8 的功能增强
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-03-08 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#java-50][Java 5.0]]
+  - [[#generics][Generics]]
+  - [[#enhanced-for-loop][Enhanced for Loop]]
+  - [[#autoboxing][Autoboxing]]
+  - [[#typesafe-enums][Typesafe Enums]]
+  - [[#varargs][Varargs]]
+  - [[#static-import][Static Import]]
+  - [[#annotations][Annotations]]
+- [[#java-se-6][Java SE 6]]
+- [[#java-se-7][Java SE 7]]
+  - [[#binary-literals][Binary Literals]]
+  - [[#underscores-in-numeric-literals][Underscores in Numeric Literals]]
+  - [[#strings-in-switch-statements][Strings in switch Statements]]
+  - [[#type-inference-for-generic-instance-creation][Type Inference for Generic Instance Creation]]
+  - [[#the-try-with-resources-statement][The try-with-resources Statement]]
+  - [[#catching-multiple-exception-types-and-rethrowing-exceptions-with-improved-type-checking][Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking]]
+- [[#java-se-8][Java SE 8]]
+  - [[#lambda-expressions][Lambda Expressions]]
+  - [[#improved-type-inference][Improved Type Inference]]
+  - [[#annotations-on-java-types][Annotations on Java Types]]
+  - [[#repeating-annotations][Repeating Annotations]]
+  - [[#method-parameter-reflection][Method Parameter Reflection]]
+- [[#结语][结语]]
+
+* 前言
+  在学习 *Python* 的过程中就因为不同版本之间的不同而迷惑过，现在在学习 *Java* 的过程中我也遇见了类似的问题。
+
+  市面上的 *Java* 教材使用的 *Java* 版本各不相同，各个版本之间的语言特性来回切换，让人有点不知所措。
+
+  这篇博客参考 [[https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html][Java Programming Language Enhancements]] 整理了一下 *Java 5.0 - 8* 的功能增强，
+  希望对有相同困惑的你有所帮助。
+
+* Java 5.0
+  就目前的情况来说，无论是市面上的 *Java* 书籍还是实际使用的 *Java* 版本，大多是 *>= 5.0* 的，因此，
+  这一节就只简单介绍一下 *5.0* 的功能增强。
+
+** Generics
+   熟悉 *Java* 语言的同学对 *泛型* 这个特性应该并不陌生，这是一个很常用的特性，单独把这个特性拎出来讲都可以写好几篇博客了。
+
+   这里就不过多的谈论和泛型相关的内容了，简单举个使用的例子就结束：
+   #+BEGIN_SRC java
+     List<String> list = new ArrayList<String>();
+   #+END_SRC
+
+** Enhanced for Loop
+   *for-each* 循环是在 *5.0* 才可以开始使用的，凡是实现了 ~Iterable~ 接口的对象或 *数组* 都可以使用这一循环方式：
+   #+BEGIN_SRC java
+     for (Type item : Iterable or array) {
+       ...
+     }
+   #+END_SRC
+
+   但是不得不说，这样的语法形式是真的丑，据说是为了保留 ~System.in~ 而没有将 ~in~ 作为新的循环关键字。
+
+** Autoboxing
+   自动装箱这一特性可谓是给编写 Java 代码的程序员带来了极大的便利，但也带来了一下其他的问题，比如：
+   + 频繁的装箱拆箱操作带来的性能损失
+
+   这可以说是每个 Java 程序员都需要学习的一个问题，也是容易忽视的一个问题。
+
+   简单的提一下，各个装箱类都有这样形式的两个静态方法： ~valueOf~ 和 ~parseXXX~, 合理使用这两个方法可以减少装箱拆箱的次数。
+
+   比如： ~Integer.valueOf~ 返回的是 ~Integer~, 而 ~Integer.parseInt~ 返回的是 ~int~.
+
+** Typesafe Enums
+   在 Java 5.0 以前是没有枚举类型的，要使用枚举只有像这样：
+   #+BEGIN_SRC java
+     public static final int SEASON_WINTER = 0;
+     public static final int SEASON_SPRING = 1;
+     public static final int SEASON_SUMMER = 2;
+     public static final int SEASON_FALL   = 3;
+   #+END_SRC
+
+   这样做会带来一些问题，因此，从 Java 5.0 开始就支持枚举类型了：
+   #+BEGIN_SRC java
+     enum Season { WINTER, SPRING, SUMMER, FALL }
+   #+END_SRC
+
+   这里有一个很有趣的问题，虽然从 Java 5.0 开始就引入了标准的枚举类型，但是在 ~Android SDK~ 的源码中，依然还是在使用 ~final int~ 型常量的形式。
+
+   有兴趣的话可以看看这篇文章了解为什么这么做的原因：[[https://android.jlelse.eu/android-performance-avoid-using-enum-on-android-326be0794dc3][Android Performance: Avoid using ENUM on Android – AndroidPub]]
+
+** Varargs
+   Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 程序员格式化字符串的时候岂不是很辛苦 @_@
+
+   #+BEGIN_SRC java
+     public static int sum(int... nums) {
+       int sum = 0;
+       for (int num : nums) {
+         sum += num;
+       }
+       return sum;
+     }
+   #+END_SRC
+
+   和大多数语言一样，虽然说是可变参数，但实际上就是一个数组。
+
+** Static Import
+   静态导入用的好绝得是一大神器，虽然说现代 IDE 的自动补全功能已经很强大，但是，能够少写一些代码还是很好的：
+   #+BEGIN_SRC java
+     import static java.lang.Math.*;
+
+     double r = cos(PI * theta);
+   #+END_SRC
+
+   当然了，使用的时候还是应该注意避免污染命名空间。
+
+** Annotations
+   注解机制的重要性我想要个不需要我说了，现代的各种 Java 框架，基本上都离不开这一机制的使用。
+
+   就算不使用这一机制实现什么功能，编写 Java 代码的使用诸如 *@Override* 的注解还是少不了的。
+
+   注解一时爽，一直注解一直爽！
+
+* Java SE 6
+  #+BEGIN_QUOTE
+  No language changes were introduced in Java SE 6.
+  #+END_QUOTE
+
+* Java SE 7
+  我看过的教程还没有哪本用的是 *Java 7*, 可怜的孩子 @_@
+
+** Binary Literals
+   二进制整数字面量，也就是说可以用类似 ~0b1110~ 或 ~0B1110~ 的形式来设置整数值，但是好像是默认为 ~int~ 型。
+
+   #+BEGIN_SRC java
+     // An 8-bit 'byte' value:
+     byte aByte = (byte)0b00100001;
+
+     // A 16-bit 'short' value:
+     short aShort = (short)0b1010000101000101;
+
+     // Some 32-bit 'int' values:
+     int anInt1 = 0b10100001010001011010000101000101;
+     int anInt2 = 0b101;
+     int anInt3 = 0B101; // The B can be upper or lower case.
+
+     // A 64-bit 'long' value. Note the "L" suffix:
+     long aLong = 0b1010000101000101101000010100010110100001010001011010000101000101L;
+   #+END_SRC
+
+** Underscores in Numeric Literals
+   数字字面量中间可以有下划线 ~_~ 了，在写长整数的使用利用这一特性可以很方便的分清楚现在有几个 ~0~.
+
+   #+BEGIN_SRC java
+     long creditCardNumber = 1234_5678_9012_3456L;
+     long socialSecurityNumber = 999_99_9999L;
+     float pi =      3.14_15F;
+     long hexBytes = 0xFF_EC_DE_5E;
+     long hexWords = 0xCAFE_BABE;
+     long maxLong = 0x7fff_ffff_ffff_ffffL;
+     byte nybbles = 0b0010_0101;
+     long bytes = 0b11010010_01101001_10010100_10010010;
+   #+END_SRC
+
+** Strings in switch Statements
+   在 ~switch~ 语句的 ~case~ 选项中可以使用字符串了，由于看的第一个教材是 ~Java 5.0~ 版的，搞得我现在都还不怎么习惯这一特性。
+
+** Type Inference for Generic Instance Creation
+   类型推断绝对是一个很方便的功能，因为这意味着像下面这样的代码：
+   #+BEGIN_SRC java
+     Map<String, List<String>> myMap = new HashMap<String, List<String>>();
+   #+END_SRC
+
+   可以写成这样：
+   #+BEGIN_SRC java
+     Map<String, List<String>> myMap = new HashMap<>();
+   #+END_SRC
+
+   Nice!!!
+
+** The try-with-resources Statement
+   可以说，凡是和 *I/O* 操作相关的对象，在最后都需要调用 *close()* 方法，这是一个很繁琐的操作，但不操作还不得行！
+
+   现在，我们可以这样，让 Java 自动帮你调用 *close()* 方法：
+   #+BEGIN_SRC java
+     static String readFirstLineFromFile(String path) throws IOException {
+       try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+         return br.readLine();
+       }
+     }
+   #+END_SRC
+
+   凡是实现了 ~java.lang.AutoCloseable~ 和 ~java.io.Closeable~ 接口的对象，都可以使用这种方式。
+
+** Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking
+   这里我们主要关注 *Catching Multiple Exception Types* 这一特性。
+
+   在编写 *Java* 代码的过程中，很有可能会遇到需要捕获多个异常但是对这些异常都差不多的情况：
+   #+BEGIN_SRC java
+     try {
+       ...
+     } catch (Exception e) {
+       e.printStackTrace();
+     }
+   #+END_SRC
+
+   有多少个异常就写多少个 ~catch~ 块时很繁琐的，因此，从 Java 7 开始，就可以这样：
+   #+BEGIN_SRC java
+     catch (IOException | SQLException ex) {
+       throw ex;
+     }
+   #+END_SRC
+
+   通过 ~|~ 操作符同时捕获多个类型的异常，很棒，不是吗？
+
+* Java SE 8
+  Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版本就是这个版本，成熟的特性，丰富的类库。
+
+** Lambda Expressions
+   作为函数式编程和 Lisp 的爱好者，看到 Java 支持 Lambda 表达式的时候心情是激动的，在看到 Java 中 Lambda 的使用后，
+   就更激动了。
+
+   除了 Lambda 表达式以外，还新增了方法引用、接口默认方法、Stream 库等新功能。
+
+   可以说是打造了一个相对完善的函数式编程环境。
+
+   当然了，Java 本身还是一个 OOP 的语言，但是，能够有地方使用 Lambda 表达式就很爽了。
+
+** Improved Type Inference
+   Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论了，反正，直接用就可以了。
+
+** Annotations on Java Types
+   Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 *任何地方* 使用：
+   #+BEGIN_SRC java
+     @NonNull String str;
+   #+END_SRC
+
+   这一点对于一些工具来说是很有用的，比如一些 *Json* 解析库。
+
+** Repeating Annotations
+   现在可以在一个地方多出使用相同的注解，就像这样：
+   #+BEGIN_SRC java
+     @Schedule(dayOfMonth="last")
+     @Schedule(dayOfWeek="Fri", hour="23")
+     public void doPeriodicCleanup() { ... }
+   #+END_SRC
+
+** Method Parameter Reflection
+   反射可以获取方法的参数了，在反射面前一个类已经没有多少隐私可言了 @_@
+
+   还记的前一段时间看到的一个新闻，说以前一些 Android 开发者可以通过反射和 JNI 的方式调用 SDK 中的隐藏接口，
+   搞得 Google 只能将那些接口变成反射不出来。
+
+   NB!!!
+
+* 结语
+  其实直接用 Java 8 的话可以不用管那个特性是那个版本开始支持的，直接用就可以了。
+
+  但是，感觉了解一下相关的内容会有助于 Java 的学习，于是便简单的操作了一下。
+
+  博客中提到的一些特性只是简单的提了一下它们的名字，而没有说它们具体是怎么样的，如果要了解的话，
+  可以 Google。
+
+  还省略了一些内容，有兴趣的可以去看一下官方文档： [[https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html][Java Programming Language Enhancements]].
+
