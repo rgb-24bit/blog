@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>移动台国际用户识别码</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2ace6cb">1. 前言</a></li>
-<li><a href="#orgc57e6f8">2. 起因</a></li>
-<li><a href="#org92ad4af">3. MSISDN</a></li>
-<li><a href="#orge3dfeb3">4. 国内号码结构</a></li>
-<li><a href="#orgd594c7a">5. 正则表达式</a></li>
-<li><a href="#org471d7f3">6. 结尾</a></li>
-<li><a href="#org33490e3">7. 参考链接</a></li>
+<li><a href="#org82bba3d">1. 前言</a></li>
+<li><a href="#org0750ef1">2. 起因</a></li>
+<li><a href="#orgc91ac99">3. MSISDN</a></li>
+<li><a href="#orgf3f9e25">4. 国内号码结构</a></li>
+<li><a href="#orgbfdf80e">5. 正则表达式</a></li>
+<li><a href="#orgdfbea87">6. 结尾</a></li>
+<li><a href="#org862c8a3">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2ace6cb" class="outline-2">
-<h2 id="org2ace6cb"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org82bba3d" class="outline-2">
+<h2 id="org82bba3d"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 作为今年的最后一篇博客，本来是准备写 <b>Dijkstra 单源最短路径算法</b> 的，但是计划赶不上变化，
@@ -275,8 +275,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc57e6f8" class="outline-2">
-<h2 id="orgc57e6f8"><span class="section-number-2">2</span> 起因</h2>
+<div id="outline-container-org0750ef1" class="outline-2">
+<h2 id="org0750ef1"><span class="section-number-2">2</span> 起因</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 移动台国际用户识别码这个东西应该是通信工程要学的东西，和我是没啥关系的。
@@ -299,8 +299,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org92ad4af" class="outline-2">
-<h2 id="org92ad4af"><span class="section-number-2">3</span> MSISDN</h2>
+<div id="outline-container-orgc91ac99" class="outline-2">
+<h2 id="orgc91ac99"><span class="section-number-2">3</span> MSISDN</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>MSISDN</code> 就是移动台国际用户识别码的缩写，和身份证号码一样，它可以通过号码中不同的区段来区分你所在的国家、地区，
@@ -365,8 +365,8 @@ MSISDN = CC + NDC + SN
 </div>
 </div>
 
-<div id="outline-container-orge3dfeb3" class="outline-2">
-<h2 id="orge3dfeb3"><span class="section-number-2">4</span> 国内号码结构</h2>
+<div id="outline-container-orgf3f9e25" class="outline-2">
+<h2 id="orgf3f9e25"><span class="section-number-2">4</span> 国内号码结构</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 现在国内的手机号码通常为 <code>11</code> 位（省略国家代码），其中 <code>NDC</code> 占 <code>7</code> 位，由 <b>MAC</b> 和 <b>HLR</b> 组成，
@@ -391,19 +391,19 @@ MSISDN = CC + NDC + SN
 </div>
 </div>
 
-<div id="outline-container-orgd594c7a" class="outline-2">
-<h2 id="orgd594c7a"><span class="section-number-2">5</span> 正则表达式</h2>
+<div id="outline-container-orgbfdf80e" class="outline-2">
+<h2 id="orgbfdf80e"><span class="section-number-2">5</span> 正则表达式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 通过 <code>Python</code>, 我们可以简单的尝试匹配国内手机号码：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold;">import</span> re
+<pre class="src src-python">In [1]: <span class="org-keyword">import</span> re
 
-In [2]: <span style="font-weight: bold; font-style: italic;">pt</span> = re.<span style="font-weight: bold;">compile</span>(r<span style="font-style: italic;">'(?P&lt;MAC&gt;\d{3})\s?(?P&lt;HLR&gt;\d{4})\s?(?P&lt;SN&gt;\d{4})'</span>)
+In [2]: <span class="org-variable-name">pt</span> = re.<span class="org-builtin">compile</span>(r<span class="org-string">'(?P&lt;MAC&gt;\d{3})\s?(?P&lt;HLR&gt;\d{4})\s?(?P&lt;SN&gt;\d{4})'</span>)
 
-In [3]: pt.match(<span style="font-style: italic;">'133 3129 6636'</span>).groupdict()
-Out[3]: {<span style="font-style: italic;">'HLR'</span>: <span style="font-style: italic;">'3129'</span>, <span style="font-style: italic;">'MAC'</span>: <span style="font-style: italic;">'133'</span>, <span style="font-style: italic;">'SN'</span>: <span style="font-style: italic;">'6636'</span>}
+In [3]: pt.match(<span class="org-string">'133 3129 6636'</span>).groupdict()
+Out[3]: {<span class="org-string">'HLR'</span>: <span class="org-string">'3129'</span>, <span class="org-string">'MAC'</span>: <span class="org-string">'133'</span>, <span class="org-string">'SN'</span>: <span class="org-string">'6636'</span>}
 </pre>
 </div>
 
@@ -413,8 +413,8 @@ emmmm, 结果的顺序似乎不是很完美&#x2026;&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org471d7f3" class="outline-2">
-<h2 id="org471d7f3"><span class="section-number-2">6</span> 结尾</h2>
+<div id="outline-container-orgdfbea87" class="outline-2">
+<h2 id="orgdfbea87"><span class="section-number-2">6</span> 结尾</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 博客中只是简单的介绍了国内号码的结果，而且还没有加上国家代码，实际使用中可能还要考虑跨区拨号的问题。
@@ -426,8 +426,8 @@ emmmm, 结果的顺序似乎不是很完美&#x2026;&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org33490e3" class="outline-2">
-<h2 id="org33490e3"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org862c8a3" class="outline-2">
+<h2 id="org862c8a3"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/MSISDN">MSISDN - Wikipedia</a></li>

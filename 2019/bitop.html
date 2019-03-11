@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-02-12 周二 16:51 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>通过位运算实现整数的加减乘除</title>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org33a9a83">1. 前言</a></li>
-<li><a href="#orgc154e33">2. 加法实现</a></li>
-<li><a href="#org7728f6b">3. 减法实现</a></li>
-<li><a href="#org0b943c9">4. 乘法实现</a></li>
-<li><a href="#orgf6b005e">5. 除法实现</a></li>
-<li><a href="#org4a921fa">6. 求余实现</a></li>
-<li><a href="#orgb566a3a">7. 结语</a></li>
-<li><a href="#org9f70eb9">8. 参考链接</a></li>
+<li><a href="#orgae07fc9">1. 前言</a></li>
+<li><a href="#org258d1dc">2. 加法实现</a></li>
+<li><a href="#org43226e6">3. 减法实现</a></li>
+<li><a href="#org9f04511">4. 乘法实现</a></li>
+<li><a href="#org9f2533e">5. 除法实现</a></li>
+<li><a href="#orgc1b8f7d">6. 求余实现</a></li>
+<li><a href="#org7e079f0">7. 结语</a></li>
+<li><a href="#orgb74fa56">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org33a9a83" class="outline-2">
-<h2 id="org33a9a83"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgae07fc9" class="outline-2">
+<h2 id="orgae07fc9"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 很久以前就了解过怎样通过位运算实现整数的加减乘除，但是每次都只是大概的了解了一下加减法的实现。
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc154e33" class="outline-2">
-<h2 id="orgc154e33"><span class="section-number-2">2</span> 加法实现</h2>
+<div id="outline-container-org258d1dc" class="outline-2">
+<h2 id="org258d1dc"><span class="section-number-2">2</span> 加法实现</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 对于二进制的整数加法来说，我们需要让 <code>1</code> 和 <code>0</code> 的运算结果为 <code>1</code>, 而 <code>0</code> 和 <code>0</code> 的运算结果为 <code>0</code>,
@@ -301,31 +301,31 @@ for the JavaScript code in this tag.
 C 语言实现：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">plus</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = a, <span style="font-weight: bold; font-style: italic;">carry</span> = b;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">plus</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">sum</span> = a, <span class="org-variable-name">carry</span> = b;
 
-  <span style="font-weight: bold;">while</span> (carry) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">temp</span> = sum;
-    sum = temp ^ carry;           <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">a ^ b</span>
-    carry = (temp &amp; carry) &lt;&lt; 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">(a &amp; b) &lt;&lt; 1</span>
+  <span class="org-keyword">while</span> (carry) {
+    <span class="org-type">int</span> <span class="org-variable-name">temp</span> = sum;
+    sum = temp ^ carry;           <span class="org-comment-delimiter">// </span><span class="org-comment">a ^ b</span>
+    carry = (temp &amp; carry) &lt;&lt; 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">(a &amp; b) &lt;&lt; 1</span>
   }
 
-  <span style="font-weight: bold;">return</span> sum;
+  <span class="org-keyword">return</span> sum;
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7728f6b" class="outline-2">
-<h2 id="org7728f6b"><span class="section-number-2">3</span> 减法实现</h2>
+<div id="outline-container-org43226e6" class="outline-2">
+<h2 id="org43226e6"><span class="section-number-2">3</span> 减法实现</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 减去一个数其实就是加上那个数的相反数，我们可以通过如下方法得到一个数的相反数：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">negate</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span>) {
-  <span style="font-weight: bold;">return</span> plus(~num, 1);
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">negate</span>(<span class="org-type">int</span> <span class="org-variable-name">num</span>) {
+  <span class="org-keyword">return</span> plus(~num, 1);
 }
 </pre>
 </div>
@@ -334,39 +334,39 @@ C 语言实现：
 然后，减法就可以很简单的实现了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">subtract</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold;">return</span> plus(a, negate(b));
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">subtract</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-keyword">return</span> plus(a, negate(b));
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0b943c9" class="outline-2">
-<h2 id="org0b943c9"><span class="section-number-2">4</span> 乘法实现</h2>
+<div id="outline-container-org9f04511" class="outline-2">
+<h2 id="org9f04511"><span class="section-number-2">4</span> 乘法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 对于乘法来说，直接的实现就是通过很多次的加法来实现，简单粗暴：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">abs</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span>) {
-  <span style="font-weight: bold;">return</span> num &lt; 0 ? negate(num) : num;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">abs</span>(<span class="org-type">int</span> <span class="org-variable-name">num</span>) {
+  <span class="org-keyword">return</span> num &lt; 0 ? negate(num) : num;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+<span class="org-type">int</span> <span class="org-function-name">multiply</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">multiplier</span> = abs(a), <span class="org-variable-name">multiplicand</span> = abs(b);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
-  <span style="font-weight: bold;">while</span> (multiplicand) {
+  <span class="org-type">int</span> <span class="org-variable-name">product</span> = 0;
+  <span class="org-keyword">while</span> (multiplicand) {
     product = plus(product, multiplier);
     multiplicand = subtract(multiplicand, 1);
   }
 
-  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+  <span class="org-keyword">if</span> ((a ^ b) &lt; 0) {
     product = negate(product);
   }
 
-  <span style="font-weight: bold;">return</span> product;
+  <span class="org-keyword">return</span> product;
 }
 </pre>
 </div>
@@ -384,25 +384,25 @@ C 语言实现：
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">multiply</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">multiplier</span> = abs(a), <span class="org-variable-name">multiplicand</span> = abs(b);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
-  <span style="font-weight: bold;">while</span> (multiplicand) {
-    <span style="font-weight: bold;">if</span> (multiplicand &amp; 0x1) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22855;&#25968;&#30340;&#26368;&#20302;&#20301;&#20026; 1</span>
+  <span class="org-type">int</span> <span class="org-variable-name">product</span> = 0;
+  <span class="org-keyword">while</span> (multiplicand) {
+    <span class="org-keyword">if</span> (multiplicand &amp; 0x1) {  <span class="org-comment-delimiter">// </span><span class="org-comment">&#22855;&#25968;&#30340;&#26368;&#20302;&#20301;&#20026; 1</span>
       product = plus(product, multiplier);
       multiplicand = subtract(multiplicand, 1);
-    } <span style="font-weight: bold;">else</span> {
-      multiplier = multiplier &lt;&lt; 1;      <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">multiplier * 2;</span>
-      multiplicand = multiplicand &gt;&gt; 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">multiplicand / 2</span>
+    } <span class="org-keyword">else</span> {
+      multiplier = multiplier &lt;&lt; 1;      <span class="org-comment-delimiter">// </span><span class="org-comment">multiplier * 2;</span>
+      multiplicand = multiplicand &gt;&gt; 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">multiplicand / 2</span>
     }
   }
 
-  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+  <span class="org-keyword">if</span> ((a ^ b) &lt; 0) {
     product = negate(product);
   }
 
-  <span style="font-weight: bold;">return</span> product;
+  <span class="org-keyword">return</span> product;
 }
 </pre>
 </div>
@@ -419,31 +419,31 @@ C 语言实现：
 这和除 2 并向下取整的结果是一样的，对于奇数，右移位的效果和向下取整相同，因此。我们的代码可以修改为：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">multiply</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">multiplier</span> = abs(a), <span style="font-weight: bold; font-style: italic;">multiplicand</span> = abs(b);
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">multiply</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">multiplier</span> = abs(a), <span class="org-variable-name">multiplicand</span> = abs(b);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">product</span> = 0;
-  <span style="font-weight: bold;">while</span> (multiplicand) {
-    <span style="font-weight: bold;">if</span> (multiplicand &amp; 0x1) {
+  <span class="org-type">int</span> <span class="org-variable-name">product</span> = 0;
+  <span class="org-keyword">while</span> (multiplicand) {
+    <span class="org-keyword">if</span> (multiplicand &amp; 0x1) {
       product = plus(product, multiplier);
     }
     multiplier = multiplier &lt;&lt; 1;
     multiplicand = multiplicand &gt;&gt; 1;
   }
 
-  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+  <span class="org-keyword">if</span> ((a ^ b) &lt; 0) {
     product = negate(product);
   }
 
-  <span style="font-weight: bold;">return</span> product;
+  <span class="org-keyword">return</span> product;
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf6b005e" class="outline-2">
-<h2 id="orgf6b005e"><span class="section-number-2">5</span> 除法实现</h2>
+<div id="outline-container-org9f2533e" class="outline-2">
+<h2 id="org9f2533e"><span class="section-number-2">5</span> 除法实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 和乘法一样，我们可以通过不断的减法来实现除法，但是，同样的，我们可以借助数学技巧来获得更好的实现。
@@ -513,77 +513,77 @@ C 语言实现：
 然后，我们就可以尝试实现了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639;&#25972;&#25968; a &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;</span>
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bitlength</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">length</span> = 0;
-  <span style="font-weight: bold;">while</span> (a) {
+<pre class="src src-C"><span class="org-comment-delimiter">// </span><span class="org-comment">&#35745;&#31639;&#25972;&#25968; a &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;</span>
+<span class="org-type">int</span> <span class="org-function-name">bitlength</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">length</span> = 0;
+  <span class="org-keyword">while</span> (a) {
     plus(length, 1);
     a = a &gt;&gt; 1;
   }
-  <span style="font-weight: bold;">return</span> length;
+  <span class="org-keyword">return</span> length;
 }
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639;&#25972;&#25968; a &#21644; b &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;&#30340;&#24046;&#20540;</span>
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lengthdiff</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold;">return</span> subtract(bitlength(a), bitlength(b));
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#35745;&#31639;&#25972;&#25968; a &#21644; b &#30340;&#26377;&#25928;&#20301;&#38271;&#24230;&#30340;&#24046;&#20540;</span>
+<span class="org-type">int</span> <span class="org-function-name">lengthdiff</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-keyword">return</span> subtract(bitlength(a), bitlength(b));
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">division</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">dividend</span> = abs(a), <span style="font-weight: bold; font-style: italic;">divisor</span> = abs(b);
+<span class="org-type">int</span> <span class="org-function-name">division</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">dividend</span> = abs(a), <span class="org-variable-name">divisor</span> = abs(b);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">quotient</span> = 0;
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">r</span> = (divisor &lt;&lt; i);
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Left shift divisor until it's smaller than dividend</span>
-    <span style="font-weight: bold;">if</span> (r &lt;= dividend) {
+  <span class="org-type">int</span> <span class="org-variable-name">quotient</span> = 0;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span> = (divisor &lt;&lt; i);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Left shift divisor until it's smaller than dividend</span>
+    <span class="org-keyword">if</span> (r &lt;= dividend) {
       quotient |= (1 &lt;&lt; i);
       dividend = subtract(dividend, r);
     }
   }
 
-  <span style="font-weight: bold;">if</span> ((a ^ b) &lt; 0) {
+  <span class="org-keyword">if</span> ((a ^ b) &lt; 0) {
     quotient = negate(quotient);
   }
 
-  <span style="font-weight: bold;">return</span> quotient;
+  <span class="org-keyword">return</span> quotient;
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4a921fa" class="outline-2">
-<h2 id="org4a921fa"><span class="section-number-2">6</span> 求余实现</h2>
+<div id="outline-container-orgc1b8f7d" class="outline-2">
+<h2 id="orgc1b8f7d"><span class="section-number-2">6</span> 求余实现</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 实现了除法，求余也就差不多，直接把最后剩余的被除数返回就可以了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">remain</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">b</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">dividend</span> = abs(a), <span style="font-weight: bold; font-style: italic;">divisor</span> = abs(b);
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">remain</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>, <span class="org-type">int</span> <span class="org-variable-name">b</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">dividend</span> = abs(a), <span class="org-variable-name">divisor</span> = abs(b);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">quotient</span> = 0;
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">r</span> = (divisor &lt;&lt; i);
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Left shift divisor until it's smaller than dividend</span>
-    <span style="font-weight: bold;">if</span> (r &lt;= dividend) {
-      dividend = subtract(dividend, (<span style="font-weight: bold; text-decoration: underline;">int</span>) r);
+  <span class="org-type">int</span> <span class="org-variable-name">quotient</span> = 0;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = lengthdiff(dividend, divisor); i &gt;= 0; i = subtract(i, 1)) {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span> = (divisor &lt;&lt; i);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Left shift divisor until it's smaller than dividend</span>
+    <span class="org-keyword">if</span> (r &lt;= dividend) {
+      dividend = subtract(dividend, (<span class="org-type">int</span>) r);
     }
   }
 
-  <span style="font-weight: bold;">if</span> (a &lt; 0) {
+  <span class="org-keyword">if</span> (a &lt; 0) {
     dividend = negate(dividend);
   }
 
-  <span style="font-weight: bold;">return</span> dividend;
+  <span class="org-keyword">return</span> dividend;
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb566a3a" class="outline-2">
-<h2 id="orgb566a3a"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org7e079f0" class="outline-2">
+<h2 id="org7e079f0"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这里尝试了通过位运算实现整数的四则运算，假如你有兴趣的话，可以试一下浮点数的 @_@
@@ -593,8 +593,8 @@ C 语言实现：
 获取浮点数的二进制表示：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold;">float2binary</span>(<span style="font-weight: bold; text-decoration: underline;">float</span> <span style="font-weight: bold; font-style: italic;">x</span>) {
-  <span style="font-weight: bold;">return</span> ((<span style="font-weight: bold; text-decoration: underline;">unsigned</span>*)&amp;x)[0];
+<pre class="src src-C"><span class="org-type">unsigned</span> <span class="org-function-name">float2binary</span>(<span class="org-type">float</span> <span class="org-variable-name">x</span>) {
+  <span class="org-keyword">return</span> ((<span class="org-type">unsigned</span>*)&amp;x)[0];
 }
 </pre>
 </div>
@@ -605,8 +605,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-org9f70eb9" class="outline-2">
-<h2 id="org9f70eb9"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-orgb74fa56" class="outline-2">
+<h2 id="orgb74fa56"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://www.cnblogs.com/kiven-code/archive/2012/09/15/2686922.html">用基本位运算实现加减乘除 - kiven.li - 博客园</a></li>

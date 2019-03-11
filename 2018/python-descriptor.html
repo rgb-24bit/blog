@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 描述器简述</title>
@@ -246,16 +246,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org52083c3">1. 前言</a></li>
-<li><a href="#orgb0f7600">2. 描述器</a></li>
-<li><a href="#orga920eec">3. 描述器的使用</a></li>
-<li><a href="#org39ba5b4">4. 参考链接</a></li>
+<li><a href="#orgb9709ee">1. 前言</a></li>
+<li><a href="#org72e52e5">2. 描述器</a></li>
+<li><a href="#org0766204">3. 描述器的使用</a></li>
+<li><a href="#org47f456a">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org52083c3" class="outline-2">
-<h2 id="org52083c3"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgb9709ee" class="outline-2">
+<h2 id="orgb9709ee"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前端时间在阅读 <a href="https://github.com/faif/python-patterns">python-patterns</a> 的源码的时候， 其中一个模式的实现使用到了 <b>描述器</b>.
@@ -283,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb0f7600" class="outline-2">
-<h2 id="orgb0f7600"><span class="section-number-2">2</span> 描述器</h2>
+<div id="outline-container-org72e52e5" class="outline-2">
+<h2 id="org72e52e5"><span class="section-number-2">2</span> 描述器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 和描述器密切相关的魔法方法有四个， 其中： <code>__get__</code>, <code>__set__</code> 和 <code>__delete__</code> 是描述器协议的组成部分。
@@ -310,12 +310,12 @@ for the JavaScript code in this tag.
 在 <b>描述器</b> 的 <a href="https://docs.python.org/3/howto/descriptor.html">官方教程</a> 中有这样一段代码， 大致告诉了我们 <b>描述器</b> 是怎么一回事：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattribute__</span>(<span style="font-weight: bold;">self</span>, key):
-    <span style="font-style: italic;">"Emulate type_getattro() in Objects/typeobject.c"</span>
-    <span style="font-weight: bold; font-style: italic;">v</span> = <span style="font-weight: bold;">object</span>.__getattribute__(<span style="font-weight: bold;">self</span>, key)
-    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(v, <span style="font-style: italic;">'__get__'</span>):
-       <span style="font-weight: bold;">return</span> v.__get__(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold;">self</span>)
-    <span style="font-weight: bold;">return</span> v
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">__getattribute__</span>(<span class="org-keyword">self</span>, key):
+    <span class="org-doc">"Emulate type_getattro() in Objects/typeobject.c"</span>
+    <span class="org-variable-name">v</span> = <span class="org-builtin">object</span>.__getattribute__(<span class="org-keyword">self</span>, key)
+    <span class="org-keyword">if</span> <span class="org-builtin">hasattr</span>(v, <span class="org-string">'__get__'</span>):
+       <span class="org-keyword">return</span> v.__get__(<span class="org-constant">None</span>, <span class="org-keyword">self</span>)
+    <span class="org-keyword">return</span> v
 </pre>
 </div>
 
@@ -336,14 +336,14 @@ for the JavaScript code in this tag.
 先看代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Descriptor</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__get__</span>(<span style="font-weight: bold;">self</span>, obj, obj_type):
-        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'call __get__'</span>)
-        <span style="font-weight: bold;">return</span> 0
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Descriptor</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__get__</span>(<span class="org-keyword">self</span>, obj, obj_type):
+        <span class="org-keyword">print</span>(<span class="org-string">'call __get__'</span>)
+        <span class="org-keyword">return</span> 0
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold; font-style: italic;">descriptor</span> = Descriptor()
+<span class="org-keyword">class</span> <span class="org-type">Test</span>(<span class="org-builtin">object</span>):
+    <span class="org-variable-name">descriptor</span> = Descriptor()
 
 Test.descriptor
 </pre>
@@ -393,12 +393,12 @@ call __get__
 如果 <code>obj</code> 是一个 <b>类</b>, 那么 <code>obj.x</code> 的调用等价于之前的那段代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattribute__</span>(<span style="font-weight: bold;">self</span>, key):
-    <span style="font-style: italic;">"Emulate type_getattro() in Objects/typeobject.c"</span>
-    <span style="font-weight: bold; font-style: italic;">v</span> = <span style="font-weight: bold;">object</span>.__getattribute__(<span style="font-weight: bold;">self</span>, key)
-    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(v, <span style="font-style: italic;">'__get__'</span>):
-       <span style="font-weight: bold;">return</span> v.__get__(<span style="font-weight: bold; text-decoration: underline;">None</span>, <span style="font-weight: bold;">self</span>)
-    <span style="font-weight: bold;">return</span> v
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">__getattribute__</span>(<span class="org-keyword">self</span>, key):
+    <span class="org-doc">"Emulate type_getattro() in Objects/typeobject.c"</span>
+    <span class="org-variable-name">v</span> = <span class="org-builtin">object</span>.__getattribute__(<span class="org-keyword">self</span>, key)
+    <span class="org-keyword">if</span> <span class="org-builtin">hasattr</span>(v, <span class="org-string">'__get__'</span>):
+       <span class="org-keyword">return</span> v.__get__(<span class="org-constant">None</span>, <span class="org-keyword">self</span>)
+    <span class="org-keyword">return</span> v
 </pre>
 </div></li>
 </ul>
@@ -413,8 +413,8 @@ call __get__
 </div>
 </div>
 
-<div id="outline-container-orga920eec" class="outline-2">
-<h2 id="orga920eec"><span class="section-number-2">3</span> 描述器的使用</h2>
+<div id="outline-container-org0766204" class="outline-2">
+<h2 id="org0766204"><span class="section-number-2">3</span> 描述器的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 描述器的方法原型为：
@@ -441,40 +441,40 @@ descr.__delete__(self, obj) --&gt; None
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Property</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-style: italic;">"Emulate PyProperty_Type() in Objects/descrobject.c"</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Property</span>(<span class="org-builtin">object</span>):
+    <span class="org-doc">"Emulate PyProperty_Type() in Objects/descrobject.c"</span>
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fget=<span style="font-weight: bold; text-decoration: underline;">None</span>, fset=<span style="font-weight: bold; text-decoration: underline;">None</span>, fdel=<span style="font-weight: bold; text-decoration: underline;">None</span>, doc=<span style="font-weight: bold; text-decoration: underline;">None</span>):
-        <span style="font-weight: bold;">self</span>.fget = fget
-        <span style="font-weight: bold;">self</span>.fset = fset
-        <span style="font-weight: bold;">self</span>.fdel = fdel
-        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span> = doc
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, fget=<span class="org-constant">None</span>, fset=<span class="org-constant">None</span>, fdel=<span class="org-constant">None</span>, doc=<span class="org-constant">None</span>):
+        <span class="org-keyword">self</span>.fget = fget
+        <span class="org-keyword">self</span>.fset = fset
+        <span class="org-keyword">self</span>.fdel = fdel
+        <span class="org-keyword">self</span>.<span class="org-builtin">__doc__</span> = doc
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__get__</span>(<span style="font-weight: bold;">self</span>, obj, objtype=<span style="font-weight: bold; text-decoration: underline;">None</span>):
-        <span style="font-weight: bold;">if</span> obj <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
-            <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>
-        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fget <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
-            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"unreadable attribute"</span>
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>.fget(obj)
+    <span class="org-keyword">def</span> <span class="org-function-name">__get__</span>(<span class="org-keyword">self</span>, obj, objtype=<span class="org-constant">None</span>):
+        <span class="org-keyword">if</span> obj <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-keyword">return</span> <span class="org-keyword">self</span>
+        <span class="org-keyword">if</span> <span class="org-keyword">self</span>.fget <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-keyword">raise</span> <span class="org-type">AttributeError</span>, <span class="org-string">"unreadable attribute"</span>
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.fget(obj)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__set__</span>(<span style="font-weight: bold;">self</span>, obj, value):
-        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fset <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
-            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"can't set attribute"</span>
-        <span style="font-weight: bold;">self</span>.fset(obj, value)
+    <span class="org-keyword">def</span> <span class="org-function-name">__set__</span>(<span class="org-keyword">self</span>, obj, value):
+        <span class="org-keyword">if</span> <span class="org-keyword">self</span>.fset <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-keyword">raise</span> <span class="org-type">AttributeError</span>, <span class="org-string">"can't set attribute"</span>
+        <span class="org-keyword">self</span>.fset(obj, value)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__delete__</span>(<span style="font-weight: bold;">self</span>, obj):
-        <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">self</span>.fdel <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
-            <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>, <span style="font-style: italic;">"can't delete attribute"</span>
-        <span style="font-weight: bold;">self</span>.fdel(obj)
+    <span class="org-keyword">def</span> <span class="org-function-name">__delete__</span>(<span class="org-keyword">self</span>, obj):
+        <span class="org-keyword">if</span> <span class="org-keyword">self</span>.fdel <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-keyword">raise</span> <span class="org-type">AttributeError</span>, <span class="org-string">"can't delete attribute"</span>
+        <span class="org-keyword">self</span>.fdel(obj)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">getter</span>(<span style="font-weight: bold;">self</span>, fget):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(fget, <span style="font-weight: bold;">self</span>.fset, <span style="font-weight: bold;">self</span>.fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+    <span class="org-keyword">def</span> <span class="org-function-name">getter</span>(<span class="org-keyword">self</span>, fget):
+        <span class="org-keyword">return</span> <span class="org-builtin">type</span>(<span class="org-keyword">self</span>)(fget, <span class="org-keyword">self</span>.fset, <span class="org-keyword">self</span>.fdel, <span class="org-keyword">self</span>.<span class="org-builtin">__doc__</span>)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">setter</span>(<span style="font-weight: bold;">self</span>, fset):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(<span style="font-weight: bold;">self</span>.fget, fset, <span style="font-weight: bold;">self</span>.fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+    <span class="org-keyword">def</span> <span class="org-function-name">setter</span>(<span class="org-keyword">self</span>, fset):
+        <span class="org-keyword">return</span> <span class="org-builtin">type</span>(<span class="org-keyword">self</span>)(<span class="org-keyword">self</span>.fget, fset, <span class="org-keyword">self</span>.fdel, <span class="org-keyword">self</span>.<span class="org-builtin">__doc__</span>)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">deleter</span>(<span style="font-weight: bold;">self</span>, fdel):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)(<span style="font-weight: bold;">self</span>.fget, <span style="font-weight: bold;">self</span>.fset, fdel, <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">__doc__</span>)
+    <span class="org-keyword">def</span> <span class="org-function-name">deleter</span>(<span class="org-keyword">self</span>, fdel):
+        <span class="org-keyword">return</span> <span class="org-builtin">type</span>(<span class="org-keyword">self</span>)(<span class="org-keyword">self</span>.fget, <span class="org-keyword">self</span>.fset, fdel, <span class="org-keyword">self</span>.<span class="org-builtin">__doc__</span>)
 </pre>
 </div>
 
@@ -503,8 +503,8 @@ emmm, 剩下的代码就很简单了。
 </div>
 </div>
 
-<div id="outline-container-org39ba5b4" class="outline-2">
-<h2 id="org39ba5b4"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org47f456a" class="outline-2">
+<h2 id="org47f456a"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/howto/descriptor.html">Descriptor HowTo Guide</a></li>

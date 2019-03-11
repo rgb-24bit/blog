@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 元类</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org494c873">1. 前言</a></li>
-<li><a href="#org68e0498">2. type</a></li>
-<li><a href="#org9eb3d14">3. 元类的定义</a></li>
-<li><a href="#orgab6870a">4. 类属性和实例属性</a></li>
-<li><a href="#org668f7ea">5. 元类的使用</a></li>
-<li><a href="#org08316f0">6. 结语</a></li>
+<li><a href="#orgd386e53">1. 前言</a></li>
+<li><a href="#org52e4104">2. type</a></li>
+<li><a href="#org6038821">3. 元类的定义</a></li>
+<li><a href="#orgea6b77b">4. 类属性和实例属性</a></li>
+<li><a href="#org9f4bfb1">5. 元类的使用</a></li>
+<li><a href="#org1220cfa">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org494c873" class="outline-2">
-<h2 id="org494c873"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd386e53" class="outline-2">
+<h2 id="orgd386e53"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>元类</b> 在 <code>Python</code> 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 <b>创建类</b> 时的行为，
@@ -266,15 +266,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org68e0498" class="outline-2">
-<h2 id="org68e0498"><span class="section-number-2">2</span> type</h2>
+<div id="outline-container-org52e4104" class="outline-2">
+<h2 id="org52e4104"><span class="section-number-2">2</span> type</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 作为动态语言， 类型是在运行时创建和确定的， 默认情况下， 用于创建类的就是 <code>type</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">type</span>(name, bases, <span style="font-weight: bold;">dict</span>) -&gt; a new <span style="font-weight: bold;">type</span>
+<pre class="src src-python"><span class="org-builtin">type</span>(name, bases, <span class="org-builtin">dict</span>) -&gt; a new <span class="org-builtin">type</span>
 </pre>
 </div>
 
@@ -291,16 +291,16 @@ for the JavaScript code in this tag.
 举个栗子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__repr__</span>(<span style="font-weight: bold;">self</span>):
-    <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'The type of this instance is %s.'</span> % <span style="font-weight: bold;">self</span>.__class__
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">__repr__</span>(<span class="org-keyword">self</span>):
+    <span class="org-keyword">return</span> <span class="org-string">'The type of this instance is %s.'</span> % <span class="org-keyword">self</span>.__class__
 
 
-<span style="font-weight: bold; font-style: italic;">TestClass</span> = <span style="font-weight: bold;">type</span>(<span style="font-style: italic;">'TestClass'</span>, (<span style="font-weight: bold;">object</span>,), {<span style="font-style: italic;">'__repr__'</span>: __repr__})
+<span class="org-variable-name">TestClass</span> = <span class="org-builtin">type</span>(<span class="org-string">'TestClass'</span>, (<span class="org-builtin">object</span>,), {<span class="org-string">'__repr__'</span>: __repr__})
 
-<span style="font-weight: bold;">print</span>(TestClass())
+<span class="org-keyword">print</span>(TestClass())
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">The type of this instance is &lt;class '__main__.TestClass'&gt;.</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">output ##</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">The type of this instance is &lt;class '__main__.TestClass'&gt;.</span>
 </pre>
 </div>
 
@@ -312,9 +312,9 @@ for the JavaScript code in this tag.
 等价于以下定义：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__repr__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'The type of this instance is %s.'</span> % <span style="font-weight: bold;">self</span>.__class__
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__repr__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">return</span> <span class="org-string">'The type of this instance is %s.'</span> % <span class="org-keyword">self</span>.__class__
 </pre>
 </div>
 
@@ -329,8 +329,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9eb3d14" class="outline-2">
-<h2 id="org9eb3d14"><span class="section-number-2">3</span> 元类的定义</h2>
+<div id="outline-container-org6038821" class="outline-2">
+<h2 id="org6038821"><span class="section-number-2">3</span> 元类的定义</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>元类(metaclass)</b> 属于 <code>type</code> 的子类， 而 <b>类</b> 属于 <b>元类</b> 的 <b>实例</b>.
@@ -348,32 +348,32 @@ for the JavaScript code in this tag.
 这里来看它们在 <b>元类</b> 中的使用：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyMetaClass</span>(<span style="font-weight: bold;">type</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__new__</span>(metaclass, name, bases, attrs):
-        <span style="font-weight: bold; font-style: italic;">attrs</span>[<span style="font-style: italic;">'creator'</span>] = metaclass.<span style="font-weight: bold;">__name__</span>
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">type</span>.__new__(metaclass, name, bases, attrs)
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">MyMetaClass</span>(<span class="org-builtin">type</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__new__</span>(metaclass, name, bases, attrs):
+        <span class="org-variable-name">attrs</span>[<span class="org-string">'creator'</span>] = metaclass.<span class="org-builtin">__name__</span>
+        <span class="org-keyword">return</span> <span class="org-builtin">type</span>.__new__(metaclass, name, bases, attrs)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(cls, name, bases, attrs):
-        <span style="font-weight: bold; font-style: italic;">cls.name</span> = cls.creator + <span style="font-style: italic;">'.'</span> + name
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(cls, name, bases, attrs):
+        <span class="org-variable-name">cls.name</span> = cls.creator + <span class="org-string">'.'</span> + name
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__call__</span>(cls, *args, **kwargs):
-        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Create an instance with type %s.'</span> % cls.name)
-        <span style="font-weight: bold; font-style: italic;">obj</span> = cls.__new__(cls, *args, **kwargs)
+    <span class="org-keyword">def</span> <span class="org-function-name">__call__</span>(cls, *args, **kwargs):
+        <span class="org-keyword">print</span>(<span class="org-string">'Create an instance with type %s.'</span> % cls.name)
+        <span class="org-variable-name">obj</span> = cls.__new__(cls, *args, **kwargs)
         obj.__init__(*args, **kwargs)
-        <span style="font-weight: bold;">return</span> obj
+        <span class="org-keyword">return</span> obj
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, name):
-        <span style="font-weight: bold;">self</span>.name = name
+<span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>, metaclass=MyMetaClass):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, name):
+        <span class="org-keyword">self</span>.name = name
 
 
-<span style="font-weight: bold;">print</span>(TestClass(<span style="font-style: italic;">'job'</span>).name)
+<span class="org-keyword">print</span>(TestClass(<span class="org-string">'job'</span>).name)
 
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create an instance with type MyMetaClass.TestClass.</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">job</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">output ##</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create an instance with type MyMetaClass.TestClass.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">job</span>
 </pre>
 </div>
 
@@ -404,11 +404,11 @@ Create an instance with type MyMetaClass.TestClass.
 创建实例的过程可以参考 <a href="python-new-instance.html">Python 构造对象实例</a> 中的代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">create_instance</span>(obj_type, *args, **kwargs):
-    <span style="font-weight: bold; font-style: italic;">obj</span> = obj_type.__new__(*args, **kwargs)
-    <span style="font-weight: bold;">if</span> obj <span style="font-weight: bold;">is</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold; text-decoration: underline;">None</span> <span style="font-weight: bold;">and</span> <span style="font-weight: bold;">issubclass</span>(obj, obj_type):
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">create_instance</span>(obj_type, *args, **kwargs):
+    <span class="org-variable-name">obj</span> = obj_type.__new__(*args, **kwargs)
+    <span class="org-keyword">if</span> obj <span class="org-keyword">is</span> <span class="org-keyword">not</span> <span class="org-constant">None</span> <span class="org-keyword">and</span> <span class="org-builtin">issubclass</span>(obj, obj_type):
         obj.__init__(*args, **kwargs)
-    <span style="font-weight: bold;">return</span> obj
+    <span class="org-keyword">return</span> obj
 </pre>
 </div>
 
@@ -425,8 +425,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-orgab6870a" class="outline-2">
-<h2 id="orgab6870a"><span class="section-number-2">4</span> 类属性和实例属性</h2>
+<div id="outline-container-orgea6b77b" class="outline-2">
+<h2 id="orgea6b77b"><span class="section-number-2">4</span> 类属性和实例属性</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 搞清楚 <b>类属性</b> 和 <b>实例属性</b> 的关系之前， 需要明确的两点是：
@@ -437,19 +437,19 @@ Create an instance with type MyMetaClass.TestClass.
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">OneClass</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold; font-style: italic;">num</span> = 10
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">OneClass</span>(<span class="org-builtin">object</span>):
+    <span class="org-variable-name">num</span> = 10
 
 
-<span style="font-weight: bold; font-style: italic;">A</span> = OneClass()
-<span style="font-weight: bold; font-style: italic;">B</span> = OneClass()
-<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+<span class="org-variable-name">A</span> = OneClass()
+<span class="org-variable-name">B</span> = OneClass()
+<span class="org-keyword">print</span>(A.num, B.num, OneClass.num)
 
-<span style="font-weight: bold; font-style: italic;">A.num</span> += 2
-<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+<span class="org-variable-name">A.num</span> += 2
+<span class="org-keyword">print</span>(A.num, B.num, OneClass.num)
 
-<span style="font-weight: bold; font-style: italic;">OneClass.num</span> += 2
-<span style="font-weight: bold;">print</span>(A.num, B.num, OneClass.num)
+<span class="org-variable-name">OneClass.num</span> += 2
+<span class="org-keyword">print</span>(A.num, B.num, OneClass.num)
 </pre>
 </div>
 
@@ -483,21 +483,21 @@ Create an instance with type MyMetaClass.TestClass.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyMetaClass</span>(<span style="font-weight: bold;">type</span>):
-    <span style="font-weight: bold; font-style: italic;">language</span> = <span style="font-style: italic;">'English'</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">MyMetaClass</span>(<span class="org-builtin">type</span>):
+    <span class="org-variable-name">language</span> = <span class="org-string">'English'</span>
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
-    <span style="font-weight: bold;">pass</span>
+<span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>, metaclass=MyMetaClass):
+    <span class="org-keyword">pass</span>
 
 
-<span style="font-weight: bold;">print</span>(TestClass.language)
-<span style="font-weight: bold;">print</span>(TestClass().language)
+<span class="org-keyword">print</span>(TestClass.language)
+<span class="org-keyword">print</span>(TestClass().language)
 
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">output ##</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">English</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">AttributeError: 'TestClass' object has no attribute 'language'</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">output ##</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">English</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">AttributeError: 'TestClass' object has no attribute 'language'</span>
 </pre>
 </div>
 
@@ -511,8 +511,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-org668f7ea" class="outline-2">
-<h2 id="org668f7ea"><span class="section-number-2">5</span> 元类的使用</h2>
+<div id="outline-container-org9f4bfb1" class="outline-2">
+<h2 id="org9f4bfb1"><span class="section-number-2">5</span> 元类的使用</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 元类的使用我也没有多少经验， 只能简单的列出一些自己尝试的结果。
@@ -527,8 +527,8 @@ Create an instance with type MyMetaClass.TestClass.
 一般情况下， 我们使用元类都是这样使用的：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
-    <span style="font-weight: bold;">pass</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>, metaclass=MyMetaClass):
+    <span class="org-keyword">pass</span>
 </pre>
 </div>
 
@@ -540,7 +540,7 @@ Create an instance with type MyMetaClass.TestClass.
 另一种情况， 显示创建类时， 我们可以定义自己的参数：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">TestClass</span> = MyMetaClass(...)
+<pre class="src src-python"><span class="org-variable-name">TestClass</span> = MyMetaClass(...)
 </pre>
 </div>
 
@@ -582,14 +582,14 @@ Create an instance with type MyMetaClass.TestClass.
 <code>Python2</code> 和 <code>Python3</code> 中定义元类的方式不同：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python2</span>
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold; font-style: italic;">__metaclass__</span> = MyMetaClass
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">Python2</span>
+<span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>):
+    <span class="org-variable-name">__metaclass__</span> = MyMetaClass
 
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python3</span>
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">TestClass</span>(<span style="font-weight: bold;">object</span>, metaclass=MyMetaClass):
-    <span style="font-weight: bold;">pass</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Python3</span>
+<span class="org-keyword">class</span> <span class="org-type">TestClass</span>(<span class="org-builtin">object</span>, metaclass=MyMetaClass):
+    <span class="org-keyword">pass</span>
 </pre>
 </div>
 
@@ -597,24 +597,24 @@ Create an instance with type MyMetaClass.TestClass.
 如果需要兼容， 可以这样做：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">from</span> six <span style="font-weight: bold;">import</span> with_metaclass
+<pre class="src src-python"><span class="org-keyword">from</span> six <span class="org-keyword">import</span> with_metaclass
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Meta</span>(<span style="font-weight: bold;">type</span>):
-    <span style="font-weight: bold;">pass</span>
+<span class="org-keyword">class</span> <span class="org-type">Meta</span>(<span class="org-builtin">type</span>):
+    <span class="org-keyword">pass</span>
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Base</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">pass</span>
+<span class="org-keyword">class</span> <span class="org-type">Base</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">pass</span>
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyClass</span>(with_metaclass(Meta, Base)):
-    <span style="font-weight: bold;">pass</span>
+<span class="org-keyword">class</span> <span class="org-type">MyClass</span>(with_metaclass(Meta, Base)):
+    <span class="org-keyword">pass</span>
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org08316f0" class="outline-2">
-<h2 id="org08316f0"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org1220cfa" class="outline-2">
+<h2 id="org1220cfa"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 给了我们很大程度上的自由， 我们可以运用各种奇淫技巧写出各种神奇的代码。

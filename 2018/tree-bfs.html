@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:17 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>树的广度优先遍历</title>
@@ -246,16 +246,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org50bc7bb">1. 前言</a></li>
-<li><a href="#orgf075fe4">2. 广度优先遍历的实现</a></li>
-<li><a href="#org4b521df">3. 将树保存到文件</a></li>
-<li><a href="#orgbe5d3ee">4. 结语</a></li>
+<li><a href="#org9d729f1">1. 前言</a></li>
+<li><a href="#org32e0570">2. 广度优先遍历的实现</a></li>
+<li><a href="#org7c2b667">3. 将树保存到文件</a></li>
+<li><a href="#org76d492b">4. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org50bc7bb" class="outline-2">
-<h2 id="org50bc7bb"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org9d729f1" class="outline-2">
+<h2 id="org9d729f1"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 《数据结构与算法分析 - C 语言描述》 一书中，相当详细的介绍了 <b>树的深度优先遍历 - DFS</b>, 
@@ -276,8 +276,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf075fe4" class="outline-2">
-<h2 id="orgf075fe4"><span class="section-number-2">2</span> 广度优先遍历的实现</h2>
+<div id="outline-container-org32e0570" class="outline-2">
+<h2 id="org32e0570"><span class="section-number-2">2</span> 广度优先遍历的实现</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 虽然 《数据结构与算法分析 - C 语言描述》 一书在 <b>树</b> 的章节没有介绍 <code>BFS</code> 的实现，
@@ -288,23 +288,23 @@ for the JavaScript code in this tag.
 实现 <code>BFS</code> 其实很简单，只需要借助 <b>队列</b> 来辅助完成就可以了：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">breadth_first_search</span>(root):
-    <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; font-style: italic;">result</span> = deque(), []
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">breadth_first_search</span>(root):
+    <span class="org-variable-name">queue</span>, <span class="org-variable-name">result</span> = deque(), []
 
     queue.append(root)
 
-    <span style="font-weight: bold;">while</span> <span style="font-weight: bold;">len</span>(queue) &gt; 0:
-        <span style="font-weight: bold; font-style: italic;">node</span> = queue.popleft()
+    <span class="org-keyword">while</span> <span class="org-builtin">len</span>(queue) &gt; 0:
+        <span class="org-variable-name">node</span> = queue.popleft()
 
         result.append(node.val)
 
-        <span style="font-weight: bold;">if</span> node.left:
+        <span class="org-keyword">if</span> node.left:
                 queue.append(node.left)
 
-        <span style="font-weight: bold;">if</span> node.right:
+        <span class="org-keyword">if</span> node.right:
                 queue.append(node.right)
 
-    <span style="font-weight: bold;">return</span> result
+    <span class="org-keyword">return</span> result
 </pre>
 </div>
 
@@ -325,8 +325,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4b521df" class="outline-2">
-<h2 id="org4b521df"><span class="section-number-2">3</span> 将树保存到文件</h2>
+<div id="outline-container-org7c2b667" class="outline-2">
+<h2 id="org7c2b667"><span class="section-number-2">3</span> 将树保存到文件</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 这是为什么我会想到用 <code>BFS</code> 的原因，最开始只是需要将 <b>二叉树</b> 保存到文件，
@@ -337,16 +337,16 @@ for the JavaScript code in this tag.
 但是后来，碰到了这样的一棵树（操作系统实验需要）：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span> {
-  <span style="font-weight: bold; text-decoration: underline;">char</span> <span style="font-weight: bold; font-style: italic;">fname</span>[_MAX_NAME_LENGTH];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#21517;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fmode</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#27169;&#24335;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ftype</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#31867;&#22411;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">faddr</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fsize</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#22823;&#23567;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fparent</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#29238;&#30446;&#24405;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fsibling</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20804;&#24351;&#25991;&#20214;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fchild</span>;    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;</span>
-} <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>;
+<pre class="src src-C"><span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span> {
+  <span class="org-type">char</span> <span class="org-variable-name">fname</span>[_MAX_NAME_LENGTH];  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#21517;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">fmode</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#27169;&#24335;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">ftype</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#31867;&#22411;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">faddr</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">fsize</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#22823;&#23567;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fparent</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">&#29238;&#30446;&#24405;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fsibling</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20804;&#24351;&#25991;&#20214;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fchild</span>;    <span class="org-comment-delimiter">// </span><span class="org-comment">&#23376;&#25991;&#20214;</span>
+} <span class="org-type">FILE_TREE</span>;
 </pre>
 </div>
 
@@ -363,17 +363,17 @@ for the JavaScript code in this tag.
 然后，就想到了 <b>广度优先</b>, 给这个树添加一个字段，保存必要的信息 - <b>子节点的数量</b>:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span> {
-  <span style="font-weight: bold; text-decoration: underline;">char</span> <span style="font-weight: bold; font-style: italic;">fname</span>[_MAX_NAME_LENGTH];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#21517;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fmode</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#27169;&#24335;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ftype</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#31867;&#22411;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">faddr</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fsize</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25991;&#20214;&#22823;&#23567;</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">fccnt</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;&#25968;&#37327;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fparent</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#29238;&#30446;&#24405;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fsibling</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20804;&#24351;&#25991;&#20214;</span>
-  <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">fchild</span>;    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23376;&#25991;&#20214;</span>
-} <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>;
+<pre class="src src-C"><span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span> {
+  <span class="org-type">char</span> <span class="org-variable-name">fname</span>[_MAX_NAME_LENGTH];  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#21517;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">fmode</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#27169;&#24335;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">ftype</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#31867;&#22411;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">faddr</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#29289;&#29702;&#22320;&#22336;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">fsize</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25991;&#20214;&#22823;&#23567;</span>
+  <span class="org-type">int</span> <span class="org-variable-name">fccnt</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#23376;&#25991;&#20214;&#25968;&#37327;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fparent</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">&#29238;&#30446;&#24405;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fsibling</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20804;&#24351;&#25991;&#20214;</span>
+  <span class="org-keyword">struct</span> <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">fchild</span>;    <span class="org-comment-delimiter">// </span><span class="org-comment">&#23376;&#25991;&#20214;</span>
+} <span class="org-type">FILE_TREE</span>;
 </pre>
 </div>
 
@@ -385,23 +385,23 @@ for the JavaScript code in this tag.
 <b>简单的队列实现 - 头文件：</b>
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#if</span><span style="font-weight: bold;">n</span><span style="font-weight: bold;">def</span> _QUEUE_H_
-<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">_QUEUE_H_</span>
+<pre class="src src-C"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> _QUEUE_H_
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">_QUEUE_H_</span>
 
-<span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="font-weight: bold; text-decoration: underline;">Queue</span> {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">head</span>;
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">tail</span>;
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>;
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">count</span>;
-  <span style="font-weight: bold; text-decoration: underline;">void</span>** <span style="font-weight: bold; font-style: italic;">buffer</span>;
-} <span style="font-weight: bold; text-decoration: underline;">Queue</span>;
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">Queue</span> {
+  <span class="org-type">int</span> <span class="org-variable-name">head</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">tail</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">capacity</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">count</span>;
+  <span class="org-type">void</span>** <span class="org-variable-name">buffer</span>;
+} <span class="org-type">Queue</span>;
 
-<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold;">create_queue</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>);
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">enqueue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span>);
-<span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold;">dequeue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>);
-<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">destroy_queue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>);
+<span class="org-type">Queue</span>* <span class="org-function-name">create_queue</span>(<span class="org-type">int</span> <span class="org-variable-name">capacity</span>);
+<span class="org-type">int</span> <span class="org-function-name">enqueue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>, <span class="org-type">void</span>* <span class="org-variable-name">item</span>);
+<span class="org-type">void</span>* <span class="org-function-name">dequeue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>);
+<span class="org-type">void</span> <span class="org-function-name">destroy_queue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>);
 
-<span style="font-weight: bold;">#endif</span>  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">_QUEUE_H_</span>
+<span class="org-preprocessor">#endif</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">_QUEUE_H_</span>
 </pre>
 </div></li>
 
@@ -409,21 +409,21 @@ for the JavaScript code in this tag.
 <b>简单的队列实现 - 源文件：</b>
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">"queue.h"</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"queue.h"</span>
 
-<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold;">create_queue</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">capacity</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = (<span style="font-weight: bold; text-decoration: underline;">Queue</span>*)malloc(<span style="font-weight: bold;">sizeof</span>(Queue));
+<span class="org-type">Queue</span>* <span class="org-function-name">create_queue</span>(<span class="org-type">int</span> <span class="org-variable-name">capacity</span>) {
+  <span class="org-type">Queue</span>* <span class="org-variable-name">queue</span> = (<span class="org-type">Queue</span>*)malloc(<span class="org-keyword">sizeof</span>(Queue));
 
-  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
-    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  <span class="org-keyword">if</span> (queue == <span class="org-constant">NULL</span>) {
+    <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
   }
 
-  queue-&gt;buffer = (<span style="font-weight: bold; text-decoration: underline;">void</span>**)malloc(<span style="font-weight: bold; text-decoration: underline;">capacity</span> * <span style="font-weight: bold;">sizeof</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>*));
+  queue-&gt;buffer = (<span class="org-type">void</span>**)malloc(<span class="org-type">capacity</span> * <span class="org-keyword">sizeof</span>(<span class="org-type">void</span>*));
 
-  <span style="font-weight: bold;">if</span> (queue-&gt;buffer == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+  <span class="org-keyword">if</span> (queue-&gt;buffer == <span class="org-constant">NULL</span>) {
     free(queue);
-    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+    <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
   }
 
   queue-&gt;head = 0;
@@ -431,40 +431,40 @@ for the JavaScript code in this tag.
   queue-&gt;count = 0;
   queue-&gt;capacity = capacity;
 
-  <span style="font-weight: bold;">return</span> queue;
+  <span class="org-keyword">return</span> queue;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">enqueue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>, <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span>) {
-  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
-    <span style="font-weight: bold;">return</span> -1;
+<span class="org-type">int</span> <span class="org-function-name">enqueue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>, <span class="org-type">void</span>* <span class="org-variable-name">item</span>) {
+  <span class="org-keyword">if</span> (queue == <span class="org-constant">NULL</span>) {
+    <span class="org-keyword">return</span> -1;
   }
 
-  <span style="font-weight: bold;">if</span> (queue-&gt;count == queue-&gt;capacity) {
-    <span style="font-weight: bold;">return</span> -1;
+  <span class="org-keyword">if</span> (queue-&gt;count == queue-&gt;capacity) {
+    <span class="org-keyword">return</span> -1;
   }
 
   queue-&gt;buffer[queue-&gt;tail] = item;
   queue-&gt;tail = (queue-&gt;tail + 1) % queue-&gt;capacity;
   queue-&gt;count++;
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold;">dequeue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>) {
-  <span style="font-weight: bold;">if</span> (queue == <span style="font-weight: bold; text-decoration: underline;">NULL</span> || queue-&gt;count == 0) {
-    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+<span class="org-type">void</span>* <span class="org-function-name">dequeue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>) {
+  <span class="org-keyword">if</span> (queue == <span class="org-constant">NULL</span> || queue-&gt;count == 0) {
+    <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
   }
 
-  <span style="font-weight: bold; text-decoration: underline;">void</span>* <span style="font-weight: bold; font-style: italic;">item</span> = queue-&gt;buffer[queue-&gt;head];
+  <span class="org-type">void</span>* <span class="org-variable-name">item</span> = queue-&gt;buffer[queue-&gt;head];
   queue-&gt;head = (queue-&gt;head + 1) % queue-&gt;capacity;
   queue-&gt;count--;
 
-  <span style="font-weight: bold;">return</span> item;
+  <span class="org-keyword">return</span> item;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">destroy_queue</span>(<span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span>) {
-  <span style="font-weight: bold;">if</span> (queue != <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
-    <span style="font-weight: bold;">if</span> (queue-&gt;buffer != <span style="font-weight: bold; text-decoration: underline;">NULL</span>) {
+<span class="org-type">void</span> <span class="org-function-name">destroy_queue</span>(<span class="org-type">Queue</span>* <span class="org-variable-name">queue</span>) {
+  <span class="org-keyword">if</span> (queue != <span class="org-constant">NULL</span>) {
+    <span class="org-keyword">if</span> (queue-&gt;buffer != <span class="org-constant">NULL</span>) {
       free(queue-&gt;buffer);
     }
     free(queue);
@@ -477,37 +477,37 @@ for the JavaScript code in this tag.
 <b>树的保存与还原：</b>
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold;">read_block</span>(<span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">in</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">parent</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">block</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)malloc(<span style="font-weight: bold;">sizeof</span>(FILE_TREE));
+<pre class="src src-C"><span class="org-type">FILE_TREE</span>* <span class="org-function-name">read_block</span>(<span class="org-type">FILE</span>* <span class="org-variable-name">in</span>, <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">parent</span>) {
+  <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">block</span> = (<span class="org-type">FILE_TREE</span>*)malloc(<span class="org-keyword">sizeof</span>(FILE_TREE));
 
-  fread(block, <span style="font-weight: bold;">sizeof</span>(FILE_TREE), 1, in);
+  fread(block, <span class="org-keyword">sizeof</span>(FILE_TREE), 1, in);
 
-  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25351;&#38024;&#21464;&#37327;&#25968;&#25454;&#37325;&#32622;&#20026; NULL</span>
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25351;&#38024;&#21464;&#37327;&#25968;&#25454;&#37325;&#32622;&#20026; NULL</span>
   block-&gt;fparent = parent;
-  block-&gt;fsibling = <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
-  block-&gt;fchild = <span style="font-weight: bold; text-decoration: underline;">NULL</span>;
+  block-&gt;fsibling = <span class="org-constant">NULL</span>;
+  block-&gt;fchild = <span class="org-constant">NULL</span>;
 
-  <span style="font-weight: bold;">return</span> block;
+  <span class="org-keyword">return</span> block;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">write_block</span>(<span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">out</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">block</span>) {
-  <span style="font-weight: bold;">return</span> fwrite(block, <span style="font-weight: bold;">sizeof</span>(FILE_TREE), 1, out);
+<span class="org-type">int</span> <span class="org-function-name">write_block</span>(<span class="org-type">FILE</span>* <span class="org-variable-name">out</span>, <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">block</span>) {
+  <span class="org-keyword">return</span> fwrite(block, <span class="org-keyword">sizeof</span>(FILE_TREE), 1, out);
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">serialization</span>(<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">filename</span>, <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">root</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = create_queue(100);
+<span class="org-type">int</span> <span class="org-function-name">serialization</span>(<span class="org-keyword">const</span> <span class="org-type">char</span>* <span class="org-variable-name">filename</span>, <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">root</span>) {
+  <span class="org-type">Queue</span>* <span class="org-variable-name">queue</span> = create_queue(100);
 
-  <span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">out</span> = fopen(filename, <span style="font-style: italic;">"wb"</span>);
+  <span class="org-type">FILE</span>* <span class="org-variable-name">out</span> = fopen(filename, <span class="org-string">"wb"</span>);
 
-  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;&#65292;&#24182;&#23558;&#26681;&#32467;&#28857;&#30340;&#25968;&#25454;&#20889;&#20837;&#25991;&#20214;</span>
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;&#65292;&#24182;&#23558;&#26681;&#32467;&#28857;&#30340;&#25968;&#25454;&#20889;&#20837;&#25991;&#20214;</span>
   enqueue(queue, root);
   write_block(out, root);
 
-  <span style="font-weight: bold;">while</span> (queue-&gt;count &gt; 0) {
-    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">node</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)dequeue(queue);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
+  <span class="org-keyword">while</span> (queue-&gt;count &gt; 0) {
+    <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">node</span> = (<span class="org-type">FILE_TREE</span>*)dequeue(queue);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
 
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#23558;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#20889;&#20837;&#25991;&#20214;&#65292;&#21516;&#26102;&#23558;&#23376;&#33410;&#28857;&#21152;&#20837;&#38431;&#21015;</span>
-    <span style="font-weight: bold;">for</span> (node = node-&gt;fchild; node != <span style="font-weight: bold; text-decoration: underline;">NULL</span>; node = node-&gt;fsibling) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#23558;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#20889;&#20837;&#25991;&#20214;&#65292;&#21516;&#26102;&#23558;&#23376;&#33410;&#28857;&#21152;&#20837;&#38431;&#21015;</span>
+    <span class="org-keyword">for</span> (node = node-&gt;fchild; node != <span class="org-constant">NULL</span>; node = node-&gt;fsibling) {
       write_block(out, node);
       enqueue(queue, node);
     }
@@ -516,33 +516,33 @@ for the JavaScript code in this tag.
   fclose(out);
   destroy_queue(queue);
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold;">deserialization</span>(<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">filename</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">Queue</span>* <span style="font-weight: bold; font-style: italic;">queue</span> = create_queue(100);
+<span class="org-type">FILE_TREE</span>* <span class="org-function-name">deserialization</span>(<span class="org-keyword">const</span> <span class="org-type">char</span>* <span class="org-variable-name">filename</span>) {
+  <span class="org-type">Queue</span>* <span class="org-variable-name">queue</span> = create_queue(100);
 
-  <span style="font-weight: bold; text-decoration: underline;">FILE</span>* <span style="font-weight: bold; font-style: italic;">in</span> = fopen(filename,<span style="font-style: italic;">"rb"</span>);
+  <span class="org-type">FILE</span>* <span class="org-variable-name">in</span> = fopen(filename,<span class="org-string">"rb"</span>);
 
-  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#26681;&#32467;&#28857;&#65292;&#21516;&#26102;&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
-  <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">root</span> = read_block(in, <span style="font-weight: bold; text-decoration: underline;">NULL</span>);
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#35835;&#21462;&#26681;&#32467;&#28857;&#65292;&#21516;&#26102;&#23558;&#26681;&#32467;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
+  <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">root</span> = read_block(in, <span class="org-constant">NULL</span>);
   enqueue(queue, root);
 
-  <span style="font-weight: bold;">while</span> (queue-&gt;count &gt; 0) {
-    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">parent</span> = (<span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>*)dequeue(queue);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
+  <span class="org-keyword">while</span> (queue-&gt;count &gt; 0) {
+    <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">parent</span> = (<span class="org-type">FILE_TREE</span>*)dequeue(queue);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21462;&#20986;&#38431;&#21015;&#22836;&#37096;&#20445;&#23384;&#30340;&#33410;&#28857;</span>
 
-    <span style="font-weight: bold;">if</span> (parent-&gt;fccnt == 0) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35813;&#33410;&#28857;&#26080;&#23376;&#33410;&#28857;&#65292;&#36339;&#36807;</span>
-      <span style="font-weight: bold;">continue</span>;
+    <span class="org-keyword">if</span> (parent-&gt;fccnt == 0) {  <span class="org-comment-delimiter">// </span><span class="org-comment">&#35813;&#33410;&#28857;&#26080;&#23376;&#33410;&#28857;&#65292;&#36339;&#36807;</span>
+      <span class="org-keyword">continue</span>;
     }
 
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#35813;&#33410;&#28857;&#30340;&#31532;&#19968;&#20010;&#23376;&#33410;&#28857;&#65292;&#24182;&#23558;&#35813;&#33410;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
-    <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">child</span> = read_block(in, parent);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35835;&#21462;&#35813;&#33410;&#28857;&#30340;&#31532;&#19968;&#20010;&#23376;&#33410;&#28857;&#65292;&#24182;&#23558;&#35813;&#33410;&#28857;&#25918;&#20837;&#38431;&#21015;</span>
+    <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">child</span> = read_block(in, parent);
     parent-&gt;fchild = child;
     enqueue(queue, child);
 
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35835;&#21462;&#21097;&#19979;&#30340;&#23376;&#33410;&#28857;&#24182;&#25918;&#20837;&#38431;&#21015;</span>
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; parent-&gt;fccnt - 1; ++i) {
-      <span style="font-weight: bold; text-decoration: underline;">FILE_TREE</span>* <span style="font-weight: bold; font-style: italic;">sibling</span> = read_block(in, parent);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35835;&#21462;&#21097;&#19979;&#30340;&#23376;&#33410;&#28857;&#24182;&#25918;&#20837;&#38431;&#21015;</span>
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; parent-&gt;fccnt - 1; ++i) {
+      <span class="org-type">FILE_TREE</span>* <span class="org-variable-name">sibling</span> = read_block(in, parent);
       child-&gt;fsibling = sibling;
       child = sibling;
 
@@ -553,7 +553,7 @@ for the JavaScript code in this tag.
   destroy_queue(queue);
   fclose(in);
 
-  <span style="font-weight: bold;">return</span> root;
+  <span class="org-keyword">return</span> root;
 }
 </pre>
 </div></li>
@@ -561,8 +561,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbe5d3ee" class="outline-2">
-<h2 id="orgbe5d3ee"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org76d492b" class="outline-2">
+<h2 id="org76d492b"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这次 <code>BFS</code> 的学习，收获最大的不是学会了 <code>BFS</code> 的实现，而是扩宽了思路。

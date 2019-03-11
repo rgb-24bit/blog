@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:58 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Android 小总结</title>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdd68c9d">1. 前言</a></li>
-<li><a href="#org0e69dba">2. 开发环境的搭建</a></li>
-<li><a href="#org74c4cc0">3. 日志工具</a></li>
-<li><a href="#org211f283">4. 活动</a></li>
-<li><a href="#org0781a9d">5. 广播、服务和内容提供器</a></li>
-<li><a href="#org12d78d6">6. 数据持久化</a></li>
-<li><a href="#org2ff49da">7. 权限问题</a></li>
-<li><a href="#org3042141">8. 后记</a></li>
+<li><a href="#org8730c39">1. 前言</a></li>
+<li><a href="#orgbf8c44f">2. 开发环境的搭建</a></li>
+<li><a href="#orge88ca53">3. 日志工具</a></li>
+<li><a href="#orgdbcd81d">4. 活动</a></li>
+<li><a href="#orga31b6a0">5. 广播、服务和内容提供器</a></li>
+<li><a href="#org67a550d">6. 数据持久化</a></li>
+<li><a href="#org2a0f472">7. 权限问题</a></li>
+<li><a href="#org4192e56">8. 后记</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdd68c9d" class="outline-2">
-<h2 id="orgdd68c9d"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org8730c39" class="outline-2">
+<h2 id="org8730c39"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触 Android 还在刚开始学编程的时候，那会刚学了点 C 语言的基础，除此以外什么都不会。
@@ -310,8 +310,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0e69dba" class="outline-2">
-<h2 id="org0e69dba"><span class="section-number-2">2</span> 开发环境的搭建</h2>
+<div id="outline-container-orgbf8c44f" class="outline-2">
+<h2 id="orgbf8c44f"><span class="section-number-2">2</span> 开发环境的搭建</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Android 开发环境是我接触到的，最难搭建的开发环境，没有之一。
@@ -363,8 +363,8 @@ Android 开发环境是我接触到的，最难搭建的开发环境，没有之
 </div>
 </div>
 
-<div id="outline-container-org74c4cc0" class="outline-2">
-<h2 id="org74c4cc0"><span class="section-number-2">3</span> 日志工具</h2>
+<div id="outline-container-orge88ca53" class="outline-2">
+<h2 id="orge88ca53"><span class="section-number-2">3</span> 日志工具</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Android 的日志工具使用起来是真的省心，不需要自己去配置什么，默认的格式基本就足够了。
@@ -378,12 +378,12 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 常见的做法是在类开头的第一个字段定义它：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyActivity</span> <span style="font-weight: bold;">extends</span> <span style="font-weight: bold; text-decoration: underline;">Activity</span> {
-  <span style="font-weight: bold;">private</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">TAG</span> = <span style="font-style: italic;">"MyActivity"</span>;
-  <span style="font-weight: bold; font-style: italic;">//</span><span style="font-weight: bold; font-style: italic;">...</span>
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span> () {
-    <span style="font-weight: bold; font-style: italic;">//</span><span style="font-weight: bold; font-style: italic;">...</span>
-    Log.d(TAG, <span style="font-style: italic;">"Some logging"</span>);
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">MyActivity</span> <span class="org-keyword">extends</span> <span class="org-type">Activity</span> {
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">TAG</span> = <span class="org-string">"MyActivity"</span>;
+  <span class="org-comment-delimiter">//</span><span class="org-comment">...</span>
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">method</span> () {
+    <span class="org-comment-delimiter">//</span><span class="org-comment">...</span>
+    Log.d(TAG, <span class="org-string">"Some logging"</span>);
   }
 }
 </pre>
@@ -397,7 +397,7 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 <a href="https://stackoverflow.com/questions/8355632/how-do-you-usually-tag-log-entries-android">Stack Overflow</a> 有人提出了相关的问题，接受的解决方案是这样的：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">private</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">TAG</span> = MyActivity.<span style="font-weight: bold;">class</span>.getName();
+<pre class="src src-java"><span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">TAG</span> = MyActivity.<span class="org-keyword">class</span>.getName();
 </pre>
 </div>
 
@@ -407,42 +407,42 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">LogUtil</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">VERBOSE</span> = 1;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">DEBUG</span> = 2;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">INFO</span> = 3;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">WARN</span> = 4;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">ERROR</span> = 5;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">NOTHING</span> = 6;
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">LogUtil</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">VERBOSE</span> = 1;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">DEBUG</span> = 2;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">INFO</span> = 3;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">WARN</span> = 4;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">ERROR</span> = 5;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">NOTHING</span> = 6;
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">level</span> = VERBOSE;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">int</span> <span class="org-variable-name">level</span> = VERBOSE;
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">v</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
-    <span style="font-weight: bold;">if</span> (level &lt;= VERBOSE) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">v</span>(<span class="org-type">String</span> <span class="org-variable-name">tag</span>, <span class="org-type">String</span> <span class="org-variable-name">msg</span>) {
+    <span class="org-keyword">if</span> (level &lt;= VERBOSE) {
       log.v(tag, msg);
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">d</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
-    <span style="font-weight: bold;">if</span> (level &lt;= DEBUG) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">d</span>(<span class="org-type">String</span> <span class="org-variable-name">tag</span>, <span class="org-type">String</span> <span class="org-variable-name">msg</span>) {
+    <span class="org-keyword">if</span> (level &lt;= DEBUG) {
       log.d(tag, msg);
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">i</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
-    <span style="font-weight: bold;">if</span> (level &lt;= INFO) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">i</span>(<span class="org-type">String</span> <span class="org-variable-name">tag</span>, <span class="org-type">String</span> <span class="org-variable-name">msg</span>) {
+    <span class="org-keyword">if</span> (level &lt;= INFO) {
       log.i(tag, msg);
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">w</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
-    <span style="font-weight: bold;">if</span> (level &lt;= WARN) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">w</span>(<span class="org-type">String</span> <span class="org-variable-name">tag</span>, <span class="org-type">String</span> <span class="org-variable-name">msg</span>) {
+    <span class="org-keyword">if</span> (level &lt;= WARN) {
       log.w(tag, msg);
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">e</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">tag</span>, <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">msg</span>) {
-    <span style="font-weight: bold;">if</span> (level &lt;= ERROR) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">e</span>(<span class="org-type">String</span> <span class="org-variable-name">tag</span>, <span class="org-type">String</span> <span class="org-variable-name">msg</span>) {
+    <span class="org-keyword">if</span> (level &lt;= ERROR) {
       log.e(tag, msg);
     }
   }
@@ -456,8 +456,8 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 </div>
 </div>
 
-<div id="outline-container-org211f283" class="outline-2">
-<h2 id="org211f283"><span class="section-number-2">4</span> 活动</h2>
+<div id="outline-container-orgdbcd81d" class="outline-2">
+<h2 id="orgdbcd81d"><span class="section-number-2">4</span> 活动</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 活动属于 Android 四大组件之一，相关的内容也很多，想要学习它们的使用可以看官方教程：
@@ -564,8 +564,8 @@ Intent 可以传递实现了 <a href="https://developer.android.google.cn/refere
 </div>
 </div>
 
-<div id="outline-container-org0781a9d" class="outline-2">
-<h2 id="org0781a9d"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
+<div id="outline-container-orga31b6a0" class="outline-2">
+<h2 id="orga31b6a0"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Android 的四大组件为：活动、广播、服务和内容提供器，除了活动以外，另外三大组件都只是简单的学习了一下，
@@ -610,8 +610,8 @@ Android 的四大组件为：活动、广播、服务和内容提供器，除了
 </div>
 </div>
 
-<div id="outline-container-org12d78d6" class="outline-2">
-<h2 id="org12d78d6"><span class="section-number-2">6</span> 数据持久化</h2>
+<div id="outline-container-org67a550d" class="outline-2">
+<h2 id="org67a550d"><span class="section-number-2">6</span> 数据持久化</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库中，并提供了相应的，简洁的接口。
@@ -630,8 +630,8 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org2ff49da" class="outline-2">
-<h2 id="org2ff49da"><span class="section-number-2">7</span> 权限问题</h2>
+<div id="outline-container-org2a0f472" class="outline-2">
+<h2 id="org2a0f472"><span class="section-number-2">7</span> 权限问题</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 编写 Android 问题避不开的一个问题就是权限的获取，对于危险的权限来说，除了需要在 <code>AndroidManifest.xml</code> 中声明以外，
@@ -659,8 +659,8 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org3042141" class="outline-2">
-<h2 id="org3042141"><span class="section-number-2">8</span> 后记</h2>
+<div id="outline-container-org4192e56" class="outline-2">
+<h2 id="org4192e56"><span class="section-number-2">8</span> 后记</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Android 的内容是很多的，单靠一篇博客就想写完是不可能的，这里也只是拎了一些印象比较深的的内容出来总结。

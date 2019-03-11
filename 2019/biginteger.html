@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-02-10 周日 11:52 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>大数的简单实现</title>
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org001c3d7">1. 前言</a></li>
-<li><a href="#org81d2190">2. 字符数组的本质</a></li>
-<li><a href="#org6bb3c05">3. 整数数组与 1000000000 进制</a></li>
-<li><a href="#org58229ff">4. 小端模式存储</a></li>
-<li><a href="#org1a44f7a">5. 和 10 进制字符串之间的转换</a></li>
-<li><a href="#orgc9bbfd0">6. 大数加法</a></li>
-<li><a href="#org3521ee6">7. 大数乘法</a></li>
-<li><a href="#org8825e26">8. 结语</a></li>
-<li><a href="#orgad936d0">9. 参考链接</a></li>
+<li><a href="#org676e301">1. 前言</a></li>
+<li><a href="#orgb95afd3">2. 字符数组的本质</a></li>
+<li><a href="#org1e87be1">3. 整数数组与 1000000000 进制</a></li>
+<li><a href="#org44ecb98">4. 小端模式存储</a></li>
+<li><a href="#org1176f03">5. 和 10 进制字符串之间的转换</a></li>
+<li><a href="#org477b00c">6. 大数加法</a></li>
+<li><a href="#orgf3ae3c6">7. 大数乘法</a></li>
+<li><a href="#orgb3e509e">8. 结语</a></li>
+<li><a href="#orga70d515">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org001c3d7" class="outline-2">
-<h2 id="org001c3d7"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org676e301" class="outline-2">
+<h2 id="org676e301"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 <b>大数加法</b> 的实现，
@@ -277,8 +277,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org81d2190" class="outline-2">
-<h2 id="org81d2190"><span class="section-number-2">2</span> 字符数组的本质</h2>
+<div id="outline-container-orgb95afd3" class="outline-2">
+<h2 id="orgb95afd3"><span class="section-number-2">2</span> 字符数组的本质</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通过字符数组表示大数的本质是什么，比如像这样一个字符数组：
@@ -310,8 +310,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6bb3c05" class="outline-2">
-<h2 id="org6bb3c05"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
+<div id="outline-container-org1e87be1" class="outline-2">
+<h2 id="org1e87be1"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 通过前面的思考，我们可以发现，通过 <b>字符数组</b> 来实现大数的方式其实就是：
@@ -380,15 +380,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org58229ff" class="outline-2">
-<h2 id="org58229ff"><span class="section-number-2">4</span> 小端模式存储</h2>
+<div id="outline-container-org44ecb98" class="outline-2">
+<h2 id="org44ecb98"><span class="section-number-2">4</span> 小端模式存储</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我们选择了整数数组和 1000000000 进制实现大数，其中，整数数组的每个元素最多存储 9 位十进制数字：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">private</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">BASE</span> = 1000000000;
-<span style="font-weight: bold;">private</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">BASE_DECIMAL_DIGITS</span> = 9;
+<pre class="src src-java"><span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">int</span> <span class="org-variable-name">BASE</span> = 1000000000;
+<span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">int</span> <span class="org-variable-name">BASE_DECIMAL_DIGITS</span> = 9;
 </pre>
 </div>
 
@@ -401,23 +401,23 @@ for the JavaScript code in this tag.
 阅读方面可以选择通过直接将大数打印为十进制字符串，因此，这里选择小端的存储模式：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-style: italic;">/**</span>
-<span style="font-style: italic;"> * Create large numbers based on small endian integer arrays</span>
-<span style="font-style: italic;"> *</span>
-<span style="font-style: italic;"> * Array [999999999, 1] representing large numbers 1999999999</span>
-<span style="font-style: italic;"> *</span>
-<span style="font-style: italic;"> * NOTE: The range of values &#8203;&#8203;for each element of the array is [0, 999999999]</span>
-<span style="font-style: italic;"> */</span>
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">BigInteger</span>(<span style="font-weight: bold; text-decoration: underline;">int</span>... <span style="font-weight: bold; font-style: italic;">digits</span>) {
-  <span style="font-weight: bold;">if</span> (digits.length &gt; 0) {
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">digit</span> : digits) {
-      <span style="font-weight: bold;">if</span> (digit &lt; 0 || digit &gt;= BASE) {
-        <span style="font-weight: bold;">throw</span> <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">IllegalArgumentException</span>(String.format(<span style="font-style: italic;">"Digit %d out of range !"</span>, digit));
+<pre class="src src-java"><span class="org-doc">/**</span>
+<span class="org-doc"> * Create large numbers based on small endian integer arrays</span>
+<span class="org-doc"> *</span>
+<span class="org-doc"> * Array [999999999, 1] representing large numbers 1999999999</span>
+<span class="org-doc"> *</span>
+<span class="org-doc"> * NOTE: The range of values &#8203;&#8203;for each element of the array is [0, 999999999]</span>
+<span class="org-doc"> */</span>
+<span class="org-keyword">public</span> <span class="org-function-name">BigInteger</span>(<span class="org-type">int</span>... <span class="org-variable-name">digits</span>) {
+  <span class="org-keyword">if</span> (digits.length &gt; 0) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">digit</span> : digits) {
+      <span class="org-keyword">if</span> (digit &lt; 0 || digit &gt;= BASE) {
+        <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">IllegalArgumentException</span>(String.format(<span class="org-string">"Digit %d out of range !"</span>, digit));
       }
     }
-    <span style="font-weight: bold;">this</span>.digits = digits.clone();
-  } <span style="font-weight: bold;">else</span> {
-    <span style="font-weight: bold;">this</span>.digits = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">int</span>[] {0};
+    <span class="org-keyword">this</span>.digits = digits.clone();
+  } <span class="org-keyword">else</span> {
+    <span class="org-keyword">this</span>.digits = <span class="org-keyword">new</span> <span class="org-type">int</span>[] {0};
   }
 }
 </pre>
@@ -425,27 +425,27 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1a44f7a" class="outline-2">
-<h2 id="org1a44f7a"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
+<div id="outline-container-org1176f03" class="outline-2">
+<h2 id="org1176f03"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 将 10 进制字符串转换为 1000000000 进制的整数数组时，只需要按 9 个数字一组的方式分割原字符串就可以了：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-style: italic;">/**</span>
-<span style="font-style: italic;"> * Create large numbers based on decimal strings</span>
-<span style="font-style: italic;"> */</span>
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">BigInteger</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">digitsString</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">stringLength</span> = digitsString.length();
-  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Array size required to store large numbers, equal ceil(digitsLength / BASE_DECIMAL_DIGITS)</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">digitsLength</span> = (stringLength - 1) / BASE_DECIMAL_DIGITS + 1;
-  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Length of the large number of heads</span>
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">head</span> = stringLength % BASE_DECIMAL_DIGITS;
+<pre class="src src-java"><span class="org-doc">/**</span>
+<span class="org-doc"> * Create large numbers based on decimal strings</span>
+<span class="org-doc"> */</span>
+<span class="org-keyword">public</span> <span class="org-function-name">BigInteger</span>(<span class="org-type">String</span> <span class="org-variable-name">digitsString</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">stringLength</span> = digitsString.length();
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Array size required to store large numbers, equal ceil(digitsLength / BASE_DECIMAL_DIGITS)</span>
+  <span class="org-type">int</span> <span class="org-variable-name">digitsLength</span> = (stringLength - 1) / BASE_DECIMAL_DIGITS + 1;
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Length of the large number of heads</span>
+  <span class="org-type">int</span> <span class="org-variable-name">head</span> = stringLength % BASE_DECIMAL_DIGITS;
 
-  <span style="font-weight: bold;">this</span>.digits = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">int</span>[digitsLength];
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; <span style="font-weight: bold; text-decoration: underline;">digitsLength</span>; ++i) {
-    <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">block</span> = digitsString.substring(Math.max(head + (i - 1) * BASE_DECIMAL_DIGITS, 0), head + i * BASE_DECIMAL_DIGITS);
-    <span style="font-weight: bold;">this</span>.digits[digitsLength - i - 1] = Integer.parseInt(block);
+  <span class="org-keyword">this</span>.digits = <span class="org-keyword">new</span> <span class="org-type">int</span>[digitsLength];
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; <span class="org-type">digitsLength</span>; ++i) {
+    <span class="org-type">String</span> <span class="org-variable-name">block</span> = digitsString.substring(Math.max(head + (i - 1) * BASE_DECIMAL_DIGITS, 0), head + i * BASE_DECIMAL_DIGITS);
+    <span class="org-keyword">this</span>.digits[digitsLength - i - 1] = Integer.parseInt(block);
   }
 }
 </pre>
@@ -455,16 +455,16 @@ for the JavaScript code in this tag.
 而将 1000000000 进制的整数数组转换为 10 进制字符串也可以通过格式化字符串简单实现：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BigInteger</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold;">toString</span>() {
-    <span style="font-weight: bold; text-decoration: underline;">Formatter</span> <span style="font-weight: bold; font-style: italic;">formatter</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Formatter</span>();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">BigInteger</span> {
+  <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+    <span class="org-type">Formatter</span> <span class="org-variable-name">formatter</span> = <span class="org-keyword">new</span> <span class="org-type">Formatter</span>();
 
-    formatter.format(<span style="font-style: italic;">"%d"</span>, digits[digits.length - 1]);
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = digits.length - 2; i &gt;= 0; --i) {
-      formatter.format(<span style="font-style: italic;">"%09d"</span>, digits[i]);
+    formatter.format(<span class="org-string">"%d"</span>, digits[digits.length - 1]);
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = digits.length - 2; i &gt;= 0; --i) {
+      formatter.format(<span class="org-string">"%09d"</span>, digits[i]);
     }
 
-    <span style="font-weight: bold;">return</span> formatter.toString();
+    <span class="org-keyword">return</span> formatter.toString();
   }
 </pre>
 </div>
@@ -473,8 +473,8 @@ for the JavaScript code in this tag.
 效果：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> BigInteger
-&gt;&gt;&gt; BigInteger(<span style="font-style: italic;">"1234684654687654354896735454"</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">import</span> BigInteger
+&gt;&gt;&gt; BigInteger(<span class="org-string">"1234684654687654354896735454"</span>)
 1234684654687654354896735454
 </pre>
 </div>
@@ -485,37 +485,37 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc9bbfd0" class="outline-2">
-<h2 id="orgc9bbfd0"><span class="section-number-2">6</span> 大数加法</h2>
+<div id="outline-container-org477b00c" class="outline-2">
+<h2 id="org477b00c"><span class="section-number-2">6</span> 大数加法</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 整数数组的大数加法和字符数组的大数加法在实现上是差不多的，所有就直接上代码好了：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BigInteger</span> <span style="font-weight: bold;">plus</span>(<span style="font-weight: bold; text-decoration: underline;">BigInteger</span> <span style="font-weight: bold; font-style: italic;">other</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span>[] <span style="font-weight: bold; font-style: italic;">result</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">int</span>[Math.max(<span style="font-weight: bold;">this</span>.digits.length, other.digits.length) + 1];
-  System.arraycopy(<span style="font-weight: bold;">this</span>.digits, 0, result, 0, <span style="font-weight: bold;">this</span>.digits.length);
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-type">BigInteger</span> <span class="org-function-name">plus</span>(<span class="org-type">BigInteger</span> <span class="org-variable-name">other</span>) {
+  <span class="org-type">int</span>[] <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">int</span>[Math.max(<span class="org-keyword">this</span>.digits.length, other.digits.length) + 1];
+  System.arraycopy(<span class="org-keyword">this</span>.digits, 0, result, 0, <span class="org-keyword">this</span>.digits.length);
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">carry</span> = 0;
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; other.digits.<span style="font-weight: bold; text-decoration: underline;">length</span>; ++i) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = carry + result[i] + other.digits[i];
+  <span class="org-type">int</span> <span class="org-variable-name">carry</span> = 0;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; other.digits.<span class="org-type">length</span>; ++i) {
+    <span class="org-type">int</span> <span class="org-variable-name">sum</span> = carry + result[i] + other.digits[i];
     result[i] = sum % BASE;
     carry = sum / BASE;
   }
 
-  <span style="font-weight: bold;">if</span> (carry != 0) {
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = other.digits.length; i &lt; result.<span style="font-weight: bold; text-decoration: underline;">length</span> &amp;&amp; carry != 0; ++i) {
-      <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = carry + result[i];
+  <span class="org-keyword">if</span> (carry != 0) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = other.digits.length; i &lt; result.<span class="org-type">length</span> &amp;&amp; carry != 0; ++i) {
+      <span class="org-type">int</span> <span class="org-variable-name">sum</span> = carry + result[i];
       result[i] = sum % BASE;
       carry = sum / BASE;
     }
   }
 
-  <span style="font-weight: bold;">if</span> (result[result.length - 1] == 0) {
+  <span class="org-keyword">if</span> (result[result.length - 1] == 0) {
     result = Arrays.copyOfRange(result, 0, result.length - 1);
   }
 
-  <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">BigInteger</span>(result);
+  <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">BigInteger</span>(result);
 }
 </pre>
 </div>
@@ -524,8 +524,8 @@ for the JavaScript code in this tag.
 测试：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">a</span> = BigInteger(<span style="font-style: italic;">"999999999999999999999999999999999999999999"</span>)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">b</span> = BigInteger(<span style="font-style: italic;">"111111111111111111111111111111111111111111"</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">a</span> = BigInteger(<span class="org-string">"999999999999999999999999999999999999999999"</span>)
+&gt;&gt;&gt; <span class="org-variable-name">b</span> = BigInteger(<span class="org-string">"111111111111111111111111111111111111111111"</span>)
 &gt;&gt;&gt; a.plus(b)
 1111111111111111111111111111111111111111110
 </pre>
@@ -533,8 +533,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3521ee6" class="outline-2">
-<h2 id="org3521ee6"><span class="section-number-2">7</span> 大数乘法</h2>
+<div id="outline-container-orgf3ae3c6" class="outline-2">
+<h2 id="orgf3ae3c6"><span class="section-number-2">7</span> 大数乘法</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 大数乘法我们可以借助 <b>long</b> 数组来辅助实现，因为，这样就不需要担心两个 <b>int</b> 相乘的溢出问题了，
@@ -542,36 +542,36 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BigInteger</span> <span style="font-weight: bold;">mul</span>(<span style="font-weight: bold; text-decoration: underline;">BigInteger</span> <span style="font-weight: bold; font-style: italic;">other</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">long</span>[] <span style="font-weight: bold; font-style: italic;">temp</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">long</span>[<span style="font-weight: bold;">this</span>.digits.length + other.digits.length];
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-type">BigInteger</span> <span class="org-function-name">mul</span>(<span class="org-type">BigInteger</span> <span class="org-variable-name">other</span>) {
+  <span class="org-type">long</span>[] <span class="org-variable-name">temp</span> = <span class="org-keyword">new</span> <span class="org-type">long</span>[<span class="org-keyword">this</span>.digits.length + other.digits.length];
 
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; <span style="font-weight: bold;">this</span>.digits.length; ++i) {
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">j</span> = 0; j &lt; other.digits.<span style="font-weight: bold; text-decoration: underline;">length</span>; ++j) {
-      temp[i + j] += (<span style="font-weight: bold; text-decoration: underline;">long</span>) <span style="font-weight: bold;">this</span>.digits[i] * (<span style="font-weight: bold; text-decoration: underline;">long</span>) other.digits[j];
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; <span class="org-keyword">this</span>.digits.length; ++i) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">j</span> = 0; j &lt; other.digits.<span class="org-type">length</span>; ++j) {
+      temp[i + j] += (<span class="org-type">long</span>) <span class="org-keyword">this</span>.digits[i] * (<span class="org-type">long</span>) other.digits[j];
     }
   }
 
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; temp.<span style="font-weight: bold; text-decoration: underline;">length</span>; ++i) {
-    <span style="font-weight: bold;">if</span> (temp[i] &gt;= BASE) {
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; temp.<span class="org-type">length</span>; ++i) {
+    <span class="org-keyword">if</span> (temp[i] &gt;= BASE) {
       temp[i + 1] += temp[i] / BASE;
       temp[i] = temp[i] % BASE;
     }
   }
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">zeroCount</span> = 0;
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = temp.length - 1; i &gt;= 0; --i) {
-    <span style="font-weight: bold;">if</span> (temp[i] &gt; 0) {
-      <span style="font-weight: bold;">break</span>;
+  <span class="org-type">int</span> <span class="org-variable-name">zeroCount</span> = 0;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = temp.length - 1; i &gt;= 0; --i) {
+    <span class="org-keyword">if</span> (temp[i] &gt; 0) {
+      <span class="org-keyword">break</span>;
     }
     zeroCount++;
   }
 
-  <span style="font-weight: bold; text-decoration: underline;">int</span>[] <span style="font-weight: bold; font-style: italic;">result</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">int</span>[temp.length - zeroCount];
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; result.<span style="font-weight: bold; text-decoration: underline;">length</span>; ++i) {
-    result[i] = (<span style="font-weight: bold; text-decoration: underline;">int</span>) temp[i];
+  <span class="org-type">int</span>[] <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">int</span>[temp.length - zeroCount];
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; result.<span class="org-type">length</span>; ++i) {
+    result[i] = (<span class="org-type">int</span>) temp[i];
   }
 
-  <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">BigInteger</span>(result);
+  <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">BigInteger</span>(result);
 }
 </pre>
 </div>
@@ -580,8 +580,8 @@ for the JavaScript code in this tag.
 测试：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">a</span> = BigInteger(<span style="font-style: italic;">"999999999999999999999999999999999999999999"</span>)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">b</span> = BigInteger(<span style="font-style: italic;">"111111111111111111111111111111111111111111"</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">a</span> = BigInteger(<span class="org-string">"999999999999999999999999999999999999999999"</span>)
+&gt;&gt;&gt; <span class="org-variable-name">b</span> = BigInteger(<span class="org-string">"111111111111111111111111111111111111111111"</span>)
 &gt;&gt;&gt; a.mul(b)
 111111111111111111111111111111111111111110888888888888888888888888888888888888888889
 </pre>
@@ -589,8 +589,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8825e26" class="outline-2">
-<h2 id="org8825e26"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-orgb3e509e" class="outline-2">
+<h2 id="orgb3e509e"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，
@@ -616,8 +616,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgad936d0" class="outline-2">
-<h2 id="orgad936d0"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-orga70d515" class="outline-2">
+<h2 id="orga70d515"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.pediy.com/kssd/pediy05/pediy50664.htm">RSA 与大数运算</a></li>

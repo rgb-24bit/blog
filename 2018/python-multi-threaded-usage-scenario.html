@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 多线程使用场景</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf95c3f6">1. 前言</a></li>
-<li><a href="#org6996605">2. GIL</a></li>
-<li><a href="#org066e2cd">3. 线程切换</a></li>
-<li><a href="#org72ce6de">4. I/O 操作</a></li>
-<li><a href="#org3977954">5. 使用场景</a></li>
-<li><a href="#org1e755d8">6. 结语</a></li>
-<li><a href="#orgb4c18d6">7. 参考链接</a></li>
+<li><a href="#orgd53b545">1. 前言</a></li>
+<li><a href="#orgf978bb1">2. GIL</a></li>
+<li><a href="#org42db36b">3. 线程切换</a></li>
+<li><a href="#org3ec5e6f">4. I/O 操作</a></li>
+<li><a href="#org33fac4c">5. 使用场景</a></li>
+<li><a href="#orgcc94b5b">6. 结语</a></li>
+<li><a href="#org16c7cee">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf95c3f6" class="outline-2">
-<h2 id="orgf95c3f6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd53b545" class="outline-2">
+<h2 id="orgd53b545"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 当初在学习 <code>Python</code> 多线程的时候就了解到： 由于 <code>GIL</code> 的原因， <code>Python</code> 解释器只允许同一时间执行一个线程。
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6996605" class="outline-2">
-<h2 id="org6996605"><span class="section-number-2">2</span> GIL</h2>
+<div id="outline-container-orgf978bb1" class="outline-2">
+<h2 id="orgf978bb1"><span class="section-number-2">2</span> GIL</h2>
 <div class="outline-text-2" id="text-2">
 <blockquote>
 <p>
@@ -289,8 +289,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org066e2cd" class="outline-2">
-<h2 id="org066e2cd"><span class="section-number-2">3</span> 线程切换</h2>
+<div id="outline-container-org42db36b" class="outline-2">
+<h2 id="org42db36b"><span class="section-number-2">3</span> 线程切换</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>线程切换</b> 会带来不小的开销，频繁的线程切换会造成资源的浪费。但是在其他环境中，
@@ -315,8 +315,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org72ce6de" class="outline-2">
-<h2 id="org72ce6de"><span class="section-number-2">4</span> I/O 操作</h2>
+<div id="outline-container-org3ec5e6f" class="outline-2">
+<h2 id="org3ec5e6f"><span class="section-number-2">4</span> I/O 操作</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 曾经，我以为 <code>I/O</code> 操作也是由 <code>CPU</code> 完成的，程序执行 <code>I/O</code> 操作的时候就是 <code>CPU</code> 不断执行神奇的指令从磁盘读写数据。
@@ -340,8 +340,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3977954" class="outline-2">
-<h2 id="org3977954"><span class="section-number-2">5</span> 使用场景</h2>
+<div id="outline-container-org33fac4c" class="outline-2">
+<h2 id="org33fac4c"><span class="section-number-2">5</span> 使用场景</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 到了这里， <code>Python</code> 多线程的使用场景就很明了了。
@@ -370,8 +370,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1e755d8" class="outline-2">
-<h2 id="org1e755d8"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgcc94b5b" class="outline-2">
+<h2 id="orgcc94b5b"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 的多线程适合用在什么地方，晚上早就有很多的讨论了，结论也早已存在。
@@ -391,8 +391,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb4c18d6" class="outline-2">
-<h2 id="orgb4c18d6"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org16c7cee" class="outline-2">
+<h2 id="org16c7cee"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://zh.wikipedia.org/wiki/%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81">全局解释器锁</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 容器</title>
@@ -246,47 +246,47 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org86ea248">1. 简介</a></li>
-<li><a href="#orgcd145e2">2. Python2 &amp; Python3</a>
+<li><a href="#orge764233">1. 简介</a></li>
+<li><a href="#org6f49af4">2. Python2 &amp; Python3</a>
 <ul>
-<li><a href="#org1c7f23f">2.1. Counter</a>
+<li><a href="#orga5b0974">2.1. Counter</a>
 <ul>
-<li><a href="#org02c6266">2.1.1. 方法</a></li>
+<li><a href="#org5842e9a">2.1.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#orgf92513a">2.2. deque</a>
+<li><a href="#org2910b1c">2.2. deque</a>
 <ul>
-<li><a href="#org489c101">2.2.1. 方法</a></li>
-<li><a href="#org3d5f026">2.2.2. 属性</a></li>
+<li><a href="#org279362c">2.2.1. 方法</a></li>
+<li><a href="#org78e07ca">2.2.2. 属性</a></li>
 </ul>
 </li>
-<li><a href="#org0567bb3">2.3. defaultdict</a></li>
-<li><a href="#org211a4d1">2.4. namedtuple</a></li>
-<li><a href="#orgb524b71">2.5. OrderedDict</a>
+<li><a href="#orge3bc0db">2.3. defaultdict</a></li>
+<li><a href="#orgca68cc1">2.4. namedtuple</a></li>
+<li><a href="#orga51fa3c">2.5. OrderedDict</a>
 <ul>
-<li><a href="#orgeaade84">2.5.1. 方法</a></li>
+<li><a href="#org50dd331">2.5.1. 方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org65293c0">3. Python3</a>
+<li><a href="#org689f781">3. Python3</a>
 <ul>
-<li><a href="#orgcb8b920">3.1. ChainMap</a>
+<li><a href="#org29bde8a">3.1. ChainMap</a>
 <ul>
-<li><a href="#org521de44">3.1.1. 方法</a></li>
-<li><a href="#org5cdee4a">3.1.2. 属性</a></li>
+<li><a href="#org443a161">3.1.1. 方法</a></li>
+<li><a href="#orgfb46e3c">3.1.2. 属性</a></li>
 </ul>
 </li>
-<li><a href="#org76266ab">3.2. Other</a></li>
+<li><a href="#org1bcf920">3.2. Other</a></li>
 </ul>
 </li>
-<li><a href="#org5ff671a">4. 相关链接</a></li>
+<li><a href="#org1feb0e9">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org86ea248" class="outline-2">
-<h2 id="org86ea248"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orge764233" class="outline-2">
+<h2 id="orge764233"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 的内置模块 <code>collections</code> 提供了通用内置容器 <code>dict</code>, <code>list</code>, <code>set</code>, <code>tuple</code> 的替代方案。
@@ -302,12 +302,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcd145e2" class="outline-2">
-<h2 id="orgcd145e2"><span class="section-number-2">2</span> Python2 &amp; Python3</h2>
+<div id="outline-container-org6f49af4" class="outline-2">
+<h2 id="org6f49af4"><span class="section-number-2">2</span> Python2 &amp; Python3</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org1c7f23f" class="outline-3">
-<h3 id="org1c7f23f"><span class="section-number-3">2.1</span> Counter</h3>
+<div id="outline-container-orga5b0974" class="outline-3">
+<h3 id="orga5b0974"><span class="section-number-3">2.1</span> Counter</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Counter</code> 提供计数器以支持方便快捷的计数。
@@ -317,7 +317,7 @@ for the JavaScript code in this tag.
 一个例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">lst</span> = [1, 2, 3, 4, 5, 6, 6, 6, 2, 1]
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">lst</span> = [1, 2, 3, 4, 5, 6, 6, 6, 2, 1]
 &gt;&gt;&gt; Counter(lst)
 Counter({6: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 1})
 </pre>
@@ -327,10 +327,10 @@ Counter({6: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 1})
 初始化 <code>Counter</code> 对象：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter()                       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31354;&#30340;&#26032;&#23481;&#22120;</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(<span style="font-style: italic;">'abcdefg'</span>)              <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36890;&#36807;&#19968;&#20010;&#21487;&#36845;&#20195;&#23545;&#35937;&#21021;&#22987;&#21270;</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter({<span style="font-style: italic;">'red'</span>: 4, <span style="font-style: italic;">'blue'</span>: 2})  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36890;&#36807;&#19968;&#20010;&#26144;&#23556;&#23545;&#35937;&#21021;&#22987;&#21270;</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(boy=30, girl=8)         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36890;&#36807;&#20851;&#38190;&#23383;&#21442;&#25968;&#21021;&#22987;&#21270;</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter()                       <span class="org-comment-delimiter"># </span><span class="org-comment">&#31354;&#30340;&#26032;&#23481;&#22120;</span>
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(<span class="org-string">'abcdefg'</span>)              <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807;&#19968;&#20010;&#21487;&#36845;&#20195;&#23545;&#35937;&#21021;&#22987;&#21270;</span>
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter({<span class="org-string">'red'</span>: 4, <span class="org-string">'blue'</span>: 2})  <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807;&#19968;&#20010;&#26144;&#23556;&#23545;&#35937;&#21021;&#22987;&#21270;</span>
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(boy=30, girl=8)         <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807;&#20851;&#38190;&#23383;&#21442;&#25968;&#21021;&#22987;&#21270;</span>
 </pre>
 </div>
 
@@ -338,18 +338,18 @@ Counter({6: 3, 1: 2, 2: 2, 3: 1, 4: 1, 5: 1})
 和 <code>dict</code> 的一个不同：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#19981;&#23384;&#22312;&#30340;&#38190;&#26102;&#65292; &#19981;&#26159;&#24341;&#21457; KeyError, &#32780;&#26159;&#36820;&#22238;&#19968;&#20010; 0 &#35745;&#25968;</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter([<span style="font-style: italic;">'girl'</span>, <span style="font-style: italic;">'boy'</span>])
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#35775;&#38382;&#19981;&#23384;&#22312;&#30340;&#38190;&#26102;&#65292; &#19981;&#26159;&#24341;&#21457; KeyError, &#32780;&#26159;&#36820;&#22238;&#19968;&#20010; 0 &#35745;&#25968;</span>
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter([<span class="org-string">'girl'</span>, <span class="org-string">'boy'</span>])
 &gt;&gt;&gt; c
-Counter({<span style="font-style: italic;">'boy'</span>: 1, <span style="font-style: italic;">'girl'</span>: 1})
-&gt;&gt;&gt; c[<span style="font-style: italic;">'nogirl'</span>]
+Counter({<span class="org-string">'boy'</span>: 1, <span class="org-string">'girl'</span>: 1})
+&gt;&gt;&gt; c[<span class="org-string">'nogirl'</span>]
 0
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org02c6266" class="outline-4">
-<h4 id="org02c6266"><span class="section-number-4">2.1.1</span> 方法</h4>
+<div id="outline-container-org5842e9a" class="outline-4">
+<h4 id="org5842e9a"><span class="section-number-4">2.1.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <dl class="org-dl">
 <dt>elements()</dt><dd><p>
@@ -357,9 +357,9 @@ Counter({<span style="font-style: italic;">'boy'</span>: 1, <span style="font-st
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(a=4, b=2, c=0, d=-2)
-&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(c.elements())
-[<span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'a'</span>, <span style="font-style: italic;">'b'</span>, <span style="font-style: italic;">'b'</span>]
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(a=4, b=2, c=0, d=-2)
+&gt;&gt;&gt; <span class="org-builtin">list</span>(c.elements())
+[<span class="org-string">'a'</span>, <span class="org-string">'a'</span>, <span class="org-string">'a'</span>, <span class="org-string">'a'</span>, <span class="org-string">'b'</span>, <span class="org-string">'b'</span>]
 </pre>
 </div></dd>
 
@@ -368,8 +368,8 @@ Counter({<span style="font-style: italic;">'boy'</span>: 1, <span style="font-st
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; Counter(<span style="font-style: italic;">'abracadabra'</span>).most_common(3)
-[(<span style="font-style: italic;">'a'</span>, 5), (<span style="font-style: italic;">'r'</span>, 2), (<span style="font-style: italic;">'b'</span>, 2)]
+<pre class="src src-python">&gt;&gt;&gt; Counter(<span class="org-string">'abracadabra'</span>).most_common(3)
+[(<span class="org-string">'a'</span>, 5), (<span class="org-string">'r'</span>, 2), (<span class="org-string">'b'</span>, 2)]
 </pre>
 </div></dd>
 
@@ -378,11 +378,11 @@ Counter({<span style="font-style: italic;">'boy'</span>: 1, <span style="font-st
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(a=4, b=2, c=0, d=-2)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = Counter(a=1, b=2, c=3, d=4)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(a=4, b=2, c=0, d=-2)
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = Counter(a=1, b=2, c=3, d=4)
 &gt;&gt;&gt; c.subtract(d)
 &gt;&gt;&gt; c
-Counter({<span style="font-style: italic;">'a'</span>: 3, <span style="font-style: italic;">'b'</span>: 0, <span style="font-style: italic;">'c'</span>: -3, <span style="font-style: italic;">'d'</span>: -6})
+Counter({<span class="org-string">'a'</span>: 3, <span class="org-string">'b'</span>: 0, <span class="org-string">'c'</span>: -3, <span class="org-string">'d'</span>: -6})
 </pre>
 </div></dd>
 
@@ -391,32 +391,32 @@ Counter({<span style="font-style: italic;">'a'</span>: 3, <span style="font-styl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(a=4, b=2, c=0, d=-2)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = Counter(a=1, b=2, c=3, d=4)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(a=4, b=2, c=0, d=-2)
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = Counter(a=1, b=2, c=3, d=4)
 &gt;&gt;&gt; c.update(d)
 &gt;&gt;&gt; c
-Counter({<span style="font-style: italic;">'a'</span>: 5, <span style="font-style: italic;">'b'</span>: 4, <span style="font-style: italic;">'c'</span>: 3, <span style="font-style: italic;">'d'</span>: 2})
+Counter({<span class="org-string">'a'</span>: 5, <span class="org-string">'b'</span>: 4, <span class="org-string">'c'</span>: 3, <span class="org-string">'d'</span>: 2})
 </pre>
 </div></dd>
 
 <dt>数学运算</dt><dd><div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(a=3, b=1)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = Counter(a=1, b=2)
-&gt;&gt;&gt; c + d                       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">add two counters together:  c[x] + d[x]</span>
-Counter({<span style="font-style: italic;">'a'</span>: 4, <span style="font-style: italic;">'b'</span>: 3})
-&gt;&gt;&gt; c - d                       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">subtract (keeping only positive counts)</span>
-Counter({<span style="font-style: italic;">'a'</span>: 2})
-&gt;&gt;&gt; c &amp; d                       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">intersection:  min(c[x], d[x])</span>
-Counter({<span style="font-style: italic;">'a'</span>: 1, <span style="font-style: italic;">'b'</span>: 1})
-&gt;&gt;&gt; c | d                       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">union:  max(c[x], d[x])</span>
-Counter({<span style="font-style: italic;">'a'</span>: 3, <span style="font-style: italic;">'b'</span>: 2})
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(a=3, b=1)
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = Counter(a=1, b=2)
+&gt;&gt;&gt; c + d                       <span class="org-comment-delimiter"># </span><span class="org-comment">add two counters together:  c[x] + d[x]</span>
+Counter({<span class="org-string">'a'</span>: 4, <span class="org-string">'b'</span>: 3})
+&gt;&gt;&gt; c - d                       <span class="org-comment-delimiter"># </span><span class="org-comment">subtract (keeping only positive counts)</span>
+Counter({<span class="org-string">'a'</span>: 2})
+&gt;&gt;&gt; c &amp; d                       <span class="org-comment-delimiter"># </span><span class="org-comment">intersection:  min(c[x], d[x])</span>
+Counter({<span class="org-string">'a'</span>: 1, <span class="org-string">'b'</span>: 1})
+&gt;&gt;&gt; c | d                       <span class="org-comment-delimiter"># </span><span class="org-comment">union:  max(c[x], d[x])</span>
+Counter({<span class="org-string">'a'</span>: 3, <span class="org-string">'b'</span>: 2})
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Python3 &#36824;&#25903;&#25345;</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = Counter(a=2, b=-4)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Python3 &#36824;&#25903;&#25345;</span>
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = Counter(a=2, b=-4)
 &gt;&gt;&gt; +c
-Counter({<span style="font-style: italic;">'a'</span>: 2})
+Counter({<span class="org-string">'a'</span>: 2})
 &gt;&gt;&gt; -c
-Counter({<span style="font-style: italic;">'b'</span>: 4})
+Counter({<span class="org-string">'b'</span>: 4})
 </pre>
 </div></dd>
 </dl>
@@ -424,8 +424,8 @@ Counter({<span style="font-style: italic;">'b'</span>: 4})
 </div>
 </div>
 
-<div id="outline-container-orgf92513a" class="outline-3">
-<h3 id="orgf92513a"><span class="section-number-3">2.2</span> deque</h3>
+<div id="outline-container-org2910b1c" class="outline-3">
+<h3 id="org2910b1c"><span class="section-number-3">2.2</span> deque</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>deque</code> 是提供快速追加和两端弹出的类列表容器。
@@ -435,13 +435,13 @@ Counter({<span style="font-style: italic;">'b'</span>: 4})
 初始化 <code>deque</code> 对象：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">deque([iterable[, maxlen]]) --&gt; deque object</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">param: iterable --&gt; &#21487;&#36845;&#20195;&#23545;&#35937;</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">param: maxlen --&gt; &#23450;&#20041; deque &#30340;&#26368;&#22823;&#38271;&#24230;</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#22914;&#26524; maxlen &#20026; None, deque &#21487;&#22686;&#38271;&#21040;&#20219;&#24847;&#38271;&#24230;</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#22914;&#26524; maxlen &#19981;&#20026; None, &#22312; deque &#36798;&#21040;&#26368;&#22823;&#38271;&#24230;&#26102;&#65292; &#28155;&#21152;&#20803;&#32032;&#30340;&#21516;&#26102;&#20174;&#23545;&#31471;&#21024;&#38500;&#30456;&#21516;&#25968;&#37327;&#30340;&#20803;&#32032;</span>
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">deque([iterable[, maxlen]]) --&gt; deque object</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">param: iterable --&gt; &#21487;&#36845;&#20195;&#23545;&#35937;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">param: maxlen --&gt; &#23450;&#20041; deque &#30340;&#26368;&#22823;&#38271;&#24230;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524; maxlen &#20026; None, deque &#21487;&#22686;&#38271;&#21040;&#20219;&#24847;&#38271;&#24230;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524; maxlen &#19981;&#20026; None, &#22312; deque &#36798;&#21040;&#26368;&#22823;&#38271;&#24230;&#26102;&#65292; &#28155;&#21152;&#20803;&#32032;&#30340;&#21516;&#26102;&#20174;&#23545;&#31471;&#21024;&#38500;&#30456;&#21516;&#25968;&#37327;&#30340;&#20803;&#32032;</span>
 
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = deque([1,2,3,4,5,6,7,8,9], maxlen=10)
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = deque([1,2,3,4,5,6,7,8,9], maxlen=10)
 &gt;&gt;&gt; d.append(10)
 &gt;&gt;&gt; d
 deque([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], maxlen=10)
@@ -452,8 +452,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-org489c101" class="outline-4">
-<h4 id="org489c101"><span class="section-number-4">2.2.1</span> 方法</h4>
+<div id="outline-container-org279362c" class="outline-4">
+<h4 id="org279362c"><span class="section-number-4">2.2.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <dl class="org-dl">
 <dt>append(x)</dt><dd>添加 <code>x</code> 到右端</dd>
@@ -494,8 +494,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-org3d5f026" class="outline-4">
-<h4 id="org3d5f026"><span class="section-number-4">2.2.2</span> 属性</h4>
+<div id="outline-container-org78e07ca" class="outline-4">
+<h4 id="org78e07ca"><span class="section-number-4">2.2.2</span> 属性</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <dl class="org-dl">
 <dt>maxlen</dt><dd>只读属性， 返回 <code>maxlen</code> 或 <code>None</code></dd>
@@ -504,8 +504,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-org0567bb3" class="outline-3">
-<h3 id="org0567bb3"><span class="section-number-3">2.3</span> defaultdict</h3>
+<div id="outline-container-orge3bc0db" class="outline-3">
+<h3 id="orge3bc0db"><span class="section-number-3">2.3</span> defaultdict</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>defaultdict</code> 是 <code>dict</code> 的一个子类， 覆盖了一个方法并添加了一个可写实例变量。
@@ -544,21 +544,21 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 使用例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'mississippi'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = defaultdict(<span style="font-weight: bold;">int</span>)
-&gt;&gt;&gt; <span style="font-weight: bold;">for</span> k <span style="font-weight: bold;">in</span> s:
-...     <span style="font-weight: bold; font-style: italic;">d</span>[k] += 1  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">dict &#20013;&#20250;&#24341;&#21457; KeyError</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'mississippi'</span>
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = defaultdict(<span class="org-builtin">int</span>)
+&gt;&gt;&gt; <span class="org-keyword">for</span> k <span class="org-keyword">in</span> s:
+...     <span class="org-variable-name">d</span>[k] += 1  <span class="org-comment-delimiter"># </span><span class="org-comment">dict &#20013;&#20250;&#24341;&#21457; KeyError</span>
 ...
-&gt;&gt;&gt; <span style="font-weight: bold;">sorted</span>(d.items())
-[(<span style="font-style: italic;">'i'</span>, 4), (<span style="font-style: italic;">'m'</span>, 1), (<span style="font-style: italic;">'p'</span>, 2), (<span style="font-style: italic;">'s'</span>, 4)]
+&gt;&gt;&gt; <span class="org-builtin">sorted</span>(d.items())
+[(<span class="org-string">'i'</span>, 4), (<span class="org-string">'m'</span>, 1), (<span class="org-string">'p'</span>, 2), (<span class="org-string">'s'</span>, 4)]
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org211a4d1" class="outline-3">
-<h3 id="org211a4d1"><span class="section-number-3">2.4</span> namedtuple</h3>
+<div id="outline-container-orgca68cc1" class="outline-3">
+<h3 id="orgca68cc1"><span class="section-number-3">2.4</span> namedtuple</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>namedtuple</code> 是用于创建具有命名字段的元组子类的工厂函数。
@@ -618,22 +618,22 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">from</span> collections <span style="font-weight: bold;">import</span> namedtuple
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">human</span> = namedtuple(<span style="font-style: italic;">'human'</span>, <span style="font-style: italic;">'name, age, sex'</span>)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">man</span> = human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font-style: italic;">'**'</span>, sex=<span style="font-style: italic;">'&#9794;'</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">from</span> collections <span class="org-keyword">import</span> namedtuple
+&gt;&gt;&gt; <span class="org-variable-name">human</span> = namedtuple(<span class="org-string">'human'</span>, <span class="org-string">'name, age, sex'</span>)
+&gt;&gt;&gt; <span class="org-variable-name">man</span> = human(name=<span class="org-string">'***'</span>, age=<span class="org-string">'**'</span>, sex=<span class="org-string">'&#9794;'</span>)
 &gt;&gt;&gt; man
-human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font-style: italic;">'**'</span>, sex=<span style="font-style: italic;">'&#9794;'</span>)
+human(name=<span class="org-string">'***'</span>, age=<span class="org-string">'**'</span>, sex=<span class="org-string">'&#9794;'</span>)
 &gt;&gt;&gt; man.sex
-<span style="font-style: italic;">'&#9794;'</span>
+<span class="org-string">'&#9794;'</span>
 &gt;&gt;&gt; man[2]
-<span style="font-style: italic;">'&#9794;'</span>
+<span class="org-string">'&#9794;'</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb524b71" class="outline-3">
-<h3 id="orgb524b71"><span class="section-number-3">2.5</span> OrderedDict</h3>
+<div id="outline-container-orga51fa3c" class="outline-3">
+<h3 id="orga51fa3c"><span class="section-number-3">2.5</span> OrderedDict</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <code>OrderedDict</code> 和 <code>Dict</code> 不同的是， 它们会记住元素添加的顺序。
@@ -648,8 +648,8 @@ human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font
 </p>
 </div>
 
-<div id="outline-container-orgeaade84" class="outline-4">
-<h4 id="orgeaade84"><span class="section-number-4">2.5.1</span> 方法</h4>
+<div id="outline-container-org50dd331" class="outline-4">
+<h4 id="org50dd331"><span class="section-number-4">2.5.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <dl class="org-dl">
 <dt>popitem(last=True)</dt><dd>如果 <code>last</code> 为 <code>True</code>, 返回最后的键值对。 如果 <code>last</code> 为 <code>False</code>, 返回最前的键值对</dd>
@@ -660,13 +660,13 @@ human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = OrderedDict.fromkeys(<span style="font-style: italic;">'abcde'</span>)
-&gt;&gt;&gt; d.move_to_end(<span style="font-style: italic;">'b'</span>)
-&gt;&gt;&gt; <span style="font-style: italic;">''</span>.join(d.keys())
-<span style="font-style: italic;">'acdeb'</span>
-&gt;&gt;&gt; d.move_to_end(<span style="font-style: italic;">'b'</span>, last=<span style="font-weight: bold; text-decoration: underline;">False</span>)
-&gt;&gt;&gt; <span style="font-style: italic;">''</span>.join(d.keys())
-<span style="font-style: italic;">'bacde'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">d</span> = OrderedDict.fromkeys(<span class="org-string">'abcde'</span>)
+&gt;&gt;&gt; d.move_to_end(<span class="org-string">'b'</span>)
+&gt;&gt;&gt; <span class="org-string">''</span>.join(d.keys())
+<span class="org-string">'acdeb'</span>
+&gt;&gt;&gt; d.move_to_end(<span class="org-string">'b'</span>, last=<span class="org-constant">False</span>)
+&gt;&gt;&gt; <span class="org-string">''</span>.join(d.keys())
+<span class="org-string">'bacde'</span>
 </pre>
 </div></dd>
 </dl>
@@ -675,12 +675,12 @@ human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font
 </div>
 </div>
 
-<div id="outline-container-org65293c0" class="outline-2">
-<h2 id="org65293c0"><span class="section-number-2">3</span> Python3</h2>
+<div id="outline-container-org689f781" class="outline-2">
+<h2 id="org689f781"><span class="section-number-2">3</span> Python3</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgcb8b920" class="outline-3">
-<h3 id="orgcb8b920"><span class="section-number-3">3.1</span> ChainMap</h3>
+<div id="outline-container-org29bde8a" class="outline-3">
+<h3 id="org29bde8a"><span class="section-number-3">3.1</span> ChainMap</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>ChainMap</code> 可以将多个 <code>dict</code> 或其他映射组合在一起， 这比使用 <code>update</code> 来的快。
@@ -690,14 +690,14 @@ human(name=<span style="font-style: italic;">'***'</span>, age=<span style="font
 <code>ChainMap</code> 初始化：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">ChainMap(*maps)</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">param: maps &#22810;&#20010;&#26144;&#23556;</span>
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">ChainMap(*maps)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">param: maps &#22810;&#20010;&#26144;&#23556;</span>
 
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m1</span> = <span style="font-weight: bold;">dict</span>(a=1)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">m2</span> = <span style="font-weight: bold;">dict</span>(b=2)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = ChainMap(m1, m2)
+&gt;&gt;&gt; <span class="org-variable-name">m1</span> = <span class="org-builtin">dict</span>(a=1)
+&gt;&gt;&gt; <span class="org-variable-name">m2</span> = <span class="org-builtin">dict</span>(b=2)
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = ChainMap(m1, m2)
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'a'</span>: 1}, {<span style="font-style: italic;">'b'</span>: 2})
+ChainMap({<span class="org-string">'a'</span>: 1}, {<span class="org-string">'b'</span>: 2})
 </pre>
 </div>
 
@@ -705,30 +705,30 @@ ChainMap({<span style="font-style: italic;">'a'</span>: 1}, {<span style="font-s
 使用例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = ChainMap(<span style="font-weight: bold;">dict</span>(m=10))
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = ChainMap(<span class="org-builtin">dict</span>(m=10))
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">d</span> = <span style="font-weight: bold;">dict</span>(t=4)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = c.new_child(d)
+ChainMap({<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; <span class="org-variable-name">d</span> = <span class="org-builtin">dict</span>(t=4)
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = c.new_child(d)
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'t'</span>: 4}, {<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; c[<span style="font-style: italic;">'t'</span>]  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#20803;&#32032;</span>
+ChainMap({<span class="org-string">'t'</span>: 4}, {<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; c[<span class="org-string">'t'</span>]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#35775;&#38382;&#20803;&#32032;</span>
 4
 &gt;&gt;&gt; c.maps
-[{<span style="font-style: italic;">'t'</span>: 4}, {<span style="font-style: italic;">'m'</span>: 10}]
+[{<span class="org-string">'t'</span>: 4}, {<span class="org-string">'m'</span>: 10}]
 &gt;&gt;&gt; c.parents
-ChainMap({<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = c.new_child(<span style="font-weight: bold;">dict</span>(m=1))
+ChainMap({<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = c.new_child(<span class="org-builtin">dict</span>(m=1))
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'m'</span>: 1}, {<span style="font-style: italic;">'t'</span>: 4}, {<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; c[<span style="font-style: italic;">'m'</span>]
+ChainMap({<span class="org-string">'m'</span>: 1}, {<span class="org-string">'t'</span>: 4}, {<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; c[<span class="org-string">'m'</span>]
 1
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org521de44" class="outline-4">
-<h4 id="org521de44"><span class="section-number-4">3.1.1</span> 方法</h4>
+<div id="outline-container-org443a161" class="outline-4">
+<h4 id="org443a161"><span class="section-number-4">3.1.1</span> 方法</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <dl class="org-dl">
 <dt>new_child(m=None)</dt><dd><p>
@@ -737,23 +737,23 @@ ChainMap({<span style="font-style: italic;">'m'</span>: 1}, {<span style="font-s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = ChainMap(<span style="font-weight: bold;">dict</span>(m=10))
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">c</span> = ChainMap(<span class="org-builtin">dict</span>(m=10))
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = c.new_child()
+ChainMap({<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = c.new_child()
 &gt;&gt;&gt; c
-ChainMap({}, {<span style="font-style: italic;">'m'</span>: 10})
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">c</span> = c.new_child(<span style="font-weight: bold;">dict</span>(t=4))
+ChainMap({}, {<span class="org-string">'m'</span>: 10})
+&gt;&gt;&gt; <span class="org-variable-name">c</span> = c.new_child(<span class="org-builtin">dict</span>(t=4))
 &gt;&gt;&gt; c
-ChainMap({<span style="font-style: italic;">'t'</span>: 4}, {}, {<span style="font-style: italic;">'m'</span>: 10})
+ChainMap({<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string">'m'</span>: 10})
 </pre>
 </div></dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-org5cdee4a" class="outline-4">
-<h4 id="org5cdee4a"><span class="section-number-4">3.1.2</span> 属性</h4>
+<div id="outline-container-orgfb46e3c" class="outline-4">
+<h4 id="orgfb46e3c"><span class="section-number-4">3.1.2</span> 属性</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <dl class="org-dl">
 <dt>maps</dt><dd><p>
@@ -762,7 +762,7 @@ ChainMap({<span style="font-style: italic;">'t'</span>: 4}, {}, {<span style="fo
 
 <div class="org-src-container">
 <pre class="src src-python">&gt;&gt;&gt; c.maps
-[{<span style="font-style: italic;">'t'</span>: 4}, {}, {<span style="font-style: italic;">'m'</span>: 10}]
+[{<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string">'m'</span>: 10}]
 </pre>
 </div></dd>
 
@@ -772,8 +772,8 @@ ChainMap({<span style="font-style: italic;">'t'</span>: 4}, {}, {<span style="fo
 </div>
 </div>
 
-<div id="outline-container-org76266ab" class="outline-3">
-<h3 id="org76266ab"><span class="section-number-3">3.2</span> Other</h3>
+<div id="outline-container-org1bcf920" class="outline-3">
+<h3 id="org1bcf920"><span class="section-number-3">3.2</span> Other</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 除了前面的， 还有三个容器： <code>UserDict</code>, <code>UserList</code>, <code>UserString</code>.
@@ -790,8 +790,8 @@ ChainMap({<span style="font-style: italic;">'t'</span>: 4}, {}, {<span style="fo
 </div>
 </div>
 
-<div id="outline-container-org5ff671a" class="outline-2">
-<h2 id="org5ff671a"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org1feb0e9" class="outline-2">
+<h2 id="org1feb0e9"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/library/collections.html">Python2 collections</a></li>

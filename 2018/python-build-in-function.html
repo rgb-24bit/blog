@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置函数</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8fc4b4a">1. 简介</a></li>
-<li><a href="#org3c60963">2. 数值计算相关</a></li>
-<li><a href="#orgb8a0029">3. 可迭代对象相关</a></li>
-<li><a href="#org5363344">4. 进制和编码转化</a></li>
-<li><a href="#org40610ff">5. 类和属性相关</a></li>
-<li><a href="#orgc19d88a">6. 命名空间相关</a></li>
-<li><a href="#orga44bcc1">7. 其他内置函数</a></li>
+<li><a href="#org3bb8909">1. 简介</a></li>
+<li><a href="#org5d8a098">2. 数值计算相关</a></li>
+<li><a href="#org175b741">3. 可迭代对象相关</a></li>
+<li><a href="#org59de883">4. 进制和编码转化</a></li>
+<li><a href="#orge1da1d1">5. 类和属性相关</a></li>
+<li><a href="#orgbe4fc68">6. 命名空间相关</a></li>
+<li><a href="#org01d1b64">7. 其他内置函数</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8fc4b4a" class="outline-2">
-<h2 id="org8fc4b4a"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org3bb8909" class="outline-2">
+<h2 id="org3bb8909"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 具有众多的内置函数， <code>Python2</code> 和 <code>Python3</code> 在这方面也具有一定的区别。
@@ -580,8 +580,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3c60963" class="outline-2">
-<h2 id="org3c60963"><span class="section-number-2">2</span> 数值计算相关</h2>
+<div id="outline-container-org5d8a098" class="outline-2">
+<h2 id="org5d8a098"><span class="section-number-2">2</span> 数值计算相关</h2>
 <div class="outline-text-2" id="text-2">
 <dl class="org-dl">
 <dt>abs(x)</dt><dd>获取 <code>x</code> 的绝对值， 如果 <code>x</code> 是复数， 则返回其大小。</dd>
@@ -595,8 +595,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb8a0029" class="outline-2">
-<h2 id="orgb8a0029"><span class="section-number-2">3</span> 可迭代对象相关</h2>
+<div id="outline-container-org175b741" class="outline-2">
+<h2 id="org175b741"><span class="section-number-2">3</span> 可迭代对象相关</h2>
 <div class="outline-text-2" id="text-3">
 <dl class="org-dl">
 <dt>all(iterable)</dt><dd>如果所有元素为 <code>True</code> 则返回 <code>True</code>, 否则返回 <code>False</code>.</dd>
@@ -607,19 +607,19 @@ for the JavaScript code in this tag.
 代码说明一切：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">seasons</span> = [<span style="font-style: italic;">'Spring'</span>, <span style="font-style: italic;">'Summer'</span>, <span style="font-style: italic;">'Fall'</span>, <span style="font-style: italic;">'Winter'</span>]
-&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(<span style="font-weight: bold;">enumerate</span>(seasons))
-[(0, <span style="font-style: italic;">'Spring'</span>), (1, <span style="font-style: italic;">'Summer'</span>), (2, <span style="font-style: italic;">'Fall'</span>), (3, <span style="font-style: italic;">'Winter'</span>)]
-&gt;&gt;&gt; <span style="font-weight: bold;">list</span>(<span style="font-weight: bold;">enumerate</span>(seasons, start=1))
-[(1, <span style="font-style: italic;">'Spring'</span>), (2, <span style="font-style: italic;">'Summer'</span>), (3, <span style="font-style: italic;">'Fall'</span>), (4, <span style="font-style: italic;">'Winter'</span>)]
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">seasons</span> = [<span class="org-string">'Spring'</span>, <span class="org-string">'Summer'</span>, <span class="org-string">'Fall'</span>, <span class="org-string">'Winter'</span>]
+&gt;&gt;&gt; <span class="org-builtin">list</span>(<span class="org-builtin">enumerate</span>(seasons))
+[(0, <span class="org-string">'Spring'</span>), (1, <span class="org-string">'Summer'</span>), (2, <span class="org-string">'Fall'</span>), (3, <span class="org-string">'Winter'</span>)]
+&gt;&gt;&gt; <span class="org-builtin">list</span>(<span class="org-builtin">enumerate</span>(seasons, start=1))
+[(1, <span class="org-string">'Spring'</span>), (2, <span class="org-string">'Summer'</span>), (3, <span class="org-string">'Fall'</span>), (4, <span class="org-string">'Winter'</span>)]
 
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;</span>
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">enumerate</span>(sequence, start=0):
-    <span style="font-weight: bold; font-style: italic;">n</span> = start
-    <span style="font-weight: bold;">for</span> elem <span style="font-weight: bold;">in</span> sequence:
-        <span style="font-weight: bold;">yield</span> n, elem
-        <span style="font-weight: bold; font-style: italic;">n</span> += 1
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110;</span>
+<span class="org-keyword">def</span> <span class="org-function-name">enumerate</span>(sequence, start=0):
+    <span class="org-variable-name">n</span> = start
+    <span class="org-keyword">for</span> elem <span class="org-keyword">in</span> sequence:
+        <span class="org-keyword">yield</span> n, elem
+        <span class="org-variable-name">n</span> += 1
 </pre>
 </div></dd>
 
@@ -655,18 +655,18 @@ for the JavaScript code in this tag.
 返回一个迭代器对象。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'123'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">iter_s</span> = <span style="font-weight: bold;">iter</span>(s)
-&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
-<span style="font-style: italic;">'1'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
-<span style="font-style: italic;">'2'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
-<span style="font-style: italic;">'3'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">next</span>(iter_s)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'123'</span>
+&gt;&gt;&gt; <span class="org-variable-name">iter_s</span> = <span class="org-builtin">iter</span>(s)
+&gt;&gt;&gt; <span class="org-builtin">next</span>(iter_s)
+<span class="org-string">'1'</span>
+&gt;&gt;&gt; <span class="org-builtin">next</span>(iter_s)
+<span class="org-string">'2'</span>
+&gt;&gt;&gt; <span class="org-builtin">next</span>(iter_s)
+<span class="org-string">'3'</span>
+&gt;&gt;&gt; <span class="org-builtin">next</span>(iter_s)
 Traceback (most recent call last):
-File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>
+File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">StopIteration</span>
 </pre>
 </div></dd>
 
@@ -693,13 +693,13 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 返回一个切片对象， 同样代码说明一切：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt;<span style="font-weight: bold; font-style: italic;">myslice</span> = <span style="font-weight: bold;">slice</span>(5)    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35774;&#32622;&#25130;&#21462;5&#20010;&#20803;&#32032;&#30340;&#20999;&#29255;</span>
+<pre class="src src-python">&gt;&gt;&gt;<span class="org-variable-name">myslice</span> = <span class="org-builtin">slice</span>(5)    <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#25130;&#21462;5&#20010;&#20803;&#32032;&#30340;&#20999;&#29255;</span>
 &gt;&gt;&gt; myslice
-<span style="font-weight: bold;">slice</span>(<span style="font-weight: bold; text-decoration: underline;">None</span>, 5, <span style="font-weight: bold; text-decoration: underline;">None</span>)
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">arr</span> = <span style="font-weight: bold;">range</span>(10)
+<span class="org-builtin">slice</span>(<span class="org-constant">None</span>, 5, <span class="org-constant">None</span>)
+&gt;&gt;&gt; <span class="org-variable-name">arr</span> = <span class="org-builtin">range</span>(10)
 &gt;&gt;&gt; arr
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-&gt;&gt;&gt; arr[myslice]         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25130;&#21462; 5 &#20010;&#20803;&#32032;</span>
+&gt;&gt;&gt; arr[myslice]         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25130;&#21462; 5 &#20010;&#20803;&#32032;</span>
 [0, 1, 2, 3, 4]
 </pre>
 </div></dd>
@@ -717,8 +717,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-org5363344" class="outline-2">
-<h2 id="org5363344"><span class="section-number-2">4</span> 进制和编码转化</h2>
+<div id="outline-container-org59de883" class="outline-2">
+<h2 id="org59de883"><span class="section-number-2">4</span> 进制和编码转化</h2>
 <div class="outline-text-2" id="text-4">
 <dl class="org-dl">
 <dt>bin(x)</dt><dd>将一个整数转化为二进制字符串， 如果 <code>x</code> 不是整数， 那么它必须定义了 <code>__index__()</code> 方法。</dd>
@@ -747,8 +747,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-org40610ff" class="outline-2">
-<h2 id="org40610ff"><span class="section-number-2">5</span> 类和属性相关</h2>
+<div id="outline-container-orge1da1d1" class="outline-2">
+<h2 id="orge1da1d1"><span class="section-number-2">5</span> 类和属性相关</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
 <dt>callable(object)</dt><dd><p>
@@ -765,10 +765,10 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 修饰的方法需要有代表类的 <code>cls</code> 参数。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold; text-decoration: underline;">@classmethod</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">f</span>(cls, arg1, arg2, ...):
-        <span style="font-weight: bold;">pass</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">C</span>(<span class="org-builtin">object</span>):
+    <span class="org-type">@classmethod</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">f</span>(cls, arg1, arg2, ...):
+        <span class="org-keyword">pass</span>
 </pre>
 </div></dd>
 
@@ -792,20 +792,20 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>:
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">self</span>._x = <span style="font-weight: bold; text-decoration: underline;">None</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">C</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>._x = <span class="org-constant">None</span>
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">getx</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+    <span class="org-keyword">def</span> <span class="org-function-name">getx</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>._x
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">setx</span>(<span style="font-weight: bold;">self</span>, value):
-        <span style="font-weight: bold;">self</span>._x = value
+    <span class="org-keyword">def</span> <span class="org-function-name">setx</span>(<span class="org-keyword">self</span>, value):
+        <span class="org-keyword">self</span>._x = value
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">delx</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">del</span> <span style="font-weight: bold;">self</span>._x
+    <span class="org-keyword">def</span> <span class="org-function-name">delx</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">del</span> <span class="org-keyword">self</span>._x
 
-    <span style="font-weight: bold; font-style: italic;">x</span> = <span style="font-weight: bold;">property</span>(getx, setx, delx, <span style="font-style: italic;">"I'm the 'x' property."</span>)
+    <span class="org-variable-name">x</span> = <span class="org-builtin">property</span>(getx, setx, delx, <span class="org-string">"I'm the 'x' property."</span>)
 </pre>
 </div>
 <p>
@@ -820,14 +820,14 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 将 <code>property</code> 函数用作装饰器可以很方便的创建只读属性：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Parrot</span>:
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">self</span>._voltage = 100000
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Parrot</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>._voltage = 100000
 
-    <span style="font-weight: bold; text-decoration: underline;">@property</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">voltage</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-style: italic;">"""Get the current voltage."""</span>
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._voltage
+    <span class="org-type">@property</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">voltage</span>(<span class="org-keyword">self</span>):
+        <span class="org-doc">"""Get the current voltage."""</span>
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>._voltage
 </pre>
 </div>
 <p>
@@ -838,22 +838,22 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 <code>property</code> 的 <code>getter</code>, <code>setter</code> 和 <code>deleter</code> 方法同样可以用作装饰器：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">C</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">self</span>._x = <span style="font-weight: bold; text-decoration: underline;">None</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">C</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>._x = <span class="org-constant">None</span>
 
-    <span style="font-weight: bold; text-decoration: underline;">@property</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-style: italic;">"""I'm the 'x' property."""</span>
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>._x
+    <span class="org-type">@property</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">x</span>(<span class="org-keyword">self</span>):
+        <span class="org-doc">"""I'm the 'x' property."""</span>
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>._x
 
-    <span style="font-weight: bold; text-decoration: underline;">@x.setter</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>, value):
-        <span style="font-weight: bold;">self</span>._x = value
+    <span class="org-type">@x.setter</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">x</span>(<span class="org-keyword">self</span>, value):
+        <span class="org-keyword">self</span>._x = value
 
-    <span style="font-weight: bold; text-decoration: underline;">@x.deleter</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">x</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">del</span> <span style="font-weight: bold;">self</span>._x
+    <span class="org-type">@x.deleter</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">x</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">del</span> <span class="org-keyword">self</span>._x
 </pre>
 </div></dd>
 
@@ -880,8 +880,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-orgc19d88a" class="outline-2">
-<h2 id="orgc19d88a"><span class="section-number-2">6</span> 命名空间相关</h2>
+<div id="outline-container-orgbe4fc68" class="outline-2">
+<h2 id="orgbe4fc68"><span class="section-number-2">6</span> 命名空间相关</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 使用叫做 <b>命名空间</b> 的东西来记录变量的轨迹。命名空间是一个 <b>字典</b>, 
@@ -902,19 +902,19 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">autoassign</span>(<span style="font-weight: bold;">self</span>, <span style="font-weight: bold;">locals</span>):
-    <span style="font-style: italic;">"""</span>
-<span style="font-style: italic;">    Automatically assigns local variables to `self`.</span>
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">autoassign</span>(<span class="org-keyword">self</span>, <span class="org-builtin">locals</span>):
+    <span class="org-doc">"""</span>
+<span class="org-doc">    Automatically assigns local variables to `self`.</span>
 
-<span style="font-style: italic;">    Generally used in `__init__` methods, as in:</span>
+<span class="org-doc">    Generally used in `__init__` methods, as in:</span>
 
-<span style="font-style: italic;">        def __init__(self, foo, bar, baz=1):</span>
-<span style="font-style: italic;">            autoassign(self, locals())</span>
-<span style="font-style: italic;">    """</span>
-    <span style="font-weight: bold;">for</span> (key, value) <span style="font-weight: bold;">in</span> iteritems(<span style="font-weight: bold;">locals</span>):
-        <span style="font-weight: bold;">if</span> key == <span style="font-style: italic;">'self'</span>: 
-            <span style="font-weight: bold;">continue</span>
-        <span style="font-weight: bold;">setattr</span>(<span style="font-weight: bold;">self</span>, key, value)
+<span class="org-doc">        def __init__(self, foo, bar, baz=1):</span>
+<span class="org-doc">            autoassign(self, locals())</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">for</span> (key, value) <span class="org-keyword">in</span> iteritems(<span class="org-builtin">locals</span>):
+        <span class="org-keyword">if</span> key == <span class="org-string">'self'</span>: 
+            <span class="org-keyword">continue</span>
+        <span class="org-builtin">setattr</span>(<span class="org-keyword">self</span>, key, value)
 </pre>
 </div></li>
 
@@ -923,8 +923,8 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 </div>
 </div>
 
-<div id="outline-container-orga44bcc1" class="outline-2">
-<h2 id="orga44bcc1"><span class="section-number-2">7</span> 其他内置函数</h2>
+<div id="outline-container-org01d1b64" class="outline-2">
+<h2 id="org01d1b64"><span class="section-number-2">7</span> 其他内置函数</h2>
 <div class="outline-text-2" id="text-7">
 <dl class="org-dl">
 <dt>type(object)</dt><dd></dd>
@@ -946,15 +946,15 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 用 <code>type</code> 创建类可以通过这样的方式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">X</span> = <span style="font-weight: bold;">type</span>(<span style="font-style: italic;">'X'</span>, (<span style="font-weight: bold;">object</span>,), <span style="font-weight: bold;">dict</span>(a=1))
+<pre class="src src-python"><span class="org-variable-name">X</span> = <span class="org-builtin">type</span>(<span class="org-string">'X'</span>, (<span class="org-builtin">object</span>,), <span class="org-builtin">dict</span>(a=1))
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">'X' &#26159;&#36825;&#20010;&#31867;&#30340;&#21517;&#31216;</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">(object, ) &#26159;&#36825;&#20010;&#31867;&#32487;&#25215;&#30340;&#31867;&#65292; &#30001;&#20110; python &#25903;&#25345;&#22810;&#37325;&#32487;&#25215;&#65292; &#25152;&#20197;&#36825;&#20010;&#21442;&#25968;&#24212;&#35813;&#26159;&#19968;&#20010; tuple</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">dict(a=1) &#26159;&#36825;&#20010;&#31867;&#30340; &#23646;&#24615;-&#20540; &#23383;&#20856;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">'X' &#26159;&#36825;&#20010;&#31867;&#30340;&#21517;&#31216;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">(object, ) &#26159;&#36825;&#20010;&#31867;&#32487;&#25215;&#30340;&#31867;&#65292; &#30001;&#20110; python &#25903;&#25345;&#22810;&#37325;&#32487;&#25215;&#65292; &#25152;&#20197;&#36825;&#20010;&#21442;&#25968;&#24212;&#35813;&#26159;&#19968;&#20010; tuple</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">dict(a=1) &#26159;&#36825;&#20010;&#31867;&#30340; &#23646;&#24615;-&#20540; &#23383;&#20856;</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110;</span>
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">X</span>:
-    <span style="font-weight: bold; font-style: italic;">a</span> = 1
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110;</span>
+<span class="org-keyword">class</span> <span class="org-type">X</span>:
+    <span class="org-variable-name">a</span> = 1
 </pre>
 </div>
 
@@ -998,7 +998,7 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 大致等价于如下代码
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-style: italic;">'{:format_spec}'</span>.<span style="font-weight: bold;">format</span>(value)
+<pre class="src src-python"><span class="org-doc">'{:format_spec}'</span>.<span class="org-builtin">format</span>(value)
 </pre>
 </div>
 
@@ -1006,11 +1006,11 @@ File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span sty
 比如说：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">value</span> = <span style="font-style: italic;">'text'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{:&gt;20}'</span>.<span style="font-weight: bold;">format</span>(value)
-<span style="font-style: italic;">'                text'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">format</span>(value, <span style="font-style: italic;">'&gt;20'</span>)
-<span style="font-style: italic;">'                text'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">value</span> = <span class="org-string">'text'</span>
+&gt;&gt;&gt; <span class="org-string">'{:&gt;20}'</span>.<span class="org-builtin">format</span>(value)
+<span class="org-string">'                text'</span>
+&gt;&gt;&gt; <span class="org-builtin">format</span>(value, <span class="org-string">'&gt;20'</span>)
+<span class="org-string">'                text'</span>
 </pre>
 </div></dd>
 </dl>

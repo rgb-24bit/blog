@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置类型</title>
@@ -246,24 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org21856cf">1. 简介</a></li>
-<li><a href="#orgd9050af">2. bool</a></li>
-<li><a href="#org99160e8">3. 数值类型</a>
+<li><a href="#org06399e1">1. 简介</a></li>
+<li><a href="#orgd25426b">2. bool</a></li>
+<li><a href="#org4ddb8cd">3. 数值类型</a>
 <ul>
-<li><a href="#org102ab5e">3.1. 方法</a></li>
+<li><a href="#orgf12be5a">3.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#org94a3d23">4. 序列类型</a></li>
-<li><a href="#org17ce8ee">5. 文本序列类型</a></li>
-<li><a href="#orgf769b26">6. 集合类型</a></li>
-<li><a href="#org4191652">7. 映射类型</a></li>
-<li><a href="#org2eeb99a">8. 参考链接</a></li>
+<li><a href="#org942489e">4. 序列类型</a></li>
+<li><a href="#org06d6015">5. 文本序列类型</a></li>
+<li><a href="#org4f22ad0">6. 集合类型</a></li>
+<li><a href="#orgfe17084">7. 映射类型</a></li>
+<li><a href="#org7e2e407">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org21856cf" class="outline-2">
-<h2 id="org21856cf"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org06399e1" class="outline-2">
+<h2 id="org06399e1"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客是对 <code>Python</code> 内置类型的简单汇总， 省略了很多内容。
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd9050af" class="outline-2">
-<h2 id="orgd9050af"><span class="section-number-2">2</span> bool</h2>
+<div id="outline-container-orgd25426b" class="outline-2">
+<h2 id="orgd25426b"><span class="section-number-2">2</span> bool</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 中， <code>bool</code> 类型属于 <code>int</code> 的子类， 只存在 <code>True</code> 和 <code>False</code> 这两个实例。
@@ -304,8 +304,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org99160e8" class="outline-2">
-<h2 id="org99160e8"><span class="section-number-2">3</span> 数值类型</h2>
+<div id="outline-container-org4ddb8cd" class="outline-2">
+<h2 id="org4ddb8cd"><span class="section-number-2">3</span> 数值类型</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持
@@ -331,7 +331,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">from</span> __future__ <span style="font-weight: bold;">import</span> division
+<pre class="src src-python"><span class="org-keyword">from</span> __future__ <span class="org-keyword">import</span> division
 </pre>
 </div></li>
 </ul>
@@ -341,8 +341,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org102ab5e" class="outline-3">
-<h3 id="org102ab5e"><span class="section-number-3">3.1</span> 方法</h3>
+<div id="outline-container-orgf12be5a" class="outline-3">
+<h3 id="orgf12be5a"><span class="section-number-3">3.1</span> 方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>int.bit_length()</dt><dd>返回整数的二进制长度。</dd>
@@ -357,7 +357,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">x</span> = 3.3
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">x</span> = 3.3
 &gt;&gt;&gt; x.as_integer_ratio()
 (3715469692580659L, 1125899906842624L)
 </pre>
@@ -379,8 +379,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org94a3d23" class="outline-2">
-<h2 id="org94a3d23"><span class="section-number-2">4</span> 序列类型</h2>
+<div id="outline-container-org942489e" class="outline-2">
+<h2 id="org942489e"><span class="section-number-2">4</span> 序列类型</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里
@@ -430,8 +430,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org17ce8ee" class="outline-2">
-<h2 id="org17ce8ee"><span class="section-number-2">5</span> 文本序列类型</h2>
+<div id="outline-container-org06d6015" class="outline-2">
+<h2 id="org06d6015"><span class="section-number-2">5</span> 文本序列类型</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 万恶之源 <code>str</code>. <code>Python2</code> 和 <code>Python3</code> 的不兼容相当难受。
@@ -466,8 +466,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf769b26" class="outline-2">
-<h2 id="orgf769b26"><span class="section-number-2">6</span> 集合类型</h2>
+<div id="outline-container-org4f22ad0" class="outline-2">
+<h2 id="org4f22ad0"><span class="section-number-2">6</span> 集合类型</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 中的集合类型有 <code>set</code> 和 <code>frozenset</code> 两种。
@@ -481,62 +481,62 @@ for the JavaScript code in this tag.
 对于 <code>set</code>, 我觉的用代码来说明是最合适的：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23450;&#20041; set</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">x</span> = <span style="font-weight: bold;">set</span>([1,2,2,3,4,5,5,6])
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">y</span> = {1, 2, 3, 7, 9, 10}
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#23450;&#20041; set</span>
+&gt;&gt;&gt; <span class="org-variable-name">x</span> = <span class="org-builtin">set</span>([1,2,2,3,4,5,5,6])
+&gt;&gt;&gt; <span class="org-variable-name">y</span> = {1, 2, 3, 7, 9, 10}
 
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">set &#20250;&#33258;&#21160;&#36807;&#28388;&#37325;&#22797;&#30340;&#20803;&#32032;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">set &#20250;&#33258;&#21160;&#36807;&#28388;&#37325;&#22797;&#30340;&#20803;&#32032;</span>
 &gt;&gt;&gt; x
-<span style="font-weight: bold;">set</span>([1, 2, 3, 4, 5, 6])
+<span class="org-builtin">set</span>([1, 2, 3, 4, 5, 6])
 &gt;&gt;&gt; y
-<span style="font-weight: bold;">set</span>([1, 2, 3, 7, 9, 10])
+<span class="org-builtin">set</span>([1, 2, 3, 7, 9, 10])
 
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#38656;&#35201;&#27880;&#24847;&#30340;&#26159; {} &#26159; dict &#32780;&#19981;&#26159; set, &#22914;&#26524;&#35201;&#21019;&#24314;&#31354; set &#24212;&#35813;&#20351;&#29992; set()</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">z</span> = {}
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(z)
-&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'dict'</span>&gt;
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#38656;&#35201;&#27880;&#24847;&#30340;&#26159; {} &#26159; dict &#32780;&#19981;&#26159; set, &#22914;&#26524;&#35201;&#21019;&#24314;&#31354; set &#24212;&#35813;&#20351;&#29992; set()</span>
+&gt;&gt;&gt; <span class="org-variable-name">z</span> = {}
+&gt;&gt;&gt; <span class="org-builtin">type</span>(z)
+&lt;<span class="org-builtin">type</span> <span class="org-string">'dict'</span>&gt;
 
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">set &#25903;&#25345;&#24120;&#29992;&#30340;&#38598;&#21512;&#36816;&#31639;</span>
-&gt;&gt;&gt; x &amp; y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20132;&#38598;</span>
-<span style="font-weight: bold;">set</span>([1, 2, 3])
+<span class="org-comment-delimiter"># </span><span class="org-comment">set &#25903;&#25345;&#24120;&#29992;&#30340;&#38598;&#21512;&#36816;&#31639;</span>
+&gt;&gt;&gt; x &amp; y               <span class="org-comment-delimiter"># </span><span class="org-comment">&#20132;&#38598;</span>
+<span class="org-builtin">set</span>([1, 2, 3])
 
-&gt;&gt;&gt; x | y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24182;&#38598;</span>
-<span style="font-weight: bold;">set</span>([1, 2, 3, 4, 5, 6, 7, 9, 10])
+&gt;&gt;&gt; x | y               <span class="org-comment-delimiter"># </span><span class="org-comment">&#24182;&#38598;</span>
+<span class="org-builtin">set</span>([1, 2, 3, 4, 5, 6, 7, 9, 10])
 
-&gt;&gt;&gt; x - y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24046;&#38598;</span>
-<span style="font-weight: bold;">set</span>([4, 5, 6])
+&gt;&gt;&gt; x - y               <span class="org-comment-delimiter"># </span><span class="org-comment">&#24046;&#38598;</span>
+<span class="org-builtin">set</span>([4, 5, 6])
 
-&gt;&gt;&gt; x ^ y               <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23545;&#31216;&#24046;&#38598;</span>
-<span style="font-weight: bold;">set</span>([4, 5, 6, 7, 9, 10])
+&gt;&gt;&gt; x ^ y               <span class="org-comment-delimiter"># </span><span class="org-comment">&#23545;&#31216;&#24046;&#38598;</span>
+<span class="org-builtin">set</span>([4, 5, 6, 7, 9, 10])
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4191652" class="outline-2">
-<h2 id="org4191652"><span class="section-number-2">7</span> 映射类型</h2>
+<div id="outline-container-orgfe17084" class="outline-2">
+<h2 id="orgfe17084"><span class="section-number-2">7</span> 映射类型</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 的映射类型无疑是 <code>dict</code> 了。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">help</span>(<span style="font-weight: bold;">dict</span>)
-Help on <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">dict</span> <span style="font-weight: bold;">in</span> module __builtin__:
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-builtin">help</span>(<span class="org-builtin">dict</span>)
+Help on <span class="org-keyword">class</span> <span class="org-type">dict</span> <span class="org-keyword">in</span> module __builtin__:
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">dict</span>(<span style="font-weight: bold;">object</span>)
- |  <span style="font-weight: bold;">dict</span>() -&gt; new empty dictionary
- |  <span style="font-weight: bold;">dict</span>(mapping) -&gt; new dictionary initialized <span style="font-weight: bold;">from</span> a mapping <span style="font-weight: bold;">object</span><span style="font-style: italic;">'s</span>
-<span style="font-style: italic;"> |      (key, value) pairs</span>
-<span style="font-style: italic;"> |  dict(iterable) -&gt; new dictionary initialized as if via:</span>
-<span style="font-style: italic;"> |      d = {}</span>
-<span style="font-style: italic;"> |      for k, v in iterable:</span>
-<span style="font-style: italic;"> |          d[k] = v</span>
-<span style="font-style: italic;"> |  dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs</span>
-<span style="font-style: italic;"> |      in the keyword argument list.  For example:  dict(one=1, two=2)</span>
+<span class="org-keyword">class</span> <span class="org-type">dict</span>(<span class="org-builtin">object</span>)
+ |  <span class="org-builtin">dict</span>() -&gt; new empty dictionary
+ |  <span class="org-builtin">dict</span>(mapping) -&gt; new dictionary initialized <span class="org-keyword">from</span> a mapping <span class="org-builtin">object</span><span class="org-string">'s</span>
+<span class="org-string"> |      (key, value) pairs</span>
+<span class="org-string"> |  dict(iterable) -&gt; new dictionary initialized as if via:</span>
+<span class="org-string"> |      d = {}</span>
+<span class="org-string"> |      for k, v in iterable:</span>
+<span class="org-string"> |          d[k] = v</span>
+<span class="org-string"> |  dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs</span>
+<span class="org-string"> |      in the keyword argument list.  For example:  dict(one=1, two=2)</span>
 </pre>
 </div>
 
@@ -546,8 +546,8 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 </div>
 </div>
 
-<div id="outline-container-org2eeb99a" class="outline-2">
-<h2 id="org2eeb99a"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org7e2e407" class="outline-2">
+<h2 id="org7e2e407"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/stdtypes.html">Python3</a></li>

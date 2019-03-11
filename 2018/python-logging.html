@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 日志模块</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7a4c5ac">1. 前言</a></li>
-<li><a href="#org7a4c8ea">2. 简单的使用</a></li>
-<li><a href="#orgb4536b0">3. 配置日志消息的格式</a></li>
-<li><a href="#org50910d1">4. 同时输出到终端和文件</a></li>
-<li><a href="#orgb77605d">5. 日志配置</a></li>
-<li><a href="#org6ad9d2e">6. 结语</a></li>
-<li><a href="#orgf53962d">7. 参考链接</a></li>
+<li><a href="#org4a63a9f">1. 前言</a></li>
+<li><a href="#orgd1e75e4">2. 简单的使用</a></li>
+<li><a href="#org8f054c4">3. 配置日志消息的格式</a></li>
+<li><a href="#org5112818">4. 同时输出到终端和文件</a></li>
+<li><a href="#orgc512c6a">5. 日志配置</a></li>
+<li><a href="#org3c4f840">6. 结语</a></li>
+<li><a href="#org3cb1cd1">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7a4c5ac" class="outline-2">
-<h2 id="org7a4c5ac"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org4a63a9f" class="outline-2">
+<h2 id="org4a63a9f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟踪为耻</b>.
@@ -275,20 +275,20 @@ Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟
 </div>
 </div>
 
-<div id="outline-container-org7a4c8ea" class="outline-2">
-<h2 id="org7a4c8ea"><span class="section-number-2">2</span> 简单的使用</h2>
+<div id="outline-container-orgd1e75e4" class="outline-2">
+<h2 id="orgd1e75e4"><span class="section-number-2">2</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>logging</code> 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-logging.debug(<span style="font-style: italic;">'This is a debug message'</span>)
-logging.info(<span style="font-style: italic;">'This is an info message'</span>)
-logging.warning(<span style="font-style: italic;">'This is a warning message'</span>)
-logging.error(<span style="font-style: italic;">'This is an error message'</span>)
-logging.critical(<span style="font-style: italic;">'This is a critical message'</span>)
+logging.debug(<span class="org-string">'This is a debug message'</span>)
+logging.info(<span class="org-string">'This is an info message'</span>)
+logging.warning(<span class="org-string">'This is a warning message'</span>)
+logging.error(<span class="org-string">'This is an error message'</span>)
+logging.critical(<span class="org-string">'This is a critical message'</span>)
 </pre>
 </div>
 
@@ -375,10 +375,10 @@ it had already been adopted by users and changing it to meet PEP8 requirements w
 一个简单的例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-logging.basicConfig(level=logging.DEBUG, <span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
-logging.debug(<span style="font-style: italic;">'This will get logged'</span>)
+logging.basicConfig(level=logging.DEBUG, <span class="org-builtin">format</span>=<span class="org-string">'%(name)s - %(levelname)s - %(message)s'</span>)
+logging.debug(<span class="org-string">'This will get logged'</span>)
 </pre>
 </div>
 
@@ -395,8 +395,8 @@ root - DEBUG - This will get logged
 </div>
 </div>
 
-<div id="outline-container-orgb4536b0" class="outline-2">
-<h2 id="orgb4536b0"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
+<div id="outline-container-org8f054c4" class="outline-2">
+<h2 id="org8f054c4"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
@@ -406,7 +406,7 @@ root - DEBUG - This will get logged
 比如上面的例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">logging.basicConfig(level=logging.DEBUG, <span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
+<pre class="src src-python">logging.basicConfig(level=logging.DEBUG, <span class="org-builtin">format</span>=<span class="org-string">'%(name)s - %(levelname)s - %(message)s'</span>)
 </pre>
 </div>
 
@@ -418,12 +418,12 @@ root - DEBUG - This will get logged
 值得注意的是，属性 <code>%(asctime)s</code> 的输出格式会受到 <code>datefmt</code> 的影响：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-logging.basicConfig(<span style="font-weight: bold;">format</span>=<span style="font-style: italic;">'%(asctime)s - %(message)s'</span>, datefmt=<span style="font-style: italic;">'%d-%b-%y %H:%M:%S'</span>)
-logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
+logging.basicConfig(<span class="org-builtin">format</span>=<span class="org-string">'%(asctime)s - %(message)s'</span>, datefmt=<span class="org-string">'%d-%b-%y %H:%M:%S'</span>)
+logging.warning(<span class="org-string">'Admin logged out'</span>)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">output</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">output</span>
 12-Jul-18 20:53:19 - Admin logged out
 </pre>
 </div>
@@ -438,8 +438,8 @@ logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
 </div>
 </div>
 
-<div id="outline-container-org50910d1" class="outline-2">
-<h2 id="org50910d1"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
+<div id="outline-container-org5112818" class="outline-2">
+<h2 id="org5112818"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
@@ -493,22 +493,22 @@ logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
 可以通过源码直观的了解这三个类之间的关系：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Logger</span>(Filterer):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, name, level=NOTSET):
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Logger</span>(Filterer):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, name, level=NOTSET):
         ...
-        <span style="font-weight: bold;">self</span>.handlers = []
-        ...
-
-
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Handler</span>(Filterer):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, level=NOTSET):
-        ...
-        <span style="font-weight: bold;">self</span>.formatter = <span style="font-weight: bold; text-decoration: underline;">None</span>
+        <span class="org-keyword">self</span>.handlers = []
         ...
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Formatter</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, datefmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, style=<span style="font-style: italic;">'%'</span>, validate=<span style="font-weight: bold; text-decoration: underline;">True</span>):
+<span class="org-keyword">class</span> <span class="org-type">Handler</span>(Filterer):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, level=NOTSET):
+        ...
+        <span class="org-keyword">self</span>.formatter = <span class="org-constant">None</span>
+        ...
+
+
+<span class="org-keyword">class</span> <span class="org-type">Formatter</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, fmt=<span class="org-constant">None</span>, datefmt=<span class="org-constant">None</span>, style=<span class="org-string">'%'</span>, validate=<span class="org-constant">True</span>):
         ...
 </pre>
 </div>
@@ -528,10 +528,10 @@ logging.warning(<span style="font-style: italic;">'Admin logged out'</span>)
 特别的， <code>Logger</code> 对象通常用 <code>logging.getLogger(name)</code> 方法来获取创建：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(<span style="font-style: italic;">'example_logger'</span>)
-logger.warning(<span style="font-style: italic;">'This is a warning'</span>)
+<span class="org-variable-name">logger</span> = logging.getLogger(<span class="org-string">'example_logger'</span>)
+logger.warning(<span class="org-string">'This is a warning'</span>)
 </pre>
 </div>
 
@@ -543,18 +543,18 @@ logger.warning(<span style="font-style: italic;">'This is a warning'</span>)
 对于 <code>Handler</code> 和 <code>Formatter</code>, 不同的 <code>Handler</code> 需要的参数不一样，而 <code>Formatter</code> 不存在子类，因此只有一种形式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StreamHandler</span>(Handler):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, stream=<span style="font-weight: bold; text-decoration: underline;">None</span>):
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">StreamHandler</span>(Handler):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, stream=<span class="org-constant">None</span>):
         ...
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">FileHandler</span>(StreamHandler):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, filename, mode=<span style="font-style: italic;">'a'</span>, encoding=<span style="font-weight: bold; text-decoration: underline;">None</span>, delay=<span style="font-weight: bold; text-decoration: underline;">False</span>):
+<span class="org-keyword">class</span> <span class="org-type">FileHandler</span>(StreamHandler):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, filename, mode=<span class="org-string">'a'</span>, encoding=<span class="org-constant">None</span>, delay=<span class="org-constant">False</span>):
         ...
 
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Formatter</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, fmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, datefmt=<span style="font-weight: bold; text-decoration: underline;">None</span>, style=<span style="font-style: italic;">'%'</span>, validate=<span style="font-weight: bold; text-decoration: underline;">True</span>):
+<span class="org-keyword">class</span> <span class="org-type">Formatter</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, fmt=<span class="org-constant">None</span>, datefmt=<span class="org-constant">None</span>, style=<span class="org-string">'%'</span>, validate=<span class="org-constant">True</span>):
         ...
 </pre>
 </div>
@@ -565,28 +565,28 @@ logger.warning(<span style="font-style: italic;">'This is a warning'</span>)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create a custom logger</span>
-<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(<span style="font-weight: bold;">__name__</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create a custom logger</span>
+<span class="org-variable-name">logger</span> = logging.getLogger(<span class="org-builtin">__name__</span>)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create handlers</span>
-<span style="font-weight: bold; font-style: italic;">c_handler</span> = logging.StreamHandler()  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">default is sys.stderr</span>
-<span style="font-weight: bold; font-style: italic;">f_handler</span> = logging.FileHandler(<span style="font-style: italic;">'file.log'</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create handlers</span>
+<span class="org-variable-name">c_handler</span> = logging.StreamHandler()  <span class="org-comment-delimiter"># </span><span class="org-comment">default is sys.stderr</span>
+<span class="org-variable-name">f_handler</span> = logging.FileHandler(<span class="org-string">'file.log'</span>)
 c_handler.setLevel(logging.WARNING)
 f_handler.setLevel(logging.ERROR)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Create formatters and add it to handlers</span>
-<span style="font-weight: bold; font-style: italic;">c_format</span> = logging.Formatter(<span style="font-style: italic;">'%(name)s - %(levelname)s - %(message)s'</span>)
-<span style="font-weight: bold; font-style: italic;">f_format</span> = logging.Formatter(<span style="font-style: italic;">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create formatters and add it to handlers</span>
+<span class="org-variable-name">c_format</span> = logging.Formatter(<span class="org-string">'%(name)s - %(levelname)s - %(message)s'</span>)
+<span class="org-variable-name">f_format</span> = logging.Formatter(<span class="org-string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)
 c_handler.setFormatter(c_format)
 f_handler.setFormatter(f_format)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Add handlers to the logger</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Add handlers to the logger</span>
 logger.addHandler(c_handler)
 logger.addHandler(f_handler)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Add handlers to the root</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Add handlers to the root</span>
 logging.basicConfig(handlers=[c_handler, f_handler])
 </pre>
 </div>
@@ -597,8 +597,8 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 </div>
 </div>
 
-<div id="outline-container-orgb77605d" class="outline-2">
-<h2 id="orgb77605d"><span class="section-number-2">5</span> 日志配置</h2>
+<div id="outline-container-orgc512c6a" class="outline-2">
+<h2 id="orgc512c6a"><span class="section-number-2">5</span> 日志配置</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 可以看到，创建和配置 <code>Logger</code> 的过程较为繁琐，因此 <code>Python</code> 为我们提供了 <code>logging.config</code> 模块来简化创建和配置 <code>Logger</code> 的过程。
@@ -629,9 +629,9 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 但只是这样还是不够，这意味着你还是需要在每个模块的开头做这样的事：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
-<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(...)
+<span class="org-variable-name">logger</span> = logging.getLogger(...)
 </pre>
 </div>
 
@@ -639,7 +639,7 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 也许还可以把 <code>logger</code> 的获取也放到 <code>__init__.py</code> 里面去，这样就只需要：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">from</span> pkg <span style="font-weight: bold;">import</span> logger
+<pre class="src src-python"><span class="org-keyword">from</span> pkg <span class="org-keyword">import</span> logger
 </pre>
 </div>
 
@@ -647,7 +647,7 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 然而，我不是很喜欢这种方式，我更喜欢 <code>logging</code> 模块那种原生的使用方式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
+<pre class="src src-python"><span class="org-keyword">import</span> logging
 
 logging.debug(...)
 </pre>
@@ -661,61 +661,61 @@ logging.debug(...)
 因此，我选择了和 <code>logging</code> 类似的方式，用一个模块封装一个 <code>logger</code>, 该模块就叫做 <code>logger</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logging
-<span style="font-weight: bold;">import</span> logging.config
+<pre class="src src-python"><span class="org-keyword">import</span> logging
+<span class="org-keyword">import</span> logging.config
 
 
 ...
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Load config</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Load config</span>
 ...
 
 
-<span style="font-weight: bold; font-style: italic;">logger</span> = logging.getLogger(...)
+<span class="org-variable-name">logger</span> = logging.getLogger(...)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">critical</span>(msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'CRITICAL' on the root logger."""</span>
+<span class="org-keyword">def</span> <span class="org-function-name">critical</span>(msg, *args, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'CRITICAL' on the root logger."""</span>
     logger.critical(msg, *args, **kwargs)
 
 
-<span style="font-weight: bold; font-style: italic;">fatal</span> = critical
+<span class="org-variable-name">fatal</span> = critical
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">error</span>(msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'ERROR' on the root logger. """</span>
+<span class="org-keyword">def</span> <span class="org-function-name">error</span>(msg, *args, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'ERROR' on the root logger. """</span>
     logger.error(msg, *args, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">exception</span>(msg, *args, exc_info=<span style="font-weight: bold; text-decoration: underline;">True</span>, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'ERROR' on the root logger, with exception</span>
-<span style="font-style: italic;">    information.</span>
-<span style="font-style: italic;">    """</span>
+<span class="org-keyword">def</span> <span class="org-function-name">exception</span>(msg, *args, exc_info=<span class="org-constant">True</span>, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'ERROR' on the root logger, with exception</span>
+<span class="org-doc">    information.</span>
+<span class="org-doc">    """</span>
     error(msg, *args, exc_info=exc_info, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">warning</span>(msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'WARNING' on the root logger."""</span>
+<span class="org-keyword">def</span> <span class="org-function-name">warning</span>(msg, *args, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'WARNING' on the root logger."""</span>
     logger.warning(msg, *args, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">info</span>(msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'INFO' on the root logger."""</span>
+<span class="org-keyword">def</span> <span class="org-function-name">info</span>(msg, *args, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'INFO' on the root logger."""</span>
     logger.info(msg, *args, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">debug</span>(msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log a message with severity 'DEBUG' on the root logger."""</span>
+<span class="org-keyword">def</span> <span class="org-function-name">debug</span>(msg, *args, **kwargs):
+    <span class="org-doc">"""Log a message with severity 'DEBUG' on the root logger."""</span>
     logger.debug(msg, *args, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">log</span>(level, msg, *args, **kwargs):
-    <span style="font-style: italic;">"""Log 'msg % args' with the integer severity 'level' on the root logger."""</span>
+<span class="org-keyword">def</span> <span class="org-function-name">log</span>(level, msg, *args, **kwargs):
+    <span class="org-doc">"""Log 'msg % args' with the integer severity 'level' on the root logger."""</span>
     logger.log(level, msg, *args, **kwargs)
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">disable</span>(level=logging.CRITICAL):
-    <span style="font-style: italic;">"""Disable all logging calls of severity 'level' and below."""</span>
-    <span style="font-weight: bold; font-style: italic;">logger.manager.disable</span> = level
+<span class="org-keyword">def</span> <span class="org-function-name">disable</span>(level=logging.CRITICAL):
+    <span class="org-doc">"""Disable all logging calls of severity 'level' and below."""</span>
+    <span class="org-variable-name">logger.manager.disable</span> = level
     logger.manager._clear_cache()
 </pre>
 </div>
@@ -724,7 +724,7 @@ logging.debug(...)
 如此，便可以这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> logger
+<pre class="src src-python"><span class="org-keyword">import</span> logger
 
 logger.info(...)
 </pre>
@@ -737,8 +737,8 @@ logger.info(...)
 </div>
 </div>
 
-<div id="outline-container-org6ad9d2e" class="outline-2">
-<h2 id="org6ad9d2e"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org3c4f840" class="outline-2">
+<h2 id="org3c4f840"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 总感觉日志配置部分做了一些多于的事情 QAQ
@@ -758,8 +758,8 @@ Over !
 </div>
 </div>
 
-<div id="outline-container-orgf53962d" class="outline-2">
-<h2 id="orgf53962d"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org3cb1cd1" class="outline-2">
+<h2 id="org3cb1cd1"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://realpython.com/python-logging/">Logging in Python - Real Python</a></li>

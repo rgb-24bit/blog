@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:58 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Git 基础使用</title>
@@ -246,33 +246,33 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org12b9385">1. 前言</a></li>
-<li><a href="#org21c17c7">2. 基本概念</a></li>
-<li><a href="#org450bbc0">3. 配置 Git</a></li>
-<li><a href="#org422abf6">4. 常用指令</a>
+<li><a href="#org3d4c1cc">1. 前言</a></li>
+<li><a href="#orgf33ff8d">2. 基本概念</a></li>
+<li><a href="#orga5df9e6">3. 配置 Git</a></li>
+<li><a href="#org2874617">4. 常用指令</a>
 <ul>
-<li><a href="#org0e3add3">4.1. 忽略文件</a></li>
-<li><a href="#org3d3a779">4.2. 常用别名设置</a></li>
+<li><a href="#orgeb0d36b">4.1. 忽略文件</a></li>
+<li><a href="#org09afe94">4.2. 常用别名设置</a></li>
 </ul>
 </li>
-<li><a href="#org6388259">5. 撤销操作</a></li>
-<li><a href="#org089f912">6. 远程仓库</a></li>
-<li><a href="#orgc084b50">7. 打标签</a></li>
-<li><a href="#org4664fbc">8. 分支</a>
+<li><a href="#org0bd0c8d">5. 撤销操作</a></li>
+<li><a href="#org7423f8a">6. 远程仓库</a></li>
+<li><a href="#org14c411d">7. 打标签</a></li>
+<li><a href="#org67c89e9">8. 分支</a>
 <ul>
-<li><a href="#org57765a8">8.1. 概念</a></li>
-<li><a href="#org8248250">8.2. 操作</a></li>
-<li><a href="#org833dd47">8.3. 远程分支</a></li>
-<li><a href="#orgdd1b83c">8.4. 变基</a></li>
+<li><a href="#orgc5bf8fc">8.1. 概念</a></li>
+<li><a href="#org7db4ec0">8.2. 操作</a></li>
+<li><a href="#orgdd3f1f2">8.3. 远程分支</a></li>
+<li><a href="#org684e334">8.4. 变基</a></li>
 </ul>
 </li>
-<li><a href="#org1121212">9. 参考链接</a></li>
+<li><a href="#org1406ba0">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org12b9385" class="outline-2">
-<h2 id="org12b9385"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org3d4c1cc" class="outline-2">
+<h2 id="org3d4c1cc"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 使用 <code>Git</code> 也有一段时间了， 最初只是随便找了一个教程看了一下， 便将就着用了。
@@ -296,8 +296,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org21c17c7" class="outline-2">
-<h2 id="org21c17c7"><span class="section-number-2">2</span> 基本概念</h2>
+<div id="outline-container-orgf33ff8d" class="outline-2">
+<h2 id="orgf33ff8d"><span class="section-number-2">2</span> 基本概念</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Git</code> 项目有三个工作区域， 分别对应了三种状态：
@@ -338,8 +338,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org450bbc0" class="outline-2">
-<h2 id="org450bbc0"><span class="section-number-2">3</span> 配置 Git</h2>
+<div id="outline-container-orga5df9e6" class="outline-2">
+<h2 id="orga5df9e6"><span class="section-number-2">3</span> 配置 Git</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>配置</b> 这个问题不是问题， 很多教程都对初步使用 <code>Git</code> 需要进行配置进行了详细的解说。
@@ -370,7 +370,7 @@ First, 是配置文件的位置：
 Second, 是用户信息的配置：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">$ git config --global user.name <span style="font-style: italic;">"xxx xxx"</span>
+<pre class="src src-bash">$ git config --global user.name <span class="org-string">"xxx xxx"</span>
 $ git config --global user.email xxx@example.com
 </pre>
 </div>
@@ -400,74 +400,74 @@ Then, 配置默认的文本编辑器：
 Finally, 检查配置信息：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21015;&#20986;&#25152;&#26377;&#37197;&#32622;</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377;&#37197;&#32622;</span>
 $ git config --list
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26816;&#26597; Git &#30340;&#26576;&#19968;&#39033;&#37197;&#32622;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26816;&#26597; Git &#30340;&#26576;&#19968;&#39033;&#37197;&#32622;</span>
 $ git config &lt;key&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org422abf6" class="outline-2">
-<h2 id="org422abf6"><span class="section-number-2">4</span> 常用指令</h2>
+<div id="outline-container-org2874617" class="outline-2">
+<h2 id="org2874617"><span class="section-number-2">4</span> 常用指令</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Git</code> 有着很多的指令， 对于不清楚功能的指令， 可以通过 <code>git help &lt;cmd&gt;</code> 的方式来获取帮助。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21021;&#22987;&#21270;&#20179;&#24211;</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21021;&#22987;&#21270;&#20179;&#24211;</span>
 $ git init
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20811;&#38534;&#36828;&#31243;&#20179;&#24211;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20811;&#38534;&#36828;&#31243;&#20179;&#24211;</span>
 $ git clone &lt;url&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21487;&#20197;&#21629;&#21517;&#20811;&#38534;&#21040;&#26412;&#22320;&#21518;&#25991;&#20214;&#22841;&#30340;&#21517;&#31216;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#20197;&#21629;&#21517;&#20811;&#38534;&#21040;&#26412;&#22320;&#21518;&#25991;&#20214;&#22841;&#30340;&#21517;&#31216;</span>
 $ git clone &lt;url&gt; &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26816;&#26597;&#25991;&#20214;&#29366;&#24577;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26816;&#26597;&#25991;&#20214;&#29366;&#24577;</span>
 $ git status
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#28155;&#21152;&#25991;&#20214;&#21040;&#26242;&#23384;&#21306; - &#25903;&#25345; glob &#35821;&#27861;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#25991;&#20214;&#21040;&#26242;&#23384;&#21306; - &#25903;&#25345; glob &#35821;&#27861;</span>
 $ git add &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#28155;&#21152;&#25152;&#26377;&#25991;&#20214;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#25152;&#26377;&#25991;&#20214;</span>
 $ git add --all
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26597;&#30475; &#26410;&#26242;&#23384; &#25991;&#20214;&#20570;&#30340;&#20462;&#25913;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26597;&#30475; &#26410;&#26242;&#23384; &#25991;&#20214;&#20570;&#30340;&#20462;&#25913;</span>
 $ git diff
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26597;&#30475; &#24050;&#26242;&#23384; &#25991;&#20214;&#20570;&#30340;&#20462;&#25913;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26597;&#30475; &#24050;&#26242;&#23384; &#25991;&#20214;&#20570;&#30340;&#20462;&#25913;</span>
 $ git diff --cached
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25552;&#20132;&#26356;&#26032;&#65292; &#24182;&#21551;&#21160;&#32534;&#36753;&#22120;&#32534;&#20889;&#27880;&#35299;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#25552;&#20132;&#26356;&#26032;&#65292; &#24182;&#21551;&#21160;&#32534;&#36753;&#22120;&#32534;&#20889;&#27880;&#35299;</span>
 $ git commit
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#19981;&#21551;&#21160;&#32534;&#36753;&#22120;</span>
-$ git commit -m <span style="font-style: italic;">"xxx"</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#21551;&#21160;&#32534;&#36753;&#22120;</span>
+$ git commit -m <span class="org-string">"xxx"</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36339;&#36807; git add</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36339;&#36807; git add</span>
 $ git commit -a
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31227;&#38500;&#25991;&#20214; - &#31867;&#20284;&#20110; rm &#25351;&#20196;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#38500;&#25991;&#20214; - &#31867;&#20284;&#20110; rm &#25351;&#20196;</span>
 $ git rm
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31227;&#21160;/&#37325;&#21629;&#21517;&#25991;&#20214; - &#31867;&#20284;&#20110; mv &#25351;&#20196;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#21160;/&#37325;&#21629;&#21517;&#25991;&#20214; - &#31867;&#20284;&#20110; mv &#25351;&#20196;</span>
 $ git mv file_from file_to
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26597;&#30475;&#25552;&#20132;&#21382;&#21490;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26597;&#30475;&#25552;&#20132;&#21382;&#21490;</span>
 $ git log
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35774;&#32622;&#21629;&#20196;&#21035;&#21517; -- xx &#23601;&#26159; &lt;cmd&gt; &#30340;&#21035;&#21517;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#21629;&#20196;&#21035;&#21517; -- xx &#23601;&#26159; &lt;cmd&gt; &#30340;&#21035;&#21517;</span>
 $ git config --global alias.xx &lt;cmd&gt;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org0e3add3" class="outline-3">
-<h3 id="org0e3add3"><span class="section-number-3">4.1</span> 忽略文件</h3>
+<div id="outline-container-orgeb0d36b" class="outline-3">
+<h3 id="orgeb0d36b"><span class="section-number-3">4.1</span> 忽略文件</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 通过 <code>.gitignore</code> 文件列出需要忽略的文件， 这些文件不会纳入 <code>Git</code> 的管理。
@@ -484,23 +484,23 @@ $ git config --global alias.xx &lt;cmd&gt;
 </div>
 </div>
 
-<div id="outline-container-org3d3a779" class="outline-3">
-<h3 id="org3d3a779"><span class="section-number-3">4.2</span> 常用别名设置</h3>
+<div id="outline-container-org09afe94" class="outline-3">
+<h3 id="org09afe94"><span class="section-number-3">4.2</span> 常用别名设置</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-bash">$ git config --global alias.co checkout
 $ git config --global alias.br branch
 $ git config --global alias.ci commit
 $ git config --global alias.st status
-$ git config --global alias.lg = log --color --graph --pretty=format:<span style="font-style: italic;">'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span> --abbrev-commit
+$ git config --global alias.lg = log --color --graph --pretty=format:<span class="org-string">'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span> --abbrev-commit
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6388259" class="outline-2">
-<h2 id="org6388259"><span class="section-number-2">5</span> 撤销操作</h2>
+<div id="outline-container-org0bd0c8d" class="outline-2">
+<h2 id="org0bd0c8d"><span class="section-number-2">5</span> 撤销操作</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 人总是会犯错的， 而 <code>Git</code> 允许我们对做错了的事进行弥补。
@@ -512,7 +512,7 @@ $ git config --global alias.lg = log --color --graph --pretty=format:<span style
 提交后发现忘记了暂存某些需要的修改， 可以像下面这样操作：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">$ git commit -m <span style="font-style: italic;">'initial commit'</span>
+<pre class="src src-bash">$ git commit -m <span class="org-string">'initial commit'</span>
 $ git add forgotten_file
 $ git commit --amend
 </pre>
@@ -540,8 +540,8 @@ $ git commit --amend
 </div>
 </div>
 
-<div id="outline-container-org089f912" class="outline-2">
-<h2 id="org089f912"><span class="section-number-2">6</span> 远程仓库</h2>
+<div id="outline-container-org7423f8a" class="outline-2">
+<h2 id="org7423f8a"><span class="section-number-2">6</span> 远程仓库</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>远程仓库</b> 是一个好东西， <code>push</code> 之后感觉都会安全不少。
@@ -574,8 +574,8 @@ $ git commit --amend
 </div>
 </div>
 
-<div id="outline-container-orgc084b50" class="outline-2">
-<h2 id="orgc084b50"><span class="section-number-2">7</span> 打标签</h2>
+<div id="outline-container-org14c411d" class="outline-2">
+<h2 id="org14c411d"><span class="section-number-2">7</span> 打标签</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 对某个特定版本打标签是很有用的。
@@ -588,10 +588,10 @@ $ git commit --amend
 有两种标签：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21019;&#24314;&#38468;&#27880;&#26631;&#31614;&#65292; git show &#21487;&#20197;&#30475;&#21040;&#20449;&#24687;</span>
-$ git tag -a version -m <span style="font-style: italic;">"commnet"</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21019;&#24314;&#38468;&#27880;&#26631;&#31614;&#65292; git show &#21487;&#20197;&#30475;&#21040;&#20449;&#24687;</span>
+$ git tag -a version -m <span class="org-string">"commnet"</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21019;&#24314;&#36731;&#37327;&#26631;&#31614;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21019;&#24314;&#36731;&#37327;&#26631;&#31614;</span>
 $ git tag version
 </pre>
 </div></dd>
@@ -613,8 +613,8 @@ $ git tag version
 </div>
 </div>
 
-<div id="outline-container-org4664fbc" class="outline-2">
-<h2 id="org4664fbc"><span class="section-number-2">8</span> 分支</h2>
+<div id="outline-container-org67c89e9" class="outline-2">
+<h2 id="org67c89e9"><span class="section-number-2">8</span> 分支</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <code>Git</code> 中的分支操作很方便， 同时分支也是一个很重要的功能。 新的想法可以通过一个临时
@@ -623,8 +623,8 @@ $ git tag version
 </p>
 </div>
 
-<div id="outline-container-org57765a8" class="outline-3">
-<h3 id="org57765a8"><span class="section-number-3">8.1</span> 概念</h3>
+<div id="outline-container-orgc5bf8fc" class="outline-3">
+<h3 id="orgc5bf8fc"><span class="section-number-3">8.1</span> 概念</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 首先， 是 <b>提交对象</b> 这一概念。 每一次提交都会创建一个 <b>提交对象</b>. 这个提交对象可以代表
@@ -655,35 +655,35 @@ $ git tag version
 </div>
 </div>
 
-<div id="outline-container-org8248250" class="outline-3">
-<h3 id="org8248250"><span class="section-number-3">8.2</span> 操作</h3>
+<div id="outline-container-org7db4ec0" class="outline-3">
+<h3 id="org7db4ec0"><span class="section-number-3">8.2</span> 操作</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 分支的基本操作很简单：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26032;&#24314;&#20998;&#25903;</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;</span>
 $ git branch &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#33719;&#21462;&#24403;&#21069;&#20998;&#25903;&#21015;&#34920;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#33719;&#21462;&#24403;&#21069;&#20998;&#25903;&#21015;&#34920;</span>
 $ git branch
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26816;&#26597;&#27599;&#19968;&#20010;&#20998;&#25903;&#26368;&#21518;&#30340;&#25552;&#20132;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26816;&#26597;&#27599;&#19968;&#20010;&#20998;&#25903;&#26368;&#21518;&#30340;&#25552;&#20132;</span>
 $ git branch -v
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#28388;&#21015;&#34920;&#20013; &#21512;&#24182;/&#26410;&#21512;&#24182; &#21040;&#24403;&#21069;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28388;&#21015;&#34920;&#20013; &#21512;&#24182;/&#26410;&#21512;&#24182; &#21040;&#24403;&#21069;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
 $ git branch --merged/--no-merged
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20999;&#25442;&#20998;&#25903;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20999;&#25442;&#20998;&#25903;</span>
 $ git checkout &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26032;&#24314;&#24182;&#20999;&#25442;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#24182;&#20999;&#25442;</span>
 $ git checkout -b &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21512;&#24182;&#20998;&#25903;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21512;&#24182;&#20998;&#25903;</span>
 $ git merge &lt;name&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#21024;&#38500;&#20998;&#25903;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#20998;&#25903;</span>
 $ git branch -d &lt;name&gt;
 </pre>
 </div>
@@ -694,8 +694,8 @@ $ git branch -d &lt;name&gt;
 </div>
 </div>
 
-<div id="outline-container-org833dd47" class="outline-3">
-<h3 id="org833dd47"><span class="section-number-3">8.3</span> 远程分支</h3>
+<div id="outline-container-orgdd3f1f2" class="outline-3">
+<h3 id="orgdd3f1f2"><span class="section-number-3">8.3</span> 远程分支</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 <b>远程分支不等于当前分支</b>.
@@ -736,10 +736,10 @@ $ git branch -d &lt;name&gt;
 设置其他跟踪分支：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36319;&#36394;&#20998;&#25903;&#65292; branch &#30340;&#21517;&#31216;&#21487;&#20197;&#21644;&#36828;&#31243;&#20998;&#25903;&#30340;&#19981;&#21516;</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#36319;&#36394;&#20998;&#25903;&#65292; branch &#30340;&#21517;&#31216;&#21487;&#20197;&#21644;&#36828;&#31243;&#20998;&#25903;&#30340;&#19981;&#21516;</span>
 $ git checkout -b [branch] [remotename]/[branch]
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24555;&#25463;&#26041;&#24335;&#65292; &#21517;&#31216;&#30456;&#21516;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#24555;&#25463;&#26041;&#24335;&#65292; &#21517;&#31216;&#30456;&#21516;</span>
 $ git checkout --track [remotename]/[branch]
 </pre>
 </div>
@@ -759,9 +759,9 @@ $ git checkout --track [remotename]/[branch]
 <div class="org-src-container">
 <pre class="src src-bash">$ git checkout -b [branch]
 
-$ git pull [remote] [branch]  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#33719;&#21462;&#36828;&#31243;&#20998;&#25903;&#20869;&#23481;&#20294;&#19981;&#36319;&#36394;</span>
+$ git pull [remote] [branch]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#33719;&#21462;&#36828;&#31243;&#20998;&#25903;&#20869;&#23481;&#20294;&#19981;&#36319;&#36394;</span>
 
-$ git push [remote] [branch]  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20219;&#28982;&#21487;&#20197;&#23558;&#26356;&#26032;&#25512;&#36865;&#21040;&#36828;&#31243;&#20998;&#25903;</span>
+$ git push [remote] [branch]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20219;&#28982;&#21487;&#20197;&#23558;&#26356;&#26032;&#25512;&#36865;&#21040;&#36828;&#31243;&#20998;&#25903;</span>
 </pre>
 </div></dd>
 
@@ -776,8 +776,8 @@ $ git push [remote] [branch]  <span style="font-weight: bold; font-style: italic
 </div>
 </div>
 
-<div id="outline-container-orgdd1b83c" class="outline-3">
-<h3 id="orgdd1b83c"><span class="section-number-3">8.4</span> 变基</h3>
+<div id="outline-container-org684e334" class="outline-3">
+<h3 id="org684e334"><span class="section-number-3">8.4</span> 变基</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 这不是一个好名字。
@@ -791,10 +791,10 @@ $ git push [remote] [branch]  <span style="font-weight: bold; font-style: italic
 变基的概念很清楚， 操作上也很方便：
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20999;&#25442;&#21040;&#35201;&#25552;&#21462;&#20462;&#25913;&#30340;&#20998;&#25903;</span>
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">&#20999;&#25442;&#21040;&#35201;&#25552;&#21462;&#20462;&#25913;&#30340;&#20998;&#25903;</span>
 $ git checkout &lt;branch&gt;
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23558;&#20462;&#25913;&#24212;&#29992;&#21040;&#30446;&#26631;&#20998;&#25903;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#20462;&#25913;&#24212;&#29992;&#21040;&#30446;&#26631;&#20998;&#25903;</span>
 $ git rebase &lt;branch&gt;
 </pre>
 </div>
@@ -802,8 +802,8 @@ $ git rebase &lt;branch&gt;
 </div>
 </div>
 
-<div id="outline-container-org1121212" class="outline-2">
-<h2 id="org1121212"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org1406ba0" class="outline-2">
+<h2 id="org1406ba0"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://git-scm.com/book/zh/v2">Git-Book</a></li>

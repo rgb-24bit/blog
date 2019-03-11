@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 基础梳理</title>
@@ -246,22 +246,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb43f912">1. 前言</a></li>
-<li><a href="#org71ef5e3">2. 语法无关内容</a></li>
-<li><a href="#org4b14d2a">3. 原始数据类型和引用</a></li>
-<li><a href="#org6892892">4. 数组和字符串</a></li>
-<li><a href="#org44da624">5. 继承和多态</a></li>
-<li><a href="#orgd432bc4">6. 重载</a></li>
-<li><a href="#orgc62c5e0">7. 抽象类</a></li>
-<li><a href="#org4c91580">8. 接口</a></li>
-<li><a href="#org573b235">9. 异常</a></li>
-<li><a href="#org92d88ee">10. 静态成员和常量</a></li>
+<li><a href="#org4b8a55c">1. 前言</a></li>
+<li><a href="#org0c77c8b">2. 语法无关内容</a></li>
+<li><a href="#org3d14629">3. 原始数据类型和引用</a></li>
+<li><a href="#org746e89a">4. 数组和字符串</a></li>
+<li><a href="#org46c63b3">5. 继承和多态</a></li>
+<li><a href="#org56c97e8">6. 重载</a></li>
+<li><a href="#org62befff">7. 抽象类</a></li>
+<li><a href="#org5edeb4e">8. 接口</a></li>
+<li><a href="#org39317d0">9. 异常</a></li>
+<li><a href="#orga1a936c">10. 静态成员和常量</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb43f912" class="outline-2">
-<h2 id="orgb43f912"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org4b8a55c" class="outline-2">
+<h2 id="org4b8a55c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本篇博客主要是对 <code>Java</code> 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容
@@ -274,8 +274,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org71ef5e3" class="outline-2">
-<h2 id="org71ef5e3"><span class="section-number-2">2</span> 语法无关内容</h2>
+<div id="outline-container-org0c77c8b" class="outline-2">
+<h2 id="org0c77c8b"><span class="section-number-2">2</span> 语法无关内容</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Java</code> 学习中有一些容易让人疑惑而与语法无关的内容， 这些内容教材上提到的少， 而平时又经常接触。
@@ -393,8 +393,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4b14d2a" class="outline-2">
-<h2 id="org4b14d2a"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
+<div id="outline-container-org3d14629" class="outline-2">
+<h2 id="org3d14629"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Java</code> 关键字中有 <code>8</code> 个代表 <b>原始数据类型</b>, 这些原始数据类型在 <code>java.lang</code> 还存在与之对应的 <b>包装类型</b>.
@@ -538,24 +538,24 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6892892" class="outline-2">
-<h2 id="org6892892"><span class="section-number-2">4</span> 数组和字符串</h2>
+<div id="outline-container-org746e89a" class="outline-2">
+<h2 id="org746e89a"><span class="section-number-2">4</span> 数组和字符串</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Java</code> 中数组类型的变量属于 <b>引用</b>, 有如下几种声明和创建方式：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22768;&#26126;&#25968;&#32452;</span>
-<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span>;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#39318;&#36873;&#30340;&#26041;&#27861;</span>
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#25968;&#32452;</span>
+<span class="org-type">dataType</span>[] <span class="org-variable-name">arrayRefVar</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">&#39318;&#36873;&#30340;&#26041;&#27861;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">dataType</span> <span style="font-weight: bold; font-style: italic;">arrayRefVar</span>[];  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#25928;&#26524;&#30456;&#21516;&#65292;&#20294;&#19981;&#26159;&#39318;&#36873;&#26041;&#27861;</span>
+<span class="org-type">dataType</span> <span class="org-variable-name">arrayRefVar</span>[];  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25928;&#26524;&#30456;&#21516;&#65292;&#20294;&#19981;&#26159;&#39318;&#36873;&#26041;&#27861;</span>
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21019;&#24314;&#25968;&#32452;</span>
-<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dataType</span>[arraySize];
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21019;&#24314;&#25968;&#32452;</span>
+<span class="org-type">dataType</span>[] <span class="org-variable-name">arrayRefVar</span> = <span class="org-keyword">new</span> <span class="org-type">dataType</span>[arraySize];
 
-<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = {value0, value1, ..., valuek};  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21482;&#33021;&#22312;&#22768;&#26126;&#30340;&#21516;&#26102;&#20351;&#29992;</span>
+<span class="org-type">dataType</span>[] <span class="org-variable-name">arrayRefVar</span> = {value0, value1, ..., valuek};  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#33021;&#22312;&#22768;&#26126;&#30340;&#21516;&#26102;&#20351;&#29992;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">dataType</span>[] <span style="font-weight: bold; font-style: italic;">arrayRefVar</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dataType</span>[]{value0, value1, ..., valuek};
+<span class="org-type">dataType</span>[] <span class="org-variable-name">arrayRefVar</span> = <span class="org-keyword">new</span> <span class="org-type">dataType</span>[]{value0, value1, ..., valuek};
 </pre>
 </div>
 
@@ -575,9 +575,9 @@ for the JavaScript code in this tag.
 <code>Java</code> 中字符串的一个强大的特性就是可以直接和其他类型的变量相 <b>加</b>, 如：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">String</span>[] <span style="font-weight: bold; font-style: italic;">args</span>) {
-    <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">str</span> = <span style="font-style: italic;">"123"</span> + 45 + <span style="font-weight: bold; text-decoration: underline;">true</span> + 3.4 + <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Test</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {
+    <span class="org-type">String</span> <span class="org-variable-name">str</span> = <span class="org-string">"123"</span> + 45 + <span class="org-constant">true</span> + 3.4 + <span class="org-keyword">new</span> <span class="org-type">Test</span>();
     System.out.println(str);
   }
 }
@@ -593,8 +593,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org44da624" class="outline-2">
-<h2 id="org44da624"><span class="section-number-2">5</span> 继承和多态</h2>
+<div id="outline-container-org46c63b3" class="outline-2">
+<h2 id="org46c63b3"><span class="section-number-2">5</span> 继承和多态</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Java</code> 中的继承机制并不复杂， 一般语法就是 <code>class A extends B</code>.
@@ -624,13 +624,13 @@ for the JavaScript code in this tag.
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Parent</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() {}
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Parent</span> {
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">method</span>() {}
 }
 
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Child</span> <span style="font-weight: bold;">extends</span> <span style="font-weight: bold; text-decoration: underline;">Parent</span> {
-  <span style="font-weight: bold; text-decoration: underline;">@Override</span>
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() {}
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Child</span> <span class="org-keyword">extends</span> <span class="org-type">Parent</span> {
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">method</span>() {}
 }
 </pre>
 </div>
@@ -648,7 +648,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Parent</span> <span style="font-weight: bold; font-style: italic;">obj</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Child</span>();
+<pre class="src src-java"><span class="org-type">Parent</span> <span class="org-variable-name">obj</span> = <span class="org-keyword">new</span> <span class="org-type">Child</span>();
 </pre>
 </div>
 
@@ -669,8 +669,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd432bc4" class="outline-2">
-<h2 id="orgd432bc4"><span class="section-number-2">6</span> 重载</h2>
+<div id="outline-container-org56c97e8" class="outline-2">
+<h2 id="org56c97e8"><span class="section-number-2">6</span> 重载</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 首先需要明白的一点是： <b>重载不是多态</b>.
@@ -695,8 +695,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc62c5e0" class="outline-2">
-<h2 id="orgc62c5e0"><span class="section-number-2">7</span> 抽象类</h2>
+<div id="outline-container-org62befff" class="outline-2">
+<h2 id="org62befff"><span class="section-number-2">7</span> 抽象类</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 假如你希望一个 <b>方法</b> 必须被子类覆盖， 那么你可以用 <code>abstract</code> 这个关键字来修饰它。
@@ -714,8 +714,8 @@ for the JavaScript code in this tag.
 <b>抽象方法</b> 不能有实体， 需要这样定义：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">abstract</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Example</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">abstract</span> <span style="font-weight: bold;">method</span>();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-keyword">class</span> <span class="org-type">Example</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-function-name">method</span>();
 }
 </pre>
 </div>
@@ -738,8 +738,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4c91580" class="outline-2">
-<h2 id="org4c91580"><span class="section-number-2">8</span> 接口</h2>
+<div id="outline-container-org5edeb4e" class="outline-2">
+<h2 id="org5edeb4e"><span class="section-number-2">8</span> 接口</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <b>接口不是类</b>.
@@ -754,17 +754,17 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">interface</span> <span style="font-weight: bold; text-decoration: underline;">Pet</span> {
-  <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">beFriendly</span>();
-  <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">play</span>();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">Pet</span> {
+  <span class="org-type">void</span> <span class="org-function-name">beFriendly</span>();
+  <span class="org-type">void</span> <span class="org-function-name">play</span>();
 }
 
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span> <span style="font-weight: bold;">implements</span> <span style="font-weight: bold; text-decoration: underline;">Pet</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">beFriendly</span>() {}
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">play</span>() {}
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">A</span> <span class="org-keyword">implements</span> <span class="org-type">Pet</span> {
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">beFriendly</span>() {}
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">play</span>() {}
 }
 
-<span style="font-weight: bold; text-decoration: underline;">Pet</span> <span style="font-weight: bold; font-style: italic;">p</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">A</span>();  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22810;&#24577;&#30340;&#20351;&#29992;</span>
+<span class="org-type">Pet</span> <span class="org-variable-name">p</span> = <span class="org-keyword">new</span> <span class="org-type">A</span>();  <span class="org-comment-delimiter">// </span><span class="org-comment">&#22810;&#24577;&#30340;&#20351;&#29992;</span>
 </pre>
 </div>
 
@@ -777,14 +777,14 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">A</span> <span style="font-weight: bold;">implements</span> <span style="font-weight: bold; text-decoration: underline;">IA</span>, <span style="font-weight: bold; text-decoration: underline;">IB</span>, <span style="font-weight: bold; text-decoration: underline;">IC</span> {}
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">A</span> <span class="org-keyword">implements</span> <span class="org-type">IA</span>, <span class="org-type">IB</span>, <span class="org-type">IC</span> {}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org573b235" class="outline-2">
-<h2 id="org573b235"><span class="section-number-2">9</span> 异常</h2>
+<div id="outline-container-org39317d0" class="outline-2">
+<h2 id="org39317d0"><span class="section-number-2">9</span> 异常</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 <code>java</code> 中使用 <code>throw</code> 抛出异常， 使用 <code>throws</code> 声明要抛出的远程， 使用 <code>try/catch</code> 捕获处理异常。
@@ -796,10 +796,10 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Example</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">method</span>() <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">ExceptionA</span>, <span style="font-weight: bold; text-decoration: underline;">ExceptionB</span> {
-    <span style="font-weight: bold;">throw</span> ExceptionA();
-    <span style="font-weight: bold;">throw</span> ExceptionB();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Example</span> {
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">method</span>() <span class="org-keyword">throws</span> <span class="org-type">ExceptionA</span>, <span class="org-type">ExceptionB</span> {
+    <span class="org-keyword">throw</span> ExceptionA();
+    <span class="org-keyword">throw</span> ExceptionB();
   }
 }
 </pre>
@@ -814,11 +814,11 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">try</span> {
-  e = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Example</span>();
+<pre class="src src-java"><span class="org-keyword">try</span> {
+  e = <span class="org-keyword">new</span> <span class="org-type">Example</span>();
   e.method();
-} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">ExcepthonA</span> <span style="font-weight: bold; font-style: italic;">ex</span>) {
-} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">ExcepthonB</span> <span style="font-weight: bold; font-style: italic;">ex</span>) {
+} <span class="org-keyword">catch</span> (<span class="org-type">ExcepthonA</span> <span class="org-variable-name">ex</span>) {
+} <span class="org-keyword">catch</span> (<span class="org-type">ExcepthonB</span> <span class="org-variable-name">ex</span>) {
 }
 </pre>
 </div>
@@ -828,8 +828,8 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">myMethod</span>() <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">ExceptionA</span>, <span style="font-weight: bold; text-decoration: underline;">ExceptionB</span> {
-  e = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Example</span>();
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">myMethod</span>() <span class="org-keyword">throws</span> <span class="org-type">ExceptionA</span>, <span class="org-type">ExceptionB</span> {
+  e = <span class="org-keyword">new</span> <span class="org-type">Example</span>();
   e.method();
 }
 </pre>
@@ -841,8 +841,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org92d88ee" class="outline-2">
-<h2 id="org92d88ee"><span class="section-number-2">10</span> 静态成员和常量</h2>
+<div id="outline-container-orga1a936c" class="outline-2">
+<h2 id="orga1a936c"><span class="section-number-2">10</span> 静态成员和常量</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Java</code> 中， 你可以使用 <code>static</code> 修饰类的 <b>内部成员</b>, 被 <code>static</code> 修饰的内部成员属于 <b>静态成员</b>.
@@ -872,7 +872,7 @@ for the JavaScript code in this tag.
 使用关键字 <code>final</code> 修饰的变量不能被修改：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">size</span> = 3;
+<pre class="src src-java"><span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">size</span> = 3;
 </pre>
 </div>
 </div>

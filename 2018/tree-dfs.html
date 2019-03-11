@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:17 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>树的深度优先遍历</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org579f96f">1. 前言</a></li>
-<li><a href="#orgc6dd3e2">2. 树类型</a></li>
-<li><a href="#org39fe3cf">3. 使用递归的深度优先遍历</a></li>
-<li><a href="#org215f632">4. 使用栈的深度优先遍历</a></li>
-<li><a href="#org03920fe">5. 使用栈的深度优先遍历 · 补</a></li>
-<li><a href="#org2c6dd47">6. 结语</a></li>
-<li><a href="#orgded5fb6">7. 参考链接</a></li>
+<li><a href="#org7de1441">1. 前言</a></li>
+<li><a href="#org0f907f5">2. 树类型</a></li>
+<li><a href="#org5c4c4a4">3. 使用递归的深度优先遍历</a></li>
+<li><a href="#org3ff8af3">4. 使用栈的深度优先遍历</a></li>
+<li><a href="#orgef3f026">5. 使用栈的深度优先遍历 · 补</a></li>
+<li><a href="#org9ee6091">6. 结语</a></li>
+<li><a href="#org8b83a63">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org579f96f" class="outline-2">
-<h2 id="org579f96f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org7de1441" class="outline-2">
+<h2 id="org7de1441"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前段时间了解到可以用 <b>队列</b> 实现 <a href="tree-bfs.html">树的广度优先遍历</a> 后，在 <a href="https://leetcode-cn.com/">LeetCode</a> 刷题的时候，
@@ -271,32 +271,32 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc6dd3e2" class="outline-2">
-<h2 id="orgc6dd3e2"><span class="section-number-2">2</span> 树类型</h2>
+<div id="outline-container-org0f907f5" class="outline-2">
+<h2 id="org0f907f5"><span class="section-number-2">2</span> 树类型</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 考虑到之后的内容会用到这两个树类型，就先在这里把它们列出来好了：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#20108;&#21449;&#26641;</span>
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">left</span>;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">right</span>;
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">&#20108;&#21449;&#26641;</span>
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">BinaryTree</span> {
+  <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-variable-name">val</span>;
+  <span class="org-keyword">public</span> <span class="org-type">BinaryTree</span> <span class="org-variable-name">left</span>;
+  <span class="org-keyword">public</span> <span class="org-type">BinaryTree</span> <span class="org-variable-name">right</span>;
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">BinaryTree</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>) {
-    <span style="font-weight: bold;">this</span>.val = val;
+  <span class="org-keyword">public</span> <span class="org-function-name">BinaryTree</span>(<span class="org-type">int</span> <span class="org-variable-name">val</span>) {
+    <span class="org-keyword">this</span>.val = val;
   }
 }
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#22810;&#21449;&#26641;</span>
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">GenericTree</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>;
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">GenericTree</span>&gt; <span style="font-weight: bold; font-style: italic;">children</span>;
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#22810;&#21449;&#26641;</span>
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">GenericTree</span> {
+  <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-variable-name">val</span>;
+  <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">GenericTree</span>&gt; <span class="org-variable-name">children</span>;
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">GenericTree</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">val</span>) {
-    <span style="font-weight: bold;">this</span>.val = val;
-    <span style="font-weight: bold;">this</span>.children = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">GenericTree</span>&gt;();
+  <span class="org-keyword">public</span> <span class="org-function-name">GenericTree</span>(<span class="org-type">int</span> <span class="org-variable-name">val</span>) {
+    <span class="org-keyword">this</span>.val = val;
+    <span class="org-keyword">this</span>.children = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">GenericTree</span>&gt;();
   }
 }
 </pre>
@@ -304,18 +304,18 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org39fe3cf" class="outline-2">
-<h2 id="org39fe3cf"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
+<div id="outline-container-org5c4c4a4" class="outline-2">
+<h2 id="org5c4c4a4"><span class="section-number-2">3</span> 使用递归的深度优先遍历</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 使用递归实现树的深度优先遍历实在是太简单了，随便一本教材都会讲到这一实现，就不多说了，
 直接上代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">RecursiveTraversal</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-      <span style="font-weight: bold;">return</span>;
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">RecursiveTraversal</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">traversal</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">root</span>) {
+    <span class="org-keyword">if</span> (root == <span class="org-constant">null</span>) {
+      <span class="org-keyword">return</span>;
     }
 
     traversal(root.left);
@@ -324,24 +324,24 @@ for the JavaScript code in this tag.
     visit(root);
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-      <span style="font-weight: bold;">return</span>;
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">traversal</span>(<span class="org-type">GenericTree</span> <span class="org-variable-name">root</span>) {
+    <span class="org-keyword">if</span> (root == <span class="org-constant">null</span>) {
+      <span class="org-keyword">return</span>;
     }
 
-    <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">child</span> : root.children) {
+    <span class="org-keyword">for</span> (<span class="org-type">GenericTree</span> <span class="org-variable-name">child</span> : root.children) {
       traversal(child);
     }
 
     visit(root);
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">visit</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">node</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">visit</span>(<span class="org-type">GenericTree</span> <span class="org-variable-name">node</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
   }
 }
 </pre>
@@ -353,8 +353,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org215f632" class="outline-2">
-<h2 id="org215f632"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
+<div id="outline-container-org3ff8af3" class="outline-2">
+<h2 id="org3ff8af3"><span class="section-number-2">4</span> 使用栈的深度优先遍历</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 使用栈实现树的深度优先遍历的基本思路是利用栈 <b>后进先出</b> 的特性，将父节点保存到栈中，
@@ -369,20 +369,20 @@ for the JavaScript code in this tag.
 首先是使用栈实现二叉树的深度优先遍历：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StackTraversal</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-    <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
-    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">lastVisited</span> = <span style="font-weight: bold; text-decoration: underline;">null</span>;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26368;&#21518;&#19968;&#20010;&#35775;&#38382; visit &#30340;&#33410;&#28857;</span>
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">StackTraversal</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">traversal</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">root</span>) {
+    <span class="org-type">Deque</span>&lt;<span class="org-type">BinaryTree</span>&gt; <span class="org-variable-name">stack</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayDeque</span>&lt;<span class="org-type">BinaryTree</span>&gt;();
+    <span class="org-type">BinaryTree</span> <span class="org-variable-name">lastVisited</span> = <span class="org-constant">null</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26368;&#21518;&#19968;&#20010;&#35775;&#38382; visit &#30340;&#33410;&#28857;</span>
 
-    <span style="font-weight: bold;">while</span> (!stack.isEmpty() || root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-      <span style="font-weight: bold;">if</span> (root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+    <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>stack.isEmpty() || root != <span class="org-constant">null</span>) {
+      <span class="org-keyword">if</span> (root != <span class="org-constant">null</span>) {
         stack.addFirst(root);
         root = root.left;
-      } <span style="font-weight: bold;">else</span> {
-        <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">peekNode</span> = stack.peekFirst();
-        <span style="font-weight: bold;">if</span> (peekNode.right != <span style="font-weight: bold; text-decoration: underline;">null</span> &amp;&amp; lastVisited != peekNode.right) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#21491;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
+      } <span class="org-keyword">else</span> {
+        <span class="org-type">BinaryTree</span> <span class="org-variable-name">peekNode</span> = stack.peekFirst();
+        <span class="org-keyword">if</span> (peekNode.right != <span class="org-constant">null</span> &amp;&amp; lastVisited != peekNode.right) {  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#21491;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
           root = peekNode.right;
-        } <span style="font-weight: bold;">else</span> {
+        } <span class="org-keyword">else</span> {
           visit(peekNode);
           lastVisited = stack.removeFirst();
         }
@@ -390,8 +390,8 @@ for the JavaScript code in this tag.
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">visit</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">node</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
   }
 }
 </pre>
@@ -409,33 +409,33 @@ for the JavaScript code in this tag.
 然后是使用栈实现多叉树的深度优先遍历：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">StackTraversal</span> {
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">traversal</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-    <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-      <span style="font-weight: bold;">return</span>;
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">StackTraversal</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">traversal</span>(<span class="org-type">GenericTree</span> <span class="org-variable-name">root</span>) {
+    <span class="org-keyword">if</span> (root == <span class="org-constant">null</span>) {
+      <span class="org-keyword">return</span>;
     }
 
-    <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
-    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">lastVisited</span> = <span style="font-weight: bold; text-decoration: underline;">null</span>;
+    <span class="org-type">Deque</span>&lt;<span class="org-type">BinaryTree</span>&gt; <span class="org-variable-name">stack</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayDeque</span>&lt;<span class="org-type">BinaryTree</span>&gt;();
+    <span class="org-type">BinaryTree</span> <span class="org-variable-name">lastVisited</span> = <span class="org-constant">null</span>;
 
     stack.addFirst(root);
 
-    <span style="font-weight: bold;">while</span> (!stack.isEmpty()) {
-      <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">peekNode</span> = stack.peekFirst();
+    <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>stack.isEmpty()) {
+      <span class="org-type">BinaryTree</span> <span class="org-variable-name">peekNode</span> = stack.peekFirst();
 
-      <span style="font-weight: bold;">if</span> (peekNode.children.size() != 0 &amp;&amp; lastVisited != peekNode.children.get(0)) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
-        <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">child</span> : peekNode.children) {
+      <span class="org-keyword">if</span> (peekNode.children.size() != 0 &amp;&amp; lastVisited != peekNode.children.get(0)) {  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21028;&#26029;&#35813;&#33410;&#28857;&#30340;&#23376;&#33410;&#28857;&#26159;&#21542;&#24050;&#35775;&#38382;</span>
+        <span class="org-keyword">for</span> (<span class="org-type">GenericTree</span> <span class="org-variable-name">child</span> : peekNode.children) {
           stack.addFirst(child);
         }
-      } <span style="font-weight: bold;">else</span> {
+      } <span class="org-keyword">else</span> {
         visit(peekNode);
         lastVisited = stack.removeFirst();
       }
     }
   }
 
-  <span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">visit</span>(<span style="font-weight: bold; text-decoration: underline;">GenericTree</span> <span style="font-weight: bold; font-style: italic;">node</span>) {
-    <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">visit</span>(<span class="org-type">GenericTree</span> <span class="org-variable-name">node</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35775;&#38382;&#22788;&#29702;&#33410;&#28857;</span>
   }
 }
 </pre>
@@ -451,45 +451,45 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org03920fe" class="outline-2">
-<h2 id="org03920fe"><span class="section-number-2">5</span> 使用栈的深度优先遍历 · 补</h2>
+<div id="outline-container-orgef3f026" class="outline-2">
+<h2 id="orgef3f026"><span class="section-number-2">5</span> 使用栈的深度优先遍历 · 补</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 想了一下，决定还是补一份使用栈实现二叉树的先序遍历和中序遍历的代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">preOrder</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-  <span style="font-weight: bold;">if</span> (root == <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-    <span style="font-weight: bold;">return</span>;
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">preOrder</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">root</span>) {
+  <span class="org-keyword">if</span> (root == <span class="org-constant">null</span>) {
+    <span class="org-keyword">return</span>;
   }
 
-  <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+  <span class="org-type">Deque</span>&lt;<span class="org-type">BinaryTree</span>&gt; <span class="org-variable-name">stack</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayDeque</span>&lt;<span class="org-type">BinaryTree</span>&gt;();
 
   stack.addFirst(root);
 
-  <span style="font-weight: bold;">while</span> (!stack.isEmpty()) {
-    <span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">node</span> = stack.removeFirst();
+  <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>stack.isEmpty()) {
+    <span class="org-type">BinaryTree</span> <span class="org-variable-name">node</span> = stack.removeFirst();
 
     visit(node);
 
-    <span style="font-weight: bold;">if</span> (node.right != <span style="font-weight: bold; text-decoration: underline;">null</span>) {  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26632;&#26159;&#21518;&#36827;&#20808;&#20986;&#30340;</span>
+    <span class="org-keyword">if</span> (node.right != <span class="org-constant">null</span>) {  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26632;&#26159;&#21518;&#36827;&#20808;&#20986;&#30340;</span>
       stack.addFirst(node.right);
     }
 
-    <span style="font-weight: bold;">if</span> (node.left != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+    <span class="org-keyword">if</span> (node.left != <span class="org-constant">null</span>) {
       stack.addFirst(node.left);
     }
   }
 }
 
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">inOrder</span>(<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span> <span style="font-weight: bold; font-style: italic;">root</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">Deque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt; <span style="font-weight: bold; font-style: italic;">stack</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayDeque</span>&lt;<span style="font-weight: bold; text-decoration: underline;">BinaryTree</span>&gt;();
+<span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">inOrder</span>(<span class="org-type">BinaryTree</span> <span class="org-variable-name">root</span>) {
+  <span class="org-type">Deque</span>&lt;<span class="org-type">BinaryTree</span>&gt; <span class="org-variable-name">stack</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayDeque</span>&lt;<span class="org-type">BinaryTree</span>&gt;();
 
-  <span style="font-weight: bold;">while</span> (!stack.isEmpty() || root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
-    <span style="font-weight: bold;">if</span> (root != <span style="font-weight: bold; text-decoration: underline;">null</span>) {
+  <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>stack.isEmpty() || root != <span class="org-constant">null</span>) {
+    <span class="org-keyword">if</span> (root != <span class="org-constant">null</span>) {
       stack.addFirst(root);
       root = root.left;
-    } <span style="font-weight: bold;">else</span> {
+    } <span class="org-keyword">else</span> {
       root = stack.removeFirst();
       visit(root);
       root = root.right;
@@ -505,8 +505,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2c6dd47" class="outline-2">
-<h2 id="org2c6dd47"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org9ee6091" class="outline-2">
+<h2 id="org9ee6091"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 通过 <b>栈</b> 来实现 <b>树的深度优先遍历</b> 并不是很难，更重要的地方在于用 <b>栈</b> 来代替 <b>递归</b> 的想法。
@@ -527,8 +527,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgded5fb6" class="outline-2">
-<h2 id="orgded5fb6"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org8b83a63" class="outline-2">
+<h2 id="org8b83a63"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Tree_traversal">Tree traversal - wiki</a></li>

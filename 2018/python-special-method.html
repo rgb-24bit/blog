@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 魔法方法</title>
@@ -246,29 +246,29 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1a430fb">1. 简介</a></li>
-<li><a href="#orgf5301a6">2. 构造和初始化</a></li>
-<li><a href="#org35e0152">3. 比较和数值运算</a>
+<li><a href="#org9193fbc">1. 简介</a></li>
+<li><a href="#org81359f1">2. 构造和初始化</a></li>
+<li><a href="#org5bcfbca">3. 比较和数值运算</a>
 <ul>
-<li><a href="#orgb87f8ac">3.1. 用于比较的魔法方法</a></li>
-<li><a href="#orgfe38bea">3.2. 数值处理的魔法方法</a></li>
+<li><a href="#orga52c5b8">3.1. 用于比较的魔法方法</a></li>
+<li><a href="#org1e2142a">3.2. 数值处理的魔法方法</a></li>
 </ul>
 </li>
-<li><a href="#org263a368">4. 类型转化</a></li>
-<li><a href="#org6d408f2">5. 表现类</a></li>
-<li><a href="#org7c1cc8c">6. 属性访问控制</a></li>
-<li><a href="#org1af70ee">7. 创建定制的序列</a></li>
-<li><a href="#org1568755">8. 反射</a></li>
-<li><a href="#orgbe9dc9f">9. 可以调用的对象</a></li>
-<li><a href="#orga57c258">10. 上下文管理器</a></li>
-<li><a href="#orgd55a362">11. 更多的方法</a></li>
-<li><a href="#org99d1e14">12. 参考链接</a></li>
+<li><a href="#orge3a47e4">4. 类型转化</a></li>
+<li><a href="#org1fb7f06">5. 表现类</a></li>
+<li><a href="#orgb0a08f5">6. 属性访问控制</a></li>
+<li><a href="#org5dcbd45">7. 创建定制的序列</a></li>
+<li><a href="#orge6347b7">8. 反射</a></li>
+<li><a href="#orga681f34">9. 可以调用的对象</a></li>
+<li><a href="#org611bc6a">10. 上下文管理器</a></li>
+<li><a href="#org9eecf11">11. 更多的方法</a></li>
+<li><a href="#orgdf977d0">12. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1a430fb" class="outline-2">
-<h2 id="org1a430fb"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org9193fbc" class="outline-2">
+<h2 id="org9193fbc"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 <code>Python</code> 中， 你可以通过定义一些特殊的方法来控制一个对象的行为。
@@ -288,8 +288,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf5301a6" class="outline-2">
-<h2 id="orgf5301a6"><span class="section-number-2">2</span> 构造和初始化</h2>
+<div id="outline-container-org81359f1" class="outline-2">
+<h2 id="org81359f1"><span class="section-number-2">2</span> 构造和初始化</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 一个对象实例化到销毁调用的方法的顺序是：
@@ -315,41 +315,41 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </dl>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"Hello World !"</span>)
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Test</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">print</span>(<span class="org-string">"Hello World !"</span>)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__del__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">"Goodbye World QAQ"</span>)
+    <span class="org-keyword">def</span> <span class="org-function-name">__del__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">print</span>(<span class="org-string">"Goodbye World QAQ"</span>)
 
-<span style="font-weight: bold; font-style: italic;">T</span> = Test()
-<span style="font-weight: bold;">del</span> T
+<span class="org-variable-name">T</span> = Test()
+<span class="org-keyword">del</span> T
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org35e0152" class="outline-2">
-<h2 id="org35e0152"><span class="section-number-2">3</span> 比较和数值运算</h2>
+<div id="outline-container-org5bcfbca" class="outline-2">
+<h2 id="org5bcfbca"><span class="section-number-2">3</span> 比较和数值运算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一个有趣的例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">one list</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">l</span> = [0]
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">one list</span>
+&gt;&gt;&gt; <span class="org-variable-name">l</span> = [0]
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">one tuple</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">t</span> = (1, )
+<span class="org-comment-delimiter"># </span><span class="org-comment">one tuple</span>
+&gt;&gt;&gt; <span class="org-variable-name">t</span> = (1, )
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">list + tuple ?</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">list + tuple ?</span>
 &gt;&gt;&gt; l + t
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">TypeError</span>: can only concatenate <span style="font-weight: bold;">list</span> (<span style="font-weight: bold;">not</span> <span style="font-style: italic;">"tuple"</span>) to <span style="font-weight: bold;">list</span>
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">TypeError</span>: can only concatenate <span class="org-builtin">list</span> (<span class="org-keyword">not</span> <span class="org-string">"tuple"</span>) to <span class="org-builtin">list</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">list += tuple ?</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">l</span> += t
+<span class="org-comment-delimiter"># </span><span class="org-comment">list += tuple ?</span>
+&gt;&gt;&gt; <span class="org-variable-name">l</span> += t
 [0, 1]
 </pre>
 </div>
@@ -368,8 +368,8 @@ Traceback (most recent call last):
 </p>
 </div>
 
-<div id="outline-container-orgb87f8ac" class="outline-3">
-<h3 id="orgb87f8ac"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
+<div id="outline-container-orga52c5b8" class="outline-3">
+<h3 id="orga52c5b8"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>__cmp__(self, other)</dt><dd>最基本的用于比较的魔法方法， 现了所有的比较符号 <b>(&lt;,==,!=,etc.)</b>. 如果 <code>self &lt; other</code> 应该返回一个 <b>负数</b>, 如果
@@ -385,25 +385,25 @@ Traceback (most recent call last):
 </dl>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Word</span>(<span style="font-weight: bold;">str</span>):
-<span style="font-style: italic;">'''&#23384;&#20648;&#21333;&#35789;&#30340;&#31867;&#65292;&#23450;&#20041;&#27604;&#36739;&#21333;&#35789;&#30340;&#20960;&#31181;&#26041;&#27861;'''</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Word</span>(<span class="org-builtin">str</span>):
+<span class="org-doc">'''&#23384;&#20648;&#21333;&#35789;&#30340;&#31867;&#65292;&#23450;&#20041;&#27604;&#36739;&#21333;&#35789;&#30340;&#20960;&#31181;&#26041;&#27861;'''</span>
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__new__</span>(cls, word):
-        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#27880;&#24847;&#25105;&#20204;&#24517;&#39035;&#35201;&#29992;&#21040;__new__&#26041;&#27861;&#65292;&#22240;&#20026;str&#26159;&#19981;&#21487;&#21464;&#31867;&#22411;</span>
-        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25152;&#20197;&#25105;&#20204;&#24517;&#39035;&#22312;&#21019;&#24314;&#30340;&#26102;&#20505;&#23558;&#23427;&#21021;&#22987;&#21270;</span>
-        <span style="font-weight: bold;">if</span> <span style="font-style: italic;">' '</span> <span style="font-weight: bold;">in</span> word:
-            <span style="font-weight: bold;">print</span> <span style="font-style: italic;">"Value contains spaces. Truncating to first space."</span>
-            <span style="font-weight: bold; font-style: italic;">word</span> = word[:word.index(<span style="font-style: italic;">' '</span>)] <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">&#21333;&#35789;&#26159;&#31532;&#19968;&#20010;&#31354;&#26684;&#20043;&#21069;&#30340;&#25152;&#26377;&#23383;&#31526;</span>
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">str</span>.__new__(cls, word)
+    <span class="org-keyword">def</span> <span class="org-function-name">__new__</span>(cls, word):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#27880;&#24847;&#25105;&#20204;&#24517;&#39035;&#35201;&#29992;&#21040;__new__&#26041;&#27861;&#65292;&#22240;&#20026;str&#26159;&#19981;&#21487;&#21464;&#31867;&#22411;</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#25152;&#20197;&#25105;&#20204;&#24517;&#39035;&#22312;&#21019;&#24314;&#30340;&#26102;&#20505;&#23558;&#23427;&#21021;&#22987;&#21270;</span>
+        <span class="org-keyword">if</span> <span class="org-string">' '</span> <span class="org-keyword">in</span> word:
+            <span class="org-keyword">print</span> <span class="org-string">"Value contains spaces. Truncating to first space."</span>
+            <span class="org-variable-name">word</span> = word[:word.index(<span class="org-string">' '</span>)] <span class="org-comment-delimiter">#</span><span class="org-comment">&#21333;&#35789;&#26159;&#31532;&#19968;&#20010;&#31354;&#26684;&#20043;&#21069;&#30340;&#25152;&#26377;&#23383;&#31526;</span>
+        <span class="org-keyword">return</span> <span class="org-builtin">str</span>.__new__(cls, word)
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__gt__</span>(<span style="font-weight: bold;">self</span>, other):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">self</span>) &gt; <span style="font-weight: bold;">len</span>(other)
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__lt__</span>(<span style="font-weight: bold;">self</span>, other):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">self</span>) &lt; <span style="font-weight: bold;">len</span>(other)
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__ge__</span>(<span style="font-weight: bold;">self</span>, other):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">self</span>) &gt;= <span style="font-weight: bold;">len</span>(other)
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__le__</span>(<span style="font-weight: bold;">self</span>, other):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">self</span>) &lt;= <span style="font-weight: bold;">len</span>(other)
+    <span class="org-keyword">def</span> <span class="org-function-name">__gt__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-builtin">len</span>(<span class="org-keyword">self</span>) &gt; <span class="org-builtin">len</span>(other)
+    <span class="org-keyword">def</span> <span class="org-function-name">__lt__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-builtin">len</span>(<span class="org-keyword">self</span>) &lt; <span class="org-builtin">len</span>(other)
+    <span class="org-keyword">def</span> <span class="org-function-name">__ge__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-builtin">len</span>(<span class="org-keyword">self</span>) &gt;= <span class="org-builtin">len</span>(other)
+    <span class="org-keyword">def</span> <span class="org-function-name">__le__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-builtin">len</span>(<span class="org-keyword">self</span>) &lt;= <span class="org-builtin">len</span>(other)
 </pre>
 </div>
 
@@ -413,8 +413,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgfe38bea" class="outline-3">
-<h3 id="orgfe38bea"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
+<div id="outline-container-org1e2142a" class="outline-3">
+<h3 id="org1e2142a"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li><b>一元操作符和函数</b> 
@@ -507,8 +507,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org263a368" class="outline-2">
-<h2 id="org263a368"><span class="section-number-2">4</span> 类型转化</h2>
+<div id="outline-container-orge3a47e4" class="outline-2">
+<h2 id="orge3a47e4"><span class="section-number-2">4</span> 类型转化</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 可以通过一些 <b>魔法方法</b> 来实现内置类型类型转换， 注意， 是转换为 <b>内置类型</b>. 
@@ -531,8 +531,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org6d408f2" class="outline-2">
-<h2 id="org6d408f2"><span class="section-number-2">5</span> 表现类</h2>
+<div id="outline-container-org1fb7f06" class="outline-2">
+<h2 id="org1fb7f06"><span class="section-number-2">5</span> 表现类</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
 <dt>__str__(self)</dt><dd>使用 <code>str(obj)</code> 会调用这个方法</dd>
@@ -545,8 +545,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org7c1cc8c" class="outline-2">
-<h2 id="org7c1cc8c"><span class="section-number-2">6</span> 属性访问控制</h2>
+<div id="outline-container-orgb0a08f5" class="outline-2">
+<h2 id="orgb0a08f5"><span class="section-number-2">6</span> 属性访问控制</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 作为动态语言， <code>Python</code> 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
@@ -570,9 +570,9 @@ from __future__ import division
 解决这一问题的方法是把获取属性的方法指向一个更高的 <b>超类</b>:
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">ClassA</span>:
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__getattribute__</span>(<span style="font-weight: bold;">self</span>, item):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">super</span>().__getattribute__(<span style="font-weight: bold;">self</span>, item)
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">ClassA</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__getattribute__</span>(<span class="org-keyword">self</span>, item):
+        <span class="org-keyword">return</span> <span class="org-builtin">super</span>().__getattribute__(<span class="org-keyword">self</span>, item)
 </pre>
 </div></dd>
 
@@ -584,14 +584,14 @@ from __future__ import division
 使用这个方法需要注意的一点：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__setattr__</span>(<span style="font-weight: bold;">self</span>, name, value):
-    <span style="font-weight: bold;">self</span>.name = value
-    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#27599;&#24403;&#23646;&#24615;&#34987;&#36171;&#20540;&#30340;&#26102;&#20505;&#65292; ``__setattr__()`` &#20250;&#34987;&#35843;&#29992;&#65292;&#36825;&#26679;&#23601;&#36896;&#25104;&#20102;&#36882;&#24402;&#35843;&#29992;</span>
-    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36825;&#24847;&#21619;&#36825;&#20250;&#35843;&#29992; ``self.__setattr__('name', value)`` &#65292;&#27599;&#27425;&#26041;&#27861;&#20250;&#35843;&#29992;&#33258;&#24049;&#12290;&#36825;&#26679;&#20250;&#36896;&#25104;&#31243;&#24207;&#23849;&#28291;</span>
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">__setattr__</span>(<span class="org-keyword">self</span>, name, value):
+    <span class="org-keyword">self</span>.name = value
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#27599;&#24403;&#23646;&#24615;&#34987;&#36171;&#20540;&#30340;&#26102;&#20505;&#65292; ``__setattr__()`` &#20250;&#34987;&#35843;&#29992;&#65292;&#36825;&#26679;&#23601;&#36896;&#25104;&#20102;&#36882;&#24402;&#35843;&#29992;</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#36825;&#24847;&#21619;&#36825;&#20250;&#35843;&#29992; ``self.__setattr__('name', value)`` &#65292;&#27599;&#27425;&#26041;&#27861;&#20250;&#35843;&#29992;&#33258;&#24049;&#12290;&#36825;&#26679;&#20250;&#36896;&#25104;&#31243;&#24207;&#23849;&#28291;</span>
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__setattr__</span>(<span style="font-weight: bold;">self</span>, name, value):
-    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#36890;&#36807;&#36825;&#31181;&#26041;&#24335;&#26469;&#36991;&#20813;</span>
-    <span style="font-weight: bold;">self</span>.__dict__[name] = value  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#32473;&#31867;&#20013;&#30340;&#23646;&#24615;&#21517;&#20998;&#37197;&#20540;</span>
+<span class="org-keyword">def</span> <span class="org-function-name">__setattr__</span>(<span class="org-keyword">self</span>, name, value):
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807;&#36825;&#31181;&#26041;&#24335;&#26469;&#36991;&#20813;</span>
+    <span class="org-keyword">self</span>.__dict__[name] = value  <span class="org-comment-delimiter"># </span><span class="org-comment">&#32473;&#31867;&#20013;&#30340;&#23646;&#24615;&#21517;&#20998;&#37197;&#20540;</span>
 </pre>
 </div>
 
@@ -609,8 +609,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org1af70ee" class="outline-2">
-<h2 id="org1af70ee"><span class="section-number-2">7</span> 创建定制的序列</h2>
+<div id="outline-container-org5dcbd45" class="outline-2">
+<h2 id="org5dcbd45"><span class="section-number-2">7</span> 创建定制的序列</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 中的序列有 <b>可变</b> 和 <b>不可变</b> 的区分， 比如 <code>tuple</code> 和 <code>list</code>.
@@ -641,8 +641,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org1568755" class="outline-2">
-<h2 id="org1568755"><span class="section-number-2">8</span> 反射</h2>
+<div id="outline-container-orge6347b7" class="outline-2">
+<h2 id="orge6347b7"><span class="section-number-2">8</span> 反射</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 通过魔法方法控制使用 <code>isinstance</code> 和 <code>issubclass</code> 的反射行为：
@@ -654,8 +654,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orgbe9dc9f" class="outline-2">
-<h2 id="orgbe9dc9f"><span class="section-number-2">9</span> 可以调用的对象</h2>
+<div id="outline-container-orga681f34" class="outline-2">
+<h2 id="orga681f34"><span class="section-number-2">9</span> 可以调用的对象</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 如果你希望可以向调用函数那样调用你的 <b>对象</b>, 那么你可以定义那个对象的 <code>__call__</code> 方法。
@@ -666,22 +666,22 @@ from __future__ import division
 </dl>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Test</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">self</span>.val = 10
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Test</span>(<span class="org-builtin">object</span>):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>.val = 10
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__call__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>.val
+    <span class="org-keyword">def</span> <span class="org-function-name">__call__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.val
 
-<span style="font-weight: bold; font-style: italic;">t</span> = Test()
+<span class="org-variable-name">t</span> = Test()
 t()
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga57c258" class="outline-2">
-<h2 id="orga57c258"><span class="section-number-2">10</span> 上下文管理器</h2>
+<div id="outline-container-org611bc6a" class="outline-2">
+<h2 id="org611bc6a"><span class="section-number-2">10</span> 上下文管理器</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Python</code> 中使用 <code>with</code> 可以写出更加简洁高效的代码， 而能够使用 <code>with</code> 的对象需要支持上下文管理器。
@@ -692,8 +692,8 @@ t()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">with</span> expression [<span style="font-weight: bold;">as</span> variable]:
-    <span style="font-weight: bold;">with</span>-block
+<pre class="src src-python"><span class="org-keyword">with</span> expression [<span class="org-keyword">as</span> variable]:
+    <span class="org-keyword">with</span>-block
 </pre>
 </div>
 
@@ -703,28 +703,28 @@ t()
 </dl>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Closer</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-style: italic;">'''&#36890;&#36807;with&#35821;&#21477;&#21644;&#19968;&#20010;close&#26041;&#27861;&#26469;&#20851;&#38381;&#19968;&#20010;&#23545;&#35937;&#30340;&#20250;&#35805;&#31649;&#29702;&#22120;'''</span>
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Closer</span>(<span class="org-builtin">object</span>):
+    <span class="org-doc">'''&#36890;&#36807;with&#35821;&#21477;&#21644;&#19968;&#20010;close&#26041;&#27861;&#26469;&#20851;&#38381;&#19968;&#20010;&#23545;&#35937;&#30340;&#20250;&#35805;&#31649;&#29702;&#22120;'''</span>
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, obj):
-    <span style="font-weight: bold;">self</span>.obj = obj
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, obj):
+    <span class="org-keyword">self</span>.obj = obj
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__enter__</span>(<span style="font-weight: bold;">self</span>):
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">self</span>.obj <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">bound to target</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">__enter__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.obj <span class="org-comment-delimiter"># </span><span class="org-comment">bound to target</span>
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__exit__</span>(<span style="font-weight: bold;">self</span>, exception_type, exception_val, trace):
-        <span style="font-weight: bold;">try</span>:
-            <span style="font-weight: bold;">self</span>.obj.close()
-        <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">AttributeError</span>: <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">obj isn't closable</span>
-            <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Not closable.'</span>
-            <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">True</span> <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">exception handled successfully</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">__exit__</span>(<span class="org-keyword">self</span>, exception_type, exception_val, trace):
+        <span class="org-keyword">try</span>:
+            <span class="org-keyword">self</span>.obj.close()
+        <span class="org-keyword">except</span> <span class="org-type">AttributeError</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">obj isn't closable</span>
+            <span class="org-keyword">print</span> <span class="org-string">'Not closable.'</span>
+            <span class="org-keyword">return</span> <span class="org-constant">True</span> <span class="org-comment-delimiter"># </span><span class="org-comment">exception handled successfully</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd55a362" class="outline-2">
-<h2 id="orgd55a362"><span class="section-number-2">11</span> 更多的方法</h2>
+<div id="outline-container-org9eecf11" class="outline-2">
+<h2 id="org9eecf11"><span class="section-number-2">11</span> 更多的方法</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <code>Python</code> 的魔法方法还有不少， <code>Python2</code> 和 <code>Python3</code> 在这方面也有一定的区别。
@@ -732,8 +732,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org99d1e14" class="outline-2">
-<h2 id="org99d1e14"><span class="section-number-2">12</span> 参考链接</h2>
+<div id="outline-container-orgdf977d0" class="outline-2">
+<h2 id="orgdf977d0"><span class="section-number-2">12</span> 参考链接</h2>
 <div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2.7/reference/datamodel.html#special-method-names">Python2.7 Special method names</a></li>

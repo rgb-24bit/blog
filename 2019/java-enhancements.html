@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-08 周五 15:54 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE 5.0 - SE 8 的功能增强</title>
@@ -246,45 +246,45 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org18cf9db">1. 前言</a></li>
-<li><a href="#org674aa6c">2. Java 5.0</a>
+<li><a href="#orgfa8bd7c">1. 前言</a></li>
+<li><a href="#org3b40f0f">2. Java 5.0</a>
 <ul>
-<li><a href="#org5a0e55e">2.1. Generics</a></li>
-<li><a href="#org9e833b4">2.2. Enhanced for Loop</a></li>
-<li><a href="#org65a0c2d">2.3. Autoboxing</a></li>
-<li><a href="#org66f44d9">2.4. Typesafe Enums</a></li>
-<li><a href="#orgdb9c042">2.5. Varargs</a></li>
-<li><a href="#org23e13f1">2.6. Static Import</a></li>
-<li><a href="#org7eac31e">2.7. Annotations</a></li>
+<li><a href="#org85321c5">2.1. Generics</a></li>
+<li><a href="#org7f4153a">2.2. Enhanced for Loop</a></li>
+<li><a href="#orgae76752">2.3. Autoboxing</a></li>
+<li><a href="#orgca9f7d3">2.4. Typesafe Enums</a></li>
+<li><a href="#org2c659ac">2.5. Varargs</a></li>
+<li><a href="#orgcfee02d">2.6. Static Import</a></li>
+<li><a href="#org9102728">2.7. Annotations</a></li>
 </ul>
 </li>
-<li><a href="#orgc5a20ff">3. Java SE 6</a></li>
-<li><a href="#org428f1fb">4. Java SE 7</a>
+<li><a href="#orgeece46a">3. Java SE 6</a></li>
+<li><a href="#org5243bd8">4. Java SE 7</a>
 <ul>
-<li><a href="#org9b24611">4.1. Binary Literals</a></li>
-<li><a href="#org8bd3d7e">4.2. Underscores in Numeric Literals</a></li>
-<li><a href="#orgb243ab3">4.3. Strings in switch Statements</a></li>
-<li><a href="#orgaf3d356">4.4. Type Inference for Generic Instance Creation</a></li>
-<li><a href="#org5cba807">4.5. The try-with-resources Statement</a></li>
-<li><a href="#orgf370fb3">4.6. Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</a></li>
+<li><a href="#org0fda5c2">4.1. Binary Literals</a></li>
+<li><a href="#org7e77784">4.2. Underscores in Numeric Literals</a></li>
+<li><a href="#org8cc4d69">4.3. Strings in switch Statements</a></li>
+<li><a href="#orgc385196">4.4. Type Inference for Generic Instance Creation</a></li>
+<li><a href="#org7f2900a">4.5. The try-with-resources Statement</a></li>
+<li><a href="#org9880b36">4.6. Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</a></li>
 </ul>
 </li>
-<li><a href="#orgfac0662">5. Java SE 8</a>
+<li><a href="#orgc63e546">5. Java SE 8</a>
 <ul>
-<li><a href="#orgeb93fb8">5.1. Lambda Expressions</a></li>
-<li><a href="#org9323863">5.2. Improved Type Inference</a></li>
-<li><a href="#orgfcd774f">5.3. Annotations on Java Types</a></li>
-<li><a href="#orgf53fa09">5.4. Repeating Annotations</a></li>
-<li><a href="#orgd2b8a36">5.5. Method Parameter Reflection</a></li>
+<li><a href="#org5ef3022">5.1. Lambda Expressions</a></li>
+<li><a href="#org1ebd622">5.2. Improved Type Inference</a></li>
+<li><a href="#orgab86300">5.3. Annotations on Java Types</a></li>
+<li><a href="#orgc1680fe">5.4. Repeating Annotations</a></li>
+<li><a href="#orgfdb6495">5.5. Method Parameter Reflection</a></li>
 </ul>
 </li>
-<li><a href="#org5f31e06">6. 结语</a></li>
+<li><a href="#org99cdd23">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org18cf9db" class="outline-2">
-<h2 id="org18cf9db"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgfa8bd7c" class="outline-2">
+<h2 id="orgfa8bd7c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <b>Python</b> 的过程中就因为不同版本之间的不同而迷惑过，现在在学习 <b>Java</b> 的过程中我也遇见了类似的问题。
@@ -301,8 +301,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org674aa6c" class="outline-2">
-<h2 id="org674aa6c"><span class="section-number-2">2</span> Java 5.0</h2>
+<div id="outline-container-org3b40f0f" class="outline-2">
+<h2 id="org3b40f0f"><span class="section-number-2">2</span> Java 5.0</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 就目前的情况来说，无论是市面上的 <b>Java</b> 书籍还是实际使用的 <b>Java</b> 版本，大多是 <b>&gt;= 5.0</b> 的，因此，
@@ -310,8 +310,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org5a0e55e" class="outline-3">
-<h3 id="org5a0e55e"><span class="section-number-3">2.1</span> Generics</h3>
+<div id="outline-container-org85321c5" class="outline-3">
+<h3 id="org85321c5"><span class="section-number-3">2.1</span> Generics</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 熟悉 <b>Java</b> 语言的同学对 <b>泛型</b> 这个特性应该并不陌生，这是一个很常用的特性，单独把这个特性拎出来讲都可以写好几篇博客了。
@@ -321,20 +321,20 @@ for the JavaScript code in this tag.
 这里就不过多的谈论和泛型相关的内容了，简单举个使用的例子就结束：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt; <span style="font-weight: bold; font-style: italic;">list</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">ArrayList</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;();
+<pre class="src src-java"><span class="org-type">List</span>&lt;<span class="org-type">String</span>&gt; <span class="org-variable-name">list</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">String</span>&gt;();
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9e833b4" class="outline-3">
-<h3 id="org9e833b4"><span class="section-number-3">2.2</span> Enhanced for Loop</h3>
+<div id="outline-container-org7f4153a" class="outline-3">
+<h3 id="org7f4153a"><span class="section-number-3">2.2</span> Enhanced for Loop</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <b>for-each</b> 循环是在 <b>5.0</b> 才可以开始使用的，凡是实现了 <code>Iterable</code> 接口的对象或 <b>数组</b> 都可以使用这一循环方式：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">Type</span> <span style="font-weight: bold; font-style: italic;">item</span> : Iterable or array) {
+<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-type">Type</span> <span class="org-variable-name">item</span> : Iterable or array) {
   ...
 }
 </pre>
@@ -346,8 +346,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org65a0c2d" class="outline-3">
-<h3 id="org65a0c2d"><span class="section-number-3">2.3</span> Autoboxing</h3>
+<div id="outline-container-orgae76752" class="outline-3">
+<h3 id="orgae76752"><span class="section-number-3">2.3</span> Autoboxing</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 自动装箱这一特性可谓是给编写 Java 代码的程序员带来了极大的便利，但也带来了一下其他的问题，比如：
@@ -370,17 +370,17 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org66f44d9" class="outline-3">
-<h3 id="org66f44d9"><span class="section-number-3">2.4</span> Typesafe Enums</h3>
+<div id="outline-container-orgca9f7d3" class="outline-3">
+<h3 id="orgca9f7d3"><span class="section-number-3">2.4</span> Typesafe Enums</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 在 Java 5.0 以前是没有枚举类型的，要使用枚举只有像这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_WINTER</span> = 0;
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_SPRING</span> = 1;
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_SUMMER</span> = 2;
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold;">final</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">SEASON_FALL</span>   = 3;
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">SEASON_WINTER</span> = 0;
+<span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">SEASON_SPRING</span> = 1;
+<span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">SEASON_SUMMER</span> = 2;
+<span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">SEASON_FALL</span>   = 3;
 </pre>
 </div>
 
@@ -388,7 +388,7 @@ for the JavaScript code in this tag.
 这样做会带来一些问题，因此，从 Java 5.0 开始就支持枚举类型了：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">enum</span> <span style="font-weight: bold; text-decoration: underline;">Season</span> { <span style="font-weight: bold; font-style: italic;">WINTER</span>, <span style="font-weight: bold; font-style: italic;">SPRING</span>, <span style="font-weight: bold; font-style: italic;">SUMMER</span>, <span style="font-weight: bold; font-style: italic;">FALL</span> }
+<pre class="src src-java"><span class="org-keyword">enum</span> <span class="org-type">Season</span> { <span class="org-variable-name">WINTER</span>, <span class="org-variable-name">SPRING</span>, <span class="org-variable-name">SUMMER</span>, <span class="org-variable-name">FALL</span> }
 </pre>
 </div>
 
@@ -402,20 +402,20 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdb9c042" class="outline-3">
-<h3 id="orgdb9c042"><span class="section-number-3">2.5</span> Varargs</h3>
+<div id="outline-container-org2c659ac" class="outline-3">
+<h3 id="org2c659ac"><span class="section-number-3">2.5</span> Varargs</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 程序员格式化字符串的时候岂不是很辛苦 @_@
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">public</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">sum</span>(<span style="font-weight: bold; text-decoration: underline;">int</span>... <span style="font-weight: bold; font-style: italic;">nums</span>) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sum</span> = 0;
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">num</span> : nums) {
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">int</span> <span class="org-function-name">sum</span>(<span class="org-type">int</span>... <span class="org-variable-name">nums</span>) {
+  <span class="org-type">int</span> <span class="org-variable-name">sum</span> = 0;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">num</span> : nums) {
     sum += num;
   }
-  <span style="font-weight: bold;">return</span> sum;
+  <span class="org-keyword">return</span> sum;
 }
 </pre>
 </div>
@@ -426,16 +426,16 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-org23e13f1" class="outline-3">
-<h3 id="org23e13f1"><span class="section-number-3">2.6</span> Static Import</h3>
+<div id="outline-container-orgcfee02d" class="outline-3">
+<h3 id="orgcfee02d"><span class="section-number-3">2.6</span> Static Import</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 静态导入用的好绝得是一大神器，虽然说现代 IDE 的自动补全功能已经很强大，但是，能够少写一些代码还是很好的：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">import</span> <span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">java</span>.<span style="font-weight: bold; text-decoration: underline;">lang</span>.<span style="font-weight: bold; text-decoration: underline;">Math</span>.*;
+<pre class="src src-java"><span class="org-keyword">import</span> <span class="org-keyword">static</span> <span class="org-constant">java</span>.<span class="org-constant">lang</span>.<span class="org-constant">Math</span>.*;
 
-<span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">r</span> = cos(PI * theta);
+<span class="org-type">double</span> <span class="org-variable-name">r</span> = cos(PI * theta);
 </pre>
 </div>
 
@@ -445,8 +445,8 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-org7eac31e" class="outline-3">
-<h3 id="org7eac31e"><span class="section-number-3">2.7</span> Annotations</h3>
+<div id="outline-container-org9102728" class="outline-3">
+<h3 id="org9102728"><span class="section-number-3">2.7</span> Annotations</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 注解机制的重要性我想要个不需要我说了，现代的各种 Java 框架，基本上都离不开这一机制的使用。
@@ -463,8 +463,8 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-orgc5a20ff" class="outline-2">
-<h2 id="orgc5a20ff"><span class="section-number-2">3</span> Java SE 6</h2>
+<div id="outline-container-orgeece46a" class="outline-2">
+<h2 id="orgeece46a"><span class="section-number-2">3</span> Java SE 6</h2>
 <div class="outline-text-2" id="text-3">
 <blockquote>
 <p>
@@ -474,63 +474,63 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-org428f1fb" class="outline-2">
-<h2 id="org428f1fb"><span class="section-number-2">4</span> Java SE 7</h2>
+<div id="outline-container-org5243bd8" class="outline-2">
+<h2 id="org5243bd8"><span class="section-number-2">4</span> Java SE 7</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我看过的教程还没有哪本用的是 <b>Java 7</b>, 可怜的孩子 @_@
 </p>
 </div>
 
-<div id="outline-container-org9b24611" class="outline-3">
-<h3 id="org9b24611"><span class="section-number-3">4.1</span> Binary Literals</h3>
+<div id="outline-container-org0fda5c2" class="outline-3">
+<h3 id="org0fda5c2"><span class="section-number-3">4.1</span> Binary Literals</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 二进制整数字面量，也就是说可以用类似 <code>0b1110</code> 或 <code>0B1110</code> 的形式来设置整数值，但是好像是默认为 <code>int</code> 型。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">An 8-bit 'byte' value:</span>
-<span style="font-weight: bold; text-decoration: underline;">byte</span> <span style="font-weight: bold; font-style: italic;">aByte</span> = (<span style="font-weight: bold; text-decoration: underline;">byte</span>)0b00100001;
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">An 8-bit 'byte' value:</span>
+<span class="org-type">byte</span> <span class="org-variable-name">aByte</span> = (<span class="org-type">byte</span>)0b00100001;
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">A 16-bit 'short' value:</span>
-<span style="font-weight: bold; text-decoration: underline;">short</span> <span style="font-weight: bold; font-style: italic;">aShort</span> = (<span style="font-weight: bold; text-decoration: underline;">short</span>)0b1010000101000101;
+<span class="org-comment-delimiter">// </span><span class="org-comment">A 16-bit 'short' value:</span>
+<span class="org-type">short</span> <span class="org-variable-name">aShort</span> = (<span class="org-type">short</span>)0b1010000101000101;
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Some 32-bit 'int' values:</span>
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt1</span> = 0b10100001010001011010000101000101;
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt2</span> = 0b101;
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">anInt3</span> = 0B101; <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">The B can be upper or lower case.</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Some 32-bit 'int' values:</span>
+<span class="org-type">int</span> <span class="org-variable-name">anInt1</span> = 0b10100001010001011010000101000101;
+<span class="org-type">int</span> <span class="org-variable-name">anInt2</span> = 0b101;
+<span class="org-type">int</span> <span class="org-variable-name">anInt3</span> = 0B101; <span class="org-comment-delimiter">// </span><span class="org-comment">The B can be upper or lower case.</span>
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">A 64-bit 'long' value. Note the "L" suffix:</span>
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">aLong</span> = 0b1010000101000101101000010100010110100001010001011010000101000101L;
+<span class="org-comment-delimiter">// </span><span class="org-comment">A 64-bit 'long' value. Note the "L" suffix:</span>
+<span class="org-type">long</span> <span class="org-variable-name">aLong</span> = 0b1010000101000101101000010100010110100001010001011010000101000101L;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8bd3d7e" class="outline-3">
-<h3 id="org8bd3d7e"><span class="section-number-3">4.2</span> Underscores in Numeric Literals</h3>
+<div id="outline-container-org7e77784" class="outline-3">
+<h3 id="org7e77784"><span class="section-number-3">4.2</span> Underscores in Numeric Literals</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 数字字面量中间可以有下划线 <code>_</code> 了，在写长整数的使用利用这一特性可以很方便的分清楚现在有几个 <code>0</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">creditCardNumber</span> = 1234_5678_9012_3456L;
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">socialSecurityNumber</span> = 999_99_9999L;
-<span style="font-weight: bold; text-decoration: underline;">float</span> <span style="font-weight: bold; font-style: italic;">pi</span> =      3.14_15F;
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">hexBytes</span> = 0xFF_EC_DE_5E;
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">hexWords</span> = 0xCAFE_BABE;
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">maxLong</span> = 0x7fff_ffff_ffff_ffffL;
-<span style="font-weight: bold; text-decoration: underline;">byte</span> <span style="font-weight: bold; font-style: italic;">nybbles</span> = 0b0010_0101;
-<span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">bytes</span> = 0b11010010_01101001_10010100_10010010;
+<pre class="src src-java"><span class="org-type">long</span> <span class="org-variable-name">creditCardNumber</span> = 1234_5678_9012_3456L;
+<span class="org-type">long</span> <span class="org-variable-name">socialSecurityNumber</span> = 999_99_9999L;
+<span class="org-type">float</span> <span class="org-variable-name">pi</span> =      3.14_15F;
+<span class="org-type">long</span> <span class="org-variable-name">hexBytes</span> = 0xFF_EC_DE_5E;
+<span class="org-type">long</span> <span class="org-variable-name">hexWords</span> = 0xCAFE_BABE;
+<span class="org-type">long</span> <span class="org-variable-name">maxLong</span> = 0x7fff_ffff_ffff_ffffL;
+<span class="org-type">byte</span> <span class="org-variable-name">nybbles</span> = 0b0010_0101;
+<span class="org-type">long</span> <span class="org-variable-name">bytes</span> = 0b11010010_01101001_10010100_10010010;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb243ab3" class="outline-3">
-<h3 id="orgb243ab3"><span class="section-number-3">4.3</span> Strings in switch Statements</h3>
+<div id="outline-container-org8cc4d69" class="outline-3">
+<h3 id="org8cc4d69"><span class="section-number-3">4.3</span> Strings in switch Statements</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 在 <code>switch</code> 语句的 <code>case</code> 选项中可以使用字符串了，由于看的第一个教材是 <code>Java 5.0</code> 版的，搞得我现在都还不怎么习惯这一特性。
@@ -538,14 +538,14 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-orgaf3d356" class="outline-3">
-<h3 id="orgaf3d356"><span class="section-number-3">4.4</span> Type Inference for Generic Instance Creation</h3>
+<div id="outline-container-orgc385196" class="outline-3">
+<h3 id="orgc385196"><span class="section-number-3">4.4</span> Type Inference for Generic Instance Creation</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 类型推断绝对是一个很方便的功能，因为这意味着像下面这样的代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt; <span style="font-weight: bold; font-style: italic;">myMap</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt;();
+<pre class="src src-java"><span class="org-type">Map</span>&lt;<span class="org-type">String</span>, <span class="org-type">List</span>&lt;<span class="org-type">String</span>&gt;&gt; <span class="org-variable-name">myMap</span> = <span class="org-keyword">new</span> <span class="org-type">HashMap</span>&lt;<span class="org-type">String</span>, <span class="org-type">List</span>&lt;<span class="org-type">String</span>&gt;&gt;();
 </pre>
 </div>
 
@@ -553,7 +553,7 @@ No language changes were introduced in Java SE 6.
 可以写成这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">Map</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>, <span style="font-weight: bold; text-decoration: underline;">List</span>&lt;<span style="font-weight: bold; text-decoration: underline;">String</span>&gt;&gt; <span style="font-weight: bold; font-style: italic;">myMap</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">HashMap</span>&lt;&gt;();
+<pre class="src src-java"><span class="org-type">Map</span>&lt;<span class="org-type">String</span>, <span class="org-type">List</span>&lt;<span class="org-type">String</span>&gt;&gt; <span class="org-variable-name">myMap</span> = <span class="org-keyword">new</span> <span class="org-type">HashMap</span>&lt;&gt;();
 </pre>
 </div>
 
@@ -563,8 +563,8 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-org5cba807" class="outline-3">
-<h3 id="org5cba807"><span class="section-number-3">4.5</span> The try-with-resources Statement</h3>
+<div id="outline-container-org7f2900a" class="outline-3">
+<h3 id="org7f2900a"><span class="section-number-3">4.5</span> The try-with-resources Statement</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 可以说，凡是和 <b>I/O</b> 操作相关的对象，在最后都需要调用 <b>close()</b> 方法，这是一个很繁琐的操作，但不操作还不得行！
@@ -574,9 +574,9 @@ Nice!!!
 现在，我们可以这样，让 Java 自动帮你调用 <b>close()</b> 方法：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">static</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold;">readFirstLineFromFile</span>(<span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">path</span>) <span style="font-weight: bold;">throws</span> <span style="font-weight: bold; text-decoration: underline;">IOException</span> {
-  <span style="font-weight: bold;">try</span> (<span style="font-weight: bold; text-decoration: underline;">BufferedReader</span> <span style="font-weight: bold; font-style: italic;">br</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">BufferedReader</span>(<span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">FileReader</span>(path))) {
-    <span style="font-weight: bold;">return</span> br.readLine();
+<pre class="src src-java"><span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-function-name">readFirstLineFromFile</span>(<span class="org-type">String</span> <span class="org-variable-name">path</span>) <span class="org-keyword">throws</span> <span class="org-type">IOException</span> {
+  <span class="org-keyword">try</span> (<span class="org-type">BufferedReader</span> <span class="org-variable-name">br</span> = <span class="org-keyword">new</span> <span class="org-type">BufferedReader</span>(<span class="org-keyword">new</span> <span class="org-type">FileReader</span>(path))) {
+    <span class="org-keyword">return</span> br.readLine();
   }
 }
 </pre>
@@ -588,8 +588,8 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-orgf370fb3" class="outline-3">
-<h3 id="orgf370fb3"><span class="section-number-3">4.6</span> Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</h3>
+<div id="outline-container-org9880b36" class="outline-3">
+<h3 id="org9880b36"><span class="section-number-3">4.6</span> Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 这里我们主要关注 <b>Catching Multiple Exception Types</b> 这一特性。
@@ -599,9 +599,9 @@ Nice!!!
 在编写 <b>Java</b> 代码的过程中，很有可能会遇到需要捕获多个异常但是对这些异常都差不多的情况：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">try</span> {
+<pre class="src src-java"><span class="org-keyword">try</span> {
   ...
-} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold; font-style: italic;">e</span>) {
+} <span class="org-keyword">catch</span> (<span class="org-type">Exception</span> <span class="org-variable-name">e</span>) {
   e.printStackTrace();
 }
 </pre>
@@ -611,8 +611,8 @@ Nice!!!
 有多少个异常就写多少个 <code>catch</code> 块时很繁琐的，因此，从 Java 7 开始，就可以这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">catch</span> (IOException | SQLException ex) {
-  <span style="font-weight: bold;">throw</span> ex;
+<pre class="src src-java"><span class="org-keyword">catch</span> (IOException | SQLException ex) {
+  <span class="org-keyword">throw</span> ex;
 }
 </pre>
 </div>
@@ -624,16 +624,16 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-orgfac0662" class="outline-2">
-<h2 id="orgfac0662"><span class="section-number-2">5</span> Java SE 8</h2>
+<div id="outline-container-orgc63e546" class="outline-2">
+<h2 id="orgc63e546"><span class="section-number-2">5</span> Java SE 8</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版本就是这个版本，成熟的特性，丰富的类库。
 </p>
 </div>
 
-<div id="outline-container-orgeb93fb8" class="outline-3">
-<h3 id="orgeb93fb8"><span class="section-number-3">5.1</span> Lambda Expressions</h3>
+<div id="outline-container-org5ef3022" class="outline-3">
+<h3 id="org5ef3022"><span class="section-number-3">5.1</span> Lambda Expressions</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 作为函数式编程和 Lisp 的爱好者，看到 Java 支持 Lambda 表达式的时候心情是激动的，在看到 Java 中 Lambda 的使用后，
@@ -654,8 +654,8 @@ Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版�
 </div>
 </div>
 
-<div id="outline-container-org9323863" class="outline-3">
-<h3 id="org9323863"><span class="section-number-3">5.2</span> Improved Type Inference</h3>
+<div id="outline-container-org1ebd622" class="outline-3">
+<h3 id="org1ebd622"><span class="section-number-3">5.2</span> Improved Type Inference</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论了，反正，直接用就可以了。
@@ -663,14 +663,14 @@ Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论�
 </div>
 </div>
 
-<div id="outline-container-orgfcd774f" class="outline-3">
-<h3 id="orgfcd774f"><span class="section-number-3">5.3</span> Annotations on Java Types</h3>
+<div id="outline-container-orgab86300" class="outline-3">
+<h3 id="orgab86300"><span class="section-number-3">5.3</span> Annotations on Java Types</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 <b>任何地方</b> 使用：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">@NonNull</span> <span style="font-weight: bold; text-decoration: underline;">String</span> <span style="font-weight: bold; font-style: italic;">str</span>;
+<pre class="src src-java"><span class="org-c-annotation">@NonNull</span> <span class="org-type">String</span> <span class="org-variable-name">str</span>;
 </pre>
 </div>
 
@@ -680,23 +680,23 @@ Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 
 </div>
 </div>
 
-<div id="outline-container-orgf53fa09" class="outline-3">
-<h3 id="orgf53fa09"><span class="section-number-3">5.4</span> Repeating Annotations</h3>
+<div id="outline-container-orgc1680fe" class="outline-3">
+<h3 id="orgc1680fe"><span class="section-number-3">5.4</span> Repeating Annotations</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 现在可以在一个地方多出使用相同的注解，就像这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold; text-decoration: underline;">@Schedule</span>(dayOfMonth=<span style="font-style: italic;">"last"</span>)
-<span style="font-weight: bold; text-decoration: underline;">@Schedule</span>(dayOfWeek=<span style="font-style: italic;">"Fri"</span>, hour=<span style="font-style: italic;">"23"</span>)
-<span style="font-weight: bold;">public</span> <span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">doPeriodicCleanup</span>() { ... }
+<pre class="src src-java"><span class="org-c-annotation">@Schedule</span>(dayOfMonth=<span class="org-string">"last"</span>)
+<span class="org-c-annotation">@Schedule</span>(dayOfWeek=<span class="org-string">"Fri"</span>, hour=<span class="org-string">"23"</span>)
+<span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">doPeriodicCleanup</span>() { ... }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd2b8a36" class="outline-3">
-<h3 id="orgd2b8a36"><span class="section-number-3">5.5</span> Method Parameter Reflection</h3>
+<div id="outline-container-orgfdb6495" class="outline-3">
+<h3 id="orgfdb6495"><span class="section-number-3">5.5</span> Method Parameter Reflection</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 反射可以获取方法的参数了，在反射面前一个类已经没有多少隐私可言了 @_@
@@ -714,8 +714,8 @@ NB!!!
 </div>
 </div>
 
-<div id="outline-container-org5f31e06" class="outline-2">
-<h2 id="org5f31e06"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org99cdd23" class="outline-2">
+<h2 id="org99cdd23"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 其实直接用 Java 8 的话可以不用管那个特性是那个版本开始支持的，直接用就可以了。

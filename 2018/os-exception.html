@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>操作系统之异常控制流</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8238398">1. 简介</a></li>
-<li><a href="#orgce5fd32">2. 异常控制流</a></li>
-<li><a href="#org1922559">3. 异常</a></li>
-<li><a href="#orge646d18">4. 信号</a></li>
-<li><a href="#org72ee9f6">5. 非本地跳转</a></li>
-<li><a href="#org429ea0f">6. 参考链接</a></li>
+<li><a href="#org4b522c2">1. 简介</a></li>
+<li><a href="#org9215259">2. 异常控制流</a></li>
+<li><a href="#org322e33e">3. 异常</a></li>
+<li><a href="#orgae9b365">4. 信号</a></li>
+<li><a href="#org77cc41d">5. 非本地跳转</a></li>
+<li><a href="#org0952fd8">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8238398" class="outline-2">
-<h2 id="org8238398"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org4b522c2" class="outline-2">
+<h2 id="org4b522c2"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>CSAPP</code> - 深入理解计算机系统这本书断断续续的看了部分章节了， 但是在看到 <b>异常控制流</b> 这一章之前，
@@ -291,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgce5fd32" class="outline-2">
-<h2 id="orgce5fd32"><span class="section-number-2">2</span> 异常控制流</h2>
+<div id="outline-container-org9215259" class="outline-2">
+<h2 id="org9215259"><span class="section-number-2">2</span> 异常控制流</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 如果学过其他高级语言， 那么 <b>异常</b> 这个词应该不陌生， 或者说很熟悉。
@@ -325,8 +325,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1922559" class="outline-2">
-<h2 id="org1922559"><span class="section-number-2">3</span> 异常</h2>
+<div id="outline-container-org322e33e" class="outline-2">
+<h2 id="org322e33e"><span class="section-number-2">3</span> 异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>异常</b> 是 <b>异常控制流</b> 的一种 <b>表现形式</b>, 也就是说异常就是异常控制流。
@@ -387,8 +387,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge646d18" class="outline-2">
-<h2 id="orge646d18"><span class="section-number-2">4</span> 信号</h2>
+<div id="outline-container-orgae9b365" class="outline-2">
+<h2 id="orgae9b365"><span class="section-number-2">4</span> 信号</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在原书上， 信号前还有一节的内容是 <b>进程</b>, <b>进程</b> 属于 <b>异常</b> 的一种应用方式， 需要详细了解的话可以查阅相关资料。
@@ -430,38 +430,38 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org72ee9f6" class="outline-2">
-<h2 id="org72ee9f6"><span class="section-number-2">5</span> 非本地跳转</h2>
+<div id="outline-container-org77cc41d" class="outline-2">
+<h2 id="org77cc41d"><span class="section-number-2">5</span> 非本地跳转</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;setjmp.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;signal.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;setjmp.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;signal.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">jmp_buf</span> <span style="font-weight: bold; font-style: italic;">ex_buf__</span>;
+<span class="org-type">jmp_buf</span> <span class="org-variable-name">ex_buf__</span>;
 
-<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">TRY</span> <span style="font-weight: bold;">do</span>{ <span style="font-weight: bold;">if</span>(!setjmp(ex_buf__)) {
-<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">CATCH</span> } <span style="font-weight: bold;">else</span> {
-<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">ETRY</span> } } <span style="font-weight: bold;">while</span>(0)
-<span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">THROW</span> longjmp(ex_buf__, 1)
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">TRY</span> <span class="org-keyword">do</span>{ <span class="org-keyword">if</span>(<span class="org-negation-char">!</span>setjmp(ex_buf__)) {
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">CATCH</span> } <span class="org-keyword">else</span> {
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ETRY</span> } } <span class="org-keyword">while</span>(0)
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">THROW</span> longjmp(ex_buf__, 1)
 
-<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">sigint_handler</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sig</span>) {
+<span class="org-type">void</span> <span class="org-function-name">sigint_handler</span>(<span class="org-type">int</span> <span class="org-variable-name">sig</span>) {
   THROW;
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
-  <span style="font-weight: bold;">if</span> (signal(SIGINT, sigint_handler) == SIG_ERR) {
-    <span style="font-weight: bold;">return</span> 0;
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">void</span>) {
+  <span class="org-keyword">if</span> (signal(SIGINT, sigint_handler) == SIG_ERR) {
+    <span class="org-keyword">return</span> 0;
   }
 
   TRY {
     raise(SIGINT);
   } CATCH {
-    printf(<span style="font-style: italic;">"KeyboardInterrupt"</span>);
+    printf(<span class="org-string">"KeyboardInterrupt"</span>);
   }
   ETRY;
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -474,7 +474,7 @@ for the JavaScript code in this tag.
 首先是 <b>信号</b> 相关的内容：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">sigint_handler</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sig</span>);
+<pre class="src src-C"><span class="org-type">void</span> <span class="org-function-name">sigint_handler</span>(<span class="org-type">int</span> <span class="org-variable-name">sig</span>);
 </pre>
 </div>
 
@@ -495,7 +495,7 @@ for the JavaScript code in this tag.
 接下来是 <b>非本地跳转</b> 相关的内容：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">jmp_buf</span> <span style="font-weight: bold; font-style: italic;">ex_buf__</span>;
+<pre class="src src-C"><span class="org-type">jmp_buf</span> <span class="org-variable-name">ex_buf__</span>;
 </pre>
 </div>
 
@@ -521,25 +521,25 @@ for the JavaScript code in this tag.
 宏展开后的主要程序代码为：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">jmp_buf</span> <span style="font-weight: bold; font-style: italic;">ex_buf__</span>;
+<pre class="src src-C"><span class="org-type">jmp_buf</span> <span class="org-variable-name">ex_buf__</span>;
 
-<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">sigint_handler</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">sig</span>) {
+<span class="org-type">void</span> <span class="org-function-name">sigint_handler</span>(<span class="org-type">int</span> <span class="org-variable-name">sig</span>) {
   longjmp(ex_buf__, 1);
 }
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
-  <span style="font-weight: bold;">if</span> (signal(2, sigint_handler) == ((<span style="font-weight: bold; text-decoration: underline;">_crt_signal_t</span>)-1)) {
-    <span style="font-weight: bold;">return</span> 0;
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">void</span>) {
+  <span class="org-keyword">if</span> (signal(2, sigint_handler) == ((<span class="org-type">_crt_signal_t</span>)-1)) {
+    <span class="org-keyword">return</span> 0;
   }
 
-  <span style="font-weight: bold;">do</span>{ <span style="font-weight: bold;">if</span>(!_setjmp(ex_buf__)) { {
+  <span class="org-keyword">do</span>{ <span class="org-keyword">if</span>(<span class="org-negation-char">!</span>_setjmp(ex_buf__)) { {
         raise(2);
-      } } <span style="font-weight: bold;">else</span> { {
-        printf(<span style="font-style: italic;">"KeyboardInterrupt"</span>);
+      } } <span class="org-keyword">else</span> { {
+        printf(<span class="org-string">"KeyboardInterrupt"</span>);
       }
-    } } <span style="font-weight: bold;">while</span>(0);
+    } } <span class="org-keyword">while</span>(0);
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -568,8 +568,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org429ea0f" class="outline-2">
-<h2 id="org429ea0f"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org0952fd8" class="outline-2">
+<h2 id="org0952fd8"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.di.unipi.it/~nids/docs/longjump_try_trow_catch.html">Exceptions in C with Longjmp and Setjmp</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 标准类型层次结构</title>
@@ -246,51 +246,51 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5aaf157">1. 前言</a></li>
-<li><a href="#org0f5610b">2. None</a></li>
-<li><a href="#org7bf281b">3. NotImplemented</a></li>
-<li><a href="#org8c595f8">4. Ellipsis</a></li>
-<li><a href="#orgbe6b6c8">5. numbers.Number</a>
+<li><a href="#org85c27e2">1. 前言</a></li>
+<li><a href="#orgc9496ee">2. None</a></li>
+<li><a href="#org163033a">3. NotImplemented</a></li>
+<li><a href="#org05b069b">4. Ellipsis</a></li>
+<li><a href="#orgbf9e141">5. numbers.Number</a>
 <ul>
-<li><a href="#org9d19886">5.1. numbers.Integral</a></li>
-<li><a href="#org134f5d4">5.2. numbers.Real(float)</a></li>
-<li><a href="#org15e7b1d">5.3. numbers.Complex(complex)</a></li>
-<li><a href="#orgbc1f85b">5.4. relationship</a></li>
+<li><a href="#org97229d6">5.1. numbers.Integral</a></li>
+<li><a href="#orga9382a8">5.2. numbers.Real(float)</a></li>
+<li><a href="#org56fce5a">5.3. numbers.Complex(complex)</a></li>
+<li><a href="#org939c580">5.4. relationship</a></li>
 </ul>
 </li>
-<li><a href="#org68c5cba">6. Sequences</a>
+<li><a href="#org28c4307">6. Sequences</a>
 <ul>
-<li><a href="#orge89ff74">6.1. Immutable sequences</a></li>
-<li><a href="#orgc03036d">6.2. Mutable sequences</a></li>
+<li><a href="#orgeaa3825">6.1. Immutable sequences</a></li>
+<li><a href="#org3e0086c">6.2. Mutable sequences</a></li>
 </ul>
 </li>
-<li><a href="#org2a899a4">7. Set types</a></li>
-<li><a href="#orgcdd94ba">8. Mappings</a></li>
-<li><a href="#org11ae694">9. Callable types</a>
+<li><a href="#org8e5975a">7. Set types</a></li>
+<li><a href="#org6494a52">8. Mappings</a></li>
+<li><a href="#orgf006140">9. Callable types</a>
 <ul>
-<li><a href="#org3bea5ba">9.1. User-defined functions</a></li>
-<li><a href="#org1328919">9.2. Instance methods</a></li>
-<li><a href="#org3a2ec49">9.3. Other</a></li>
+<li><a href="#org7c2cc8f">9.1. User-defined functions</a></li>
+<li><a href="#orgc7674a7">9.2. Instance methods</a></li>
+<li><a href="#orgb5d827c">9.3. Other</a></li>
 </ul>
 </li>
-<li><a href="#orge65095f">10. Modules</a></li>
-<li><a href="#orgad94265">11. Custom classes</a></li>
-<li><a href="#orgfc29e81">12. Class instances</a></li>
-<li><a href="#org6eeec84">13. I/O objects</a></li>
-<li><a href="#org7d8cb9a">14. Internal types</a>
+<li><a href="#org10ea0c7">10. Modules</a></li>
+<li><a href="#orgb481d31">11. Custom classes</a></li>
+<li><a href="#orgca2490a">12. Class instances</a></li>
+<li><a href="#org6b06693">13. I/O objects</a></li>
+<li><a href="#org2ff27ed">14. Internal types</a>
 <ul>
-<li><a href="#org7808657">14.1. Code objects</a></li>
-<li><a href="#org692dfb3">14.2. Frame objects</a></li>
-<li><a href="#orge25e30c">14.3. Other</a></li>
+<li><a href="#org35974e6">14.1. Code objects</a></li>
+<li><a href="#orgc67a1b8">14.2. Frame objects</a></li>
+<li><a href="#org174ef40">14.3. Other</a></li>
 </ul>
 </li>
-<li><a href="#org7963b83">15. 结尾</a></li>
+<li><a href="#org107a7c6">15. 结尾</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5aaf157" class="outline-2">
-<h2 id="org5aaf157"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org85c27e2" class="outline-2">
+<h2 id="org85c27e2"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客算是 <a href="https://docs.python.org/3/reference/datamodel.html#the-standard-type-hierarchy">The standard type hierarchy</a> 的阅读笔记，配合原文阅读效果更佳。
@@ -298,8 +298,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0f5610b" class="outline-2">
-<h2 id="org0f5610b"><span class="section-number-2">2</span> None</h2>
+<div id="outline-container-orgc9496ee" class="outline-2">
+<h2 id="orgc9496ee"><span class="section-number-2">2</span> None</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>NoneType</code> 具有单个值。只有一个具有此值的对象。使用内置名称 <code>None</code> 来访问这个对象。
@@ -311,8 +311,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7bf281b" class="outline-2">
-<h2 id="org7bf281b"><span class="section-number-2">3</span> NotImplemented</h2>
+<div id="outline-container-org163033a" class="outline-2">
+<h2 id="org163033a"><span class="section-number-2">3</span> NotImplemented</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>NotImplementedType</code> 具有单个值。只有一个具有此值的对象。使用内置名称 <code>NotImplemented</code> 来访问这个对象。
@@ -328,8 +328,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8c595f8" class="outline-2">
-<h2 id="org8c595f8"><span class="section-number-2">4</span> Ellipsis</h2>
+<div id="outline-container-org05b069b" class="outline-2">
+<h2 id="org05b069b"><span class="section-number-2">4</span> Ellipsis</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>ellipsis</code> 具有单个值。只有一个具有此值的对象。使用 <code>...</code> 或内置名称 <code>Ellipsis</code> 来访问这个对象。
@@ -340,8 +340,8 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; text-decoration: underline;">Ellipsis</span> <span style="font-weight: bold;">is</span> ...
-<span style="font-weight: bold; text-decoration: underline;">True</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-constant">Ellipsis</span> <span class="org-keyword">is</span> ...
+<span class="org-constant">True</span>
 </pre>
 </div>
 
@@ -351,8 +351,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbe6b6c8" class="outline-2">
-<h2 id="orgbe6b6c8"><span class="section-number-2">5</span> numbers.Number</h2>
+<div id="outline-container-orgbf9e141" class="outline-2">
+<h2 id="orgbf9e141"><span class="section-number-2">5</span> numbers.Number</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>numbers</code> 是一个模块，详细内容可以浏览官方文档： <a href="https://docs.python.org/3/library/numbers.html">numbers — Numeric abstract base classes</a>.
@@ -364,15 +364,15 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">nums</span> = [1, 2.3, <span style="font-weight: bold;">complex</span>(1, 2)]
-&gt;&gt;&gt; <span style="font-weight: bold;">all</span>(<span style="font-weight: bold;">map</span>(<span style="font-weight: bold;">lambda</span> x: <span style="font-weight: bold;">isinstance</span>(x, numbers.Number), nums))
-<span style="font-weight: bold; text-decoration: underline;">True</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">nums</span> = [1, 2.3, <span class="org-builtin">complex</span>(1, 2)]
+&gt;&gt;&gt; <span class="org-builtin">all</span>(<span class="org-builtin">map</span>(<span class="org-keyword">lambda</span> x: <span class="org-builtin">isinstance</span>(x, numbers.Number), nums))
+<span class="org-constant">True</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org9d19886" class="outline-3">
-<h3 id="org9d19886"><span class="section-number-3">5.1</span> numbers.Integral</h3>
+<div id="outline-container-org97229d6" class="outline-3">
+<h3 id="org97229d6"><span class="section-number-3">5.1</span> numbers.Integral</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 <b>整数类型</b> 的抽象基类，其子类包括 <code>Integers(int)</code> 和 <code>Booleans(bool)</code>.
@@ -384,8 +384,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org134f5d4" class="outline-3">
-<h3 id="org134f5d4"><span class="section-number-3">5.2</span> numbers.Real(float)</h3>
+<div id="outline-container-orga9382a8" class="outline-3">
+<h3 id="orga9382a8"><span class="section-number-3">5.2</span> numbers.Real(float)</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 <b>浮点数类型</b> 的抽象基类。
@@ -393,8 +393,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org15e7b1d" class="outline-3">
-<h3 id="org15e7b1d"><span class="section-number-3">5.3</span> numbers.Complex(complex)</h3>
+<div id="outline-container-org56fce5a" class="outline-3">
+<h3 id="org56fce5a"><span class="section-number-3">5.3</span> numbers.Complex(complex)</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 <b>复数类型</b> 的抽象基类。
@@ -406,8 +406,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbc1f85b" class="outline-3">
-<h3 id="orgbc1f85b"><span class="section-number-3">5.4</span> relationship</h3>
+<div id="outline-container-org939c580" class="outline-3">
+<h3 id="org939c580"><span class="section-number-3">5.4</span> relationship</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 抽象基类和实际的类之间的关系：
@@ -428,8 +428,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org68c5cba" class="outline-2">
-<h2 id="org68c5cba"><span class="section-number-2">6</span> Sequences</h2>
+<div id="outline-container-org28c4307" class="outline-2">
+<h2 id="org28c4307"><span class="section-number-2">6</span> Sequences</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 抽象基类 <code>Sequence</code> 可以在 <a href="https://docs.python.org/3/library/collections.abc.html">collections.abc — Abstract Base Classes for Containers</a> 模块中找到。
@@ -448,8 +448,8 @@ numbers.Number
 </p>
 </div>
 
-<div id="outline-container-orge89ff74" class="outline-3">
-<h3 id="orge89ff74"><span class="section-number-3">6.1</span> Immutable sequences</h3>
+<div id="outline-container-orgeaa3825" class="outline-3">
+<h3 id="orgeaa3825"><span class="section-number-3">6.1</span> Immutable sequences</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 不可变序列类型的对象一旦创建就不能更改，以下类型是不可变序列：
@@ -463,8 +463,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orgc03036d" class="outline-3">
-<h3 id="orgc03036d"><span class="section-number-3">6.2</span> Mutable sequences</h3>
+<div id="outline-container-org3e0086c" class="outline-3">
+<h3 id="org3e0086c"><span class="section-number-3">6.2</span> Mutable sequences</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 可变序列在创建后可以更改，目前有两种内置的可变序列类型：
@@ -478,8 +478,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org2a899a4" class="outline-2">
-<h2 id="org2a899a4"><span class="section-number-2">7</span> Set types</h2>
+<div id="outline-container-org8e5975a" class="outline-2">
+<h2 id="org8e5975a"><span class="section-number-2">7</span> Set types</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 抽象基类 <code>Set</code> 可以在 <a href="https://docs.python.org/3/library/collections.abc.html">collections.abc — Abstract Base Classes for Containers</a> 模块中找到。
@@ -503,8 +503,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orgcdd94ba" class="outline-2">
-<h2 id="orgcdd94ba"><span class="section-number-2">8</span> Mappings</h2>
+<div id="outline-container-org6494a52" class="outline-2">
+<h2 id="org6494a52"><span class="section-number-2">8</span> Mappings</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 抽象基类 <code>Mappings</code> 可以在 <a href="https://docs.python.org/3/library/collections.abc.html">collections.abc — Abstract Base Classes for Containers</a> 模块中找到。
@@ -523,16 +523,16 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org11ae694" class="outline-2">
-<h2 id="org11ae694"><span class="section-number-2">9</span> Callable types</h2>
+<div id="outline-container-orgf006140" class="outline-2">
+<h2 id="orgf006140"><span class="section-number-2">9</span> Callable types</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 抽象基类 <code>Callable</code> 可以在 <a href="https://docs.python.org/3/library/collections.abc.html">collections.abc — Abstract Base Classes for Containers</a> 模块中找到。
 </p>
 </div>
 
-<div id="outline-container-org3bea5ba" class="outline-3">
-<h3 id="org3bea5ba"><span class="section-number-3">9.1</span> User-defined functions</h3>
+<div id="outline-container-org7c2cc8f" class="outline-3">
+<h3 id="org7c2cc8f"><span class="section-number-3">9.1</span> User-defined functions</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 用户定义的函数自然是可调用对象，同时也包含了一些特殊的属性：
@@ -629,8 +629,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org1328919" class="outline-3">
-<h3 id="org1328919"><span class="section-number-3">9.2</span> Instance methods</h3>
+<div id="outline-container-orgc7674a7" class="outline-3">
+<h3 id="orgc7674a7"><span class="section-number-3">9.2</span> Instance methods</h3>
 <div class="outline-text-3" id="text-9-2">
 <p>
 实例方法具有用户自定义函数的大多数特殊属性，同时具有一些自己的 <b>只读</b> 特殊属性：
@@ -683,8 +683,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org3a2ec49" class="outline-3">
-<h3 id="org3a2ec49"><span class="section-number-3">9.3</span> Other</h3>
+<div id="outline-container-orgb5d827c" class="outline-3">
+<h3 id="orgb5d827c"><span class="section-number-3">9.3</span> Other</h3>
 <div class="outline-text-3" id="text-9-3">
 <dl class="org-dl">
 <dt>Generator functions</dt><dd>使用了 <code>yield</code> 语句的函数为 <b>生成器函数</b>, 生成器的使用可以参考博客 <a href="python-generator.html">Python 生成器</a>.</dd>
@@ -705,8 +705,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orge65095f" class="outline-2">
-<h2 id="orge65095f"><span class="section-number-2">10</span> Modules</h2>
+<div id="outline-container-org10ea0c7" class="outline-2">
+<h2 id="org10ea0c7"><span class="section-number-2">10</span> Modules</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 模块对象由 <a href="https://docs.python.org/3/reference/import.html#importsystem">import system</a> 创建，对模块对象的属性引用被转换为该字典中的查找。
@@ -762,8 +762,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orgad94265" class="outline-2">
-<h2 id="orgad94265"><span class="section-number-2">11</span> Custom classes</h2>
+<div id="outline-container-orgb481d31" class="outline-2">
+<h2 id="orgb481d31"><span class="section-number-2">11</span> Custom classes</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 自定义类也有一些特殊属性：
@@ -817,8 +817,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orgfc29e81" class="outline-2">
-<h2 id="orgfc29e81"><span class="section-number-2">12</span> Class instances</h2>
+<div id="outline-container-orgca2490a" class="outline-2">
+<h2 id="orgca2490a"><span class="section-number-2">12</span> Class instances</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 实例对象的属性基本上都是由我们自己管理的了，至少我不希望自己创建的实例多出了什么奇怪的属性。
@@ -830,8 +830,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org6eeec84" class="outline-2">
-<h2 id="org6eeec84"><span class="section-number-2">13</span> I/O objects</h2>
+<div id="outline-container-org6b06693" class="outline-2">
+<h2 id="org6b06693"><span class="section-number-2">13</span> I/O objects</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 也称为 <b>文件对象</b>, 前段时间了解了一下 <code>Python I/O</code> 的封装层次，然后发现， <code>Java</code> 中也差不多。
@@ -843,16 +843,16 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org7d8cb9a" class="outline-2">
-<h2 id="org7d8cb9a"><span class="section-number-2">14</span> Internal types</h2>
+<div id="outline-container-org2ff27ed" class="outline-2">
+<h2 id="org2ff27ed"><span class="section-number-2">14</span> Internal types</h2>
 <div class="outline-text-2" id="text-14">
 <p>
 向用户公开的一些解释器内部使用的一些类型。
 </p>
 </div>
 
-<div id="outline-container-org7808657" class="outline-3">
-<h3 id="org7808657"><span class="section-number-3">14.1</span> Code objects</h3>
+<div id="outline-container-org35974e6" class="outline-3">
+<h3 id="org35974e6"><span class="section-number-3">14.1</span> Code objects</h3>
 <div class="outline-text-3" id="text-14-1">
 <p>
 <code>Code</code> 对象属于 <b>不可变</b> 对象，同时不包含任何可变对象的引用。
@@ -950,8 +950,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org692dfb3" class="outline-3">
-<h3 id="org692dfb3"><span class="section-number-3">14.2</span> Frame objects</h3>
+<div id="outline-container-orgc67a1b8" class="outline-3">
+<h3 id="orgc67a1b8"><span class="section-number-3">14.2</span> Frame objects</h3>
 <div class="outline-text-3" id="text-14-2">
 <p>
 帧对象表示执行帧。它们可能出现在回溯对象中，也会传递给已注册的跟踪函数。
@@ -1021,8 +1021,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-orge25e30c" class="outline-3">
-<h3 id="orge25e30c"><span class="section-number-3">14.3</span> Other</h3>
+<div id="outline-container-org174ef40" class="outline-3">
+<h3 id="org174ef40"><span class="section-number-3">14.3</span> Other</h3>
 <div class="outline-text-3" id="text-14-3">
 <dl class="org-dl">
 <dt>Traceback objects</dt><dd>回溯对象，表示异常的堆栈跟踪</dd>
@@ -1034,8 +1034,8 @@ numbers.Number
 </div>
 </div>
 
-<div id="outline-container-org7963b83" class="outline-2">
-<h2 id="org7963b83"><span class="section-number-2">15</span> 结尾</h2>
+<div id="outline-container-org107a7c6" class="outline-2">
+<h2 id="org107a7c6"><span class="section-number-2">15</span> 结尾</h2>
 <div class="outline-text-2" id="text-15">
 <p>
 我后悔了，搞这个花的时间有点长，收获与付出的时间成本不符。

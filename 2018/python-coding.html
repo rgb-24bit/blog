@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 编码问题</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc67a99e">1. Unicode &amp; UTF-8</a></li>
-<li><a href="#org9cf51fc">2. 编码格式转化</a></li>
-<li><a href="#org0974b10">3. Python2</a></li>
-<li><a href="#org126bb13">4. Python3</a></li>
-<li><a href="#org90ac413">5. 编写程序</a></li>
-<li><a href="#orge7f8db2">6. 代码样例</a></li>
-<li><a href="#org75cabab">7. 参考链接</a></li>
+<li><a href="#orge7f4a6d">1. Unicode &amp; UTF-8</a></li>
+<li><a href="#orga1b94cd">2. 编码格式转化</a></li>
+<li><a href="#org3746d3a">3. Python2</a></li>
+<li><a href="#orgebff8cd">4. Python3</a></li>
+<li><a href="#orgeb09843">5. 编写程序</a></li>
+<li><a href="#orgcaa2ee0">6. 代码样例</a></li>
+<li><a href="#org24a4e5b">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc67a99e" class="outline-2">
-<h2 id="orgc67a99e"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
+<div id="outline-container-orge7f4a6d" class="outline-2">
+<h2 id="orge7f4a6d"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
@@ -285,8 +285,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9cf51fc" class="outline-2">
-<h2 id="org9cf51fc"><span class="section-number-2">2</span> 编码格式转化</h2>
+<div id="outline-container-orga1b94cd" class="outline-2">
+<h2 id="orga1b94cd"><span class="section-number-2">2</span> 编码格式转化</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>目前存在有很多种编码方式， 如 <code>UTF-8</code>, <code>cp936</code> 等</li>
@@ -299,8 +299,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0974b10" class="outline-2">
-<h2 id="org0974b10"><span class="section-number-2">3</span> Python2</h2>
+<div id="outline-container-org3746d3a" class="outline-2">
+<h2 id="org3746d3a"><span class="section-number-2">3</span> Python2</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python2</code> 中的两种字符串数据类型：
@@ -323,17 +323,17 @@ unicode -&gt; encode -&gt; str
 </pre>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
-&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'str'</span>&gt;
-&gt;&gt;&gt; s.decode(<span style="font-style: italic;">'cp936'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35299;&#30721;</span>
-u<span style="font-style: italic;">'\u7f16\u7801'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s.decode(<span style="font-style: italic;">'cp936'</span>))
-&lt;<span style="font-weight: bold;">type</span> <span style="font-style: italic;">'unicode'</span>&gt;
-&gt;&gt;&gt; u<span style="font-style: italic;">'&#32534;&#30721;'</span>
-u<span style="font-style: italic;">'\u7f16\u7801'</span>
-&gt;&gt;&gt; u<span style="font-style: italic;">'&#32534;&#30721;'</span>.encode(<span style="font-style: italic;">'cp936'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#32534;&#30721;</span>
-<span style="font-style: italic;">'\xb1\xe0\xc2\xeb'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span class="org-builtin">type</span>(s)
+&lt;<span class="org-builtin">type</span> <span class="org-string">'str'</span>&gt;
+&gt;&gt;&gt; s.decode(<span class="org-string">'cp936'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#35299;&#30721;</span>
+u<span class="org-string">'\u7f16\u7801'</span>
+&gt;&gt;&gt; <span class="org-builtin">type</span>(s.decode(<span class="org-string">'cp936'</span>))
+&lt;<span class="org-builtin">type</span> <span class="org-string">'unicode'</span>&gt;
+&gt;&gt;&gt; u<span class="org-string">'&#32534;&#30721;'</span>
+u<span class="org-string">'\u7f16\u7801'</span>
+&gt;&gt;&gt; u<span class="org-string">'&#32534;&#30721;'</span>.encode(<span class="org-string">'cp936'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#32534;&#30721;</span>
+<span class="org-string">'\xb1\xe0\xc2\xeb'</span>
 </pre>
 </div>
 
@@ -347,19 +347,19 @@ u<span style="font-style: italic;">'\u7f16\u7801'</span>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; u<span style="font-style: italic;">'abc'</span> + <span style="font-style: italic;">'def'</span>
-u<span style="font-style: italic;">'abcdef'</span>
-&gt;&gt;&gt; u<span style="font-style: italic;">'abc'</span> + <span style="font-style: italic;">'&#32534;&#30721;'</span>
+<pre class="src src-python">&gt;&gt;&gt; u<span class="org-string">'abc'</span> + <span class="org-string">'def'</span>
+u<span class="org-doc">'abcdef'</span>
+&gt;&gt;&gt; u<span class="org-string">'abc'</span> + <span class="org-string">'&#32534;&#30721;'</span>
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">UnicodeDecodeError</span>: <span style="font-style: italic;">'ascii'</span> codec can<span style="font-style: italic;">'t decode byte 0xb1 in position 0: ordinal not in range(128)</span>
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">UnicodeDecodeError</span>: <span class="org-string">'ascii'</span> codec can<span class="org-string">'t decode byte 0xb1 in position 0: ordinal not in range(128)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org126bb13" class="outline-2">
-<h2 id="org126bb13"><span class="section-number-2">4</span> Python3</h2>
+<div id="outline-container-orgebff8cd" class="outline-2">
+<h2 id="orgebff8cd"><span class="section-number-2">4</span> Python3</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 和 <code>Python2</code> 中不同的是， <code>Python3</code> 默认的字符串类型变为了 <code>unicode</code>, 而字节字符串的定义需要通过 <code>b'abc'</code> 的方式。
@@ -382,31 +382,31 @@ Traceback (most recent call last):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
-&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'str'</span>&gt;
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = u<span style="font-style: italic;">'&#32534;&#30721;'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
-&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'str'</span>&gt;
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = b<span style="font-style: italic;">'&#32534;&#30721;'</span>
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1
-<span style="font-weight: bold; text-decoration: underline;">SyntaxError</span>: <span style="font-weight: bold;">bytes</span> can only contain ASCII literal characters.
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>.encode(<span style="font-style: italic;">'cp936'</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span class="org-builtin">type</span>(s)
+&lt;<span class="org-keyword">class</span> <span class="org-string">'str'</span>&gt;
+&gt;&gt;&gt; <span class="org-variable-name">s</span> = u<span class="org-string">'&#32534;&#30721;'</span>
+&gt;&gt;&gt; <span class="org-builtin">type</span>(s)
+&lt;<span class="org-keyword">class</span> <span class="org-string">'str'</span>&gt;
+&gt;&gt;&gt; <span class="org-variable-name">s</span> = b<span class="org-string">'&#32534;&#30721;'</span>
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1
+<span class="org-type">SyntaxError</span>: <span class="org-builtin">bytes</span> can only contain ASCII literal characters.
+&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'&#32534;&#30721;'</span>.encode(<span class="org-string">'cp936'</span>)
 &gt;&gt;&gt; s
-b<span style="font-style: italic;">'\xb1\xe0\xc2\xeb'</span>
-&gt;&gt;&gt; <span style="font-weight: bold;">type</span>(s)
-&lt;<span style="font-weight: bold;">class</span> <span style="font-style: italic;">'bytes'</span>&gt;
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">s</span> = <span style="font-style: italic;">'&#32534;&#30721;'</span>.decode(<span style="font-style: italic;">'cp936'</span>)
+b<span class="org-string">'\xb1\xe0\xc2\xeb'</span>
+&gt;&gt;&gt; <span class="org-builtin">type</span>(s)
+&lt;<span class="org-keyword">class</span> <span class="org-string">'bytes'</span>&gt;
+&gt;&gt;&gt; <span class="org-variable-name">s</span> = <span class="org-string">'&#32534;&#30721;'</span>.decode(<span class="org-string">'cp936'</span>)
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">AttributeError</span>: <span style="font-style: italic;">'str'</span> <span style="font-weight: bold;">object</span> has no attribute <span style="font-style: italic;">'decode'</span>
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">AttributeError</span>: <span class="org-string">'str'</span> <span class="org-builtin">object</span> has no attribute <span class="org-string">'decode'</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org90ac413" class="outline-2">
-<h2 id="org90ac413"><span class="section-number-2">5</span> 编写程序</h2>
+<div id="outline-container-orgeb09843" class="outline-2">
+<h2 id="orgeb09843"><span class="section-number-2">5</span> 编写程序</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b>无法改变的五个事实：</b>
@@ -430,59 +430,59 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orge7f8db2" class="outline-2">
-<h2 id="orge7f8db2"><span class="section-number-2">6</span> 代码样例</h2>
+<div id="outline-container-orgcaa2ee0" class="outline-2">
+<h2 id="orgcaa2ee0"><span class="section-number-2">6</span> 代码样例</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在阅读 <a href="https://github.com/webpy/webpy">webpy</a> 源码的过程中， 发现了在 <code>utils.py</code> 中的一段处理这个问题的代码， 感觉很有用：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">safeunicode</span>(obj, encoding=<span style="font-style: italic;">'utf-8'</span>):
-    r<span style="font-style: italic;">"""</span>
-<span style="font-style: italic;">    Converts any given object to unicode string.</span>
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">safeunicode</span>(obj, encoding=<span class="org-string">'utf-8'</span>):
+    r<span class="org-doc">"""</span>
+<span class="org-doc">    Converts any given object to unicode string.</span>
 
-<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode('hello')</span>
-<span style="font-style: italic;">        u'hello'</span>
-<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode(2)</span>
-<span style="font-style: italic;">        u'2'</span>
-<span style="font-style: italic;">        &gt;&gt;&gt; safeunicode('\xe1\x88\xb4')</span>
-<span style="font-style: italic;">        u'\u1234'</span>
-<span style="font-style: italic;">    """</span>
-    <span style="font-weight: bold; font-style: italic;">t</span> = <span style="font-weight: bold;">type</span>(obj)
-    <span style="font-weight: bold;">if</span> t <span style="font-weight: bold;">is</span> text_type:
-        <span style="font-weight: bold;">return</span> obj
-    <span style="font-weight: bold;">elif</span> t <span style="font-weight: bold;">is</span> <span style="font-weight: bold;">bytes</span>:
-        <span style="font-weight: bold;">return</span> obj.decode(encoding)
-    <span style="font-weight: bold;">elif</span> t <span style="font-weight: bold;">in</span> [<span style="font-weight: bold;">int</span>, <span style="font-weight: bold;">float</span>, <span style="font-weight: bold;">bool</span>]:
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">unicode</span>(obj)
-    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">elif hasattr(obj, '__unicode__') or isinstance(obj, unicode):</span>
-    <span style="font-weight: bold; font-style: italic;">#    </span><span style="font-weight: bold; font-style: italic;">return unicode(obj)</span>
-    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">else:</span>
-    <span style="font-weight: bold; font-style: italic;">#    </span><span style="font-weight: bold; font-style: italic;">return str(obj).decode(encoding)</span>
-    <span style="font-weight: bold;">else</span>:
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">unicode</span>(obj)
+<span class="org-doc">        &gt;&gt;&gt; safeunicode('hello')</span>
+<span class="org-doc">        u'hello'</span>
+<span class="org-doc">        &gt;&gt;&gt; safeunicode(2)</span>
+<span class="org-doc">        u'2'</span>
+<span class="org-doc">        &gt;&gt;&gt; safeunicode('\xe1\x88\xb4')</span>
+<span class="org-doc">        u'\u1234'</span>
+<span class="org-doc">    """</span>
+    <span class="org-variable-name">t</span> = <span class="org-builtin">type</span>(obj)
+    <span class="org-keyword">if</span> t <span class="org-keyword">is</span> text_type:
+        <span class="org-keyword">return</span> obj
+    <span class="org-keyword">elif</span> t <span class="org-keyword">is</span> <span class="org-builtin">bytes</span>:
+        <span class="org-keyword">return</span> obj.decode(encoding)
+    <span class="org-keyword">elif</span> t <span class="org-keyword">in</span> [<span class="org-builtin">int</span>, <span class="org-builtin">float</span>, <span class="org-builtin">bool</span>]:
+        <span class="org-keyword">return</span> <span class="org-builtin">unicode</span>(obj)
+    <span class="org-comment-delimiter">#</span><span class="org-comment">elif hasattr(obj, '__unicode__') or isinstance(obj, unicode):</span>
+    <span class="org-comment-delimiter">#    </span><span class="org-comment">return unicode(obj)</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">else:</span>
+    <span class="org-comment-delimiter">#    </span><span class="org-comment">return str(obj).decode(encoding)</span>
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">return</span> <span class="org-builtin">unicode</span>(obj)
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">safestr</span>(obj, encoding=<span style="font-style: italic;">'utf-8'</span>):
-    r<span style="font-style: italic;">"""</span>
-<span style="font-style: italic;">    Converts any given object to utf-8 encoded string. </span>
+<span class="org-keyword">def</span> <span class="org-function-name">safestr</span>(obj, encoding=<span class="org-string">'utf-8'</span>):
+    r<span class="org-doc">"""</span>
+<span class="org-doc">    Converts any given object to utf-8 encoded string. </span>
 
-<span style="font-style: italic;">        &gt;&gt;&gt; safestr('hello')</span>
-<span style="font-style: italic;">        'hello'</span>
-<span style="font-style: italic;">        &gt;&gt;&gt; safestr(2)</span>
-<span style="font-style: italic;">        '2'</span>
-<span style="font-style: italic;">    """</span>
+<span class="org-doc">        &gt;&gt;&gt; safestr('hello')</span>
+<span class="org-doc">        'hello'</span>
+<span class="org-doc">        &gt;&gt;&gt; safestr(2)</span>
+<span class="org-doc">        '2'</span>
+<span class="org-doc">    """</span>
 
-    <span style="font-weight: bold;">if</span> PY2 <span style="font-weight: bold;">and</span> <span style="font-weight: bold;">isinstance</span>(obj, <span style="font-weight: bold;">unicode</span>):
-        <span style="font-weight: bold;">return</span> obj.encode(encoding)
-    <span style="font-weight: bold;">elif</span> is_iter(obj):
-        <span style="font-weight: bold;">return</span> imap(safestr, obj)
-    <span style="font-weight: bold;">else</span>:
-        <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">str</span>(obj)
+    <span class="org-keyword">if</span> PY2 <span class="org-keyword">and</span> <span class="org-builtin">isinstance</span>(obj, <span class="org-builtin">unicode</span>):
+        <span class="org-keyword">return</span> obj.encode(encoding)
+    <span class="org-keyword">elif</span> is_iter(obj):
+        <span class="org-keyword">return</span> imap(safestr, obj)
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">return</span> <span class="org-builtin">str</span>(obj)
 
-<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> PY2:
-    <span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">Since Python3, utf-8 encoded strings and unicode strings are the same thing</span>
-    <span style="font-weight: bold; font-style: italic;">safeunicode</span> = safestr
+<span class="org-keyword">if</span> <span class="org-keyword">not</span> PY2:
+    <span class="org-comment-delimiter">#</span><span class="org-comment">Since Python3, utf-8 encoded strings and unicode strings are the same thing</span>
+    <span class="org-variable-name">safeunicode</span> = safestr
 </pre>
 </div>
 
@@ -492,8 +492,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org75cabab" class="outline-2">
-<h2 id="org75cabab"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org24a4e5b" class="outline-2">
+<h2 id="org24a4e5b"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html">unicode 之痛</a> - 推荐</li>

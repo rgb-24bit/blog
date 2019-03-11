@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python urllib</title>
@@ -246,24 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8024c9e">1. 前言</a></li>
-<li><a href="#org08744c7">2. Python2</a>
+<li><a href="#orgc5152bb">1. 前言</a></li>
+<li><a href="#orgb47ca37">2. Python2</a>
 <ul>
-<li><a href="#orgda278dc">2.1. 获取资源</a></li>
-<li><a href="#orgead4acb">2.2. 发送数据</a></li>
-<li><a href="#org6e93147">2.3. 用户代理</a></li>
-<li><a href="#org2eb918a">2.4. 异常处理</a></li>
-<li><a href="#org6b24c2f">2.5. 超时设置</a></li>
+<li><a href="#org5b434e4">2.1. 获取资源</a></li>
+<li><a href="#org3350e25">2.2. 发送数据</a></li>
+<li><a href="#orgcf08091">2.3. 用户代理</a></li>
+<li><a href="#orge958146">2.4. 异常处理</a></li>
+<li><a href="#org12f8355">2.5. 超时设置</a></li>
 </ul>
 </li>
-<li><a href="#orgf52af55">3. Python3</a></li>
-<li><a href="#org0e514fe">4. 相关链接</a></li>
+<li><a href="#orgf7b1d3c">3. Python3</a></li>
+<li><a href="#org18e5e99">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8024c9e" class="outline-2">
-<h2 id="org8024c9e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgc5152bb" class="outline-2">
+<h2 id="orgc5152bb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客之前是发过的，当时由于太过求全，添加了不少自己不太明白的内容，
@@ -281,16 +281,16 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org08744c7" class="outline-2">
-<h2 id="org08744c7"><span class="section-number-2">2</span> Python2</h2>
+<div id="outline-container-orgb47ca37" class="outline-2">
+<h2 id="orgb47ca37"><span class="section-number-2">2</span> Python2</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 这篇博客的内容以 <code>Python2</code> 为基础， <code>Python3</code> 为补充。
 </p>
 </div>
 
-<div id="outline-container-orgda278dc" class="outline-3">
-<h3 id="orgda278dc"><span class="section-number-3">2.1</span> 获取资源</h3>
+<div id="outline-container-org5b434e4" class="outline-3">
+<h3 id="org5b434e4"><span class="section-number-3">2.1</span> 获取资源</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Python2</code> 中的 <code>urllib</code> 库分为 <code>urllib</code> 和 <code>urllib2</code>, 两者都可以用于获取 <code>URL</code> 资源， 
@@ -301,9 +301,9 @@ for the JavaScript code in this tag.
 一个简单的例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib2
-<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(<span style="font-style: italic;">'http://python.org'</span>)
-<span style="font-weight: bold; font-style: italic;">html</span> = response.read()
+<pre class="src src-python"><span class="org-keyword">import</span> urllib2
+<span class="org-variable-name">response</span> = urllib2.urlopen(<span class="org-string">'http://python.org'</span>)
+<span class="org-variable-name">html</span> = response.read()
 </pre>
 </div>
 
@@ -317,18 +317,18 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib2
+<pre class="src src-python"><span class="org-keyword">import</span> urllib2
 
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)
-<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
-<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+<span class="org-variable-name">req</span> = urllib2.Request(<span class="org-string">'http://www.voidspace.org.uk'</span>)
+<span class="org-variable-name">response</span> = urllib2.urlopen(req)
+<span class="org-variable-name">the_page</span> = response.read()
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgead4acb" class="outline-3">
-<h3 id="orgead4acb"><span class="section-number-3">2.2</span> 发送数据</h3>
+<div id="outline-container-org3350e25" class="outline-3">
+<h3 id="org3350e25"><span class="section-number-3">2.2</span> 发送数据</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 我们可以使用 <code>POST</code> 请求向服务器发送一些数据，数据在发送之前，需要以标准方式进行编码。
@@ -350,18 +350,18 @@ for the JavaScript code in this tag.
 一个例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib
-<span style="font-weight: bold;">import</span> urllib2
+<pre class="src src-python"><span class="org-keyword">import</span> urllib
+<span class="org-keyword">import</span> urllib2
 
-<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
-<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span> : <span style="font-style: italic;">'Michael Foord'</span>,
-          <span style="font-style: italic;">'location'</span> : <span style="font-style: italic;">'Northampton'</span>,
-          <span style="font-style: italic;">'language'</span> : <span style="font-style: italic;">'Python'</span> }
+<span class="org-variable-name">url</span> = <span class="org-string">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span class="org-variable-name">values</span> = {<span class="org-string">'name'</span> : <span class="org-string">'Michael Foord'</span>,
+          <span class="org-string">'location'</span> : <span class="org-string">'Northampton'</span>,
+          <span class="org-string">'language'</span> : <span class="org-string">'Python'</span> }
 
-<span style="font-weight: bold; font-style: italic;">data</span> = urllib.urlencode(values)
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(url, data)
-<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
-<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+<span class="org-variable-name">data</span> = urllib.urlencode(values)
+<span class="org-variable-name">req</span> = urllib2.Request(url, data)
+<span class="org-variable-name">response</span> = urllib2.urlopen(req)
+<span class="org-variable-name">the_page</span> = response.read()
 </pre>
 </div>
 
@@ -377,18 +377,18 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 另外， 可以通过将数据整合到到 <code>url</code> 方式， 使用 <code>GET</code> 请求发送数据。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">import</span> urllib2
-&gt;&gt;&gt; <span style="font-weight: bold;">import</span> urllib
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span> = {}
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'name'</span>] = <span style="font-style: italic;">'Somebody Here'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'location'</span>] = <span style="font-style: italic;">'Northampton'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span>[<span style="font-style: italic;">'language'</span>] = <span style="font-style: italic;">'Python'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">url_values</span> = urllib.urlencode(data)
-&gt;&gt;&gt; <span style="font-weight: bold;">print</span> url_values  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">The order may differ. </span>
-<span style="font-weight: bold; font-style: italic;">name</span>=Somebody+Here&amp;<span style="font-weight: bold; font-style: italic;">language</span>=Python&amp;<span style="font-weight: bold; font-style: italic;">location</span>=Northampton
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.example.com/example.cgi'</span>
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">full_url</span> = url + <span style="font-style: italic;">'?'</span> + url_values
-&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">data</span> = urllib2.urlopen(full_url)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">import</span> urllib2
+&gt;&gt;&gt; <span class="org-keyword">import</span> urllib
+&gt;&gt;&gt; <span class="org-variable-name">data</span> = {}
+&gt;&gt;&gt; <span class="org-variable-name">data</span>[<span class="org-string">'name'</span>] = <span class="org-string">'Somebody Here'</span>
+&gt;&gt;&gt; <span class="org-variable-name">data</span>[<span class="org-string">'location'</span>] = <span class="org-string">'Northampton'</span>
+&gt;&gt;&gt; <span class="org-variable-name">data</span>[<span class="org-string">'language'</span>] = <span class="org-string">'Python'</span>
+&gt;&gt;&gt; <span class="org-variable-name">url_values</span> = urllib.urlencode(data)
+&gt;&gt;&gt; <span class="org-keyword">print</span> url_values  <span class="org-comment-delimiter"># </span><span class="org-comment">The order may differ. </span>
+<span class="org-variable-name">name</span>=Somebody+Here&amp;<span class="org-variable-name">language</span>=Python&amp;<span class="org-variable-name">location</span>=Northampton
+&gt;&gt;&gt; <span class="org-variable-name">url</span> = <span class="org-string">'http://www.example.com/example.cgi'</span>
+&gt;&gt;&gt; <span class="org-variable-name">full_url</span> = url + <span class="org-string">'?'</span> + url_values
+&gt;&gt;&gt; <span class="org-variable-name">data</span> = urllib2.urlopen(full_url)
 </pre>
 </div>
 
@@ -398,8 +398,8 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 </div>
 </div>
 
-<div id="outline-container-org6e93147" class="outline-3">
-<h3 id="org6e93147"><span class="section-number-3">2.3</span> 用户代理</h3>
+<div id="outline-container-orgcf08091" class="outline-3">
+<h3 id="orgcf08091"><span class="section-number-3">2.3</span> 用户代理</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器
@@ -429,20 +429,20 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 比如说：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib
-<span style="font-weight: bold;">import</span> urllib2
+<pre class="src src-python"><span class="org-keyword">import</span> urllib
+<span class="org-keyword">import</span> urllib2
 
-<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
-<span style="font-weight: bold; font-style: italic;">user_agent</span> = <span style="font-style: italic;">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36'</span>
-<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span>: <span style="font-style: italic;">'Michael Foord'</span>,
-          <span style="font-style: italic;">'location'</span>: <span style="font-style: italic;">'Northampton'</span>,
-          <span style="font-style: italic;">'language'</span>: <span style="font-style: italic;">'Python'</span> }
-<span style="font-weight: bold; font-style: italic;">headers</span> = {<span style="font-style: italic;">'User-Agent'</span>: user_agent}
+<span class="org-variable-name">url</span> = <span class="org-string">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span class="org-variable-name">user_agent</span> = <span class="org-string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36'</span>
+<span class="org-variable-name">values</span> = {<span class="org-string">'name'</span>: <span class="org-string">'Michael Foord'</span>,
+          <span class="org-string">'location'</span>: <span class="org-string">'Northampton'</span>,
+          <span class="org-string">'language'</span>: <span class="org-string">'Python'</span> }
+<span class="org-variable-name">headers</span> = {<span class="org-string">'User-Agent'</span>: user_agent}
 
-<span style="font-weight: bold; font-style: italic;">data</span> = urllib.urlencode(values)
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(url, data, headers)
-<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
-<span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+<span class="org-variable-name">data</span> = urllib.urlencode(values)
+<span class="org-variable-name">req</span> = urllib2.Request(url, data, headers)
+<span class="org-variable-name">response</span> = urllib2.urlopen(req)
+<span class="org-variable-name">the_page</span> = response.read()
 </pre>
 </div>
 
@@ -452,8 +452,8 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-org2eb918a" class="outline-3">
-<h3 id="org2eb918a"><span class="section-number-3">2.4</span> 异常处理</h3>
+<div id="outline-container-orge958146" class="outline-3">
+<h3 id="orge958146"><span class="section-number-3">2.4</span> 异常处理</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <i>urlopen</i> 在不能处理响应的时候会抛出错误 <code>URLError</code>.
@@ -476,12 +476,12 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 该异常具有 <code>reason</code> 属性， 一个包含错误代码和错误信息的元组。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.pretend_server.org'</span>)
-&gt;&gt;&gt; <span style="font-weight: bold;">try</span>: urllib2.urlopen(req)
-... <span style="font-weight: bold;">except</span> urllib2.URLError <span style="font-weight: bold;">as</span> e:
-...    <span style="font-weight: bold;">print</span> e.reason
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">req</span> = urllib2.Request(<span class="org-string">'http://www.pretend_server.org'</span>)
+&gt;&gt;&gt; <span class="org-keyword">try</span>: urllib2.urlopen(req)
+... <span class="org-keyword">except</span> urllib2.URLError <span class="org-keyword">as</span> e:
+...    <span class="org-keyword">print</span> e.reason
 ...
-(4, <span style="font-style: italic;">'getaddrinfo failed'</span>)
+(4, <span class="org-string">'getaddrinfo failed'</span>)
 </pre>
 </div></li>
 
@@ -510,11 +510,11 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 你可以打印这个字典来了解一些响应码的含义。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">from</span> BaseHTTPServer <span style="font-weight: bold;">import</span> BaseHTTPRequestHandler.responses
+<pre class="src src-python"><span class="org-keyword">from</span> BaseHTTPServer <span class="org-keyword">import</span> BaseHTTPRequestHandler.responses
 
 
-<span style="font-weight: bold;">for</span> code, info <span style="font-weight: bold;">in</span> BaseHTTPRequestHandler.responses.items():
-    <span style="font-weight: bold;">print</span>(code, info)
+<span class="org-keyword">for</span> code, info <span class="org-keyword">in</span> BaseHTTPRequestHandler.responses.items():
+    <span class="org-keyword">print</span>(code, info)
 </pre>
 </div>
 
@@ -522,16 +522,16 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 <b>HTTPError</b> 实例可以作为服务器响应(<code>response</code>)的实例， 即其拥有 <b>read</b>, <b>geturl</b>, <b>info</b> 方法。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.python.org/fish.html'</span>)
-&gt;&gt;&gt; <span style="font-weight: bold;">try</span>:
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">req</span> = urllib2.Request(<span class="org-string">'http://www.python.org/fish.html'</span>)
+&gt;&gt;&gt; <span class="org-keyword">try</span>:
 ...     urllib2.urlopen(req)
-... <span style="font-weight: bold;">except</span> urllib2.HTTPError <span style="font-weight: bold;">as</span> e:
-...     <span style="font-weight: bold;">print</span> e.code
-...     <span style="font-weight: bold;">print</span> e.read() 
+... <span class="org-keyword">except</span> urllib2.HTTPError <span class="org-keyword">as</span> e:
+...     <span class="org-keyword">print</span> e.code
+...     <span class="org-keyword">print</span> e.read() 
 ...
 404
-&lt;!DOCTYPE html PUBLIC <span style="font-style: italic;">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
-<span style="font-style: italic;">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
+&lt;!DOCTYPE html PUBLIC <span class="org-string">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
+<span class="org-string">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
 ...
 &lt;title&gt;Page Not Found&lt;/title&gt;
 ...
@@ -543,38 +543,38 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 现在， 有两种方式来处理这两个异常， 推荐第二种。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26041;&#24335;&#19968;</span>
-<span style="font-weight: bold;">from</span> urllib2 <span style="font-weight: bold;">import</span> Request, urlopen, URLError, HTTPError
-<span style="font-weight: bold; font-style: italic;">req</span> = Request(someurl)
-<span style="font-weight: bold;">try</span>:
-    <span style="font-weight: bold; font-style: italic;">response</span> = urlopen(req)
-<span style="font-weight: bold;">except</span> HTTPError <span style="font-weight: bold;">as</span> e:
-    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'The server couldn\'t fulfill the request.'</span>
-    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Error code: '</span>, e.code
-<span style="font-weight: bold;">except</span> URLError <span style="font-weight: bold;">as</span> e:
-    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'We failed to reach a server.'</span>
-    <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Reason: '</span>, e.reason
-<span style="font-weight: bold;">else</span>:
-    <span style="font-weight: bold;">pass</span>
-    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">everything is fine</span>
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#26041;&#24335;&#19968;</span>
+<span class="org-keyword">from</span> urllib2 <span class="org-keyword">import</span> Request, urlopen, URLError, HTTPError
+<span class="org-variable-name">req</span> = Request(someurl)
+<span class="org-keyword">try</span>:
+    <span class="org-variable-name">response</span> = urlopen(req)
+<span class="org-keyword">except</span> HTTPError <span class="org-keyword">as</span> e:
+    <span class="org-keyword">print</span> <span class="org-string">'The server couldn\'t fulfill the request.'</span>
+    <span class="org-keyword">print</span> <span class="org-string">'Error code: '</span>, e.code
+<span class="org-keyword">except</span> URLError <span class="org-keyword">as</span> e:
+    <span class="org-keyword">print</span> <span class="org-string">'We failed to reach a server.'</span>
+    <span class="org-keyword">print</span> <span class="org-string">'Reason: '</span>, e.reason
+<span class="org-keyword">else</span>:
+    <span class="org-keyword">pass</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">everything is fine</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">PS: HTTPError &#24517;&#39035;&#26159;&#31532;&#19968;&#20010;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">PS: HTTPError &#24517;&#39035;&#26159;&#31532;&#19968;&#20010;</span>
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#26041;&#24335;&#20108;</span>
-<span style="font-weight: bold;">from</span> urllib2 <span style="font-weight: bold;">import</span> Request, urlopen, URLError
-<span style="font-weight: bold; font-style: italic;">req</span> = Request(someurl)
-<span style="font-weight: bold;">try</span>:
-    <span style="font-weight: bold; font-style: italic;">response</span> = urlopen(req)
-<span style="font-weight: bold;">except</span> URLError <span style="font-weight: bold;">as</span> e:
-    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">hasattr</span>(e, <span style="font-style: italic;">'reason'</span>):
-        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'We failed to reach a server.'</span>
-        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Reason: '</span>, e.reason
-    <span style="font-weight: bold;">elif</span> <span style="font-weight: bold;">hasattr</span>(e, <span style="font-style: italic;">'code'</span>):
-        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'The server couldn\'t fulfill the request.'</span>
-        <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'Error code: '</span>, e.code
-<span style="font-weight: bold;">else</span>:
-    <span style="font-weight: bold;">pass</span>
-    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">everything is fine</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26041;&#24335;&#20108;</span>
+<span class="org-keyword">from</span> urllib2 <span class="org-keyword">import</span> Request, urlopen, URLError
+<span class="org-variable-name">req</span> = Request(someurl)
+<span class="org-keyword">try</span>:
+    <span class="org-variable-name">response</span> = urlopen(req)
+<span class="org-keyword">except</span> URLError <span class="org-keyword">as</span> e:
+    <span class="org-keyword">if</span> <span class="org-builtin">hasattr</span>(e, <span class="org-string">'reason'</span>):
+        <span class="org-keyword">print</span> <span class="org-string">'We failed to reach a server.'</span>
+        <span class="org-keyword">print</span> <span class="org-string">'Reason: '</span>, e.reason
+    <span class="org-keyword">elif</span> <span class="org-builtin">hasattr</span>(e, <span class="org-string">'code'</span>):
+        <span class="org-keyword">print</span> <span class="org-string">'The server couldn\'t fulfill the request.'</span>
+        <span class="org-keyword">print</span> <span class="org-string">'Error code: '</span>, e.code
+<span class="org-keyword">else</span>:
+    <span class="org-keyword">pass</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">everything is fine</span>
 </pre>
 </div>
 
@@ -588,32 +588,32 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-org6b24c2f" class="outline-3">
-<h3 id="org6b24c2f"><span class="section-number-3">2.5</span> 超时设置</h3>
+<div id="outline-container-org12f8355" class="outline-3">
+<h3 id="org12f8355"><span class="section-number-3">2.5</span> 超时设置</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <code>urllib</code> 依赖于 <code>socket</code>, 因此可以通过 <code>socket</code> 来设置超时时间：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> socket
-<span style="font-weight: bold;">import</span> urllib2
+<pre class="src src-python"><span class="org-keyword">import</span> socket
+<span class="org-keyword">import</span> urllib2
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">timeout in seconds</span>
-<span style="font-weight: bold; font-style: italic;">timeout</span> = 10
+<span class="org-comment-delimiter"># </span><span class="org-comment">timeout in seconds</span>
+<span class="org-variable-name">timeout</span> = 10
 socket.setdefaulttimeout(timeout)
 
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this call to urllib2.urlopen now uses the default timeout</span>
-<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">we have set in the socket module</span>
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib2.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)
-<span style="font-weight: bold; font-style: italic;">response</span> = urllib2.urlopen(req)
+<span class="org-comment-delimiter"># </span><span class="org-comment">this call to urllib2.urlopen now uses the default timeout</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">we have set in the socket module</span>
+<span class="org-variable-name">req</span> = urllib2.Request(<span class="org-string">'http://www.voidspace.org.uk'</span>)
+<span class="org-variable-name">response</span> = urllib2.urlopen(req)
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf52af55" class="outline-2">
-<h2 id="orgf52af55"><span class="section-number-2">3</span> Python3</h2>
+<div id="outline-container-orgf7b1d3c" class="outline-2">
+<h2 id="orgf7b1d3c"><span class="section-number-2">3</span> Python3</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们都知道 <code>Python3</code> 和 <code>Python2</code> 不兼容。 对于 <code>urllib</code> 来说更是如此。
@@ -629,11 +629,11 @@ socket.setdefaulttimeout(timeout)
 写代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib.request
+<pre class="src src-python"><span class="org-keyword">import</span> urllib.request
 
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib.request.Request(<span style="font-style: italic;">'http://www.voidspace.org.uk'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">urllib2.Request</span>
-<span style="font-weight: bold;">with</span> urllib.request.urlopen(req) <span style="font-weight: bold;">as</span> response:  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">urllib2.urlopen</span>
-   <span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+<span class="org-variable-name">req</span> = urllib.request.Request(<span class="org-string">'http://www.voidspace.org.uk'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">urllib2.Request</span>
+<span class="org-keyword">with</span> urllib.request.urlopen(req) <span class="org-keyword">as</span> response:  <span class="org-comment-delimiter"># </span><span class="org-comment">urllib2.urlopen</span>
+   <span class="org-variable-name">the_page</span> = response.read()
 </pre>
 </div>
 
@@ -641,21 +641,21 @@ socket.setdefaulttimeout(timeout)
 其他接口的调用基本上换个名字就可以了， 但需要注意的是上传数据时进行编码处理：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">import</span> urllib.parse
-<span style="font-weight: bold;">import</span> urllib.request
+<pre class="src src-python"><span class="org-keyword">import</span> urllib.parse
+<span class="org-keyword">import</span> urllib.request
 
-<span style="font-weight: bold; font-style: italic;">url</span> = <span style="font-style: italic;">'http://www.someserver.com/cgi-bin/register.cgi'</span>
-<span style="font-weight: bold; font-style: italic;">user_agent</span> = <span style="font-style: italic;">'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'</span>
-<span style="font-weight: bold; font-style: italic;">values</span> = {<span style="font-style: italic;">'name'</span>: <span style="font-style: italic;">'Michael Foord'</span>,
-          <span style="font-style: italic;">'location'</span>: <span style="font-style: italic;">'Northampton'</span>,
-          <span style="font-style: italic;">'language'</span>: <span style="font-style: italic;">'Python'</span> }
-<span style="font-weight: bold; font-style: italic;">headers</span> = {<span style="font-style: italic;">'User-Agent'</span>: user_agent}
+<span class="org-variable-name">url</span> = <span class="org-string">'http://www.someserver.com/cgi-bin/register.cgi'</span>
+<span class="org-variable-name">user_agent</span> = <span class="org-string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'</span>
+<span class="org-variable-name">values</span> = {<span class="org-string">'name'</span>: <span class="org-string">'Michael Foord'</span>,
+          <span class="org-string">'location'</span>: <span class="org-string">'Northampton'</span>,
+          <span class="org-string">'language'</span>: <span class="org-string">'Python'</span> }
+<span class="org-variable-name">headers</span> = {<span class="org-string">'User-Agent'</span>: user_agent}
 
-<span style="font-weight: bold; font-style: italic;">data</span> = urllib.parse.urlencode(values)
-<span style="font-weight: bold; font-style: italic;">data</span> = data.encode(<span style="font-style: italic;">'ascii'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#19978;&#20256;&#30340;&#25968;&#25454;&#24212;&#35813;&#26159; bytes</span>
-<span style="font-weight: bold; font-style: italic;">req</span> = urllib.request.Request(url, data, headers)
-<span style="font-weight: bold;">with</span> urllib.request.urlopen(req) <span style="font-weight: bold;">as</span> response:
-   <span style="font-weight: bold; font-style: italic;">the_page</span> = response.read()
+<span class="org-variable-name">data</span> = urllib.parse.urlencode(values)
+<span class="org-variable-name">data</span> = data.encode(<span class="org-string">'ascii'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#19978;&#20256;&#30340;&#25968;&#25454;&#24212;&#35813;&#26159; bytes</span>
+<span class="org-variable-name">req</span> = urllib.request.Request(url, data, headers)
+<span class="org-keyword">with</span> urllib.request.urlopen(req) <span class="org-keyword">as</span> response:
+   <span class="org-variable-name">the_page</span> = response.read()
 </pre>
 </div>
 
@@ -663,17 +663,17 @@ socket.setdefaulttimeout(timeout)
 还有便是那个有用的错误码字典：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">from</span> http.server <span style="font-weight: bold;">import</span> BaseHTTPRequestHandler
+<pre class="src src-python"><span class="org-keyword">from</span> http.server <span class="org-keyword">import</span> BaseHTTPRequestHandler
 
-<span style="font-weight: bold;">for</span> code, info <span style="font-weight: bold;">in</span> BaseHTTPRequestHandler.responses.items():
-    <span style="font-weight: bold;">print</span>(code, info)
+<span class="org-keyword">for</span> code, info <span class="org-keyword">in</span> BaseHTTPRequestHandler.responses.items():
+    <span class="org-keyword">print</span>(code, info)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0e514fe" class="outline-2">
-<h2 id="org0e514fe"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org18e5e99" class="outline-2">
+<h2 id="org18e5e99"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/howto/urllib2.html">HOWTO Fetch Internet Resources Using urllib2</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-25 周五 16:50 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>随机数杂谈</title>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge3eab6a">1. 前言</a></li>
-<li><a href="#orgf6a10c3">2. 简单的伪随机数生成器</a></li>
-<li><a href="#org9259cb3">3. 蒙特卡洛方法求 π</a></li>
-<li><a href="#org7c318bf">4. 随机的 BUG</a></li>
-<li><a href="#orgbbff525">5. 洗牌算法</a></li>
-<li><a href="#orgfea466d">6. 自然底数</a></li>
-<li><a href="#org8fca6b7">7. 缘起</a></li>
-<li><a href="#orga7e8959">8. 结语</a></li>
+<li><a href="#org7dc91e6">1. 前言</a></li>
+<li><a href="#org99f382e">2. 简单的伪随机数生成器</a></li>
+<li><a href="#orgd230824">3. 蒙特卡洛方法求 π</a></li>
+<li><a href="#org91836ba">4. 随机的 BUG</a></li>
+<li><a href="#orgbf15914">5. 洗牌算法</a></li>
+<li><a href="#org4160cad">6. 自然底数</a></li>
+<li><a href="#orgca49600">7. 缘起</a></li>
+<li><a href="#orgad514f1">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge3eab6a" class="outline-2">
-<h2 id="orge3eab6a"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org7dc91e6" class="outline-2">
+<h2 id="org7dc91e6"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前几天在 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上看到的一个问题再次勾起了我对随机数的兴趣，可以说，对各种和随机数相关的话题我都挺感兴趣的。
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf6a10c3" class="outline-2">
-<h2 id="orgf6a10c3"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
+<div id="outline-container-org99f382e" class="outline-2">
+<h2 id="org99f382e"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，我们使用的随机数生成器都是 <b>伪随机数（看起来像随机数的数字序列）</b> 生成器，对于这一点我相信你并不陌生。
@@ -310,14 +310,14 @@ for the JavaScript code in this tag.
 《C 标准库》 一书中的伪随机生成器便是使用的这个方法，其源码如下：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">long</span> <span style="font-weight: bold; font-style: italic;">_Randseed</span> = 1;
+<pre class="src src-C"><span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-variable-name">_Randseed</span> = 1;
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">rand</span>(<span style="font-weight: bold; text-decoration: underline;">void</span>) {
+<span class="org-type">int</span> <span class="org-function-name">rand</span>(<span class="org-type">void</span>) {
   _Randseed = _Randseed * 1103515245 + 12345;
-  <span style="font-weight: bold;">return</span> ((<span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">int</span>)(_Randseed &gt;&gt; 16) &amp; RAND_MAX);
+  <span class="org-keyword">return</span> ((<span class="org-type">unsigned</span> <span class="org-type">int</span>)(_Randseed &gt;&gt; 16) &amp; RAND_MAX);
 }
 
-<span style="font-weight: bold; text-decoration: underline;">void</span> <span style="font-weight: bold;">srand</span>(<span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">seed</span>) {
+<span class="org-type">void</span> <span class="org-function-name">srand</span>(<span class="org-type">unsigned</span> <span class="org-type">int</span> <span class="org-variable-name">seed</span>) {
   _Randseed = seed;
 }
 </pre>
@@ -329,8 +329,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9259cb3" class="outline-2">
-<h2 id="org9259cb3"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
+<div id="outline-container-orgd230824" class="outline-2">
+<h2 id="orgd230824"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>蒙特卡罗方法</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 是一种以概率统计理论为指导的数值计算方法，可以通过随机数（伪随机数）来解决很多计算问题。
@@ -354,27 +354,27 @@ for the JavaScript code in this tag.
 C 代码实现：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;time.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;time.h&gt;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
-  <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">times</span> = 100000, <span style="font-weight: bold; font-style: italic;">sum</span> = 0;
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">int</span> <span class="org-variable-name">argc</span>, <span class="org-type">char</span>* <span class="org-variable-name">argv</span>[]) {
+  <span class="org-type">int</span> <span class="org-variable-name">times</span> = 100000, <span class="org-variable-name">sum</span> = 0;
 
   srand(time(0));
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; times; ++i) {
-    <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">x</span> = (<span style="font-weight: bold; text-decoration: underline;">double</span>) rand() / RAND_MAX;
-    <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">y</span> = (<span style="font-weight: bold; text-decoration: underline;">double</span>) rand() / RAND_MAX;
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; times; ++i) {
+    <span class="org-type">double</span> <span class="org-variable-name">x</span> = (<span class="org-type">double</span>) rand() / RAND_MAX;
+    <span class="org-type">double</span> <span class="org-variable-name">y</span> = (<span class="org-type">double</span>) rand() / RAND_MAX;
 
-    <span style="font-weight: bold;">if</span> ((x * x + y * y) &lt;= 1.0) {
+    <span class="org-keyword">if</span> ((x * x + y * y) &lt;= 1.0) {
       sum++;
     }
   }
 
-  <span style="font-weight: bold; text-decoration: underline;">double</span> <span style="font-weight: bold; font-style: italic;">pi</span> = 4.0 * sum / times;
-  printf(<span style="font-style: italic;">"pi = %f"</span>, pi);
+  <span class="org-type">double</span> <span class="org-variable-name">pi</span> = 4.0 * sum / times;
+  printf(<span class="org-string">"pi = %f"</span>, pi);
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -393,8 +393,8 @@ pi = 3.135840
 </div>
 </div>
 
-<div id="outline-container-org7c318bf" class="outline-2">
-<h2 id="org7c318bf"><span class="section-number-2">4</span> 随机的 BUG</h2>
+<div id="outline-container-org91836ba" class="outline-2">
+<h2 id="org91836ba"><span class="section-number-2">4</span> 随机的 BUG</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 记不清是在什么地方看到的这个操作了，大意是如何在交付应用程序后保证甲方能够及时付清尾款。
@@ -404,7 +404,7 @@ pi = 3.135840
 然后，便看到了一个优秀的操作：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#define</span> <span style="font-weight: bold; font-style: italic;">true</span> (rand() &lt; 10)
+<pre class="src src-C"><span class="org-preprocessor">#define</span> <span class="org-variable-name">true</span> (rand() &lt; 10)
 </pre>
 </div>
 
@@ -415,8 +415,8 @@ pi = 3.135840
 </div>
 </div>
 
-<div id="outline-container-orgbbff525" class="outline-2">
-<h2 id="orgbbff525"><span class="section-number-2">5</span> 洗牌算法</h2>
+<div id="outline-container-orgbf15914" class="outline-2">
+<h2 id="orgbf15914"><span class="section-number-2">5</span> 洗牌算法</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 洗牌算法，顾名思义，就是和洗牌一样，打乱一个序列的顺序。这也是一个很有趣的算法不是吗？
@@ -440,25 +440,25 @@ for i from n−1 downto 1 do
 实现起来自然也简单：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;time.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;time.h&gt;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">int</span> <span class="org-variable-name">argc</span>, <span class="org-type">char</span>* <span class="org-variable-name">argv</span>[]) {
   srand(time(0));
 
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = argc - 1; i &gt;= 2; --i) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">j</span> = rand() % i + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[1, i], skip argv[0]</span>
-    <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">temp</span> = argv[j];
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = argc - 1; i &gt;= 2; --i) {
+    <span class="org-type">int</span> <span class="org-variable-name">j</span> = rand() % i + 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">[1, i], skip argv[0]</span>
+    <span class="org-type">char</span>* <span class="org-variable-name">temp</span> = argv[j];
     argv[j] = argv[i];
     argv[i] = temp;
   }
 
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 1; i &lt; argc; ++i) {
-    printf(<span style="font-style: italic;">"%s "</span>, argv[i]);
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 1; i &lt; argc; ++i) {
+    printf(<span class="org-string">"%s "</span>, argv[i]);
   }
 
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -473,22 +473,22 @@ Out: 3 5 8 6 1 9 4 2 0 7
 </div>
 </div>
 
-<div id="outline-container-orgfea466d" class="outline-2">
-<h2 id="orgfea466d"><span class="section-number-2">6</span> 自然底数</h2>
+<div id="outline-container-org4160cad" class="outline-2">
+<h2 id="org4160cad"><span class="section-number-2">6</span> 自然底数</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 之前在知乎上看到的图形学大佬 <b>Milo Yip</b> 的文章 - <a href="https://zhuanlan.zhihu.com/p/46698082">自然而然 - 知乎</a>，其中的代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>() {
-  <span style="font-weight: bold; text-decoration: underline;">unsigned</span> <span style="font-weight: bold; font-style: italic;">i</span>, <span style="font-weight: bold; font-style: italic;">j</span>, <span style="font-weight: bold; font-style: italic;">k</span> = 0, <span style="font-weight: bold; font-style: italic;">n</span> = 1e8;
-  <span style="font-weight: bold;">for</span> (i = 0; i &lt; n; i++)
-    <span style="font-weight: bold;">for</span> (j = 0; j &lt; RAND_MAX; j += rand())
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+  <span class="org-type">unsigned</span> <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-variable-name">k</span> = 0, <span class="org-variable-name">n</span> = 1e8;
+  <span class="org-keyword">for</span> (i = 0; i &lt; n; i++)
+    <span class="org-keyword">for</span> (j = 0; j &lt; RAND_MAX; j += rand())
       k++;
-  printf(<span style="font-style: italic;">"%f\n"</span>, (<span style="font-weight: bold; text-decoration: underline;">double</span>)k / n);
+  printf(<span class="org-string">"%f\n"</span>, (<span class="org-type">double</span>)k / n);
 }
 </pre>
 </div>
@@ -507,8 +507,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-org8fca6b7" class="outline-2">
-<h2 id="org8fca6b7"><span class="section-number-2">7</span> 缘起</h2>
+<div id="outline-container-orgca49600" class="outline-2">
+<h2 id="orgca49600"><span class="section-number-2">7</span> 缘起</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这一节的内容是关于 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上的那个问题的，问题描述为：
@@ -541,16 +541,16 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 通过 Python 的实现：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">random_nums</span>():
-    <span style="font-weight: bold; font-style: italic;">nums</span> = [random.randint(0, 101) <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(9)]
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">random_nums</span>():
+    <span class="org-variable-name">nums</span> = [random.randint(0, 101) <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(9)]
     nums.extend([0, 100])
     nums.sort()
 
-    <span style="font-weight: bold; font-style: italic;">result</span> = []
-    <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(1, 11):
+    <span class="org-variable-name">result</span> = []
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(1, 11):
         result.append(nums[i] - nums[i - 1])
 
-    <span style="font-weight: bold;">return</span> result
+    <span class="org-keyword">return</span> result
 </pre>
 </div>
 
@@ -560,8 +560,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-orga7e8959" class="outline-2">
-<h2 id="orga7e8959"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-orgad514f1" class="outline-2">
+<h2 id="orgad514f1"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 我一直觉得，程序代码中的那一丝不确定性是一种别样的浪漫，因此一直很好奇随机数的实现与使用。

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 格式化字符串</title>
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge9d7dca">1. 简介</a></li>
-<li><a href="#orgb1792cc">2. 使用 str.format()</a>
+<li><a href="#org6fa67fe">1. 简介</a></li>
+<li><a href="#orgc59c1f5">2. 使用 str.format()</a>
 <ul>
-<li><a href="#org8a928a7">2.1. 格式化字符串语法</a></li>
-<li><a href="#org90596ea">2.2. 格式说明符</a></li>
+<li><a href="#org876647a">2.1. 格式化字符串语法</a></li>
+<li><a href="#org9e79f1e">2.2. 格式说明符</a></li>
 </ul>
 </li>
-<li><a href="#org818b18f">3. 使用 %</a></li>
-<li><a href="#orgc227a8e">4. Update: 2018-04-18</a></li>
+<li><a href="#org650324e">3. 使用 %</a></li>
+<li><a href="#org0c6136e">4. Update: 2018-04-18</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge9d7dca" class="outline-2">
-<h2 id="orge9d7dca"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org6fa67fe" class="outline-2">
+<h2 id="org6fa67fe"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 目前有两种进行格式化字符串的方式：
@@ -284,12 +284,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb1792cc" class="outline-2">
-<h2 id="orgb1792cc"><span class="section-number-2">2</span> 使用 str.format()</h2>
+<div id="outline-container-orgc59c1f5" class="outline-2">
+<h2 id="orgc59c1f5"><span class="section-number-2">2</span> 使用 str.format()</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org8a928a7" class="outline-3">
-<h3 id="org8a928a7"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
+<div id="outline-container-org876647a" class="outline-3">
+<h3 id="org876647a"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>format</code> 字符串包含由 <code>{}</code> 括起来的替换字段， 不包含在 <code>{}</code> 中的内容不做处理。
@@ -342,22 +342,22 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-style: italic;">"First, thou shalt count to {0}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
-<span style="font-style: italic;">"Bring me a {}"</span>                   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#38544;&#24335;&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
-<span style="font-style: italic;">"From {} to {}"</span>                   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31561;&#20215;&#20110; "From {0} to {1}"</span>
-<span style="font-style: italic;">"My quest is {name}"</span>              <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24341;&#29992;&#20851;&#38190;&#23383;&#21442;&#25968; "name"</span>
-<span style="font-style: italic;">"Weight in tons {0.weight}"</span>       <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#31532;&#19968;&#20301;&#32622;&#21442;&#25968;&#30340; "weight" &#23646;&#24615;</span>
-<span style="font-style: italic;">"Units destroyed: {players[0]}"</span>   <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' &#30340;&#31532;&#19968;&#20010;&#20803;&#32032;</span>
-<span style="font-style: italic;">"Units destroyed: {players[key]}"</span> <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' 'key' &#38190;&#19978;&#30340;&#20803;&#32032;</span>
-<span style="font-style: italic;">"Harold's a clever {0!s}"</span>         <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; str()</span>
-<span style="font-style: italic;">"Bring out the holy {name!r}"</span>     <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; repr()</span>
+<pre class="src src-python"><span class="org-doc">"First, thou shalt count to {0}"</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
+<span class="org-doc">"Bring me a {}"</span>                   <span class="org-comment-delimiter"># </span><span class="org-comment">&#38544;&#24335;&#24341;&#29992;&#31532;&#19968;&#20010;&#20301;&#32622;&#21442;&#25968;</span>
+<span class="org-string">"From {} to {}"</span>                   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110; "From {0} to {1}"</span>
+<span class="org-string">"My quest is {name}"</span>              <span class="org-comment-delimiter"># </span><span class="org-comment">&#24341;&#29992;&#20851;&#38190;&#23383;&#21442;&#25968; "name"</span>
+<span class="org-string">"Weight in tons {0.weight}"</span>       <span class="org-comment-delimiter"># </span><span class="org-comment">&#31532;&#19968;&#20301;&#32622;&#21442;&#25968;&#30340; "weight" &#23646;&#24615;</span>
+<span class="org-string">"Units destroyed: {players[0]}"</span>   <span class="org-comment-delimiter"># </span><span class="org-comment">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' &#30340;&#31532;&#19968;&#20010;&#20803;&#32032;</span>
+<span class="org-string">"Units destroyed: {players[key]}"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20851;&#38190;&#23383;&#21442;&#25968; 'players' 'key' &#38190;&#19978;&#30340;&#20803;&#32032;</span>
+<span class="org-string">"Harold's a clever {0!s}"</span>         <span class="org-comment-delimiter"># </span><span class="org-comment">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; str()</span>
+<span class="org-string">"Bring out the holy {name!r}"</span>     <span class="org-comment-delimiter"># </span><span class="org-comment">&#39318;&#20808;&#22312;&#21442;&#25968;&#19978;&#35843;&#29992; repr()</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org90596ea" class="outline-3">
-<h3 id="org90596ea"><span class="section-number-3">2.2</span> 格式说明符</h3>
+<div id="outline-container-org9e79f1e" class="outline-3">
+<h3 id="org9e79f1e"><span class="section-number-3">2.2</span> 格式说明符</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>format_spec</code> 允许定义该替换字段的表现形式， 如左右对齐， 宽度等。
@@ -425,16 +425,16 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:?&lt;10}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'123456????'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:?&gt;10}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'????123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:?=10}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'????123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:?=10}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'-???123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:?^10}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'?-123456??'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:?&lt;10}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-doc">'123456????'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:?&gt;10}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'????123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:?=10}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'????123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:?=10}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">'-???123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:?^10}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">'?-123456??'</span>
 </pre>
 </div></li>
 
@@ -481,18 +481,18 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:+}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'+123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:+}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'-123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:-}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:-}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'-123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0: }'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">' 123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0: }'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'-123456'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:+}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-doc">'+123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:+}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">'-123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:-}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:-}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">'-123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0: }'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">' 123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0: }'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">'-123456'</span>
 </pre>
 </div></li>
 
@@ -505,20 +505,20 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:#}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:#o}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'0o361100'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:#b}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'0b11110001001000000'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:#x}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'0x1e240'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:o}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'361100'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:b}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'11110001001000000'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:x}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'1e240'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:#}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-doc">'123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:#o}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'0o361100'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:#b}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'0b11110001001000000'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:#x}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'0x1e240'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:o}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'361100'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:b}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'11110001001000000'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:x}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'1e240'</span>
 </pre>
 </div></li>
 
@@ -530,8 +530,8 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:,}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'123,456'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:,}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-doc">'123,456'</span>
 </pre>
 </div></li>
 
@@ -543,10 +543,10 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(123456)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#25968;&#23383;&#40664;&#35748;&#20026; '&gt;'</span>
-<span style="font-style: italic;">'  123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(<span style="font-style: italic;">'123456'</span>)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#23383;&#31526;&#20018;&#40664;&#35748;&#20026; '&lt;'</span>
-<span style="font-style: italic;">'123456  '</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:8}'</span>.<span class="org-builtin">format</span>(123456)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25968;&#23383;&#40664;&#35748;&#20026; '&gt;'</span>
+<span class="org-doc">'  123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:8}'</span>.<span class="org-builtin">format</span>(<span class="org-string">'123456'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#31526;&#20018;&#40664;&#35748;&#20026; '&lt;'</span>
+<span class="org-string">'123456  '</span>
 </pre>
 </div></li>
 
@@ -559,10 +559,10 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:08}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">'-0123456'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:8}'</span>.<span style="font-weight: bold;">format</span>(-123456)
-<span style="font-style: italic;">' -123456'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:08}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-doc">'-0123456'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:8}'</span>.<span class="org-builtin">format</span>(-123456)
+<span class="org-string">' -123456'</span>
 </pre>
 </div></li>
 
@@ -576,16 +576,16 @@ for the JavaScript code in this tag.
 示例：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5f}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'123456.00000'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5g}'</span>.<span style="font-weight: bold;">format</span>(123456)
-<span style="font-style: italic;">'1.2346e+05'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5}'</span>.<span style="font-weight: bold;">format</span>(<span style="font-style: italic;">'123456'</span>)
-<span style="font-style: italic;">'12345'</span>
-&gt;&gt;&gt; <span style="font-style: italic;">'{0:.5}'</span>.<span style="font-weight: bold;">format</span>(123456)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:.5f}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-doc">'123456.00000'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:.5g}'</span>.<span class="org-builtin">format</span>(123456)
+<span class="org-string">'1.2346e+05'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:.5}'</span>.<span class="org-builtin">format</span>(<span class="org-string">'123456'</span>)
+<span class="org-string">'12345'</span>
+&gt;&gt;&gt; <span class="org-string">'{0:.5}'</span>.<span class="org-builtin">format</span>(123456)
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">ValueError</span>: Precision <span style="font-weight: bold;">not</span> allowed <span style="font-weight: bold;">in</span> integer <span style="font-weight: bold;">format</span> specifier
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">ValueError</span>: Precision <span class="org-keyword">not</span> allowed <span class="org-keyword">in</span> integer <span class="org-builtin">format</span> specifier
 </pre>
 </div></li>
 
@@ -752,8 +752,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org818b18f" class="outline-2">
-<h2 id="org818b18f"><span class="section-number-2">3</span> 使用 %</h2>
+<div id="outline-container-org650324e" class="outline-2">
+<h2 id="org650324e"><span class="section-number-2">3</span> 使用 %</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>注：</b> 这个方式不被推荐， 如果可以的话， 还是尽量使用 <code>str.format()</code>
@@ -782,8 +782,8 @@ Traceback (most recent call last):
 这在 <code>str.format()</code> 中可以由嵌套的替换字段实现， 如：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-style: italic;">'{0:.{1}f}'</span>.<span style="font-weight: bold;">format</span>(123456, 5)
-<span style="font-style: italic;">'123456.00000'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-string">'{0:.{1}f}'</span>.<span class="org-builtin">format</span>(123456, 5)
+<span class="org-doc">'123456.00000'</span>
 </pre>
 </div></li>
 
@@ -801,8 +801,8 @@ Traceback (most recent call last):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">print</span> <span style="font-style: italic;">'%(language)s has %(number)03d quote types.'</span> % \
-...       {<span style="font-style: italic;">"language"</span>: <span style="font-style: italic;">"Python"</span>, <span style="font-style: italic;">"number"</span>: 2}
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">print</span> <span class="org-string">'%(language)s has %(number)03d quote types.'</span> % \
+...       {<span class="org-string">"language"</span>: <span class="org-string">"Python"</span>, <span class="org-string">"number"</span>: 2}
 Python has 002 quote types.
 </pre>
 </div>
@@ -954,8 +954,8 @@ Python has 002 quote types.
 </div>
 </div>
 
-<div id="outline-container-orgc227a8e" class="outline-2">
-<h2 id="orgc227a8e"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
+<div id="outline-container-org0c6136e" class="outline-2">
+<h2 id="org0c6136e"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这次更新是关于使用 <code>str.format</code> 的过程中包含 <code>{}</code> 的问题的。
@@ -965,19 +965,19 @@ Python has 002 quote types.
 以前遇到过的一个 <code>Bug</code>, 其中有一串代码大概是这样的：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">LOGIN_POST_DATA</span> = r<span style="font-style: italic;">"""</span>
-<span style="font-style: italic;">{</span>
-<span style="font-style: italic;">    "action": "login",</span>
-<span style="font-style: italic;">    "username": "",</span>
-<span style="font-style: italic;">    "password": "",</span>
-<span style="font-style: italic;">    "ac_id": "2",</span>
-<span style="font-style: italic;">    "user_ip": "{user_ip}",</span>
-<span style="font-style: italic;">    "nas_ip": "",</span>
-<span style="font-style: italic;">    "user_mac": "",</span>
-<span style="font-style: italic;">    "save_me": "1",</span>
-<span style="font-style: italic;">    "ajax": "1"</span>
-<span style="font-style: italic;">}</span>
-<span style="font-style: italic;">"""</span>.<span style="font-weight: bold;">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">format keyerror</span>
+<pre class="src src-python"><span class="org-variable-name">LOGIN_POST_DATA</span> = r<span class="org-string">"""</span>
+<span class="org-string">{</span>
+<span class="org-string">    "action": "login",</span>
+<span class="org-string">    "username": "",</span>
+<span class="org-string">    "password": "",</span>
+<span class="org-string">    "ac_id": "2",</span>
+<span class="org-string">    "user_ip": "{user_ip}",</span>
+<span class="org-string">    "nas_ip": "",</span>
+<span class="org-string">    "user_mac": "",</span>
+<span class="org-string">    "save_me": "1",</span>
+<span class="org-string">    "ajax": "1"</span>
+<span class="org-string">}</span>
+<span class="org-string">"""</span>.<span class="org-builtin">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span class="org-comment-delimiter"># </span><span class="org-comment">format keyerror</span>
 </pre>
 </div>
 
@@ -1005,19 +1005,19 @@ Python has 002 quote types.
 改一下就好：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">LOGIN_POST_DATA</span> = r<span style="font-style: italic;">"""</span>
-<span style="font-style: italic;">{{</span>
-<span style="font-style: italic;">    "action": "login",</span>
-<span style="font-style: italic;">    "username": "",</span>
-<span style="font-style: italic;">    "password": "",</span>
-<span style="font-style: italic;">    "ac_id": "2",</span>
-<span style="font-style: italic;">    "user_ip": "{user_ip}",</span>
-<span style="font-style: italic;">    "nas_ip": "",</span>
-<span style="font-style: italic;">    "user_mac": "",</span>
-<span style="font-style: italic;">    "save_me": "1",</span>
-<span style="font-style: italic;">    "ajax": "1"</span>
-<span style="font-style: italic;">}}</span>
-<span style="font-style: italic;">"""</span>.<span style="font-weight: bold;">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">format keyerror</span>
+<pre class="src src-python"><span class="org-variable-name">LOGIN_POST_DATA</span> = r<span class="org-string">"""</span>
+<span class="org-string">{{</span>
+<span class="org-string">    "action": "login",</span>
+<span class="org-string">    "username": "",</span>
+<span class="org-string">    "password": "",</span>
+<span class="org-string">    "ac_id": "2",</span>
+<span class="org-string">    "user_ip": "{user_ip}",</span>
+<span class="org-string">    "nas_ip": "",</span>
+<span class="org-string">    "user_mac": "",</span>
+<span class="org-string">    "save_me": "1",</span>
+<span class="org-string">    "ajax": "1"</span>
+<span class="org-string">}}</span>
+<span class="org-string">"""</span>.<span class="org-builtin">format</span>(user_ip = socket.gethostbyname_ex(socket.gethostname())[-1][0])  <span class="org-comment-delimiter"># </span><span class="org-comment">format keyerror</span>
 </pre>
 </div>
 

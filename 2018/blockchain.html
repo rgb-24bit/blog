@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:58 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>区块链的简单尝试</title>
@@ -246,15 +246,15 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org407751b">1. 前言</a></li>
-<li><a href="#org15f91c9">2. 代码尝试</a></li>
-<li><a href="#org6dfc305">3. 相关链接</a></li>
+<li><a href="#org276d57e">1. 前言</a></li>
+<li><a href="#org562a947">2. 代码尝试</a></li>
+<li><a href="#orgd3586aa">3. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org407751b" class="outline-2">
-<h2 id="org407751b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org276d57e" class="outline-2">
+<h2 id="org276d57e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 昨晚， 我再一次浏览了有关于区块链技术的博客。
@@ -291,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org15f91c9" class="outline-2">
-<h2 id="org15f91c9"><span class="section-number-2">2</span> 代码尝试</h2>
+<div id="outline-container-org562a947" class="outline-2">
+<h2 id="org562a947"><span class="section-number-2">2</span> 代码尝试</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 得益于看到的博客， 我从相关链接中， 看到了一篇很简洁但很精辟的示例：
@@ -303,98 +303,98 @@ for the JavaScript code in this tag.
 这是一篇很好的文章， 模仿文中的代码， 我用 <code>Python</code> 写了一个小脚本来测试：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">-*- coding: utf-8 -*-</span>
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">-*- coding: utf-8 -*-</span>
 
-<span style="font-weight: bold;">from</span> __future__ <span style="font-weight: bold;">import</span> print_function
+<span class="org-keyword">from</span> __future__ <span class="org-keyword">import</span> print_function
 
-<span style="font-weight: bold;">import</span> time, random
+<span class="org-keyword">import</span> time, random
 
-<span style="font-weight: bold;">from</span> hashlib <span style="font-weight: bold;">import</span> sha256
-
-
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">BlockChain</span>(<span style="font-weight: bold;">object</span>):
-    <span style="font-style: italic;">""" &#21306;&#22359;.</span>
-
-<span style="font-style: italic;">    :param index: &#24403;&#21069;&#21306;&#22359;&#30340; `index`.</span>
-<span style="font-style: italic;">    :type index: int</span>
-<span style="font-style: italic;">    :param pre_hash: &#21069;&#19968;&#20010;&#21306;&#22359;&#30340; `hash`.</span>
-<span style="font-style: italic;">    :type pre_hash: str</span>
-<span style="font-style: italic;">    :param data: &#24403;&#21069;&#21306;&#22359;&#35201;&#20648;&#23384;&#30340;&#20449;&#24687;.</span>
-<span style="font-style: italic;">    :type data: str</span>
-<span style="font-style: italic;">    """</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init__</span>(<span style="font-weight: bold;">self</span>, index, pre_hash, data):
-        <span style="font-weight: bold;">self</span>.index = index
-        <span style="font-weight: bold;">self</span>.pre_hash = pre_hash
-        <span style="font-weight: bold;">self</span>.time = time.ctime()
-        <span style="font-weight: bold;">self</span>.data = data
-        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = <span style="font-weight: bold; text-decoration: underline;">None</span>
-        <span style="font-weight: bold;">self</span>.nonce = 0      <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#35745;&#31639; `hash` &#30340;&#27425;&#25968;</span>
-
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">calc_hash</span>(<span style="font-weight: bold;">self</span>, difficulty):
-        <span style="font-style: italic;">""" &#35745;&#31639; `hash`.</span>
-
-<span style="font-style: italic;">        :pparam difficulty: &#35745;&#31639;&#38590;&#24230;.</span>
-<span style="font-style: italic;">        :type difficulty: int</span>
-<span style="font-style: italic;">        """</span>
-        <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">is_vaild_hash</span>(<span style="font-weight: bold;">hash</span>, difficulty):
-            <span style="font-style: italic;">""" &#21028;&#26029;&#31639;&#30340;&#30340; `hash` &#26159;&#21542;&#26377;&#25928;.</span>
-<span style="font-style: italic;">            """</span>
-            <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(<span style="font-weight: bold;">len</span>(<span style="font-weight: bold;">hash</span>)):
-                <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">hash</span>[i] == <span style="font-style: italic;">'0'</span>:
-                    <span style="font-weight: bold;">break</span>
-            <span style="font-weight: bold;">return</span> i &gt;= difficulty
-
-        <span style="font-weight: bold;">input</span> = <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.index) + <span style="font-weight: bold;">self</span>.pre_hash + \
-                <span style="font-weight: bold;">self</span>.time + <span style="font-weight: bold;">self</span>.data + <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.nonce)
-        <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = sha256(<span style="font-weight: bold;">input</span>).hexdigest()
-
-        <span style="font-weight: bold;">while</span> <span style="font-weight: bold;">not</span> is_vaild_hash(<span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span>, difficulty):
-            <span style="font-weight: bold;">self</span>.nonce += 1
-            <span style="font-weight: bold;">input</span> = <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.index) + <span style="font-weight: bold;">self</span>.pre_hash + \
-                    <span style="font-weight: bold;">self</span>.time + <span style="font-weight: bold;">self</span>.data + <span style="font-weight: bold;">str</span>(<span style="font-weight: bold;">self</span>.nonce)
-            <span style="font-weight: bold;">self</span>.<span style="font-weight: bold;">hash</span> = sha256(<span style="font-weight: bold;">input</span>).hexdigest()
+<span class="org-keyword">from</span> hashlib <span class="org-keyword">import</span> sha256
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">genesis_block</span>():
-    <span style="font-style: italic;">""" &#33719;&#21462;&#21019;&#19990;&#21306;&#22359;.</span>
-<span style="font-style: italic;">    """</span>
-    <span style="font-weight: bold; font-style: italic;">first_block</span> = BlockChain(0, <span style="font-style: italic;">'0'</span>, <span style="font-style: italic;">'My first block'</span>)
+<span class="org-keyword">class</span> <span class="org-type">BlockChain</span>(<span class="org-builtin">object</span>):
+    <span class="org-doc">""" &#21306;&#22359;.</span>
+
+<span class="org-doc">    :param index: &#24403;&#21069;&#21306;&#22359;&#30340; `index`.</span>
+<span class="org-doc">    :type index: int</span>
+<span class="org-doc">    :param pre_hash: &#21069;&#19968;&#20010;&#21306;&#22359;&#30340; `hash`.</span>
+<span class="org-doc">    :type pre_hash: str</span>
+<span class="org-doc">    :param data: &#24403;&#21069;&#21306;&#22359;&#35201;&#20648;&#23384;&#30340;&#20449;&#24687;.</span>
+<span class="org-doc">    :type data: str</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, index, pre_hash, data):
+        <span class="org-keyword">self</span>.index = index
+        <span class="org-keyword">self</span>.pre_hash = pre_hash
+        <span class="org-keyword">self</span>.time = time.ctime()
+        <span class="org-keyword">self</span>.data = data
+        <span class="org-keyword">self</span>.<span class="org-builtin">hash</span> = <span class="org-constant">None</span>
+        <span class="org-keyword">self</span>.nonce = 0      <span class="org-comment-delimiter"># </span><span class="org-comment">&#35745;&#31639; `hash` &#30340;&#27425;&#25968;</span>
+
+    <span class="org-keyword">def</span> <span class="org-function-name">calc_hash</span>(<span class="org-keyword">self</span>, difficulty):
+        <span class="org-doc">""" &#35745;&#31639; `hash`.</span>
+
+<span class="org-doc">        :pparam difficulty: &#35745;&#31639;&#38590;&#24230;.</span>
+<span class="org-doc">        :type difficulty: int</span>
+<span class="org-doc">        """</span>
+        <span class="org-keyword">def</span> <span class="org-function-name">is_vaild_hash</span>(<span class="org-builtin">hash</span>, difficulty):
+            <span class="org-doc">""" &#21028;&#26029;&#31639;&#30340;&#30340; `hash` &#26159;&#21542;&#26377;&#25928;.</span>
+<span class="org-doc">            """</span>
+            <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(<span class="org-builtin">len</span>(<span class="org-builtin">hash</span>)):
+                <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-builtin">hash</span>[i] == <span class="org-string">'0'</span>:
+                    <span class="org-keyword">break</span>
+            <span class="org-keyword">return</span> i &gt;= difficulty
+
+        <span class="org-builtin">input</span> = <span class="org-builtin">str</span>(<span class="org-keyword">self</span>.index) + <span class="org-keyword">self</span>.pre_hash + \
+                <span class="org-keyword">self</span>.time + <span class="org-keyword">self</span>.data + <span class="org-builtin">str</span>(<span class="org-keyword">self</span>.nonce)
+        <span class="org-keyword">self</span>.<span class="org-builtin">hash</span> = sha256(<span class="org-builtin">input</span>).hexdigest()
+
+        <span class="org-keyword">while</span> <span class="org-keyword">not</span> is_vaild_hash(<span class="org-keyword">self</span>.<span class="org-builtin">hash</span>, difficulty):
+            <span class="org-keyword">self</span>.nonce += 1
+            <span class="org-builtin">input</span> = <span class="org-builtin">str</span>(<span class="org-keyword">self</span>.index) + <span class="org-keyword">self</span>.pre_hash + \
+                    <span class="org-keyword">self</span>.time + <span class="org-keyword">self</span>.data + <span class="org-builtin">str</span>(<span class="org-keyword">self</span>.nonce)
+            <span class="org-keyword">self</span>.<span class="org-builtin">hash</span> = sha256(<span class="org-builtin">input</span>).hexdigest()
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">genesis_block</span>():
+    <span class="org-doc">""" &#33719;&#21462;&#21019;&#19990;&#21306;&#22359;.</span>
+<span class="org-doc">    """</span>
+    <span class="org-variable-name">first_block</span> = BlockChain(0, <span class="org-string">'0'</span>, <span class="org-string">'My first block'</span>)
     first_block.calc_hash(random.randint(1, 4))
-    <span style="font-weight: bold;">return</span> first_block
+    <span class="org-keyword">return</span> first_block
 
 
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">print_block</span>(block):
-    <span style="font-style: italic;">""" &#36755;&#20986;&#21306;&#22359;&#20449;&#24687;.</span>
-<span style="font-style: italic;">    """</span>
-    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'index: %s'</span> % block.index)
-    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'hash: %s'</span> % block.<span style="font-weight: bold;">hash</span>)
-    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'nonce: %s\n'</span> % block.nonce)
+<span class="org-keyword">def</span> <span class="org-function-name">print_block</span>(block):
+    <span class="org-doc">""" &#36755;&#20986;&#21306;&#22359;&#20449;&#24687;.</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">print</span>(<span class="org-string">'index: %s'</span> % block.index)
+    <span class="org-keyword">print</span>(<span class="org-string">'hash: %s'</span> % block.<span class="org-builtin">hash</span>)
+    <span class="org-keyword">print</span>(<span class="org-string">'nonce: %s\n'</span> % block.nonce)
 
 
-<span style="font-weight: bold;">if</span> <span style="font-weight: bold;">__name__</span> == <span style="font-style: italic;">'__main__'</span>:
-    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'Genesis block:'</span>)
-    <span style="font-weight: bold; font-style: italic;">first_block</span> = genesis_block()
+<span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+    <span class="org-keyword">print</span>(<span class="org-string">'Genesis block:'</span>)
+    <span class="org-variable-name">first_block</span> = genesis_block()
     print_block(first_block)
 
-    <span style="font-weight: bold; font-style: italic;">pre_block</span> = first_block
+    <span class="org-variable-name">pre_block</span> = first_block
 
-    <span style="font-weight: bold;">while</span> <span style="font-weight: bold; text-decoration: underline;">True</span>:
-        <span style="font-weight: bold; font-style: italic;">data</span> = <span style="font-weight: bold;">raw_input</span>(<span style="font-style: italic;">'Input data: '</span>)
-        <span style="font-weight: bold;">if</span> data:
-            <span style="font-weight: bold; font-style: italic;">cur_block</span> = BlockChain(pre_block.index + 1, pre_block.<span style="font-weight: bold;">hash</span>, data)
+    <span class="org-keyword">while</span> <span class="org-constant">True</span>:
+        <span class="org-variable-name">data</span> = <span class="org-builtin">raw_input</span>(<span class="org-string">'Input data: '</span>)
+        <span class="org-keyword">if</span> data:
+            <span class="org-variable-name">cur_block</span> = BlockChain(pre_block.index + 1, pre_block.<span class="org-builtin">hash</span>, data)
 
-            <span style="font-weight: bold; font-style: italic;">difficulty</span> = random.randint(1, 4)    <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">..., &#38590;&#24230;&#31245;&#24494;&#22823;&#19968;&#28857;&#23621;&#28982;&#37117;&#35201;&#31639;&#21322;&#22825;...</span>
-            <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'difficulty: %s'</span> % difficulty)
+            <span class="org-variable-name">difficulty</span> = random.randint(1, 4)    <span class="org-comment-delimiter"># </span><span class="org-comment">..., &#38590;&#24230;&#31245;&#24494;&#22823;&#19968;&#28857;&#23621;&#28982;&#37117;&#35201;&#31639;&#21322;&#22825;...</span>
+            <span class="org-keyword">print</span>(<span class="org-string">'difficulty: %s'</span> % difficulty)
 
             cur_block.calc_hash(difficulty)
             print_block(cur_block)
 
-            <span style="font-weight: bold; font-style: italic;">pre_block</span> = cur_block
+            <span class="org-variable-name">pre_block</span> = cur_block
 
-        <span style="font-weight: bold;">else</span>:
-            <span style="font-weight: bold;">break</span>
+        <span class="org-keyword">else</span>:
+            <span class="org-keyword">break</span>
 
-    <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'over'</span>)
+    <span class="org-keyword">print</span>(<span class="org-string">'over'</span>)
 </pre>
 </div>
 
@@ -460,8 +460,8 @@ nonce: 53565
 </div>
 </div>
 
-<div id="outline-container-org6dfc305" class="outline-2">
-<h2 id="org6dfc305"><span class="section-number-2">3</span> 相关链接</h2>
+<div id="outline-container-orgd3586aa" class="outline-2">
+<h2 id="orgd3586aa"><span class="section-number-2">3</span> 相关链接</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li><a href="http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html">Bitcoin mining the hard way: the algorithms, protocols, and bytes.</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 正则表达式</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga6df029">1. 简介</a></li>
-<li><a href="#orgdab8f48">2. 模块和对象</a></li>
-<li><a href="#org5cdb00e">3. 模块对象和正则表达式对象</a></li>
-<li><a href="#org4165ccd">4. 正则表达式匹配对象</a></li>
-<li><a href="#org7f37f06">5. 语法扩展和原始字符串</a></li>
-<li><a href="#orgd380d27">6. 参考链接</a></li>
+<li><a href="#org8035f73">1. 简介</a></li>
+<li><a href="#orgef54214">2. 模块和对象</a></li>
+<li><a href="#orgcdf6161">3. 模块对象和正则表达式对象</a></li>
+<li><a href="#orgab752a7">4. 正则表达式匹配对象</a></li>
+<li><a href="#org250b1a6">5. 语法扩展和原始字符串</a></li>
+<li><a href="#org1485fdf">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga6df029" class="outline-2">
-<h2 id="orga6df029"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org8035f73" class="outline-2">
+<h2 id="org8035f73"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 处理复杂的文本的时候， 使用 <b>正则表达式</b> 能够很大程度上减轻我们的工作量。
@@ -274,8 +274,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdab8f48" class="outline-2">
-<h2 id="orgdab8f48"><span class="section-number-2">2</span> 模块和对象</h2>
+<div id="outline-container-orgef54214" class="outline-2">
+<h2 id="orgef54214"><span class="section-number-2">2</span> 模块和对象</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 为了更好的理解 <code>re</code> 模块的使用， 我们首先将 <code>re</code> 模块涉及到的 <b>三个对象</b> 列举出来：
@@ -305,8 +305,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5cdb00e" class="outline-2">
-<h2 id="org5cdb00e"><span class="section-number-2">3</span> 模块对象和正则表达式对象</h2>
+<div id="outline-container-orgcdf6161" class="outline-2">
+<h2 id="orgcdf6161"><span class="section-number-2">3</span> 模块对象和正则表达式对象</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 由于 <b>模块对象</b> 和 <b>正则表达式</b> 对象的使用十分接近， 就把两者
@@ -354,14 +354,14 @@ for the JavaScript code in this tag.
 需要注意的一种情况是匹配模式的 <b>分组多于 1</b> 的时候的匹配结果：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [2]: re.findall(r<span style="font-style: italic;">'\w+'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
-Out[2]: [<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'operations'</span>]
+<pre class="src src-python">In [2]: re.findall(r<span class="org-string">'\w+'</span>, <span class="org-string">'re: Regular expression operations'</span>)
+Out[2]: [<span class="org-string">'re'</span>, <span class="org-string">'Regular'</span>, <span class="org-string">'expression'</span>, <span class="org-string">'operations'</span>]
 
-In [3]: re.findall(r<span style="font-style: italic;">'(\w+)'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
-Out[3]: [<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'operations'</span>]
+In [3]: re.findall(r<span class="org-string">'(\w+)'</span>, <span class="org-string">'re: Regular expression operations'</span>)
+Out[3]: [<span class="org-string">'re'</span>, <span class="org-string">'Regular'</span>, <span class="org-string">'expression'</span>, <span class="org-string">'operations'</span>]
 
-In [5]: re.findall(r<span style="font-style: italic;">'(\w+).(\w+)'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
-Out[5]: [(<span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'expression'</span>), (<span style="font-style: italic;">'operatio'</span>, <span style="font-style: italic;">'s'</span>)]
+In [5]: re.findall(r<span class="org-string">'(\w+).(\w+)'</span>, <span class="org-string">'re: Regular expression operations'</span>)
+Out[5]: [(<span class="org-string">'Regular'</span>, <span class="org-string">'expression'</span>), (<span class="org-string">'operatio'</span>, <span class="org-string">'s'</span>)]
 </pre>
 </div>
 
@@ -382,8 +382,8 @@ Out[5]: [(<span style="font-style: italic;">'Regular'</span>, <span style="font-
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [6]: re.findall(r<span style="font-style: italic;">'(\w+(\w))'</span>, <span style="font-style: italic;">'re: Regular expression operations'</span>)
-Out[6]: [(<span style="font-style: italic;">'re'</span>, <span style="font-style: italic;">'e'</span>), (<span style="font-style: italic;">'Regular'</span>, <span style="font-style: italic;">'r'</span>), (<span style="font-style: italic;">'expression'</span>, <span style="font-style: italic;">'n'</span>), (<span style="font-style: italic;">'operations'</span>, <span style="font-style: italic;">'s'</span>)]
+<pre class="src src-python">In [6]: re.findall(r<span class="org-string">'(\w+(\w))'</span>, <span class="org-string">'re: Regular expression operations'</span>)
+Out[6]: [(<span class="org-string">'re'</span>, <span class="org-string">'e'</span>), (<span class="org-string">'Regular'</span>, <span class="org-string">'r'</span>), (<span class="org-string">'expression'</span>, <span class="org-string">'n'</span>), (<span class="org-string">'operations'</span>, <span class="org-string">'s'</span>)]
 </pre>
 </div>
 
@@ -401,8 +401,8 @@ Out[6]: [(<span style="font-style: italic;">'re'</span>, <span style="font-style
 可以通过 <code>max</code> 指定最大分割次数：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [13]: re.split(r<span style="font-style: italic;">'\w\s\w'</span>, <span style="font-style: italic;">'Hello World !'</span>)
-Out[13]: [<span style="font-style: italic;">'Hell'</span>, <span style="font-style: italic;">'orld !'</span>]
+<pre class="src src-python">In [13]: re.split(r<span class="org-string">'\w\s\w'</span>, <span class="org-string">'Hello World !'</span>)
+Out[13]: [<span class="org-string">'Hell'</span>, <span class="org-string">'orld !'</span>]
 </pre>
 </div></dd>
 
@@ -415,8 +415,8 @@ Out[13]: [<span style="font-style: italic;">'Hell'</span>, <span style="font-sty
 <b>注:</b> <code>repl</code> 中可以使用 <b>回溯引用</b>.
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [18]: re.sub(r<span style="font-style: italic;">'\w+?(T)\w'</span>, r<span style="font-style: italic;">'\1'</span>, <span style="font-style: italic;">'asdTgdfTdgfhTdsfgTf'</span>)
-Out[18]: <span style="font-style: italic;">'TTTT'</span>
+<pre class="src src-python">In [18]: re.sub(r<span class="org-string">'\w+?(T)\w'</span>, r<span class="org-string">'\1'</span>, <span class="org-string">'asdTgdfTdgfhTdsfgTf'</span>)
+Out[18]: <span class="org-string">'TTTT'</span>
 </pre>
 </div></dd>
 </dl>
@@ -427,8 +427,8 @@ Out[18]: <span style="font-style: italic;">'TTTT'</span>
 </div>
 </div>
 
-<div id="outline-container-org4165ccd" class="outline-2">
-<h2 id="org4165ccd"><span class="section-number-2">4</span> 正则表达式匹配对象</h2>
+<div id="outline-container-orgab752a7" class="outline-2">
+<h2 id="orgab752a7"><span class="section-number-2">4</span> 正则表达式匹配对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>匹配对象</b> 通常为 <code>re.match</code> 或 <code>re.search</code> 返回的对象。
@@ -488,8 +488,8 @@ Out[18]: <span style="font-style: italic;">'TTTT'</span>
 </div>
 </div>
 
-<div id="outline-container-org7f37f06" class="outline-2">
-<h2 id="org7f37f06"><span class="section-number-2">5</span> 语法扩展和原始字符串</h2>
+<div id="outline-container-org250b1a6" class="outline-2">
+<h2 id="org250b1a6"><span class="section-number-2">5</span> 语法扩展和原始字符串</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python</code> 对正则表达式的语法做了一些扩展：
@@ -576,14 +576,14 @@ Out[18]: <span style="font-style: italic;">'TTTT'</span>
 此时， 使用原始字符串解决这一问题：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">r<span style="font-style: italic;">'string'</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#22312;&#23383;&#31526;&#20018;&#21069;&#38754;&#21152;&#19978; r &#21363;&#21487;</span>
+<pre class="src src-python">r<span class="org-doc">'string'</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#23383;&#31526;&#20018;&#21069;&#38754;&#21152;&#19978; r &#21363;&#21487;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd380d27" class="outline-2">
-<h2 id="orgd380d27"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org1485fdf" class="outline-2">
+<h2 id="org1485fdf"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html">Python正则表达式指南</a></li>

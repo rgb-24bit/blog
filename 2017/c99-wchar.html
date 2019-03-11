@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:58 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C99 宽字符</title>
@@ -246,22 +246,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf47d7cd">1. 前言</a></li>
-<li><a href="#org1c408fc">2. 头文件</a></li>
-<li><a href="#org6dd0276">3. 宽字符及本地化支持</a>
+<li><a href="#orgd9876c8">1. 前言</a></li>
+<li><a href="#org77673bf">2. 头文件</a></li>
+<li><a href="#org042653a">3. 宽字符及本地化支持</a>
 <ul>
-<li><a href="#orgd302fd7">3.1. 本地化支持</a></li>
-<li><a href="#orgd54367d">3.2. 文件编码格式设置</a></li>
-<li><a href="#org1b76b09">3.3. 代码编写</a></li>
+<li><a href="#orga753517">3.1. 本地化支持</a></li>
+<li><a href="#org587c64c">3.2. 文件编码格式设置</a></li>
+<li><a href="#orgd2c1ad4">3.3. 代码编写</a></li>
 </ul>
 </li>
-<li><a href="#orga6d8787">4. 相关链接</a></li>
+<li><a href="#orgb067a7e">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf47d7cd" class="outline-2">
-<h2 id="orgf47d7cd"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd9876c8" class="outline-2">
+<h2 id="orgd9876c8"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这两天学习 <code>C99标准</code> 的过程中, 宽字符的问题可是花了我不少时间。
@@ -273,8 +273,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1c408fc" class="outline-2">
-<h2 id="org1c408fc"><span class="section-number-2">2</span> 头文件</h2>
+<div id="outline-container-org77673bf" class="outline-2">
+<h2 id="org77673bf"><span class="section-number-2">2</span> 头文件</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><p>
@@ -291,31 +291,31 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6dd0276" class="outline-2">
-<h2 id="org6dd0276"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
+<div id="outline-container-org042653a" class="outline-2">
+<h2 id="org042653a"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一段简单的代码:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;locale.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdlib.h&gt;</span>
-<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;wchar.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;locale.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;wchar.h&gt;</span>
 
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
-    setlocale(LC_ALL, <span style="font-style: italic;">""</span>);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#26412;&#22320;&#21270;&#35774;&#32622;</span>
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">int</span> <span class="org-variable-name">argc</span>, <span class="org-type">char</span>* <span class="org-variable-name">argv</span>[]) {
+    setlocale(LC_ALL, <span class="org-string">""</span>);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26412;&#22320;&#21270;&#35774;&#32622;</span>
 
-    <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">str</span> = <span style="font-style: italic;">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
-    <span style="font-weight: bold; text-decoration: underline;">wchar_t</span>* <span style="font-weight: bold; font-style: italic;">wstr</span> = L<span style="font-style: italic;">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
+    <span class="org-type">char</span>* <span class="org-variable-name">str</span> = <span class="org-string">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
+    <span class="org-type">wchar_t</span>* <span class="org-variable-name">wstr</span> = L<span class="org-string">"&#23485;&#23383;&#31526;&#27979;&#35797;"</span>;
 
-    printf(<span style="font-style: italic;">"%s\n"</span>, str);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#21333;&#65288;&#22810;&#65289;&#23383;&#33410;&#23383;&#31526;&#20018;</span>
-    wprintf(L<span style="font-style: italic;">"%ls\n"</span>, wstr);  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">&#36755;&#20986;&#23485;&#23383;&#31526;&#20018;</span>
+    printf(<span class="org-string">"%s\n"</span>, str);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#36755;&#20986;&#21333;&#65288;&#22810;&#65289;&#23383;&#33410;&#23383;&#31526;&#20018;</span>
+    wprintf(L<span class="org-string">"%ls\n"</span>, wstr);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#36755;&#20986;&#23485;&#23383;&#31526;&#20018;</span>
 
     getchar();
-    <span style="font-weight: bold;">return</span> 0;
+    <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -339,8 +339,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgd302fd7" class="outline-3">
-<h3 id="orgd302fd7"><span class="section-number-3">3.1</span> 本地化支持</h3>
+<div id="outline-container-orga753517" class="outline-3">
+<h3 id="orga753517"><span class="section-number-3">3.1</span> 本地化支持</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 在使用宽字符之前，我们需要了解一些相关的内容。
@@ -397,8 +397,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd54367d" class="outline-3">
-<h3 id="orgd54367d"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
+<div id="outline-container-org587c64c" class="outline-3">
+<h3 id="org587c64c"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 完成了本地化支持的设置，那么还有一个关键内容便是 <code>文件编码格式</code> 了。
@@ -453,8 +453,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1b76b09" class="outline-3">
-<h3 id="org1b76b09"><span class="section-number-3">3.3</span> 代码编写</h3>
+<div id="outline-container-orgd2c1ad4" class="outline-3">
+<h3 id="orgd2c1ad4"><span class="section-number-3">3.3</span> 代码编写</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 前面两个步骤完成了基础设置， 这时候便需要了解一些在编程过程中需要注意的一些问题了。
@@ -468,8 +468,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga6d8787" class="outline-2">
-<h2 id="orga6d8787"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-orgb067a7e" class="outline-2">
+<h2 id="orgb067a7e"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>维基百科:

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-02-01 周五 16:01 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>二分搜索算法</title>
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2cb0990">1. 前言</a></li>
-<li><a href="#org33c408f">2. 中点值计算</a></li>
-<li><a href="#org4faf9aa">3. 搜索区间与终止条件</a></li>
-<li><a href="#org17a603f">4. 等于某值</a></li>
-<li><a href="#org34c1416">5. 第一个不小于</a></li>
-<li><a href="#orgdce2722">6. 第一个大于</a></li>
-<li><a href="#org979fc19">7. 最后一个不大于和最后一个小于</a></li>
-<li><a href="#orgfa914c1">8. 结尾</a></li>
-<li><a href="#org29cead2">9. 参考链接</a></li>
+<li><a href="#org71ce550">1. 前言</a></li>
+<li><a href="#org21b3124">2. 中点值计算</a></li>
+<li><a href="#orgc3e9384">3. 搜索区间与终止条件</a></li>
+<li><a href="#org9bff352">4. 等于某值</a></li>
+<li><a href="#org8ee9a8b">5. 第一个不小于</a></li>
+<li><a href="#org41e5ff2">6. 第一个大于</a></li>
+<li><a href="#org0678639">7. 最后一个不大于和最后一个小于</a></li>
+<li><a href="#org23b5be0">8. 结尾</a></li>
+<li><a href="#org8c11f0c">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2cb0990" class="outline-2">
-<h2 id="org2cb0990"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org71ce550" class="outline-2">
+<h2 id="org71ce550"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 曾经一度觉得二分搜索算法是一个比较简单的算法，直到我看到了这样一些问题：
@@ -282,8 +282,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org33c408f" class="outline-2">
-<h2 id="org33c408f"><span class="section-number-2">2</span> 中点值计算</h2>
+<div id="outline-container-org21b3124" class="outline-2">
+<h2 id="org21b3124"><span class="section-number-2">2</span> 中点值计算</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 二分搜索算法是一个很细节的算法，中点值的计算就是其需要注意的一个地方。
@@ -293,7 +293,7 @@ for the JavaScript code in this tag.
 通常情况下，中点值的计算是这样的：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = (left + right) / 2;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">mid</span> = (left + right) / 2;
 </pre>
 </div>
 
@@ -305,7 +305,7 @@ for the JavaScript code in this tag.
 因此，中点值的计算应该用如下算式替代：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
 </pre>
 </div>
 
@@ -317,8 +317,8 @@ for the JavaScript code in this tag.
 所以说，以下两者是等价的：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = (left + right) / 2;
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">mid</span> = (left + right) / 2;
+<span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
 </pre>
 </div>
 
@@ -327,15 +327,15 @@ for the JavaScript code in this tag.
 不过还是给出中点值向上取整的写法：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = ceil((left + right) / 2);
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = right - (right - left) / 2;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">mid</span> = ceil((left + right) / 2);
+<span class="org-type">int</span> <span class="org-variable-name">mid</span> = right - (right - left) / 2;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4faf9aa" class="outline-2">
-<h2 id="org4faf9aa"><span class="section-number-2">3</span> 搜索区间与终止条件</h2>
+<div id="outline-container-orgc3e9384" class="outline-2">
+<h2 id="orgc3e9384"><span class="section-number-2">3</span> 搜索区间与终止条件</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 很明显，二分搜索算法的搜索区间存在四种选择： <code>[left, right]</code>, <code>[left, right)</code>, <code>(left, right]</code>, <code>(left, right)</code>.
@@ -359,7 +359,7 @@ for the JavaScript code in this tag.
 在中点值是向下取整的情况下，很明显，只有当 left 和 right 相等的时候，我们才能搜索到右边界，因此，循环的终止条件应该为：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">while</span> (left &lt;= right) {
+<pre class="src src-C"><span class="org-keyword">while</span> (left &lt;= right) {
   ...
 }
 </pre>
@@ -369,7 +369,7 @@ for the JavaScript code in this tag.
 然后是区间 <code>[left, right)</code>, 有了前面的基础，我们可以很快的反应过来，右边界是不需要的，因此，我们只需要将终止条件修改为：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">while</span> (left &lt; right) {
+<pre class="src src-C"><span class="org-keyword">while</span> (left &lt; right) {
   ...
 }
 </pre>
@@ -382,25 +382,25 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org17a603f" class="outline-2">
-<h2 id="org17a603f"><span class="section-number-2">4</span> 等于某值</h2>
+<div id="outline-container-org9bff352" class="outline-2">
+<h2 id="org9bff352"><span class="section-number-2">4</span> 等于某值</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 查找一个已排序序列中等于某个值的元素是很简单的，这里就直接给出代码好了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bsearch</span>(arr, left, right, target) {
-  <span style="font-weight: bold;">while</span> (left &lt;= right) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
-    <span style="font-weight: bold;">if</span> (arr[mid] == target) {
-      <span style="font-weight: bold;">return</span> mid;
-    } <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span> (arr[mid] &gt; target) {
-      right = mid - 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid - 1]</span>
-    } <span style="font-weight: bold;">else</span> {
-      left = mid + 1;   <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right]</span>
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">bsearch</span>(arr, left, right, target) {
+  <span class="org-keyword">while</span> (left &lt;= right) {
+    <span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
+    <span class="org-keyword">if</span> (arr[mid] == target) {
+      <span class="org-keyword">return</span> mid;
+    } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (arr[mid] &gt; target) {
+      right = mid - 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">[left, mid - 1]</span>
+    } <span class="org-keyword">else</span> {
+      left = mid + 1;   <span class="org-comment-delimiter">// </span><span class="org-comment">[mid + 1, right]</span>
     }
   }
-  <span style="font-weight: bold;">return</span> -1;
+  <span class="org-keyword">return</span> -1;
 }
 </pre>
 </div>
@@ -425,18 +425,18 @@ for the JavaScript code in this tag.
 但是，这对于区间 <code>[left, right)</code> 来说就不一样了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">bsearch</span>(arr, left, right, target) {
-  <span style="font-weight: bold;">while</span> (left &lt; right) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
-    <span style="font-weight: bold;">if</span> (arr[mid] == target) {
-      <span style="font-weight: bold;">return</span> mid;
-    } <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span> (arr[mid] &gt; target) {
-      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
-    } <span style="font-weight: bold;">else</span> {
-      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right])</span>
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">bsearch</span>(arr, left, right, target) {
+  <span class="org-keyword">while</span> (left &lt; right) {
+    <span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
+    <span class="org-keyword">if</span> (arr[mid] == target) {
+      <span class="org-keyword">return</span> mid;
+    } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (arr[mid] &gt; target) {
+      right = mid;     <span class="org-comment-delimiter">// </span><span class="org-comment">[left, mid)</span>
+    } <span class="org-keyword">else</span> {
+      left = mid + 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">[mid + 1, right])</span>
     }
   }
-  <span style="font-weight: bold;">return</span> -1;
+  <span class="org-keyword">return</span> -1;
 }
 </pre>
 </div>
@@ -452,8 +452,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org34c1416" class="outline-2">
-<h2 id="org34c1416"><span class="section-number-2">5</span> 第一个不小于</h2>
+<div id="outline-container-org8ee9a8b" class="outline-2">
+<h2 id="org8ee9a8b"><span class="section-number-2">5</span> 第一个不小于</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 从这里开始就只讨论区间 <code>[left, right)</code> 的写法了，对于区间 <code>[left, right]</code>, 有兴趣的可以去研究一下。
@@ -489,15 +489,15 @@ for the JavaScript code in this tag.
 这里我们可以用一个简单的程序来测试一下：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">seq</span> = [2 <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10)]
-<span style="font-weight: bold; font-style: italic;">left</span>, <span style="font-weight: bold; font-style: italic;">right</span> = 0, <span style="font-weight: bold;">len</span>(seq)
-<span style="font-weight: bold;">while</span> left &lt; right:
-    <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) // 2
-    <span style="font-weight: bold;">if</span> seq[mid] &lt; 2:
-        <span style="font-weight: bold; font-style: italic;">left</span> = mid + 1
-    <span style="font-weight: bold;">else</span>:
-        <span style="font-weight: bold; font-style: italic;">right</span> = mid + 1
-    <span style="font-weight: bold;">print</span>(right)
+<pre class="src src-python"><span class="org-variable-name">seq</span> = [2 <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10)]
+<span class="org-variable-name">left</span>, <span class="org-variable-name">right</span> = 0, <span class="org-builtin">len</span>(seq)
+<span class="org-keyword">while</span> left &lt; right:
+    <span class="org-variable-name">mid</span> = left + (right - left) // 2
+    <span class="org-keyword">if</span> seq[mid] &lt; 2:
+        <span class="org-variable-name">left</span> = mid + 1
+    <span class="org-keyword">else</span>:
+        <span class="org-variable-name">right</span> = mid + 1
+    <span class="org-keyword">print</span>(right)
 </pre>
 </div>
 
@@ -512,7 +512,7 @@ for the JavaScript code in this tag.
 这是一个无限死循环，因为终止条件是 left &lt; right，而中点值的计算是趋向于左边界的，此时，如果将右边界修改为 <code>mid + 1</code>, 那么问题就变成了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">seq</span>[left] = seq[left + 1] = target;
+<pre class="src src-C"><span class="org-type">seq</span>[left] = seq[left + 1] = target;
 right = left + 1;
 mid = left + (right - left) / 2 = left + 1 / 2 = left;
 right = mid + 1 = left + 1;
@@ -531,16 +531,16 @@ right = mid + 1 = left + 1;
 最后，我们的实现如下：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lower_bound</span>(arr, left, right, target) {
-  <span style="font-weight: bold;">while</span> (left &lt; right) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
-    <span style="font-weight: bold;">if</span> (arr[mid] &lt; target) {
-      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right)</span>
-    } <span style="font-weight: bold;">else</span> {
-      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">lower_bound</span>(arr, left, right, target) {
+  <span class="org-keyword">while</span> (left &lt; right) {
+    <span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
+    <span class="org-keyword">if</span> (arr[mid] &lt; target) {
+      left = mid + 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">[mid + 1, right)</span>
+    } <span class="org-keyword">else</span> {
+      right = mid;     <span class="org-comment-delimiter">// </span><span class="org-comment">[left, mid)</span>
     }
   }
-  <span style="font-weight: bold;">return</span> left;
+  <span class="org-keyword">return</span> left;
 }
 </pre>
 </div>
@@ -560,8 +560,8 @@ right = mid + 1 = left + 1;
 </div>
 </div>
 
-<div id="outline-container-orgdce2722" class="outline-2">
-<h2 id="orgdce2722"><span class="section-number-2">6</span> 第一个大于</h2>
+<div id="outline-container-org41e5ff2" class="outline-2">
+<h2 id="org41e5ff2"><span class="section-number-2">6</span> 第一个大于</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 前面考虑了第一个不小于的情况，这里再来考虑第一个大于就容易多了，核心依然是搜索区间的修改。
@@ -572,16 +572,16 @@ right = mid + 1 = left + 1;
 右边界的修改和前面一样，因此，这里的实现只需要将前面的代码改动一点点就可以了：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">upper_bound</span>(arr, left, right, target) {
-  <span style="font-weight: bold;">while</span> (left &lt; right) {
-    <span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">mid</span> = left + (right - left) / 2;
-    <span style="font-weight: bold;">if</span> (arr[mid] &lt;= target) {
-      left = mid + 1;  <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[mid + 1, right)</span>
-    } <span style="font-weight: bold;">else</span> {
-      right = mid;     <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">[left, mid)</span>
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-function-name">upper_bound</span>(arr, left, right, target) {
+  <span class="org-keyword">while</span> (left &lt; right) {
+    <span class="org-type">int</span> <span class="org-variable-name">mid</span> = left + (right - left) / 2;
+    <span class="org-keyword">if</span> (arr[mid] &lt;= target) {
+      left = mid + 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">[mid + 1, right)</span>
+    } <span class="org-keyword">else</span> {
+      right = mid;     <span class="org-comment-delimiter">// </span><span class="org-comment">[left, mid)</span>
     }
   }
-  <span style="font-weight: bold;">return</span> left;
+  <span class="org-keyword">return</span> left;
 }
 </pre>
 </div>
@@ -592,22 +592,22 @@ right = mid + 1 = left + 1;
 </div>
 </div>
 
-<div id="outline-container-org979fc19" class="outline-2">
-<h2 id="org979fc19"><span class="section-number-2">7</span> 最后一个不大于和最后一个小于</h2>
+<div id="outline-container-org0678639" class="outline-2">
+<h2 id="org0678639"><span class="section-number-2">7</span> 最后一个不大于和最后一个小于</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这两个的实现可以取个巧，首先我们可以研究一下前面两个实现返回的结果的情况：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result] &gt;= target</span>
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result - 1] &lt; target</span>
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">lower_bound</span>(arr, left, right, target) {
+<pre class="src src-C"><span class="org-comment-delimiter">// </span><span class="org-comment">arr[result] &gt;= target</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">arr[result - 1] &lt; target</span>
+<span class="org-type">int</span> <span class="org-function-name">lower_bound</span>(arr, left, right, target) {
   ...
 }
 
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result] &gt; target</span>
-<span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">arr[result - 1] &lt;= target</span>
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">upper_bound</span>(arr, left, right, target) {
+<span class="org-comment-delimiter">// </span><span class="org-comment">arr[result] &gt; target</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">arr[result - 1] &lt;= target</span>
+<span class="org-type">int</span> <span class="org-function-name">upper_bound</span>(arr, left, right, target) {
   ...
 }
 </pre>
@@ -625,7 +625,7 @@ arr[result + 1] &gt; target
 这一点和第一个大于的返回结果很相似，因此，最后一个不大于可以借助第一个大于来实现：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">result</span> = upper_bound(arr, left, right, target) - 1;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">result</span> = upper_bound(arr, left, right, target) - 1;
 </pre>
 </div>
 
@@ -637,14 +637,14 @@ arr[result + 1] &gt; target
 最后一个小于也是一样的道理：
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">result</span> = lower_bound(arr, left, right, target) - 1;
+<pre class="src src-C"><span class="org-type">int</span> <span class="org-variable-name">result</span> = lower_bound(arr, left, right, target) - 1;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfa914c1" class="outline-2">
-<h2 id="orgfa914c1"><span class="section-number-2">8</span> 结尾</h2>
+<div id="outline-container-org23b5be0" class="outline-2">
+<h2 id="org23b5be0"><span class="section-number-2">8</span> 结尾</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 二分搜索算法真的是一个很细节的算法，各种实现之间的区别都不大，很多就是加一减一这种程度的区别，
@@ -657,8 +657,8 @@ arr[result + 1] &gt; target
 </div>
 </div>
 
-<div id="outline-container-org29cead2" class="outline-2">
-<h2 id="org29cead2"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org8c11f0c" class="outline-2">
+<h2 id="org8c11f0c"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.zhihu.com/question/36132386/answer/530313852">二分查找有几种写法？它们的区别是什么？ - Jason Li 的回答</a></li>

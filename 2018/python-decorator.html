@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 闭包和装饰器</title>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org395502d">1. 简介</a></li>
-<li><a href="#org24ecb9e">2. 闭包</a></li>
-<li><a href="#orgccde25a">3. 装饰器</a>
+<li><a href="#org582da16">1. 简介</a></li>
+<li><a href="#org974697f">2. 闭包</a></li>
+<li><a href="#org0854183">3. 装饰器</a>
 <ul>
-<li><a href="#org198027e">3.1. 多重装饰器</a></li>
+<li><a href="#org44cacb9">3.1. 多重装饰器</a></li>
 </ul>
 </li>
-<li><a href="#org5c0e0b1">4. 参考链接</a></li>
+<li><a href="#org3b09024">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org395502d" class="outline-2">
-<h2 id="org395502d"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org582da16" class="outline-2">
+<h2 id="org582da16"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时
@@ -272,8 +272,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org24ecb9e" class="outline-2">
-<h2 id="org24ecb9e"><span class="section-number-2">2</span> 闭包</h2>
+<div id="outline-container-org974697f" class="outline-2">
+<h2 id="org974697f"><span class="section-number-2">2</span> 闭包</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
@@ -288,16 +288,16 @@ for the JavaScript code in this tag.
 这种说法的理解可以通过代码来尝试理解：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(num):
-   ...:     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">inner_func</span>():
-   ...:         <span style="font-weight: bold;">return</span> num
-   ...:     <span style="font-weight: bold;">return</span> inner_func
+<pre class="src src-python">In [1]: <span class="org-keyword">def</span> <span class="org-function-name">func</span>(num):
+   ...:     <span class="org-keyword">def</span> <span class="org-function-name">inner_func</span>():
+   ...:         <span class="org-keyword">return</span> num
+   ...:     <span class="org-keyword">return</span> inner_func
    ...:
 
-In [2]: <span style="font-weight: bold; font-style: italic;">f</span> = func(10)
+In [2]: <span class="org-variable-name">f</span> = func(10)
 
 In [3]: f
-Out[3]: &lt;function __main__.func.&lt;<span style="font-weight: bold;">locals</span>&gt;.inner_func&gt;
+Out[3]: &lt;function __main__.func.&lt;<span class="org-builtin">locals</span>&gt;.inner_func&gt;
 </pre>
 </div>
 
@@ -328,16 +328,16 @@ Out[3]: &lt;function __main__.func.&lt;<span style="font-weight: bold;">locals</
 现在换一个方式来进行测试：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [7]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>(lst=[]):
-   ...:     <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">inner_func</span>():
+<pre class="src src-python">In [7]: <span class="org-keyword">def</span> <span class="org-function-name">func</span>(lst=[]):
+   ...:     <span class="org-keyword">def</span> <span class="org-function-name">inner_func</span>():
    ...:         lst.append(10)
-   ...:         <span style="font-weight: bold;">return</span> lst
-   ...:     <span style="font-weight: bold;">return</span> inner_func
+   ...:         <span class="org-keyword">return</span> lst
+   ...:     <span class="org-keyword">return</span> inner_func
    ...:
 
-In [8]: <span style="font-weight: bold; font-style: italic;">f1</span> = func()
+In [8]: <span class="org-variable-name">f1</span> = func()
 
-In [9]: <span style="font-weight: bold; font-style: italic;">f2</span> = func()
+In [9]: <span class="org-variable-name">f2</span> = func()
 
 In [10]: f1()
 Out[10]: [10]
@@ -345,8 +345,8 @@ Out[10]: [10]
 In [11]: f2()
 Out[11]: [10, 10]
 
-In [12]: <span style="font-weight: bold;">id</span>(f1) == <span style="font-weight: bold;">id</span>(f2)
-Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</span>
+In [12]: <span class="org-builtin">id</span>(f1) == <span class="org-builtin">id</span>(f2)
+Out[12]: <span class="org-constant">False</span>
 </pre>
 </div>
 
@@ -377,8 +377,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-orgccde25a" class="outline-2">
-<h2 id="orgccde25a"><span class="section-number-2">3</span> 装饰器</h2>
+<div id="outline-container-org0854183" class="outline-2">
+<h2 id="org0854183"><span class="section-number-2">3</span> 装饰器</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的
@@ -406,13 +406,13 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; text-decoration: underline;">@decorator</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#19981;&#24102;&#21442;</span>
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
-    <span style="font-weight: bold;">pass</span>
+<pre class="src src-python"><span class="org-type">@decorator</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#24102;&#21442;</span>
+<span class="org-keyword">def</span> <span class="org-function-name">func</span>():
+    <span class="org-keyword">pass</span>
 
-<span style="font-weight: bold; text-decoration: underline;">@decorator</span>(level=3)  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">&#24102;&#21442;</span>
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
-    <span style="font-weight: bold;">pass</span>
+<span class="org-type">@decorator</span>(level=3)  <span class="org-comment-delimiter"># </span><span class="org-comment">&#24102;&#21442;</span>
+<span class="org-keyword">def</span> <span class="org-function-name">func</span>():
+    <span class="org-keyword">pass</span>
 </pre>
 </div>
 
@@ -457,19 +457,19 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 因此， 你可以写一个 <b>装饰器</b>, 这个 <b>装饰器</b> 接受 <b>带参</b> 与 <b>不带参</b> 两种调用方式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">def</span> <span style="font-weight: bold;">decorator</span>(func=<span style="font-weight: bold; text-decoration: underline;">None</span>, **kwargs):
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap_arg</span>(func):
-        <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap</span>():
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">decorator</span>(func=<span class="org-constant">None</span>, **kwargs):
+    <span class="org-keyword">def</span> <span class="org-function-name">wrap_arg</span>(func):
+        <span class="org-keyword">def</span> <span class="org-function-name">wrap</span>():
             func()
-        <span style="font-weight: bold;">return</span> wrap
+        <span class="org-keyword">return</span> wrap
 
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">wrap</span>():
+    <span class="org-keyword">def</span> <span class="org-function-name">wrap</span>():
         func()
 
-    <span style="font-weight: bold;">if</span> func <span style="font-weight: bold;">is</span> <span style="font-weight: bold; text-decoration: underline;">None</span>:
-        <span style="font-weight: bold;">return</span> wrap_arg
+    <span class="org-keyword">if</span> func <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+        <span class="org-keyword">return</span> wrap_arg
 
-    <span style="font-weight: bold;">return</span> wrap
+    <span class="org-keyword">return</span> wrap
 </pre>
 </div>
 
@@ -507,19 +507,19 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </ul>
 </div>
 
-<div id="outline-container-org198027e" class="outline-3">
-<h3 id="org198027e"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div id="outline-container-org44cacb9" class="outline-3">
+<h3 id="org44cacb9"><span class="section-number-3">3.1</span> 多重装饰器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; text-decoration: underline;">@dec_a</span>
-<span style="font-weight: bold; text-decoration: underline;">@dec_b</span>
-<span style="font-weight: bold; text-decoration: underline;">@dec_c</span>
-<span style="font-weight: bold;">def</span> <span style="font-weight: bold;">func</span>():
-    <span style="font-weight: bold;">pass</span>
+<pre class="src src-python"><span class="org-type">@dec_a</span>
+<span class="org-type">@dec_b</span>
+<span class="org-type">@dec_c</span>
+<span class="org-keyword">def</span> <span class="org-function-name">func</span>():
+    <span class="org-keyword">pass</span>
 </pre>
 </div>
 
@@ -544,8 +544,8 @@ Out[12]: <span style="font-weight: bold; text-decoration: underline;">False</spa
 </div>
 </div>
 
-<div id="outline-container-org5c0e0b1" class="outline-2">
-<h2 id="org5c0e0b1"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org3b09024" class="outline-2">
+<h2 id="org3b09024"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:16 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 生成器</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org08c5487">1. 简介</a></li>
-<li><a href="#org640540f">2. 创建生成器</a></li>
-<li><a href="#orgd873464">3. 简单的使用</a></li>
-<li><a href="#orgc1933a8">4. 生成器对象</a></li>
-<li><a href="#org18eb308">5. 新的特性</a></li>
-<li><a href="#org5637683">6. 结语</a></li>
+<li><a href="#org5b77421">1. 简介</a></li>
+<li><a href="#orga82dc4c">2. 创建生成器</a></li>
+<li><a href="#org3a260de">3. 简单的使用</a></li>
+<li><a href="#org09127fa">4. 生成器对象</a></li>
+<li><a href="#orga681325">5. 新的特性</a></li>
+<li><a href="#orgf321137">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org08c5487" class="outline-2">
-<h2 id="org08c5487"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org5b77421" class="outline-2">
+<h2 id="org5b77421"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>生成器</b> 这个对于 <code>Python</code> 使用者来说应该并不陌生， <del>毕竟现在的 <code>Python3</code> 中部分内置函数的返回值就是一个 <b>生成器</b>.</del>
@@ -269,8 +269,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org640540f" class="outline-2">
-<h2 id="org640540f"><span class="section-number-2">2</span> 创建生成器</h2>
+<div id="outline-container-orga82dc4c" class="outline-2">
+<h2 id="orga82dc4c"><span class="section-number-2">2</span> 创建生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 创建生成器的方式有两种：
@@ -286,15 +286,15 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold; font-style: italic;">generator</span> = (x * x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10))
+<pre class="src src-python">In [1]: <span class="org-variable-name">generator</span> = (x * x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10))
 
-In [2]: <span style="font-weight: bold;">type</span>(generator)
+In [2]: <span class="org-builtin">type</span>(generator)
 Out[2]: generator
 
-In [3]: <span style="font-weight: bold; font-style: italic;">lst</span> = [x * x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10)]
+In [3]: <span class="org-variable-name">lst</span> = [x * x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10)]
 
-In [4]: <span style="font-weight: bold;">type</span>(lst)
-Out[4]: <span style="font-weight: bold;">list</span>
+In [4]: <span class="org-builtin">type</span>(lst)
+Out[4]: <span class="org-builtin">list</span>
 </pre>
 </div>
 
@@ -311,18 +311,18 @@ Out[4]: <span style="font-weight: bold;">list</span>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">fib</span>(<span style="font-weight: bold;">max</span>):
-   ...:     <span style="font-weight: bold; font-style: italic;">n</span>, <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; font-style: italic;">b</span> = 0, 0, 1
-   ...:     <span style="font-weight: bold;">while</span> n &lt; <span style="font-weight: bold;">max</span>:
-   ...:         <span style="font-weight: bold;">yield</span> b
-   ...:         <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; font-style: italic;">b</span> = b, a + 1
-   ...:         <span style="font-weight: bold; font-style: italic;">n</span> = n + 1
-   ...:     <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'done'</span>
+<pre class="src src-python">In [1]: <span class="org-keyword">def</span> <span class="org-function-name">fib</span>(<span class="org-builtin">max</span>):
+   ...:     <span class="org-variable-name">n</span>, <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = 0, 0, 1
+   ...:     <span class="org-keyword">while</span> n &lt; <span class="org-builtin">max</span>:
+   ...:         <span class="org-keyword">yield</span> b
+   ...:         <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = b, a + 1
+   ...:         <span class="org-variable-name">n</span> = n + 1
+   ...:     <span class="org-keyword">return</span> <span class="org-string">'done'</span>
    ...:
 
-In [2]: <span style="font-weight: bold; font-style: italic;">f</span> = fib(6)
+In [2]: <span class="org-variable-name">f</span> = fib(6)
 
-In [3]: <span style="font-weight: bold;">type</span>(f)
+In [3]: <span class="org-builtin">type</span>(f)
 Out[3]: generator
 </pre>
 </div>
@@ -337,8 +337,8 @@ Out[3]: generator
 </div>
 </div>
 
-<div id="outline-container-orgd873464" class="outline-2">
-<h2 id="orgd873464"><span class="section-number-2">3</span> 简单的使用</h2>
+<div id="outline-container-org3a260de" class="outline-2">
+<h2 id="org3a260de"><span class="section-number-2">3</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们可以通过内置函数 <code>next()</code> 获取 <b>生成器</b> 的下一个返回值，如果没有更多的返回值时，
@@ -346,24 +346,24 @@ Out[3]: generator
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [4]: <span style="font-weight: bold; font-style: italic;">generator</span> = (x * x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(3))
+<pre class="src src-python">In [4]: <span class="org-variable-name">generator</span> = (x * x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(3))
 
-In [5]: <span style="font-weight: bold;">next</span>(generator)
+In [5]: <span class="org-builtin">next</span>(generator)
 Out[5]: 0
 
-In [6]: <span style="font-weight: bold;">next</span>(generator)
+In [6]: <span class="org-builtin">next</span>(generator)
 Out[6]: 1
 
-In [7]: <span style="font-weight: bold;">next</span>(generator)
+In [7]: <span class="org-builtin">next</span>(generator)
 Out[7]: 4
 
-In [8]: <span style="font-weight: bold;">next</span>(generator)
+In [8]: <span class="org-builtin">next</span>(generator)
 ---------------------------------------------------------------------------
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>                             Traceback (most recent call last)
-&lt;ipython-<span style="font-weight: bold;">input</span>-8-1d0a8ea12077&gt; <span style="font-weight: bold;">in</span> &lt;module&gt;()
-----&gt; 1 <span style="font-weight: bold;">next</span>(generator)
+<span class="org-type">StopIteration</span>                             Traceback (most recent call last)
+&lt;ipython-<span class="org-builtin">input</span>-8-1d0a8ea12077&gt; <span class="org-keyword">in</span> &lt;module&gt;()
+----&gt; 1 <span class="org-builtin">next</span>(generator)
 
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>:
+<span class="org-type">StopIteration</span>:
 </pre>
 </div>
 
@@ -372,27 +372,27 @@ In [8]: <span style="font-weight: bold;">next</span>(generator)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [19]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">fib</span>(<span style="font-weight: bold;">max</span>):
-    ...:     <span style="font-weight: bold; font-style: italic;">n</span>, <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; font-style: italic;">b</span> = 0, 0, 1
-    ...:     <span style="font-weight: bold;">while</span> n &lt; <span style="font-weight: bold;">max</span>:
-    ...:         <span style="font-weight: bold;">yield</span> b
-    ...:         <span style="font-weight: bold; font-style: italic;">a</span>, <span style="font-weight: bold; font-style: italic;">b</span> = b, a + 1
-    ...:         <span style="font-weight: bold; font-style: italic;">n</span> = n + 1
-    ...:     <span style="font-weight: bold;">return</span> <span style="font-style: italic;">'done'</span>
+<pre class="src src-python">In [19]: <span class="org-keyword">def</span> <span class="org-function-name">fib</span>(<span class="org-builtin">max</span>):
+    ...:     <span class="org-variable-name">n</span>, <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = 0, 0, 1
+    ...:     <span class="org-keyword">while</span> n &lt; <span class="org-builtin">max</span>:
+    ...:         <span class="org-keyword">yield</span> b
+    ...:         <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = b, a + 1
+    ...:         <span class="org-variable-name">n</span> = n + 1
+    ...:     <span class="org-keyword">return</span> <span class="org-string">'done'</span>
     ...:
 
-In [20]: <span style="font-weight: bold; font-style: italic;">f</span> = fib(10)
+In [20]: <span class="org-variable-name">f</span> = fib(10)
 
-In [21]: <span style="font-weight: bold; font-style: italic;">lst</span> = []
+In [21]: <span class="org-variable-name">lst</span> = []
 
-In [22]: <span style="font-weight: bold;">for</span> val <span style="font-weight: bold;">in</span> f:
+In [22]: <span class="org-keyword">for</span> val <span class="org-keyword">in</span> f:
     ...:     lst.append(val)
     ...:
 
 In [23]: lst
 Out[23]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 
-In [24]: <span style="font-weight: bold;">list</span>(fib(10))
+In [24]: <span class="org-builtin">list</span>(fib(10))
 Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 </pre>
 </div>
@@ -403,32 +403,32 @@ Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 </div>
 </div>
 
-<div id="outline-container-orgc1933a8" class="outline-2">
-<h2 id="orgc1933a8"><span class="section-number-2">4</span> 生成器对象</h2>
+<div id="outline-container-org09127fa" class="outline-2">
+<h2 id="org09127fa"><span class="section-number-2">4</span> 生成器对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 生成器的完整名称应该是生成器 <b>对象</b>, 既然是一个对象，那么自然有 <b>方法</b> 和 <b>属性</b>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">In [45]: <span style="font-weight: bold; font-style: italic;">g</span> = (x <span style="font-weight: bold;">for</span> x <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10))
+<pre class="src src-python">In [45]: <span class="org-variable-name">g</span> = (x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10))
 
-In [46]: <span style="font-weight: bold;">help</span>(g)
-Help on generator <span style="font-weight: bold;">object</span>:
+In [46]: <span class="org-builtin">help</span>(g)
+Help on generator <span class="org-builtin">object</span>:
 
-&lt;genexpr&gt; = <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">generator</span>(<span style="font-weight: bold;">object</span>)
+&lt;genexpr&gt; = <span class="org-keyword">class</span> <span class="org-type">generator</span>(<span class="org-builtin">object</span>)
  |  Methods defined here:
  |
  |  close(...)
- |      close() -&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">GeneratorExit</span> inside generator.
+ |      close() -&gt; <span class="org-keyword">raise</span> <span class="org-type">GeneratorExit</span> inside generator.
  |
  |  send(...)
- |      send(arg) -&gt; send <span style="font-style: italic;">'arg'</span> into generator,
- |      <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">next</span> yielded value <span style="font-weight: bold;">or</span> <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">StopIteration</span>.
+ |      send(arg) -&gt; send <span class="org-string">'arg'</span> into generator,
+ |      <span class="org-keyword">return</span> <span class="org-builtin">next</span> yielded value <span class="org-keyword">or</span> <span class="org-keyword">raise</span> <span class="org-type">StopIteration</span>.
  |
  |  throw(...)
- |      throw(typ[,val[,tb]]) -&gt; <span style="font-weight: bold;">raise</span> exception <span style="font-weight: bold;">in</span> generator,
- |      <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">next</span> yielded value <span style="font-weight: bold;">or</span> <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">StopIteration</span>.
+ |      throw(typ[,val[,tb]]) -&gt; <span class="org-keyword">raise</span> exception <span class="org-keyword">in</span> generator,
+ |      <span class="org-keyword">return</span> <span class="org-builtin">next</span> yielded value <span class="org-keyword">or</span> <span class="org-keyword">raise</span> <span class="org-type">StopIteration</span>.
  |
  |  ----------------------------------------------------------------------
  |  Data descriptors defined here:
@@ -440,7 +440,7 @@ Help on generator <span style="font-weight: bold;">object</span>:
  |  gi_running
  |
  |  gi_yieldfrom
- |      <span style="font-weight: bold;">object</span> being iterated by <span style="font-weight: bold;">yield</span> <span style="font-weight: bold;">from</span>, <span style="font-weight: bold;">or</span> <span style="font-weight: bold; text-decoration: underline;">None</span>
+ |      <span class="org-builtin">object</span> being iterated by <span class="org-keyword">yield</span> <span class="org-keyword">from</span>, <span class="org-keyword">or</span> <span class="org-constant">None</span>
 </pre>
 </div>
 
@@ -452,29 +452,29 @@ Help on generator <span style="font-weight: bold;">object</span>:
 方法 <code>close</code> 会在生成器内部抛出一个 <code>GeneratorExit</code> 异常：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [54]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
-    ...:     <span style="font-weight: bold;">try</span>:
-    ...:         <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
-    ...:             <span style="font-weight: bold;">yield</span> i
-    ...:     <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">GeneratorExit</span>:
-    ...:         <span style="font-weight: bold;">print</span>(<span style="font-style: italic;">'close generator'</span>)
+<pre class="src src-python">In [54]: <span class="org-keyword">def</span> <span class="org-function-name">gen</span>():
+    ...:     <span class="org-keyword">try</span>:
+    ...:         <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):
+    ...:             <span class="org-keyword">yield</span> i
+    ...:     <span class="org-keyword">except</span> <span class="org-type">GeneratorExit</span>:
+    ...:         <span class="org-keyword">print</span>(<span class="org-string">'close generator'</span>)
     ...:
 
-In [55]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+In [55]: <span class="org-variable-name">g</span> = gen()
 
-In [56]: <span style="font-weight: bold;">next</span>(g)
+In [56]: <span class="org-builtin">next</span>(g)
 Out[56]: 0
 
 In [57]: g.close()
 close generator
 
-In [58]: <span style="font-weight: bold;">next</span>(g)
+In [58]: <span class="org-builtin">next</span>(g)
 ---------------------------------------------------------------------------
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>                             Traceback (most recent call last)
-&lt;ipython-<span style="font-weight: bold;">input</span>-58-5f315c5de15b&gt; <span style="font-weight: bold;">in</span> &lt;module&gt;()
-----&gt; 1 <span style="font-weight: bold;">next</span>(g)
+<span class="org-type">StopIteration</span>                             Traceback (most recent call last)
+&lt;ipython-<span class="org-builtin">input</span>-58-5f315c5de15b&gt; <span class="org-keyword">in</span> &lt;module&gt;()
+----&gt; 1 <span class="org-builtin">next</span>(g)
 
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>:
+<span class="org-type">StopIteration</span>:
 </pre>
 </div>
 
@@ -482,25 +482,25 @@ In [58]: <span style="font-weight: bold;">next</span>(g)
 特别的，可以不用 <code>catch</code> 抛出的 <code>GeneratorExit</code> 异常：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
-   ...:     <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
-   ...:         <span style="font-weight: bold;">yield</span> i
+<pre class="src src-python">In [1]: <span class="org-keyword">def</span> <span class="org-function-name">gen</span>():
+   ...:     <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):
+   ...:         <span class="org-keyword">yield</span> i
    ...:
 
-In [2]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+In [2]: <span class="org-variable-name">g</span> = gen()
 
-In [3]: <span style="font-weight: bold;">next</span>(g)
+In [3]: <span class="org-builtin">next</span>(g)
 Out[3]: 0
 
 In [4]: g.close()
 
-In [5]: <span style="font-weight: bold;">next</span>(g)
+In [5]: <span class="org-builtin">next</span>(g)
 ---------------------------------------------------------------------------
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>                             Traceback (most recent call last)
-&lt;ipython-<span style="font-weight: bold;">input</span>-6-5f315c5de15b&gt; <span style="font-weight: bold;">in</span> &lt;module&gt;()
-----&gt; 1 <span style="font-weight: bold;">next</span>(g)
+<span class="org-type">StopIteration</span>                             Traceback (most recent call last)
+&lt;ipython-<span class="org-builtin">input</span>-6-5f315c5de15b&gt; <span class="org-keyword">in</span> &lt;module&gt;()
+----&gt; 1 <span class="org-builtin">next</span>(g)
 
-<span style="font-weight: bold; text-decoration: underline;">StopIteration</span>:
+<span class="org-type">StopIteration</span>:
 </pre>
 </div>
 
@@ -508,23 +508,23 @@ In [5]: <span style="font-weight: bold;">next</span>(g)
 方法 <code>send</code> 传递一个参数到 <b>生成器内部</b>, 那么问题来了，这个参数是怎样传递的呢？
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [65]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
-    ...:     <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
-    ...:         <span style="font-weight: bold; font-style: italic;">arg</span> = <span style="font-weight: bold;">yield</span> i
-    ...:         <span style="font-weight: bold;">print</span>(arg)
+<pre class="src src-python">In [65]: <span class="org-keyword">def</span> <span class="org-function-name">gen</span>():
+    ...:     <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):
+    ...:         <span class="org-variable-name">arg</span> = <span class="org-keyword">yield</span> i
+    ...:         <span class="org-keyword">print</span>(arg)
     ...:
 
-In [66]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+In [66]: <span class="org-variable-name">g</span> = gen()
 
-In [67]: g.send(<span style="font-weight: bold; text-decoration: underline;">None</span>)
+In [67]: g.send(<span class="org-constant">None</span>)
 Out[67]: 0
 
 In [69]: g.send(10)
 10
 Out[69]: 1
 
-In [70]: <span style="font-weight: bold;">next</span>(g)
-<span style="font-weight: bold; text-decoration: underline;">None</span>
+In [70]: <span class="org-builtin">next</span>(g)
+<span class="org-constant">None</span>
 Out[70]: 2
 </pre>
 </div>
@@ -533,7 +533,7 @@ Out[70]: 2
 生成器通过 <code>yield</code> 语句返回值，同时也通过 <code>yield</code> 语句传递 <code>send()</code> 的参数。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">arg</span> = <span style="font-weight: bold;">yield</span> i
+<pre class="src src-python"><span class="org-variable-name">arg</span> = <span class="org-keyword">yield</span> i
 </pre>
 </div>
 
@@ -541,7 +541,7 @@ Out[70]: 2
 需要注意的是： 生成器启动的时候传递的参数必须是 <code>None</code>, 否则会出错。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">g.send(<span style="font-weight: bold; text-decoration: underline;">None</span>)
+<pre class="src src-python">g.send(<span class="org-constant">None</span>)
 </pre>
 </div>
 
@@ -553,8 +553,8 @@ Out[70]: 2
 同时， <code>yield</code> 的返回值默认为 <code>None</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [70]: <span style="font-weight: bold;">next</span>(g)
-<span style="font-weight: bold; text-decoration: underline;">None</span>
+<pre class="src src-python">In [70]: <span class="org-builtin">next</span>(g)
+<span class="org-constant">None</span>
 Out[70]: 2
 </pre>
 </div>
@@ -563,24 +563,24 @@ Out[70]: 2
 然后是方法 <code>throw</code>, 在 <b>生成器</b> 内部抛出一个异常，然后返回下一个值或抛出 <code>StopIteration</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [1]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
-   ...:     <span style="font-weight: bold;">try</span>:
-   ...:         <span style="font-weight: bold;">for</span> i <span style="font-weight: bold;">in</span> <span style="font-weight: bold;">range</span>(10):
-   ...:             <span style="font-weight: bold;">yield</span> i * i
-   ...:     <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">as</span> ex:
-   ...:         <span style="font-weight: bold;">print</span>(ex)
-   ...:     <span style="font-weight: bold;">yield</span> -1
+<pre class="src src-python">In [1]: <span class="org-keyword">def</span> <span class="org-function-name">gen</span>():
+   ...:     <span class="org-keyword">try</span>:
+   ...:         <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):
+   ...:             <span class="org-keyword">yield</span> i * i
+   ...:     <span class="org-keyword">except</span> <span class="org-type">Exception</span> <span class="org-keyword">as</span> ex:
+   ...:         <span class="org-keyword">print</span>(ex)
+   ...:     <span class="org-keyword">yield</span> -1
    ...:
 
-In [2]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+In [2]: <span class="org-variable-name">g</span> = gen()
 
-In [3]: <span style="font-weight: bold;">next</span>(g)
+In [3]: <span class="org-builtin">next</span>(g)
 Out[3]: 0
 
-In [4]: <span style="font-weight: bold;">next</span>(g)
+In [4]: <span class="org-builtin">next</span>(g)
 Out[4]: 1
 
-In [5]: g.throw(<span style="font-weight: bold; text-decoration: underline;">Exception</span>, <span style="font-style: italic;">'throw'</span>)
+In [5]: g.throw(<span class="org-type">Exception</span>, <span class="org-string">'throw'</span>)
 throw
 Out[5]: -1
 </pre>
@@ -601,20 +601,20 @@ Out[5]: -1
 </div>
 </div>
 
-<div id="outline-container-org18eb308" class="outline-2">
-<h2 id="org18eb308"><span class="section-number-2">5</span> 新的特性</h2>
+<div id="outline-container-orga681325" class="outline-2">
+<h2 id="orga681325"><span class="section-number-2">5</span> 新的特性</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 从 <code>3.3</code> 开始， <code>yield</code> 语句可以这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">In [8]: <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">gen</span>():
-   ...:     <span style="font-weight: bold;">yield</span> <span style="font-weight: bold;">from</span> <span style="font-weight: bold;">range</span>(10)
+<pre class="src src-python">In [8]: <span class="org-keyword">def</span> <span class="org-function-name">gen</span>():
+   ...:     <span class="org-keyword">yield</span> <span class="org-keyword">from</span> <span class="org-builtin">range</span>(10)
    ...:
 
-In [9]: <span style="font-weight: bold; font-style: italic;">g</span> = gen()
+In [9]: <span class="org-variable-name">g</span> = gen()
 
-In [10]: <span style="font-weight: bold;">next</span>(g)
+In [10]: <span class="org-builtin">next</span>(g)
 Out[10]: 0
 </pre>
 </div>
@@ -629,8 +629,8 @@ Out[10]: 0
 </div>
 </div>
 
-<div id="outline-container-org5637683" class="outline-2">
-<h2 id="org5637683"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgf321137" class="outline-2">
+<h2 id="orgf321137"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在学习 <b>协程</b> 之前我是万万没想到生成器对象居然存在方法和属性，毕竟平时还是简单的使用为主。

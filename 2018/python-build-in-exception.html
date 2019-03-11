@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-01-05 周六 16:15 -->
+<!-- 2019-03-11 周一 20:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置异常</title>
@@ -246,27 +246,27 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org33002a3">1. 简介</a></li>
-<li><a href="#org2642f99">2. 常见异常</a></li>
-<li><a href="#org9f37210">3. 自定义异常</a></li>
-<li><a href="#org3a06697">4. Python2 内置异常</a>
+<li><a href="#orgdd85296">1. 简介</a></li>
+<li><a href="#org84fcc20">2. 常见异常</a></li>
+<li><a href="#orgceaa523">3. 自定义异常</a></li>
+<li><a href="#org83f8d87">4. Python2 内置异常</a>
 <ul>
-<li><a href="#orgeef0121">4.1. 完整异常列表</a></li>
-<li><a href="#org18f5f0f">4.2. 异常层次结构</a></li>
+<li><a href="#orgaf696d0">4.1. 完整异常列表</a></li>
+<li><a href="#org8938af5">4.2. 异常层次结构</a></li>
 </ul>
 </li>
-<li><a href="#org88e7906">5. Python3 内置异常</a>
+<li><a href="#orgcf72920">5. Python3 内置异常</a>
 <ul>
-<li><a href="#org561fc11">5.1. 完整异常列表</a></li>
-<li><a href="#org00945ca">5.2. 异常层次结构</a></li>
+<li><a href="#org75faa25">5.1. 完整异常列表</a></li>
+<li><a href="#org575d28f">5.2. 异常层次结构</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org33002a3" class="outline-2">
-<h2 id="org33002a3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgdd85296" class="outline-2">
+<h2 id="orgdd85296"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
@@ -284,8 +284,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2642f99" class="outline-2">
-<h2 id="org2642f99"><span class="section-number-2">2</span> 常见异常</h2>
+<div id="outline-container-org84fcc20" class="outline-2">
+<h2 id="org84fcc20"><span class="section-number-2">2</span> 常见异常</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 网上有人总结了 <code>Python</code> 的常见异常， 这里记录下来：
@@ -374,8 +374,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9f37210" class="outline-2">
-<h2 id="org9f37210"><span class="section-number-2">3</span> 自定义异常</h2>
+<div id="outline-container-orgceaa523" class="outline-2">
+<h2 id="orgceaa523"><span class="section-number-2">3</span> 自定义异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 定义自己的异常是很有用的， 能够提供更清楚的 <b>异常信息</b>, 也能添加内置异常不具有的功能。
@@ -390,14 +390,14 @@ for the JavaScript code in this tag.
 既然自定义异常类继承自 <code>Exception</code>, 那么应该先了解一下 <code>Exception</code> 的内容：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">help</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span>)
-Help on <span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">in</span> module builtins:
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-builtin">help</span>(<span class="org-type">Exception</span>)
+Help on <span class="org-keyword">class</span> <span class="org-type">Exception</span> <span class="org-keyword">in</span> module builtins:
 
-<span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-weight: bold; text-decoration: underline;">BaseException</span>)
- |  Common base <span style="font-weight: bold;">class</span> <span style="font-weight: bold;">for</span> <span style="font-weight: bold;">all</span> non-<span style="font-weight: bold; text-decoration: underline;">exit</span> exceptions.
+<span class="org-keyword">class</span> <span class="org-type">Exception</span>(<span class="org-type">BaseException</span>)
+ |  Common base <span class="org-keyword">class</span> <span class="org-keyword">for</span> <span class="org-builtin">all</span> non-<span class="org-constant">exit</span> exceptions.
  |
- |  __init__(<span style="font-weight: bold;">self</span>, /, *args, **kwargs)
- |      Initialize <span style="font-weight: bold;">self</span>.  See <span style="font-weight: bold;">help</span>(<span style="font-weight: bold;">type</span>(<span style="font-weight: bold;">self</span>)) <span style="font-weight: bold;">for</span> accurate signature.
+ |  __init__(<span class="org-keyword">self</span>, /, *args, **kwargs)
+ |      Initialize <span class="org-keyword">self</span>.  See <span class="org-builtin">help</span>(<span class="org-builtin">type</span>(<span class="org-keyword">self</span>)) <span class="org-keyword">for</span> accurate signature.
 </pre>
 </div>
 
@@ -410,20 +410,20 @@ Help on <span style="font-weight: bold;">class</span> <span style="font-weight: 
 先来测试一下这些参数的作用：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">raise</span> <span class="org-type">Exception</span>(<span class="org-string">'exception'</span>)
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">Exception</span>: exception
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">Exception</span>: exception
 
-&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>, 2)
+&gt;&gt;&gt; <span class="org-keyword">raise</span> <span class="org-type">Exception</span>(<span class="org-string">'exception'</span>, 2)
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">Exception</span>: (<span style="font-style: italic;">'exception'</span>, 2)
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">Exception</span>: (<span class="org-string">'exception'</span>, 2)
 
-&gt;&gt;&gt; <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(<span style="font-style: italic;">'exception'</span>, 2, name=<span style="font-style: italic;">'Test'</span>)
+&gt;&gt;&gt; <span class="org-keyword">raise</span> <span class="org-type">Exception</span>(<span class="org-string">'exception'</span>, 2, name=<span class="org-string">'Test'</span>)
 Traceback (most recent call last):
-  File <span style="font-style: italic;">"&lt;stdin&gt;"</span>, line 1, <span style="font-weight: bold;">in</span> &lt;module&gt;
-<span style="font-weight: bold; text-decoration: underline;">TypeError</span>: exceptions.<span style="font-weight: bold; text-decoration: underline;">Exception</span> does <span style="font-weight: bold;">not</span> take keyword arguments
+  File <span class="org-string">"&lt;stdin&gt;"</span>, line 1, <span class="org-keyword">in</span> &lt;module&gt;
+<span class="org-type">TypeError</span>: exceptions.<span class="org-type">Exception</span> does <span class="org-keyword">not</span> take keyword arguments
 </pre>
 </div>
 
@@ -435,10 +435,10 @@ Traceback (most recent call last):
 同时， 所有的参数会保存在名为 <code>args</code> 元组中：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="font-weight: bold;">try</span>:
-...     <span style="font-weight: bold;">raise</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span>(1, 2, 3)
-... <span style="font-weight: bold;">except</span> <span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold;">as</span> ex:
-...     <span style="font-weight: bold;">print</span>(ex.args)
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-keyword">try</span>:
+...     <span class="org-keyword">raise</span> <span class="org-type">Exception</span>(1, 2, 3)
+... <span class="org-keyword">except</span> <span class="org-type">Exception</span> <span class="org-keyword">as</span> ex:
+...     <span class="org-keyword">print</span>(ex.args)
 ...
 (1, 2, 3)
 </pre>
@@ -449,12 +449,12 @@ Traceback (most recent call last):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">class</span> <span style="font-weight: bold; text-decoration: underline;">MyException</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span>):
-    <span style="font-style: italic;">""" My Exception."""</span>
-    <span style="font-weight: bold;">def</span> <span style="font-weight: bold;">__init</span>(<span style="font-weight: bold;">self</span>, message, status, more=<span style="font-weight: bold; text-decoration: underline;">None</span>):
-        <span style="font-weight: bold; text-decoration: underline;">Exception</span>.__init__(<span style="font-weight: bold;">self</span>, message, status, more)
-        <span style="font-weight: bold;">self</span>.message = message
-        <span style="font-weight: bold;">self</span>.status = status
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">MyException</span>(<span class="org-type">Exception</span>):
+    <span class="org-doc">""" My Exception."""</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">__init</span>(<span class="org-keyword">self</span>, message, status, more=<span class="org-constant">None</span>):
+        <span class="org-type">Exception</span>.__init__(<span class="org-keyword">self</span>, message, status, more)
+        <span class="org-keyword">self</span>.message = message
+        <span class="org-keyword">self</span>.status = status
 </pre>
 </div>
 
@@ -467,22 +467,22 @@ Traceback (most recent call last):
 这样， 当遇到 <code>MyException</code> 时的处理方式可以更加丰富：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="font-weight: bold;">try</span>:
+<pre class="src src-python"><span class="org-keyword">try</span>:
     ...
-<span style="font-weight: bold;">except</span> MyException <span style="font-weight: bold;">as</span> ex:
-    <span style="font-weight: bold;">if</span> ex.status &gt; 500:
-        <span style="font-weight: bold;">print</span>(ex.message)
+<span class="org-keyword">except</span> MyException <span class="org-keyword">as</span> ex:
+    <span class="org-keyword">if</span> ex.status &gt; 500:
+        <span class="org-keyword">print</span>(ex.message)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3a06697" class="outline-2">
-<h2 id="org3a06697"><span class="section-number-2">4</span> Python2 内置异常</h2>
+<div id="outline-container-org83f8d87" class="outline-2">
+<h2 id="org83f8d87"><span class="section-number-2">4</span> Python2 内置异常</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgeef0121" class="outline-3">
-<h3 id="orgeef0121"><span class="section-number-3">4.1</span> 完整异常列表</h3>
+<div id="outline-container-orgaf696d0" class="outline-3">
+<h3 id="orgaf696d0"><span class="section-number-3">4.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -564,8 +564,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org18f5f0f" class="outline-3">
-<h3 id="org18f5f0f"><span class="section-number-3">4.2</span> 异常层次结构</h3>
+<div id="outline-container-org8938af5" class="outline-3">
+<h3 id="org8938af5"><span class="section-number-3">4.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-4-2">
 <pre class="example">
 BaseException
@@ -623,8 +623,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org88e7906" class="outline-2">
-<h2 id="org88e7906"><span class="section-number-2">5</span> Python3 内置异常</h2>
+<div id="outline-container-orgcf72920" class="outline-2">
+<h2 id="orgcf72920"><span class="section-number-2">5</span> Python3 内置异常</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python3</code> 和 <code>Python2</code> 不兼容， 异常处理方面， <code>Python3</code> 也对异常结构进行了一些调整。
@@ -638,8 +638,8 @@ BaseException
 </ul>
 </div>
 
-<div id="outline-container-org561fc11" class="outline-3">
-<h3 id="org561fc11"><span class="section-number-3">5.1</span> 完整异常列表</h3>
+<div id="outline-container-org75faa25" class="outline-3">
+<h3 id="org75faa25"><span class="section-number-3">5.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -738,8 +738,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org00945ca" class="outline-3">
-<h3 id="org00945ca"><span class="section-number-3">5.2</span> 异常层次结构</h3>
+<div id="outline-container-org575d28f" class="outline-3">
+<h3 id="org575d28f"><span class="section-number-3">5.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-5-2">
 <pre class="example">
 BaseException

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-02-20 周三 16:05 -->
+<!-- 2019-03-11 周一 21:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>不同环境下的正则表达式</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6ee991b">1. 前言</a></li>
-<li><a href="#org910f394">2. PCRE</a></li>
-<li><a href="#orgf791a77">3. POSIX</a></li>
-<li><a href="#orgc789ce9">4. 原始字符串</a></li>
-<li><a href="#org6248862">5. 结语</a></li>
-<li><a href="#orgbcfd155">6. 参考链接</a></li>
+<li><a href="#org64fa179">1. 前言</a></li>
+<li><a href="#org7487ac0">2. PCRE</a></li>
+<li><a href="#orgc471b45">3. POSIX</a></li>
+<li><a href="#org08360a3">4. 原始字符串</a></li>
+<li><a href="#org2d09d1e">5. 结语</a></li>
+<li><a href="#org362373c">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6ee991b" class="outline-2">
-<h2 id="org6ee991b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org64fa179" class="outline-2">
+<h2 id="org64fa179"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 距离初次接触正则表达式已经过了很久了，随着使用环境的增多，才发现，正则表达式不止一种。
@@ -273,8 +273,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org910f394" class="outline-2">
-<h2 id="org910f394"><span class="section-number-2">2</span> PCRE</h2>
+<div id="outline-container-org7487ac0" class="outline-2">
+<h2 id="org7487ac0"><span class="section-number-2">2</span> PCRE</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 PCER 的全称是 Perl Compatible Regular Expression，即：Perl 兼容的正则表达式。
@@ -300,8 +300,8 @@ This module provides regular expression matching operations similar to those fou
 </div>
 </div>
 
-<div id="outline-container-orgf791a77" class="outline-2">
-<h2 id="orgf791a77"><span class="section-number-2">3</span> POSIX</h2>
+<div id="outline-container-orgc471b45" class="outline-2">
+<h2 id="orgc471b45"><span class="section-number-2">3</span> POSIX</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 在 <code>Unix/Linux</code> 环境下，常常会通过命令行进行各种 <b>匹配</b> 操作，常用的两种匹配方式就是通过 <b>Glob</b> 和 <b>正则表达式</b>.
@@ -495,8 +495,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-orgc789ce9" class="outline-2">
-<h2 id="orgc789ce9"><span class="section-number-2">4</span> 原始字符串</h2>
+<div id="outline-container-org08360a3" class="outline-2">
+<h2 id="org08360a3"><span class="section-number-2">4</span> 原始字符串</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这是除了正则表达式的类型以外另一个会影响正则表达式的使用的因素。
@@ -520,13 +520,13 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
 
-<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span>(<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span>* <span style="font-weight: bold; font-style: italic;">argv</span>[]) {
-  <span style="font-weight: bold;">for</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">i</span> = 1; i &lt; argc; ++i) {
-    printf(<span style="font-style: italic;">"%s\n"</span>, argv[i]);
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">int</span> <span class="org-variable-name">argc</span>, <span class="org-type">char</span>* <span class="org-variable-name">argv</span>[]) {
+  <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 1; i &lt; argc; ++i) {
+    printf(<span class="org-string">"%s\n"</span>, argv[i]);
   }
-  <span style="font-weight: bold;">return</span> 0;
+  <span class="org-keyword">return</span> 0;
 }
 </pre>
 </div>
@@ -542,8 +542,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-org6248862" class="outline-2">
-<h2 id="org6248862"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org2d09d1e" class="outline-2">
+<h2 id="org2d09d1e"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 所以说，我们平时说的正则表达式应该是原始字符串环境下的 PCRE，然后就是在需要转义的字符串环境下 PCRE。
@@ -559,8 +559,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-orgbcfd155" class="outline-2">
-<h2 id="orgbcfd155"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org362373c" class="outline-2">
+<h2 id="org362373c"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.4e00.com/blog/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">posix 正则表达式规范 bre 和 ere 简介</a></li>
