@@ -86,6 +86,41 @@ textarea {
  *                                 Custom styles
  ******************************************************************************/
 
+/* code highlight */
+.org-keyword {
+  color: #859900;
+}
+
+.org-type {
+  color: color: #268bd2;
+}
+
+.org-builtin {
+  color: #6c71c4;
+}
+
+.org-function-name {
+  color: #b58900;
+}
+
+.org-variable-name {
+  color: #6c71c4;
+}
+
+.org-string {
+  color: #2aa198;
+}
+
+.org-comment-delimiter {
+  font-style: italic;
+  color: #93a1a1;
+}
+
+.org-comment {
+  font-style: italic;
+  color: #93a1a1;
+}
+
 .todo, .done, .tag {
   font-family: "Source Pro", Monaco, "Courier New", monospace;
   background-color: #EEE;
@@ -153,6 +188,7 @@ pre {
   word-wrap: normal;
   font-size: 90%;
   padding: 8pt;
+  box-shadow: none !important;
   overflow: auto;
   white-space: pre;
 }
@@ -392,7 +428,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .outline-text-2 code, pre {
-  background-color: #EEE;
+  background-color: #f6f8fa;
 }
 
 #table-of-contents {
@@ -432,8 +468,8 @@ h1, h2, h3, h4, h5, h6 {
   /* Style adjustments for high resolution devices */
 }
 
-@media print {
-  * {
+@media print { 
+ * {
     /* Black prints faster. */
     text-shadow: none !important;
     color: #000 !important;
@@ -500,8 +536,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* large screen */
-@media screen and (min-width: 40rem) {
-  html {
+@media screen and (min-width: 40rem) { 
+ html {
     font-size: 100%;
   }
 
@@ -509,7 +545,7 @@ h1, h2, h3, h4, h5, h6 {
     /* required by z-index */
     display: block;
     position: relative;
-    background-color: #EEE;
+    background-color: #f6f8fa;
     width: 32%;
     min-width: 18em;
     padding: 1em;
