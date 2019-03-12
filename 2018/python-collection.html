@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 20:59 -->
+<!-- 2019-03-12 周二 13:44 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 容器</title>
@@ -246,47 +246,47 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge764233">1. 简介</a></li>
-<li><a href="#org6f49af4">2. Python2 &amp; Python3</a>
+<li><a href="#orgd5f93dc">1. 简介</a></li>
+<li><a href="#org5fff6f5">2. Python2 &amp; Python3</a>
 <ul>
-<li><a href="#orga5b0974">2.1. Counter</a>
+<li><a href="#org1217445">2.1. Counter</a>
 <ul>
-<li><a href="#org5842e9a">2.1.1. 方法</a></li>
+<li><a href="#org578ea7f">2.1.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#org2910b1c">2.2. deque</a>
+<li><a href="#orgd354009">2.2. deque</a>
 <ul>
-<li><a href="#org279362c">2.2.1. 方法</a></li>
-<li><a href="#org78e07ca">2.2.2. 属性</a></li>
+<li><a href="#orga0a4f42">2.2.1. 方法</a></li>
+<li><a href="#org87d9f17">2.2.2. 属性</a></li>
 </ul>
 </li>
-<li><a href="#orge3bc0db">2.3. defaultdict</a></li>
-<li><a href="#orgca68cc1">2.4. namedtuple</a></li>
-<li><a href="#orga51fa3c">2.5. OrderedDict</a>
+<li><a href="#orga690d1a">2.3. defaultdict</a></li>
+<li><a href="#org0501ded">2.4. namedtuple</a></li>
+<li><a href="#org4075f88">2.5. OrderedDict</a>
 <ul>
-<li><a href="#org50dd331">2.5.1. 方法</a></li>
+<li><a href="#org3cf6701">2.5.1. 方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org689f781">3. Python3</a>
+<li><a href="#orgba3ecaa">3. Python3</a>
 <ul>
-<li><a href="#org29bde8a">3.1. ChainMap</a>
+<li><a href="#org92e94fb">3.1. ChainMap</a>
 <ul>
-<li><a href="#org443a161">3.1.1. 方法</a></li>
-<li><a href="#orgfb46e3c">3.1.2. 属性</a></li>
+<li><a href="#org6eb2b1d">3.1.1. 方法</a></li>
+<li><a href="#org32e207c">3.1.2. 属性</a></li>
 </ul>
 </li>
-<li><a href="#org1bcf920">3.2. Other</a></li>
+<li><a href="#org5fe757d">3.2. Other</a></li>
 </ul>
 </li>
-<li><a href="#org1feb0e9">4. 相关链接</a></li>
+<li><a href="#org39a14e9">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge764233" class="outline-2">
-<h2 id="orge764233"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgd5f93dc" class="outline-2">
+<h2 id="orgd5f93dc"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 的内置模块 <code>collections</code> 提供了通用内置容器 <code>dict</code>, <code>list</code>, <code>set</code>, <code>tuple</code> 的替代方案。
@@ -302,12 +302,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6f49af4" class="outline-2">
-<h2 id="org6f49af4"><span class="section-number-2">2</span> Python2 &amp; Python3</h2>
+<div id="outline-container-org5fff6f5" class="outline-2">
+<h2 id="org5fff6f5"><span class="section-number-2">2</span> Python2 &amp; Python3</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga5b0974" class="outline-3">
-<h3 id="orga5b0974"><span class="section-number-3">2.1</span> Counter</h3>
+<div id="outline-container-org1217445" class="outline-3">
+<h3 id="org1217445"><span class="section-number-3">2.1</span> Counter</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Counter</code> 提供计数器以支持方便快捷的计数。
@@ -348,8 +348,8 @@ Counter({<span class="org-string">'boy'</span>: 1, <span class="org-string">'gir
 </div>
 </div>
 
-<div id="outline-container-org5842e9a" class="outline-4">
-<h4 id="org5842e9a"><span class="section-number-4">2.1.1</span> 方法</h4>
+<div id="outline-container-org578ea7f" class="outline-4">
+<h4 id="org578ea7f"><span class="section-number-4">2.1.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <dl class="org-dl">
 <dt>elements()</dt><dd><p>
@@ -424,8 +424,8 @@ Counter({<span class="org-string">'b'</span>: 4})
 </div>
 </div>
 
-<div id="outline-container-org2910b1c" class="outline-3">
-<h3 id="org2910b1c"><span class="section-number-3">2.2</span> deque</h3>
+<div id="outline-container-orgd354009" class="outline-3">
+<h3 id="orgd354009"><span class="section-number-3">2.2</span> deque</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>deque</code> 是提供快速追加和两端弹出的类列表容器。
@@ -452,8 +452,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-org279362c" class="outline-4">
-<h4 id="org279362c"><span class="section-number-4">2.2.1</span> 方法</h4>
+<div id="outline-container-orga0a4f42" class="outline-4">
+<h4 id="orga0a4f42"><span class="section-number-4">2.2.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <dl class="org-dl">
 <dt>append(x)</dt><dd>添加 <code>x</code> 到右端</dd>
@@ -494,8 +494,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-org78e07ca" class="outline-4">
-<h4 id="org78e07ca"><span class="section-number-4">2.2.2</span> 属性</h4>
+<div id="outline-container-org87d9f17" class="outline-4">
+<h4 id="org87d9f17"><span class="section-number-4">2.2.2</span> 属性</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <dl class="org-dl">
 <dt>maxlen</dt><dd>只读属性， 返回 <code>maxlen</code> 或 <code>None</code></dd>
@@ -504,8 +504,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-orge3bc0db" class="outline-3">
-<h3 id="orge3bc0db"><span class="section-number-3">2.3</span> defaultdict</h3>
+<div id="outline-container-orga690d1a" class="outline-3">
+<h3 id="orga690d1a"><span class="section-number-3">2.3</span> defaultdict</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>defaultdict</code> 是 <code>dict</code> 的一个子类， 覆盖了一个方法并添加了一个可写实例变量。
@@ -557,8 +557,8 @@ deque([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], maxlen=10)
 </div>
 </div>
 
-<div id="outline-container-orgca68cc1" class="outline-3">
-<h3 id="orgca68cc1"><span class="section-number-3">2.4</span> namedtuple</h3>
+<div id="outline-container-org0501ded" class="outline-3">
+<h3 id="org0501ded"><span class="section-number-3">2.4</span> namedtuple</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>namedtuple</code> 是用于创建具有命名字段的元组子类的工厂函数。
@@ -632,8 +632,8 @@ human(name=<span class="org-string">'***'</span>, age=<span class="org-string">'
 </div>
 </div>
 
-<div id="outline-container-orga51fa3c" class="outline-3">
-<h3 id="orga51fa3c"><span class="section-number-3">2.5</span> OrderedDict</h3>
+<div id="outline-container-org4075f88" class="outline-3">
+<h3 id="org4075f88"><span class="section-number-3">2.5</span> OrderedDict</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <code>OrderedDict</code> 和 <code>Dict</code> 不同的是， 它们会记住元素添加的顺序。
@@ -648,8 +648,8 @@ human(name=<span class="org-string">'***'</span>, age=<span class="org-string">'
 </p>
 </div>
 
-<div id="outline-container-org50dd331" class="outline-4">
-<h4 id="org50dd331"><span class="section-number-4">2.5.1</span> 方法</h4>
+<div id="outline-container-org3cf6701" class="outline-4">
+<h4 id="org3cf6701"><span class="section-number-4">2.5.1</span> 方法</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <dl class="org-dl">
 <dt>popitem(last=True)</dt><dd>如果 <code>last</code> 为 <code>True</code>, 返回最后的键值对。 如果 <code>last</code> 为 <code>False</code>, 返回最前的键值对</dd>
@@ -675,12 +675,12 @@ human(name=<span class="org-string">'***'</span>, age=<span class="org-string">'
 </div>
 </div>
 
-<div id="outline-container-org689f781" class="outline-2">
-<h2 id="org689f781"><span class="section-number-2">3</span> Python3</h2>
+<div id="outline-container-orgba3ecaa" class="outline-2">
+<h2 id="orgba3ecaa"><span class="section-number-2">3</span> Python3</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org29bde8a" class="outline-3">
-<h3 id="org29bde8a"><span class="section-number-3">3.1</span> ChainMap</h3>
+<div id="outline-container-org92e94fb" class="outline-3">
+<h3 id="org92e94fb"><span class="section-number-3">3.1</span> ChainMap</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>ChainMap</code> 可以将多个 <code>dict</code> 或其他映射组合在一起， 这比使用 <code>update</code> 来的快。
@@ -727,8 +727,8 @@ ChainMap({<span class="org-string">'m'</span>: 1}, {<span class="org-string">'t'
 </div>
 </div>
 
-<div id="outline-container-org443a161" class="outline-4">
-<h4 id="org443a161"><span class="section-number-4">3.1.1</span> 方法</h4>
+<div id="outline-container-org6eb2b1d" class="outline-4">
+<h4 id="org6eb2b1d"><span class="section-number-4">3.1.1</span> 方法</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <dl class="org-dl">
 <dt>new_child(m=None)</dt><dd><p>
@@ -752,8 +752,8 @@ ChainMap({<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string"
 </div>
 </div>
 
-<div id="outline-container-orgfb46e3c" class="outline-4">
-<h4 id="orgfb46e3c"><span class="section-number-4">3.1.2</span> 属性</h4>
+<div id="outline-container-org32e207c" class="outline-4">
+<h4 id="org32e207c"><span class="section-number-4">3.1.2</span> 属性</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <dl class="org-dl">
 <dt>maps</dt><dd><p>
@@ -772,8 +772,8 @@ ChainMap({<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string"
 </div>
 </div>
 
-<div id="outline-container-org1bcf920" class="outline-3">
-<h3 id="org1bcf920"><span class="section-number-3">3.2</span> Other</h3>
+<div id="outline-container-org5fe757d" class="outline-3">
+<h3 id="org5fe757d"><span class="section-number-3">3.2</span> Other</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 除了前面的， 还有三个容器： <code>UserDict</code>, <code>UserList</code>, <code>UserString</code>.
@@ -790,8 +790,8 @@ ChainMap({<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string"
 </div>
 </div>
 
-<div id="outline-container-org1feb0e9" class="outline-2">
-<h2 id="org1feb0e9"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org39a14e9" class="outline-2">
+<h2 id="org39a14e9"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/library/collections.html">Python2 collections</a></li>
@@ -801,7 +801,7 @@ ChainMap({<span class="org-string">'t'</span>: 4}, {}, {<span class="org-string"
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

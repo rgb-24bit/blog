@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 20:58 -->
+<!-- 2019-03-12 周二 13:44 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C 语言指针和数组</title>
@@ -246,22 +246,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc07d87a">1. 简介</a></li>
-<li><a href="#org8e94dac">2. 基本对象</a></li>
-<li><a href="#org67d2616">3. 指针的值</a></li>
-<li><a href="#org1814e27">4. 指针运算</a></li>
-<li><a href="#orga418808">5. 指针类型</a></li>
-<li><a href="#org4268ffa">6. 指针参数</a></li>
-<li><a href="#org91fb98b">7. 函数指针</a></li>
-<li><a href="#org6392247">8. 数组</a></li>
-<li><a href="#org1043e43">9. 指针数组和数组指针</a></li>
-<li><a href="#org157dad8">10. 参考链接</a></li>
+<li><a href="#orgbc3289d">1. 简介</a></li>
+<li><a href="#org59775b1">2. 基本对象</a></li>
+<li><a href="#org360eb85">3. 指针的值</a></li>
+<li><a href="#orgaebb815">4. 指针运算</a></li>
+<li><a href="#orgc2e2323">5. 指针类型</a></li>
+<li><a href="#org49c62dc">6. 指针参数</a></li>
+<li><a href="#org241884a">7. 函数指针</a></li>
+<li><a href="#org7c71b8a">8. 数组</a></li>
+<li><a href="#org0b23751">9. 指针数组和数组指针</a></li>
+<li><a href="#orgbb1eff3">10. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc07d87a" class="outline-2">
-<h2 id="orgc07d87a"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgbc3289d" class="outline-2">
+<h2 id="orgbc3289d"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 C 语言是一门很重要的语言， 即使你不会使用 C 语言进行程序开发， 但是学习了解
@@ -287,8 +287,8 @@ C 语言依然是一件很有必要的事情。
 </div>
 </div>
 
-<div id="outline-container-org8e94dac" class="outline-2">
-<h2 id="org8e94dac"><span class="section-number-2">2</span> 基本对象</h2>
+<div id="outline-container-org59775b1" class="outline-2">
+<h2 id="org59775b1"><span class="section-number-2">2</span> 基本对象</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 为了更好的理解 <b>指针和数组</b>, 需要引入两个基本对象：
@@ -300,8 +300,8 @@ C 语言依然是一件很有必要的事情。
 </div>
 </div>
 
-<div id="outline-container-org67d2616" class="outline-2">
-<h2 id="org67d2616"><span class="section-number-2">3</span> 指针的值</h2>
+<div id="outline-container-org360eb85" class="outline-2">
+<h2 id="org360eb85"><span class="section-number-2">3</span> 指针的值</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 学习指针的过程中， 一定要分清楚的两个值是： <b>指针地址</b> 和 <b>指针的值</b>.
@@ -329,8 +329,8 @@ C 语言依然是一件很有必要的事情。
 </div>
 </div>
 
-<div id="outline-container-org1814e27" class="outline-2">
-<h2 id="org1814e27"><span class="section-number-2">4</span> 指针运算</h2>
+<div id="outline-container-orgaebb815" class="outline-2">
+<h2 id="orgaebb815"><span class="section-number-2">4</span> 指针运算</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 和其他类型不同， 由于指针保存的值是 <b>内存地址</b>, 因此指针运算的直接操作对象就是 <b>内存地址</b>.
@@ -354,8 +354,8 @@ C 语言通过操作符 <code>&amp;</code> 和 <code>*</code> 来产生 <b>指�
 </div>
 </div>
 
-<div id="outline-container-orga418808" class="outline-2">
-<h2 id="orga418808"><span class="section-number-2">5</span> 指针类型</h2>
+<div id="outline-container-orgc2e2323" class="outline-2">
+<h2 id="orgc2e2323"><span class="section-number-2">5</span> 指针类型</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 由于所有的指针保存的值都是一个 <b>内存地址</b>, 因此所有指针变量的大小都是一样的， 等于操作系统的 <b>地址宽度</b>.
@@ -404,8 +404,8 @@ C 语言通过操作符 <code>&amp;</code> 和 <code>*</code> 来产生 <b>指�
 </div>
 </div>
 
-<div id="outline-container-org4268ffa" class="outline-2">
-<h2 id="org4268ffa"><span class="section-number-2">6</span> 指针参数</h2>
+<div id="outline-container-org49c62dc" class="outline-2">
+<h2 id="org49c62dc"><span class="section-number-2">6</span> 指针参数</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 当函数的参数是一个指针的时候， 传参时的行为和其他类型的变量 <b>没有区别</b>.
@@ -453,8 +453,8 @@ C 语言通过操作符 <code>&amp;</code> 和 <code>*</code> 来产生 <b>指�
 </div>
 </div>
 
-<div id="outline-container-org91fb98b" class="outline-2">
-<h2 id="org91fb98b"><span class="section-number-2">7</span> 函数指针</h2>
+<div id="outline-container-org241884a" class="outline-2">
+<h2 id="org241884a"><span class="section-number-2">7</span> 函数指针</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 如果你学过操作系统， 那么应该就知道， <b>函数</b> 只是内存中的一个 <b>指令块</b>.
@@ -506,8 +506,8 @@ C 语言中， <b>函数名</b> 相当于该 <b>指令块</b> 的首地址。
 </div>
 </div>
 
-<div id="outline-container-org6392247" class="outline-2">
-<h2 id="org6392247"><span class="section-number-2">8</span> 数组</h2>
+<div id="outline-container-org7c71b8a" class="outline-2">
+<h2 id="org7c71b8a"><span class="section-number-2">8</span> 数组</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 在 C 语言中， 数组和指针的关系密切， 主要原因就是 <b>数组名</b> 相当于指向数组第一个元素
@@ -567,8 +567,8 @@ C 语言中， <b>函数名</b> 相当于该 <b>指令块</b> 的首地址。
 </div>
 </div>
 
-<div id="outline-container-org1043e43" class="outline-2">
-<h2 id="org1043e43"><span class="section-number-2">9</span> 指针数组和数组指针</h2>
+<div id="outline-container-org0b23751" class="outline-2">
+<h2 id="org0b23751"><span class="section-number-2">9</span> 指针数组和数组指针</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 指针数组和数组指针是容易犯错的一个地方， 简单梳理一下：
@@ -604,8 +604,8 @@ C 语言中， <b>函数名</b> 相当于该 <b>指令块</b> 的首地址。
 </div>
 </div>
 
-<div id="outline-container-org157dad8" class="outline-2">
-<h2 id="org157dad8"><span class="section-number-2">10</span> 参考链接</h2>
+<div id="outline-container-orgbb1eff3" class="outline-2">
+<h2 id="orgbb1eff3"><span class="section-number-2">10</span> 参考链接</h2>
 <div class="outline-text-2" id="text-10">
 <ul class="org-ul">
 <li><a href="http://www.runoob.com/w3cnote/c-pointer-detail.html">C 指针详解</a></li>
@@ -615,7 +615,7 @@ C 语言中， <b>函数名</b> 相当于该 <b>指令块</b> 的首地址。
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

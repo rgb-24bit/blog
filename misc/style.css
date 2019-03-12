@@ -2,7 +2,7 @@
  *         My blog style base on https://github.com/ptpt/org-notes-style
  ******************************************************************************/
 
-@import "https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i|Source+Code+Pro|Source+Sans+Pro:700,700i";
+@import "https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:700,700i";
 
 /*******************************************************************************
  *                     Base styles: opinionated defaults
@@ -390,7 +390,7 @@ p.verse, blockquote {
 }
 
 body {
-  font-family: Lora, Palatino, Georgia, serif;
+  font-family: Monospace, Serif, sans-serif;
   background-color: #FFF;
   width: 92%;
   max-width: 1024px;

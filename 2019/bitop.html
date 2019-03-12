@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 21:00 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>通过位运算实现整数的加减乘除</title>
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgae07fc9">1. 前言</a></li>
-<li><a href="#org258d1dc">2. 加法实现</a></li>
-<li><a href="#org43226e6">3. 减法实现</a></li>
-<li><a href="#org9f04511">4. 乘法实现</a></li>
-<li><a href="#org9f2533e">5. 除法实现</a></li>
-<li><a href="#orgc1b8f7d">6. 求余实现</a></li>
-<li><a href="#org7e079f0">7. 结语</a></li>
-<li><a href="#orgb74fa56">8. 参考链接</a></li>
+<li><a href="#orgeae94bf">1. 前言</a></li>
+<li><a href="#org9970f0b">2. 加法实现</a></li>
+<li><a href="#org40573fb">3. 减法实现</a></li>
+<li><a href="#org113eec8">4. 乘法实现</a></li>
+<li><a href="#org61ed141">5. 除法实现</a></li>
+<li><a href="#orgcf522cc">6. 求余实现</a></li>
+<li><a href="#org0adef4a">7. 结语</a></li>
+<li><a href="#org90c39c6">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgae07fc9" class="outline-2">
-<h2 id="orgae07fc9"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgeae94bf" class="outline-2">
+<h2 id="orgeae94bf"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 很久以前就了解过怎样通过位运算实现整数的加减乘除，但是每次都只是大概的了解了一下加减法的实现。
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org258d1dc" class="outline-2">
-<h2 id="org258d1dc"><span class="section-number-2">2</span> 加法实现</h2>
+<div id="outline-container-org9970f0b" class="outline-2">
+<h2 id="org9970f0b"><span class="section-number-2">2</span> 加法实现</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 对于二进制的整数加法来说，我们需要让 <code>1</code> 和 <code>0</code> 的运算结果为 <code>1</code>, 而 <code>0</code> 和 <code>0</code> 的运算结果为 <code>0</code>,
@@ -317,8 +317,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-org43226e6" class="outline-2">
-<h2 id="org43226e6"><span class="section-number-2">3</span> 减法实现</h2>
+<div id="outline-container-org40573fb" class="outline-2">
+<h2 id="org40573fb"><span class="section-number-2">3</span> 减法实现</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 减去一个数其实就是加上那个数的相反数，我们可以通过如下方法得到一个数的相反数：
@@ -342,8 +342,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-org9f04511" class="outline-2">
-<h2 id="org9f04511"><span class="section-number-2">4</span> 乘法实现</h2>
+<div id="outline-container-org113eec8" class="outline-2">
+<h2 id="org113eec8"><span class="section-number-2">4</span> 乘法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 对于乘法来说，直接的实现就是通过很多次的加法来实现，简单粗暴：
@@ -442,8 +442,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-org9f2533e" class="outline-2">
-<h2 id="org9f2533e"><span class="section-number-2">5</span> 除法实现</h2>
+<div id="outline-container-org61ed141" class="outline-2">
+<h2 id="org61ed141"><span class="section-number-2">5</span> 除法实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 和乘法一样，我们可以通过不断的减法来实现除法，但是，同样的，我们可以借助数学技巧来获得更好的实现。
@@ -552,8 +552,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-orgc1b8f7d" class="outline-2">
-<h2 id="orgc1b8f7d"><span class="section-number-2">6</span> 求余实现</h2>
+<div id="outline-container-orgcf522cc" class="outline-2">
+<h2 id="orgcf522cc"><span class="section-number-2">6</span> 求余实现</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 实现了除法，求余也就差不多，直接把最后剩余的被除数返回就可以了：
@@ -582,8 +582,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-org7e079f0" class="outline-2">
-<h2 id="org7e079f0"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org0adef4a" class="outline-2">
+<h2 id="org0adef4a"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这里尝试了通过位运算实现整数的四则运算，假如你有兴趣的话，可以试一下浮点数的 @_@
@@ -605,8 +605,8 @@ C 语言实现：
 </div>
 </div>
 
-<div id="outline-container-orgb74fa56" class="outline-2">
-<h2 id="orgb74fa56"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org90c39c6" class="outline-2">
+<h2 id="org90c39c6"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://www.cnblogs.com/kiven-code/archive/2012/09/15/2686922.html">用基本位运算实现加减乘除 - kiven.li - 博客园</a></li>
@@ -617,7 +617,7 @@ C 语言实现：
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 20:59 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 日志模块</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4a63a9f">1. 前言</a></li>
-<li><a href="#orgd1e75e4">2. 简单的使用</a></li>
-<li><a href="#org8f054c4">3. 配置日志消息的格式</a></li>
-<li><a href="#org5112818">4. 同时输出到终端和文件</a></li>
-<li><a href="#orgc512c6a">5. 日志配置</a></li>
-<li><a href="#org3c4f840">6. 结语</a></li>
-<li><a href="#org3cb1cd1">7. 参考链接</a></li>
+<li><a href="#orgd072ab6">1. 前言</a></li>
+<li><a href="#orgdc1b579">2. 简单的使用</a></li>
+<li><a href="#orgc408065">3. 配置日志消息的格式</a></li>
+<li><a href="#org7bce4f7">4. 同时输出到终端和文件</a></li>
+<li><a href="#orgd666eb2">5. 日志配置</a></li>
+<li><a href="#org2e68254">6. 结语</a></li>
+<li><a href="#orgfc6319c">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4a63a9f" class="outline-2">
-<h2 id="org4a63a9f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd072ab6" class="outline-2">
+<h2 id="orgd072ab6"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟踪为耻</b>.
@@ -275,8 +275,8 @@ Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟
 </div>
 </div>
 
-<div id="outline-container-orgd1e75e4" class="outline-2">
-<h2 id="orgd1e75e4"><span class="section-number-2">2</span> 简单的使用</h2>
+<div id="outline-container-orgdc1b579" class="outline-2">
+<h2 id="orgdc1b579"><span class="section-number-2">2</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>logging</code> 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
@@ -395,8 +395,8 @@ root - DEBUG - This will get logged
 </div>
 </div>
 
-<div id="outline-container-org8f054c4" class="outline-2">
-<h2 id="org8f054c4"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
+<div id="outline-container-orgc408065" class="outline-2">
+<h2 id="orgc408065"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
@@ -438,8 +438,8 @@ logging.warning(<span class="org-string">'Admin logged out'</span>)
 </div>
 </div>
 
-<div id="outline-container-org5112818" class="outline-2">
-<h2 id="org5112818"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
+<div id="outline-container-org7bce4f7" class="outline-2">
+<h2 id="org7bce4f7"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
@@ -597,8 +597,8 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 </div>
 </div>
 
-<div id="outline-container-orgc512c6a" class="outline-2">
-<h2 id="orgc512c6a"><span class="section-number-2">5</span> 日志配置</h2>
+<div id="outline-container-orgd666eb2" class="outline-2">
+<h2 id="orgd666eb2"><span class="section-number-2">5</span> 日志配置</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 可以看到，创建和配置 <code>Logger</code> 的过程较为繁琐，因此 <code>Python</code> 为我们提供了 <code>logging.config</code> 模块来简化创建和配置 <code>Logger</code> 的过程。
@@ -737,8 +737,8 @@ logger.info(...)
 </div>
 </div>
 
-<div id="outline-container-org3c4f840" class="outline-2">
-<h2 id="org3c4f840"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org2e68254" class="outline-2">
+<h2 id="org2e68254"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 总感觉日志配置部分做了一些多于的事情 QAQ
@@ -758,8 +758,8 @@ Over !
 </div>
 </div>
 
-<div id="outline-container-org3cb1cd1" class="outline-2">
-<h2 id="org3cb1cd1"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgfc6319c" class="outline-2">
+<h2 id="orgfc6319c"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://realpython.com/python-logging/">Logging in Python - Real Python</a></li>
@@ -770,7 +770,7 @@ Over !
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

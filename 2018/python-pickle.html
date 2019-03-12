@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 21:00 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>使用 pickle 序列化 Python 对象</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org88fc80e">1. 前言</a></li>
-<li><a href="#org45f4af1">2. pickle 的简单使用</a></li>
-<li><a href="#org0e927fd">3. 可序列化的对象</a></li>
-<li><a href="#org7724689">4. pickle 和 json</a></li>
-<li><a href="#org8602d37">5. pickle 的使用技巧</a></li>
-<li><a href="#org336d514">6. 结语</a></li>
-<li><a href="#orgaff2cfe">7. 参考链接</a></li>
+<li><a href="#org1453e50">1. 前言</a></li>
+<li><a href="#orgd34977a">2. pickle 的简单使用</a></li>
+<li><a href="#org54ce07e">3. 可序列化的对象</a></li>
+<li><a href="#org502fdc7">4. pickle 和 json</a></li>
+<li><a href="#org993e55f">5. pickle 的使用技巧</a></li>
+<li><a href="#orgc42205a">6. 结语</a></li>
+<li><a href="#orgabc89c3">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org88fc80e" class="outline-2">
-<h2 id="org88fc80e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org1453e50" class="outline-2">
+<h2 id="org1453e50"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 很久以前就接触过和 <code>pickle</code> 相关的内容了，但是因为存在 <code>json</code> 的原因，就没有专门去了解学习相关的内容。
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org45f4af1" class="outline-2">
-<h2 id="org45f4af1"><span class="section-number-2">2</span> pickle 的简单使用</h2>
+<div id="outline-container-orgd34977a" class="outline-2">
+<h2 id="orgd34977a"><span class="section-number-2">2</span> pickle 的简单使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>pickle</code> 模块的使用很简单，接口和 <code>json</code> 差不多，如果有 <code>json</code> 模块的使用经验，那么 <code>pickle</code> 模块的上手无疑会简单很多。
@@ -335,8 +335,8 @@ obj.value:  233
 </div>
 </div>
 
-<div id="outline-container-org0e927fd" class="outline-2">
-<h2 id="org0e927fd"><span class="section-number-2">3</span> 可序列化的对象</h2>
+<div id="outline-container-org54ce07e" class="outline-2">
+<h2 id="org54ce07e"><span class="section-number-2">3</span> 可序列化的对象</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python</code> 中，绝大多数对象都可以 <b>直接</b> 用 <code>pickle</code> 完成序列化，包括自定义的类，具体的规则如下：
@@ -428,8 +428,8 @@ obj.value:  233
 </div>
 </div>
 
-<div id="outline-container-org7724689" class="outline-2">
-<h2 id="org7724689"><span class="section-number-2">4</span> pickle 和 json</h2>
+<div id="outline-container-org502fdc7" class="outline-2">
+<h2 id="org502fdc7"><span class="section-number-2">4</span> pickle 和 json</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 大多数时候，序列化一个 <code>Python</code> 对象我会选择 <code>json</code> 模块来完成，因为 <code>json</code> 格式更通用，更易读。
@@ -505,8 +505,8 @@ In [4]: %timeit <span class="org-variable-name">pickle_dump</span> = pickle.dump
 </div>
 </div>
 
-<div id="outline-container-org8602d37" class="outline-2">
-<h2 id="org8602d37"><span class="section-number-2">5</span> pickle 的使用技巧</h2>
+<div id="outline-container-org993e55f" class="outline-2">
+<h2 id="org993e55f"><span class="section-number-2">5</span> pickle 的使用技巧</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><p>
@@ -561,8 +561,8 @@ $  du -h dump_max.dat
 </div>
 </div>
 
-<div id="outline-container-org336d514" class="outline-2">
-<h2 id="org336d514"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgc42205a" class="outline-2">
+<h2 id="orgc42205a"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 测试的时候想创建一个够大的列表，直接顺手按了一串零，结果，电脑当场死机&#x2026;&#x2026;
@@ -578,8 +578,8 @@ $  du -h dump_max.dat
 </div>
 </div>
 
-<div id="outline-container-orgaff2cfe" class="outline-2">
-<h2 id="orgaff2cfe"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgabc89c3" class="outline-2">
+<h2 id="orgabc89c3"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/pickle.html">pickle — Python object serialization</a></li>
@@ -589,7 +589,7 @@ $  du -h dump_max.dat
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 21:00 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>正则表达式</title>
@@ -268,34 +268,34 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org75d4d5e">1. 简介</a></li>
-<li><a href="#org03a2ea6">2. 简单的匹配</a></li>
-<li><a href="#orgb9ffcef">3. 子表达式</a></li>
-<li><a href="#org25e517a">4. 回溯引用</a>
+<li><a href="#org9918d62">1. 简介</a></li>
+<li><a href="#org2b16661">2. 简单的匹配</a></li>
+<li><a href="#org4f064c5">3. 子表达式</a></li>
+<li><a href="#orgb0bf8be">4. 回溯引用</a>
 <ul>
-<li><a href="#org3fc4bdb">4.1. 回溯引用在替换操作中的使用</a></li>
+<li><a href="#orgc913b60">4.1. 回溯引用在替换操作中的使用</a></li>
 </ul>
 </li>
-<li><a href="#orgd102a13">5. 前后查找</a>
+<li><a href="#org38fe4f0">5. 前后查找</a>
 <ul>
-<li><a href="#org1298d20">5.1. 向前查找</a></li>
-<li><a href="#org878831a">5.2. 向后查找</a></li>
-<li><a href="#org3a2b11a">5.3. 对前后查找取非</a></li>
+<li><a href="#orge0024a6">5.1. 向前查找</a></li>
+<li><a href="#org0d22d52">5.2. 向后查找</a></li>
+<li><a href="#org939dcf6">5.3. 对前后查找取非</a></li>
 </ul>
 </li>
-<li><a href="#org391fd1d">6. 嵌入条件</a>
+<li><a href="#orgd76a3ed">6. 嵌入条件</a>
 <ul>
-<li><a href="#orgf9d5b9d">6.1. 回溯引用条件</a></li>
-<li><a href="#org63bc090">6.2. 前后查找条件</a></li>
+<li><a href="#org0f90fac">6.1. 回溯引用条件</a></li>
+<li><a href="#orgddb8a99">6.2. 前后查找条件</a></li>
 </ul>
 </li>
-<li><a href="#org0484b4b">7. 正则表达式在线测试</a></li>
+<li><a href="#orgc9183d4">7. 正则表达式在线测试</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org75d4d5e" class="outline-2">
-<h2 id="org75d4d5e"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org9918d62" class="outline-2">
+<h2 id="org9918d62"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 正则表达式(regular expression, 缩写regex) 是文本处理方面功能最强大的工具之一.
@@ -307,8 +307,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org03a2ea6" class="outline-2">
-<h2 id="org03a2ea6"><span class="section-number-2">2</span> 简单的匹配</h2>
+<div id="outline-container-org2b16661" class="outline-2">
+<h2 id="org2b16661"><span class="section-number-2">2</span> 简单的匹配</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 有时, 简单的组合正则表达式的 <b>元字符</b> 和 <b>纯文本</b> 便足够解决很多问题.
@@ -685,8 +685,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb9ffcef" class="outline-2">
-<h2 id="orgb9ffcef"><span class="section-number-2">3</span> 子表达式</h2>
+<div id="outline-container-org4f064c5" class="outline-2">
+<h2 id="org4f064c5"><span class="section-number-2">3</span> 子表达式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 子表达式可以对表达式进行 <b>分组</b> 和 <b>归类</b>.
@@ -749,8 +749,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-org25e517a" class="outline-2">
-<h2 id="org25e517a"><span class="section-number-2">4</span> 回溯引用</h2>
+<div id="outline-container-orgb0bf8be" class="outline-2">
+<h2 id="orgb0bf8be"><span class="section-number-2">4</span> 回溯引用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>回溯引用</b> 允许正则表达式模式引用前面部分中定义的 <b>子表达式</b> 匹配的 <b>结果</b>.
@@ -786,8 +786,8 @@ The ip address is: [12.159.46.200]
 </p>
 </div>
 
-<div id="outline-container-org3fc4bdb" class="outline-3">
-<h3 id="org3fc4bdb"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
+<div id="outline-container-orgc913b60" class="outline-3">
+<h3 id="orgc913b60"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 你可以在替换时引用匹配时使用的子表达式.
@@ -908,8 +908,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-orgd102a13" class="outline-2">
-<h2 id="orgd102a13"><span class="section-number-2">5</span> 前后查找</h2>
+<div id="outline-container-org38fe4f0" class="outline-2">
+<h2 id="org38fe4f0"><span class="section-number-2">5</span> 前后查找</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 使用正则表达式标记要匹配的文本的位置, 对该位置的前后内容进行查找.
@@ -925,8 +925,8 @@ The ip address is: [12.159.46.200]
 </p>
 </div>
 
-<div id="outline-container-org1298d20" class="outline-3">
-<h3 id="org1298d20"><span class="section-number-3">5.1</span> 向前查找</h3>
+<div id="outline-container-orge0024a6" class="outline-3">
+<h3 id="orge0024a6"><span class="section-number-3">5.1</span> 向前查找</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 向前查找指定了一个必须匹配但不在结果中返回的模式.
@@ -964,8 +964,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org878831a" class="outline-3">
-<h3 id="org878831a"><span class="section-number-3">5.2</span> 向后查找</h3>
+<div id="outline-container-org0d22d52" class="outline-3">
+<h3 id="org0d22d52"><span class="section-number-3">5.2</span> 向后查找</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 向后查找类似于向前查找, 操作符是: <code>?&lt;=</code>
@@ -981,8 +981,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org3a2b11a" class="outline-3">
-<h3 id="org3a2b11a"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
+<div id="outline-container-org939dcf6" class="outline-3">
+<h3 id="org939dcf6"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 前面两种查找方式为: <code>正向前查找</code> 和 <code>正向后查找</code>.
@@ -1008,8 +1008,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org391fd1d" class="outline-2">
-<h2 id="org391fd1d"><span class="section-number-2">6</span> 嵌入条件</h2>
+<div id="outline-container-orgd76a3ed" class="outline-2">
+<h2 id="orgd76a3ed"><span class="section-number-2">6</span> 嵌入条件</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>注</b>: 并非所有正则表达式实现都支持条件处理.
@@ -1028,8 +1028,8 @@ ftp
 </ul>
 </div>
 
-<div id="outline-container-orgf9d5b9d" class="outline-3">
-<h3 id="orgf9d5b9d"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
+<div id="outline-container-org0f90fac" class="outline-3">
+<h3 id="org0f90fac"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 回溯引用条件只在前面的子表达式匹配取得成功的情况下才允许使用一个表达式.
@@ -1059,8 +1059,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org63bc090" class="outline-3">
-<h3 id="org63bc090"><span class="section-number-3">6.2</span> 前后查找条件</h3>
+<div id="outline-container-orgddb8a99" class="outline-3">
+<h3 id="orgddb8a99"><span class="section-number-3">6.2</span> 前后查找条件</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 前后查找条件只在一个向前查找或一个向后查找取得成功的情况下才允许使用一个表达式.
@@ -1078,8 +1078,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org0484b4b" class="outline-2">
-<h2 id="org0484b4b"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
+<div id="outline-container-orgc9183d4" class="outline-2">
+<h2 id="orgc9183d4"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://c.runoob.com/front-end/854">正则表达式在线测试|菜鸟教程</a></li>
@@ -1088,7 +1088,7 @@ ftp
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

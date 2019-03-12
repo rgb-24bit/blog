@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 21:00 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python urllib</title>
@@ -246,24 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc5152bb">1. 前言</a></li>
-<li><a href="#orgb47ca37">2. Python2</a>
+<li><a href="#orgd3a1f1f">1. 前言</a></li>
+<li><a href="#org7764e0d">2. Python2</a>
 <ul>
-<li><a href="#org5b434e4">2.1. 获取资源</a></li>
-<li><a href="#org3350e25">2.2. 发送数据</a></li>
-<li><a href="#orgcf08091">2.3. 用户代理</a></li>
-<li><a href="#orge958146">2.4. 异常处理</a></li>
-<li><a href="#org12f8355">2.5. 超时设置</a></li>
+<li><a href="#org2908f5e">2.1. 获取资源</a></li>
+<li><a href="#orgdf947ce">2.2. 发送数据</a></li>
+<li><a href="#org80b7cc8">2.3. 用户代理</a></li>
+<li><a href="#orgad0d80f">2.4. 异常处理</a></li>
+<li><a href="#org6205dfa">2.5. 超时设置</a></li>
 </ul>
 </li>
-<li><a href="#orgf7b1d3c">3. Python3</a></li>
-<li><a href="#org18e5e99">4. 相关链接</a></li>
+<li><a href="#org57a9212">3. Python3</a></li>
+<li><a href="#orgbfaedf0">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc5152bb" class="outline-2">
-<h2 id="orgc5152bb"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd3a1f1f" class="outline-2">
+<h2 id="orgd3a1f1f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客之前是发过的，当时由于太过求全，添加了不少自己不太明白的内容，
@@ -281,16 +281,16 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb47ca37" class="outline-2">
-<h2 id="orgb47ca37"><span class="section-number-2">2</span> Python2</h2>
+<div id="outline-container-org7764e0d" class="outline-2">
+<h2 id="org7764e0d"><span class="section-number-2">2</span> Python2</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 这篇博客的内容以 <code>Python2</code> 为基础， <code>Python3</code> 为补充。
 </p>
 </div>
 
-<div id="outline-container-org5b434e4" class="outline-3">
-<h3 id="org5b434e4"><span class="section-number-3">2.1</span> 获取资源</h3>
+<div id="outline-container-org2908f5e" class="outline-3">
+<h3 id="org2908f5e"><span class="section-number-3">2.1</span> 获取资源</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Python2</code> 中的 <code>urllib</code> 库分为 <code>urllib</code> 和 <code>urllib2</code>, 两者都可以用于获取 <code>URL</code> 资源， 
@@ -327,8 +327,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3350e25" class="outline-3">
-<h3 id="org3350e25"><span class="section-number-3">2.2</span> 发送数据</h3>
+<div id="outline-container-orgdf947ce" class="outline-3">
+<h3 id="orgdf947ce"><span class="section-number-3">2.2</span> 发送数据</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 我们可以使用 <code>POST</code> 请求向服务器发送一些数据，数据在发送之前，需要以标准方式进行编码。
@@ -398,8 +398,8 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 </div>
 </div>
 
-<div id="outline-container-orgcf08091" class="outline-3">
-<h3 id="orgcf08091"><span class="section-number-3">2.3</span> 用户代理</h3>
+<div id="outline-container-org80b7cc8" class="outline-3">
+<h3 id="org80b7cc8"><span class="section-number-3">2.3</span> 用户代理</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器
@@ -452,8 +452,8 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-orge958146" class="outline-3">
-<h3 id="orge958146"><span class="section-number-3">2.4</span> 异常处理</h3>
+<div id="outline-container-orgad0d80f" class="outline-3">
+<h3 id="orgad0d80f"><span class="section-number-3">2.4</span> 异常处理</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <i>urlopen</i> 在不能处理响应的时候会抛出错误 <code>URLError</code>.
@@ -588,8 +588,8 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-org12f8355" class="outline-3">
-<h3 id="org12f8355"><span class="section-number-3">2.5</span> 超时设置</h3>
+<div id="outline-container-org6205dfa" class="outline-3">
+<h3 id="org6205dfa"><span class="section-number-3">2.5</span> 超时设置</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <code>urllib</code> 依赖于 <code>socket</code>, 因此可以通过 <code>socket</code> 来设置超时时间：
@@ -612,8 +612,8 @@ socket.setdefaulttimeout(timeout)
 </div>
 </div>
 
-<div id="outline-container-orgf7b1d3c" class="outline-2">
-<h2 id="orgf7b1d3c"><span class="section-number-2">3</span> Python3</h2>
+<div id="outline-container-org57a9212" class="outline-2">
+<h2 id="org57a9212"><span class="section-number-2">3</span> Python3</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们都知道 <code>Python3</code> 和 <code>Python2</code> 不兼容。 对于 <code>urllib</code> 来说更是如此。
@@ -672,8 +672,8 @@ socket.setdefaulttimeout(timeout)
 </div>
 </div>
 
-<div id="outline-container-org18e5e99" class="outline-2">
-<h2 id="org18e5e99"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-orgbfaedf0" class="outline-2">
+<h2 id="orgbfaedf0"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/howto/urllib2.html">HOWTO Fetch Internet Resources Using urllib2</a></li>
@@ -683,7 +683,7 @@ socket.setdefaulttimeout(timeout)
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

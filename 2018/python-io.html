@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 20:59 -->
+<!-- 2019-03-12 周二 13:44 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python I/O</title>
@@ -246,30 +246,30 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfb1e8f2">1. 简介</a></li>
-<li><a href="#org0fe5ec3">2. I/O 类型</a></li>
-<li><a href="#org95e2a74">3. Base Class</a>
+<li><a href="#org55f21e0">1. 简介</a></li>
+<li><a href="#org6386956">2. I/O 类型</a></li>
+<li><a href="#org4f4c7e3">3. Base Class</a>
 <ul>
-<li><a href="#orgaede8cf">3.1. IOBase</a></li>
-<li><a href="#orgf4ac559">3.2. RawIOBase</a></li>
-<li><a href="#orgf3743a1">3.3. BufferedIOBase</a></li>
-<li><a href="#org1e86922">3.4. TextIOBase</a></li>
+<li><a href="#org4fac828">3.1. IOBase</a></li>
+<li><a href="#org1a0a38c">3.2. RawIOBase</a></li>
+<li><a href="#org13557e1">3.3. BufferedIOBase</a></li>
+<li><a href="#org7ab076d">3.4. TextIOBase</a></li>
 </ul>
 </li>
-<li><a href="#org0d65ead">4. 具体实现</a>
+<li><a href="#orgfd24639">4. 具体实现</a>
 <ul>
-<li><a href="#org19e8d70">4.1. BytesIO</a></li>
-<li><a href="#orgda08bb8">4.2. StringIO</a></li>
-<li><a href="#orgaa01388">4.3. TextIOWrapper</a></li>
+<li><a href="#org5256d61">4.1. BytesIO</a></li>
+<li><a href="#org7160fb3">4.2. StringIO</a></li>
+<li><a href="#orga9618db">4.3. TextIOWrapper</a></li>
 </ul>
 </li>
-<li><a href="#org07e190e">5. 相关链接</a></li>
+<li><a href="#orge7809be">5. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfb1e8f2" class="outline-2">
-<h2 id="orgfb1e8f2"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org55f21e0" class="outline-2">
+<h2 id="org55f21e0"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python I/O</code> 操作主要由模块 <code>io</code> 提供支持，在 <code>Python3</code> 中，内置函数 <code>open</code> 甚至就是 <code>io.open</code> 的别名。
@@ -281,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0fe5ec3" class="outline-2">
-<h2 id="org0fe5ec3"><span class="section-number-2">2</span> I/O 类型</h2>
+<div id="outline-container-org6386956" class="outline-2">
+<h2 id="org6386956"><span class="section-number-2">2</span> I/O 类型</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>I/O</code> 主要有三种类型，分别为：
@@ -329,8 +329,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org95e2a74" class="outline-2">
-<h2 id="org95e2a74"><span class="section-number-2">3</span> Base Class</h2>
+<div id="outline-container-org4f4c7e3" class="outline-2">
+<h2 id="org4f4c7e3"><span class="section-number-2">3</span> Base Class</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>io</code> 模块通过类的层次结构实现这些 <code>I/O</code> 类型，最基本的四个类为： <code>IOBase</code>, <code>RawIOBase</code>, <code>BufferedIOBase</code>
@@ -395,8 +395,8 @@ for the JavaScript code in this tag.
 </table>
 </div>
 
-<div id="outline-container-orgaede8cf" class="outline-3">
-<h3 id="orgaede8cf"><span class="section-number-3">3.1</span> IOBase</h3>
+<div id="outline-container-org4fac828" class="outline-3">
+<h3 id="org4fac828"><span class="section-number-3">3.1</span> IOBase</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>IOBase</code> 是所有 <code>I/O</code> 类的抽象基类，作用于字节流。我们不直接使用这个类，但可以了解这个类的字段和方法。
@@ -513,8 +513,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf4ac559" class="outline-3">
-<h3 id="orgf4ac559"><span class="section-number-3">3.2</span> RawIOBase</h3>
+<div id="outline-container-org1a0a38c" class="outline-3">
+<h3 id="org1a0a38c"><span class="section-number-3">3.2</span> RawIOBase</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <code>RawIOBase</code> 继承了 <code>IOBase</code>, 因此拥有 <code>IOBase</code> 的所有字段和方法，除此以外还提供一下方法：
@@ -567,8 +567,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf3743a1" class="outline-3">
-<h3 id="orgf3743a1"><span class="section-number-3">3.3</span> BufferedIOBase</h3>
+<div id="outline-container-org13557e1" class="outline-3">
+<h3 id="org13557e1"><span class="section-number-3">3.3</span> BufferedIOBase</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>BufferedIOBase</code> 同样继承自 <code>IOBase</code>, 是支持某种缓冲的二进制流的基类。
@@ -629,8 +629,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1e86922" class="outline-3">
-<h3 id="org1e86922"><span class="section-number-3">3.4</span> TextIOBase</h3>
+<div id="outline-container-org7ab076d" class="outline-3">
+<h3 id="org7ab076d"><span class="section-number-3">3.4</span> TextIOBase</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <code>TextIOBase</code> 支持的是 <b>字符流</b>, 方法和字段如下：
@@ -706,8 +706,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0d65ead" class="outline-2">
-<h2 id="org0d65ead"><span class="section-number-2">4</span> 具体实现</h2>
+<div id="outline-container-orgfd24639" class="outline-2">
+<h2 id="orgfd24639"><span class="section-number-2">4</span> 具体实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这三种 <code>I/O</code> 的具体实现还是不少的，这里不可能一一列举说明。但还是可以从源码了解具体实现有哪些：
@@ -748,8 +748,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org19e8d70" class="outline-3">
-<h3 id="org19e8d70"><span class="section-number-3">4.1</span> BytesIO</h3>
+<div id="outline-container-org5256d61" class="outline-3">
+<h3 id="org5256d61"><span class="section-number-3">4.1</span> BytesIO</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <code>BytesIO</code> 是 <code>BufferedIOBase</code> 的实现，除了继承自 <code>BufferedIOBase</code> 的内容外，还有：
@@ -777,8 +777,8 @@ b<span class="org-string">'ab56ef'</span>
 </div>
 </div>
 
-<div id="outline-container-orgda08bb8" class="outline-3">
-<h3 id="orgda08bb8"><span class="section-number-3">4.2</span> StringIO</h3>
+<div id="outline-container-org7160fb3" class="outline-3">
+<h3 id="org7160fb3"><span class="section-number-3">4.2</span> StringIO</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>StringIO</code> 是 <code>TextIOBase</code> 的实现，你可想操作文件那样操作它，它的方法 <code>getvalue</code> 会返回包含
@@ -807,8 +807,8 @@ output.close()
 </div>
 </div>
 
-<div id="outline-container-orgaa01388" class="outline-3">
-<h3 id="orgaa01388"><span class="section-number-3">4.3</span> TextIOWrapper</h3>
+<div id="outline-container-orga9618db" class="outline-3">
+<h3 id="orga9618db"><span class="section-number-3">4.3</span> TextIOWrapper</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 <code>TextIOWrapper</code> 是一个很重要的对象，平时我们通过 <code>open('xxx')</code> 获得就是这个对象。
@@ -842,8 +842,8 @@ output.close()
 </div>
 </div>
 
-<div id="outline-container-org07e190e" class="outline-2">
-<h2 id="org07e190e"><span class="section-number-2">5</span> 相关链接</h2>
+<div id="outline-container-orge7809be" class="outline-2">
+<h2 id="orge7809be"><span class="section-number-2">5</span> 相关链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/io.html">io — Core tools for working with streams</a></li>
@@ -853,7 +853,7 @@ output.close()
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

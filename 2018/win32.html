@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 21:00 -->
+<!-- 2019-03-12 周二 13:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Win32 API 窗口程序</title>
@@ -246,28 +246,28 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9292664">1. 前言</a></li>
-<li><a href="#org919e747">2. 基本内容</a>
+<li><a href="#orgd33aadd">1. 前言</a></li>
+<li><a href="#org7faa713">2. 基本内容</a>
 <ul>
-<li><a href="#orgb42ba06">2.1. 类型定义</a></li>
-<li><a href="#orga88f7e0">2.2. 匈牙利命名法</a></li>
-<li><a href="#orgb824fd6">2.3. 使用字符串</a></li>
-<li><a href="#org8c76c62">2.4. 应用程序入口: WinMain</a></li>
-<li><a href="#orgc4a2f90">2.5. 关于句柄</a></li>
+<li><a href="#org786d2fb">2.1. 类型定义</a></li>
+<li><a href="#orge05c987">2.2. 匈牙利命名法</a></li>
+<li><a href="#orgb06a007">2.3. 使用字符串</a></li>
+<li><a href="#orgc06a365">2.4. 应用程序入口: WinMain</a></li>
+<li><a href="#orgb58afd1">2.5. 关于句柄</a></li>
 </ul>
 </li>
-<li><a href="#org1f8e2a2">3. 简单的窗口程序</a>
+<li><a href="#org42cb4ce">3. 简单的窗口程序</a>
 <ul>
-<li><a href="#org10801cf">3.1. 代码理解</a></li>
+<li><a href="#orgca57169">3.1. 代码理解</a></li>
 </ul>
 </li>
-<li><a href="#org22676ee">4. 参考链接</a></li>
+<li><a href="#org5996c2c">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9292664" class="outline-2">
-<h2 id="org9292664"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd33aadd" class="outline-2">
+<h2 id="orgd33aadd"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 之前因为一些原因放弃了学习 <code>Win32 API</code> 来编写图形程序， 虽然还是不打算深入学习
@@ -276,12 +276,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org919e747" class="outline-2">
-<h2 id="org919e747"><span class="section-number-2">2</span> 基本内容</h2>
+<div id="outline-container-org7faa713" class="outline-2">
+<h2 id="org7faa713"><span class="section-number-2">2</span> 基本内容</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgb42ba06" class="outline-3">
-<h3 id="orgb42ba06"><span class="section-number-3">2.1</span> 类型定义</h3>
+<div id="outline-container-org786d2fb" class="outline-3">
+<h3 id="org786d2fb"><span class="section-number-3">2.1</span> 类型定义</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Win32 API</code> 预先定义了一些类型， 编写程序之前了解这些是很有必要的。
@@ -425,8 +425,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga88f7e0" class="outline-3">
-<h3 id="orga88f7e0"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
+<div id="outline-container-orge05c987" class="outline-3">
+<h3 id="orge05c987"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Win32 API</code> 中采用 <a href="https://zh.wikipedia.org/wiki/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95">匈牙利命名法</a>, 每个变量名由一个或多个小写字母开始。 这些字母有助于记忆变量的类型和用途。
@@ -440,8 +440,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb824fd6" class="outline-3">
-<h3 id="orgb824fd6"><span class="section-number-3">2.3</span> 使用字符串</h3>
+<div id="outline-container-orgb06a007" class="outline-3">
+<h3 id="orgb06a007"><span class="section-number-3">2.3</span> 使用字符串</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>Windows</code> 系统的使用者遍布全世界， 仅仅使用 <code>ANSI</code> 字符是满足不了需求的。
@@ -592,8 +592,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-org8c76c62" class="outline-3">
-<h3 id="org8c76c62"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
+<div id="outline-container-orgc06a365" class="outline-3">
+<h3 id="orgc06a365"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>C</code> 语言的入口函数是 <code>main</code>, 而 <code>Win32 Api</code> 程序的入口函数应该是 <code>WinMain</code>.
@@ -619,8 +619,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-orgc4a2f90" class="outline-3">
-<h3 id="orgc4a2f90"><span class="section-number-3">2.5</span> 关于句柄</h3>
+<div id="outline-container-orgb58afd1" class="outline-3">
+<h3 id="orgb58afd1"><span class="section-number-3">2.5</span> 关于句柄</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <b>句柄</b> 在 <code>Windows</code> 中应该是一个比较重要的概念， 当初在学习的时候把我绕了一圈还晕乎乎的。
@@ -651,8 +651,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-org1f8e2a2" class="outline-2">
-<h2 id="org1f8e2a2"><span class="section-number-2">3</span> 简单的窗口程序</h2>
+<div id="outline-container-org42cb4ce" class="outline-2">
+<h2 id="org42cb4ce"><span class="section-number-2">3</span> 简单的窗口程序</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;windows.h&gt;</span>
@@ -763,8 +763,8 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </p>
 </div>
 
-<div id="outline-container-org10801cf" class="outline-3">
-<h3 id="org10801cf"><span class="section-number-3">3.1</span> 代码理解</h3>
+<div id="outline-container-orgca57169" class="outline-3">
+<h3 id="orgca57169"><span class="section-number-3">3.1</span> 代码理解</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 虽然是一个简单的窗口程序， 但是 <code>Win32</code> 窗口程序的基本框架和这个程序是基本相同的， 基本流程就是：
@@ -838,8 +838,8 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </div>
 </div>
 
-<div id="outline-container-org22676ee" class="outline-2">
-<h2 id="org22676ee"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org5996c2c" class="outline-2">
+<h2 id="org5996c2c"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://msdn.microsoft.com/library/windows/desktop/bg126470.aspx?f=255&amp;MSPPError=-2147217396">Desktop Programming</a></li>
@@ -849,7 +849,7 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';

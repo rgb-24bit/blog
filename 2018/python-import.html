@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-11 周一 20:59 -->
+<!-- 2019-03-12 周二 13:44 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 导入相关</title>
@@ -246,24 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga0b4e04">1. 简介</a></li>
-<li><a href="#org897bfec">2. import 语法</a></li>
-<li><a href="#orgd59f188">3. 相对导入和绝对导入</a>
+<li><a href="#org1a766a0">1. 简介</a></li>
+<li><a href="#orgc78183b">2. import 语法</a></li>
+<li><a href="#orgde8b1de">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#orgd7019ce">3.1. 相对导入</a></li>
-<li><a href="#orga838c87">3.2. 绝对导入</a></li>
+<li><a href="#orge6aca95">3.1. 相对导入</a></li>
+<li><a href="#org0dba7d2">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#orge60b243">4. 同名的包和模块</a></li>
-<li><a href="#org8e29486">5. 执行一次导入后</a></li>
-<li><a href="#orgee3775d">6. 其他使用细节</a></li>
-<li><a href="#orgd43fb6b">7. 参考链接</a></li>
+<li><a href="#org4347ee0">4. 同名的包和模块</a></li>
+<li><a href="#orga85bbe0">5. 执行一次导入后</a></li>
+<li><a href="#orga57b200">6. 其他使用细节</a></li>
+<li><a href="#org712e507">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga0b4e04" class="outline-2">
-<h2 id="orga0b4e04"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org1a766a0" class="outline-2">
+<h2 id="org1a766a0"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
@@ -284,8 +284,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org897bfec" class="outline-2">
-<h2 id="org897bfec"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-orgc78183b" class="outline-2">
+<h2 id="orgc78183b"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -316,12 +316,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd59f188" class="outline-2">
-<h2 id="orgd59f188"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-orgde8b1de" class="outline-2">
+<h2 id="orgde8b1de"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd7019ce" class="outline-3">
-<h3 id="orgd7019ce"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-orge6aca95" class="outline-3">
+<h3 id="orge6aca95"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -350,8 +350,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga838c87" class="outline-3">
-<h3 id="orga838c87"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org0dba7d2" class="outline-3">
+<h3 id="org0dba7d2"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -548,8 +548,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-orge60b243" class="outline-2">
-<h2 id="orge60b243"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org4347ee0" class="outline-2">
+<h2 id="org4347ee0"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -631,8 +631,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org8e29486" class="outline-2">
-<h2 id="org8e29486"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-orga85bbe0" class="outline-2">
+<h2 id="orga85bbe0"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -678,8 +678,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgee3775d" class="outline-2">
-<h2 id="orgee3775d"><span class="section-number-2">6</span> 其他使用细节</h2>
+<div id="outline-container-orga57b200" class="outline-2">
+<h2 id="orga57b200"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -712,8 +712,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgd43fb6b" class="outline-2">
-<h2 id="orgd43fb6b"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org712e507" class="outline-2">
+<h2 id="org712e507"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>
@@ -723,7 +723,7 @@ pkg/
 </div>
 </div>
 <div id="postamble" class="status">
-版权声明:自由转载-非商用-非衍生-保持署名(<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>)
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'rgb-24bit';
