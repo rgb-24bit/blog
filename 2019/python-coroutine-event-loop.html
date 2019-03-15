@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-03-15 周五 21:17 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 协程和事件循环</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Python 协程和事件循环</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org458dd03">1. 前言</a></li>
+<li><a href="#org6138322">2. 协程</a></li>
+<li><a href="#org73393f4">3. async &amp; await</a></li>
+<li><a href="#org38c7c6e">4. 事件循环</a></li>
+<li><a href="#orgb49cab0">5. asyncio 的事件循环</a></li>
+<li><a href="#orgd219457">6. 结语</a></li>
+<li><a href="#orgd760b36">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org458dd03" class="outline-2">
+<h2 id="org458dd03"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Python 标准库 <code>asyncio</code> 是我目前接触过的最难理解的 Python 库，它的实现使用了太多我不太熟悉的东西：协程、事件循环、多路 I/O 复用……
+</p>
+
+<p>
+我对这些概念的认识基本都是停留在知道有这么个东西，大概有什么用上，当真的遇到这些东西的使用的时候，就抓了瞎。
+</p>
+
+<p>
+然而，运气很好的是，随着协程使用的普及（不只是 Python），现在可以在网上找到很多相关的文章，借助这些文章，我终于大致明白了这个库背后的部分工作原理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6138322" class="outline-2">
+<h2 id="org6138322"><span class="section-number-2">2</span> 协程</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+首先需要明白的是，协程不是 Python 独有的功能，因为协程通常是在 <b>语言</b> 层面上实现的功能，因此，只要有需要，各个语言都有可能实现这一功能。
+</p>
+
+<p>
+而在 Python 中，协程虽然是借助 <b>生成器</b> 实现的（有关生成器的介绍可以看这篇博客：<a href="file:///e:/blog/2018/python-generator.html">Python 生成器</a>），但是在使用时一定要分清这两个概念。
+</p>
+
+<p>
+引用 <a href="http://www.dabeaz.com/">David Beazley</a> 在 PyCon 2009 的课程 <a href="http://www.dabeaz.com/coroutines/index.html">A Curious Course on Coroutines and Concurrency</a> 中的观点来说的话就是：
+</p>
+<ul class="org-ul">
+<li>生成器生产数据而协程消费数据，同时，协程和迭代无关</li>
+</ul>
+
+<p>
+举例来说，下面这段代码可以创建用于匹配包含指定 <code>pattern</code> 的句子的协程：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">grep</span>(pattern):
+    <span class="org-keyword">print</span>(<span class="org-string">"Looking for %s"</span> % pattern)
+    <span class="org-keyword">while</span> <span class="org-constant">True</span>:
+        <span class="org-variable-name">line</span> = <span class="org-keyword">yield</span>
+        <span class="org-keyword">if</span> pattern <span class="org-keyword">in</span> line:
+            <span class="org-keyword">print</span>(line)
+</pre>
+</div>
+
+<p>
+代码的执行测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">g</span> = grep(<span class="org-string">"python"</span>)
+&gt;&gt;&gt; <span class="org-builtin">next</span>(g)
+Looking <span class="org-keyword">for</span> python
+&gt;&gt;&gt; g.send(<span class="org-string">"Yeah, but no, but yeah, but no"</span>)
+&gt;&gt;&gt; g.send(<span class="org-string">"A series of tubes"</span>)
+&gt;&gt;&gt; g.send(<span class="org-string">"python generators rock!"</span>)
+python generators rock!
+</pre>
+</div>
+
+<p>
+可以看到，使用协程时我们并不关心协程的返回值，而是不断的向协程传输数据进行处理。
+</p>
+
+<p>
+PS：假如你不理解这段代码，可以先看看有关于 <a href="file:///e:/blog/2018/python-generator.html#MissingReference">生成器对象</a> 的内容
+</p>
+</div>
+</div>
+
+<div id="outline-container-org73393f4" class="outline-2">
+<h2 id="org73393f4"><span class="section-number-2">3</span> async &amp; await</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+在 Python 中调用协程对象<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>的 <code>send()</code> 方法时，第一次调用必须使用参数 <code>None</code>, 这使得协程的使用变得十分麻烦。
+</p>
+
+<p>
+因此，我们可以借助 Python 自身的特性来避免这一问题，比如，创建一个装饰器：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">coroutine</span>(func):
+    <span class="org-keyword">def</span> <span class="org-function-name">start</span>(*args, **kwargs):
+        <span class="org-variable-name">cr</span> = func(*args, **kwargs)
+        cr.send(<span class="org-constant">None</span>)
+        <span class="org-keyword">return</span> cr
+    <span class="org-keyword">return</span> start
+</pre>
+</div>
+
+<p>
+当我们用这个装饰器装饰协程时，每次创建新的协程对象它就会自己帮我们调用 <code>send(None)</code>, 由于这个装饰器使用的很频繁，因此，
+从 Python3.5 开始，这个装饰器就演变为了关键字 <code>async</code>.
+</p>
+
+<p>
+对于关键字 <code>await</code> 来说，我们可以把它看做 <code>yield from</code> 的替代，而 <code>yield from</code> 的作用大致和下面的循环相同：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">yield</span> <span class="org-keyword">from</span> iterator
+
+<span class="org-keyword">for</span> x <span class="org-keyword">in</span> iterator:
+    <span class="org-keyword">yield</span> x
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38c7c6e" class="outline-2">
+<h2 id="org38c7c6e"><span class="section-number-2">4</span> 事件循环</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+看到事件循环的时候我首先想到的是 <code>GUI</code> 程序编程中的那种事件/消息循环，通过注册回调的方式，由事件循环获取事件并调用回调处理事件。
+</p>
+
+<p>
+在 <code>GUI</code> 编程中，事件的获取可以由 <b>操作系统</b> 这样的低层设施完成，然后将事件放到应用程序的事件队列中，编写程序时，只需要考虑从队列中获取处理事件。
+</p>
+
+<p>
+然而在 <code>asyncio</code> 中，这个事件队列需要由自己来维护，而这篇博客的主要内容，就是学习这个事件队列（事件循环）维护方式。
+</p>
+
+<p>
+<b>注：</b> 这一节剩下的内容算是我的探索过程，有兴趣的可以看一下，急着看结论的可以到下一节。
+</p>
+
+<p>
+首先是一篇 <a href="https://juejin.im/timeline">掘金</a> 翻译的文章，文章中实现了一个简单的事件循环，当然，这个事件循环很不完善：
+</p>
+
+<details><summary><i>点击查看代码</i></summary>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> datetime
+<span class="org-keyword">import</span> heapq
+<span class="org-keyword">import</span> types
+<span class="org-keyword">import</span> time
+
+<span class="org-keyword">class</span> <span class="org-type">Task</span>:
+
+    <span class="org-doc">"""Represent how long a coroutine should before starting again.</span>
+
+<span class="org-doc">    Comparison operators are implemented for use by heapq. Two-item</span>
+<span class="org-doc">    tuples unfortunately don't work because when the datetime.datetime</span>
+<span class="org-doc">    instances are equal, comparison falls to the coroutine and they don't</span>
+<span class="org-doc">    implement comparison methods, triggering an exception.</span>
+
+<span class="org-doc">    Think of this as being like asyncio.Task/curio.Task.</span>
+<span class="org-doc">    """</span>
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, wait_until, coro):
+        <span class="org-keyword">self</span>.coro = coro
+        <span class="org-keyword">self</span>.waiting_until = wait_until
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__eq__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.waiting_until == other.waiting_until
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__lt__</span>(<span class="org-keyword">self</span>, other):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.waiting_until &lt; other.waiting_until
+
+<span class="org-keyword">class</span> <span class="org-type">SleepingLoop</span>:
+
+    <span class="org-doc">"""An event loop focused on delaying execution of coroutines.</span>
+
+<span class="org-doc">    Think of this as being like asyncio.BaseEventLoop/curio.Kernel.</span>
+<span class="org-doc">    """</span>
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, *coros):
+        <span class="org-keyword">self</span>._new = coros
+        <span class="org-keyword">self</span>._waiting = []
+
+    <span class="org-keyword">def</span> <span class="org-function-name">run_until_complete</span>(<span class="org-keyword">self</span>):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Start all the coroutines.</span>
+        <span class="org-keyword">for</span> coro <span class="org-keyword">in</span> <span class="org-keyword">self</span>._new:
+            <span class="org-variable-name">wait_for</span> = coro.send(<span class="org-constant">None</span>)
+            heapq.heappush(<span class="org-keyword">self</span>._waiting, Task(wait_for, coro))
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Keep running until there is no more work to do.</span>
+        <span class="org-keyword">while</span> <span class="org-keyword">self</span>._waiting:
+            <span class="org-variable-name">now</span> = datetime.datetime.now()
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Get the coroutine with the soonest resumption time.</span>
+            <span class="org-variable-name">task</span> = heapq.heappop(<span class="org-keyword">self</span>._waiting)
+            <span class="org-keyword">if</span> now &lt; task.waiting_until:
+                <span class="org-comment-delimiter"># </span><span class="org-comment">We're ahead of schedule; wait until it's time to resume.</span>
+                <span class="org-variable-name">delta</span> = task.waiting_until - now
+                time.sleep(delta.total_seconds())
+                <span class="org-variable-name">now</span> = datetime.datetime.now()
+            <span class="org-keyword">try</span>:
+                <span class="org-comment-delimiter"># </span><span class="org-comment">It's time to resume the coroutine.</span>
+                <span class="org-variable-name">wait_until</span> = task.coro.send(now)
+                heapq.heappush(<span class="org-keyword">self</span>._waiting, Task(wait_until, task.coro))
+            <span class="org-keyword">except</span> <span class="org-type">StopIteration</span>:
+                <span class="org-comment-delimiter"># </span><span class="org-comment">The coroutine is done.</span>
+                <span class="org-keyword">pass</span>
+
+<span class="org-type">@types.coroutine</span>
+<span class="org-keyword">def</span> <span class="org-function-name">sleep</span>(seconds):
+    <span class="org-doc">"""Pause a coroutine for the specified number of seconds.</span>
+
+<span class="org-doc">    Think of this as being like asyncio.sleep()/curio.sleep().</span>
+<span class="org-doc">    """</span>
+    <span class="org-variable-name">now</span> = datetime.datetime.now()
+    <span class="org-variable-name">wait_until</span> = now + datetime.timedelta(seconds=seconds)
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Make all coroutines on the call stack pause; the need to use `yield`</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">necessitates this be generator-based and not an async-based coroutine.</span>
+    <span class="org-variable-name">actual</span> = <span class="org-keyword">yield</span> wait_until
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Resume the execution stack, sending back how long we actually waited.</span>
+    <span class="org-keyword">return</span> actual - now
+
+<span class="org-keyword">async def</span> <span class="org-function-name">countdown</span>(label, length, *, delay=0):
+    <span class="org-doc">"""Countdown a launch for `length` seconds, waiting `delay` seconds.</span>
+
+<span class="org-doc">    This is what a user would typically write.</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">print</span>(label, <span class="org-string">'waiting'</span>, delay, <span class="org-string">'seconds before starting countdown'</span>)
+    <span class="org-variable-name">delta</span> = <span class="org-keyword">await</span> sleep(delay)
+    <span class="org-keyword">print</span>(label, <span class="org-string">'starting after waiting'</span>, delta)
+    <span class="org-keyword">while</span> length:
+        <span class="org-keyword">print</span>(label, <span class="org-string">'T-minus'</span>, length)
+        <span class="org-variable-name">waited</span> = <span class="org-keyword">await</span> sleep(1)
+        <span class="org-variable-name">length</span> -= 1
+    <span class="org-keyword">print</span>(label, <span class="org-string">'lift-off!'</span>)
+
+<span class="org-keyword">def</span> <span class="org-function-name">main</span>():
+    <span class="org-doc">"""Start the event loop, counting down 3 separate launches.</span>
+
+<span class="org-doc">    This is what a user would typically write.</span>
+<span class="org-doc">    """</span>
+    <span class="org-variable-name">loop</span> = SleepingLoop(countdown(<span class="org-string">'A'</span>, 5), countdown(<span class="org-string">'B'</span>, 3, delay=2),
+                        countdown(<span class="org-string">'C'</span>, 4, delay=1))
+    <span class="org-variable-name">start</span> = datetime.datetime.now()
+    loop.run_until_complete()
+    <span class="org-keyword">print</span>(<span class="org-string">'Total elapsed time is'</span>, datetime.datetime.now() - start)
+
+<span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+    main()
+</pre>
+</div>
+
+<p>
+可能的执行结果是这样的：
+</p>
+<pre class="example">
+A waiting 0 seconds before starting countdown
+B waiting 2 seconds before starting countdown
+C waiting 1 seconds before starting countdown
+A starting after waiting 0:00:00.001000
+A T-minus 5
+C starting after waiting 0:00:01.000057
+C T-minus 4
+A T-minus 4
+B starting after waiting 0:00:02.000115
+B T-minus 3
+C T-minus 3
+A T-minus 3
+B T-minus 2
+C T-minus 2
+A T-minus 2
+B T-minus 1
+C T-minus 1
+A T-minus 1
+B lift-off!
+C lift-off!
+A lift-off!
+Total elapsed time is 0:00:05.003286
+</pre>
+
+</details>
+
+<p>
+在这段代码中我获得的重要信息：事件循环取出协程执行后，如果协程未执行完，会将协程再次放到事件/协程队列中。
+</p>
+
+<p>
+当然，这是显而易见的，自己思考也大概能够想到这一点。
+</p>
+
+<p>
+通过这样的想法可以大致理解如下的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> asyncio
+<span class="org-keyword">import</span> time
+
+<span class="org-keyword">async def</span> <span class="org-function-name">say_after</span>(delay, what):
+    <span class="org-keyword">await</span> asyncio.sleep(delay)
+    <span class="org-keyword">print</span>(what)
+
+<span class="org-keyword">async def</span> <span class="org-function-name">main</span>():
+    <span class="org-keyword">print</span>(f<span class="org-string">"started at {time.strftime('%X')}"</span>)
+
+    <span class="org-keyword">await</span> say_after(1, <span class="org-string">'hello'</span>)
+    <span class="org-keyword">await</span> say_after(2, <span class="org-string">'world'</span>)
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"finished at {time.strftime('%X')}"</span>)
+
+asyncio.run(main())
+</pre>
+</div>
+
+<p>
+对于这一段代码来说，不断取出执行 <code>main()</code> 的时间花费大概是 <code>3</code> 秒，而事实也是如此。
+</p>
+
+<p>
+当时我觉得差不多理解了 <code>asyncio</code> 的工作原理的时候，我看到了这样一段代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">async def</span> <span class="org-function-name">main</span>():
+    <span class="org-variable-name">task1</span> = asyncio.create_task(
+        say_after(1, <span class="org-string">'hello'</span>))
+
+    <span class="org-variable-name">task2</span> = asyncio.create_task(
+        say_after(2, <span class="org-string">'world'</span>))
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"started at {time.strftime('%X')}"</span>)
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Wait until both tasks are completed (should take</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">around 2 seconds.)</span>
+    <span class="org-keyword">await</span> task1
+    <span class="org-keyword">await</span> task2
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"finished at {time.strftime('%X')}"</span>)
+</pre>
+</div>
+
+<p>
+这段代码的执行时间是 <code>2</code> 秒，也就是说，在创建 <code>Task</code> 的过程中，创建的 <code>Task</code> 被直接加入 <b>事件循环</b> 了，但是，这里大概还可以用前面的想法理解，
+直到我做了这样的修改：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> asyncio
+<span class="org-keyword">import</span> time
+
+
+<span class="org-keyword">async def</span> <span class="org-function-name">get_after</span>(delay, what):
+    <span class="org-keyword">await</span> asyncio.sleep(delay)
+    <span class="org-keyword">return</span> what
+
+
+<span class="org-keyword">async def</span> <span class="org-function-name">main</span>():
+    <span class="org-keyword">print</span>(f<span class="org-string">"started at {time.strftime('%X')}"</span>)
+
+    <span class="org-variable-name">task1</span> = asyncio.create_task(get_after(1, <span class="org-string">'hello'</span>))
+    <span class="org-variable-name">task2</span> = asyncio.create_task(get_after(2, <span class="org-string">'world'</span>))
+
+    <span class="org-variable-name">t2</span> = <span class="org-keyword">await</span> task2
+    <span class="org-variable-name">t1</span> = <span class="org-keyword">await</span> task1
+
+    <span class="org-keyword">print</span>(t1, t2)
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"finished at {time.strftime('%X')}"</span>)
+
+
+asyncio.run(main())
+</pre>
+</div>
+
+<p>
+这段代码中，第一个任务比第二个任务先完成，但是第一个任务排在第二个任务后面，同时，t1 和 t2 都获得了正确的返回值。
+</p>
+
+<p>
+也就是说，两个任务异步完成的同时，还可以按照同步的顺序将值返回。
+</p>
+
+<p>
+Oh!!!我的大脑开始晕了，我已经不建议你阅读这一节剩下的内容。
+</p>
+
+<p>
+然后，我看到了微信上的文章 <a href="https://mp.weixin.qq.com/s/GgamzHPyZuSg45LoJKsofA">深入理解 Python 异步编程（上）</a>，其中的一部分代码：
+</p>
+
+<img src="https://mmbiz.qpic.cn/mmbiz_png/fhujzoQe7TqwIlwniae0PZntyOBFHJKp6iaxmFsCDl62tUWztJTicyFVCib0LXokHIm0DRU1QUhHBHqsQuicMktqprg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+
+<p>
+Oh!!!yes!!!我们可以将协程的执行结果保存！！！
+</p>
+
+<p>
+同时，我还了解到 <code>Future</code> 的源码中存在这样的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">__iter__</span>(<span class="org-keyword">self</span>):
+    <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>.done():
+        <span class="org-keyword">yield</span> <span class="org-keyword">self</span>
+    <span class="org-keyword">return</span> <span class="org-keyword">self</span>.result()
+</pre>
+</div>
+
+<p>
+其实，到了这里，我离真相已经不远了，但是，由于我在脑内建立了一个错误的印象： <code>asyncio</code> 内部的事件循环是同时保存了所有的协程的。
+</p>
+
+<p>
+导致，我对 <code>asyncio</code> 工作原理的理解陷入僵局：
+</p>
+<ol class="org-ol">
+<li>所有协程都在事件循环中</li>
+<li>当其中某个事件执行完成后，再次调度时，就会获得它的返回值</li>
+<li>当它的返回值被获取，那么，就不能再次获取返回值了</li>
+</ol>
+
+<p>
+也就是说，对于下面的代码，我们要保证 val 可以获取 future 的返回值：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">val</span> = <span class="org-keyword">yield</span> <span class="org-keyword">from</span> future
+</pre>
+</div>
+
+<p>
+然后我失败了，我在寝室里走过来走过去，用 Google 搜索各种资料，都没能解决我的问题，思维进入了死角。
+</p>
+
+<p>
+直到结合源码阅读了一篇博客！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb49cab0" class="outline-2">
+<h2 id="orgb49cab0"><span class="section-number-2">5</span> asyncio 的事件循环</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+asyncio 中的事件循环不生产值，但是 <b>返回</b> 值, 返回值是协程的执行结果：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">async def</span> <span class="org-function-name">coro1</span>():
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):
+        <span class="org-variable-name">val</span> = <span class="org-keyword">yield</span>
+    <span class="org-keyword">return</span> 10
+
+<span class="org-keyword">async def</span> <span class="org-function-name">coro2</span>():
+    <span class="org-variable-name">val</span> = <span class="org-keyword">await</span> coro1()
+</pre>
+</div>
+
+<p>
+上面这段代码中的 <code>coro2</code> 大致上等价于：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">async def</span> <span class="org-function-name">coro2</span>():
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10):  <span class="org-comment-delimiter"># </span><span class="org-comment">coro1</span>
+        <span class="org-variable-name">val</span> = <span class="org-keyword">yield</span>      <span class="org-comment-delimiter"># </span><span class="org-comment">coro1</span>
+    <span class="org-variable-name">val</span> = 10             <span class="org-comment-delimiter"># </span><span class="org-comment">coro1 return 10</span>
+</pre>
+</div>
+
+<p>
+特别是代码中的 <code>return</code>, 这在 <code>Python2</code> 中是不允许的，但是为了方便，Python3 中加入了这一特性。
+</p>
+
+<p>
+然后，我们需要通过下面这段代码来理解 <code>asyncio</code> 内部的事件调度：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> asyncio
+<span class="org-keyword">import</span> time
+
+
+<span class="org-keyword">async def</span> <span class="org-function-name">get_after</span>(delay, what):
+    <span class="org-keyword">await</span> asyncio.sleep(delay)
+    <span class="org-keyword">return</span> what
+
+
+<span class="org-keyword">async def</span> <span class="org-function-name">main</span>():
+    <span class="org-keyword">print</span>(f<span class="org-string">"started at {time.strftime('%X')}"</span>)
+
+    <span class="org-variable-name">task1</span> = asyncio.create_task(get_after(1, <span class="org-string">'hello'</span>))
+    <span class="org-variable-name">task2</span> = asyncio.create_task(get_after(2, <span class="org-string">'world'</span>))
+
+    <span class="org-variable-name">t2</span> = <span class="org-keyword">await</span> task2
+    <span class="org-variable-name">t1</span> = <span class="org-keyword">await</span> task1
+
+    <span class="org-keyword">print</span>(t1, t2)
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"finished at {time.strftime('%X')}"</span>)
+
+
+asyncio.run(main())
+</pre>
+</div>
+
+<p>
+这段代码中，首先创建了两个 <code>Task</code>, 我们可以看一下 <code>Task</code> 的构造函数：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Task</span>(futures.Future):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, coro, *, loop=<span class="org-constant">None</span>):
+        ...
+        <span class="org-keyword">self</span>._loop.call_soon(<span class="org-keyword">self</span>._step)
+        ...
+</pre>
+</div>
+
+<p>
+可以看到，Task 在创建的时候就会通过 <code>loop.call_soon</code> 将 Task 放入事件循环。同时，Task 可以被用在 <code>await(yield from)</code>, 
+说明它是一个可迭代对象，也就是实现了 <code>__iter__</code> 方法：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Future</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__await__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>.done():
+            ...
+            <span class="org-keyword">yield</span> <span class="org-keyword">self</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">This tells Task to wait for completion.</span>
+        <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>.done():
+            <span class="org-keyword">raise</span> <span class="org-type">RuntimeError</span>(<span class="org-string">"await wasn't used with future"</span>)
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.result()  <span class="org-comment-delimiter"># </span><span class="org-comment">May raise too.</span>
+
+    <span class="org-variable-name">__iter__</span> = __await__  <span class="org-comment-delimiter"># </span><span class="org-comment">make compatible with 'yield from'.</span>
+</pre>
+</div>
+
+<p>
+现在，这段代码中的 <code>main()</code> 可以改造为：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">async def</span> <span class="org-function-name">main</span>():
+    <span class="org-keyword">print</span>(f<span class="org-string">"started at {time.strftime('%X')}"</span>)
+
+    <span class="org-variable-name">task1</span> = asyncio.create_task(get_after(1, <span class="org-string">'hello'</span>))
+    <span class="org-variable-name">task2</span> = asyncio.create_task(get_after(2, <span class="org-string">'world'</span>))
+
+    <span class="org-keyword">if</span> <span class="org-keyword">not</span> task2.done():
+        <span class="org-keyword">yield</span> task2
+    <span class="org-keyword">assert</span> task2.done()
+    <span class="org-variable-name">t2</span> = task2.result()
+
+    <span class="org-keyword">if</span> <span class="org-keyword">not</span> task1.done():
+        <span class="org-keyword">yield</span> task1
+    <span class="org-keyword">assert</span> task1.done()
+    <span class="org-variable-name">t1</span> = task1.result()
+
+    <span class="org-keyword">print</span>(t1, t2)
+
+    <span class="org-keyword">print</span>(f<span class="org-string">"finished at {time.strftime('%X')}"</span>)
+</pre>
+</div>
+
+<p>
+对于 <code>main()</code> 来说，我们需要保证在 <code>task2</code> 和 <code>task1</code> 执行完成之前不会调度它自己，如果将 <code>main()</code> 一直放在事件循环中，
+那么是无法实现这一点的。
+</p>
+
+<p>
+也就是说，我们在执行到 <code>task2</code> 或 <code>task1</code> 的位置后，如果 <code>task2</code> 或 <code>task1</code> 没有执行完成，就需要将 <code>main()</code> 从事件循环中取出，
+等到 <code>task2</code> 或 <code>task1</code> 执行完成后在继续执行。
+</p>
+
+<p>
+当我们通过 <code>asyncio.run(main())</code> 开始执行程序时，main() 会被 <code>Task</code> 包装，然后调用 <code>Task</code> 的方法 <code>_step()</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">_step</span>(<span class="org-keyword">self</span>, exc=<span class="org-constant">None</span>):
+    <span class="org-keyword">try</span>:
+        <span class="org-keyword">if</span> exc <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">We use the `send` method directly, because coroutines</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">don't have `__iter__` and `__next__` methods.</span>
+            <span class="org-variable-name">result</span> = coro.send(<span class="org-constant">None</span>)
+        <span class="org-keyword">else</span>:
+            <span class="org-variable-name">result</span> = coro.throw(exc)
+    <span class="org-keyword">except</span> <span class="org-type">StopIteration</span> <span class="org-keyword">as</span> exc:
+        <span class="org-keyword">if</span> <span class="org-keyword">self</span>._must_cancel:
+            ...
+        <span class="org-keyword">else</span>:
+            <span class="org-keyword">self</span>.set_result(exc.value)
+    <span class="org-keyword">except</span> futures.CancelledError:
+        ...
+    <span class="org-keyword">except</span> <span class="org-type">Exception</span> <span class="org-keyword">as</span> exc:
+        ...
+    <span class="org-keyword">except</span> <span class="org-type">BaseException</span> <span class="org-keyword">as</span> exc:
+        ...
+    <span class="org-keyword">else</span>:
+        <span class="org-variable-name">blocking</span> = <span class="org-builtin">getattr</span>(result, <span class="org-string">'_asyncio_future_blocking'</span>, <span class="org-constant">None</span>)
+        <span class="org-keyword">if</span> blocking <span class="org-keyword">is</span> <span class="org-keyword">not</span> <span class="org-constant">None</span>:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Yielded Future must come from Future.__iter__().</span>
+            <span class="org-keyword">if</span> result._loop <span class="org-keyword">is</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>._loop:
+                ...
+            <span class="org-keyword">elif</span> blocking:
+                ...
+            <span class="org-keyword">else</span>:
+                <span class="org-variable-name">result._asyncio_future_blocking</span> = <span class="org-constant">False</span>
+                result.add_done_callback(<span class="org-keyword">self</span>._wakeup)
+                ...
+        <span class="org-keyword">elif</span> result <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Bare yield relinquishes control for one event loop iteration.</span>
+            <span class="org-keyword">self</span>._loop.call_soon(<span class="org-keyword">self</span>._step)
+            ...
+</pre>
+</div>
+
+<p>
+假如调用方法 <code>_step()</code> 的时候 <code>task2</code> 还没有执行完成，那么就会执行 <code>yield task2</code>, 在获取到 <code>task2</code> 之后，就会执行操作：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">result.add_done_callback(<span class="org-keyword">self</span>._wakeup)
+</pre>
+</div>
+
+<p>
+我们可以看一下相关的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">add_done_callback</span>(<span class="org-keyword">self</span>, fn, *, context=<span class="org-constant">None</span>):
+    <span class="org-keyword">if</span> <span class="org-keyword">self</span>._state != _PENDING:
+        <span class="org-keyword">self</span>._loop.call_soon(fn, <span class="org-keyword">self</span>, context=context)
+    <span class="org-keyword">else</span>:
+        ...
+        <span class="org-keyword">self</span>._callbacks.append((fn, context))
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">_wakeup</span>(<span class="org-keyword">self</span>, future):
+    <span class="org-keyword">try</span>:
+        future.result()
+    <span class="org-keyword">except</span> <span class="org-type">Exception</span> <span class="org-keyword">as</span> exc:
+        <span class="org-comment-delimiter"># </span><span class="org-comment">This may also be a cancellation.</span>
+        <span class="org-keyword">self</span>._step(exc)
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">self</span>._step()
+    <span class="org-keyword">self</span> = <span class="org-constant">None</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Needed to break cycles when an exception occurs.</span>
+</pre>
+</div>
+
+<p>
+这个过程中，Task(main) 的 <code>_wakeup</code> 方法成为了 <code>task2</code> 的回调，而自身从事件循环中取出。
+</p>
+
+<p>
+然后，创建 Task 的过程中，task1 和 task2 已经被加入事件循环，加入调用它们返回的是 <code>Task(Future)</code>, 就重复之前的过程，否则返回 <code>None</code> 执行：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">elif</span> result <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Bare yield relinquishes control for one event loop iteration.</span>
+    <span class="org-keyword">self</span>._loop.call_soon(<span class="org-keyword">self</span>._step)
+</pre>
+</div>
+
+<p>
+即：再次将自己放入事件循环。
+</p>
+
+<p>
+当 Task 包裹的协程执行完成时，会抛出 <code>StopIteration</code> 异常，执行如下代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">except</span> <span class="org-type">StopIteration</span> <span class="org-keyword">as</span> exc:
+    <span class="org-keyword">if</span> <span class="org-keyword">self</span>._must_cancel:
+        ...
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">self</span>.set_result(exc.value)
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">__schedule_callbacks</span>(<span class="org-keyword">self</span>):
+    <span class="org-variable-name">callbacks</span> = <span class="org-keyword">self</span>._callbacks[:]
+    <span class="org-keyword">if</span> <span class="org-keyword">not</span> callbacks:
+        <span class="org-keyword">return</span>
+
+    <span class="org-keyword">self</span>._callbacks[:] = []
+    <span class="org-keyword">for</span> callback, ctx <span class="org-keyword">in</span> callbacks:
+        <span class="org-keyword">self</span>._loop.call_soon(callback, <span class="org-keyword">self</span>, context=ctx)
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">set_result</span>(<span class="org-keyword">self</span>, result):
+    <span class="org-keyword">if</span> <span class="org-keyword">self</span>._state != _PENDING:
+        <span class="org-keyword">raise</span> exceptions.InvalidStateError(f<span class="org-string">'{self._state}: {self!r}'</span>)
+    <span class="org-keyword">self</span>._result = result
+    <span class="org-keyword">self</span>._state = _FINISHED
+    <span class="org-keyword">self</span>.__schedule_callbacks()
+
+</pre>
+</div>
+
+<p>
+可以看到，执行 <code>set_result</code> 的时候会执行 <code>callbacks</code> 中的回调，而在之前的操作中，已经将 <code>Task(main)</code> 的 <code>_wakeup</code> 放入回调，
+也就是说，将要执行：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">_wakeup</span>(<span class="org-keyword">self</span>, future):
+    <span class="org-keyword">try</span>:
+        ...
+    <span class="org-keyword">except</span> <span class="org-type">Exception</span> <span class="org-keyword">as</span> exc:
+        ...
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">self</span>._step()  <span class="org-comment-delimiter"># </span><span class="org-comment">!!!</span>
+    ...
+</pre>
+</div>
+
+<p>
+现在，我们恢复了 Task(main) 的正常调度，同时也将执行完成的 <code>Task</code> 从事件循环中取出。
+</p>
+
+<p>
+That's all!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd219457" class="outline-2">
+<h2 id="orgd219457"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+最后想了下，asyncio 的事件循环其实并不复杂，关键点在于：
+</p>
+<ol class="org-ol">
+<li>如果在执行 <code>otask</code> 的过程中遇到 <code>await itask</code> 语句，如果 <code>itask</code> 还未完成，就将 <code>otask</code> 从事件循环中取出，
+并将可以唤醒自身的方法放到 <code>itask</code> 的回调中</li>
+<li>当 <code>itask</code> 执行完成后，执行 <code>itask</code> 的所有回调，唤醒 <code>otask</code> 并将 <code>itask</code> 从事件循环取出</li>
+</ol>
+
+<p>
+搞清楚这个问题花了不少的时间，而且现在还不能说是完全正确，真是复杂的问题……
+</p>
+
+<p>
+这篇博客写的很乱，有机会的话整理一下吧 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd760b36" class="outline-2">
+<h2 id="orgd760b36"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="https://mp.weixin.qq.com/s/GgamzHPyZuSg45LoJKsofA">深入理解 Python 异步编程（上）</a></li>
+<li><a href="https://www.cnblogs.com/wdliu/p/6890930.html">协程、 事件驱动介绍 - W-D - 博客园</a></li>
+<li><a href="https://github.com/xitu/gold-miner/blob/master/TODO/how-the-heck-does-async-await-work-in-python-3-5.md">gold-miner/how-the-heck-does-async-await-work-in-python-3-5.md at master · xitu/gold-miner</a></li>
+<li><a href="https://github.com/dwqs/blog/issues/61">从一道题浅说 JavaScript 的事件循环 · Issue #61 · dwqs/blog</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Event_loop">Event loop - Wikipedia</a></li>
+<li><a href="https://github.com/atotic/event-loop">atotic/event-loop: event loop docs</a></li>
+<li><a href="https://lotabout.me/2017/understand-python-asyncio/">理解 Python asyncio | 三点水</a></li>
+<li><a href="http://www.dabeaz.com/coroutines/index.html">:A Curious Course on Coroutines and Concurrency</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Coroutine">Coroutine - Wikipedia</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+为了区分生成器和协程，这篇博客中将把 <a href="file:///e:/blog/2018/python-generator.html#MissingReference">生成器对象</a> 称为 <b>协程对象</b>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
