@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-03-22 周五 17:30 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL 与关系代数</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">SQL 与关系代数</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org13ccb63">1. 前言</a></li>
+<li><a href="#orgfc868a3">2. 关系与表</a></li>
+<li><a href="#orge6f136a">3. 关系代数的基本运算</a>
+<ul>
+<li><a href="#org412b357">3.1. 投影</a></li>
+<li><a href="#org211c82e">3.2. 选择</a></li>
+<li><a href="#org6ef8506">3.3. 并运算</a></li>
+<li><a href="#org96064c7">3.4. 集合差运算</a></li>
+<li><a href="#org264815e">3.5. 笛卡尔积</a></li>
+<li><a href="#org92b19d2">3.6. 更名运算</a></li>
+</ul>
+</li>
+<li><a href="#orgb20e672">4. 关系代数的附加运算</a>
+<ul>
+<li><a href="#org903e212">4.1. 集合交运算</a></li>
+<li><a href="#orgbb64fb3">4.2. 连接运算</a>
+<ul>
+<li><a href="#org554d02e">4.2.1. 自然连接</a></li>
+<li><a href="#orge03de22">4.2.2. 内连接</a></li>
+<li><a href="#orge0ab40f">4.2.3. 外连接</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd1c1b35">5. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org13ccb63" class="outline-2">
+<h2 id="org13ccb63"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+SQL 是基于关系代数的查询语言，假如学习过 SQL 和关系代数，你就会发现，在 SQL 的查询语句中你会发现很多关系代数的影子。
+</p>
+
+<p>
+然而，虽然知道 SQL 和关系代数密切相关，但是我也不知道学了关系代数对学习 SQL 有什么好处，因此，如果你对关系代数没兴趣的话，
+现在就可以关掉这篇博客了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfc868a3" class="outline-2">
+<h2 id="orgfc868a3"><span class="section-number-2">2</span> 关系与表</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+我们可以把数据库中的表和关系代数中的关系看做是一个东西，这里给出接下来会用到的两个关系（表）：
+</p>
+
+<ul class="org-ul">
+<li><p>
+User:
+</p>
+<pre class="example">
++------+---------+--------+
+| id   | account | passwd |
++------+---------+--------+
+|    1 | 123     | ****** |
+|    2 | 456     | ****** |
++------+---------+--------+
+</pre></li>
+<li><p>
+Profile
+</p>
+<pre class="example">
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | tony |   16 |
+|    3 | john |    2 |
++------+------+------+
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge6f136a" class="outline-2">
+<h2 id="orge6f136a"><span class="section-number-2">3</span> 关系代数的基本运算</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+关系代数的基本运算包括：选择、投影、并、集合差、笛卡尔积和更名。
+</p>
+</div>
+
+<div id="outline-container-org412b357" class="outline-3">
+<h3 id="org412b357"><span class="section-number-3">3.1</span> 投影</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+这里我们可以先来看一看 <b>投影</b> 运算，它的作用和 SQL 中的 <code>SELECT</code> 基本相同。
+</p>
+
+<p>
+比如说我们要选择 <code>User</code> 中的 <code>account</code>, 用 SQL 编写的话就是：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> account <span class="org-keyword">FROM</span> <span class="org-builtin">user</span>;
+</pre>
+</div>
+
+<p>
+如果用关系代数来写的话，就可以写成 \(\prod_{account}(user)\).
+</p>
+
+<p>
+选择多列就可以这样： \(\prod_{id,account}(user)\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org211c82e" class="outline-3">
+<h3 id="org211c82e"><span class="section-number-3">3.2</span> 选择</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+由于一些历史原因，关系代数中的选择和 SQL 中的 <code>SELECT</code> 不是一个意思，而是更接近 <code>WHERE</code>, 我们可以通过选择运算选择关系中符合指定条件的部分。
+</p>
+
+<p>
+比如说 \(\sigma_{id=1}(user)\) 可以选择关系 <code>User</code> 中 <code>id</code> 等于 <code>1</code> 的用户，其等价的 SQL 语句如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">WHERE</span> id = 1;
+</pre>
+</div>
+
+<p>
+选择运算中可以使用的谓词包括： \(=, \neq, <, \leqslant, >, \geqslant\). 同时还可以使用连词 \(and(\land), or(\lor), not(\lnot)\) 将多个谓词合并为一个较大的连词。
+</p>
+
+<p>
+比如说 \(\sigma_{id \geqslant 1 \land id < 3}\) 选择 <code>id</code> 范围在 <code>[1, 3)</code> 之间的用户，等价于：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">WHERE</span> id &gt;= 1 <span class="org-keyword">AND</span> id &lt; 3; 
+</pre>
+</div>
+
+<p>
+同时，由于关系运算的结果依然是一个关系，因此，我们可以将关系运算组合起来，比如：选择 id 为一的用户的 account 可以表示为 \(\prod_{account}(\sigma_{id=1}(user))\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6ef8506" class="outline-3">
+<h3 id="org6ef8506"><span class="section-number-3">3.3</span> 并运算</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+并运算可以将两个集合并起来，对应到 SQL 中就是 <code>UNION</code> 操作，比如说获取 User 和 Profile 中的所有 ID：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">UNION</span> <span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> profile;
+</pre>
+</div>
+
+<p>
+用关系代数来表示的话就是： \(\prod_{id}(user) \cup \prod_{id}(profile)\).
+</p>
+
+<p>
+关系代数的并运算和 SQL 中的 <code>UNION</code> 一样，要求需要并起来的关系的 <b>列</b> 是相同的，同时，比 SQL 更严格的是，关系代数的并运算还要求列的位置相同。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org96064c7" class="outline-3">
+<h3 id="org96064c7"><span class="section-number-3">3.4</span> 集合差运算</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+集合差运算可以从一个集合中排除另一个集合中的内容，对于到 SQL 中就是 <code>EXCEPT</code> 操作，比如获取 User 不在 Profile 中的所有 ID<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">EXCEPT</span> <span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> profile;
+</pre>
+</div>
+
+<p>
+用关系代数来表示的话就是： \(\prod_{id}(user) - \prod_{id}(profile)\).
+</p>
+
+<p>
+集合差运算对不同关系的要求和并运算是相同的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org264815e" class="outline-3">
+<h3 id="org264815e"><span class="section-number-3">3.5</span> 笛卡尔积</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+笛卡尔积是一个很重要的运算，通过笛卡尔积我们可以将 <b>任意</b> 两个关系的信息结合在一起，笛卡尔积的运算结果会将两个关系的所有列作为新的关系的列，
+将两个关系的所有行的组合作为新的关系的行。
+</p>
+
+<p>
+对应到 SQL 中便是 <code>CROSS JOIN</code>, 比如说如下 SQL 语句便可以表示为 \(user \times profile\):
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">CROSS</span> <span class="org-keyword">JOIN</span> profile;
+</pre>
+</div>
+
+<p>
+运算结果如下：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+|    2 | 456     | ****** |    1 | tony |   16 |
+|    1 | 123     | ****** |    3 | john |    2 |
+|    2 | 456     | ****** |    3 | john |    2 |
++------+---------+--------+------+------+------+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org92b19d2" class="outline-3">
+<h3 id="org92b19d2"><span class="section-number-3">3.6</span> 更名运算</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+关系代数中的更名运算对应到 SQL 中便等价于 <code>AS</code> 操作，可以对关系进行更名也可以对列进行更名操作：
+</p>
+<ul class="org-ul">
+<li>更名关系 - \(\rho_{users}(user)\)</li>
+<li>更名列 - \(\rho_{users(uid,account,password)}(user)\)</li>
+</ul>
+
+<p>
+在进行连接操作的时候常常会用到更名操作，而 SQL 中的更名操作用起来比关系代数中的方便一些，形象一些。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb20e672" class="outline-2">
+<h2 id="orgb20e672"><span class="section-number-2">4</span> 关系代数的附加运算</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+关系代数的附加运算是可以通过基本运算推导得出的，包括集合交运算和各类连接运算。
+</p>
+</div>
+
+<div id="outline-container-org903e212" class="outline-3">
+<h3 id="org903e212"><span class="section-number-3">4.1</span> 集合交运算</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+集合交运算计算两个关系中都存在的部分，可以通过基本运算表示： \(r \cap s = r - (r - s)\).
+</p>
+
+<p>
+集合交运算对于的 SQL 语句是 <code>INTERSECT</code>, 比如：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">INTERSECT</span> <span class="org-keyword">SELECT</span> id <span class="org-keyword">FROM</span> profile;
+</pre>
+</div>
+
+<p>
+表示为关系代数便是 \(\prod_{id}(user) \cap \prod_{id}(profile)\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb64fb3" class="outline-3">
+<h3 id="orgbb64fb3"><span class="section-number-3">4.2</span> 连接运算</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+个人认为连接运算是所有运算中最难的一种，它存在很多分类，比如：自然连接、内连接、外连接等。
+</p>
+
+<p>
+同时，不同的连接运算之间还存在不浅的关系，因此，需要好好理解才行。
+</p>
+</div>
+
+<div id="outline-container-org554d02e" class="outline-4">
+<h4 id="org554d02e"><span class="section-number-4">4.2.1</span> 自然连接</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+首先是自然连接，自然连接将两个关系的 <b>属性集</b> 的 <b>并集</b> 作为新的关系的属性，同时会对两个关系中的相同属性进行比较筛选。
+</p>
+
+<p>
+假如两个关系不存在相同的属性，那么自然连接的结果便和 <b>笛卡尔积</b> 相同：
+</p>
+<pre class="example">
++------+---------+--------+------+------+
+| id   | account | passwd | name | age  |
++------+---------+--------+------+------+
+|    1 | 123     | ****** | tony |   16 |
++------+---------+--------+------+------+
+</pre>
+
+<p>
+如上便是 <b>自然连接</b> 的运算结果，它将关系 User 和 Profile 的属性的并集作为新关系的属性，
+同时筛选具有相同 ID 值的行。
+</p>
+
+<p>
+连接运算的关系代数形式都很复杂，这里就简单列出对应的 SQL 语句好了<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">NATURAL</span> <span class="org-keyword">JOIN</span> profile;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge03de22" class="outline-4">
+<h4 id="orge03de22"><span class="section-number-4">4.2.2</span> 内连接</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+可以把内连接<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>  看做添加了选择语句的笛卡尔积，也就是说，计算内连接时需要先行计算出笛卡尔积，然后在根据选择条件进行选择。
+</p>
+
+<p>
+比如这样的内连接操作：
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">INNER</span> <span class="org-keyword">JOIN</span> profile <span class="org-keyword">ON</span> <span class="org-builtin">user</span>.id &gt;= profile.id;
+</pre>
+</div>
+
+<p>
+其结果为：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+|    2 | 456     | ****** |    1 | tony |   16 |
++------+---------+--------+------+------+------+
+</pre>
+
+<p>
+这里可以对照笛卡尔积的计算结果进行理解：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+|    2 | 456     | ****** |    1 | tony |   16 |
+|    1 | 123     | ****** |    3 | john |    2 |
+|    2 | 456     | ****** |    3 | john |    2 |
++------+---------+--------+------+------+------+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge0ab40f" class="outline-4">
+<h4 id="orge0ab40f"><span class="section-number-4">4.2.3</span> 外连接</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+我们可以把外连接看做是 <b>内连接</b> 的扩展<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>，首先计算出两个关系内连接的结果，然后根据外连接的类型补充数据到内连接的结果上。
+</p>
+
+<p>
+比如说左外连接，首先可以计算出 User 和 Profile 的内连接，然后用空值来填充在左侧关系中存在而右侧关系中不存在的项就可以了。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> <span class="org-builtin">user</span> <span class="org-keyword">LEFT</span> <span class="org-keyword">JOIN</span> profile <span class="org-keyword">on</span> <span class="org-builtin">user</span>.id = profile.id;
+</pre>
+</div>
+
+<p>
+这条 SQL 语句的执行结果为：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+|    2 | 456     | ****** | NULL | NULL | NULL |
++------+---------+--------+------+------+------+
+</pre>
+
+<p>
+如果将其替换为内连接的话便是：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
++------+---------+--------+------+------+------+
+</pre>
+
+<p>
+可以看到，ID 为 2 的项只存在于 User 中而不存在与 Profile 中，因此，左外连接时使用了空值来填充 Profile 对应的部分，
+保证 User 的每项都存在。
+</p>
+
+<p>
+依次类推，右外连接、全外连接也就好理解了：
+</p>
+<ul class="org-ul">
+<li><p>
+右外连接的执行结果：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+| NULL | NULL    | NULL   |    3 | john |    2 |
++------+---------+--------+------+------+------+
+</pre></li>
+<li><p>
+全外连接的执行结果：
+</p>
+<pre class="example">
++------+---------+--------+------+------+------+
+| id   | account | passwd | id   | name | age  |
++------+---------+--------+------+------+------+
+|    1 | 123     | ****** |    1 | tony |   16 |
+|    2 | 456     | ****** | NULL | NULL | NULL |
+| NULL | NULL    | NULL   |    3 | john |    2 |
++------+---------+--------+------+------+------+
+</pre></li>
+</ul>
+
+<p>
+其实，这三个外连接是可以互相转换的，将两个关系的位置换一下就可以将左外连接转换为右外连接，
+而将左右外连接的结果并起来就可以得到全外连接了。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1c1b35" class="outline-2">
+<h2 id="orgd1c1b35"><span class="section-number-2">5</span> 结语</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+虽然说关系代数和 SQL 有不浅的关系，但是学了关系代数，对编写 SQL 也没有多大的帮助 @_@
+</p>
+
+<p>
+而且，不同的数据库实现 SQL 的语法还存在细微的差别……
+</p>
+
+<p>
+也许，可以借助关系代数表达式来生成 SQL 语句！
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+其实关系代数还有一些扩展运算，对应到 SQL 中便是聚集、分组之类的，博客中没有说到，有兴趣的话可以去了解一下。
+</p>
+
+<p>
+或者什么时候有时间了补上 @_@
+</p>
+
+</details>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+不同数据库对 <code>EXCEPT</code> 子句的支持存在区别，这里的 SQL 语句不一定能运行通过
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+如果有兴趣可以看看书《<a href="https://book.douban.com/subject/10548379/">数据库系统概念</a>》中的描述
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+其实在关系代数中内连接应该叫做 <b>theta 连接</b>, 这里主要是为了和 SQL 相对应
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+其实按照书《<a href="https://book.douban.com/subject/10548379/">数据库系统概念</a>》中的描述的话应该是 <b>自然连接</b>, 但是实际的操作结果更符合 <b>内连接</b>, 虽然说，内连接也可以看做是自然连接
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
