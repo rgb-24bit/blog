@@ -1,0 +1,130 @@
+#+TITLE:      Python 高级 I/O 多路复用
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-03-29 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#select][select]]
+- [[#selectors][selectors]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  第一次接触和 I/O 多路复用相关的概念是在书 CSAPP[fn:1] 的并发编程章节，当时在了解了这个概念后只是感觉很神奇，但是并没有实际使用过。
+
+  直到接触了和 *异步 I/O* 相关的概念，然后才发现，并发和 I/O 这一块的东西还真的有点多。
+
+  这篇博客的内容算是对 I/O 多路复用的简单介绍以及和 [[https://docs.python.org/3/library/selectors.html][selectors]] 模块的简单使用。
+
+* select
+  介绍 I/O 多路复用这个概念往往都是从 ~select~ 这个 *系统调用* 开始的，这篇博客也不例外，但是为了方便，
+  我们使用的是 Python 提供的 ~select.select~ 函数[fn:2]。
+
+  这个函数的参数列表与返回值是这样的：
+  #+BEGIN_SRC python
+    select(rlist, wlist, xlist[, timeout]) -> (rlist, wlist, xlist)
+  #+END_SRC
+
+  各个参数的含义：
+  + ~rlist~ - 等待 *可读* 事件发生的文件描述符列表
+  + ~wlist~ - 等待 *可写* 事件发生的文件描述符列表
+  + ~xlist~ - 等待 *异常* 事件发生的文件描述符列表
+  + ~timeout~ - 可选，指定最长阻塞等待时间
+
+  调用这个函数后会 *阻塞* 等待和各个的文件描述符相对应的 I/O 事件发生，然后将准备好的文件描述符返回。
+
+  I/O 多路复用的基本模型就和这个函数一样，都是通过一定的方式监听处理 *多个* 文件的 I/O 事件，或者说，select 是 I/O 多路复用的一种实现。
+  
+  除了 ~select~ 以外，常见的还有 ~poll~ 和 ~epoll~ 这两个实现，它们背后的基本思想都是一样的，区别主要就在于使用的方便性和效率上。
+
+* selectors
+  ~selectors~ 模块是对 ~select~ 的一层封装，能够让我们以更方便的方式来使用 I/O 多路复用。
+
+  简单的使用流程为：
+  1. 通过 ~selectors.DefaultSelector()~ 创建默认的 ~selector~
+
+     当然还存在其他不同种类的 ~Selector~, 但是不同种类的 ~Selector~ 的受支持情况在不同的平台上存在差异，
+     因此大多数时候使用 ~DefaultSelector~ 就可以了，它是相应平台上最有效的 ~Selector~ 的易名。
+
+  2. 通过 ~selector.register(fileobj, events, data=None)~ 方法注册需要监听的 *文件描述符* 或 *文件对象*
+
+     可以看到，在使用 ~selector~ 时我们可以注册 *文件对象* 而不一定必须要是 *文件描述符*[fn:3]，这为我们的使用带来了一定的便利。
+
+     对于参数 ~events~, 在 ~selectors~ 模块中定义的事件只有 ~EVENT_READ~ 和 ~EVENT_WRITE~, 刨除了不太常用的 *异常* 事件。
+
+     如果要同时注册两个事件可以像这样：
+     #+BEGIN_SRC python
+       selector.register(fileobj, EVENT_READ | EVENT_WRITE)
+     #+END_SRC
+
+  3. 调用 ~selector.select(timeout=None)~ 方法监听并获取发生了的 *键 - 事件* 对列表
+
+     这里的键是指 ~SelectorKey~ 对象，它的属性包括：
+     + ~fileobj~ - 我们注册的文件对象
+     + ~fd~ - 我们注册的文件对象的文件描述符
+     + ~events~ - 我们注册的事件
+     + ~data~ - 注册时的 ~data~ 参数
+
+  4. 处理得到的 *键 - 事件* 对列表
+     
+     如果注册了不同类型的事件，处理时可以通过返回的事件类型进行处理。
+
+     同时，我们可以在注册时通过 ~data~ 参数附带回调函数，方便处理。
+
+  下面是官网的例子：
+  #+BEGIN_SRC python
+    import selectors
+    import socket
+
+    sel = selectors.DefaultSelector()
+
+    def accept(sock, mask):
+        conn, addr = sock.accept()  # Should be ready
+        print('accepted', conn, 'from', addr)
+        conn.setblocking(False)
+        sel.register(conn, selectors.EVENT_READ, read)
+
+    def read(conn, mask):
+        data = conn.recv(1000)  # Should be ready
+        if data:
+            print('echoing', repr(data), 'to', conn)
+            conn.send(data)  # Hope it won't block
+        else:
+            print('closing', conn)
+            sel.unregister(conn)
+            conn.close()
+
+    sock = socket.socket()
+    sock.bind(('localhost', 1234))
+    sock.listen(100)
+    sock.setblocking(False)
+    sel.register(sock, selectors.EVENT_READ, accept)
+
+    while True:
+        events = sel.select()
+        for key, mask in events:
+            callback = key.data
+            callback(key.fileobj, mask)
+  #+END_SRC
+
+* 结语     
+  虽然接触 I/O 多路复用已经有一段时间了，但是还没有遇到过需要使用的地方……
+
+  或者说需要使用的地方已经被相关类库的作者封装好了，没自己什么事了 @_@
+
+  但是，掌握相关的概念还是很有价值的。
+
+* 参考链接
+  + [[https://docs.python.org/3/library/selectors.html][selectors — High-level I/O multiplexing — Python 3.7.3 documentation]]
+  + [[https://github.com/python/cpython/blob/3.7/Lib/selectors.py][cpython/selectors.py at 3.7 · python/cpython]]
+
+* Footnotes
+
+[fn:1] [[http://csapp.cs.cmu.edu][Computer Systems: A Programmer's Perspective, 3/E (CS:APP3e)]]
+
+[fn:2] C 语言版可以参考 [[https://en.wikipedia.org/wiki/Select_(Unix)][select - Wikipedia]]
+
+[fn:3] 文件描述符可以通过文件对象的 ~fileno()~ 方法获取
+
