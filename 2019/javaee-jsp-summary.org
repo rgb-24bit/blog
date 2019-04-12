@@ -1,0 +1,440 @@
+#+TITLE:      Java EE - JSP 小结
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-04-12 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#jsp-与-servlet][JSP 与 Servlet]]
+- [[#脚本元素][脚本元素]]
+  - [[#page-指令][page 指令]]
+  - [[#禁用脚本元素][禁用脚本元素]]
+- [[#el-表达式][EL 表达式]]
+  - [[#el-函数][EL 函数]]
+  - [[#taglib-指令][taglib 指令]]
+- [[#标记][标记]]
+  - [[#tld-文件的位置][TLD 文件的位置]]
+  - [[#标准动作][标准动作]]
+  - [[#第三方标记库][第三方标记库]]
+  - [[#定制标记][定制标记]]
+    - [[#标记文件][标记文件]]
+    - [[#简单标记处理器][简单标记处理器]]
+    - [[#标记的属性与体][标记的属性与体]]
+- [[#include-指令][include 指令]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  在接触 Servlet 和 JSP 之前我一直觉得两者中应该是 Servlet 比较难，接触了之后才发现，JSP 的东西怎么那么多啊？
+
+  但是，进行了简单的梳理后，发现 JSP 的东西虽然多，但是理清了以后其实也不是很难。
+
+  这篇博客的内容便是对 JSP 相关内容的简单总结。
+
+  注意：
+  1) 由于 JSP 中的内容挺多的，因此这篇博客中按照自己的理解将其分为了四大元素[fn:1]：脚本元素、指令、EL 表达式、标记
+  2) 博客的主要内容不是这些元素的使用，需要详细教程的可以去查找其他的资料
+
+* JSP 与 Servlet
+  在了解四大元素之前还必须先了解 JSP 与 Servlet 的关系才行 @_@
+
+  默认情况下，在初次访问某个 JSP 的时候，这个 JSP 将会被容器编译为 Servlet[fn:3]，然后和一般的 Servlet 一样，容器将会创建这个从 JSP 编译过来的 Servlet 的实例。
+
+  然后将 *请求对象* 和 *响应对象* 交给这个实例的 ~Service~ 方法进行处理。
+
+  也就是说，你编写的 JSP 在最后将会被编译为 Java 代码，其中的 HTML 将会被当做字符串直接写入响应，其他元素也会进行响应的处理。
+
+  这便意味着，JSP 可以和一般的 Servlet 一样访问 ServletContext，也可以拥有自己的 ServletConfig！
+
+  进一步的，只要进行简单的处理，我们就可以直接在 JSP 中访问请求、响应、上下文等对象（这便是脚本元素的原理）。
+
+* 脚本元素
+  脚本元素应该是很多人初学 JSP 接触的第一个 JSP 元素，其组成为：[[https://docs.oracle.com/javaee/5/tutorial/doc/bnaou.html][scriptlets]](~<% %>~)、[[https://docs.oracle.com/javaee/5/tutorial/doc/bnaov.html][scriptlet expressions]](~<%= %>~) 和 [[https://docs.oracle.com/javaee/5/tutorial/doc/bnaos.html][scriptlet declarations]](~<%! %>~)。
+
+  脚本元素 scriptlets 的功能为：嵌入 Java 代码，当 JSP 被编译为 Servlet 时，相应的 Java 代码会被直接嵌入到 ~Service~ 方法体中。
+
+  脚本元素 scriptlet expressions 的功能为：将 Java 表达式的结果转化为字符串写入响应。
+
+  脚本元素 scriptlet declarations 的功能为：声明这个 JSP 对应的 Servlet 的字段与方法。
+
+  这里我们可以来看一个简单的例子，对于如下的 JSP 文件来说：
+  #+BEGIN_SRC html
+    <html>
+      <head>
+        <title>Example</title>
+        <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+      </head>
+      <body>
+        <!-- scriptlets -->
+        <%
+        for (int i = 0; i < 10; ++i) {
+          out.println(i);
+        }
+        %>
+
+        <!-- scriptlet expressions -->
+        <%= Math.random() %>
+
+        <!-- scriptlet declarations -->
+        <%!
+        int count = 0;
+
+        public int getCount() {
+          return count;
+        }
+        %>
+      </body>
+    </html>
+  #+END_SRC
+
+  将编译后的结果简化可以得到如下代码：
+  #+BEGIN_SRC java
+    public final class hello_jsp {
+      int count = 0;
+
+      public int getCount() {
+        return count;
+      }
+
+      public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+          throws java.io.IOException, javax.servlet.ServletException {
+
+        out.write("<html>\r\n");
+        out.write("  <head>\r\n");
+        out.write("    <title>Example</title>\r\n");
+        out.write("    <meta http-equiv=\"content-type\" content=\"text/html\" charset=\"utf-8\" />\r\n");
+        out.write("  </head>\r\n");
+        out.write("\t<body>\r\n");
+        out.write("    <!-- scriptlets -->\r\n");
+        out.write("    ");
+
+        // scriptlets
+        for (int i = 0; i < 10; ++i) {
+          out.println(i);
+        }
+
+        out.write("\r\n");
+        out.write("\r\n");
+        out.write("    <!-- scriptlet expressions -->\r\n");
+        out.write("    ");
+        // scriptlet expressions
+        out.print( Math.random() );
+        out.write("\r\n");
+        out.write("\r\n");
+        out.write("    <!-- scriptlet declarations -->\r\n");
+        out.write("    ");
+        out.write("\r\n");
+        out.write("\t</body>\r\n");
+        out.write("</html>\r\n");
+      }
+    }
+  #+END_SRC
+
+  然后是脚本元素可以使用的隐式对象，这些对象就声明在 ~Service~ 方法体中：
+  #+BEGIN_SRC java
+    // request, response, pageContext, session, application, config, out, page
+    public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+        throws java.io.IOException, javax.servlet.ServletException {
+
+      final javax.servlet.jsp.PageContext pageContext;
+      javax.servlet.http.HttpSession session = null;
+      final javax.servlet.ServletContext application;
+      final javax.servlet.ServletConfig config;
+      javax.servlet.jsp.JspWriter out = null;
+      final java.lang.Object page = this;
+
+      pageContext = _jspxFactory.getPageContext(this, request, response,
+                                                null, true, 8192, true);
+      application = pageContext.getServletContext();
+      config = pageContext.getServletConfig();
+      session = pageContext.getSession();
+      out = pageContext.getOut();
+    }
+  #+END_SRC
+  
+  如果是 *错误页面* 的话，还会有一个 ~exception~ 隐式对象，但常用的隐式对象都在上面了。
+
+  可以看到，脚本元素的原理还是很简单的，就是将 Java 代码简单处理后直接放到代码中，算是四大元素中最没有逼格的一个 @_@
+  
+** page 指令
+   由于指令和另外三大元素都有关系，而且有些元素对指令的依赖还很大，因此，指令的内容将会向这样拆分开来讲解。
+
+   使用指令时，我们是通过指令的 *属性* 来影响这个 JSP 页面的编译与使用，而使用脚本元素意味着我们编写的就是 Java 代码，
+   因此可以通过 page 指令的 ~import~ 属性告诉容器这个 JSP 需要那些而外的依赖，容器将会把定义的 import 语句增加到生成的 Servlet 类代码中。
+
+   比如这样的一个 page 指令：
+   #+BEGIN_SRC html
+     <%@ page import="java.util.List, java.util.Map" %>
+   #+END_SRC
+
+   生成的 Servlet 类代码中将会包含：
+   #+BEGIN_SRC java
+     import java.util.List;
+     import java.util.Map;
+   #+END_SRC
+
+   page 指令还用其他一些属性，比如属性 ~pageEncoding~ 可以设置当前页面的编码，避免中文乱码。
+
+** 禁用脚本元素
+   当我们在 *DD*[fn:2] 添加如下配置的时候就会使得脚本元素无法使用（用了就会出错）：
+   #+BEGIN_SRC xml
+     <jsp-config>
+       <jsp-property-group>
+         <url-pattern>*.jsp</url-pattern>
+         <scripting-invalid>true</scripting-invalid>
+       </jsp-property-group>
+     </jsp-config>
+   #+END_SRC
+
+* EL 表达式
+  EL 表达式很简单，尤其是对于使用者来说，只需要记住一些简单的语法便可以直接上手使用，不需要像脚本元素那样需要会 Java。
+
+  当然了，EL 表达式式也仅仅是表达式, 当容器遇到 EL 表达式时，会计算这个表达式的结果并将其写入响应。
+
+  比如说 EL 表达式 ~${1 + 3}~, Tomcat 容器的处理方式是：
+  #+BEGIN_SRC java
+    out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${1 + 3}", java.lang.String.class, (javax.servlet.jsp.PageContext)_jspx_page_context, null));
+  #+END_SRC
+
+  因此，EL 表达式难以完成复杂的逻辑操作，这时，我们便可以使用 EL 函数或 *标记*.
+  
+** EL 函数
+   使用 EL 函数是很简单的，只需要使用 ~taglib~ 指令告诉容器你使用的 EL 函数来自什么地方：
+   #+BEGIN_SRC html
+     <%@ taglib prefix="mine" uri="xxx" %>
+
+     ${mine:random()}
+   #+END_SRC
+   
+   困难的地方在于 EL 函数的创建：
+   1) 你需要编写一个有 *公共静态* 方法的 Java 类，比如：
+      #+BEGIN_SRC java
+        public class Example {
+          public static double method() {
+            return Math.random();
+          }
+        }
+      #+END_SRC
+   2) 然后，你需要编写一个 *TLD*[fn:4] 文件建立 EL 函数和静态方法的映射：
+      #+BEGIN_SRC xml
+        <taglib>
+          <uri>xxx</uri>
+
+          <function>
+            <name>random</name>
+            <function-class>Example</function-class>
+            <function-signature>
+              double method()
+            </function-signature>
+          </function>
+
+        </taglib>
+      #+END_SRC
+
+   关键在于这个 TLD 文件中的内容，TLD 文件中的 ~uri~ 就是 ~taglib~ 指令使用的 ~uri~, 而 ~function~ 部分告诉容器可以在什么地方找到这个函数。
+
+   也就是说是通过 TLD 文件的 ~function~ 标签建立 EL 函数名和实际的函数之间的映射。
+   
+   某种程度上，EL 函数也不复杂，但主要问题在于 EL 函数的映射是借助 TLD 文件建立的，在 JSP 中使用也需要使用 ~taglib~ 指令，这和 *标记* 混杂在了一起。
+
+** taglib 指令
+   ~taglib~ 指令的使用更多是在使用标记的时候，但是 EL 函数却需要使用 taglib 指令来使用……
+
+   这个指令的常见形式如下：
+   #+BEGIN_EXAMPLE
+     <%@ taglib prefix="your-prefix" uri="..." %>
+   #+END_EXAMPLE
+
+   指令的 ~prefix~ 属性可以自己随便定义，而 ~uri~ 也只是一个标识，不一定需要是具体的路径，只要和 TLD 文件中定义的 ~uri~ 相同就可以了。
+
+* 标记
+  标记应该是 JSP 中最复杂的一部分，在我的理解中，标准动作、第三方标记库、定制标记都属于标记。
+
+  这就意味着标记这一节需要掌握的东西很多，而且需要分清楚不同的内容之间的区别。
+
+** TLD 文件的位置
+   在进一步了解标记之前需要先来看看 TLD 文件可以放在那些地方：
+   1) 直接放在 ~WEB-INF~ 目录下
+   2) 直接放在 ~WEB-INF~ 目录的一个子目录下，比如说 ~WEB-INF/tlds~
+   3) 在 ~WEB-INF/lib~ 下的一个 JAR 文件中的 ~META-INF~ 目录中
+   4) 在 ~WEB-INF/lib~ 下的一个 JAR 文件中的 ~META-INF~ 目录的子目录中
+      
+   只要你将 TLD 文件放在这些目录中，容器就可以找到你自己定义的标记与 EL 函数。
+
+** 标准动作
+   标记的语法比 EL 表达式还要简单，使用上的问题主要集中在标记的作用、属性与标记体上，因此这里将会略过快速标准动作的相关内容。
+
+   标准动作中存在一个比较特殊的动作：<jsp:attribute>，这个动作可以用来设置其父标记的属性值：
+   #+BEGIN_SRC html
+     <prefix:name>
+       <jsp:attribute name="attributeName">value</jsp:attribute>
+     </prefix:name>
+   #+END_SRC
+
+   这个动作的特殊之处在于：即使父标记要求体为空，也任然可以通过 <jsp:attribute> 来设置父标记的属性值。
+
+   其他一些常用的标准动作：
+   #+BEGIN_EXAMPLE
+     <jsp:include>、<jsp:param>、<jsp:forward>、<jsp:useBean>、<jsp:setProperty>、<jsp:getProperty>
+   #+END_EXAMPLE
+
+** 第三方标记库
+   这里的第三方标记库包括 JSTL，虽然说 JSTL 被叫做标准标记库，但它不是和标准动作不一样，不是内置的标记。
+
+   使用时和其他第三方标记库一样，需要将包含标记库的 jar 放到 ~WEB-INF/lib~ 目录。
+
+   如果你解压包含 JSTL 的 jar，就可以看到前面说的在 ~jar/META-INF~ 目录下的 TLD 文件了。
+
+   JSTL 使用时通常使用如下形式的 taglib 指令：
+   #+BEGIN_EXAMPLE
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   #+END_EXAMPLE
+
+   这个 uri 可以在 ~jstl.jar/META-INF/c.tld~ 文件中发现：
+   #+BEGIN_SRC xml
+     <taglib>
+       <uri>http://java.sun.com/jsp/jstl/core</uri>
+     </taglib>
+   #+END_SRC
+
+** 定制标记
+   定制标记有三种方式：标记文件、简单标记处理器和传统标记处理器，这篇博客将只涉及标记文件和简单标记处理器。
+
+*** 标记文件
+    标记文件更像是可以通过标记语法进行包含的 JSP 文件，使用它的 tablib 指令也和一般的指令存在一定区别：
+    #+BEGIN_EXAMPLE
+      <%@ taglib prefix="prefix" tagdir="xxx" %>
+    #+END_EXAMPLE
+
+    假如你的标记文件是直接放在 ~WEB-INF/tags~ 目录或其子目录中，那么就可以通过 ~tagdir~ 属性指定标记文件的位置，使用时就可以通过 ~<prefix:tagFileName>~ 的方式使用。
+
+    如果你的标记文件在 ~jar~ 中，那么你就需要一个 TLD 文件来描述你的标记文件的位置：
+    #+BEGIN_SRC xml
+      <tagfile>
+        <name>tagName</name>
+        <path>/META-INF/tags/...</path>
+      </tagfile>
+    #+END_SRC
+
+    然后通过 ~uri~ 指定引用的标记文件，使用时通过 ~<prefix:tagName>~ 的方式使用。
+
+    在标记文件中，我们可以通过 ~attribute~ 指令声明属性，通过 ~tag~ 指令声明标记文件的体的限制（这两个指令只能在标记文件中使用）：
+    #+BEGIN_EXAMPLE
+      <%@ attribute name="name" required="true" %>
+      <%@ tag body-content="tagdependent" %>
+
+      <p>Hello ${name}, <jsp:doBoby /></p>
+    #+END_EXAMPLE
+
+    上面这个标记文件：
+    1) 通过 ~attribute~ 指令声明了 ~name~ 属性，这个属性的值必须给出
+    2) 通过 ~tag~ 指令说明了这个标记的题将会按原样取出放入 ~<jsp:doBody>~ 的位置
+
+    比如说，假如这个标记为 <tag:example>，那么如下内容：
+    #+BEGIN_SRC html
+      <tag:example name="tony">${hello}</tag:example>
+    #+END_SRC
+
+    将会被翻译为：
+    #+BEGIN_SRC html
+      <p>Hello tony, ${hello}</p>
+    #+END_SRC
+
+*** 简单标记处理器
+    简单标记处理器的实现还是比较简单的，只需要扩展 ~SimpleTagSupport~ 类就可以了：
+    #+BEGIN_SRC java
+      public class MyTag extends SimpleTagSupport {
+        public void doTag() throws JspException, IOException {
+          ...
+        }
+      }
+    #+END_SRC
+
+    标记处理器可以访问标记体、标记属性，也可以访问 PageContext 从而得到作用域属性和请求及响应。
+
+    一个简单的简单标记处理器需要：
+    1) 实现 doTag 方法
+    2) 对于所有在 TLD 文件中声明的属性，给出对应的 set 方法
+
+    简单标记处理器在 TLD 中的注册形式：
+    #+BEGIN_SRC xml
+      <tag>
+        <description>...</description>
+        <name>tagName</name>
+        <tag-class>package.className</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+          <name>attrName</name>
+          <requirend>true</requirend>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+      </tag>
+    #+END_SRC
+
+    到目前为止，需要在 TLD 文件中注册的就有：EL 函数、标记文件、简单标记处理器：
+    #+BEGIN_SRC xml
+      <taglib>
+        <!-- EL 函数 -->
+        <function>...</function>
+
+        <!-- 标记文件 -->
+        <tagfile>...</tagfile>
+
+        <!-- 简单标记处理器 -->
+        <tag>...</tag>
+      </taglib>
+    #+END_SRC
+
+*** 标记的属性与体
+    在自定义标记的时候我们可以限制标记的属性与体的形式：
+    + 当属性的 ~rtexprvalue~ 为 ~false~ 时，属性值就只能是字符串字面量，为 ~true~ 时，可以有如下三个形式：
+      #+BEGIN_EXAMPLE
+        <prefix:tag attr="${xxx}" %>
+        <prefix:tag attr="<%= %>" %>
+        <prefix:tag>
+          <jsp:attribute name="attr">value</jsp:attribute>
+        </prefix:tag>
+      #+END_EXAMPLE
+    
+      即：EL 表达式、脚本表达式、标准动作 <jsp:attribute>
+
+    + 标记体的内容通过 ~body-content~ 进行限定，其值包括：
+      |--------------+---------------------------------------------------------------|
+      | 值           | 含义                                                          |
+      |--------------+---------------------------------------------------------------|
+      | empty        | 标记不能有体，但还是可以通过标准动作 <jsp:attribute> 设置属性 |
+      | scriptless   | 标记体不能有脚本元素（默认）                                      |
+      | tagdependent | 标记体将被看做纯文本                                          |
+      | JSP          | 标记体支持一切 JSP 元素                                       |
+      |--------------+---------------------------------------------------------------|
+
+    对于标记文件来说，rtexprvalue 可以通过 attribute 指令的 rtexprvalue 属性设置，而标记文件的体不能有脚本元素，因此值只能是 scriptless、tagdependent 和 empty，
+    可以通过 tag 指令的 body-content 属性进行设置。
+
+* include 指令
+  include 指令是最后一个指令了，这个指令告诉容器复制目标文件中的所有内容，并粘贴到使用这个指令的位置。
+
+  其一般形式为：
+  #+BEGIN_EXAMPLE
+    <%@ include file="xxx.jsp" %>
+  #+END_EXAMPLE
+
+* 结语
+  这篇博客目前来说达到了自己的目的：梳理 JSP 相关的内容。
+
+  当然了，这是篇偏向总结的博客，关于 JSP 各个元素的使用的内容并不多，更多的是我在学习过程的感觉比较重要的内容的记录，
+  以及较为困惑的内容的梳理。
+
+  JSP……
+
+* Footnotes
+
+[fn:1] 其实算上 HTML 的话可以分为五大元素，但是 HTML 还是当做背景板好了
+
+[fn:2] Deployment Descriptor - 部署描述文件，也就是常用的 ~web.xml~ 文件
+
+[fn:3] 对于 Tomcat 来说，编译得到的类文件可以在 ~tomcat/work/Catalina/localhost/{your-web-app}~ 找到
+
+[fn:4] 标记库描述文件，文件后缀为 ~tld~
+
