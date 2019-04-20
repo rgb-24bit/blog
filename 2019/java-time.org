@@ -1,0 +1,207 @@
+#+TITLE:      Java8 时间处理
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-04-20 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#时间单位和时区][时间单位和时区]]
+- [[#时间点][时间点]]
+- [[#时间段][时间段]]
+- [[#时间的解析和格式化][时间的解析和格式化]]
+- [[#时区时间][时区时间]]
+- [[#兼容旧接口][兼容旧接口]]
+- [[#结语][结语]]
+
+* 前言
+  时间处理是一个经常会用到但又不那么好用的功能，其中的主要问题在于对人友好的时间格式的处理上。
+
+  在这一点上，Java8 提供了方便我们的使用的新的日期和时间接口。
+  
+  #+HTML: <details><summary><i>……</i></summary>
+
+  当然了，Java8 出来都这么久了，这接口也不算新了 @_@
+
+  #+HTML: </details>
+
+* 时间单位和时区
+  时间是我们每天都在接触的东西，但我并不是很清楚和它的相关的一些概念，借着这次机会，去了解了时间处理中常用的两个概念：时间单位和时区。
+
+  首先是时间单位，通过 [[https://en.wikipedia.org/wiki/Unit_of_time][维基百科]] 可以发现时间单位有很多，在 Java 中是通过枚举 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/ChronoUnit.html][ChronoUnit]] 来表示时间单位的，这里列出其中常用的一部分：
+  |----------+----------+-------------------------------|
+  | 时间单位 | 大小     | java.time.temporal.ChronoUnit |
+  |----------+----------+-------------------------------|
+  | 纳秒     | 10^-9 s  | ChronoUnit.NANOS              |
+  | 毫秒     | 10^-3 s  | ChronoUnit.MILLIS             |
+  | 秒       | 1 s      | ChronoUnit.SECONDS            |
+  | 分       | 60 s     | ChronoUnit.MINUTES            |
+  | 时       | 3600 s   | ChronoUnit.HOURS              |
+  | 日       | 24 时    | ChronoUnit.DAYS               |
+  | 周       | 7 日     | ChronoUnit.WEEKS              |
+  | 月       | 28-31 日 | ChronoUnit.MONTHS             |
+  | 年       | 12 月    | ChronoUnit.YEARS              |
+  |----------+----------+-------------------------------|
+
+  然后是时区这个有些复杂的概念，时区的理解需要区分 *本地时间* 和 *UTC 偏移量*.
+
+  比如说时间 ~2019-04-19T14:31:09.764+08:00[Asia/Shanghai]~, 这个时间表示 ~Asia/Shanghai~ 时区的 *本地时间* 为 ~2019-04-19T14:31:09.764~, 
+  而它的 *UTC 偏移量* 为 ~+08:00~, 即：时区 Asia/Shanghai 的的本地时间比世界标准时间（本初子午线处的本地时间）快 8 个小时。
+  
+  在计算两个时区之间的时间差时，不能直接用本地时间进行计算，而应该综合本地时间和 UTC 偏移量。
+
+  最直接的方式便是将两个时区的时间都转换为 UTC 世界标准时间然后在进行计算。
+
+* 时间点
+  对时间的处理可以粗略的划分为三个部分：时间点、时间段和时间的解析与格式化。
+
+  在 Java8 中表示时间点的对象都实现了接口 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/Temporal.html][java.time.temporal]]，其中，常用的时间点对象有：Instant、LocalDate、LocalTime 和 LocalDateTime。
+
+  这几个时间点对象中比较特殊的是 ~Instant~ 对象，这个对象表示的时间是世界标准时间，而不是本地时间。
+
+  尝试执行下面这一行代码你就会发现，它的输出结果和你电脑上显示的时间是不一样的，如果是在国内，那么它的结果会比你电脑上的时间慢 8 个小时：
+  #+BEGIN_SRC java
+    System.out.println(Instant.now());
+  #+END_SRC
+
+  这些时间点对象都提供了可以根据当前时间创建相应时间点对象的静态工厂方法 ~now~, 除了 ~Instant~ 以外也提供了静态工厂方法 ~of~ 允许你指定参数创建时间点对象：
+  #+BEGIN_SRC java
+    LocalDate date = LocalDate.of(2019, 4, 19);                  // 2019-04-15
+    LocalTime time = LocalTime.of(15, 0, 0);                     // 15:00:00
+    LocalDateTime dt = LocalDateTime.of(2019, 4, 19, 15, 0, 0);  // 2019-04-15 15:00:00
+  #+END_SRC
+  
+  和旧的接口不一样的一点是，这些对象都是 *不可变* 对象，这意味着修改这些对象的属性时会返回创建的新对象。
+
+  修改这些对象的方法有很多，通用的便是在 ~Temporal~ 接口中定义的一些方法：
+  #+BEGIN_SRC java
+    minus(long amountToSubtract, TemporalUnit unit);  // - amountToSubtract * unit
+    minus(TemporalAmount amount);                     // - amount
+
+    plus(long amountToAdd, TemporalUnit unit);        // + amountToSubtract * unit
+    plus(TemporalAmount amount);                      // + amount
+
+    with(TemporalAdjuster adjuster);
+    with(TemporalField field, long newValue);
+  #+END_SRC
+
+  当然了，这些对象也提供了更多的方便使用的接口，可以很方便的在相应的时间单位上进行修改。
+
+  这里比较特殊的是通过 ~TemporalAdjuster~ 对时间进行调整，它的伴随类 ~TemporalAdjusters~ 提供了一些现成的工厂方法，方便我们使用：
+  #+BEGIN_SRC java
+    // 将日期调整到该月的最后一天
+    LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+  #+END_SRC
+
+* 时间段
+  时间段对应的接口是 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAmount.html][java.time.temporal]]，这个接口的实现只有两个：Duration 和 Period。
+
+  Duration 可以通过两个 LocalDateTime、LocalTime 和 Instant 对象创建：
+  #+BEGIN_SRC java
+    Duration.between(time1, time2);
+  #+END_SRC
+
+  而 Period 对象可以通过两个 LocalDate 对象进行创建：
+  #+BEGIN_SRC java
+    Period.between(date1, date2);
+  #+END_SRC
+
+  除了通过两个时间点对象以外，Duration 和 Period 对象也提供了一些静态工厂方法创建实例：
+  #+BEGIN_SRC java
+    Duration.of(3, ChronoUnit.MILLIS);  // 3 Millis
+    Period.of(0, 0, 1);                 // 1 day
+  #+END_SRC
+  
+  Duration 和 Period 对象都提供了相应的 get 方法用于获取它们支持的时间单位的长度（好像是病句 QAQ）：
+  #+BEGIN_SRC java
+    Duration.ofDays(1).getSeconds();  // 86400
+    Period.of(1, 2, 3).getDays();     // 3
+  #+END_SRC
+
+* 时间的解析和格式化
+  时间的解析和格式化相关的对象是 ~DateTimeFormatter~, 这个类提供了很多默认的格式器，也可以自己创建格式器。
+
+  时间点对象都可以通过静态方法 ~parse~ 解析字符串创建实例，除了 Instant 对象以外还支持提供一个 DateTimeFormatter 参数解析特定格式的时间字符串：
+  #+BEGIN_SRC java
+    Instant.parse('2007-12-03T10:15:30.00Z')
+    LocalDateTime.parse('2017-12-3T09:32:00', DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+  #+END_SRC
+
+  虽然 ~DateTimeFormatter~ 提供了很多的默认格式器，但是这些格式器有时并不能满足我们的需求，这时可以通过自定义格式器完成相关的时间解析工作：
+  #+BEGIN_SRC java
+    LocalDateTime.parse('17-12-03 09:32:00', DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss"))
+  #+END_SRC
+
+  下面是常用的日期/时间格式的格式化符号：
+  |--------------+-----------------------------------------------|
+  | 时间与或目的 | 示例                                          |
+  |--------------+-----------------------------------------------|
+  | YEAR         | yy: 69, yyyy: 1969                            |
+  | MONTH        | M: 7, MM: 07, MMM: Jul, MMMM: July, MMMMM:  J |
+  | DAY          | d: 6, dd: 06                                  |
+  | WEEK         | e: 3, E: Wed, EEE: Wednesday, EEEE: W         |
+  | HOUR         | H: 9, HH: 09                                  |
+  | MINUTE       | mm: 02                                        |
+  | SECOND       | ss: 00                                        |
+  |--------------+-----------------------------------------------|
+
+  时间字符串反过来便是时间的格式化了，我们可以通过格式器来格式化时间：
+  #+BEGIN_SRC java
+    DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss").format(LocalDateTime.now());  // 19-04-19 20:53:49
+    DateTimeFormatter.BASIC_ISO_DATE.format(LocalDateTime.now());                  // 20190419
+  #+END_SRC
+
+* 时区时间
+  时区时间同样也是时间点对象，实现了 ~Temporal~ 接口，相较于 ~LocalDateTime~, 时区时间多了 *时区信息*:
+  #+BEGIN_EXAMPLE
+    ZonedDateTime: 2019-04-20T10:14:44.396+08:00[Asia/Shanghai]
+    LocalDateTime: 2019-04-20T10:14:44.396
+    LocalDate:     2019-04-20
+    LocalTime:     14:44.396
+  #+END_EXAMPLE
+
+  时区信息可以通过 ~ZoneId~ 标识，LocalDateTime 对象可以通过 ~ZoneId~ 对象添加时区信息（不会修改本地时间的值）：
+  #+BEGIN_SRC java
+    LocalDateTime.now().atZone(ZoneId.of('Europe/London'));  // 2019-04-20T10:19:30.461+01:00[Europe/London]
+  #+END_SRC
+
+  如果不想直接用时区 ID，那么可以选择使用 UTC 时间偏差：
+  #+BEGIN_SRC java
+    LocalDateTime.now().atOffset(ZoneOffset.of("+01:00"));  // 2019-04-20T10:25:14.496+01:00
+  #+END_SRC
+
+  而且使用 ~ZoneOffset~ 可以转换 LocalDateTime 和 Instant：
+  #+BEGIN_SRC java
+    LocalDateTime.now().toInstant(ZoneOffset.of("+01:00"));           // 2019-04-20T09:34:59.110Z
+    LocalDateTime.ofInstant(Instant.now(), ZoneOffset.of("+01:00"));  // 2019-04-20T03:35:51.980
+  #+END_SRC
+
+* 兼容旧接口
+  Java8 提供了一些方法允许新的日期时间后旧的日期时间进行转换，下面列举出了一部分：
+  |-----------------------------+--------------------------+---------------------|
+  | 类                          | 转换到旧的对象           | 转换到新的对象      |
+  |-----------------------------+--------------------------+---------------------|
+  | Instant - java.util.Date    | Date.from(instant)       | date.toInstant()    |
+  | LocalDate - java.sql.Date   | Date.valueOf(localDate)  | date.toLocalDate()  |
+  | LocalTime - java.sql.Time   | Time.valueOf(localTime)  | date.toLocalTime()  |
+  | ZoneId - java.util.TimeZone | TimeZone.getTimeZone(id) | timeZone.toZoneId() |
+  |-----------------------------+--------------------------+---------------------|
+
+  可以说，Java 8 不仅提供了新的接口，还提供了能够很方便的兼容旧的接口的方式，真的很棒！
+
+* 结语
+  这篇博客的内容不怎么详细，基本上只是简单的提了一下各个接口可以做什么，更多的使用还是需要翻文档。
+
+  但是不得不说，Java8 的日期和时间接口提供了很多方便我们使用的功能，而且接口的设计也很 Beautiful！
+
+  Nice!!!
+
+  #+HTML: <details><summary><i>……</i></summary>
+
+  这篇博客的编写主要参考了两本书：《Java8 实战》和《Java 核心技术卷卷二》。
+
+  然后就不得不吐槽《Java8 实战》这本书了，关于时间处理的这一章节勘误一大堆，内容也不是很清楚。
+
+  而《Java 核心技术卷卷二》就写的很清楚，不知道是不是翻译的锅……
+
+  #+HTML: </details>
+
