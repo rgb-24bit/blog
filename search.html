@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>rgb-24bit's blog search</title>
+    <meta name="author" content="rgb-24bit">
+    <meta name="description" content="rgb-24bit's blog search page">
+    <style>
+     *,
+     *::before,
+     *::after {
+       box-sizing: border-box;
+     }
+     body {
+       background-attachment: fixed;
+       background-size: 100% 100%;
+       font-family: 'Roboto', sans-serif;
+       font-size: 13px;
+       color: #5a6674;
+       background-color: #DEDEDE;
+       background-image: url("/assets/image/ty.jpg");
+       background-repeat: no-repeat;
+       height: 100vh;
+       margin: 0;
+       overflow: hidden;
+     }
+     .search-form {
+       -webkit-transform: translate(-50%, -50%);
+       transition: all 0.3s ease;
+       position: relative;
+       background: #fff;
+       top: 15%;
+       left: 50%;
+       width: 350px;
+       height: 40px;
+       border-radius: 40px;
+       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+       transform: translate(-50%, -50%);
+     }
+     .search-form.focus {
+       box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+     }
+     .search-input {
+       -webkit-appearance: none;
+       -moz-appearance: none;
+       appearance: none;
+       position: absolute;
+       font-size: 14px;
+       color: #5a6674;
+       background: none;
+       top: 10px;
+       left: 38px;
+       width: 195px;
+       height: 20px;
+       border: none;
+       outline: none;
+     }
+     .search-input::-webkit-search-cancel-button {
+       -webkit-appearance: none;
+       appearance: none;
+     }
+     .search-button {
+       position: absolute;
+       background: none;
+       top: 10px;
+       left: 15px;
+       width: 20px;
+       height: 20px;
+       padding: 0;
+       margin: 0;
+       border: none;
+       outline: none !important;
+       cursor: pointer;
+     }
+     .search-button svg {
+       fill: #5a6674;
+       width: 20px;
+       height: 20px;
+     }
+     .search-option {
+       position: absolute;
+       top: 10px;
+       right: 15px;
+       text-align: right;
+     }
+     .search-option div {
+       display: inline-block;
+       position: relative;
+       margin: 0 1px;
+       cursor: pointer;
+     }
+     .search-option div input {
+       position: absolute;
+       top: 0;
+       left: 0;
+       opacity: 0.01;
+       cursor: pointer;
+     }
+     .search-option div span {
+       -webkit-transform: translateX(-50%);
+       transition: all .2s ease-in-out;
+       display: block;
+       position: absolute;
+       font-size: 9px;
+       color: #fff;
+       background: #929AA3;
+       top: -18px;
+       left: 50%;
+       line-height: 1;
+       padding: 4px 7px;
+       opacity: 0;
+       border-radius: 12px;
+       text-align: center;
+       text-transform: uppercase;
+       transform: translateX(-50%);
+       letter-spacing: 1px;
+     }
+     .search-option div span::after {
+       -webkit-transform: translateX(-50%);
+       transition: all .2s ease-in-out;
+       content: '';
+       position: absolute;
+       bottom: -3px;
+       left: 50%;
+       border-top: 4px solid #929AA3;
+       border-left: 4px solid transparent;
+       border-right: 4px solid transparent;
+       transform: translateX(-50%);
+     }
+     .search-option div:hover span {
+       top: -21px;
+       opacity: 1;
+     }
+     .search-option div label {
+       display: block;
+       cursor: pointer;
+     }
+     .search-option div svg {
+       fill: #5a6674;
+       transition: all .2s ease-in-out;
+       pointer-events: none;
+       width: 20px;
+       height: 20px;
+       opacity: 0.6;
+     }
+     .search-option div:hover svg {
+       opacity: 1;
+     }
+     .search-option div input:checked + label svg {
+       fill: #e24040;
+       opacity: .9;
+     }
+     .search-option div input:checked + label span {
+       background: #e24040;
+     }
+     .search-option div input:checked + label span::after {
+       border-top-color: #e24040;
+     }
+    </style>
+  </head>
+  <body>
+    <!-- Refrence: https://codepen.io/supah/pen/XdKMJK -->
+    <form class="search-form" action="https://google.com/search" method="get">
+      <input type="hidden" name="sitesearch" value="rgb-24bit.github.io/blog/">
+      <input type="search" name="q" placeholder="Search" class="search-input">
+      <button type="submit" class="search-button">
+        <svg class="submit-button">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+        </svg>
+      </button>
+    </form>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+      <symbol id="search" viewBox="0 0 32 32">
+        <path d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+      </symbol>
+    </svg>
+
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script>
+     $('.search-input').focus(function(){
+       $(this).parent().addClass('focus');
+     }).blur(function(){
+       $(this).parent().removeClass('focus');
+     })
+    </script>
+  </body>
+</html>

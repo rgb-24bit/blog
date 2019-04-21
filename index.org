@@ -76,3 +76,12 @@
 
 #+HTML: </details>
 
+#+BEGIN_EXPORT html
+<script>
+  (function(href, text) {
+    let anchor = document.querySelector("#org-div-home-and-up > a");
+    Object.assign(anchor, {"href": href, "text": text});
+  })("/blog/search.html", "SEARCH");
+</script>
+#+END_EXPORT
+
