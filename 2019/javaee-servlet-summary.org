@@ -1,0 +1,265 @@
+#+TITLE:      Java EE - Servlet 小结
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-04-26 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#servlet-的生命周期][Servlet 的生命周期]]
+- [[#servlet-的初始化][Servlet 的初始化]]
+  - [[#servletcontext--servletconfig][ServletContext & ServletConfig]]
+- [[#请求的处理][请求的处理]]
+  - [[#httpservletrequest][HttpServletRequest]]
+  - [[#请求分派][请求分派]]
+  - [[#属性][属性]]
+  - [[#httpservletresponse][HttpServletResponse]]
+- [[#servlet-的销毁][Servlet 的销毁]]
+- [[#监听者和过滤器][监听者和过滤器]]
+- [[#完整生命周期和默认-servlet][完整生命周期和默认 Servlet]]
+- [[#结语][结语]]
+
+* 前言
+  最近在看《Spring in Action(4th Edition)》的过程中发现，使用 Spring MVC 进行 Web 开发时，原生 Servlet 的存在感已经低到了一定程度。
+
+  我感觉在不总结一下的话，要不了多久，学过的关于 Servlet 的知识就要忘完了……
+ 
+  注：由于学习 Servlet 使用的教材《Head First Servlet & JSP》属于一本比较老的书，和现在基本上都是 Servlet 3.1 及以上的情况不一样，它使用的大概是 Servlet 2.5，
+  因此，有一些高版本的新特性估计不会在本篇博客中出现 (-_-)
+
+* Servlet 的生命周期
+  Servlet 的生命周期大概可以分为三个阶段：
+  1) 第一个阶段是 Servlet 类的加载与初始化，在这一阶段 Servlet 容器会执行如下操作：
+     1) 加载 Servlet 类
+     2) 创建 Servlet 实例
+     3) 调用 Servlet 的 ~init~ 方法，将 ~ServletContext~ 和 ~ServletConfig~ 对象传递给 Servlet
+  2) 第二个阶段是 Servlet 实例处理请求的阶段，在这个阶段 Servlet 实例将会存活在内存中，每当一个请求到达时，便会在一个 *新的线程* 中执行该 Servlet 的 ~service~ 方法处理请求
+  3) 第三个阶段就是 Servlet 实例去世的阶段，在 Servlet 实例被销毁之前会调用该实例的 ~destroy~ 方法
+
+  通过观察 Servlet 的生命周期可以发现，容器并不是为每一个请求都分配一个 Servlet 实例，而是为每个请求分配一个线程，单个 Servlet 的实例只会存在一个。
+
+  因此，假如需要操作 Servlet 的实例域，那么就需要注意 *线程安全* 的问题。
+
+* Servlet 的初始化
+  Servlet 类的加载和初始化是由容器完成的，默认情况下这一过程是在第一个请求来临时进行的，这就意味着第一个发出相应请求的客户需要多等一会儿了。
+
+  但是我们也可以在 DD 添加一点配置使得 Servlet 在应用部署（服务器启动）时完成加载与初始化：
+  #+BEGIN_SRC xml
+    <servlet>
+      <load-on-startup>1</load-on-startup>
+    </servlet>
+  #+END_SRC
+
+  只要 ~load-on-startup~ 的值不为负，相应的 ~Servlet~ 便会在应用部署（服务器启动）时完成加载与初始化，同时，不同的 Servlet 的加载顺序将由 ~load-on-startup~ 的值的大小确定。
+
+  我们可以决定 Servlet 的加载与初始化时间，同时也可以通过覆盖无参的 ~init~ 方法配置 Servlet 初始化时要做的一些事：
+  #+BEGIN_SRC java
+    public class MyServlet extends HttpServlet {
+      public void init() throws ServletException {
+        // write your code
+      }
+    }
+  #+END_SRC
+
+  我们不应该覆盖有参的 ~init~ 方法，因为这并没有多大的意义，因为有参的 ~init~ 方法大概是这样的：
+  #+BEGIN_SRC java
+    public void init(ServletConfig config) throws ServletException {
+      this.config = config;
+      this.init();
+    }
+  #+END_SRC
+
+  可以看到，有参的 ~init~ 方法的参数是一个 ~ServletConfig~ 对象（它包含 ~ServletContext~ 对象的引用），它会调用无参的 ~init~ 方法。
+
+  因此，覆盖无参的 ~init~ 方法就足够我们使用了。
+
+** ServletContext & ServletConfig
+   在容器调用 ~Servlet~ 的 ~init~ 方法时，会将该 ~Servlet~ 的 ~ServletConfig~ 对象传递给它，我们可以通过 ~ServletConfig~ 对象获得为该 ~Servlet~ 配置的初始化参数：
+   #+BEGIN_SRC java
+     ServletConfig.getInitParameter(String name);
+   #+END_SRC
+
+   初始化参数只能获取不能设置，因此只有 ~getInitParameter~ 方法没有 ~setInitParameter~ 方法！
+
+   Servlet 的初始化参数是通过 DD 文件进行配置的：
+   #+BEGIN_SRC xml
+     <servlet>
+       <init-param>
+         <param-name>name</param-name>
+         <param-value>value</param-value>
+       </init-param>
+     </servlet>
+   #+END_SRC
+
+   除了获取初始化参数以外，ServletConfig 的另一个重要作用便是获取 ~ServletContext~ 对象：
+   #+BEGIN_SRC java
+     ServletConfig.getServletContext();
+   #+END_SRC
+
+   ServletContext 的功能就比 ServletConfig 强大多了，除了初始化参数以外，还可以设置属性、获取应用程序的相关信息、输出日志、分派请求……
+
+   这里可以来看一下初始化参数，获取方式和 ServletConfig 一样：
+   #+BEGIN_SRC java
+     ServletContext.getInitParameter(String name);
+   #+END_SRC
+
+   配置上也差不多：
+   #+BEGIN_SRC xml
+     <web-app>
+       <context-param>
+         <param-name>name</param-name>
+         <param-value>value</param-value>
+       </context-param>
+     </web-app>
+   #+END_SRC
+
+   需要注意的是：ServletConfig 是每个 Servlet 都有的，但是 ServletContext 整个应用程序只存在一个（分布式除外）。
+
+* 请求的处理
+  请求的处理是在 Servlet 的 ~service~ 方法中完成的，而我们经常使用的 ~HttpServlet~ 的 ~service~ 方法会根据请求使用的 HTTP 方法调用 doGet、doPost 等方法。
+
+  虽然说是处理请求，但其实我们也需要负责将响应内容写入响应对象，不过还好的是，我们一般不需要要手动将 HTML 写入响应 @_@
+
+** HttpServletRequest
+   处理请求的过程其实就是获取客户端的信息，然后根据信息判断返回给客户端什么东西的过程。
+
+   一般情况下，我们会先对客户端的状态进行判断，由于 HTTP 协议是无状态协议，因此判断客户端状态的常用方式是通过 ~Cookie~ 和 ~Session~.
+
+   这两个都可以通过 ~HttpServletRequest~ 对象获得：
+   #+BEGIN_SRC java
+     HttpservletRequest.getCookies();
+     HttpservletRequest.getSession();
+   #+END_SRC
+
+   至于 Session 和 Cookie 的使用，单独拿出来都可以写一篇博客了，这里就不多说了 (´• ω •`)
+
+   如果你有编写爬虫的经历的话，你就应该知道，客户端发送的信息除了 Cookie 以外还可能有请求头、请求参数和资源。
+
+   这些都可以通过 ~HttpServletRequest~ 对象获取：
+   #+BEGIN_SRC java
+     HttpservletRequest.getHeader(String);
+     HttpservletRequest.getParameter(String);
+     HttpservletRequest.getInputStream();
+   #+END_SRC
+
+   和 Session 与 Cookie 一样，更详细的使用请自己进行探索 (￣▽￣*)ゞ
+
+** 请求分派
+   ~HttpServletRequest~ 对象除了获取客户端的信息以外，还有一个重要的功能便是进行 *请求分派*, 比如说这样：
+   #+BEGIN_SRC java
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       // 获取请求分派器
+       RequestDispatcher dispatcher = req.getRequestDispatcher("view.jsp");
+
+       // 进行请求分派
+       dispatcher.forward(req, resp);
+     }
+   #+END_SRC
+
+   请求分派可以通过 ~HttpServletRequest~ 对象完成，但是也可以通过 ~ServletContext~ 对象进行，两者的区别并不大，主要区别在于获取 ~RequestDispatcher~ 对象时可以使用的参数：
+   + HttpServletRequest 的 ~getRequestDispatcher~ 方法支持相对与绝对路径
+   + ServletContext 的 ~getRequestDispatcher~ 方法仅支持绝对路径
+
+   进行请求分派时可以选择的操作有：
+   + ~forward~ - 将请求的处理彻底交给其他组件了，自己不再管
+   + ~include~ - 让其他组件处理一下请求，处理完了还是要将控制权还给自己
+
+** 属性   
+   通过请求分派，我们可以通过多个组件完成一个请求的处理，将视图渲染和业务逻辑分开。而属性，便是联系这些不同的组件的桥梁。
+
+   在 Servlet 中，可以设置属性的对象有三个，分别为：ServletRequest、ServletContext、Session。
+
+   属性的使用方式都是一样的，通过 ~getAttribute/setAttribute~ 方法获取设置属性，通过 ~removeAttribute~ 移除属性。
+
+   我们需要注意的应该是使用哪个对象的属性：
+   + ServletRequest - 我们可以将和 *单个请求* 相关的属性存储在请求对象中，处理同一个请求的不同组件可以通过这些属性进行交流
+   + Session - 我们应该将和 *单个客户* 相关的属性存储在 Session 对象中，通过 Session 对象的属性我们可以跟踪客户的状态
+   + ServletContext - 我们一个将用于整个应用的属性存储在 ServletContext 对象中
+     
+   注：这三个对象中，只有 ~ServletRequest~ 的属性是线程安全的。
+
+** HttpServletResponse
+   处理完请求之后便需要将响应内容写入响应对象了，这个过程中我们需要写入的内容包括：响应状态码、响应头、响应体。
+
+   通常情况下，响应状态码不需要我们设置，直接使用默认的就可以了。如果需要设置的话可以通过 ~HttpServletResponse~ 对象的 ~setStatus~ 方法设置。
+
+   响应头可以通过 ~addHeader~ 添加，同时还可以通过 ~addCookie~ 方法快捷的添加 Cookie。
+
+   可以通过 ~getOutputStream/getWriter~ 方法获取写入响应体内容的输出流。
+
+   可以看到，响应的使用还是比较简单的，基本上就是 HTTP 协议响应的简单抽象。
+   
+   另外，如果需要进行重定向的话，可以通过 ~HttpServletResponse~ 对象的 ~sendRedirect~ 方法，这个方法支持相对路径。
+   
+   这里需要注意请求分派与重定向之间的区别：
+   + 请求分派在服务器内部完成，客户端只需要发起一次请求
+   + 重定向有客户端完成，客户端需要发起两次请求
+
+* Servlet 的销毁
+  Servlet 被销毁之前会调用 ~destroy~ 方法，但是这个方法我目前还没有用过 (￢_￢)
+  
+  教材上也只是简单的提了一下有这么个阶段，所以，我也提一下 (￣▽￣)ノ
+
+* 监听者和过滤器
+  监听者和过滤器不是 Servlet，但却是和 Servlet 密切相关的两个东西，因此便放到这篇博客里面了。
+  
+  监听者可以监听和应用程序内部的关键时刻相关的事件，包括：
+  + 上下文的初始化与销毁
+  + 上下文属性的设置
+  + 请求的初始化与销毁
+  + 请求属性的设置
+  + Session 的创建与销毁
+  + Session 属性的设置与绑定
+  + Session 的迁移（针对分布式 Session）
+
+  通过监听这些事件我们可以在不干涉请求处理流程的情况下进行一些额外的操作，比如我们可以在上下文初始化的时候建立和数据库的连接，
+  在上下文销毁的时候断开和数据库的连接。
+
+  大多数监听者都需要在 DD 文件中注册（除了 HttpSessionBindingListener）：
+  #+BEGIN_SRC xml
+    <web-app>
+      <listener>
+        <listener-class>package.className</listener-class>
+      </listener>
+    </web-app>
+  #+END_SRC
+  
+  而过滤器，可以对请求和响应进行额外的操作，使用过滤器时，容器会将所有匹配的过滤器和 Servlet 连成一条链，然后按照过滤器（1、2、3……） -> Servlet -> 过滤器（……3、2、1）的顺序对请求和响应进行处理。
+  其中过滤器的顺序是按照它们在 DD 文件中的声明顺序排列的（教材上这个地方有问题，还是我自己查资料尝试确认的 (；￣Д￣)）
+
+  如果中途过滤器拦截了请求或将请求转发，那么这个链条后面的成员可能就收不到请求和响应了。
+
+  和前面一样，详细内容请自己探索 <・ )))><<
+
+* 完整生命周期和默认 Servlet
+  之前介绍了一下 Servlet 的生命周期，这里的是加上容器的生命周期：
+  1) 服务器启动
+  2) 容器启动
+     + 容器根据 DD 文件中的内容创建 ServletContext
+  3) 当客户端发起请求时，服务器将请求转发给容器
+  4) 容器根据请求创建 Servlet 实例
+     + 容器根据 DD 文件中的内容创建 ServletConfig
+  5) 容器创建和请求相对应的 request 和 respone 对象，并将这两个对象交给 Servlet 处理
+  6) 容器将处理好的响应返回给服务器
+  7) 服务器将响应转发给客服端
+
+  这里需要注意的是容器和服务器不是一个东西，我们常用的 apache-tomcat 其实是 apache 服务器 + tomcat 服务器。
+
+  虽然 tomcat 也自带服务器，但是那个东西的功能用来测试还可以，要是放到生产环境就不够用了，因此便需要一个专业的服务器来辅助，比如 apache。
+  
+  然后是默认 Servlet，在学习了生命周期后我就一直在思考：既然请求都是交给 Servlet 处理的，那么静态资源呢？我并没有给它们配置 Servlet 啊！
+
+  后来我才了解到，是有默认 Servlet 存在的，对静态资源的请求都是通过默认 Servlet 进行处理的，还有 JSP 也是……
+
+  当时就打开了新世界的大门 ＼(￣▽￣)／
+
+  详细内容可以参考 [[https://tomcat.apache.org/tomcat-7.0-doc/default-servlet.html][Apache Tomcat 7 (7.0.94) - Default Servlet Reference]]
+
+* 结语
+  和往常一样，这篇博客里面没有多少使用上的细节，emmm，连 Servlet 映射的配置都没有 @_@
+
+  但是不得不说，Servlet 接口的设计是很漂亮的，可以让人感受到一种美感！
+
+  当然了，现在常用的是 Spring 框架，和 Servlet 相关的一堆细节都被屏蔽了，还引入了自己的生命周期 ( ╯°□°)╯ ┻━━┻
+  
+  ……
+
