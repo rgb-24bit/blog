@@ -1,0 +1,162 @@
+#+TITLE:      Java EE - Servlet 3.0 和 Spring MVC
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-05-03 周五>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#基于-java-的配置][基于 Java 的配置]]
+- [[#servletcontainerinitializer][ServletContainerInitializer]]
+- [[#动态配置][动态配置]]
+- [[#dispatcherservlet-和-contextloaderlistener][DispatcherServlet 和 ContextLoaderListener]]
+- [[#两个应用上下文][两个应用上下文]]
+- [[#配置过程][配置过程]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  在学习 Spring MVC 的过程中发现，Spring MVC 使用了不少 Servlet 3.0 的新特性，但鉴于我学习 Servlet 使用的教程是 《Head First Servlet & JSP》，
+  其中的 Servlet 版本只有 2.5，因此不得不去研究一下 Servlet 3.0 的新特性在继续 Spring MVC 的学习。
+
+  这篇博客的主要内容便是在学习了 Servlet 3.0 的一些新特性之后对 Spring MVC 的启动配置过程的理解。
+
+  注意：博客的主要内容不是关于 Servlet 3.0 的新特性和 Spring MVC 的使用的。
+
+  #+HTML: <details><summary><i></i></summary>
+
+  Servlet 3.0 规范 2009 年就出来了，但是现在的教程基本上还是从 web.xml 开始配置的……
+
+  #+HTML: </details>
+
+* 基于 Java 的配置
+  首先我们来看一下一个基于 Java 的配置，其实就是《Spring 实战》第五章的那个配置：
+  #+BEGIN_SRC java
+    import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+    import spittr.web.WebConfig;
+
+    public class SpitterWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+      @Override
+      protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[] { RootConfig.class };
+      }
+
+      @Override
+      protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] { WebConfig.class };
+      }
+
+      @Override
+      protected String[] getServletMappings() {
+        return new String[] { "/" };
+      }
+    }
+  #+END_SRC  
+
+  这个配置的作用为：
+  1) 配置 DispatcherServlet 的路径映射为 ~/~, 也就是说所有的请求都会经由 DispatcherServlet 进行处理
+  2) 指定 DispatcherServlet 中的应用上下文配置类为 WebConfig
+  3) 指定 ContextLoaderListener 中的应用上下文配置类为 RootConfig
+
+  由于在看 《Head First Servlet & JSP》的时候配置都是基于 XML 的，因此在看到《Spring 实战》的这一部分的时候我产生了不少的疑惑，其中包括：
+  1) DispatcherServlet 是什么？是我们自己编写的 Servlet 还是 Spring MVC 自带的？
+  2) ContextLoaderListener 是什么？新种类的 Listener？
+  3) 我没有在 DD 中配置 DispatcherServlet，Servlet 容器怎么知道把请求发送给 DispatcherServlet？
+  4) Spring MVC 中存在两个应用上下文？
+  5) 基于 XML 又该怎样配置？
+  6) ……
+
+  这里面的一些问题可以通过看书解决，但有一些问题，还是需要查阅网上的资料才行。
+
+* ServletContainerInitializer
+  Servlet 3.0 中的新特性还是不少的，其中一个新特性便是：
+  + 在 Servlet 3.0 环境中，Servlet 容器会在类路径中查找实现了 ServletContainerInitializer 接口的类，如果能发现的话，就会在启动的时候自动调用实现类的 onStartup 方法[fn:1]。
+
+  Spring MVC 中的 ServletContainerInitializer 实现便是 SpringServletContainerInitializer，它的部分源码如下：
+  #+BEGIN_SRC java
+    @HandlesTypes(WebApplicationInitializer.class)
+    public class SpringServletContainerInitializer implements ServletContainerInitializer {
+
+      @Override
+      public void onStartup(@Nullable Set<Class<?>> webAppInitializerClasses, ServletContext servletContext)
+          throws ServletException {
+        // ...
+      }
+    }
+  #+END_SRC
+
+  onStartup 中的代码可以不用管，关键在于 SpringServletContainerInitializer 头上的那个注解：
+  #+BEGIN_SRC java
+    @HandlesTypes(WebApplicationInitializer.class)
+  #+END_SRC
+
+  这个注解的意思是：初始化 SpringServletContainerInitializer 时扫描所有实现了 WebApplicationInitializer 接口的类，并作为参数 webAppInitializerClasses 传递给 onStartup 方法。
+
+  而我们在前面的配置中继承的 AbstractAnnotationConfigDispatcherServletInitializer 便是 WebApplicationInitializer 的一个便利的基础实现。
+
+  也就是说，Servlet 容器启动的时候会将我们的配置类发送给 SpringServletContainerInitializer 方法，然后在进行一系列的操作后完成 DispatcherServlet 的配置。
+
+  到了这里，大概能解决 Servlet 容器是怎么找到我们的配置类的，但还有一个问题是：Spring MVC 是怎么配置的 DispatcherServlet。
+
+* 动态配置
+  Servlet 3.0 中的一个新特性便是支持动态配置，我们可以通过 ServletContext 获取 Registration 对象进行动态配置，比如：
+  #+BEGIN_SRC java
+    ServletRegistration.Dynamic registratio = ServletContext.addServlet("appServlet", DispatcherServlet.class);
+    registratio.addMapping("/");
+  #+END_SRC
+
+  我们可以看到，SpringServletContainerInitializer 的 onStartup 是可以获得 ServletContext 的，因此，我们完全可以在 onStartup 内部完成 DispatcherServlet 的配置。
+
+  很好，Servlet 容器是怎么配置 DispatcherServlet 的问题大概可以解决了。
+
+* DispatcherServlet 和 ContextLoaderListener
+  通过查阅资料可以发现，DispatcherServlet 是 Spring MVC 框架自带的 Servlet，而 ContextLoaderListener 是 Spring MVC 自带的 ServletContextListener，不是新品种的监听者。
+
+  这两个类的源码链接如下：
+  + [[https://github.com/spring-projects/spring-framework/blob/master/spring-web/src/main/java/org/springframework/web/context/ContextLoaderListener.java][spring-framework/ContextLoaderListener.java at master · spring-projects/spring-framework]]
+  + [[https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/main/java/org/springframework/web/servlet/DispatcherServlet.java][spring-framework/DispatcherServlet.java at master · spring-projects/spring-framework]]
+
+* 两个应用上下文
+  在最开始的配置中，我们分别制定了 DispatcherServlet 和 ContextLoaderListener 中的应用上下文的配置类，这意味着：
+  + Spring MVC 中存在两个应用上下文，这两个应用上下文分别位于 DispatcherServlet 和 ContextLoaderListener
+
+  翻书可以得知，这两个应用上下文的作用分别为：
+  + DispatcherServlet 应用上下文用于加载应用中包含 Web 组件的 Bean，包括控制器、视图解析器……
+  + ContextLoaderListener 应用上下文用于加载应用中的其他 Bean，通常是驱动应用后端的中间层和数据层组件。
+
+  这样一来，我们便可以大致总结一下配置 DispatcherServlet 和 ContextLoaderListener 中需要配置的内容了：
+  + DispatcherServlet：普通 Servlet 对象需要的配置项，如路径映射、初始化参数。以及内部的 Spring 应用上下文的配置
+  + ContextLoaderListener：常规的应用上下文配置，比如初始化参数。以及内部的 Spring 应用上下文的配置。
+
+* 配置过程
+  现在可以大致总结一下 Spring MVC 的配置过程了：
+  1) Servlet 容器启动的时候查找 ServletContainerInitializer 的实现类，找到 SpringServletContainerInitializer
+  2) 根据 SpringServletContainerInitializer 的 HandlesTypes 查找所有 WebApplicationInitializer 的实现类
+  3) SpringServletContainerInitializer 的 onStartup 在内部的调用流程中创建并配置 DispatcherServlet 和 ContextLoaderListener
+
+  当然了，没有看源码的话，还有一个细节是不清楚的：
+  + 应用上下文的创建是在 DispatcherServlet 和 ContextLoaderListener 内部完成的还是在外部创建好后传递给 DispatcherServlet 和 ContextLoaderListener
+
+  当然了，这无伤大雅 （￣▽￣）
+
+  #+HTML: <details><summary><i></i></summary>
+
+  之前还一直在想 Servlet 容器是先调用 ServletContainerInitializer 还是先调用 ServletContextListener，然后突然翻译过来，我都没有配置 Listener，
+  那肯定只能是 ServletContainerInitializer 了啊 (°∀°)ﾉ
+
+  #+HTML: </details>
+
+* 结语
+  本来还说贴一下 XML 的配置代码，结果《Spring 实战》提供的样例代码中直接把 web.xml 给去了，所以……
+
+* 参考链接
+  + [[https://elim.iteye.com/blog/2426592][通过 ServletContainerInitializer 注册 Servlet 对象 - Elim 的博客 - ITeye 博客]]
+  + [[http://www.oracle.com/technetwork/cn/community/4-servlet-3-324302-zhs.pdf][JavaEE 6 Servlet 3.0 中的新特性 - Oracle]]
+  + [[https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html][Servlet 3.0 新特性详解]]
+
+* Footnotes
+
+[fn:1] 书上这里说的是：如果能发现的话，就会用实现类来配置 Servlet 容器。感觉这种说法挺不准确的，不知道是不是翻译的锅。
+

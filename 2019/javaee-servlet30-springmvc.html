@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-05-03 周五 20:57 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java EE - Servlet 3.0 和 Spring MVC</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Java EE - Servlet 3.0 和 Spring MVC</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0ae563c">1. 前言</a></li>
+<li><a href="#org91f7b2b">2. 基于 Java 的配置</a></li>
+<li><a href="#org1030f44">3. ServletContainerInitializer</a></li>
+<li><a href="#org048123a">4. 动态配置</a></li>
+<li><a href="#org832dc9c">5. DispatcherServlet 和 ContextLoaderListener</a></li>
+<li><a href="#orgc539a45">6. 两个应用上下文</a></li>
+<li><a href="#orgab0f758">7. 配置过程</a></li>
+<li><a href="#orgb29b56f">8. 结语</a></li>
+<li><a href="#orgb6712f9">9. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0ae563c" class="outline-2">
+<h2 id="org0ae563c"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在学习 Spring MVC 的过程中发现，Spring MVC 使用了不少 Servlet 3.0 的新特性，但鉴于我学习 Servlet 使用的教程是 《Head First Servlet &amp; JSP》，
+其中的 Servlet 版本只有 2.5，因此不得不去研究一下 Servlet 3.0 的新特性在继续 Spring MVC 的学习。
+</p>
+
+<p>
+这篇博客的主要内容便是在学习了 Servlet 3.0 的一些新特性之后对 Spring MVC 的启动配置过程的理解。
+</p>
+
+<p>
+注意：博客的主要内容不是关于 Servlet 3.0 的新特性和 Spring MVC 的使用的。
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+Servlet 3.0 规范 2009 年就出来了，但是现在的教程基本上还是从 web.xml 开始配置的……
+</p>
+
+</details>
+</div>
+</div>
+
+<div id="outline-container-org91f7b2b" class="outline-2">
+<h2 id="org91f7b2b"><span class="section-number-2">2</span> 基于 Java 的配置</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+首先我们来看一下一个基于 Java 的配置，其实就是《Spring 实战》第五章的那个配置：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">import</span> <span class="org-constant">org</span>.<span class="org-constant">springframework</span>.<span class="org-constant">web</span>.<span class="org-constant">servlet</span>.<span class="org-constant">support</span>.<span class="org-type">AbstractAnnotationConfigDispatcherServletInitializer</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">spittr</span>.<span class="org-constant">web</span>.<span class="org-type">WebConfig</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SpitterWebInitializer</span> <span class="org-keyword">extends</span> <span class="org-type">AbstractAnnotationConfigDispatcherServletInitializer</span> {
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">protected</span> <span class="org-type">Class</span>&lt;?&gt;[] <span class="org-function-name">getRootConfigClasses</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">Class</span>&lt;?&gt;[] { RootConfig.<span class="org-keyword">class</span> };
+  }
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">protected</span> <span class="org-type">Class</span>&lt;?&gt;[] <span class="org-function-name">getServletConfigClasses</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">Class</span>&lt;?&gt;[] { WebConfig.<span class="org-keyword">class</span> };
+  }
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">protected</span> <span class="org-type">String</span>[] <span class="org-function-name">getServletMappings</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">String</span>[] { <span class="org-string">"/"</span> };
+  }
+}
+</pre>
+</div>
+
+<p>
+这个配置的作用为：
+</p>
+<ol class="org-ol">
+<li>配置 DispatcherServlet 的路径映射为 <code>/</code>, 也就是说所有的请求都会经由 DispatcherServlet 进行处理</li>
+<li>指定 DispatcherServlet 中的应用上下文配置类为 WebConfig</li>
+<li>指定 ContextLoaderListener 中的应用上下文配置类为 RootConfig</li>
+</ol>
+
+<p>
+由于在看 《Head First Servlet &amp; JSP》的时候配置都是基于 XML 的，因此在看到《Spring 实战》的这一部分的时候我产生了不少的疑惑，其中包括：
+</p>
+<ol class="org-ol">
+<li>DispatcherServlet 是什么？是我们自己编写的 Servlet 还是 Spring MVC 自带的？</li>
+<li>ContextLoaderListener 是什么？新种类的 Listener？</li>
+<li>我没有在 DD 中配置 DispatcherServlet，Servlet 容器怎么知道把请求发送给 DispatcherServlet？</li>
+<li>Spring MVC 中存在两个应用上下文？</li>
+<li>基于 XML 又该怎样配置？</li>
+<li>……</li>
+</ol>
+
+<p>
+这里面的一些问题可以通过看书解决，但有一些问题，还是需要查阅网上的资料才行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1030f44" class="outline-2">
+<h2 id="org1030f44"><span class="section-number-2">3</span> ServletContainerInitializer</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Servlet 3.0 中的新特性还是不少的，其中一个新特性便是：
+</p>
+<ul class="org-ul">
+<li>在 Servlet 3.0 环境中，Servlet 容器会在类路径中查找实现了 ServletContainerInitializer 接口的类，如果能发现的话，就会在启动的时候自动调用实现类的 onStartup 方法<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>。</li>
+</ul>
+
+<p>
+Spring MVC 中的 ServletContainerInitializer 实现便是 SpringServletContainerInitializer，它的部分源码如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@HandlesTypes</span>(WebApplicationInitializer.<span class="org-keyword">class</span>)
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SpringServletContainerInitializer</span> <span class="org-keyword">implements</span> <span class="org-type">ServletContainerInitializer</span> {
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">onStartup</span>(<span class="org-c-annotation">@Nullable</span> <span class="org-type">Set</span>&lt;<span class="org-type">Class</span>&lt;?&gt;&gt; <span class="org-variable-name">webAppInitializerClasses</span>, <span class="org-type">ServletContext</span> <span class="org-variable-name">servletContext</span>)
+      <span class="org-keyword">throws</span> <span class="org-type">ServletException</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+onStartup 中的代码可以不用管，关键在于 SpringServletContainerInitializer 头上的那个注解：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@HandlesTypes</span>(WebApplicationInitializer.<span class="org-keyword">class</span>)
+</pre>
+</div>
+
+<p>
+这个注解的意思是：初始化 SpringServletContainerInitializer 时扫描所有实现了 WebApplicationInitializer 接口的类，并作为参数 webAppInitializerClasses 传递给 onStartup 方法。
+</p>
+
+<p>
+而我们在前面的配置中继承的 AbstractAnnotationConfigDispatcherServletInitializer 便是 WebApplicationInitializer 的一个便利的基础实现。
+</p>
+
+<p>
+也就是说，Servlet 容器启动的时候会将我们的配置类发送给 SpringServletContainerInitializer 方法，然后在进行一系列的操作后完成 DispatcherServlet 的配置。
+</p>
+
+<p>
+到了这里，大概能解决 Servlet 容器是怎么找到我们的配置类的，但还有一个问题是：Spring MVC 是怎么配置的 DispatcherServlet。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org048123a" class="outline-2">
+<h2 id="org048123a"><span class="section-number-2">4</span> 动态配置</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Servlet 3.0 中的一个新特性便是支持动态配置，我们可以通过 ServletContext 获取 Registration 对象进行动态配置，比如：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-constant">ServletRegistration</span>.<span class="org-type">Dynamic</span> <span class="org-variable-name">registratio</span> = ServletContext.addServlet(<span class="org-string">"appServlet"</span>, DispatcherServlet.<span class="org-keyword">class</span>);
+registratio.addMapping(<span class="org-string">"/"</span>);
+</pre>
+</div>
+
+<p>
+我们可以看到，SpringServletContainerInitializer 的 onStartup 是可以获得 ServletContext 的，因此，我们完全可以在 onStartup 内部完成 DispatcherServlet 的配置。
+</p>
+
+<p>
+很好，Servlet 容器是怎么配置 DispatcherServlet 的问题大概可以解决了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org832dc9c" class="outline-2">
+<h2 id="org832dc9c"><span class="section-number-2">5</span> DispatcherServlet 和 ContextLoaderListener</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+通过查阅资料可以发现，DispatcherServlet 是 Spring MVC 框架自带的 Servlet，而 ContextLoaderListener 是 Spring MVC 自带的 ServletContextListener，不是新品种的监听者。
+</p>
+
+<p>
+这两个类的源码链接如下：
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/spring-projects/spring-framework/blob/master/spring-web/src/main/java/org/springframework/web/context/ContextLoaderListener.java">spring-framework/ContextLoaderListener.java at master · spring-projects/spring-framework</a></li>
+<li><a href="https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/main/java/org/springframework/web/servlet/DispatcherServlet.java">spring-framework/DispatcherServlet.java at master · spring-projects/spring-framework</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc539a45" class="outline-2">
+<h2 id="orgc539a45"><span class="section-number-2">6</span> 两个应用上下文</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+在最开始的配置中，我们分别制定了 DispatcherServlet 和 ContextLoaderListener 中的应用上下文的配置类，这意味着：
+</p>
+<ul class="org-ul">
+<li>Spring MVC 中存在两个应用上下文，这两个应用上下文分别位于 DispatcherServlet 和 ContextLoaderListener</li>
+</ul>
+
+<p>
+翻书可以得知，这两个应用上下文的作用分别为：
+</p>
+<ul class="org-ul">
+<li>DispatcherServlet 应用上下文用于加载应用中包含 Web 组件的 Bean，包括控制器、视图解析器……</li>
+<li>ContextLoaderListener 应用上下文用于加载应用中的其他 Bean，通常是驱动应用后端的中间层和数据层组件。</li>
+</ul>
+
+<p>
+这样一来，我们便可以大致总结一下配置 DispatcherServlet 和 ContextLoaderListener 中需要配置的内容了：
+</p>
+<ul class="org-ul">
+<li>DispatcherServlet：普通 Servlet 对象需要的配置项，如路径映射、初始化参数。以及内部的 Spring 应用上下文的配置</li>
+<li>ContextLoaderListener：常规的应用上下文配置，比如初始化参数。以及内部的 Spring 应用上下文的配置。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgab0f758" class="outline-2">
+<h2 id="orgab0f758"><span class="section-number-2">7</span> 配置过程</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+现在可以大致总结一下 Spring MVC 的配置过程了：
+</p>
+<ol class="org-ol">
+<li>Servlet 容器启动的时候查找 ServletContainerInitializer 的实现类，找到 SpringServletContainerInitializer</li>
+<li>根据 SpringServletContainerInitializer 的 HandlesTypes 查找所有 WebApplicationInitializer 的实现类</li>
+<li>SpringServletContainerInitializer 的 onStartup 在内部的调用流程中创建并配置 DispatcherServlet 和 ContextLoaderListener</li>
+</ol>
+
+<p>
+当然了，没有看源码的话，还有一个细节是不清楚的：
+</p>
+<ul class="org-ul">
+<li>应用上下文的创建是在 DispatcherServlet 和 ContextLoaderListener 内部完成的还是在外部创建好后传递给 DispatcherServlet 和 ContextLoaderListener</li>
+</ul>
+
+<p>
+当然了，这无伤大雅 （￣▽￣）
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+之前还一直在想 Servlet 容器是先调用 ServletContainerInitializer 还是先调用 ServletContextListener，然后突然翻译过来，我都没有配置 Listener，
+那肯定只能是 ServletContainerInitializer 了啊 (°∀°)ﾉ
+</p>
+
+</details>
+</div>
+</div>
+
+<div id="outline-container-orgb29b56f" class="outline-2">
+<h2 id="orgb29b56f"><span class="section-number-2">8</span> 结语</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+本来还说贴一下 XML 的配置代码，结果《Spring 实战》提供的样例代码中直接把 web.xml 给去了，所以……
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb6712f9" class="outline-2">
+<h2 id="orgb6712f9"><span class="section-number-2">9</span> 参考链接</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li><a href="https://elim.iteye.com/blog/2426592">通过 ServletContainerInitializer 注册 Servlet 对象 - Elim 的博客 - ITeye 博客</a></li>
+<li><a href="http://www.oracle.com/technetwork/cn/community/4-servlet-3-324302-zhs.pdf">JavaEE 6 Servlet 3.0 中的新特性 - Oracle</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html">Servlet 3.0 新特性详解</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+书上这里说的是：如果能发现的话，就会用实现类来配置 Servlet 容器。感觉这种说法挺不准确的，不知道是不是翻译的锅。
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
