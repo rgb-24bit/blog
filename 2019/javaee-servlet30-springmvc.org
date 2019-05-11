@@ -143,10 +143,14 @@
 
   #+HTML: <details><summary><i></i></summary>
 
-  之前还一直在想 Servlet 容器是先调用 ServletContainerInitializer 还是先调用 ServletContextListener，然后突然翻译过来，我都没有配置 Listener，
+  之前还一直在想 Servlet 容器是先调用 ServletContainerInitializer 还是先调用 ServletContextListener，然后突然反应过来，我都没有配置 Listener，
   那肯定只能是 ServletContainerInitializer 了啊 (°∀°)ﾉ
 
   #+HTML: </details>
+
+  更新：
+  + 2019.05.11 - 看了一下官方文档，两个应用上下文都是在创建好以后再分配给 DispatcherServlet 和 ContextLoaderListener 的，同时 DispatcherServlet 中的应用上下文是 ContextLoaderListener 的子应用上下文，
+    当 DispatcherServlet 中找不到需要的 Bean 时，就会委托给 ContextLoaderListener 应用上下文查找。
 
 * 结语
   本来还说贴一下 XML 的配置代码，结果《Spring 实战》提供的样例代码中直接把 web.xml 给去了，所以……
