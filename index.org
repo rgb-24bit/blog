@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
+- 05-18 -- [[file:2019/ml-knn.org][机器学习 - K-近邻算法]] ::
 - 05-03 -- [[file:2019/javaee-servlet30-springmvc.org][Java EE - Servlet 3.0 和 Spring MVC]] ::
 - 04-26 -- [[file:2019/javaee-servlet-summary.org][Java EE - Servlet 小结]] ::
 - 04-20 -- [[file:2019/java-time.org][Java8 时间处理]] ::

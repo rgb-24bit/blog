@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-05-18 周六 16:44 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>机器学习 - K-近邻算法</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">机器学习 - K-近邻算法</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5cf8f78">1. 前言</a></li>
+<li><a href="#org9b55256">2. 算法介绍</a></li>
+<li><a href="#org43580e7">3. 距离计算</a></li>
+<li><a href="#org3bda930">4. 算法实现</a></li>
+<li><a href="#org847724e">5. 数据转换</a></li>
+<li><a href="#orgb141e66">6. K 值选取</a></li>
+<li><a href="#org69acaf5">7. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5cf8f78" class="outline-2">
+<h2 id="org5cf8f78"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+K-近邻算法(k-nearest neighbors algorithm)，又称为 KNN 算法，是这学期机器学习课教的第一个算法，也是我接触的第一个机器学习算法。
+</p>
+
+<p>
+学习之后的感触便是：
+</p>
+<ol class="org-ol">
+<li>机器学习和我想象的有点不一样</li>
+<li>KNN 是真滴简单 (〜￣△￣)〜</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org9b55256" class="outline-2">
+<h2 id="org9b55256"><span class="section-number-2">2</span> 算法介绍</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+KNN 属于有监督的分类算法，也就是说，KNN 是通过 <b>有标签</b> 的样本集进行训练，并通过样本集数据对测试对象进行 <b>分类</b> 的算法。
+</p>
+
+<p>
+KNN 的原理也很简单，通过选取样本集中 K 个离测试对象最近的样本，然后根据这 K 个样本的类型对测试对象进行分类。这也是算法名称中 K 的来历。
+</p>
+
+<p>
+通过算法的原理我们也可以了解到，实现 KNN 算法的关键在于：样本集、距离的计算、K 值的选取。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org43580e7" class="outline-2">
+<h2 id="org43580e7"><span class="section-number-2">3</span> 距离计算</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+说到距离计算，脑子里首先想到的公式便是 \(\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}\), 这个公式可以计算点 \((x_1, y_1)\) 和点 \((x_2, y_2)\) 之间的距离。
+但是公式是欧几里得距离在二维平面中的简化形式，完整的公式是这样的：
+</p>
+
+\begin{align*}
+  d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \dots + (x_n - y_n)^2}
+\end{align*}
+
+<p>
+通过这个公式来计算测试对象和样本集中样本距离的 Python 代码实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">euclidean_distance</span>(a, b):
+    <span class="org-doc">"""Implementation of Euclidean distance calculation.</span>
+
+<span class="org-doc">    Example:</span>
+<span class="org-doc">    &gt;&gt;&gt; a = np.array([1, 2, 3])</span>
+<span class="org-doc">    &gt;&gt;&gt; b = np.array([[4, 5, 6], [7, 8, 9]])</span>
+<span class="org-doc">    &gt;&gt;&gt; euclidean_distance(a, b)</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">return</span> np.square(np.tile(a, (b.shape[0], 1)) - b).<span class="org-builtin">sum</span>(axis=1) ** 0.5
+</pre>
+</div>
+
+<p>
+上面的代码中，参数 <code>a</code> 是测试对象，是一个 \(1xn\) 的向量，而参数 <code>b</code> 是一个 \(m \times n\) 的矩阵，意味着存在 \(m\) 个样本。
+</p>
+
+<p>
+除了欧几里得距离公式以外，还有两个常用的距离计算公式，分别为：
+</p>
+<ul class="org-ul">
+<li><p>
+曼哈顿距离计算公式 \(d(x, y) = |x_1 - y_1| + |x_2 - y_2| + \dots + |x_n - y_n|\)
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">manhattan_distance</span>(a, b):
+    <span class="org-doc">"""Implementation of Manhattan distance calculation.</span>
+
+<span class="org-doc">    Example:</span>
+<span class="org-doc">    &gt;&gt;&gt; a = np.array([1, 2, 3])</span>
+<span class="org-doc">    &gt;&gt;&gt; b = np.array([[4, 5, 6], [7, 8, 9]])</span>
+<span class="org-doc">    &gt;&gt;&gt; manhattan_distance(a, b)</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">return</span> np.<span class="org-builtin">abs</span>(np.tile(a, (b.shape[0], 1)) - b).<span class="org-builtin">sum</span>(axis=1)
+</pre>
+</div></li>
+
+<li><p>
+闵可夫斯基距离计算公式 \(d(x, y) = \Bigg(\sum\limits_{i=1}^n|x_i - y_i|^p \Bigg)^\frac{1}{p}\)
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">minkowski_distance</span>(a, b, p):
+    <span class="org-doc">"""Implementation of Minkowski distance calculation.</span>
+
+<span class="org-doc">    Example:</span>
+<span class="org-doc">    &gt;&gt;&gt; a = np.array([1, 2, 3])</span>
+<span class="org-doc">    &gt;&gt;&gt; b = np.array([[4, 5, 6], [7, 8, 9]])</span>
+<span class="org-doc">    &gt;&gt;&gt; minkowski_distance(a, b, 3)</span>
+<span class="org-doc">    """</span>
+    <span class="org-variable-name">abs_diff</span> = np.<span class="org-builtin">abs</span>(np.tile(a, (b.shape[0], 1)) - b)
+    <span class="org-keyword">return</span> np.power(abs_diff, p).<span class="org-builtin">sum</span>(axis=1) ** (1 / p)
+</pre>
+</div></li>
+</ul>
+
+<p>
+同时，根据闵可夫斯基距离的公式可以知到，当公式中的中 \(p = 2\) 时闵可夫斯基距离就变成了欧氏距离，而 \(p = 1\) 时则变成了曼哈顿距离。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3bda930" class="outline-2">
+<h2 id="org3bda930"><span class="section-number-2">4</span> 算法实现</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+有了距离的计算函数，就可以着手实现 KNN 算法了，使用 Python 的实现的版本如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">classify0</span>(inx, data_set, labels, k):
+    <span class="org-variable-name">sorted_distances</span> = euclidean_distance(inx, data_set).argsort()
+
+    <span class="org-variable-name">class_counter</span> = {}
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(k):
+        <span class="org-variable-name">label</span> = labels[sorted_distances[i]]
+        <span class="org-variable-name">class_counter</span>[label] = class_counter.get(label, 0) + 1
+
+    <span class="org-variable-name">sorted_class_counter</span> = <span class="org-builtin">sorted</span>(
+        class_counter.items(), key=operator.itemgetter(1), reverse=<span class="org-constant">True</span>)
+
+    <span class="org-keyword">return</span> sorted_class_counter[0][0]
+</pre>
+</div>
+
+<p>
+这是一个很简单的实现，函数的输入为测试对象向量 <code>inx</code>, 样本集矩阵 <code>data_set</code>, 样本集样本对应的标签 <code>lables</code> 和 <code>K</code> 值。
+</p>
+
+<p>
+函数首先通过欧几里得距离计算函数计算测试对象向量到样本集中各样本之间的距离，然后通过 <code>argsort</code> 方法对距离从小到大进行排序。然后根据 <code>K</code> 值选取最近的 K 个样本，
+根据这些样本的分类情况返回分类结果。
+</p>
+
+<p>
+其中，方法 <code>argsort</code> 是一个很有用的方法，一般来说，距离计算的结果往往是 <b>浮点数</b>, 然而方法 <code>argsort</code> 对结果进行排序后的结果是 <b>整数索引</b>. 比如下面这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span class="org-variable-name">arr</span> = np.array([1.3, 4.5, 2.5, 6.7, 2.3])
+&gt;&gt;&gt; arr.argsort()
+array([0, 4, 2, 1, 3], dtype=int64)
+&gt;&gt;&gt; [arr[i] <span class="org-keyword">for</span> i <span class="org-keyword">in</span> arr.argsort()]
+[1.3, 2.3, 2.5, 4.5, 6.7]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org847724e" class="outline-2">
+<h2 id="org847724e"><span class="section-number-2">5</span> 数据转换</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+仔细观察前面的代码的话就可以发现，我们对样本和测试对象作出了一个假设，那就是它们都是 \(1 \times n\) 的向量，而样本集便是由多个样本组成的 \(m \times n\) 的矩阵。
+</p>
+
+<p>
+因此，在使用 KNN 算法的实现代码之前还需要解决的问题便是：怎样将样本转换为向量！
+</p>
+
+<p>
+假设我们的样本是如下形式的，其中不同名称的值可能是相同的：
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">样本编号</th>
+<th scope="col" class="org-left">特征 A</th>
+<th scope="col" class="org-left">特征 B</th>
+<th scope="col" class="org-left">特征 C</th>
+<th scope="col" class="org-left">特征 D</th>
+<th scope="col" class="org-left">样本分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">a1</td>
+<td class="org-left">b1</td>
+<td class="org-left">c1</td>
+<td class="org-left">d1</td>
+<td class="org-left">分类 1</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">a2</td>
+<td class="org-left">b2</td>
+<td class="org-left">c2</td>
+<td class="org-left">d2</td>
+<td class="org-left">分类 2</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">a3</td>
+<td class="org-left">b3</td>
+<td class="org-left">c3</td>
+<td class="org-left">d3</td>
+<td class="org-left">分类 3</td>
+</tr>
+
+<tr>
+<td class="org-right">&#x2026;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#x2026;</td>
+</tr>
+
+<tr>
+<td class="org-right">n</td>
+<td class="org-left">an</td>
+<td class="org-left">bn</td>
+<td class="org-left">cn</td>
+<td class="org-left">dn</td>
+<td class="org-left">分类 n</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+对于上面的样本来说，假如特征值都是 <b>数值型</b> 的，那么我们可以直接构建样本矩阵：
+</p>
+\begin{align*}
+  \begin{bmatrix}
+    a1 & b1 & c1 & d1              \\
+    a2 & b2 & c2 & d2              \\
+    \dots & \dots & \dots & \dots  \\
+    an & bn & cn & dn              \\
+  \end{bmatrix}
+\end{align*}
+
+<p>
+而对于特征值不是数值型的样本来说，我们可以根据特征值的数量对特征值进行变换，比如是和否可以转换为 <code>0</code> 和 <code>1</code>.
+</p>
+
+<p>
+这也就意味着：KNN 适用的数据范围为数值型和标称型（特征值的取值范围是有限的）
+</p>
+
+<p>
+另外，假如样本的特征值取值范围变换很大，比如特征 A 的取值可能为 <code>(1, 1000)</code> 而特征 B 的取值可能为 <code>(1, 2)</code>, 那么我们应该进行数值归一化，
+避免部分特征值的权重过大，比如将取值范围处理为 <code>0</code> 到 <code>1</code> 或者 <code>-1</code> 到 <code>1</code> 之间。
+</p>
+
+<p>
+简单的处理方式便是 \(newVal = (oldVal - min) / (max - min)\), 其中， <code>min</code> 和 <code>max</code> 分别为每个特征的最大最小值。
+</p>
+
+<p>
+Python 代码实现如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">auto_norm</span>(data_set):
+    <span class="org-variable-name">min_vals</span>, <span class="org-variable-name">max_vals</span> = data_set.<span class="org-builtin">min</span>(0), data_set.<span class="org-builtin">max</span>(0)
+    <span class="org-variable-name">ranges</span> = max_vals - min_vals
+    <span class="org-variable-name">m</span> = data_set.shape[0]
+    <span class="org-keyword">return</span> (data_set - np.tile(min_vals, (m, 1))) / np.tile(ranges, (m, 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb141e66" class="outline-2">
+<h2 id="orgb141e66"><span class="section-number-2">6</span> K 值选取</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+完成了距离计算和数据转换，需要考虑的便是 K 值的选取了，在这一点上没有什么技巧，只有靠 <b>试</b>.
+</p>
+
+<p>
+可选的试验方式便是 <b>交叉验证</b>, 从样本集中选取一部分作为样本集，剩下的作为测试集，然后轮流测试不同 K 的正确率。
+</p>
+
+<p>
+如果要使用交叉验证，那么就需要考虑样本集的顺序对交叉验证的效果是否存在影响。
+</p>
+
+<p>
+我在使用交叉验证测试《机器学习实战》一书中的手写识别样本集的时候，由于样本集的顺序是固定的，因此选取某一部分作为测试集的时候，样本集便缺失了该部分的数据，
+导致测试效果非常不好，后来还是在打乱了样本集的顺序后测试效果才好起来。
+</p>
+
+<p>
+在完成了 K 的选取之后，我们的 KNN 算法就完成了，剩下的便是读取转换数据、测试和使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69acaf5" class="outline-2">
+<h2 id="org69acaf5"><span class="section-number-2">7</span> 结语</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+KNN 算法真的很简单，而且还是《机器学习实战》一书中唯一一个不需要学习的算法，就是简单粗暴的计算测试对象到样本的距离。
+</p>
+
+<p>
+不像其他算法，你可能还需要生成某种结构，需要保存统计数据。
+</p>
+
+<p>
+但也因此，KNN 的算法复杂度很高，时间和空间都高。
+</p>
+
+<p>
+拿自己的电脑跑程序的时候实在等的人心慌 (；￣Д￣)
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

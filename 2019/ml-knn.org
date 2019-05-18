@@ -1,0 +1,177 @@
+#+TITLE:      机器学习 - K-近邻算法
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-05-18 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#算法介绍][算法介绍]]
+- [[#距离计算][距离计算]]
+- [[#算法实现][算法实现]]
+- [[#数据转换][数据转换]]
+- [[#k-值选取][K 值选取]]
+- [[#结语][结语]]
+
+* 前言
+  K-近邻算法(k-nearest neighbors algorithm)，又称为 KNN 算法，是这学期机器学习课教的第一个算法，也是我接触的第一个机器学习算法。
+
+  学习之后的感触便是：
+  1) 机器学习和我想象的有点不一样
+  2) KNN 是真滴简单 (〜￣△￣)〜
+
+* 算法介绍
+  KNN 属于有监督的分类算法，也就是说，KNN 是通过 *有标签* 的样本集进行训练，并通过样本集数据对测试对象进行 *分类* 的算法。
+
+  KNN 的原理也很简单，通过选取样本集中 K 个离测试对象最近的样本，然后根据这 K 个样本的类型对测试对象进行分类。这也是算法名称中 K 的来历。
+
+  通过算法的原理我们也可以了解到，实现 KNN 算法的关键在于：样本集、距离的计算、K 值的选取。
+
+* 距离计算
+  说到距离计算，脑子里首先想到的公式便是 $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$, 这个公式可以计算点 $(x_1, y_1)$ 和点 $(x_2, y_2)$ 之间的距离。
+  但是公式是欧几里得距离在二维平面中的简化形式，完整的公式是这样的：
+
+  \begin{align*}
+    d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \dots + (x_n - y_n)^2}
+  \end{align*}
+  
+  通过这个公式来计算测试对象和样本集中样本距离的 Python 代码实现：
+  #+BEGIN_SRC python
+    def euclidean_distance(a, b):
+        """Implementation of Euclidean distance calculation.
+
+        Example:
+        >>> a = np.array([1, 2, 3])
+        >>> b = np.array([[4, 5, 6], [7, 8, 9]])
+        >>> euclidean_distance(a, b)
+        """
+        return np.square(np.tile(a, (b.shape[0], 1)) - b).sum(axis=1) ** 0.5
+  #+END_SRC
+
+  上面的代码中，参数 ~a~ 是测试对象，是一个 $1xn$ 的向量，而参数 ~b~ 是一个 $m \times n$ 的矩阵，意味着存在 $m$ 个样本。
+
+  除了欧几里得距离公式以外，还有两个常用的距离计算公式，分别为：
+  + 曼哈顿距离计算公式 $d(x, y) = |x_1 - y_1| + |x_2 - y_2| + \dots + |x_n - y_n|$
+    #+BEGIN_SRC python
+      def manhattan_distance(a, b):
+          """Implementation of Manhattan distance calculation.
+
+          Example:
+          >>> a = np.array([1, 2, 3])
+          >>> b = np.array([[4, 5, 6], [7, 8, 9]])
+          >>> manhattan_distance(a, b)
+          """
+          return np.abs(np.tile(a, (b.shape[0], 1)) - b).sum(axis=1)
+    #+END_SRC
+
+  + 闵可夫斯基距离计算公式 $d(x, y) = \Bigg(\sum\limits_{i=1}^n|x_i - y_i|^p \Bigg)^\frac{1}{p}$
+    #+BEGIN_SRC python
+      def minkowski_distance(a, b, p):
+          """Implementation of Minkowski distance calculation.
+
+          Example:
+          >>> a = np.array([1, 2, 3])
+          >>> b = np.array([[4, 5, 6], [7, 8, 9]])
+          >>> minkowski_distance(a, b, 3)
+          """
+          abs_diff = np.abs(np.tile(a, (b.shape[0], 1)) - b)
+          return np.power(abs_diff, p).sum(axis=1) ** (1 / p)
+    #+END_SRC
+
+  同时，根据闵可夫斯基距离的公式可以知到，当公式中的中 $p = 2$ 时闵可夫斯基距离就变成了欧氏距离，而 $p = 1$ 时则变成了曼哈顿距离。
+
+* 算法实现
+  有了距离的计算函数，就可以着手实现 KNN 算法了，使用 Python 的实现的版本如下：
+  #+BEGIN_SRC python
+    def classify0(inx, data_set, labels, k):
+        sorted_distances = euclidean_distance(inx, data_set).argsort()
+
+        class_counter = {}
+        for i in range(k):
+            label = labels[sorted_distances[i]]
+            class_counter[label] = class_counter.get(label, 0) + 1
+
+        sorted_class_counter = sorted(
+            class_counter.items(), key=operator.itemgetter(1), reverse=True)
+
+        return sorted_class_counter[0][0]
+  #+END_SRC
+
+  这是一个很简单的实现，函数的输入为测试对象向量 ~inx~, 样本集矩阵 ~data_set~, 样本集样本对应的标签 ~lables~ 和 ~K~ 值。
+
+  函数首先通过欧几里得距离计算函数计算测试对象向量到样本集中各样本之间的距离，然后通过 ~argsort~ 方法对距离从小到大进行排序。然后根据 ~K~ 值选取最近的 K 个样本，
+  根据这些样本的分类情况返回分类结果。
+
+  其中，方法 ~argsort~ 是一个很有用的方法，一般来说，距离计算的结果往往是 *浮点数*, 然而方法 ~argsort~ 对结果进行排序后的结果是 *整数索引*. 比如下面这样：
+  #+BEGIN_SRC python
+    >>> arr = np.array([1.3, 4.5, 2.5, 6.7, 2.3])
+    >>> arr.argsort()
+    array([0, 4, 2, 1, 3], dtype=int64)
+    >>> [arr[i] for i in arr.argsort()]
+    [1.3, 2.3, 2.5, 4.5, 6.7]
+  #+END_SRC
+
+* 数据转换
+  仔细观察前面的代码的话就可以发现，我们对样本和测试对象作出了一个假设，那就是它们都是 $1 \times n$ 的向量，而样本集便是由多个样本组成的 $m \times n$ 的矩阵。
+
+  因此，在使用 KNN 算法的实现代码之前还需要解决的问题便是：怎样将样本转换为向量！
+
+  假设我们的样本是如下形式的，其中不同名称的值可能是相同的：
+  |----------+--------+--------+--------+--------+----------|
+  | 样本编号 | 特征 A | 特征 B | 特征 C | 特征 D | 样本分类 |
+  |----------+--------+--------+--------+--------+----------|
+  |        1 | a1     | b1     | c1     | d1     | 分类 1   |
+  |        2 | a2     | b2     | c2     | d2     | 分类 2   |
+  |        3 | a3     | b3     | c3     | d3     | 分类 3   |
+  |      ... | ...    | ...    | ...    | ...    | ...      |
+  |        n | an     | bn     | cn     | dn     | 分类 n   |
+  |----------+--------+--------+--------+--------+----------|
+
+  对于上面的样本来说，假如特征值都是 *数值型* 的，那么我们可以直接构建样本矩阵：
+  \begin{align*}
+    \begin{bmatrix}
+      a1 & b1 & c1 & d1              \\
+      a2 & b2 & c2 & d2              \\
+      \dots & \dots & \dots & \dots  \\
+      an & bn & cn & dn              \\
+    \end{bmatrix}
+  \end{align*}
+  
+  而对于特征值不是数值型的样本来说，我们可以根据特征值的数量对特征值进行变换，比如是和否可以转换为 ~0~ 和 ~1~.
+
+  这也就意味着：KNN 适用的数据范围为数值型和标称型（特征值的取值范围是有限的）
+
+  另外，假如样本的特征值取值范围变换很大，比如特征 A 的取值可能为 ~(1, 1000)~ 而特征 B 的取值可能为 ~(1, 2)~, 那么我们应该进行数值归一化，
+  避免部分特征值的权重过大，比如将取值范围处理为 ~0~ 到 ~1~ 或者 ~-1~ 到 ~1~ 之间。
+
+  简单的处理方式便是 $newVal = (oldVal - min) / (max - min)$, 其中， ~min~ 和 ~max~ 分别为每个特征的最大最小值。
+
+  Python 代码实现如下：
+  #+BEGIN_SRC python
+    def auto_norm(data_set):
+        min_vals, max_vals = data_set.min(0), data_set.max(0)
+        ranges = max_vals - min_vals
+        m = data_set.shape[0]
+        return (data_set - np.tile(min_vals, (m, 1))) / np.tile(ranges, (m, 1))
+  #+END_SRC
+
+* K 值选取
+  完成了距离计算和数据转换，需要考虑的便是 K 值的选取了，在这一点上没有什么技巧，只有靠 *试*.
+
+  可选的试验方式便是 *交叉验证*, 从样本集中选取一部分作为样本集，剩下的作为测试集，然后轮流测试不同 K 的正确率。
+
+  如果要使用交叉验证，那么就需要考虑样本集的顺序对交叉验证的效果是否存在影响。
+
+  我在使用交叉验证测试《机器学习实战》一书中的手写识别样本集的时候，由于样本集的顺序是固定的，因此选取某一部分作为测试集的时候，样本集便缺失了该部分的数据，
+  导致测试效果非常不好，后来还是在打乱了样本集的顺序后测试效果才好起来。
+
+  在完成了 K 的选取之后，我们的 KNN 算法就完成了，剩下的便是读取转换数据、测试和使用。
+
+* 结语
+  KNN 算法真的很简单，而且还是《机器学习实战》一书中唯一一个不需要学习的算法，就是简单粗暴的计算测试对象到样本的距离。
+
+  不像其他算法，你可能还需要生成某种结构，需要保存统计数据。
+
+  但也因此，KNN 的算法复杂度很高，时间和空间都高。
+
+  拿自己的电脑跑程序的时候实在等的人心慌 (；￣Д￣)
+
