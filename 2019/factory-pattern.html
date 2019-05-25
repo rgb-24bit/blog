@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-05-25 周六 16:18 -->
+<!-- 2019-05-25 周六 17:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>设计模式之工厂模式</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb6478f2">1. 前言</a></li>
-<li><a href="#org6a2e4b5">2. 开闭原则和依赖倒转原则</a></li>
-<li><a href="#org4080449">3. 简单工厂模式</a></li>
-<li><a href="#orge45afa3">4. 工厂方法模式</a></li>
-<li><a href="#org5ae8e05">5. 抽象工厂模式</a></li>
-<li><a href="#org37180bf">6. 综合理解</a></li>
-<li><a href="#org9f83e07">7. 结语</a></li>
+<li><a href="#org58d48fa">1. 前言</a></li>
+<li><a href="#org0bc12a6">2. 三个面向对象设计原则</a></li>
+<li><a href="#org47f3e10">3. 简单工厂模式</a></li>
+<li><a href="#org5868391">4. 工厂方法模式</a></li>
+<li><a href="#org32557b7">5. 抽象工厂模式</a></li>
+<li><a href="#org1da925f">6. 综合理解</a></li>
+<li><a href="#org164bbb3">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb6478f2" class="outline-2">
-<h2 id="orgb6478f2"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org58d48fa" class="outline-2">
+<h2 id="org58d48fa"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在多次接触设计模式的过程中，工厂模式留给我的印象是最深的，因为，它基本上是各种教程前面必然会出现的一个模式 (￢_￢)
@@ -270,44 +270,33 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6a2e4b5" class="outline-2">
-<h2 id="org6a2e4b5"><span class="section-number-2">2</span> 开闭原则和依赖倒转原则</h2>
+<div id="outline-container-org0bc12a6" class="outline-2">
+<h2 id="org0bc12a6"><span class="section-number-2">2</span> 三个面向对象设计原则</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-说起来，以前学习工厂模式的过程中基本上都只学习了工厂模式的结构是怎么样的，但是却没有去了解为什么是那样的。
+某种程度上，设计模式的设计依据便是面向对象的设计原则，这里先列出来个人认为有助于工厂模式的理解的三个原则：
 </p>
-
-<p>
-在接触学习了面向对象的设计原则后，感觉开闭原则和依赖倒转原则对理解工厂模式来说是很有帮助的。
-</p>
-
-<p>
-因此，在学习工厂模式是怎么样的之前，可以先来看一看这两个原则。
-</p>
-
-<p>
-其中，开闭原则是指：类应该对扩展开发，对修改关闭。也就是说，我们应该在尽量避免修改已有代码的情况下扩展增加功能。
-</p>
-
-<p>
-而依赖倒转原则是指：依赖抽象，不要依赖具体类。也就是说，我们应该避免对具体类的依赖，而要尽量的依赖抽象。
-</p>
+<ul class="org-ul">
+<li>开闭原则：类应该对扩展开发，对修改关闭。也就是说，我们应该在尽量避免修改已有代码的情况下扩展增加功能</li>
+<li>依赖倒置原则：依赖抽象，不要依赖具体类。也就是说，我们应该避免对具体类的依赖，而要尽量的依赖抽象</li>
+<li>单一职责原则：类的职责要单一，不要将太多的职责放在一个类中</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org4080449" class="outline-2">
-<h2 id="org4080449"><span class="section-number-2">3</span> 简单工厂模式</h2>
+<div id="outline-container-org47f3e10" class="outline-2">
+<h2 id="org47f3e10"><span class="section-number-2">3</span> 简单工厂模式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 简单工厂模式不是一个设计模式，这是每个教程里面都会有的一句话，这里也不例外。
 </p>
 
 <p>
-简单工厂模式更像是一种编程习惯，其基本理念就是将创建具体类的过程抽取出来，放到某个（静态）方法中：
+简单工厂模式更像是一种编程习惯，其基本理念就是将创建具体类的过程抽取出来，放到某个工厂类的（静态）方法中：
 </p>
 <div class="org-src-container">
 <pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SimplePizzaFactory</span> {
-  <span class="org-keyword">public</span> <span class="org-type">Pizza</span> <span class="org-function-name">createPizza</span>(<span class="org-type">String</span> <span class="org-variable-name">type</span>) {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">Pizza</span> <span class="org-function-name">createPizza</span>(<span class="org-type">String</span> <span class="org-variable-name">type</span>) {
     <span class="org-type">Pizza</span> <span class="org-variable-name">pizza</span> = <span class="org-constant">null</span>;
 
     <span class="org-keyword">if</span> (type.equals(<span class="org-string">"cheese"</span>)) {
@@ -331,65 +320,65 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-另外，和常见的方式不同，这个例子中的 <code>createPizza</code> 方法并不是静态的，书中给与的解释是：非静态的方法可以通过继承的方式进行重写。
+这样一来，在使用简单工厂的地方，我们就只需要依赖一个简单工厂 <code>SimplePizzaFactory</code> 和一个 <code>Pizza</code> 类型，不需要关心具体的 <code>Pizza</code> 类型（依赖倒置原则）。
 </p>
-
-<details><summary><i></i></summary>
-
-<p>
-其实，如果通过继承简单工厂的模式重写方法的话，就有点接近工厂方法模式了 @_@
-</p>
-
-</details>
-
 
 <p>
 但是简单工厂模式是存在一些问题的：
 </p>
 <ol class="org-ol">
 <li>每当我们可以创建的具体对象的类型变多了，我们就需要修改简单工厂的代码，这违反了开闭原则</li>
-<li>假如简单工厂中的代码存在错误，那么，所有使用了这个工厂的地方都会存在安全隐患，这违反了单一职责原则<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></li>
+<li>假如简单工厂中的代码存在错误，那么，所有使用了这个工厂的地方都会存在安全隐患，这违反了单一职责原则</li>
 </ol>
 
 <p>
 因此，我们需要改进简单工厂模式，让其遵守面向对象的设计原则。
 </p>
+
+<p>
+注：《Head First 设计模式》给出的源码中，方法 <code>createPizza</code> 并不是静态的，理由是：非静态的方法可以通过继承的方式进行重写。但我个人感觉不是很有必要，
+就改成静态的了。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orge45afa3" class="outline-2">
-<h2 id="orge45afa3"><span class="section-number-2">4</span> 工厂方法模式</h2>
+<div id="outline-container-org5868391" class="outline-2">
+<h2 id="org5868391"><span class="section-number-2">4</span> 工厂方法模式</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 工厂方法模式和简单工厂模式有点像，它在父类中声明用于创建具体对象的 <b>抽象方法</b>, 然后由 <b>子类</b> 来实现抽象方法。
 </p>
 
 <p>
-其常见的结构为：
+通过这种方式我们便可以通过增加子类的方式来扩展工厂的功能，而不是去修改已有的代码，其常见的结构为：
 </p>
 <ul class="org-ul">
-<li>抽象工厂：声明了用于创建具体对象的抽象方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></li>
+<li>抽象工厂：声明了用于创建具体对象的抽象方法</li>
 <li>具体工厂：实现了用于创建具体对象的抽象方法</li>
 <li>抽象产品：要被创建的具体对象的抽象父类</li>
 <li>具体产品：要被创建的具体对象</li>
 </ul>
 
 <p>
-类图也许要更加直观一些：
+类图：
 </p>
 <img src="https://i.loli.net/2019/05/25/5ce8ec1d0832695386.png">
 
 <p>
-通过工厂方法模式，当我们增加了具体产品的类型的时候，就只需要增加具体工厂的数量，而不是修改旧的工厂的代码。
+可以看到，工厂方法的扩展方式是通过增加子类实现的，因此避免了修改已有的代码。同时，每个子类只负责创建一种具体对象，符合了单一职责原则。
+</p>
+
+<p>
+但有些时候，也不能一味的符合单一职责原则，比如，需要创建一组相关的对象的时候。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5ae8e05" class="outline-2">
-<h2 id="org5ae8e05"><span class="section-number-2">5</span> 抽象工厂模式</h2>
+<div id="outline-container-org32557b7" class="outline-2">
+<h2 id="org32557b7"><span class="section-number-2">5</span> 抽象工厂模式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-抽象工厂模式和工厂方法模式就更接近了，基本上，就只是增加了抽象方法和抽象产品的数量，其类图如下：
+抽象工厂模式和工厂方法模式很接近，主要用于创建一组相关的对象，也就是经常会在一起被创建的对象，其类图如下：
 </p>
 <img src="https://i.loli.net/2019/05/25/5ce8ee724ea1899220.png">
 
@@ -399,38 +388,50 @@ for the JavaScript code in this tag.
 <img src="https://i.loli.net/2019/05/25/5ce8f9368d11c36366.png">
 
 <p>
-可以发现，抽象工厂模式和工厂方法模式的差别并不是很大，只不过，一个负责创建一系列的对象，而另一个只创建某一类型的对象。
+可以发现，抽象工厂模式和工厂方法模式的差别并不是很大，只不过，一个负责创建一组对象，而另一个只创建某一类型的对象。
+如果将一组对象变成一个对象，那么抽象工厂模式和工厂方法模式就变得差不多了。
 </p>
 
 <p>
-某种程度上，可以说是抽象工厂模式包含了工厂方法模式。
+虽然在抽象工厂模式中单个具体工厂的职责更多，但是，如果将需要经常在一起创建的对象分散到多个工厂中，反而会增加使用者的依赖和整体的复杂的，
+因此，抽象工厂模式在创建一组相关的对象的时候还是很有用的。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org37180bf" class="outline-2">
-<h2 id="org37180bf"><span class="section-number-2">6</span> 综合理解</h2>
+<div id="outline-container-org1da925f" class="outline-2">
+<h2 id="org1da925f"><span class="section-number-2">6</span> 综合理解</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 设计模式的设计依据是面向对象的设计原则，因此，在理解设计模式的时候，应该参考相应的设计原则。
 </p>
 
 <p>
-而和工厂模式的理解相关的设计原则，主要应该是开闭原则和依赖倒转原则：
+简单工厂模式虽然简单，但是如果具体对象的类型会经常增加，那么工厂的代码也就会经常修改，频繁的修改就容易出现错误。
 </p>
-<ul class="org-ul">
-<li>遵循开闭原则，通过继承扩展的方式增加功能，而不是修改已有的代码</li>
-<li>依赖倒转原则，通过抽象工厂和产品的方式，让使用者依赖少量的抽象类型，让具体实现依赖抽象</li>
-</ul>
 
 <p>
-当然了，还有单一职责原则，避免单个类的职责过重。
+而一旦出现错误，由于简单工厂的职责过重，所有使用简单工厂的地方都会出现问题，因此，出现了工厂方法和抽象工厂。
+</p>
+
+<p>
+无论是工厂方法还是抽象工厂，添加功能的时候都可以通过增加子类的方式完成，避免了对已有代码的修改。而工厂方法中的具体工厂的职责也很单一，
+这样一来，出现错误时，受影响的范围可以少一点。
+</p>
+
+<p>
+同时，虽然抽象工厂中的具体工厂需要负责创建多个对象，出现错误可能全军覆没，但是，抽象工厂创建的对象本来就是相关的，也就是说，就算分开了，
+一个地方出错还是会影响整体，因此，将相关的一组对象放在一起创建带来的好处是更多的。
+</p>
+
+<p>
+而且，使用这些工厂的时候，使用者都只需要依赖抽象工厂和抽象产品的类型，不需要依赖具体的类型，符合依赖倒置原则。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9f83e07" class="outline-2">
-<h2 id="org9f83e07"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org164bbb3" class="outline-2">
+<h2 id="org164bbb3"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 据说学习设计模式容易陷入一个误区，那就是到处都在用设计模式，使得整体代码变得复杂且难以理解。
@@ -441,21 +442,7 @@ for the JavaScript code in this tag.
 </p>
 </div>
 </div>
-<div id="footnotes">
-<h2 class="footnotes">&#33050;&#27880;: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-类的职责要单一，不要将太多的职责放在一个类中
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-在《Head First 设计模式》一书中并没有要求工厂方法模式的父工厂需要是 <b>抽象类</b>
-</p></div></div>
-
-
 </div>
-</div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
 <div id="disqus_thread"></div>
