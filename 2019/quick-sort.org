@@ -1,0 +1,253 @@
+#+TITLE:      Quick Sort 快速排序算法
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-06-22 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#算法步骤][算法步骤]]
+- [[#选取枢纽元][选取枢纽元]]
+- [[#分割数组][分割数组]]
+- [[#算法实现][算法实现]]
+- [[#小数组和插入排序][小数组和插入排序]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  快速排序算法应该是常见的排序算法中使用的最多的一个，很多语言内置的排序算法都间接或直接的使用了这一算法。
+
+  因此，我们是很有必要学习快速排序算法的。
+
+* 算法步骤
+  在了解详细的算法步骤之前可以先来看一下快速排序算法的算法复杂度：
+  |--------------------+--------------------+------------|
+  | 时间复杂度（平均） | 时间复杂度（最坏） | 空间复杂度 |
+  |--------------------+--------------------+------------|
+  | $O(nlog_2n)$       | $O(n^2)$           | $O(1)$     |
+  |--------------------+--------------------+------------|
+
+  通过快速排序算法的算法复杂度我们可以猜测它可能是一种 *分治* 算法，而事实也是如此。
+
+  当通过快速排序算法对数组 $A$ 进行排序时，我们需要递归的将其分为不同的部分进行处理，其基本步骤为：
+  1) 如果数组 $A$ 中的元素个数为 1 或 0 时，就直接返回
+  2) 选择数组 $A$ 中的任一元素 $P$ 作为 *枢纽元*
+  3) 将数组 $A$ 中的元素分为两个部分：所有元素 *小于等于* $P$ 的部分 $A_1$ 和所有元素 *大于等于* $P$ 的部分 $A_2$
+  4) 返回 [$QuickSort(A_1)$, $P$, $QuickSort(A_2)$]
+
+  可以看到，快速排序算法的基本步骤并不难，实现这个算法主要需要考虑的问题便是 *枢纽元* 的选取和 *怎样分割* 数组。
+
+* 选取枢纽元
+  常见的枢纽元选择方式大概就是选择数组 *中间* 的那个元素，简单直接有效。
+
+  在选取枢纽元后，通常需要对两端和枢纽元处的值进行排序，这样可以稍稍提高算法的效率并避免一些意外情况[fn:1]：
+  #+BEGIN_SRC java
+    public static int selectPivot(int[] arr, int left, int right) {  // 包含右边界
+      int mid = (left + right) / 2;
+
+      if (arr[left] > arr[mid]) {
+        swap(arr, left, mid);
+      }
+
+      if (arr[left] > arr[right]) {
+        swap(arr, left, right);
+      }
+
+      if (arr[mid] > arr[right]) {
+        swap(arr, mid, right);
+      }
+
+      /* arr[left] <= arr[mid] <= arr[right] */
+
+      swap(arr, mid, right - 1);
+
+      return arr[right - 1];
+    }
+  #+END_SRC
+
+  在将两端和枢纽元处的值排序后，最左端的值必然是小于等于枢纽元处的值的，最右端的值必然是大于等于枢纽元处的值的，这时，我们需要分割的数组便变成了 ~[left + 1, right - 1]~.
+
+  然后，交换枢纽元和 ~right - 1~ 处的元素，使得枢纽元离开要被分割的数组[fn:2]，这时，我们需要分割的数组便变成了 ~[left + 1, right - 2]~.
+
+  介绍完了常用的做法，这里在介绍一种不常用的做法和一种常见的错误做法：
+  + 随机选取枢纽元是一种不常用的做法，因为随机数的生成成本相较于中值的计算成本要昂贵的多
+  + 直接选取第一个元素作为枢纽元是一种常见的错误做法，当输入的数组是预排序的时，会让所有元素都分配到单个组中，并不断递归，使得时间复杂度变成 $O(n^2)$
+
+* 分割数组  
+  分割数组时，需要首先将选取的枢纽元和末端的元素交换位置，然后从左向右遍历所有小于枢纽元的元素，从右向左遍历所有大于枢纽元的元素，当两者遇到大于或小于枢纽元的元素停下时，
+  便交换遇到的元素，然后继续遍历，直到交错：
+  #+BEGIN_EXAMPLE
+        初始状态：
+            8  1  4  9  0  3  5  2  7  6
+            i                       j  p
+
+        交换前：
+            8  1  4  9  0  3  5  2  7  6
+            i                    j     p
+
+        交换后：
+            2  1  4  9  0  3  5  8  7  6
+            i                    j     p
+  #+END_EXAMPLE
+
+  交错后便将 ~i~ 处的元素和末端的枢纽元相交换，此时，枢纽元左边的元素都小于等于它，右边的元素都大于等于它：
+  #+BEGIN_EXAMPLE
+        交错后：
+            2  1  4  5  0  3  9  8  7  6
+                           j  i        p
+
+        交换后：
+            2  1  4  5  0  3  6  8  7  9
+                              i        p
+  #+END_EXAMPLE
+
+  遍历过程中需要考虑的一个问题是：遇到和枢纽元相等的元素怎么处理？是都停止还是都不停止？
+
+  假设输入的元素都相等，我们来看一下两种策略最后可能的情况：
+  #+BEGIN_EXAMPLE
+        都停止：
+            8  8  8  8  8  8  8  8  8
+                     j  i           p
+
+        都不停止：
+            8  8  8  8  8  8  8  8  8
+            i                    j  p
+  #+END_EXAMPLE
+
+  可以看到，采用都停止的策略时，虽然会产生一些不必要的交换，但是都不停止的话，数组的分割便会极为的不均衡，这会使得时间复杂度很高。
+
+  因此，更好的选择是在遇到和枢纽元相等的元素后都停下来。
+
+* 算法实现
+  在确定了枢纽元的选取方法和数组的分割策略后，就可以尝试实现快速排序算法了：
+  #+BEGIN_SRC java
+    public static void quickSort(int[] arr) {
+      quickSort(arr, 0, arr.length - 1);
+    }
+
+    public static void quickSort(int[] arr, int left, int right) {  // 包含右边界
+      if  (left >= right) {  // 元素小于等于 1 个
+        return;
+      }
+
+      int i = left, j = right - 1, pivot = selectPivot(arr, left, right);
+
+      while (i < j) {
+        while (arr[++i] < pivot) {}
+        while (arr[--j] > pivot) {}
+
+        if (i < j) {
+          swap(arr, i, j) ;
+        }
+      }
+
+      swap(arr, i, right - 1);
+
+      quickSort(arr, left, i - 1);
+      quickSort(arr, i + 1, right);
+    }
+
+    public static int selectPivot(int[] arr, int left, int right) {
+      int mid = (left + right) / 2;
+
+      if (arr[left] > arr[mid]) {
+        swap(arr, left, mid);
+      }
+
+      if (arr[left] > arr[right]) {
+        swap(arr, left, right);
+      }
+
+      if (arr[mid] > arr[right]) {
+        swap(arr, mid, right);
+      }
+
+      /* arr[left] <= arr[mid] <= arr[right] */
+
+      swap(arr, mid, right - 1);
+
+      return arr[right - 1];
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+      int tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+  #+END_SRC
+  
+  算法的实现并不是很难，但是需要注意的一段代码是：
+  #+BEGIN_SRC java
+    while (i < j) {
+      while (arr[++i] < pivot) {}
+      while (arr[--j] > pivot) {}
+
+      if (i < j) {
+        swap(arr, i, j) ;
+      }
+    }
+  #+END_SRC
+
+  假如将这段代码修改为如下形式，会使得在遇到 ~arr[i] = arr[j] = pivot~ 的情况后陷入死循环：
+  #+BEGIN_SRC java
+    while (i < j) {
+      while (arr[i] < pivot) {i++;}
+      while (arr[j] > pivot) {j--;}
+
+      if (i < j) {
+        swap(arr, i, j) ;
+      }
+    }
+  #+END_SRC
+
+* 小数组和插入排序
+  快速排序在小数组上的表现还不如插入排序好，因此，在实现快速排序时，常常还会通过插入排序来排序较小的数组，比如说 [[https://github.com/exsourcode/jdk8u-jdk/blob/master/src/share/classes/java/util/DualPivotQuicksort.java#L214][OpenJDK]] 中的实现便是这样的。
+
+  改进后的实现如下：
+  #+BEGIN_SRC java
+    public static void insertSort(int[] arr, int left, int right) {  // 包含右边界
+      for (int p = left + 1; p <= right; p++) {
+        int tmp = arr[p];
+        for (int j = p; j > left && arr[j - 1] > tmp; j--) {
+          arr[j] = arr[j - 1];
+        }
+        arr[j] = tmp;
+      }
+    }
+
+    public static void quickSort(int[] arr) {
+      quickSort(arr, 0, arr.length - 1);
+    }
+
+    public static void quickSort(int[] arr, int left, int right) {
+      if  (left + 20 >= right) {  // 小数组
+        insertSort(arr, left, right);
+        return;
+      }
+
+      int i = left, j = right - 1, pivot = selectPivot(arr, left, right);
+
+      while (i < j) {
+        while (arr[++i] < pivot) {}
+        while (arr[--j] > pivot) {}
+
+        if (i < j) {
+          swap(arr, i, j) ;
+        }
+      }
+
+      swap(arr, i, right - 1);
+
+      quickSort(arr, left, i - 1);
+      quickSort(arr, i + 1, right);
+    }
+  #+END_SRC
+
+* 结语
+  这篇博客的大部分内容都来源于《数据结构和算法分析 —— C 语言描述》一书的 /7.7/ 节，有兴趣的可以看一看 @_@
+
+* Footnotes
+
+[fn:1] 意外情况可以参考《数据结构和算法分析 —— C 语言描述》一书中的习题 /7.38/
+
+[fn:2] 我并没有得到这种做法的原因和解释，只知道这种做法可以让数组的分割更加安全（避免出错或低效）
+  
