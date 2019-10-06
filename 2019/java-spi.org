@@ -1,0 +1,172 @@
+#+TITLE:      Java SPI 机制及其实现
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-10-06 周日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#serviceloader][ServiceLoader]]
+- [[#jdbc-中的使用][JDBC 中的使用]]
+- [[#更多的使用场景][更多的使用场景]]
+- [[#实现原理][实现原理]]
+- [[#springfactoriesloader][SpringFactoriesLoader]]
+- [[#结语][结语]]
+
+* 前言
+  第一次接触 SPI 是在看《Java 核心计算卷》中 JDBC 相关的章节的时候，当时看到说在高版本的 JDBC 中可以省略通过 ~Class.forName~ 加载驱动这一步，
+  因为高版本的 JDBC 可以通过 SPI 机制自动加载注册驱动。
+
+  当时看到的时候感觉很惊喜，终于不用写那又臭又长的 ~try-catch~ 了。
+
+  后来在阅读源码的过程中又发现 Spring 中也实现了类似于 Java SPI 机制的功能，研究了一下后发现 SPI 机制无论是在使用上还是在实现上，都是很简单的。
+
+  所以，我觉得，可以整一篇博客总结一下。
+
+  #+HTML: <details><summary><i>隐藏内容</i></summary>
+
+  上一次写博客还是 6 月 22 号，断更了 100 多天，感觉有点手生 @_@
+
+  #+HTML: </details>
+
+* ServiceLoader
+  SPI 的全称为 (Service Provider Interface)，是 JDK 内置的一种服务提供发现机制。主要由工具类 ~java.util.ServiceLoader~ 提供相应的支持。  
+
+  其中的两个主要角色为：
+  + Service - 服务，通常为一个接口或一个抽象类，具体类虽然也可以，但是一般不建议那样做
+  + Service Provider - 服务提供者，服务的具体实现类
+
+  使用时，需要在 ~META-INF/services~ 下创建和服务的 *全限定名* 相同的文件，然后在该文件中写入 *服务提供者* 的全限定名，可以用 ~#~ 作为注释。比如说，
+  我们可以在文件 ~mysql-connector-java/META-INF/services/java.sql.Driver~ 中发现如下内容：
+  #+begin_example
+    com.mysql.jdbc.Driver
+    com.mysql.fabric.jdbc.FabricMySQLDriver
+  #+end_example
+  
+  然后，就可以通过 ~ServiceLoader~ 来获取这些服务提供者。由于 ServiceLoader 并没有提供直接获取服务提供者的方法，因此，只能通过迭代的方式获取：
+  #+begin_src java
+    ServiceLoader<Service> loader = Service.load(Service.class);
+
+    for (Service service : loader) {
+      // ...
+    }
+  #+end_src
+  
+  可以看到，ServiceLoader 的使用还是很简单的，更多的和 ServiceLoader 相关的内容可以看一下官方文档：[[https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html][ServiceLoader (Java Platform SE 8 )]]
+  
+* JDBC 中的使用
+  如果要找一个使用了 SPI 机制的例子的话，最直接的就是 JDBC 中通过 SPI 的方式加载驱动了，这里可以看一下 JDBC 的使用方式：
+  #+begin_src java
+    public class DriverManager {
+      static {
+        loadInitialDrivers();
+      }
+
+      private static void loadInitialDrivers() {
+        AccessController.doPrivileged(new PrivilegedAction<Void>() {
+            public Void run() {
+
+              ServiceLoader<Driver> loadedDrivers = ServiceLoader.load(Driver.class);
+              Iterator<Driver> driversIterator = loadedDrivers.iterator();
+
+              try{
+                while(driversIterator.hasNext()) {
+                  driversIterator.next();
+                }
+              } catch(Throwable t) {
+                // Do nothing
+              }
+              return null;
+            }
+          });
+      }
+    }
+  #+end_src
+  
+  通过上面的简化过后的代码可以发现，在加载 ~DriverManager~ 这个类的时候就会通过静态初始化代码块调用执行 ~loadInitialDrivers~ 方法，而这个方法会通过 ~ServiceLoader~ 加载所有的 ~Driver~ 提供者。
+
+  而在相应的 Driver 提供类中，比如类 ~com.mysql.jdbc.Driver~ 中就存在如下形式的代码：
+  #+begin_src java
+    static {
+      try {
+        java.sql.DriverManager.registerDriver(new Driver());
+      } catch (SQLException E) {
+        throw new RuntimeException("Can't register driver!");
+      }
+    }
+  #+end_src
+
+  是不是很简单？加载 DriverManager 的时候通过 SPI 机制加载各个 Driver，然后各个 Driver 又在它们自己的静态初始化代码块中将自己注册到 DriverManager。
+
+* 更多的使用场景
+  通过 JDBC 中 SPI 机制的使用可以发现，要使用 SPI 的话还是很简单的，那么，我们可以在什么地方使用 SPI 呢？
+  
+  由于 SPI 机制的限制，单个 ServiceLoader 只能加载单个类型的 Service，同时还必须创建相应的文件放到 ~META-INF/services~ 目录下，因此，使用场景最好就是类似 JDBC 中这种，
+  可以通过单个对象来访问其他服务提供者的场景，即：可以使用 *门面模式* 的场景。
+
+  比如说，现在 Java 中存在不少常用的 JSON 库，比如 Gson、FastJSON、Jackson 等，这些库在使用时都可以通过简单的封装来满足大部分的需求，那么，
+  我们就可以考虑通过 SPI 机制来实现一个这些 JSON 库的门面，将 JSON 的处理下放到 Service Provider 来完成，而我们通过门面来使用这些服务。
+
+  这样一来，我们一方面可以提供自己的默认实现，也可以留出扩展的接口，也就不需要自己手动去加载那些实现了。
+
+* 实现原理
+  SPI 不仅在使用上很简单，它的实现原理也很简单，关键就在 ~ClassLoader.getResources~ 这个方法上，SPI 加载服务的方式就是通过 ~ClassLoader.getResources~ 方法找到 ~META-INF/services~ 目录下的相应文件，
+  然后解析文件得到服务提供者的类名。
+
+  最后通过 ~Class.forName() -> clazz.newInstance()~ 得到实例返回。
+
+  非常简单且直白的实现方式，比较值得注意的就是 ~ClassLoader.getResources~ 方法的使用了，比如，你可以在一个 ~Spring~ 项目下执行如下代码：
+  #+begin_src java
+    public class Test {
+      public static void main(String[] args) throws Exception {
+        Enumeration<URL> urls = Test.class.getClassLoader().getResources("META-INF/spring.factories");
+        while (urls.hasMoreElements()) {
+          System.out.println(urls.nextElement());
+        }
+      }
+    }
+  #+end_src
+
+  这个就是 Spring 中通过 ~SpringFactoriesLoader~ 来加载相关的类的起点。
+
+* SpringFactoriesLoader
+  SpringFactoriesLoader 是 Spring 中十分重要的一个扩展机制之一，它的使用方式和实现原理和 SPI 十分相似，只不过，提供了更加强大的功能。
+
+  和 SPI 不同，由于 SpringFactoriesLoader 中的配置文件格式是 ~properties~ 文件，因此，不需要要像 SPI 中那样为每个服务都创建一个文件，
+  而是选择直接把所有服务都扔到 ~META-INF/spring.factories~ 文件中。
+
+  比如，spring-boot-autoconfigure 中的部分内容：
+  #+begin_src conf
+    # Initializers
+    org.springframework.context.ApplicationContextInitializer=\
+    org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer,\
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+
+    # Application Listeners
+    org.springframework.context.ApplicationListener=\
+    org.springframework.boot.autoconfigure.BackgroundPreinitializer
+
+    # Auto Configuration Import Listeners
+    org.springframework.boot.autoconfigure.AutoConfigurationImportListener=\
+    org.springframework.boot.autoconfigure.condition.ConditionEvaluationReportAutoConfigurationImportListener
+
+    # Auto Configuration Import Filters
+    org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
+    org.springframework.boot.autoconfigure.condition.OnClassCondition
+
+    # ...
+  #+end_src
+
+  更多的使用可以参考：[[https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/support/SpringFactoriesLoader.html][SpringFactoriesLoader (Spring Framework 5.2.0.RELEASE API)]]
+
+* 结语
+  总的来说，无论是 ServiceLoader 还是 SpringFactoriesLoader，它们的基本原理都是一样的，都是通过 ~ClassLoader.getResources~ 方法找到相应的配置文件，
+  然后解析文件得到服务提供者的全限定名。
+
+  得益于 Java 强大的反射机制，拿到全限定名后基本上就可以为所欲为了 @_@
+
+  #+HTML: <details><summary><i>隐藏内容</i></summary>
+
+  简陋的 JSON 门面：[[https://github.com/rgb-24bit/ruava/blob/master/ruava-support/src/main/java/com/rgbit/ruava/support/json/DefaultJsonProviderFactory.java][DefaultJsonProviderFactory.java]]
+
+  #+HTML: </details>
+
