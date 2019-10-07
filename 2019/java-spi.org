@@ -44,7 +44,7 @@
   
   然后，就可以通过 ~ServiceLoader~ 来获取这些服务提供者。由于 ServiceLoader 并没有提供直接获取服务提供者的方法，因此，只能通过迭代的方式获取：
   #+begin_src java
-    ServiceLoader<Service> loader = Service.load(Service.class);
+    ServiceLoader<Service> loader = ServiceLoader.load(Service.class);
 
     for (Service service : loader) {
       // ...

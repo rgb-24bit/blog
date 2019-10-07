@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-06 日 15:29 -->
+<!-- 2019-10-07 周一 16:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SPI 机制及其实现</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc21c2c6">1. 前言</a></li>
-<li><a href="#orgb4fba8d">2. ServiceLoader</a></li>
-<li><a href="#orgb27a066">3. JDBC 中的使用</a></li>
-<li><a href="#orgbef97fa">4. 更多的使用场景</a></li>
-<li><a href="#orga18826a">5. 实现原理</a></li>
-<li><a href="#orgaba3e5d">6. SpringFactoriesLoader</a></li>
-<li><a href="#orgc8d8514">7. 结语</a></li>
+<li><a href="#org1265b78">1. 前言</a></li>
+<li><a href="#orgf8c290e">2. ServiceLoader</a></li>
+<li><a href="#orgb46f506">3. JDBC 中的使用</a></li>
+<li><a href="#org811977e">4. 更多的使用场景</a></li>
+<li><a href="#org88cb78a">5. 实现原理</a></li>
+<li><a href="#org20dc208">6. SpringFactoriesLoader</a></li>
+<li><a href="#orgae0eae9">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc21c2c6" class="outline-2">
-<h2 id="orgc21c2c6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org1265b78" class="outline-2">
+<h2 id="org1265b78"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触 SPI 是在看《Java 核心计算卷》中 JDBC 相关的章节的时候，当时看到说在高版本的 JDBC 中可以省略通过 <code>Class.forName</code> 加载驱动这一步，
@@ -287,8 +287,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb4fba8d" class="outline-2">
-<h2 id="orgb4fba8d"><span class="section-number-2">2</span> ServiceLoader</h2>
+<div id="outline-container-orgf8c290e" class="outline-2">
+<h2 id="orgf8c290e"><span class="section-number-2">2</span> ServiceLoader</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 SPI 的全称为 (Service Provider Interface)，是 JDK 内置的一种服务提供发现机制。主要由工具类 <code>java.util.ServiceLoader</code> 提供相应的支持。  
@@ -315,7 +315,7 @@ com.mysql.fabric.jdbc.FabricMySQLDriver
 然后，就可以通过 <code>ServiceLoader</code> 来获取这些服务提供者。由于 ServiceLoader 并没有提供直接获取服务提供者的方法，因此，只能通过迭代的方式获取：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span class="org-type">ServiceLoader</span>&lt;<span class="org-type">Service</span>&gt; <span class="org-variable-name">loader</span> = Service.load(Service.<span class="org-keyword">class</span>);
+<pre class="src src-java"><span class="org-type">ServiceLoader</span>&lt;<span class="org-type">Service</span>&gt; <span class="org-variable-name">loader</span> = ServiceLoader.load(Service.<span class="org-keyword">class</span>);
 
 <span class="org-keyword">for</span> (<span class="org-type">Service</span> <span class="org-variable-name">service</span> : loader) {
   <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
@@ -329,8 +329,8 @@ com.mysql.fabric.jdbc.FabricMySQLDriver
 </div>
 </div>
 
-<div id="outline-container-orgb27a066" class="outline-2">
-<h2 id="orgb27a066"><span class="section-number-2">3</span> JDBC 中的使用</h2>
+<div id="outline-container-orgb46f506" class="outline-2">
+<h2 id="orgb46f506"><span class="section-number-2">3</span> JDBC 中的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 如果要找一个使用了 SPI 机制的例子的话，最直接的就是 JDBC 中通过 SPI 的方式加载驱动了，这里可以看一下 JDBC 的使用方式：
@@ -387,8 +387,8 @@ com.mysql.fabric.jdbc.FabricMySQLDriver
 </div>
 </div>
 
-<div id="outline-container-orgbef97fa" class="outline-2">
-<h2 id="orgbef97fa"><span class="section-number-2">4</span> 更多的使用场景</h2>
+<div id="outline-container-org811977e" class="outline-2">
+<h2 id="org811977e"><span class="section-number-2">4</span> 更多的使用场景</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 通过 JDBC 中 SPI 机制的使用可以发现，要使用 SPI 的话还是很简单的，那么，我们可以在什么地方使用 SPI 呢？
@@ -410,8 +410,8 @@ com.mysql.fabric.jdbc.FabricMySQLDriver
 </div>
 </div>
 
-<div id="outline-container-orga18826a" class="outline-2">
-<h2 id="orga18826a"><span class="section-number-2">5</span> 实现原理</h2>
+<div id="outline-container-org88cb78a" class="outline-2">
+<h2 id="org88cb78a"><span class="section-number-2">5</span> 实现原理</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 SPI 不仅在使用上很简单，它的实现原理也很简单，关键就在 <code>ClassLoader.getResources</code> 这个方法上，SPI 加载服务的方式就是通过 <code>ClassLoader.getResources</code> 方法找到 <code>META-INF/services</code> 目录下的相应文件，
@@ -443,8 +443,8 @@ SPI 不仅在使用上很简单，它的实现原理也很简单，关键就在 
 </div>
 </div>
 
-<div id="outline-container-orgaba3e5d" class="outline-2">
-<h2 id="orgaba3e5d"><span class="section-number-2">6</span> SpringFactoriesLoader</h2>
+<div id="outline-container-org20dc208" class="outline-2">
+<h2 id="org20dc208"><span class="section-number-2">6</span> SpringFactoriesLoader</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 SpringFactoriesLoader 是 Spring 中十分重要的一个扩展机制之一，它的使用方式和实现原理和 SPI 十分相似，只不过，提供了更加强大的功能。
@@ -459,24 +459,24 @@ SpringFactoriesLoader 是 Spring 中十分重要的一个扩展机制之一，�
 比如，spring-boot-autoconfigure 中的部分内容：
 </p>
 <div class="org-src-container">
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Initializers</span>
+<pre class="src src-conf"># Initializers
 <span class="org-variable-name">org.springframework.context.ApplicationContextInitializer</span>=\
 org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer,\
 org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Application Listeners</span>
+# Application Listeners
 <span class="org-variable-name">org.springframework.context.ApplicationListener</span>=\
 org.springframework.boot.autoconfigure.BackgroundPreinitializer
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Auto Configuration Import Listeners</span>
+# Auto Configuration Import Listeners
 <span class="org-variable-name">org.springframework.boot.autoconfigure.AutoConfigurationImportListener</span>=\
 org.springframework.boot.autoconfigure.condition.ConditionEvaluationReportAutoConfigurationImportListener
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Auto Configuration Import Filters</span>
+# Auto Configuration Import Filters
 <span class="org-variable-name">org.springframework.boot.autoconfigure.AutoConfigurationImportFilter</span>=\
 org.springframework.boot.autoconfigure.condition.OnClassCondition
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">...</span>
+# ...
 </pre>
 </div>
 
@@ -486,8 +486,8 @@ org.springframework.boot.autoconfigure.condition.OnClassCondition
 </div>
 </div>
 
-<div id="outline-container-orgc8d8514" class="outline-2">
-<h2 id="orgc8d8514"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-orgae0eae9" class="outline-2">
+<h2 id="orgae0eae9"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 总的来说，无论是 ServiceLoader 还是 SpringFactoriesLoader，它们的基本原理都是一样的，都是通过 <code>ClassLoader.getResources</code> 方法找到相应的配置文件，
