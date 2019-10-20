@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-10-20 周日 19:50 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spring Security 认证流程梳理</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Spring Security 认证流程梳理</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdc82435">1. 前言</a></li>
+<li><a href="#org62bf519">2. 简单的认证流程</a></li>
+<li><a href="#orgbb45e27">3. Spring Security</a></li>
+<li><a href="#org306112d">4. 结语</a></li>
+<li><a href="#org47cbff5">5. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdc82435" class="outline-2">
+<h2 id="orgdc82435"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个模块之一了，最开始看书学习的时候，在看了几次还有一些迷糊后就放弃了。
+</p>
+
+<p>
+直到前段时间再次捡起来，这次在网上找了很多资料后，终于对 Spring Security 有了一定的理解，发现，理解起来其实也不是那么难。
+</p>
+
+<p>
+这里便是一个简单的梳理总结。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org62bf519" class="outline-2">
+<h2 id="org62bf519"><span class="section-number-2">2</span> 简单的认证流程</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+很多人在刚开始学习 Web 应用程序的编写的时候，应该都使用过下面这种认证方式：
+</p>
+<ol class="org-ol">
+<li>前端页面获取到用户的账号密码等信息后通过 POST 请求发送给后端</li>
+<li>后端拿到用户的账号密码等信息到数据库查询服务端保存的用户信息</li>
+<li>对比数据库中的用户信息和前端传递过来的账号密码信息</li>
+<li>相同就生成一个 Token 保存到 Seesion 并将 Token 返回给客户端</li>
+<li>前端保存拿到的 Token 后在后续的请求中携带这一 Token 来证明自己的身份</li>
+</ol>
+
+<p>
+这样的认证方式是很简单的，但是，Spring Security 中的认证流程又何尝不是这样的呢？只不过，Spring Security 通过更加统一的抽象接口实现了这样的认证流程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb45e27" class="outline-2">
+<h2 id="orgbb45e27"><span class="section-number-2">3</span> Spring Security</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+前面的简单的认证流程中，是可以将一些东西抽象出来作为一个单独的实体，这些实体都可以在 Spring Security 中找到相应的对象，包括：
+</p>
+<ol class="org-ol">
+<li><p>
+用户输入的账号密码等信息，这些东西其实就是用户的认证信息，对应到 Spring Security 中的话就是 <code>Authentication</code> 对象，只不过，Spring Security 中的 Authentication 对象除了保存用户的认证信息以外，
+还可以用来保存用户认证成功后从数据库中拿到的用户的详细信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">Authentication</span> <span class="org-keyword">extends</span> <span class="org-type">Principal</span>, <span class="org-type">Serializable</span> {
+  <span class="org-type">Collection</span>&lt;? <span class="org-keyword">extends</span> <span class="org-type">GrantedAuthority</span>&gt; <span class="org-function-name">getAuthorities</span>();  <span class="org-comment-delimiter">// </span><span class="org-comment">&#29992;&#25143;&#26435;&#38480;</span>
+  <span class="org-type">Object</span> <span class="org-function-name">getCredentials</span>();                                  <span class="org-comment-delimiter">// </span><span class="org-comment">&#29992;&#25143;&#35748;&#35777;&#20449;&#24687;</span>
+  <span class="org-type">Object</span> <span class="org-function-name">getDetails</span>();                                      <span class="org-comment-delimiter">// </span><span class="org-comment">&#29992;&#25143;&#35814;&#32454;&#20449;&#24687;</span>
+  <span class="org-type">Object</span> <span class="org-function-name">getPrincipal</span>();                                    <span class="org-comment-delimiter">// </span><span class="org-comment">&#29992;&#25143;&#36523;&#20221;&#20449;&#24687;</span>
+  <span class="org-type">boolean</span> <span class="org-function-name">isAuthenticated</span>();                                <span class="org-comment-delimiter">// </span><span class="org-comment">&#24403;&#21069; Authentication &#26159;&#21542;&#24050;&#35748;&#35777;</span>
+  <span class="org-type">void</span> <span class="org-function-name">setAuthenticated</span>(<span class="org-type">boolean</span> <span class="org-variable-name">isAuthenticated</span>);
+}
+</pre>
+</div></li>
+
+<li><p>
+只凭用户提供的认证信息往往是不足以用来判断该用户是否合法的，因此，我们通常还需要某种手段来获取保存在服务端的用户信息，同时，也需要某种手段来保存用户信息，
+这些对应到 Spring Security 中的话就是 <code>UserDetailsService</code> 和 <code>UserDetails</code> 这两个对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">UserDetailsService</span> {
+  <span class="org-type">UserDetails</span> <span class="org-function-name">loadUserByUsername</span>(<span class="org-type">String</span> <span class="org-variable-name">username</span>) <span class="org-keyword">throws</span> <span class="org-type">UsernameNotFoundException</span>;
+}
+
+<span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">UserDetails</span> <span class="org-keyword">extends</span> <span class="org-type">Serializable</span> {
+  <span class="org-type">Collection</span>&lt;? <span class="org-keyword">extends</span> <span class="org-type">GrantedAuthority</span>&gt; <span class="org-function-name">getAuthorities</span>();
+  <span class="org-type">String</span> <span class="org-function-name">getPassword</span>();
+  <span class="org-type">String</span> <span class="org-function-name">getUsername</span>();
+  <span class="org-type">boolean</span> <span class="org-function-name">isAccountNonExpired</span>();
+  <span class="org-type">boolean</span> <span class="org-function-name">isAccountNonLocked</span>();
+  <span class="org-type">boolean</span> <span class="org-function-name">isCredentialsNonExpired</span>();
+  <span class="org-type">boolean</span> <span class="org-function-name">isEnabled</span>();
+}
+</pre>
+</div></li>
+
+<li><p>
+在拥有了用户提供的认证信息和保存在服务端的用户信息后，我们就需要通过某种方式来比较这两份信息，而这种来效验用户认证信息的对象对应到 Spring Security 中便是 <code>AuthenticationManager</code> 对象了。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">Authentication</span> <span class="org-function-name">authenticate</span>(<span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span>)<span class="org-keyword">throws</span> <span class="org-type">AuthenticationException</span>;
+</pre>
+</div>
+
+<p>
+而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 <code>AuthenticationProvider</code> 和 <code>~ProviderManager</code> 这个默认的 AuthenticationManager 实现。
+使用时，我们往往就只需要实现 <code>AuthenticationProvider</code> 就足够了。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">AuthenticationProvider</span> {
+  <span class="org-type">Authentication</span> <span class="org-function-name">authenticate</span>(<span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span>) <span class="org-keyword">throws</span> <span class="org-type">AuthenticationException</span>;
+  <span class="org-type">boolean</span> <span class="org-function-name">supports</span>(<span class="org-type">Class</span>&lt;?&gt; <span class="org-variable-name">authentication</span>);
+}
+</pre>
+</div>
+
+<p>
+可以看到，AuthenticationProvider 中的方法 <code>authenticate</code> 会返回一个 <code>Authentication</code> 对象，当通过认证后，这个对象往往会保存用户的详细信息。
+</p></li>
+
+<li><p>
+当用户的认证信息通过效验后，我们往往还需要在服务端保存通过的认证信息或生成的令牌，这个保存通过的认证信息的对象在 Spring Security 中就是 <code>SecurityContext</code> 和 <code>SecurityContextHolder</code> 这两个对象，
+SecurityContext 保存已通过认证的 Authentication 对象，SecurityContextHolder 保存 SecurityContext 到当前线程的上下文，方便我们的使用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">SecurityContext</span> <span class="org-keyword">extends</span> <span class="org-type">Serializable</span> {
+  <span class="org-type">Authentication</span> <span class="org-function-name">getAuthentication</span>();
+  <span class="org-type">void</span> <span class="org-function-name">setAuthentication</span>(<span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span>);
+}
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SecurityContextHolder</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">SecurityContext</span> <span class="org-function-name">getContext</span>();
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">SecurityContext</span> setContext();
+}
+</pre>
+</div>
+
+<p>
+Spring Security 是基于 Filter 来实现的，而每个请求往往也会分配一个线程，因此，Spring Security 在请求到达具体的处理逻辑之前，就可以在 Filter 中完成用户信息的认证，生成 SecurityContext 方面后续的使用。
+</p></li>
+</ol>
+
+<p>
+这里在附上一张来源于 <a href="http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/?vip">Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客</a> 的一张图，很好的解释了上述对象之间的关系：
+</p>
+<img src="https://i.loli.net/2019/10/20/BJ3lRDFtxSuZpod.png">
+
+<p>
+可以看到，虽然 Spring Security 看似很复杂，但是其核心思想和以前那种简单的认证流程依然是一样的。只不过，Spring Security 将其中的关键部分抽象了处理，又提供了相应的扩展接口。
+</p>
+
+<p>
+我们在使用时，便可以实现自己的 UserDetailsService 和 UserDetails 来获取保存用户信息，实现自己的 Authentication 来保存特定的用户认证信息，
+实现自己的 AuthenticationProvider 使用自己的 UserDetailsService 和 Authentication 来对用户认证信息进行效验。
+</p>
+
+<p>
+当然了，Spring Security 还存在更多的功能，但是，在对基本流程有了一定的理解后，后续的内容也就能够更加容易的进行学习了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org306112d" class="outline-2">
+<h2 id="org306112d"><span class="section-number-2">4</span> 结语</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+其实除了 Spring Security 以外还看了一下 Spring Security OAuth2 和 Spring Security JWT，本来感觉可以和这篇博客一起总结了，但是写着写着才发现，卧槽，Spring Security 部分的思路那么清晰，
+怎么到了 Spring Security OAuth2 后就变得断断续续的。
+</p>
+
+<p>
+然后才发信，只是大致的理清了 Spring Security 和 Spring Security OAuth2 之间的关系，细节上还有待推敲，因此，还是留给以后吧 @_@
+</p>
+</div>
+</div>
+
+<div id="outline-container-org47cbff5" class="outline-2">
+<h2 id="org47cbff5"><span class="section-number-2">5</span> 参考链接</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="https://www.ibm.com/developerworks/cn/web/wa-spring-security-web-application-and-fingerprint-login/index.html">Spring Security 的 Web 应用和指纹登录实践</a></li>
+<li><a href="https://www.cnblogs.com/xz816111/p/8528896.html">Spring Security 验证流程剖析及自定义验证方法 - Decouple - 博客园</a></li>
+<li><a href="http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/">Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>

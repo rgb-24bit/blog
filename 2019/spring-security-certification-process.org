@@ -1,0 +1,120 @@
+#+TITLE:      Spring Security 认证流程梳理
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-10-20 日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#简单的认证流程][简单的认证流程]]
+- [[#spring-security][Spring Security]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个模块之一了，最开始看书学习的时候，在看了几次还有一些迷糊后就放弃了。
+
+  直到前段时间再次捡起来，这次在网上找了很多资料后，终于对 Spring Security 有了一定的理解，发现，理解起来其实也不是那么难。
+
+  这里便是一个简单的梳理总结。
+
+* 简单的认证流程
+  很多人在刚开始学习 Web 应用程序的编写的时候，应该都使用过下面这种认证方式：
+  1. 前端页面获取到用户的账号密码等信息后通过 POST 请求发送给后端
+  2. 后端拿到用户的账号密码等信息到数据库查询服务端保存的用户信息
+  3. 对比数据库中的用户信息和前端传递过来的账号密码信息
+  4. 相同就生成一个 Token 保存到 Seesion 并将 Token 返回给客户端
+  5. 前端保存拿到的 Token 后在后续的请求中携带这一 Token 来证明自己的身份
+
+  这样的认证方式是很简单的，但是，Spring Security 中的认证流程又何尝不是这样的呢？只不过，Spring Security 通过更加统一的抽象接口实现了这样的认证流程。
+
+* Spring Security
+  前面的简单的认证流程中，是可以将一些东西抽象出来作为一个单独的实体，这些实体都可以在 Spring Security 中找到相应的对象，包括：
+  1. 用户输入的账号密码等信息，这些东西其实就是用户的认证信息，对应到 Spring Security 中的话就是 ~Authentication~ 对象，只不过，Spring Security 中的 Authentication 对象除了保存用户的认证信息以外，
+     还可以用来保存用户认证成功后从数据库中拿到的用户的详细信息。
+
+     #+BEGIN_SRC java
+       public interface Authentication extends Principal, Serializable {
+         Collection<? extends GrantedAuthority> getAuthorities();  // 用户权限
+         Object getCredentials();                                  // 用户认证信息
+         Object getDetails();                                      // 用户详细信息
+         Object getPrincipal();                                    // 用户身份信息
+         boolean isAuthenticated();                                // 当前 Authentication 是否已认证
+         void setAuthenticated(boolean isAuthenticated);
+       }
+     #+END_SRC
+
+  2. 只凭用户提供的认证信息往往是不足以用来判断该用户是否合法的，因此，我们通常还需要某种手段来获取保存在服务端的用户信息，同时，也需要某种手段来保存用户信息，
+     这些对应到 Spring Security 中的话就是 ~UserDetailsService~ 和 ~UserDetails~ 这两个对象。
+
+     #+BEGIN_SRC java
+       public interface UserDetailsService {
+         UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+       }
+
+       public interface UserDetails extends Serializable {
+         Collection<? extends GrantedAuthority> getAuthorities();
+         String getPassword();
+         String getUsername();
+         boolean isAccountNonExpired();
+         boolean isAccountNonLocked();
+         boolean isCredentialsNonExpired();
+         boolean isEnabled();
+       }
+     #+END_SRC
+
+  3. 在拥有了用户提供的认证信息和保存在服务端的用户信息后，我们就需要通过某种方式来比较这两份信息，而这种来效验用户认证信息的对象对应到 Spring Security 中便是 ~AuthenticationManager~ 对象了。
+     
+     #+BEGIN_SRC java
+       Authentication authenticate(Authentication authentication)throws AuthenticationException;
+     #+END_SRC
+
+     而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 ~AuthenticationProvider~ 和 ~~ProviderManager~ 这个默认的 AuthenticationManager 实现。
+     使用时，我们往往就只需要实现 ~AuthenticationProvider~ 就足够了。
+
+     #+BEGIN_SRC java
+       public interface AuthenticationProvider {
+         Authentication authenticate(Authentication authentication) throws AuthenticationException;
+         boolean supports(Class<?> authentication);
+       }
+     #+END_SRC
+
+     可以看到，AuthenticationProvider 中的方法 ~authenticate~ 会返回一个 ~Authentication~ 对象，当通过认证后，这个对象往往会保存用户的详细信息。
+
+  4. 当用户的认证信息通过效验后，我们往往还需要在服务端保存通过的认证信息或生成的令牌，这个保存通过的认证信息的对象在 Spring Security 中就是 ~SecurityContext~ 和 ~SecurityContextHolder~ 这两个对象，
+     SecurityContext 保存已通过认证的 Authentication 对象，SecurityContextHolder 保存 SecurityContext 到当前线程的上下文，方便我们的使用。
+
+     #+BEGIN_SRC java
+       public interface SecurityContext extends Serializable {
+         Authentication getAuthentication();
+         void setAuthentication(Authentication authentication);
+       }
+
+       public class SecurityContextHolder {
+         public static SecurityContext getContext();
+         public void SecurityContext setContext();
+       }
+     #+END_SRC
+
+     Spring Security 是基于 Filter 来实现的，而每个请求往往也会分配一个线程，因此，Spring Security 在请求到达具体的处理逻辑之前，就可以在 Filter 中完成用户信息的认证，生成 SecurityContext 方面后续的使用。
+
+  这里在附上一张来源于 [[http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/?vip][Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客]] 的一张图，很好的解释了上述对象之间的关系：
+  #+HTML: <img src="https://i.loli.net/2019/10/20/BJ3lRDFtxSuZpod.png">
+
+  可以看到，虽然 Spring Security 看似很复杂，但是其核心思想和以前那种简单的认证流程依然是一样的。只不过，Spring Security 将其中的关键部分抽象了处理，又提供了相应的扩展接口。
+
+  我们在使用时，便可以实现自己的 UserDetailsService 和 UserDetails 来获取保存用户信息，实现自己的 Authentication 来保存特定的用户认证信息，
+  实现自己的 AuthenticationProvider 使用自己的 UserDetailsService 和 Authentication 来对用户认证信息进行效验。
+
+  当然了，Spring Security 还存在更多的功能，但是，在对基本流程有了一定的理解后，后续的内容也就能够更加容易的进行学习了。
+
+* 结语
+  其实除了 Spring Security 以外还看了一下 Spring Security OAuth2 和 Spring Security JWT，本来感觉可以和这篇博客一起总结了，但是写着写着才发现，卧槽，Spring Security 部分的思路那么清晰，
+  怎么到了 Spring Security OAuth2 后就变得断断续续的。
+
+  然后才发信，只是大致的理清了 Spring Security 和 Spring Security OAuth2 之间的关系，细节上还有待推敲，因此，还是留给以后吧 @_@
+
+* 参考链接
+  + [[https://www.ibm.com/developerworks/cn/web/wa-spring-security-web-application-and-fingerprint-login/index.html][Spring Security 的 Web 应用和指纹登录实践]]
+  + [[https://www.cnblogs.com/xz816111/p/8528896.html][Spring Security 验证流程剖析及自定义验证方法 - Decouple - 博客园]]
+  + [[http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/][Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客]]
+
