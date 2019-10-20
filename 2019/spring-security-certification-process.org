@@ -68,7 +68,7 @@
        Authentication authenticate(Authentication authentication)throws AuthenticationException;
      #+END_SRC
 
-     而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 ~AuthenticationProvider~ 和 ~~ProviderManager~ 这个默认的 AuthenticationManager 实现。
+     而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 ~AuthenticationProvider~ 和 ~ProviderManager~ 这个默认的 AuthenticationManager 实现。
      使用时，我们往往就只需要实现 ~AuthenticationProvider~ 就足够了。
 
      #+BEGIN_SRC java
