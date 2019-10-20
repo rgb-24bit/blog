@@ -1,0 +1,68 @@
+#+TITLE:      Spring Security & OAuth2 & JWT
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2019-10-20 日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#spring-security][Spring Security]]
+- [[#spring-security-oauth2][Spring Security OAuth2]]
+
+* 前言
+  Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个模块之一了，然后，光是 Security 可能还不够，很有可能还需要结合 OAuth2。
+  结合 OAuth2 以后，发现，JWT 也可以考虑考虑。
+
+  这也就使得，本来就不简单的 Spring Security，变得更加地复杂。因此，我觉得，需要梳理一下这些东西之间的关系和流程。
+
+* Spring Security
+  在开始 Spring Security 相关的内容之前，可以先来回忆一下一个传统的安全认证方式是怎么做的：
+  1. 在传统的认证方式中，我们首先应该会拿到用户的认证信息，比如账号和密码
+  2. 然后，我们应该会根据用户提供的认证信息到存储用户信息的地方取得相应的用户信息
+  3. 在取得存储的用户信息后，我们就可以对比用户提供的认证信息，根据对比结果判断用户是否认证成功
+  4. 如果用户认证成功，我们往往会在服务端保存一份用户认证（成功）结果的备份，并将相应的 Token 返回给用户
+
+  这种认证方式应该是很多人在刚开始设计实现需要进行用户认证的系统使用的方式，而 Spring Security 的实现，其实也并没有脱离这个方式，只不过，
+  提供了更加完善功能，更加抽象的统一接口，更加陡峭的学习曲线 @_@
+
+  Spring Security 中的组件 SecurityContext、SecurityContextHolder、Authentication、UserDetails、UserDetailsService 和 AuthenticationManager 便可以和上面的过程对应起来：
+  |-----------------------+--------------------------------------------|
+  | 组件                  | 作用                                       |
+  |-----------------------+--------------------------------------------|
+  | ~Authentication~        | 用来存储用户的认证信息和详细信息           |
+  | ~UserDetails~           | 用来存储用户的详细信息                     |
+  | ~UserDetailsService~    | 用来获取用户的详细信息                     |
+  | ~AuthenticationManager~ | 用来对比用户的认证信息和详细信息，完成认证 |
+  | ~SecurityContext~       | 用来保存用户的认证结果                     |
+  | ~SecurityContextHolder~ | 用来保存持有 ~SecurityContext~               |
+  |-----------------------+--------------------------------------------|
+
+  这些组件在整个 Spring Security 认证流程中发挥作用的顺序和上面传统的认证流程都是可以对应起来的：
+  1. Spring Security 的实现是基于一系列的 Filter 的，在接到用户的认证信息后，Spring Security 会将相关的用户认证信息取出放到一个 Authentication 中。
+
+     这时，Authentication 只保存了用户的认证信息。
+
+  2. 在取到用户的认证信息后，就可以将认证信息交给 AuthenticationManager 去完成认证了。常用的 AuthenticationManager 实现是 ProviderManager，
+     这个 AuthenticationManager 允许我们通过实现 AuthenticationProvider 的方式来提供自己的认证方法。
+
+     我们只需要将自己的 AuthenticationProvider 注册到 ProviderManager，然后，ProviderManager 就会遍历所有注册的 AuthenticationProvider 进行认证，只要有一个认证成功就认证成功了。
+
+  3. 而我们自己实现的 AuthenticationProvider 通常需要完成以下事情：
+     1. 调用我们自己的 UserDetailsService 根据用户的认证信息加载用户的详细信息 UserDetails
+     2. 对比 UserDetails 和 Authentication 中的详细，认证成功就返回一个新的 Authentication，这个 Authentication 往往包含了得到的 UserDetails
+  
+  4. 然后，当我们认证成功后，Spring Security 就可以将包含 UserDetails 的 Authentication 放到 SecurityContext 中，而 SecurityContext 又将被放到 SecurityContextHolder 中，
+     使得我们可以在当前线程上线文中获取用户的认证结果。
+
+* Spring Security OAuth2
+  在开始和 Spring Security OAuth2 相关的内容之前，还是先来简单的了解一下 OAuth2 这个东西。
+
+  OAuth2 中的四个基本角色为：
+  |------------+------------------------------------|
+  | 角色       | 描述                               |
+  |------------+------------------------------------|
+  | 资源拥有者 | 能被授予受保护资源的访问权限的实体 |
+  | 资源服务器 | 托管受保护资源的服务器             |
+  | 授权服务器 | 对客户端进行认证授权的服务器       |
+  | 客户端     |                                    |
+  |------------+------------------------------------|
+
