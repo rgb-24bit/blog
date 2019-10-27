@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
+- 10-26 -- [[file:2019/git-object-and-data-recovery.org][Git 对象和数据恢复]] ::
 - 10-20 -- [[file:2019/spring-security-certification-process.org][Spring Security 认证流程梳理]] ::
 - 10-06 -- [[file:2019/java-spi.org][Java SPI 机制及其实现]] ::
 - 06-22 -- [[file:2019/quick-sort.org][Quick Sort 快速排序算法]] ::
