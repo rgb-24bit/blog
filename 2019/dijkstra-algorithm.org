@@ -111,7 +111,7 @@
              if vertices:
                  self.vertices = {ver: set() for ver in vertices}
              else:
-                 self.vertices = []
+                 self.vertices = {}
              if edges:
                  self.add_edges(edges)
 
