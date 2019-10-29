@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-29 二 09:21 -->
+<!-- 2019-10-29 二 09:25 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>迪杰斯特拉算法</title>
@@ -246,23 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfc5aa62">1. 前言</a></li>
-<li><a href="#org509121e">2. 算法简述</a></li>
-<li><a href="#org425c9d6">3. 算法详述</a></li>
-<li><a href="#org18df5c4">4. 算法实现</a>
+<li><a href="#org8a0e5eb">1. 前言</a></li>
+<li><a href="#org733697c">2. 算法简述</a></li>
+<li><a href="#org1299c2c">3. 算法详述</a></li>
+<li><a href="#org6736079">4. 算法实现</a>
 <ul>
-<li><a href="#orga4e7a42">4.1. 简单的有向无权图</a></li>
-<li><a href="#org6b03456">4.2. 具体的算法实现</a></li>
-<li><a href="#orga0a3ee4">4.3. 可能的实现优化</a></li>
+<li><a href="#org1af4db7">4.1. 简单的有向无权图</a></li>
+<li><a href="#orgdf1eb81">4.2. 具体的算法实现</a></li>
+<li><a href="#org0c4e31f">4.3. 可能的实现优化</a></li>
 </ul>
 </li>
-<li><a href="#orgd5d12f2">5. 结语</a></li>
+<li><a href="#org6dbed2d">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfc5aa62" class="outline-2">
-<h2 id="orgfc5aa62"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org8a0e5eb" class="outline-2">
+<h2 id="org8a0e5eb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算法了，经常可以看到 <code>Dijkstra</code> 的大名。
@@ -278,8 +278,8 @@ Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算
 </div>
 </div>
 
-<div id="outline-container-org509121e" class="outline-2">
-<h2 id="org509121e"><span class="section-number-2">2</span> 算法简述</h2>
+<div id="outline-container-org733697c" class="outline-2">
+<h2 id="org733697c"><span class="section-number-2">2</span> 算法简述</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 迪杰斯特拉算法其实是一个很简单的算法，属于典型的贪婪算法，基本思想为：
@@ -333,8 +333,8 @@ a -&gt; b -&gt; c
 </div>
 </div>
 
-<div id="outline-container-org425c9d6" class="outline-2">
-<h2 id="org425c9d6"><span class="section-number-2">3</span> 算法详述</h2>
+<div id="outline-container-org1299c2c" class="outline-2">
+<h2 id="org1299c2c"><span class="section-number-2">3</span> 算法详述</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面了解了迪杰斯特拉算法的基本思想，接下来可以了解算法的详细过程了：
@@ -388,19 +388,19 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org18df5c4" class="outline-2">
-<h2 id="org18df5c4"><span class="section-number-2">4</span> 算法实现</h2>
+<div id="outline-container-org6736079" class="outline-2">
+<h2 id="org6736079"><span class="section-number-2">4</span> 算法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 事实证明，只有实际动手去敲过代码的东西印象才留的深，留的久，这里简单用 Python 实现了这一算法。
 </p>
 </div>
 
-<div id="outline-container-orga4e7a42" class="outline-3">
-<h3 id="orga4e7a42"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
+<div id="outline-container-org1af4db7" class="outline-3">
+<h3 id="org1af4db7"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
-要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无项图和有权图都有点麻烦 @_@
+要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无向图和有权图都有点麻烦 @_@
 </p>
 
 <div class="org-src-container">
@@ -435,8 +435,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org6b03456" class="outline-3">
-<h3 id="org6b03456"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
+<div id="outline-container-orgdf1eb81" class="outline-3">
+<h3 id="orgdf1eb81"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 利用 Python 来实现这一算法的思考过程：
@@ -522,8 +522,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orga0a3ee4" class="outline-3">
-<h3 id="orga0a3ee4"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
+<div id="outline-container-org0c4e31f" class="outline-3">
+<h3 id="org0c4e31f"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 算法的实现还是很简单的，但是很明显的，还存在优化空间，就是那个比较耗时的一步：选取最短未知顶点。
@@ -561,8 +561,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orgd5d12f2" class="outline-2">
-<h2 id="orgd5d12f2"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org6dbed2d" class="outline-2">
+<h2 id="org6dbed2d"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 全程无图的博客，还是和图结构相关的博客，阅读体验估计不太好 &gt;_&gt;
