@@ -1,5 +1,5 @@
 blog:
 	emacs --script export.el
 
-all-blog:
+all:
 	emacs --script export.el all

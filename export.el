@@ -9,14 +9,11 @@
 (require 'org)
 
 (defvar file-list nil)
-(defvar directory-list
-  '("./2017"
-    "./2018"
-    "./2019"))
+(defvar directory-list (directory-files default-directory t "[0-9]+"))
 
-(defun get-export-file-list (&optional ALL)
+(defun get-export-file-list (&optional export-all)
   "Get a list of files to export."
-  (if ALL
+  (if export-all
       (dolist (directory directory-list)
         (setq file-list (append file-list (directory-files directory t "\\.org$"))))
 
