@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 构造对象实例</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +246,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgeda2fd5">1. 前言</a></li>
-<li><a href="#orgc7ffd4a">2. 使用</a></li>
-<li><a href="#orgb9e3880">3. 关系</a></li>
-<li><a href="#org57b15fa">4. 元类</a></li>
-<li><a href="#org3586566">5. 参考链接</a></li>
+<li><a href="#orgca51cdb">1. 前言</a></li>
+<li><a href="#org6312403">2. 使用</a></li>
+<li><a href="#orgd2e28db">3. 关系</a></li>
+<li><a href="#orgb193af5">4. 元类</a></li>
+<li><a href="#orge0299a9">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgeda2fd5" class="outline-2">
-<h2 id="orgeda2fd5"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgca51cdb" class="outline-2">
+<h2 id="orgca51cdb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中我们常用的一个特殊方法为 <code>__init__</code>, 曾经， 我认为这个方法是用于构造对象实例的方法。
@@ -281,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc7ffd4a" class="outline-2">
-<h2 id="orgc7ffd4a"><span class="section-number-2">2</span> 使用</h2>
+<div id="outline-container-org6312403" class="outline-2">
+<h2 id="org6312403"><span class="section-number-2">2</span> 使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 对于 <code>__init__</code>, 相信只要使用过 <code>Python</code>, 应该都不陌生， 其一般形式为：
@@ -357,8 +357,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orgb9e3880" class="outline-2">
-<h2 id="orgb9e3880"><span class="section-number-2">3</span> 关系</h2>
+<div id="outline-container-orgd2e28db" class="outline-2">
+<h2 id="orgd2e28db"><span class="section-number-2">3</span> 关系</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>__new__</code> 和 <code>__init__</code> 两者之间存在很紧密的关系， 简单的概括一下就是：
@@ -482,12 +482,11 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-org57b15fa" class="outline-2">
-<h2 id="org57b15fa"><span class="section-number-2">4</span> 元类</h2>
+<div id="outline-container-orgb193af5" class="outline-2">
+<h2 id="orgb193af5"><span class="section-number-2">4</span> 元类</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-<code>__new__</code> 的一大使用场景就是元类了， 和一般的 <code>__new__</code> 不一样， 由于 <b>元类</b> 的实例是 <b>类</b>, 因此 <b>元类</b> 的 <code>__new__</code> 方法
-的参数需要和 <code>type</code> 相符合。
+<code>__new__</code> 的一大使用场景就是元类了， 和一般的 <code>__new__</code> 不一样， 由于 <b>元类</b> 的实例是 <b>类</b>, 因此 <b>元类</b> 的 <code>__new__</code> 方法的参数需要和 <code>type</code> 相符合。
 </p>
 
 <div class="org-src-container">
@@ -513,8 +512,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-org3586566" class="outline-2">
-<h2 id="org3586566"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-orge0299a9" class="outline-2">
+<h2 id="orge0299a9"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://amir.rachum.com/blog/2016/10/03/understanding-python-class-instantiation/">Understanding Python Class Instantiation</a></li>

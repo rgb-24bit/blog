@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 格式化字符串</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcbc4692">1. 简介</a></li>
-<li><a href="#orgf801755">2. 使用 str.format()</a>
+<li><a href="#orge93b45e">1. 简介</a></li>
+<li><a href="#org2722053">2. 使用 str.format()</a>
 <ul>
-<li><a href="#orge8eaa83">2.1. 格式化字符串语法</a></li>
-<li><a href="#org94f9087">2.2. 格式说明符</a></li>
+<li><a href="#org0c0fc9f">2.1. 格式化字符串语法</a></li>
+<li><a href="#org6a1ac2e">2.2. 格式说明符</a></li>
 </ul>
 </li>
-<li><a href="#org9ddc289">3. 使用 %</a></li>
-<li><a href="#org727d2cb">4. Update: 2018-04-18</a></li>
+<li><a href="#orgb60a142">3. 使用 %</a></li>
+<li><a href="#org1668621">4. Update: 2018-04-18</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcbc4692" class="outline-2">
-<h2 id="orgcbc4692"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orge93b45e" class="outline-2">
+<h2 id="orge93b45e"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 目前有两种进行格式化字符串的方式：
@@ -284,12 +284,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf801755" class="outline-2">
-<h2 id="orgf801755"><span class="section-number-2">2</span> 使用 str.format()</h2>
+<div id="outline-container-org2722053" class="outline-2">
+<h2 id="org2722053"><span class="section-number-2">2</span> 使用 str.format()</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orge8eaa83" class="outline-3">
-<h3 id="orge8eaa83"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
+<div id="outline-container-org0c0fc9f" class="outline-3">
+<h3 id="org0c0fc9f"><span class="section-number-3">2.1</span> 格式化字符串语法</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>format</code> 字符串包含由 <code>{}</code> 括起来的替换字段， 不包含在 <code>{}</code> 中的内容不做处理。
@@ -356,8 +356,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org94f9087" class="outline-3">
-<h3 id="org94f9087"><span class="section-number-3">2.2</span> 格式说明符</h3>
+<div id="outline-container-org6a1ac2e" class="outline-3">
+<h3 id="org6a1ac2e"><span class="section-number-3">2.2</span> 格式说明符</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>format_spec</code> 允许定义该替换字段的表现形式， 如左右对齐， 宽度等。
@@ -497,8 +497,7 @@ for the JavaScript code in this tag.
 </div></li>
 
 <li><p>
-<b># 选项</b> - 仅适用于数字参数， 同时仅适用于 <code>2</code>, <code>8</code>, <code>16</code> 进制的数字。 会在输出的数字前
-添加 <code>0b</code>, <code>0o</code>, <code>0x</code> 前缀。
+<b># 选项</b> - 仅适用于数字参数， 同时仅适用于 <code>2</code>, <code>8</code>, <code>16</code> 进制的数字。 会在输出的数字前添加 <code>0b</code>, <code>0o</code>, <code>0x</code> 前缀。
 </p>
 
 <p>
@@ -551,8 +550,7 @@ for the JavaScript code in this tag.
 </div></li>
 
 <li><p>
-<b>0 选项</b> - 如果未给出明确的对齐方式， 可以在宽度字段前加上一个 <code>0</code> 字符。 这相当于
-填充字符 <code>0</code>, 对齐方式为 <code>=</code>.
+<b>0 选项</b> - 如果未给出明确的对齐方式， 可以在宽度字段前加上一个 <code>0</code> 字符。 这相当于填充字符 <code>0</code>, 对齐方式为 <code>=</code>.
 </p>
 
 <p>
@@ -752,8 +750,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org9ddc289" class="outline-2">
-<h2 id="org9ddc289"><span class="section-number-2">3</span> 使用 %</h2>
+<div id="outline-container-orgb60a142" class="outline-2">
+<h2 id="orgb60a142"><span class="section-number-2">3</span> 使用 %</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>注：</b> 这个方式不被推荐， 如果可以的话， 还是尽量使用 <code>str.format()</code>
@@ -774,8 +772,7 @@ Traceback (most recent call last):
 <li>转换标志（可选）， 影响某些转换类型的结果</li>
 
 <li><p>
-最小字段宽度(可选)。 如果指定为 <code>*</code>, 则实际宽度将从值的下一个元素中读取。
-并且要转换的值位于宽度之后。
+最小字段宽度(可选)。 如果指定为 <code>*</code>, 则实际宽度将从值的下一个元素中读取。并且要转换的值位于宽度之后。
 </p>
 
 <p>
@@ -787,8 +784,7 @@ Traceback (most recent call last):
 </pre>
 </div></li>
 
-<li>精度（可选）。 以 <code>.</code> 表示。 如果指定为 <code>*</code>, 则实际精度将从值的下一个元素中读取。
-并且要转换的值位于精度之后。</li>
+<li>精度（可选）。 以 <code>.</code> 表示。 如果指定为 <code>*</code>, 则实际精度将从值的下一个元素中读取。并且要转换的值位于精度之后。</li>
 
 <li>长度修饰符（可选）</li>
 
@@ -954,8 +950,8 @@ Python has 002 quote types.
 </div>
 </div>
 
-<div id="outline-container-org727d2cb" class="outline-2">
-<h2 id="org727d2cb"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
+<div id="outline-container-org1668621" class="outline-2">
+<h2 id="org1668621"><span class="section-number-2">4</span> Update: 2018-04-18</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这次更新是关于使用 <code>str.format</code> 的过程中包含 <code>{}</code> 的问题的。

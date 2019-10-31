@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C# 图像处理的三种方式</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +246,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgddd91b2">1. 前言</a></li>
-<li><a href="#orgeba9758">2. 像素法</a></li>
-<li><a href="#org95ea6dc">3. 内存法</a></li>
-<li><a href="#org7707239">4. 指针法</a></li>
-<li><a href="#orgeda2b9f">5. 参考链接</a></li>
+<li><a href="#org3097dac">1. 前言</a></li>
+<li><a href="#orgb274413">2. 像素法</a></li>
+<li><a href="#org1089719">3. 内存法</a></li>
+<li><a href="#org9a3630b">4. 指针法</a></li>
+<li><a href="#org6d0c29a">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgddd91b2" class="outline-2">
-<h2 id="orgddd91b2"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org3097dac" class="outline-2">
+<h2 id="org3097dac"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客记录一下 <code>C#</code> 中用于处理图像的三种常规方式： <b>像素法</b>, <b>内存法</b> 和 <b>指针法</b>.
@@ -264,12 +264,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgeba9758" class="outline-2">
-<h2 id="orgeba9758"><span class="section-number-2">2</span> 像素法</h2>
+<div id="outline-container-orgb274413" class="outline-2">
+<h2 id="orgb274413"><span class="section-number-2">2</span> 像素法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-<b>像素法</b> 通过 <code>Bitmap</code> 对象的 <code>GetPixel()</code> 和 <code>SetPixel()</code> 来直接访问操作像素点，
-是三种方式中最简单的一种方式，但简单带来的是极其低下的处理速度。
+<b>像素法</b> 通过 <code>Bitmap</code> 对象的 <code>GetPixel()</code> 和 <code>SetPixel()</code> 来直接访问操作像素点，是三种方式中最简单的一种方式，但简单带来的是极其低下的处理速度。
 </p>
 
 <p>
@@ -296,8 +295,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org95ea6dc" class="outline-2">
-<h2 id="org95ea6dc"><span class="section-number-2">3</span> 内存法</h2>
+<div id="outline-container-org1089719" class="outline-2">
+<h2 id="org1089719"><span class="section-number-2">3</span> 内存法</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>内存法</b> 把图像数据直接复制到内存中进行处理，可以带来比 <b>像素法</b> 快的多的处理速度。
@@ -312,8 +311,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-<b>图片类型</b> 影响着存储每个像素点所需要的字节大小，假如 <code>RGBA</code> 值各占一个字节（现在常见的图片确实是这样），
-那么存储 <code>JPG</code> 和 <code>BMP</code> 每个像素点需要 <code>3</code> 字节，而存储 <code>PNG</code> 却需要 <code>4</code> 字节。
+<b>图片类型</b> 影响着存储每个像素点所需要的字节大小，假如 <code>RGBA</code> 值各占一个字节（现在常见的图片确实是这样），那么存储 <code>JPG</code> 和 <code>BMP</code> 每个像素点需要 <code>3</code> 字节，而存储 <code>PNG</code> 却需要 <code>4</code> 字节。
 </p>
 
 <p>
@@ -343,8 +341,7 @@ int B = rgbValues[b + index];       // 获取 B 值， GBA 以此类推
 </div>
 
 <p>
-最后是 <b>字节对齐</b> 问题，图像数据在内存中存储时是按 <code>4</code> 字节对齐的，这对于只有 <code>RGB</code> 这三种类型颜色通道的图片来说，
-可能使得图像每一个像素行的末尾存在一些无用的字节数据。必要时需要跳过这些无用的字节。
+最后是 <b>字节对齐</b> 问题，图像数据在内存中存储时是按 <code>4</code> 字节对齐的，这对于只有 <code>RGB</code> 这三种类型颜色通道的图片来说，可能使得图像每一个像素行的末尾存在一些无用的字节数据。必要时需要跳过这些无用的字节。
 </p>
 
 <pre class="example">
@@ -405,12 +402,11 @@ BGR BGR BGR BGR BGR BGR XX
 </div>
 </div>
 
-<div id="outline-container-org7707239" class="outline-2">
-<h2 id="org7707239"><span class="section-number-2">4</span> 指针法</h2>
+<div id="outline-container-org9a3630b" class="outline-2">
+<h2 id="org9a3630b"><span class="section-number-2">4</span> 指针法</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-<b>指针法</b> 顾名思义，就是使用 <b>指针</b>, 在 <code>C#</code> 中使用指针需要把代码放到 <code>unsafe</code> 代码块中，
-而 <b>指针法</b> 和 <b>内存法</b> 一样，需要考虑 <b>图片类型</b>, <b>字节顺序</b> 和 <b>字节对齐</b> 的问题。
+<b>指针法</b> 顾名思义，就是使用 <b>指针</b>, 在 <code>C#</code> 中使用指针需要把代码放到 <code>unsafe</code> 代码块中，而 <b>指针法</b> 和 <b>内存法</b> 一样，需要考虑 <b>图片类型</b>, <b>字节顺序</b> 和 <b>字节对齐</b> 的问题。
 </p>
 
 <p>
@@ -487,8 +483,8 @@ and the execution engine works to ensure that unsafe code cannot be executed in 
 </div>
 </div>
 
-<div id="outline-container-orgeda2b9f" class="outline-2">
-<h2 id="orgeda2b9f"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-org6d0c29a" class="outline-2">
+<h2 id="org6d0c29a"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="http://kuangqi.me/image-processing/image-processing-using-c-sharp/">使用 C# 进行图像处理的几种方法</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-29 二 09:25 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>迪杰斯特拉算法</title>
@@ -246,23 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8a0e5eb">1. 前言</a></li>
-<li><a href="#org733697c">2. 算法简述</a></li>
-<li><a href="#org1299c2c">3. 算法详述</a></li>
-<li><a href="#org6736079">4. 算法实现</a>
+<li><a href="#org08565ba">1. 前言</a></li>
+<li><a href="#org66a4ef2">2. 算法简述</a></li>
+<li><a href="#orge38af9c">3. 算法详述</a></li>
+<li><a href="#org405c527">4. 算法实现</a>
 <ul>
-<li><a href="#org1af4db7">4.1. 简单的有向无权图</a></li>
-<li><a href="#orgdf1eb81">4.2. 具体的算法实现</a></li>
-<li><a href="#org0c4e31f">4.3. 可能的实现优化</a></li>
+<li><a href="#org132442f">4.1. 简单的有向无权图</a></li>
+<li><a href="#org714bb8a">4.2. 具体的算法实现</a></li>
+<li><a href="#orgeffc3a2">4.3. 可能的实现优化</a></li>
 </ul>
 </li>
-<li><a href="#org6dbed2d">5. 结语</a></li>
+<li><a href="#org0b876e5">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8a0e5eb" class="outline-2">
-<h2 id="org8a0e5eb"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org08565ba" class="outline-2">
+<h2 id="org08565ba"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算法了，经常可以看到 <code>Dijkstra</code> 的大名。
@@ -278,8 +278,8 @@ Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算
 </div>
 </div>
 
-<div id="outline-container-org733697c" class="outline-2">
-<h2 id="org733697c"><span class="section-number-2">2</span> 算法简述</h2>
+<div id="outline-container-org66a4ef2" class="outline-2">
+<h2 id="org66a4ef2"><span class="section-number-2">2</span> 算法简述</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 迪杰斯特拉算法其实是一个很简单的算法，属于典型的贪婪算法，基本思想为：
@@ -289,8 +289,7 @@ Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算
 </ul>
 
 <p>
-在这种情况下，迪杰斯特拉算法只需要不断计算更新选取的顶点到其 <b>邻接顶点</b> 的路径长度就可以了，这对于路径长度必然是递增的（无权或非负权）图来说，
-是没有问题的，因为，对于它们来说，每一步的最优解就是整体的最优解。
+在这种情况下，迪杰斯特拉算法只需要不断计算更新选取的顶点到其 <b>邻接顶点</b> 的路径长度就可以了，这对于路径长度必然是递增的（无权或非负权）图来说，是没有问题的，因为，对于它们来说，每一步的最优解就是整体的最优解。
 </p>
 
 <p>
@@ -333,22 +332,20 @@ a -&gt; b -&gt; c
 </div>
 </div>
 
-<div id="outline-container-org1299c2c" class="outline-2">
-<h2 id="org1299c2c"><span class="section-number-2">3</span> 算法详述</h2>
+<div id="outline-container-orge38af9c" class="outline-2">
+<h2 id="orge38af9c"><span class="section-number-2">3</span> 算法详述</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面了解了迪杰斯特拉算法的基本思想，接下来可以了解算法的详细过程了：
 </p>
 <ol class="org-ol">
-<li>算法开始时，将图中的所有顶点分为两组，一组为已知最短路径的顶点，一组为未知最短路径的顶点，
-初始时所有顶点都属于未知最短路径的顶点，并标记每个顶点的路径长度为无穷大。</li>
+<li>算法开始时，将图中的所有顶点分为两组，一组为已知最短路径的顶点，一组为未知最短路径的顶点，初始时所有顶点都属于未知最短路径的顶点，并标记每个顶点的路径长度为无穷大。</li>
 
 <li>将起始点的路径长度设为 0</li>
 
 <li>每个阶段中，选取所有未知最短路径的顶点中路径长度最短的那一个，将其标记为已知最短路径的顶点，</li>
 
-<li>然后计算该顶点到其邻接顶点中属于未知最短路径的顶点的路径长度，如果计算得到的路径长度比原有的长度短，
-就更新该邻接顶点的路径长度，并将该邻接顶点的前置节点设为选取的顶点</li>
+<li>然后计算该顶点到其邻接顶点中属于未知最短路径的顶点的路径长度，如果计算得到的路径长度比原有的长度短，就更新该邻接顶点的路径长度，并将该邻接顶点的前置节点设为选取的顶点</li>
 
 <li>不断执行 3 - 4 操作，直到未知最短路径的顶点数量为 0</li>
 </ol>
@@ -388,16 +385,16 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org6736079" class="outline-2">
-<h2 id="org6736079"><span class="section-number-2">4</span> 算法实现</h2>
+<div id="outline-container-org405c527" class="outline-2">
+<h2 id="org405c527"><span class="section-number-2">4</span> 算法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 事实证明，只有实际动手去敲过代码的东西印象才留的深，留的久，这里简单用 Python 实现了这一算法。
 </p>
 </div>
 
-<div id="outline-container-org1af4db7" class="outline-3">
-<h3 id="org1af4db7"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
+<div id="outline-container-org132442f" class="outline-3">
+<h3 id="org132442f"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无向图和有权图都有点麻烦 @_@
@@ -435,18 +432,16 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orgdf1eb81" class="outline-3">
-<h3 id="orgdf1eb81"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
+<div id="outline-container-org714bb8a" class="outline-3">
+<h3 id="org714bb8a"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 利用 Python 来实现这一算法的思考过程：
 </p>
 <ul class="org-ul">
-<li>首先，是已知和未知集合的确定，因为只有两种情况，因此只需要创建其中一个集合就足够了。
-同时，Python 内置的集合结构可以直接拿来用，简单。</li>
+<li>首先，是已知和未知集合的确定，因为只有两种情况，因此只需要创建其中一个集合就足够了。同时，Python 内置的集合结构可以直接拿来用，简单。</li>
 
-<li>然后，是每个顶点距离和前置顶点的保存，Python 中可以考虑用字典来实现，建立顶点到距离和顶点到前置顶点的映射。
-这一步也很简单。</li>
+<li>然后，是每个顶点距离和前置顶点的保存，Python 中可以考虑用字典来实现，建立顶点到距离和顶点到前置顶点的映射。这一步也很简单。</li>
 
 <li>其次，是选取路径长度最短的未知顶点，常规的实现就是遍历所有未知节点，找出最短的那一个。这一步较为耗时，</li>
 
@@ -522,8 +517,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org0c4e31f" class="outline-3">
-<h3 id="org0c4e31f"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
+<div id="outline-container-orgeffc3a2" class="outline-3">
+<h3 id="orgeffc3a2"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 算法的实现还是很简单的，但是很明显的，还存在优化空间，就是那个比较耗时的一步：选取最短未知顶点。
@@ -534,8 +529,7 @@ function Dijkstra(Graph, source):
 </p>
 
 <p>
-选取最短未知顶点可以概括为：不断选取某集合中的最小成员。这一点和一个数据结构的操作很像，
-那就是 <span class="underline">优先队列 - 堆</span> ！
+选取最短未知顶点可以概括为：不断选取某集合中的最小成员。这一点和一个数据结构的操作很像，那就是 <span class="underline">优先队列 - 堆</span> ！
 </p>
 
 <p>
@@ -561,8 +555,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org6dbed2d" class="outline-2">
-<h2 id="org6dbed2d"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org0b876e5" class="outline-2">
+<h2 id="org0b876e5"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 全程无图的博客，还是和图结构相关的博客，阅读体验估计不太好 &gt;_&gt;

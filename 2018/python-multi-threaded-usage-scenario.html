@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 多线程使用场景</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org473fb48">1. 前言</a></li>
-<li><a href="#orgecd59f1">2. GIL</a></li>
-<li><a href="#org89166f4">3. 线程切换</a></li>
-<li><a href="#org24e5c06">4. I/O 操作</a></li>
-<li><a href="#orgf474719">5. 使用场景</a></li>
-<li><a href="#org356c2e3">6. 结语</a></li>
-<li><a href="#org6950736">7. 参考链接</a></li>
+<li><a href="#orge1a22ab">1. 前言</a></li>
+<li><a href="#org8c39f9e">2. GIL</a></li>
+<li><a href="#orgac79df2">3. 线程切换</a></li>
+<li><a href="#orgebc3b25">4. I/O 操作</a></li>
+<li><a href="#org0d20ad5">5. 使用场景</a></li>
+<li><a href="#org76b6222">6. 结语</a></li>
+<li><a href="#org460dc37">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org473fb48" class="outline-2">
-<h2 id="org473fb48"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orge1a22ab" class="outline-2">
+<h2 id="orge1a22ab"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 当初在学习 <code>Python</code> 多线程的时候就了解到： 由于 <code>GIL</code> 的原因， <code>Python</code> 解释器只允许同一时间执行一个线程。
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgecd59f1" class="outline-2">
-<h2 id="orgecd59f1"><span class="section-number-2">2</span> GIL</h2>
+<div id="outline-container-org8c39f9e" class="outline-2">
+<h2 id="org8c39f9e"><span class="section-number-2">2</span> GIL</h2>
 <div class="outline-text-2" id="text-2">
 <blockquote>
 <p>
@@ -289,12 +289,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org89166f4" class="outline-2">
-<h2 id="org89166f4"><span class="section-number-2">3</span> 线程切换</h2>
+<div id="outline-container-orgac79df2" class="outline-2">
+<h2 id="orgac79df2"><span class="section-number-2">3</span> 线程切换</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-<b>线程切换</b> 会带来不小的开销，频繁的线程切换会造成资源的浪费。但是在其他环境中，
-线程可以 <b>并发</b> 的执行，并发带来的效率的提高完全可以忽视因为线程切换带来的消耗。
+<b>线程切换</b> 会带来不小的开销，频繁的线程切换会造成资源的浪费。但是在其他环境中，线程可以 <b>并发</b> 的执行，并发带来的效率的提高完全可以忽视因为线程切换带来的消耗。
 </p>
 
 <p>
@@ -315,8 +314,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org24e5c06" class="outline-2">
-<h2 id="org24e5c06"><span class="section-number-2">4</span> I/O 操作</h2>
+<div id="outline-container-orgebc3b25" class="outline-2">
+<h2 id="orgebc3b25"><span class="section-number-2">4</span> I/O 操作</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 曾经，我以为 <code>I/O</code> 操作也是由 <code>CPU</code> 完成的，程序执行 <code>I/O</code> 操作的时候就是 <code>CPU</code> 不断执行神奇的指令从磁盘读写数据。
@@ -340,8 +339,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf474719" class="outline-2">
-<h2 id="orgf474719"><span class="section-number-2">5</span> 使用场景</h2>
+<div id="outline-container-org0d20ad5" class="outline-2">
+<h2 id="org0d20ad5"><span class="section-number-2">5</span> 使用场景</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 到了这里， <code>Python</code> 多线程的使用场景就很明了了。
@@ -352,8 +351,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-这对于 <b>CPU 密集型</b> 的程序来说是不利的，因为 <b>CPU 密集型</b> 的程序主要的消耗集中在执行 <code>CPU</code> 指令上，
-而 <code>Python</code> 中的多线程因为 <code>GIL</code> 的原因会带来 <b>线程切换</b> 的巨大开销，降低程序性能。
+这对于 <b>CPU 密集型</b> 的程序来说是不利的，因为 <b>CPU 密集型</b> 的程序主要的消耗集中在执行 <code>CPU</code> 指令上，而 <code>Python</code> 中的多线程因为 <code>GIL</code> 的原因会带来 <b>线程切换</b> 的巨大开销，降低程序性能。
 </p>
 
 <p>
@@ -370,8 +368,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org356c2e3" class="outline-2">
-<h2 id="org356c2e3"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org76b6222" class="outline-2">
+<h2 id="org76b6222"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 的多线程适合用在什么地方，晚上早就有很多的讨论了，结论也早已存在。
@@ -391,8 +389,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6950736" class="outline-2">
-<h2 id="org6950736"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org460dc37" class="outline-2">
+<h2 id="org460dc37"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://zh.wikipedia.org/wiki/%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81">全局解释器锁</a></li>

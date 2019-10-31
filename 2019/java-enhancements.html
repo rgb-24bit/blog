@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE 5.0 - SE 8 的功能增强</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,45 +246,45 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8f2a729">1. 前言</a></li>
-<li><a href="#org0c259bb">2. Java 5.0</a>
+<li><a href="#org880997e">1. 前言</a></li>
+<li><a href="#org1899cfb">2. Java 5.0</a>
 <ul>
-<li><a href="#orgbc658c2">2.1. Generics</a></li>
-<li><a href="#orgaf16020">2.2. Enhanced for Loop</a></li>
-<li><a href="#org33f9b75">2.3. Autoboxing</a></li>
-<li><a href="#org9059957">2.4. Typesafe Enums</a></li>
-<li><a href="#org83056e3">2.5. Varargs</a></li>
-<li><a href="#org8becab8">2.6. Static Import</a></li>
-<li><a href="#orgb168692">2.7. Annotations</a></li>
+<li><a href="#org8cb1197">2.1. Generics</a></li>
+<li><a href="#org795c005">2.2. Enhanced for Loop</a></li>
+<li><a href="#org140d3a6">2.3. Autoboxing</a></li>
+<li><a href="#org7496fb0">2.4. Typesafe Enums</a></li>
+<li><a href="#org3b6f4b9">2.5. Varargs</a></li>
+<li><a href="#orge45fe60">2.6. Static Import</a></li>
+<li><a href="#orgf672898">2.7. Annotations</a></li>
 </ul>
 </li>
-<li><a href="#orgc92b044">3. Java SE 6</a></li>
-<li><a href="#orgcde1d1a">4. Java SE 7</a>
+<li><a href="#orgd8d3d5f">3. Java SE 6</a></li>
+<li><a href="#org2ebe346">4. Java SE 7</a>
 <ul>
-<li><a href="#org58187bc">4.1. Binary Literals</a></li>
-<li><a href="#orga79abc0">4.2. Underscores in Numeric Literals</a></li>
-<li><a href="#org1dde06d">4.3. Strings in switch Statements</a></li>
-<li><a href="#orgd04aa4b">4.4. Type Inference for Generic Instance Creation</a></li>
-<li><a href="#org3294a73">4.5. The try-with-resources Statement</a></li>
-<li><a href="#orgf0e41d9">4.6. Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</a></li>
+<li><a href="#org600cf00">4.1. Binary Literals</a></li>
+<li><a href="#org24dd2fd">4.2. Underscores in Numeric Literals</a></li>
+<li><a href="#org01cd334">4.3. Strings in switch Statements</a></li>
+<li><a href="#org8032b55">4.4. Type Inference for Generic Instance Creation</a></li>
+<li><a href="#org5412a19">4.5. The try-with-resources Statement</a></li>
+<li><a href="#org61e944f">4.6. Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</a></li>
 </ul>
 </li>
-<li><a href="#orge0dfcec">5. Java SE 8</a>
+<li><a href="#orgac1899f">5. Java SE 8</a>
 <ul>
-<li><a href="#orgc2f8906">5.1. Lambda Expressions</a></li>
-<li><a href="#org51b92d5">5.2. Improved Type Inference</a></li>
-<li><a href="#org5b328ea">5.3. Annotations on Java Types</a></li>
-<li><a href="#org8e79762">5.4. Repeating Annotations</a></li>
-<li><a href="#org18fba67">5.5. Method Parameter Reflection</a></li>
+<li><a href="#org6aca7d2">5.1. Lambda Expressions</a></li>
+<li><a href="#org048175c">5.2. Improved Type Inference</a></li>
+<li><a href="#org9a9a5b3">5.3. Annotations on Java Types</a></li>
+<li><a href="#org0365389">5.4. Repeating Annotations</a></li>
+<li><a href="#org825230b">5.5. Method Parameter Reflection</a></li>
 </ul>
 </li>
-<li><a href="#org60a5d16">6. 结语</a></li>
+<li><a href="#orgd25c762">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8f2a729" class="outline-2">
-<h2 id="org8f2a729"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org880997e" class="outline-2">
+<h2 id="org880997e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <b>Python</b> 的过程中就因为不同版本之间的不同而迷惑过，现在在学习 <b>Java</b> 的过程中我也遇见了类似的问题。
@@ -295,23 +295,21 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-这篇博客参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html">Java Programming Language Enhancements</a> 整理了一下 <b>Java 5.0 - 8</b> 的功能增强，
-希望对有相同困惑的你有所帮助。
+这篇博客参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html">Java Programming Language Enhancements</a> 整理了一下 <b>Java 5.0 - 8</b> 的功能增强，希望对有相同困惑的你有所帮助。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0c259bb" class="outline-2">
-<h2 id="org0c259bb"><span class="section-number-2">2</span> Java 5.0</h2>
+<div id="outline-container-org1899cfb" class="outline-2">
+<h2 id="org1899cfb"><span class="section-number-2">2</span> Java 5.0</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-就目前的情况来说，无论是市面上的 <b>Java</b> 书籍还是实际使用的 <b>Java</b> 版本，大多是 <b>&gt;= 5.0</b> 的，因此，
-这一节就只简单介绍一下 <b>5.0</b> 的功能增强。
+就目前的情况来说，无论是市面上的 <b>Java</b> 书籍还是实际使用的 <b>Java</b> 版本，大多是 <b>&gt;= 5.0</b> 的，因此，这一节就只简单介绍一下 <b>5.0</b> 的功能增强。
 </p>
 </div>
 
-<div id="outline-container-orgbc658c2" class="outline-3">
-<h3 id="orgbc658c2"><span class="section-number-3">2.1</span> Generics</h3>
+<div id="outline-container-org8cb1197" class="outline-3">
+<h3 id="org8cb1197"><span class="section-number-3">2.1</span> Generics</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 熟悉 <b>Java</b> 语言的同学对 <b>泛型</b> 这个特性应该并不陌生，这是一个很常用的特性，单独把这个特性拎出来讲都可以写好几篇博客了。
@@ -327,8 +325,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgaf16020" class="outline-3">
-<h3 id="orgaf16020"><span class="section-number-3">2.2</span> Enhanced for Loop</h3>
+<div id="outline-container-org795c005" class="outline-3">
+<h3 id="org795c005"><span class="section-number-3">2.2</span> Enhanced for Loop</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <b>for-each</b> 循环是在 <b>5.0</b> 才可以开始使用的，凡是实现了 <code>Iterable</code> 接口的对象或 <b>数组</b> 都可以使用这一循环方式：
@@ -346,8 +344,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org33f9b75" class="outline-3">
-<h3 id="org33f9b75"><span class="section-number-3">2.3</span> Autoboxing</h3>
+<div id="outline-container-org140d3a6" class="outline-3">
+<h3 id="org140d3a6"><span class="section-number-3">2.3</span> Autoboxing</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 自动装箱这一特性可谓是给编写 Java 代码的程序员带来了极大的便利，但也带来了一下其他的问题，比如：
@@ -370,8 +368,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9059957" class="outline-3">
-<h3 id="org9059957"><span class="section-number-3">2.4</span> Typesafe Enums</h3>
+<div id="outline-container-org7496fb0" class="outline-3">
+<h3 id="org7496fb0"><span class="section-number-3">2.4</span> Typesafe Enums</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 在 Java 5.0 以前是没有枚举类型的，要使用枚举只有像这样：
@@ -402,8 +400,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org83056e3" class="outline-3">
-<h3 id="org83056e3"><span class="section-number-3">2.5</span> Varargs</h3>
+<div id="outline-container-org3b6f4b9" class="outline-3">
+<h3 id="org3b6f4b9"><span class="section-number-3">2.5</span> Varargs</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 程序员格式化字符串的时候岂不是很辛苦 @_@
@@ -426,8 +424,8 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-org8becab8" class="outline-3">
-<h3 id="org8becab8"><span class="section-number-3">2.6</span> Static Import</h3>
+<div id="outline-container-orge45fe60" class="outline-3">
+<h3 id="orge45fe60"><span class="section-number-3">2.6</span> Static Import</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 静态导入用的好绝得是一大神器，虽然说现代 IDE 的自动补全功能已经很强大，但是，能够少写一些代码还是很好的：
@@ -445,8 +443,8 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-orgb168692" class="outline-3">
-<h3 id="orgb168692"><span class="section-number-3">2.7</span> Annotations</h3>
+<div id="outline-container-orgf672898" class="outline-3">
+<h3 id="orgf672898"><span class="section-number-3">2.7</span> Annotations</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 注解机制的重要性我想要个不需要我说了，现代的各种 Java 框架，基本上都离不开这一机制的使用。
@@ -463,8 +461,8 @@ Java 居然是在 5.0 才引入可变参数这一特性的，5.0 以前的 Java 
 </div>
 </div>
 
-<div id="outline-container-orgc92b044" class="outline-2">
-<h2 id="orgc92b044"><span class="section-number-2">3</span> Java SE 6</h2>
+<div id="outline-container-orgd8d3d5f" class="outline-2">
+<h2 id="orgd8d3d5f"><span class="section-number-2">3</span> Java SE 6</h2>
 <div class="outline-text-2" id="text-3">
 <blockquote>
 <p>
@@ -474,16 +472,16 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-orgcde1d1a" class="outline-2">
-<h2 id="orgcde1d1a"><span class="section-number-2">4</span> Java SE 7</h2>
+<div id="outline-container-org2ebe346" class="outline-2">
+<h2 id="org2ebe346"><span class="section-number-2">4</span> Java SE 7</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我看过的教程还没有哪本用的是 <b>Java 7</b>, 可怜的孩子 @_@
 </p>
 </div>
 
-<div id="outline-container-org58187bc" class="outline-3">
-<h3 id="org58187bc"><span class="section-number-3">4.1</span> Binary Literals</h3>
+<div id="outline-container-org600cf00" class="outline-3">
+<h3 id="org600cf00"><span class="section-number-3">4.1</span> Binary Literals</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 二进制整数字面量，也就是说可以用类似 <code>0b1110</code> 或 <code>0B1110</code> 的形式来设置整数值，但是好像是默认为 <code>int</code> 型。
@@ -508,8 +506,8 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-orga79abc0" class="outline-3">
-<h3 id="orga79abc0"><span class="section-number-3">4.2</span> Underscores in Numeric Literals</h3>
+<div id="outline-container-org24dd2fd" class="outline-3">
+<h3 id="org24dd2fd"><span class="section-number-3">4.2</span> Underscores in Numeric Literals</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 数字字面量中间可以有下划线 <code>_</code> 了，在写长整数的使用利用这一特性可以很方便的分清楚现在有几个 <code>0</code>.
@@ -529,8 +527,8 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-org1dde06d" class="outline-3">
-<h3 id="org1dde06d"><span class="section-number-3">4.3</span> Strings in switch Statements</h3>
+<div id="outline-container-org01cd334" class="outline-3">
+<h3 id="org01cd334"><span class="section-number-3">4.3</span> Strings in switch Statements</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 在 <code>switch</code> 语句的 <code>case</code> 选项中可以使用字符串了，由于看的第一个教材是 <code>Java 5.0</code> 版的，搞得我现在都还不怎么习惯这一特性。
@@ -538,8 +536,8 @@ No language changes were introduced in Java SE 6.
 </div>
 </div>
 
-<div id="outline-container-orgd04aa4b" class="outline-3">
-<h3 id="orgd04aa4b"><span class="section-number-3">4.4</span> Type Inference for Generic Instance Creation</h3>
+<div id="outline-container-org8032b55" class="outline-3">
+<h3 id="org8032b55"><span class="section-number-3">4.4</span> Type Inference for Generic Instance Creation</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 类型推断绝对是一个很方便的功能，因为这意味着像下面这样的代码：
@@ -563,8 +561,8 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-org3294a73" class="outline-3">
-<h3 id="org3294a73"><span class="section-number-3">4.5</span> The try-with-resources Statement</h3>
+<div id="outline-container-org5412a19" class="outline-3">
+<h3 id="org5412a19"><span class="section-number-3">4.5</span> The try-with-resources Statement</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 可以说，凡是和 <b>I/O</b> 操作相关的对象，在最后都需要调用 <b>close()</b> 方法，这是一个很繁琐的操作，但不操作还不得行！
@@ -588,8 +586,8 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-orgf0e41d9" class="outline-3">
-<h3 id="orgf0e41d9"><span class="section-number-3">4.6</span> Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</h3>
+<div id="outline-container-org61e944f" class="outline-3">
+<h3 id="org61e944f"><span class="section-number-3">4.6</span> Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 这里我们主要关注 <b>Catching Multiple Exception Types</b> 这一特性。
@@ -624,20 +622,19 @@ Nice!!!
 </div>
 </div>
 
-<div id="outline-container-orge0dfcec" class="outline-2">
-<h2 id="orge0dfcec"><span class="section-number-2">5</span> Java SE 8</h2>
+<div id="outline-container-orgac1899f" class="outline-2">
+<h2 id="orgac1899f"><span class="section-number-2">5</span> Java SE 8</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版本就是这个版本，成熟的特性，丰富的类库。
 </p>
 </div>
 
-<div id="outline-container-orgc2f8906" class="outline-3">
-<h3 id="orgc2f8906"><span class="section-number-3">5.1</span> Lambda Expressions</h3>
+<div id="outline-container-org6aca7d2" class="outline-3">
+<h3 id="org6aca7d2"><span class="section-number-3">5.1</span> Lambda Expressions</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-作为函数式编程和 Lisp 的爱好者，看到 Java 支持 Lambda 表达式的时候心情是激动的，在看到 Java 中 Lambda 的使用后，
-就更激动了。
+作为函数式编程和 Lisp 的爱好者，看到 Java 支持 Lambda 表达式的时候心情是激动的，在看到 Java 中 Lambda 的使用后，就更激动了。
 </p>
 
 <p>
@@ -654,8 +651,8 @@ Java 8 是具有里程碑意义的一个版本，现在我们常用的 Java 版�
 </div>
 </div>
 
-<div id="outline-container-org51b92d5" class="outline-3">
-<h3 id="org51b92d5"><span class="section-number-3">5.2</span> Improved Type Inference</h3>
+<div id="outline-container-org048175c" class="outline-3">
+<h3 id="org048175c"><span class="section-number-3">5.2</span> Improved Type Inference</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论了，反正，直接用就可以了。
@@ -663,8 +660,8 @@ Java 8 增强了类型推断的功能，具体是什么样的就不多做讨论�
 </div>
 </div>
 
-<div id="outline-container-org5b328ea" class="outline-3">
-<h3 id="org5b328ea"><span class="section-number-3">5.3</span> Annotations on Java Types</h3>
+<div id="outline-container-org9a9a5b3" class="outline-3">
+<h3 id="org9a9a5b3"><span class="section-number-3">5.3</span> Annotations on Java Types</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 <b>任何地方</b> 使用：
@@ -680,8 +677,8 @@ Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 
 </div>
 </div>
 
-<div id="outline-container-org8e79762" class="outline-3">
-<h3 id="org8e79762"><span class="section-number-3">5.4</span> Repeating Annotations</h3>
+<div id="outline-container-org0365389" class="outline-3">
+<h3 id="org0365389"><span class="section-number-3">5.4</span> Repeating Annotations</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 现在可以在一个地方多出使用相同的注解，就像这样：
@@ -695,16 +692,15 @@ Java 8 以前的注解貌似只能用在类和方法上，但是现在可以在 
 </div>
 </div>
 
-<div id="outline-container-org18fba67" class="outline-3">
-<h3 id="org18fba67"><span class="section-number-3">5.5</span> Method Parameter Reflection</h3>
+<div id="outline-container-org825230b" class="outline-3">
+<h3 id="org825230b"><span class="section-number-3">5.5</span> Method Parameter Reflection</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 反射可以获取方法的参数了，在反射面前一个类已经没有多少隐私可言了 @_@
 </p>
 
 <p>
-还记的前一段时间看到的一个新闻，说以前一些 Android 开发者可以通过反射和 JNI 的方式调用 SDK 中的隐藏接口，
-搞得 Google 只能将那些接口变成反射不出来。
+还记的前一段时间看到的一个新闻，说以前一些 Android 开发者可以通过反射和 JNI 的方式调用 SDK 中的隐藏接口，搞得 Google 只能将那些接口变成反射不出来。
 </p>
 
 <p>
@@ -714,8 +710,8 @@ NB!!!
 </div>
 </div>
 
-<div id="outline-container-org60a5d16" class="outline-2">
-<h2 id="org60a5d16"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgd25c762" class="outline-2">
+<h2 id="orgd25c762"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 其实直接用 Java 8 的话可以不用管那个特性是那个版本开始支持的，直接用就可以了。
@@ -726,8 +722,7 @@ NB!!!
 </p>
 
 <p>
-博客中提到的一些特性只是简单的提了一下它们的名字，而没有说它们具体是怎么样的，如果要了解的话，
-可以 Google。
+博客中提到的一些特性只是简单的提了一下它们的名字，而没有说它们具体是怎么样的，如果要了解的话，可以 Google。
 </p>
 
 <p>

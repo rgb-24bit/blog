@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 日志模块</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,27 +246,26 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd072ab6">1. 前言</a></li>
-<li><a href="#orgdc1b579">2. 简单的使用</a></li>
-<li><a href="#orgc408065">3. 配置日志消息的格式</a></li>
-<li><a href="#org7bce4f7">4. 同时输出到终端和文件</a></li>
-<li><a href="#orgd666eb2">5. 日志配置</a></li>
-<li><a href="#org2e68254">6. 结语</a></li>
-<li><a href="#orgfc6319c">7. 参考链接</a></li>
+<li><a href="#org98e0edb">1. 前言</a></li>
+<li><a href="#org4f33365">2. 简单的使用</a></li>
+<li><a href="#org5da8e10">3. 配置日志消息的格式</a></li>
+<li><a href="#orgf7e7fcc">4. 同时输出到终端和文件</a></li>
+<li><a href="#org84cf8ca">5. 日志配置</a></li>
+<li><a href="#orgc811c57">6. 结语</a></li>
+<li><a href="#org4393071">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd072ab6" class="outline-2">
-<h2 id="orgd072ab6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org98e0edb" class="outline-2">
+<h2 id="org98e0edb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟踪为耻</b>.
 </p>
 
 <p>
-<code>Python</code> 中的内置模块 <code>logging</code> 就是用来打印日志的，然而，使用这个模块的过程总是伴随着各种的不满意，
-折腾过来折腾过去，算是勉强达到了满意的效果。
+<code>Python</code> 中的内置模块 <code>logging</code> 就是用来打印日志的，然而，使用这个模块的过程总是伴随着各种的不满意，折腾过来折腾过去，算是勉强达到了满意的效果。
 </p>
 
 <p>
@@ -275,8 +274,8 @@ Python 八荣八耻中的一句就是： <b>以打印日志为荣 , 以单步跟
 </div>
 </div>
 
-<div id="outline-container-orgdc1b579" class="outline-2">
-<h2 id="orgdc1b579"><span class="section-number-2">2</span> 简单的使用</h2>
+<div id="outline-container-org4f33365" class="outline-2">
+<h2 id="org4f33365"><span class="section-number-2">2</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>logging</code> 模块提供了一个默认的日志记录器，允许在不需要进行太多配置的情况下开始使用：
@@ -302,8 +301,7 @@ CRITICAL:root:This is a critical message
 </pre>
 
 <p>
-调用了五个函数但只有三个输出的原因是默认的日志记录器 <code>root</code> 根据设置好的 <b>输出级别</b> 进行日志输出，
-而默认的输出级别为 <code>WARNING</code>.
+调用了五个函数但只有三个输出的原因是默认的日志记录器 <code>root</code> 根据设置好的 <b>输出级别</b> 进行日志输出，而默认的输出级别为 <code>WARNING</code>.
 </p>
 
 <p>
@@ -395,8 +393,8 @@ root - DEBUG - This will get logged
 </div>
 </div>
 
-<div id="outline-container-orgc408065" class="outline-2">
-<h2 id="orgc408065"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
+<div id="outline-container-org5da8e10" class="outline-2">
+<h2 id="org5da8e10"><span class="section-number-2">3</span> 配置日志消息的格式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 日志消息的格式是很重要的，日志消息包含必要内容可以让你更快的找到问题的所在，而良好的格式也能让你在看日志的时候更舒服。
@@ -438,16 +436,15 @@ logging.warning(<span class="org-string">'Admin logged out'</span>)
 </div>
 </div>
 
-<div id="outline-container-org7bce4f7" class="outline-2">
-<h2 id="org7bce4f7"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
+<div id="outline-container-orgf7e7fcc" class="outline-2">
+<h2 id="orgf7e7fcc"><span class="section-number-2">4</span> 同时输出到终端和文件</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 一般在程序的调试阶段，我希望日志能够同时输出到终端和文件，方便调试。
 </p>
 
 <p>
-但是，函数 <code>logging.basicConfig()</code> 是不允许同时设置参数 stream(终端) 和 filename(文件) 的，这意味着，
-如果要想让日志同时输出到终端和文件，就不得不使用一些更底层的接口。
+但是，函数 <code>logging.basicConfig()</code> 是不允许同时设置参数 stream(终端) 和 filename(文件) 的，这意味着，如果要想让日志同时输出到终端和文件，就不得不使用一些更底层的接口。
 </p>
 
 <p>
@@ -597,8 +594,8 @@ logging.basicConfig(handlers=[c_handler, f_handler])
 </div>
 </div>
 
-<div id="outline-container-orgd666eb2" class="outline-2">
-<h2 id="orgd666eb2"><span class="section-number-2">5</span> 日志配置</h2>
+<div id="outline-container-org84cf8ca" class="outline-2">
+<h2 id="org84cf8ca"><span class="section-number-2">5</span> 日志配置</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 可以看到，创建和配置 <code>Logger</code> 的过程较为繁琐，因此 <code>Python</code> 为我们提供了 <code>logging.config</code> 模块来简化创建和配置 <code>Logger</code> 的过程。
@@ -737,8 +734,8 @@ logger.info(...)
 </div>
 </div>
 
-<div id="outline-container-org2e68254" class="outline-2">
-<h2 id="org2e68254"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgc811c57" class="outline-2">
+<h2 id="orgc811c57"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 总感觉日志配置部分做了一些多于的事情 QAQ
@@ -758,8 +755,8 @@ Over !
 </div>
 </div>
 
-<div id="outline-container-orgfc6319c" class="outline-2">
-<h2 id="orgfc6319c"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org4393071" class="outline-2">
+<h2 id="org4393071"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://realpython.com/python-logging/">Logging in Python - Real Python</a></li>

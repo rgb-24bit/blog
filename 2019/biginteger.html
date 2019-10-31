@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>大数的简单实现</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,25 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc53ea8b">1. 前言</a></li>
-<li><a href="#org5e0d1d2">2. 字符数组的本质</a></li>
-<li><a href="#orgbf75104">3. 整数数组与 1000000000 进制</a></li>
-<li><a href="#org66c8b2c">4. 小端模式存储</a></li>
-<li><a href="#org27c86ae">5. 和 10 进制字符串之间的转换</a></li>
-<li><a href="#orgca3cb5d">6. 大数加法</a></li>
-<li><a href="#org50dc102">7. 大数乘法</a></li>
-<li><a href="#orgeadbdba">8. 结语</a></li>
-<li><a href="#orge0847ee">9. 参考链接</a></li>
+<li><a href="#org50c7ce7">1. 前言</a></li>
+<li><a href="#org3aee07b">2. 字符数组的本质</a></li>
+<li><a href="#org3bc09ca">3. 整数数组与 1000000000 进制</a></li>
+<li><a href="#org9ebebe6">4. 小端模式存储</a></li>
+<li><a href="#org2217c32">5. 和 10 进制字符串之间的转换</a></li>
+<li><a href="#orgb24d0b6">6. 大数加法</a></li>
+<li><a href="#org755a085">7. 大数乘法</a></li>
+<li><a href="#org4ffdf72">8. 结语</a></li>
+<li><a href="#orgbc5bea8">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc53ea8b" class="outline-2">
-<h2 id="orgc53ea8b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org50c7ce7" class="outline-2">
+<h2 id="org50c7ce7"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 <b>大数加法</b> 的实现，
-更进一步便是 <b>大数乘法</b>.
+大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 <b>大数加法</b> 的实现，更进一步便是 <b>大数乘法</b>.
 </p>
 
 <p>
@@ -277,8 +276,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5e0d1d2" class="outline-2">
-<h2 id="org5e0d1d2"><span class="section-number-2">2</span> 字符数组的本质</h2>
+<div id="outline-container-org3aee07b" class="outline-2">
+<h2 id="org3aee07b"><span class="section-number-2">2</span> 字符数组的本质</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通过字符数组表示大数的本质是什么，比如像这样一个字符数组：
@@ -296,8 +295,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-但是很明显，就算是在 <code>C</code> 语言中，存储一个字符也至少需要一个字节，而一个字节能够表示 <code>[0, 255]</code>, 我们却只拿来存储 <code>[0, 9]</code> 的数字，
-这显得有点奢侈。
+但是很明显，就算是在 <code>C</code> 语言中，存储一个字符也至少需要一个字节，而一个字节能够表示 <code>[0, 255]</code>, 我们却只拿来存储 <code>[0, 9]</code> 的数字，这显得有点奢侈。
 </p>
 
 <p>
@@ -310,8 +308,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbf75104" class="outline-2">
-<h2 id="orgbf75104"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
+<div id="outline-container-org3bc09ca" class="outline-2">
+<h2 id="org3bc09ca"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 通过前面的思考，我们可以发现，通过 <b>字符数组</b> 来实现大数的方式其实就是：
@@ -380,8 +378,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org66c8b2c" class="outline-2">
-<h2 id="org66c8b2c"><span class="section-number-2">4</span> 小端模式存储</h2>
+<div id="outline-container-org9ebebe6" class="outline-2">
+<h2 id="org9ebebe6"><span class="section-number-2">4</span> 小端模式存储</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我们选择了整数数组和 1000000000 进制实现大数，其中，整数数组的每个元素最多存储 9 位十进制数字：
@@ -393,8 +391,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-然后需要考虑的就是大数的存储模式，和计算机内存中数据的存储一样，这里我们有 <b>大端</b> 和 <b>小端</b> 两种存储模式可以选择，其中，大端形式可以方便人的阅读，
-而小端可以方便相关大数计算的实现。
+然后需要考虑的就是大数的存储模式，和计算机内存中数据的存储一样，这里我们有 <b>大端</b> 和 <b>小端</b> 两种存储模式可以选择，其中，大端形式可以方便人的阅读，而小端可以方便相关大数计算的实现。
 </p>
 
 <p>
@@ -425,8 +422,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org27c86ae" class="outline-2">
-<h2 id="org27c86ae"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
+<div id="outline-container-org2217c32" class="outline-2">
+<h2 id="org2217c32"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 将 10 进制字符串转换为 1000000000 进制的整数数组时，只需要按 9 个数字一组的方式分割原字符串就可以了：
@@ -485,8 +482,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgca3cb5d" class="outline-2">
-<h2 id="orgca3cb5d"><span class="section-number-2">6</span> 大数加法</h2>
+<div id="outline-container-orgb24d0b6" class="outline-2">
+<h2 id="orgb24d0b6"><span class="section-number-2">6</span> 大数加法</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 整数数组的大数加法和字符数组的大数加法在实现上是差不多的，所有就直接上代码好了：
@@ -533,12 +530,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org50dc102" class="outline-2">
-<h2 id="org50dc102"><span class="section-number-2">7</span> 大数乘法</h2>
+<div id="outline-container-org755a085" class="outline-2">
+<h2 id="org755a085"><span class="section-number-2">7</span> 大数乘法</h2>
 <div class="outline-text-2" id="text-7">
 <p>
-大数乘法我们可以借助 <b>long</b> 数组来辅助实现，因为，这样就不需要担心两个 <b>int</b> 相乘的溢出问题了，
-这也是为什么不选择 <b>long</b> 数组来实现大数的一个原因。
+大数乘法我们可以借助 <b>long</b> 数组来辅助实现，因为，这样就不需要担心两个 <b>int</b> 相乘的溢出问题了，这也是为什么不选择 <b>long</b> 数组来实现大数的一个原因。
 </p>
 
 <div class="org-src-container">
@@ -589,17 +585,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgeadbdba" class="outline-2">
-<h2 id="orgeadbdba"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org4ffdf72" class="outline-2">
+<h2 id="org4ffdf72"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
-这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，
-于是就放弃了。
+这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，于是就放弃了。
 </p>
 
 <p>
-但是，如果真的用 2 进制流来实现的话，其实也就只是相当于 <b>0xff</b> 进制的字符数组或 <b>0xffffffff</b> 进制的整数数组，
-主要是和十进制之间的转换有点麻烦。
+但是，如果真的用 2 进制流来实现的话，其实也就只是相当于 <b>0xff</b> 进制的字符数组或 <b>0xffffffff</b> 进制的整数数组，主要是和十进制之间的转换有点麻烦。
 </p>
 
 <p>
@@ -616,8 +610,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge0847ee" class="outline-2">
-<h2 id="orge0847ee"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-orgbc5bea8" class="outline-2">
+<h2 id="orgbc5bea8"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.pediy.com/kssd/pediy05/pediy50664.htm">RSA 与大数运算</a></li>

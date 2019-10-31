@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 导入相关</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,32 +246,31 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1a766a0">1. 简介</a></li>
-<li><a href="#orgc78183b">2. import 语法</a></li>
-<li><a href="#orgde8b1de">3. 相对导入和绝对导入</a>
+<li><a href="#org3f75237">1. 简介</a></li>
+<li><a href="#orgb5a1a73">2. import 语法</a></li>
+<li><a href="#orgee41afc">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#orge6aca95">3.1. 相对导入</a></li>
-<li><a href="#org0dba7d2">3.2. 绝对导入</a></li>
+<li><a href="#org570fa05">3.1. 相对导入</a></li>
+<li><a href="#org8115797">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#org4347ee0">4. 同名的包和模块</a></li>
-<li><a href="#orga85bbe0">5. 执行一次导入后</a></li>
-<li><a href="#orga57b200">6. 其他使用细节</a></li>
-<li><a href="#org712e507">7. 参考链接</a></li>
+<li><a href="#org0af8ba8">4. 同名的包和模块</a></li>
+<li><a href="#orgc7553a6">5. 执行一次导入后</a></li>
+<li><a href="#org99ae272">6. 其他使用细节</a></li>
+<li><a href="#org0049ad6">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1a766a0" class="outline-2">
-<h2 id="org1a766a0"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org3f75237" class="outline-2">
+<h2 id="org3f75237"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
 </p>
 
 <p>
-如果平时使用的时候避开容易出现坑的地方， 那么 <code>import</code> 就会老老实实的， 没有任何
-问题。
+如果平时使用的时候避开容易出现坑的地方， 那么 <code>import</code> 就会老老实实的， 没有任何问题。
 </p>
 
 <p>
@@ -284,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc78183b" class="outline-2">
-<h2 id="orgc78183b"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-orgb5a1a73" class="outline-2">
+<h2 id="orgb5a1a73"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -316,12 +315,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgde8b1de" class="outline-2">
-<h2 id="orgde8b1de"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-orgee41afc" class="outline-2">
+<h2 id="orgee41afc"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orge6aca95" class="outline-3">
-<h3 id="orge6aca95"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-org570fa05" class="outline-3">
+<h3 id="org570fa05"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -350,8 +349,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0dba7d2" class="outline-3">
-<h3 id="org0dba7d2"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org8115797" class="outline-3">
+<h3 id="org8115797"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -376,8 +375,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-首先， 需要清楚的一点是： 这个路径会被添加到 <code>sys.path</code> 最前面， 所以如果该路径下存在
-和内建或第三方库同名的模块或包， 使用绝对导入会优先导入那个同名的模块。
+首先， 需要清楚的一点是： 这个路径会被添加到 <code>sys.path</code> 最前面， 所以如果该路径下存在和内建或第三方库同名的模块或包， 使用绝对导入会优先导入那个同名的模块。
 </p>
 
 <p>
@@ -536,8 +534,7 @@ Desktop/
 </div>
 
 <p>
-这也是在相对简单的包结构中 <a href="https://www.python.org/dev/peps/pep-0008/#imports">PEP8</a> 推荐使用的方式， 而复杂的包结构可能会有多层嵌套
-的 <b>包</b>, 此时如果还用 <b>绝对导入</b> 就是 <b>包A.包B.包C.模块</b> 的形式了， 此时使用 <b>相对导入</b>
+这也是在相对简单的包结构中 <a href="https://www.python.org/dev/peps/pep-0008/#imports">PEP8</a> 推荐使用的方式， 而复杂的包结构可能会有多层嵌套的 <b>包</b>, 此时如果还用 <b>绝对导入</b> 就是 <b>包A.包B.包C.模块</b> 的形式了， 此时使用 <b>相对导入</b>
 会更加简洁.
 </p>
 
@@ -548,8 +545,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-org4347ee0" class="outline-2">
-<h2 id="org4347ee0"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org0af8ba8" class="outline-2">
+<h2 id="org0af8ba8"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -631,8 +628,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orga85bbe0" class="outline-2">
-<h2 id="orga85bbe0"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-orgc7553a6" class="outline-2">
+<h2 id="orgc7553a6"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -664,8 +661,7 @@ pkg/
 </div>
 
 <p>
-像这样直接从 <b>模块</b> 导入一个 <b>数值</b> 对象， 这个数值对象就会绑定到 <b>导入它</b> 的模块， 并从新
-在内存中创建一个实例。
+像这样直接从 <b>模块</b> 导入一个 <b>数值</b> 对象， 这个数值对象就会绑定到 <b>导入它</b> 的模块， 并从新在内存中创建一个实例。
 </p>
 
 <p>
@@ -678,8 +674,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orga57b200" class="outline-2">
-<h2 id="orga57b200"><span class="section-number-2">6</span> 其他使用细节</h2>
+<div id="outline-container-org99ae272" class="outline-2">
+<h2 id="org99ae272"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -712,8 +708,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org712e507" class="outline-2">
-<h2 id="org712e507"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org0049ad6" class="outline-2">
+<h2 id="org0049ad6"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>

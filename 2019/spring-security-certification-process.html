@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-20 周日 19:56 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spring Security 认证流程梳理</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +246,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3915e7e">1. 前言</a></li>
-<li><a href="#org9c37e72">2. 简单的认证流程</a></li>
-<li><a href="#org433c46e">3. Spring Security</a></li>
-<li><a href="#orgfcb7b09">4. 结语</a></li>
-<li><a href="#org2309753">5. 参考链接</a></li>
+<li><a href="#org6610fa4">1. 前言</a></li>
+<li><a href="#orgf40bc91">2. 简单的认证流程</a></li>
+<li><a href="#org1f0aa75">3. Spring Security</a></li>
+<li><a href="#org3bdc7a8">4. 结语</a></li>
+<li><a href="#org5fce578">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3915e7e" class="outline-2">
-<h2 id="org3915e7e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6610fa4" class="outline-2">
+<h2 id="org6610fa4"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个模块之一了，最开始看书学习的时候，在看了几次还有一些迷糊后就放弃了。
@@ -272,8 +272,8 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div>
 </div>
 
-<div id="outline-container-org9c37e72" class="outline-2">
-<h2 id="org9c37e72"><span class="section-number-2">2</span> 简单的认证流程</h2>
+<div id="outline-container-orgf40bc91" class="outline-2">
+<h2 id="orgf40bc91"><span class="section-number-2">2</span> 简单的认证流程</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 很多人在刚开始学习 Web 应用程序的编写的时候，应该都使用过下面这种认证方式：
@@ -292,16 +292,15 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div>
 </div>
 
-<div id="outline-container-org433c46e" class="outline-2">
-<h2 id="org433c46e"><span class="section-number-2">3</span> Spring Security</h2>
+<div id="outline-container-org1f0aa75" class="outline-2">
+<h2 id="org1f0aa75"><span class="section-number-2">3</span> Spring Security</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面的简单的认证流程中，是可以将一些东西抽象出来作为一个单独的实体，这些实体都可以在 Spring Security 中找到相应的对象，包括：
 </p>
 <ol class="org-ol">
 <li><p>
-用户输入的账号密码等信息，这些东西其实就是用户的认证信息，对应到 Spring Security 中的话就是 <code>Authentication</code> 对象，只不过，Spring Security 中的 Authentication 对象除了保存用户的认证信息以外，
-还可以用来保存用户认证成功后从数据库中拿到的用户的详细信息。
+用户输入的账号密码等信息，这些东西其实就是用户的认证信息，对应到 Spring Security 中的话就是 <code>Authentication</code> 对象，只不过，Spring Security 中的 Authentication 对象除了保存用户的认证信息以外，还可以用来保存用户认证成功后从数据库中拿到的用户的详细信息。
 </p>
 
 <div class="org-src-container">
@@ -317,8 +316,7 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div></li>
 
 <li><p>
-只凭用户提供的认证信息往往是不足以用来判断该用户是否合法的，因此，我们通常还需要某种手段来获取保存在服务端的用户信息，同时，也需要某种手段来保存用户信息，
-这些对应到 Spring Security 中的话就是 <code>UserDetailsService</code> 和 <code>UserDetails</code> 这两个对象。
+只凭用户提供的认证信息往往是不足以用来判断该用户是否合法的，因此，我们通常还需要某种手段来获取保存在服务端的用户信息，同时，也需要某种手段来保存用户信息，这些对应到 Spring Security 中的话就是 <code>UserDetailsService</code> 和 <code>UserDetails</code> 这两个对象。
 </p>
 
 <div class="org-src-container">
@@ -348,8 +346,7 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div>
 
 <p>
-而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 <code>AuthenticationProvider</code> 和 <code>ProviderManager</code> 这个默认的 AuthenticationManager 实现。
-使用时，我们往往就只需要实现 <code>AuthenticationProvider</code> 就足够了。
+而鉴于各种各样的用户认证信息和层出不穷的效验方式，Spring Security 提供了更易于我们扩展的接口 <code>AuthenticationProvider</code> 和 <code>ProviderManager</code> 这个默认的 AuthenticationManager 实现。使用时，我们往往就只需要实现 <code>AuthenticationProvider</code> 就足够了。
 </p>
 
 <div class="org-src-container">
@@ -397,8 +394,7 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </p>
 
 <p>
-我们在使用时，便可以实现自己的 UserDetailsService 和 UserDetails 来获取保存用户信息，实现自己的 Authentication 来保存特定的用户认证信息，
-实现自己的 AuthenticationProvider 使用自己的 UserDetailsService 和 Authentication 来对用户认证信息进行效验。
+我们在使用时，便可以实现自己的 UserDetailsService 和 UserDetails 来获取保存用户信息，实现自己的 Authentication 来保存特定的用户认证信息，实现自己的 AuthenticationProvider 使用自己的 UserDetailsService 和 Authentication 来对用户认证信息进行效验。
 </p>
 
 <p>
@@ -407,12 +403,11 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </div>
 </div>
 
-<div id="outline-container-orgfcb7b09" class="outline-2">
-<h2 id="orgfcb7b09"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org3bdc7a8" class="outline-2">
+<h2 id="org3bdc7a8"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-其实除了 Spring Security 以外还看了一下 Spring Security OAuth2 和 Spring Security JWT，本来感觉可以和这篇博客一起总结了，但是写着写着才发现，卧槽，Spring Security 部分的思路那么清晰，
-怎么到了 Spring Security OAuth2 后就变得断断续续的。
+其实除了 Spring Security 以外还看了一下 Spring Security OAuth2 和 Spring Security JWT，本来感觉可以和这篇博客一起总结了，但是写着写着才发现，卧槽，Spring Security 部分的思路那么清晰，怎么到了 Spring Security OAuth2 后就变得断断续续的。
 </p>
 
 <p>
@@ -421,8 +416,8 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </div>
 </div>
 
-<div id="outline-container-org2309753" class="outline-2">
-<h2 id="org2309753"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-org5fce578" class="outline-2">
+<h2 id="org5fce578"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://www.ibm.com/developerworks/cn/web/wa-spring-security-web-application-and-fingerprint-login/index.html">Spring Security 的 Web 应用和指纹登录实践</a></li>

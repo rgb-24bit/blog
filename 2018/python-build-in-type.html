@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置类型</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,24 +246,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgac398a0">1. 简介</a></li>
-<li><a href="#org83bc4c8">2. bool</a></li>
-<li><a href="#org8017e73">3. 数值类型</a>
+<li><a href="#org82a0e57">1. 简介</a></li>
+<li><a href="#org70f8159">2. bool</a></li>
+<li><a href="#org996d576">3. 数值类型</a>
 <ul>
-<li><a href="#org0cbf2d1">3.1. 方法</a></li>
+<li><a href="#orgbcd1832">3.1. 方法</a></li>
 </ul>
 </li>
-<li><a href="#orgcaa0aa8">4. 序列类型</a></li>
-<li><a href="#org84934f7">5. 文本序列类型</a></li>
-<li><a href="#org039ba22">6. 集合类型</a></li>
-<li><a href="#org3188c10">7. 映射类型</a></li>
-<li><a href="#orge0d85d8">8. 参考链接</a></li>
+<li><a href="#orgd4c5a7f">4. 序列类型</a></li>
+<li><a href="#org3d69a59">5. 文本序列类型</a></li>
+<li><a href="#org7a84bac">6. 集合类型</a></li>
+<li><a href="#orgd985f48">7. 映射类型</a></li>
+<li><a href="#orge650ebb">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgac398a0" class="outline-2">
-<h2 id="orgac398a0"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org82a0e57" class="outline-2">
+<h2 id="org82a0e57"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这篇博客是对 <code>Python</code> 内置类型的简单汇总， 省略了很多内容。
@@ -271,16 +271,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org83bc4c8" class="outline-2">
-<h2 id="org83bc4c8"><span class="section-number-2">2</span> bool</h2>
+<div id="outline-container-org70f8159" class="outline-2">
+<h2 id="org70f8159"><span class="section-number-2">2</span> bool</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 中， <code>bool</code> 类型属于 <code>int</code> 的子类， 只存在 <code>True</code> 和 <code>False</code> 这两个实例。
 </p>
 
 <p>
-<code>Python2</code> 中可以对 <code>True</code> 或 <code>False</code> 赋值搞出 <code>True = False</code> 的操作， 这一点在 <code>Python3</code> 中得到
-了修改。
+<code>Python2</code> 中可以对 <code>True</code> 或 <code>False</code> 赋值搞出 <code>True = False</code> 的操作， 这一点在 <code>Python3</code> 中得到了修改。
 </p>
 
 <p>
@@ -304,12 +303,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8017e73" class="outline-2">
-<h2 id="org8017e73"><span class="section-number-2">3</span> 数值类型</h2>
+<div id="outline-container-org996d576" class="outline-2">
+<h2 id="org996d576"><span class="section-number-2">3</span> 数值类型</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-<code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持
-复数运算。 另外， <code>Python2</code> 还有一个 <code>long</code> 类型。
+<code>Python</code> 的数值类型有 <code>int</code>, <code>float</code>, <code>complex</code>. 其中， <code>complex</code> 是复数， <code>Python</code> 默认就支持复数运算。 另外， <code>Python2</code> 还有一个 <code>long</code> 类型。
 </p>
 
 <p>
@@ -326,8 +324,7 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li><p>
 除法 <code>/</code>: <code>Python2</code> 中的除法默认是地板除， 而在 <code>Python3</code> 中地板除是 <code>//</code>. 当然， <code>Python2</code>
-中也可以使用 <code>//</code>, 但是这和 <code>/</code> 没有区别。 如果想要 <code>Python2</code> 中的除法和 <code>Python3</code> 中的
-行为保持一致， 可以：
+中也可以使用 <code>//</code>, 但是这和 <code>/</code> 没有区别。 如果想要 <code>Python2</code> 中的除法和 <code>Python3</code> 中的行为保持一致， 可以：
 </p>
 
 <div class="org-src-container">
@@ -341,14 +338,13 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org0cbf2d1" class="outline-3">
-<h3 id="org0cbf2d1"><span class="section-number-3">3.1</span> 方法</h3>
+<div id="outline-container-orgbcd1832" class="outline-3">
+<h3 id="orgbcd1832"><span class="section-number-3">3.1</span> 方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>int.bit_length()</dt><dd>返回整数的二进制长度。</dd>
 
-<dt>int.to_bytes(length, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回表示整数的字节数组。
-效果和 <code>hex(x)</code> 有点像， 但更高级</dd>
+<dt>int.to_bytes(length, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回表示整数的字节数组。效果和 <code>hex(x)</code> 有点像， 但更高级</dd>
 
 <dt>int.from_bytes(bytes, byteorder, *, signed=False)</dt><dd>(<code>Python3</code>) 返回给定字节数组所表示的整数。</dd>
 
@@ -379,12 +375,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcaa0aa8" class="outline-2">
-<h2 id="orgcaa0aa8"><span class="section-number-2">4</span> 序列类型</h2>
+<div id="outline-container-orgd4c5a7f" class="outline-2">
+<h2 id="orgd4c5a7f"><span class="section-number-2">4</span> 序列类型</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里
-采取 <code>Python3</code> 的类型划分。
+从这里开始， <code>Python2</code> 和 <code>Python3</code> 的文档就存在明显的差异了。这里采取 <code>Python3</code> 的类型划分。
 </p>
 
 <p>
@@ -412,13 +407,11 @@ for the JavaScript code in this tag.
 </p>
 <dl class="org-dl">
 <dt>sort(*, key=None, reverse=False)</dt><dd><p>
-<code>Python2</code> 还有一个 <code>cmp</code> 参数， 这个参数
-在 <code>Python3</code> 已经被废除了， 可以的话， 就不用 <code>cmp</code> 参数了。
+<code>Python2</code> 还有一个 <code>cmp</code> 参数， 这个参数在 <code>Python3</code> 已经被废除了， 可以的话， 就不用 <code>cmp</code> 参数了。
 </p>
 
 <p>
-另外， <code>sort()</code> 是没有返回值的， 如果想当然的希望 <code>list.sort()</code> 返回排序后的列表
-的话， 你将得到一个 <code>None</code>. 
+另外， <code>sort()</code> 是没有返回值的， 如果想当然的希望 <code>list.sort()</code> 返回排序后的列表的话， 你将得到一个 <code>None</code>. 
 </p>
 
 <p>
@@ -430,8 +423,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org84934f7" class="outline-2">
-<h2 id="org84934f7"><span class="section-number-2">5</span> 文本序列类型</h2>
+<div id="outline-container-org3d69a59" class="outline-2">
+<h2 id="org3d69a59"><span class="section-number-2">5</span> 文本序列类型</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 万恶之源 <code>str</code>. <code>Python2</code> 和 <code>Python3</code> 的不兼容相当难受。
@@ -466,8 +459,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org039ba22" class="outline-2">
-<h2 id="org039ba22"><span class="section-number-2">6</span> 集合类型</h2>
+<div id="outline-container-org7a84bac" class="outline-2">
+<h2 id="org7a84bac"><span class="section-number-2">6</span> 集合类型</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 中的集合类型有 <code>set</code> 和 <code>frozenset</code> 两种。
@@ -516,8 +509,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3188c10" class="outline-2">
-<h2 id="org3188c10"><span class="section-number-2">7</span> 映射类型</h2>
+<div id="outline-container-orgd985f48" class="outline-2">
+<h2 id="orgd985f48"><span class="section-number-2">7</span> 映射类型</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 的映射类型无疑是 <code>dict</code> 了。
@@ -546,8 +539,8 @@ Help on <span class="org-keyword">class</span> <span class="org-type">dict</span
 </div>
 </div>
 
-<div id="outline-container-orge0d85d8" class="outline-2">
-<h2 id="orge0d85d8"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-orge650ebb" class="outline-2">
+<h2 id="orge650ebb"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/stdtypes.html">Python3</a></li>

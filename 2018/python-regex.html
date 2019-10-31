@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 正则表达式</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,26 +246,25 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9b2c2c3">1. 简介</a></li>
-<li><a href="#org7ae6ea2">2. 模块和对象</a></li>
-<li><a href="#orgc092000">3. 模块对象和正则表达式对象</a></li>
-<li><a href="#orgae13e3f">4. 正则表达式匹配对象</a></li>
-<li><a href="#org5551dcc">5. 语法扩展和原始字符串</a></li>
-<li><a href="#orgd8d7c17">6. 参考链接</a></li>
+<li><a href="#org42c7037">1. 简介</a></li>
+<li><a href="#orgbb67cc9">2. 模块和对象</a></li>
+<li><a href="#org66fa6ae">3. 模块对象和正则表达式对象</a></li>
+<li><a href="#org9f58ca6">4. 正则表达式匹配对象</a></li>
+<li><a href="#orgf2818d9">5. 语法扩展和原始字符串</a></li>
+<li><a href="#orgeb4b476">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9b2c2c3" class="outline-2">
-<h2 id="org9b2c2c3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org42c7037" class="outline-2">
+<h2 id="org42c7037"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 处理复杂的文本的时候， 使用 <b>正则表达式</b> 能够很大程度上减轻我们的工作量。
 </p>
 
 <p>
-这篇博客的主要内容是针对 <code>Python</code> 的正则表达式模块 <code>re</code> 的理解和使用， 有关正则表达式
-语法的内容可以查看 <a href="https://github.com/rgb-24bit/blog/blob/master/2018/regex.org">正则表达式</a>.
+这篇博客的主要内容是针对 <code>Python</code> 的正则表达式模块 <code>re</code> 的理解和使用， 有关正则表达式语法的内容可以查看 <a href="https://github.com/rgb-24bit/blog/blob/master/2018/regex.org">正则表达式</a>.
 </p>
 
 <p>
@@ -274,8 +273,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7ae6ea2" class="outline-2">
-<h2 id="org7ae6ea2"><span class="section-number-2">2</span> 模块和对象</h2>
+<div id="outline-container-orgbb67cc9" class="outline-2">
+<h2 id="orgbb67cc9"><span class="section-number-2">2</span> 模块和对象</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 为了更好的理解 <code>re</code> 模块的使用， 我们首先将 <code>re</code> 模块涉及到的 <b>三个对象</b> 列举出来：
@@ -305,18 +304,16 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc092000" class="outline-2">
-<h2 id="orgc092000"><span class="section-number-2">3</span> 模块对象和正则表达式对象</h2>
+<div id="outline-container-org66fa6ae" class="outline-2">
+<h2 id="org66fa6ae"><span class="section-number-2">3</span> 模块对象和正则表达式对象</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-由于 <b>模块对象</b> 和 <b>正则表达式</b> 对象的使用十分接近， 就把两者
-的内容放在一起了。
+由于 <b>模块对象</b> 和 <b>正则表达式</b> 对象的使用十分接近， 就把两者的内容放在一起了。
 </p>
 
 <dl class="org-dl">
 <dt>re.compile(pattern, flags=0)</dt><dd><p>
-       这个方法只适用于 <b>模块对象</b>, 使用任何可选的 <code>flag</code> 来编译正则表达式模式，
-并返回一个 <b>正则表达式对象</b>.
+       这个方法只适用于 <b>模块对象</b>, 使用任何可选的 <code>flag</code> 来编译正则表达式模式，并返回一个 <b>正则表达式对象</b>.
 </p>
 
 <p>
@@ -346,8 +343,7 @@ for the JavaScript code in this tag.
 </p></dd>
 
 <dt>findall(pattern, string, [,flags])</dt><dd><p>
-       这个方法查找字符串中 <b>所有</b> 非重复出现的正则表达式模式， 并返回一个列表。 如果没有
-匹配到的话就返回一个 <b>空的</b> 列表。
+       这个方法查找字符串中 <b>所有</b> 非重复出现的正则表达式模式， 并返回一个列表。 如果没有匹配到的话就返回一个 <b>空的</b> 列表。
 </p>
 
 <p>
@@ -407,8 +403,7 @@ Out[13]: [<span class="org-string">'Hell'</span>, <span class="org-string">'orld
 </div></dd>
 
 <dt>sub(pattern, repl, string, count=0)</dt><dd><p>
-       使用 <code>repl</code> 替换 <code>string</code> 中出现的和 <code>pattern</code> 相匹配的字符串， 通过 <code>count</code> 指定替换次数， 默认
-为替换所有。
+       使用 <code>repl</code> 替换 <code>string</code> 中出现的和 <code>pattern</code> 相匹配的字符串， 通过 <code>count</code> 指定替换次数， 默认为替换所有。
 </p>
 
 <p>
@@ -427,8 +422,8 @@ Out[18]: <span class="org-string">'TTTT'</span>
 </div>
 </div>
 
-<div id="outline-container-orgae13e3f" class="outline-2">
-<h2 id="orgae13e3f"><span class="section-number-2">4</span> 正则表达式匹配对象</h2>
+<div id="outline-container-org9f58ca6" class="outline-2">
+<h2 id="org9f58ca6"><span class="section-number-2">4</span> 正则表达式匹配对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>匹配对象</b> 通常为 <code>re.match</code> 或 <code>re.search</code> 返回的对象。
@@ -439,8 +434,7 @@ Out[18]: <span class="org-string">'TTTT'</span>
 </p>
 
 <p>
-通常， 我们可以在 <b>匹配模式</b> 中使用 <code>()</code> 来定义 <b>元组(子组)</b>. 这些 <b>元组</b> 会根据
-定义的顺序被设置一个 <b>编号</b>.
+通常， 我们可以在 <b>匹配模式</b> 中使用 <code>()</code> 来定义 <b>元组(子组)</b>. 这些 <b>元组</b> 会根据定义的顺序被设置一个 <b>编号</b>.
 </p>
 
 <p>
@@ -477,8 +471,7 @@ Out[18]: <span class="org-string">'TTTT'</span>
 
 <dt>groups(default=None)</dt><dd>返回一个包含所有匹配子组的元组</dd>
 
-<dt>groupdict(default=None)</dt><dd>返回一个包含所有匹配的 <b>命名子组</b> (Python 语法扩展) 的字典，
-所有的子组名作为字典的键。</dd>
+<dt>groupdict(default=None)</dt><dd>返回一个包含所有匹配的 <b>命名子组</b> (Python 语法扩展) 的字典，所有的子组名作为字典的键。</dd>
 </dl>
 
 <p>
@@ -488,8 +481,8 @@ Out[18]: <span class="org-string">'TTTT'</span>
 </div>
 </div>
 
-<div id="outline-container-org5551dcc" class="outline-2">
-<h2 id="org5551dcc"><span class="section-number-2">5</span> 语法扩展和原始字符串</h2>
+<div id="outline-container-orgf2818d9" class="outline-2">
+<h2 id="orgf2818d9"><span class="section-number-2">5</span> 语法扩展和原始字符串</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python</code> 对正则表达式的语法做了一些扩展：
@@ -582,8 +575,8 @@ Out[18]: <span class="org-string">'TTTT'</span>
 </div>
 </div>
 
-<div id="outline-container-orgd8d7c17" class="outline-2">
-<h2 id="orgd8d7c17"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-orgeb4b476" class="outline-2">
+<h2 id="orgeb4b476"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html">Python正则表达式指南</a></li>

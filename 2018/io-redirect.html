@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>I/O 重定向</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,22 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd0d9b3c">1. 前言</a></li>
-<li><a href="#org053f8cf">2. 概念</a></li>
-<li><a href="#org8c31998">3. 系统级实现</a></li>
-<li><a href="#org4fe9c37">4. 简单的使用</a></li>
-<li><a href="#org6d063ee">5. 用户级实现</a></li>
-<li><a href="#org325a693">6. 结语</a></li>
+<li><a href="#orgfdf462b">1. 前言</a></li>
+<li><a href="#orgdd3bc6a">2. 概念</a></li>
+<li><a href="#org328c61f">3. 系统级实现</a></li>
+<li><a href="#org4b99f6b">4. 简单的使用</a></li>
+<li><a href="#orgc55cb30">5. 用户级实现</a></li>
+<li><a href="#orgdad05be">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd0d9b3c" class="outline-2">
-<h2 id="orgd0d9b3c"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgfdf462b" class="outline-2">
+<h2 id="orgfdf462b"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<b>I/O 重定向</b> 算是一个灰常简单的概念，《深入理解计算机系统》这本书中对它的讲解不到一页，
-但依然很清楚的说明了 <b>I/O 重定向</b> 是怎么一回事。
+<b>I/O 重定向</b> 算是一个灰常简单的概念，《深入理解计算机系统》这本书中对它的讲解不到一页，但依然很清楚的说明了 <b>I/O 重定向</b> 是怎么一回事。
 </p>
 
 <p>
@@ -270,8 +269,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org053f8cf" class="outline-2">
-<h2 id="org053f8cf"><span class="section-number-2">2</span> 概念</h2>
+<div id="outline-container-orgdd3bc6a" class="outline-2">
+<h2 id="orgdd3bc6a"><span class="section-number-2">2</span> 概念</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，操作系统内部使用小的非负整数 <b>文件描述符</b> 来标识打开的文件，一切对文件的操作都是通过 <b>文件描述符</b> 来完成的。
@@ -287,8 +286,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8c31998" class="outline-2">
-<h2 id="org8c31998"><span class="section-number-2">3</span> 系统级实现</h2>
+<div id="outline-container-org328c61f" class="outline-2">
+<h2 id="org328c61f"><span class="section-number-2">3</span> 系统级实现</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 很明显，重定向的操作需要修改操作系统内部的数据结构，而作为操作系统使用者的我们，是无法直接操作操作系统内部的数据结构的。
@@ -351,8 +350,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4fe9c37" class="outline-2">
-<h2 id="org4fe9c37"><span class="section-number-2">4</span> 简单的使用</h2>
+<div id="outline-container-org4b99f6b" class="outline-2">
+<h2 id="org4b99f6b"><span class="section-number-2">4</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在 <code>Shell</code> 中，通过管道命令 <code>|</code> 可以将上一个命令的 <b>标准输出</b> 重定向为下一个命令的 <b>标准输入</b>.
@@ -384,14 +383,13 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-上述代码将得到的部分标准输入重定向到文件 <code>out.txt</code>, 当然，这并没有什么意义，
-毕竟，完全可以用 <code>&gt;</code> 操作符代替。
+上述代码将得到的部分标准输入重定向到文件 <code>out.txt</code>, 当然，这并没有什么意义，毕竟，完全可以用 <code>&gt;</code> 操作符代替。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6d063ee" class="outline-2">
-<h2 id="org6d063ee"><span class="section-number-2">5</span> 用户级实现</h2>
+<div id="outline-container-orgc55cb30" class="outline-2">
+<h2 id="orgc55cb30"><span class="section-number-2">5</span> 用户级实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 对一般用户来说，重定向的具体实现是怎样的没有多大意义，只要结果正确就行了。
@@ -416,8 +414,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-在 <code>Python</code> 中，像上面那样，替换了 <code>stdout</code> 后，虽然不是将描述符 <code>1</code> 标识的文件替换为 <code>out.txt</code>, 但执行结果上，
-效果是一样的。
+在 <code>Python</code> 中，像上面那样，替换了 <code>stdout</code> 后，虽然不是将描述符 <code>1</code> 标识的文件替换为 <code>out.txt</code>, 但执行结果上，效果是一样的。
 </p>
 
 <p>
@@ -426,8 +423,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org325a693" class="outline-2">
-<h2 id="org325a693"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgdad05be" class="outline-2">
+<h2 id="orgdad05be"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 对系统底层的了解越多，就越能感受到现在的高级语言为我们提供了多少便利。

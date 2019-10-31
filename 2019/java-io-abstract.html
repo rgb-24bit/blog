@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-04-05 周五 16:24 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 中的 I/O 抽象</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,26 +246,26 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0bcfd45">1. 前言</a></li>
-<li><a href="#org2d43b4e">2. 字节流</a>
+<li><a href="#orge77a4c5">1. 前言</a></li>
+<li><a href="#org4371537">2. 字节流</a>
 <ul>
-<li><a href="#org412a254">2.1. 常用实现</a></li>
+<li><a href="#orgfecfa15">2.1. 常用实现</a></li>
 </ul>
 </li>
-<li><a href="#orgbfcc1eb">3. 字符流</a>
+<li><a href="#org86683cc">3. 字符流</a>
 <ul>
-<li><a href="#org804a2b9">3.1. 常用实现</a></li>
+<li><a href="#org6e514f2">3.1. 常用实现</a></li>
 </ul>
 </li>
-<li><a href="#org100be52">4. 缓冲区</a></li>
-<li><a href="#org16eeab1">5. 各种字节流</a></li>
-<li><a href="#org30a5c1f">6. 结语</a></li>
+<li><a href="#org5edb499">4. 缓冲区</a></li>
+<li><a href="#org99314bf">5. 各种字节流</a></li>
+<li><a href="#orgf635ebc">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0bcfd45" class="outline-2">
-<h2 id="org0bcfd45"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orge77a4c5" class="outline-2">
+<h2 id="orge77a4c5"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 由于在接触 Java 之前使用的语言是 Python，所以在转到 Java 后对 Java 的 I/O 操作各种不习惯。
@@ -281,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2d43b4e" class="outline-2">
-<h2 id="org2d43b4e"><span class="section-number-2">2</span> 字节流</h2>
+<div id="outline-container-org4371537" class="outline-2">
+<h2 id="org4371537"><span class="section-number-2">2</span> 字节流</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 和 Python 一样，Java 中最底层的 I/O 接口处理的是 <b>字节序列</b>, 但是和 Python 中的文件对象一把梭不一样，Java 将输入和输出分别抽象为了两个对象。
@@ -377,8 +377,8 @@ OutputStream 提供的部分接口：
 </p>
 </div>
 
-<div id="outline-container-org412a254" class="outline-3">
-<h3 id="org412a254"><span class="section-number-3">2.1</span> 常用实现</h3>
+<div id="outline-container-orgfecfa15" class="outline-3">
+<h3 id="orgfecfa15"><span class="section-number-3">2.1</span> 常用实现</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Java 中字节流的具体实现很多，但最常用的应该就是和 <b>文件</b> 相关的了，因此在这里将它们列举出来：
@@ -461,12 +461,11 @@ FileOutputStream 的构造方法和 FileInputStream 的基本相同，不同的�
 </div>
 </div>
 
-<div id="outline-container-orgbfcc1eb" class="outline-2">
-<h2 id="orgbfcc1eb"><span class="section-number-2">3</span> 字符流</h2>
+<div id="outline-container-org86683cc" class="outline-2">
+<h2 id="org86683cc"><span class="section-number-2">3</span> 字符流</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-通过字节流可以完成很多 I/O 操作，但是如果连文本文件的处理都通过字节流来完成的话就太麻烦了。因此，为了解决这样的问题，
-字符流便诞生了。
+通过字节流可以完成很多 I/O 操作，但是如果连文本文件的处理都通过字节流来完成的话就太麻烦了。因此，为了解决这样的问题，字符流便诞生了。
 </p>
 
 <p>
@@ -543,8 +542,8 @@ Writer：
 </p>
 </div>
 
-<div id="outline-container-org804a2b9" class="outline-3">
-<h3 id="org804a2b9"><span class="section-number-3">3.1</span> 常用实现</h3>
+<div id="outline-container-org6e514f2" class="outline-3">
+<h3 id="org6e514f2"><span class="section-number-3">3.1</span> 常用实现</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Java 字符流实现中最常用的应该是 <code>InputStreamReader</code> 和 <code>OutputStreamWriter</code> 了，它们的构造方法如下：
@@ -600,8 +599,8 @@ Java 字符流实现中最常用的应该是 <code>InputStreamReader</code> 和 
 </div>
 </div>
 
-<div id="outline-container-org100be52" class="outline-2">
-<h2 id="org100be52"><span class="section-number-2">4</span> 缓冲区</h2>
+<div id="outline-container-org5edb499" class="outline-2">
+<h2 id="org5edb499"><span class="section-number-2">4</span> 缓冲区</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 I/O 操作的一个常识：频繁的 I/O 操作的效率是很低的，所以我们加一个缓冲区吧！
@@ -626,12 +625,11 @@ Java 中我们可以通过 <code>BufferedInputStream</code> 和 <code>BufferedOu
 </div>
 </div>
 
-<div id="outline-container-org16eeab1" class="outline-2">
-<h2 id="org16eeab1"><span class="section-number-2">5</span> 各种字节流</h2>
+<div id="outline-container-org99314bf" class="outline-2">
+<h2 id="org99314bf"><span class="section-number-2">5</span> 各种字节流</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-虽然说最常用的字节流式文件字节流（大概），但是，输入输出的环境是复杂的，处理文件以外，其他的设备如内存、网络等都可能用到输入输出，
-而且不同的条件下需要的功能还不一样。
+虽然说最常用的字节流式文件字节流（大概），但是，输入输出的环境是复杂的，处理文件以外，其他的设备如内存、网络等都可能用到输入输出，而且不同的条件下需要的功能还不一样。
 </p>
 
 <p>
@@ -652,8 +650,8 @@ Java 中我们可以通过 <code>BufferedInputStream</code> 和 <code>BufferedOu
 </div>
 </div>
 
-<div id="outline-container-org30a5c1f" class="outline-2">
-<h2 id="org30a5c1f"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgf635ebc" class="outline-2">
+<h2 id="orgf635ebc"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 写完博客回头看，感觉质量有点差……

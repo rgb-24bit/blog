@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 描述器简述</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,16 +246,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org259b5c8">1. 前言</a></li>
-<li><a href="#orgad161fd">2. 描述器</a></li>
-<li><a href="#org4f166ec">3. 描述器的使用</a></li>
-<li><a href="#org61be777">4. 参考链接</a></li>
+<li><a href="#org47aef1e">1. 前言</a></li>
+<li><a href="#org3b0bcdf">2. 描述器</a></li>
+<li><a href="#org2bcca97">3. 描述器的使用</a></li>
+<li><a href="#org06d4d6e">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org259b5c8" class="outline-2">
-<h2 id="org259b5c8"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org47aef1e" class="outline-2">
+<h2 id="org47aef1e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前端时间在阅读 <a href="https://github.com/faif/python-patterns">python-patterns</a> 的源码的时候， 其中一个模式的实现使用到了 <b>描述器</b>.
@@ -283,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgad161fd" class="outline-2">
-<h2 id="orgad161fd"><span class="section-number-2">2</span> 描述器</h2>
+<div id="outline-container-org3b0bcdf" class="outline-2">
+<h2 id="org3b0bcdf"><span class="section-number-2">2</span> 描述器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 和描述器密切相关的魔法方法有四个， 其中： <code>__get__</code>, <code>__set__</code> 和 <code>__delete__</code> 是描述器协议的组成部分。
@@ -320,8 +320,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-通过这段代码可以看到， 当我们尝试去获取属性 <code>key</code> 的值的时候， <code>__getattribute__</code> 会尝试判读获取到
-的值 <code>v</code> 是否存在属性 <code>__get__</code>.
+通过这段代码可以看到， 当我们尝试去获取属性 <code>key</code> 的值的时候， <code>__getattribute__</code> 会尝试判读获取到的值 <code>v</code> 是否存在属性 <code>__get__</code>.
 </p>
 
 <p>
@@ -413,8 +412,8 @@ call __get__
 </div>
 </div>
 
-<div id="outline-container-org4f166ec" class="outline-2">
-<h2 id="org4f166ec"><span class="section-number-2">3</span> 描述器的使用</h2>
+<div id="outline-container-org2bcca97" class="outline-2">
+<h2 id="org2bcca97"><span class="section-number-2">3</span> 描述器的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 描述器的方法原型为：
@@ -436,8 +435,7 @@ descr.__delete__(self, obj) --&gt; None
 </p>
 
 <p>
-对于描述器的使用场景， 我编写程序还没遇到过需要使用描述器的地方， 只能拿教程里的
-一个例子来说明了：
+对于描述器的使用场景， 我编写程序还没遇到过需要使用描述器的地方， 只能拿教程里的一个例子来说明了：
 </p>
 
 <div class="org-src-container">
@@ -479,8 +477,7 @@ descr.__delete__(self, obj) --&gt; None
 </div>
 
 <p>
-上述代码是内置函数 <code>property</code> 的一个等价实现， 至于 <code>property</code> 的作用我想不需要
-我多说了。
+上述代码是内置函数 <code>property</code> 的一个等价实现， 至于 <code>property</code> 的作用我想不需要我多说了。
 </p>
 
 <p>
@@ -503,8 +500,8 @@ emmm, 剩下的代码就很简单了。
 </div>
 </div>
 
-<div id="outline-container-org61be777" class="outline-2">
-<h2 id="org61be777"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org06d4d6e" class="outline-2">
+<h2 id="org06d4d6e"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/howto/descriptor.html">Descriptor HowTo Guide</a></li>

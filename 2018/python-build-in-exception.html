@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置异常</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,32 +246,30 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdb239c9">1. 简介</a></li>
-<li><a href="#org05ed0ff">2. 常见异常</a></li>
-<li><a href="#orgb2c542b">3. 自定义异常</a></li>
-<li><a href="#org65a24d2">4. Python2 内置异常</a>
+<li><a href="#org6ce1276">1. 简介</a></li>
+<li><a href="#org56e4f26">2. 常见异常</a></li>
+<li><a href="#org1747e1e">3. 自定义异常</a></li>
+<li><a href="#org2eb9b41">4. Python2 内置异常</a>
 <ul>
-<li><a href="#org24af759">4.1. 完整异常列表</a></li>
-<li><a href="#org9065341">4.2. 异常层次结构</a></li>
+<li><a href="#orgda75664">4.1. 完整异常列表</a></li>
+<li><a href="#org1193b1e">4.2. 异常层次结构</a></li>
 </ul>
 </li>
-<li><a href="#org978754f">5. Python3 内置异常</a>
+<li><a href="#org5389a9c">5. Python3 内置异常</a>
 <ul>
-<li><a href="#orgdf7fd22">5.1. 完整异常列表</a></li>
-<li><a href="#org6dbd566">5.2. 异常层次结构</a></li>
+<li><a href="#org3e44c6d">5.1. 完整异常列表</a></li>
+<li><a href="#org121b8a3">5.2. 异常层次结构</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdb239c9" class="outline-2">
-<h2 id="orgdb239c9"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org6ce1276" class="outline-2">
+<h2 id="org6ce1276"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发
-的异常类型而直接对所有异常进行处理。 这样虽然让程序运行了起来， 但是很明显，
-这样做是不合适的。
+<b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发的异常类型而直接对所有异常进行处理。 这样虽然让程序运行了起来， 但是很明显，这样做是不合适的。
 </p>
 
 <p>
@@ -284,8 +282,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org05ed0ff" class="outline-2">
-<h2 id="org05ed0ff"><span class="section-number-2">2</span> 常见异常</h2>
+<div id="outline-container-org56e4f26" class="outline-2">
+<h2 id="org56e4f26"><span class="section-number-2">2</span> 常见异常</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 网上有人总结了 <code>Python</code> 的常见异常， 这里记录下来：
@@ -374,16 +372,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb2c542b" class="outline-2">
-<h2 id="orgb2c542b"><span class="section-number-2">3</span> 自定义异常</h2>
+<div id="outline-container-org1747e1e" class="outline-2">
+<h2 id="org1747e1e"><span class="section-number-2">3</span> 自定义异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 定义自己的异常是很有用的， 能够提供更清楚的 <b>异常信息</b>, 也能添加内置异常不具有的功能。
 </p>
 
 <p>
-首先， 自定义异常类应该总是继承自内置的 <code>Exception</code> 类， 
-或者是继承自那些本身就是从 <code>Exception</code> 继承而来的类。
+首先， 自定义异常类应该总是继承自内置的 <code>Exception</code> 类，或者是继承自那些本身就是从 <code>Exception</code> 继承而来的类。
 </p>
 
 <p>
@@ -459,8 +456,7 @@ Traceback (most recent call last):
 </div>
 
 <p>
-一个简单的自定义异常， 包含了 <code>message</code> 及 <code>status</code> 属性。
-还有 <code>more</code> 参数， 可以通过 <code>args</code> 属性获取其值。
+一个简单的自定义异常， 包含了 <code>message</code> 及 <code>status</code> 属性。还有 <code>more</code> 参数， 可以通过 <code>args</code> 属性获取其值。
 </p>
 
 <p>
@@ -477,12 +473,12 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org65a24d2" class="outline-2">
-<h2 id="org65a24d2"><span class="section-number-2">4</span> Python2 内置异常</h2>
+<div id="outline-container-org2eb9b41" class="outline-2">
+<h2 id="org2eb9b41"><span class="section-number-2">4</span> Python2 内置异常</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org24af759" class="outline-3">
-<h3 id="org24af759"><span class="section-number-3">4.1</span> 完整异常列表</h3>
+<div id="outline-container-orgda75664" class="outline-3">
+<h3 id="orgda75664"><span class="section-number-3">4.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -564,8 +560,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org9065341" class="outline-3">
-<h3 id="org9065341"><span class="section-number-3">4.2</span> 异常层次结构</h3>
+<div id="outline-container-org1193b1e" class="outline-3">
+<h3 id="org1193b1e"><span class="section-number-3">4.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-4-2">
 <pre class="example">
 BaseException
@@ -623,8 +619,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org978754f" class="outline-2">
-<h2 id="org978754f"><span class="section-number-2">5</span> Python3 内置异常</h2>
+<div id="outline-container-org5389a9c" class="outline-2">
+<h2 id="org5389a9c"><span class="section-number-2">5</span> Python3 内置异常</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python3</code> 和 <code>Python2</code> 不兼容， 异常处理方面， <code>Python3</code> 也对异常结构进行了一些调整。
@@ -638,8 +634,8 @@ BaseException
 </ul>
 </div>
 
-<div id="outline-container-orgdf7fd22" class="outline-3">
-<h3 id="orgdf7fd22"><span class="section-number-3">5.1</span> 完整异常列表</h3>
+<div id="outline-container-org3e44c6d" class="outline-3">
+<h3 id="org3e44c6d"><span class="section-number-3">5.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -738,8 +734,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org6dbd566" class="outline-3">
-<h3 id="org6dbd566"><span class="section-number-3">5.2</span> 异常层次结构</h3>
+<div id="outline-container-org121b8a3" class="outline-3">
+<h3 id="org121b8a3"><span class="section-number-3">5.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-5-2">
 <pre class="example">
 BaseException

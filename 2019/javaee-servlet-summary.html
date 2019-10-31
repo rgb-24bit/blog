@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-04-26 周五 20:35 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java EE - Servlet 小结</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,31 +246,31 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org59c10b0">1. 前言</a></li>
-<li><a href="#orgc40669d">2. Servlet 的生命周期</a></li>
-<li><a href="#org4110dc3">3. Servlet 的初始化</a>
+<li><a href="#org080f353">1. 前言</a></li>
+<li><a href="#org7a1ab49">2. Servlet 的生命周期</a></li>
+<li><a href="#org1d03dcb">3. Servlet 的初始化</a>
 <ul>
-<li><a href="#org308bb82">3.1. ServletContext &amp; ServletConfig</a></li>
+<li><a href="#orgfb93e2b">3.1. ServletContext &amp; ServletConfig</a></li>
 </ul>
 </li>
-<li><a href="#org9d3b78f">4. 请求的处理</a>
+<li><a href="#org9c2dbaf">4. 请求的处理</a>
 <ul>
-<li><a href="#org60c00d1">4.1. HttpServletRequest</a></li>
-<li><a href="#org2de173d">4.2. 请求分派</a></li>
-<li><a href="#orga048da8">4.3. 属性</a></li>
-<li><a href="#org3616935">4.4. HttpServletResponse</a></li>
+<li><a href="#org2777d3b">4.1. HttpServletRequest</a></li>
+<li><a href="#orgd31fbef">4.2. 请求分派</a></li>
+<li><a href="#org8338f0a">4.3. 属性</a></li>
+<li><a href="#orge195b7d">4.4. HttpServletResponse</a></li>
 </ul>
 </li>
-<li><a href="#orgfae3e02">5. Servlet 的销毁</a></li>
-<li><a href="#orgeae003d">6. 监听者和过滤器</a></li>
-<li><a href="#orge1d8a6b">7. 完整生命周期和默认 Servlet</a></li>
-<li><a href="#orgd13e7dd">8. 结语</a></li>
+<li><a href="#org9cbe73b">5. Servlet 的销毁</a></li>
+<li><a href="#orgd7a91e9">6. 监听者和过滤器</a></li>
+<li><a href="#orgee64643">7. 完整生命周期和默认 Servlet</a></li>
+<li><a href="#org462299a">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org59c10b0" class="outline-2">
-<h2 id="org59c10b0"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org080f353" class="outline-2">
+<h2 id="org080f353"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最近在看《Spring in Action(4th Edition)》的过程中发现，使用 Spring MVC 进行 Web 开发时，原生 Servlet 的存在感已经低到了一定程度。
@@ -281,14 +281,13 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-注：由于学习 Servlet 使用的教材《Head First Servlet &amp; JSP》属于一本比较老的书，和现在基本上都是 Servlet 3.1 及以上的情况不一样，它使用的大概是 Servlet 2.5，
-因此，有一些高版本的新特性估计不会在本篇博客中出现 (-_-)
+注：由于学习 Servlet 使用的教材《Head First Servlet &amp; JSP》属于一本比较老的书，和现在基本上都是 Servlet 3.1 及以上的情况不一样，它使用的大概是 Servlet 2.5，因此，有一些高版本的新特性估计不会在本篇博客中出现 (-_-)
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc40669d" class="outline-2">
-<h2 id="orgc40669d"><span class="section-number-2">2</span> Servlet 的生命周期</h2>
+<div id="outline-container-org7a1ab49" class="outline-2">
+<h2 id="org7a1ab49"><span class="section-number-2">2</span> Servlet 的生命周期</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Servlet 的生命周期大概可以分为三个阶段：
@@ -314,8 +313,8 @@ Servlet 的生命周期大概可以分为三个阶段：
 </div>
 </div>
 
-<div id="outline-container-org4110dc3" class="outline-2">
-<h2 id="org4110dc3"><span class="section-number-2">3</span> Servlet 的初始化</h2>
+<div id="outline-container-org1d03dcb" class="outline-2">
+<h2 id="org1d03dcb"><span class="section-number-2">3</span> Servlet 的初始化</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Servlet 类的加载和初始化是由容器完成的，默认情况下这一过程是在第一个请求来临时进行的，这就意味着第一个发出相应请求的客户需要多等一会儿了。
@@ -367,8 +366,8 @@ Servlet 类的加载和初始化是由容器完成的，默认情况下这一过
 </p>
 </div>
 
-<div id="outline-container-org308bb82" class="outline-3">
-<h3 id="org308bb82"><span class="section-number-3">3.1</span> ServletContext &amp; ServletConfig</h3>
+<div id="outline-container-orgfb93e2b" class="outline-3">
+<h3 id="orgfb93e2b"><span class="section-number-3">3.1</span> ServletContext &amp; ServletConfig</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 在容器调用 <code>Servlet</code> 的 <code>init</code> 方法时，会将该 <code>Servlet</code> 的 <code>ServletConfig</code> 对象传递给它，我们可以通过 <code>ServletConfig</code> 对象获得为该 <code>Servlet</code> 配置的初始化参数：
@@ -435,8 +434,8 @@ ServletContext 的功能就比 ServletConfig 强大多了，除了初始化参�
 </div>
 </div>
 
-<div id="outline-container-org9d3b78f" class="outline-2">
-<h2 id="org9d3b78f"><span class="section-number-2">4</span> 请求的处理</h2>
+<div id="outline-container-org9c2dbaf" class="outline-2">
+<h2 id="org9c2dbaf"><span class="section-number-2">4</span> 请求的处理</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 请求的处理是在 Servlet 的 <code>service</code> 方法中完成的，而我们经常使用的 <code>HttpServlet</code> 的 <code>service</code> 方法会根据请求使用的 HTTP 方法调用 doGet、doPost 等方法。
@@ -447,8 +446,8 @@ ServletContext 的功能就比 ServletConfig 强大多了，除了初始化参�
 </p>
 </div>
 
-<div id="outline-container-org60c00d1" class="outline-3">
-<h3 id="org60c00d1"><span class="section-number-3">4.1</span> HttpServletRequest</h3>
+<div id="outline-container-org2777d3b" class="outline-3">
+<h3 id="org2777d3b"><span class="section-number-3">4.1</span> HttpServletRequest</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 处理请求的过程其实就是获取客户端的信息，然后根据信息判断返回给客户端什么东西的过程。
@@ -491,8 +490,8 @@ HttpservletRequest.getInputStream();
 </div>
 </div>
 
-<div id="outline-container-org2de173d" class="outline-3">
-<h3 id="org2de173d"><span class="section-number-3">4.2</span> 请求分派</h3>
+<div id="outline-container-orgd31fbef" class="outline-3">
+<h3 id="orgd31fbef"><span class="section-number-3">4.2</span> 请求分派</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>HttpServletRequest</code> 对象除了获取客户端的信息以外，还有一个重要的功能便是进行 <b>请求分派</b>, 比如说这样：
@@ -526,8 +525,8 @@ HttpservletRequest.getInputStream();
 </div>
 </div>
 
-<div id="outline-container-orga048da8" class="outline-3">
-<h3 id="orga048da8"><span class="section-number-3">4.3</span> 属性</h3>
+<div id="outline-container-org8338f0a" class="outline-3">
+<h3 id="org8338f0a"><span class="section-number-3">4.3</span> 属性</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 通过请求分派，我们可以通过多个组件完成一个请求的处理，将视图渲染和业务逻辑分开。而属性，便是联系这些不同的组件的桥梁。
@@ -556,8 +555,8 @@ HttpservletRequest.getInputStream();
 </div>
 </div>
 
-<div id="outline-container-org3616935" class="outline-3">
-<h3 id="org3616935"><span class="section-number-3">4.4</span> HttpServletResponse</h3>
+<div id="outline-container-orge195b7d" class="outline-3">
+<h3 id="orge195b7d"><span class="section-number-3">4.4</span> HttpServletResponse</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 处理完请求之后便需要将响应内容写入响应对象了，这个过程中我们需要写入的内容包括：响应状态码、响应头、响应体。
@@ -594,8 +593,8 @@ HttpservletRequest.getInputStream();
 </div>
 </div>
 
-<div id="outline-container-orgfae3e02" class="outline-2">
-<h2 id="orgfae3e02"><span class="section-number-2">5</span> Servlet 的销毁</h2>
+<div id="outline-container-org9cbe73b" class="outline-2">
+<h2 id="org9cbe73b"><span class="section-number-2">5</span> Servlet 的销毁</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方法我目前还没有用过 (￢_￢)
@@ -607,8 +606,8 @@ Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方�
 </div>
 </div>
 
-<div id="outline-container-orgeae003d" class="outline-2">
-<h2 id="orgeae003d"><span class="section-number-2">6</span> 监听者和过滤器</h2>
+<div id="outline-container-orgd7a91e9" class="outline-2">
+<h2 id="orgd7a91e9"><span class="section-number-2">6</span> 监听者和过滤器</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 监听者和过滤器不是 Servlet，但却是和 Servlet 密切相关的两个东西，因此便放到这篇博客里面了。
@@ -628,8 +627,7 @@ Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方�
 </ul>
 
 <p>
-通过监听这些事件我们可以在不干涉请求处理流程的情况下进行一些额外的操作，比如我们可以在上下文初始化的时候建立和数据库的连接，
-在上下文销毁的时候断开和数据库的连接。
+通过监听这些事件我们可以在不干涉请求处理流程的情况下进行一些额外的操作，比如我们可以在上下文初始化的时候建立和数据库的连接，在上下文销毁的时候断开和数据库的连接。
 </p>
 
 <p>
@@ -645,8 +643,7 @@ Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方�
 </div>
 
 <p>
-而过滤器，可以对请求和响应进行额外的操作，使用过滤器时，容器会将所有匹配的过滤器和 Servlet 连成一条链，然后按照过滤器（1、2、3……） -&gt; Servlet -&gt; 过滤器（……3、2、1）的顺序对请求和响应进行处理。
-其中过滤器的顺序是按照它们在 DD 文件中的声明顺序排列的（教材上这个地方有问题，还是我自己查资料尝试确认的 (；￣Д￣)）
+而过滤器，可以对请求和响应进行额外的操作，使用过滤器时，容器会将所有匹配的过滤器和 Servlet 连成一条链，然后按照过滤器（1、2、3……） -&gt; Servlet -&gt; 过滤器（……3、2、1）的顺序对请求和响应进行处理。其中过滤器的顺序是按照它们在 DD 文件中的声明顺序排列的（教材上这个地方有问题，还是我自己查资料尝试确认的 (；￣Д￣)）
 </p>
 
 <p>
@@ -659,8 +656,8 @@ Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方�
 </div>
 </div>
 
-<div id="outline-container-orge1d8a6b" class="outline-2">
-<h2 id="orge1d8a6b"><span class="section-number-2">7</span> 完整生命周期和默认 Servlet</h2>
+<div id="outline-container-orgee64643" class="outline-2">
+<h2 id="orgee64643"><span class="section-number-2">7</span> 完整生命周期和默认 Servlet</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 之前介绍了一下 Servlet 的生命周期，这里的是加上容器的生命周期：
@@ -707,8 +704,8 @@ Servlet 被销毁之前会调用 <code>destroy</code> 方法，但是这个方�
 </div>
 </div>
 
-<div id="outline-container-orgd13e7dd" class="outline-2">
-<h2 id="orgd13e7dd"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org462299a" class="outline-2">
+<h2 id="org462299a"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 和往常一样，这篇博客里面没有多少使用上的细节，emmm，连 Servlet 映射的配置都没有 @_@

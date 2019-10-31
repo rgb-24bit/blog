@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HTTP 协议相关</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,23 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0b058c5">1. 前言</a></li>
-<li><a href="#org18cd8c6">2. URL 相关</a></li>
-<li><a href="#org5973f28">3. HTTP 概览</a>
+<li><a href="#org72e972a">1. 前言</a></li>
+<li><a href="#org1528cd5">2. URL 相关</a></li>
+<li><a href="#orgfb476a2">3. HTTP 概览</a>
 <ul>
-<li><a href="#org8a369f8">3.1. HTTP 报文</a></li>
-<li><a href="#org0f9ddfb">3.2. HTTP 消息头</a></li>
-<li><a href="#org222e295">3.3. HTTP Cookie</a></li>
-<li><a href="#org2c22aeb">3.4. HTTP 身份验证</a></li>
+<li><a href="#orge4338ae">3.1. HTTP 报文</a></li>
+<li><a href="#org71f60be">3.2. HTTP 消息头</a></li>
+<li><a href="#orgf7913bf">3.3. HTTP Cookie</a></li>
+<li><a href="#org02f586b">3.4. HTTP 身份验证</a></li>
 </ul>
 </li>
-<li><a href="#org7d5309e">4. 参考链接</a></li>
+<li><a href="#orge17bbb8">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0b058c5" class="outline-2">
-<h2 id="org0b058c5"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org72e972a" class="outline-2">
+<h2 id="org72e972a"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最近在阅读源码的过程中， 因为对 <code>HTTP</code> 协议了解的太少， 使得源码的阅读难以推进。
@@ -278,8 +278,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org18cd8c6" class="outline-2">
-<h2 id="org18cd8c6"><span class="section-number-2">2</span> URL 相关</h2>
+<div id="outline-container-org1528cd5" class="outline-2">
+<h2 id="org1528cd5"><span class="section-number-2">2</span> URL 相关</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先来看 <b>统一资源定位符 URL</b>.
@@ -300,8 +300,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </pre>
 
 <p>
-这种格式中的 <code>user</code> 和 <code>password</code> 是访问资源时需要的凭证信息， 因为安全问题几乎
-被遗弃了。
+这种格式中的 <code>user</code> 和 <code>password</code> 是访问资源时需要的凭证信息， 因为安全问题几乎被遗弃了。
 </p>
 
 <p>
@@ -369,8 +368,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 
 <p>
-<b>百分号编码</b> 类似于 <code>%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81</code>, 通常为
-字符对应的 <code>UTF-8</code> 字节序和转义字符 <code>%</code> 的组合。
+<b>百分号编码</b> 类似于 <code>%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81</code>, 通常为字符对应的 <code>UTF-8</code> 字节序和转义字符 <code>%</code> 的组合。
 </p>
 
 <p>
@@ -388,21 +386,20 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org5973f28" class="outline-2">
-<h2 id="org5973f28"><span class="section-number-2">3</span> HTTP 概览</h2>
+<div id="outline-container-orgfb476a2" class="outline-2">
+<h2 id="orgfb476a2"><span class="section-number-2">3</span> HTTP 概览</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 首先， <code>HTTP</code> 是一个协议， 主要规定了 <b>客户端</b> 和 <b>服务端</b> 之间数据传输的 <b>格式</b>.
 </p>
 
 <p>
-简单来说就是： <code>HTTP</code> 规定了 <b>客户端</b> 和 <b>服务端</b> 传输的数据的 <b>结构</b>, 而没有规定怎样
-将数据传过去。
+简单来说就是： <code>HTTP</code> 规定了 <b>客户端</b> 和 <b>服务端</b> 传输的数据的 <b>结构</b>, 而没有规定怎样将数据传过去。
 </p>
 </div>
 
-<div id="outline-container-org8a369f8" class="outline-3">
-<h3 id="org8a369f8"><span class="section-number-3">3.1</span> HTTP 报文</h3>
+<div id="outline-container-orge4338ae" class="outline-3">
+<h3 id="orge4338ae"><span class="section-number-3">3.1</span> HTTP 报文</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>HTTP 报文</b> 在一定程度是就是 <code>HTTP</code> 协议的数据结构。
@@ -548,8 +545,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org0f9ddfb" class="outline-3">
-<h3 id="org0f9ddfb"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
+<div id="outline-container-org71f60be" class="outline-3">
+<h3 id="org71f60be"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>HTTP 消息头</b> 的格式为 <code>Name: Value</code>.
@@ -585,8 +582,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org222e295" class="outline-3">
-<h3 id="org222e295"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
+<div id="outline-container-orgf7913bf" class="outline-3">
+<h3 id="orgf7913bf"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 由于 <code>HTTP</code> 是 <b>无状态</b> 的协议， 因此无法直接判断两个 <b>请求</b> 之间的关系。
@@ -597,8 +594,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 
 <p>
-<b>服务端</b> 可以通过 <b>响应头</b> 来设置 <b>客户端</b> 要 <b>保存</b> 的 <b>Cookie</b> 信息， <b>客户端</b> 在发起新的
-请求的时候会将 <b>Cookie</b> 信息一同发送。
+<b>服务端</b> 可以通过 <b>响应头</b> 来设置 <b>客户端</b> 要 <b>保存</b> 的 <b>Cookie</b> 信息， <b>客户端</b> 在发起新的请求的时候会将 <b>Cookie</b> 信息一同发送。
 </p>
 
 <p>
@@ -634,8 +630,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 
 <p>
-当用户上线后创建一个 <b>Session</b> 保存用户的在线信息， 并在返回的 <b>响应头</b> 中包含与
-这个 <b>Session</b> 相关的数据。
+当用户上线后创建一个 <b>Session</b> 保存用户的在线信息， 并在返回的 <b>响应头</b> 中包含与这个 <b>Session</b> 相关的数据。
 </p>
 
 <p>
@@ -652,12 +647,11 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org2c22aeb" class="outline-3">
-<h3 id="org2c22aeb"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
+<div id="outline-container-org02f586b" class="outline-3">
+<h3 id="org02f586b"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，
-并在 <code>WWW-Authenticate</code> 头中指定 <b>验证方式</b>.
+某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，并在 <code>WWW-Authenticate</code> 头中指定 <b>验证方式</b>.
 </p>
 
 
@@ -667,8 +661,7 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 
 <p>
-类似的， <b>服务端</b> 还可以返回 <code>407</code> 状态码说明需要 <b>代理认证</b>, 并在 <code>Proxy-Authenticate</code> 中
-指明验证方式。
+类似的， <b>服务端</b> 还可以返回 <code>407</code> 状态码说明需要 <b>代理认证</b>, 并在 <code>Proxy-Authenticate</code> 中指明验证方式。
 </p>
 
 <p>
@@ -704,8 +697,8 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 </div>
 
-<div id="outline-container-org7d5309e" class="outline-2">
-<h2 id="org7d5309e"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orge17bbb8" class="outline-2">
+<h2 id="orge17bbb8"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP</a></li>

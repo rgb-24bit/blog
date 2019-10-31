@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 编码问题</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,24 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4a07a99">1. Unicode &amp; UTF-8</a></li>
-<li><a href="#org3c23b4c">2. 编码格式转化</a></li>
-<li><a href="#org5aebd75">3. Python2</a></li>
-<li><a href="#orgacc961e">4. Python3</a></li>
-<li><a href="#org69db542">5. 编写程序</a></li>
-<li><a href="#org33e6854">6. 代码样例</a></li>
-<li><a href="#org493de90">7. 参考链接</a></li>
+<li><a href="#org7e22514">1. Unicode &amp; UTF-8</a></li>
+<li><a href="#org47179aa">2. 编码格式转化</a></li>
+<li><a href="#org38892a5">3. Python2</a></li>
+<li><a href="#orgead5790">4. Python3</a></li>
+<li><a href="#org3d567e5">5. 编写程序</a></li>
+<li><a href="#org2ee4fde">6. 代码样例</a></li>
+<li><a href="#org6656e50">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4a07a99" class="outline-2">
-<h2 id="org4a07a99"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
+<div id="outline-container-org7e22514" class="outline-2">
+<h2 id="org7e22514"><span class="section-number-2">1</span> Unicode &amp; UTF-8</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
-<code>Unicode</code>, 一个字符集， 将世界上所有的字符都纳入其中， 并给予每一个字符
-一个独一无二的编码。
+<code>Unicode</code>, 一个字符集， 将世界上所有的字符都纳入其中， 并给予每一个字符一个独一无二的编码。
 </p>
 
 <p>
@@ -271,22 +270,20 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-<b>注：</b> <code>Unicode</code> 只是一个字符集， 只规定了一个字符的二进制编码， 没有规定这个二进制编码
-的储存方式。
+<b>注：</b> <code>Unicode</code> 只是一个字符集， 只规定了一个字符的二进制编码， 没有规定这个二进制编码的储存方式。
 </p></li>
 
 <li><code>UTF-8</code>, <code>Unicode</code> 的 <b>一种</b> 实现方式， 规定了二进制编码的储存方式， 可以由计算机识别。</li>
 </ul>
 
 <p>
-<b>PS:</b> 不同的编码方式对同一字符的编码很有可能是不一样的， 所以按照错误的编码方式
-显示数据时， 会导致乱码。
+<b>PS:</b> 不同的编码方式对同一字符的编码很有可能是不一样的， 所以按照错误的编码方式显示数据时， 会导致乱码。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3c23b4c" class="outline-2">
-<h2 id="org3c23b4c"><span class="section-number-2">2</span> 编码格式转化</h2>
+<div id="outline-container-org47179aa" class="outline-2">
+<h2 id="org47179aa"><span class="section-number-2">2</span> 编码格式转化</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>目前存在有很多种编码方式， 如 <code>UTF-8</code>, <code>cp936</code> 等</li>
@@ -299,8 +296,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5aebd75" class="outline-2">
-<h2 id="org5aebd75"><span class="section-number-2">3</span> Python2</h2>
+<div id="outline-container-org38892a5" class="outline-2">
+<h2 id="org38892a5"><span class="section-number-2">3</span> Python2</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python2</code> 中的两种字符串数据类型：
@@ -338,8 +335,7 @@ u<span class="org-string">'\u7f16\u7801'</span>
 </div>
 
 <p>
-<code>Python2</code> 中， 组合 <code>str</code> 和 <code>unicode</code> 对象的时候， 会自动尝试将 <code>str</code> 解码为 <code>unicode</code>, 解码中使用的
-字符集的值与 <code>sys.getdefaultencoding()</code> 的值相等。
+<code>Python2</code> 中， 组合 <code>str</code> 和 <code>unicode</code> 对象的时候， 会自动尝试将 <code>str</code> 解码为 <code>unicode</code>, 解码中使用的字符集的值与 <code>sys.getdefaultencoding()</code> 的值相等。
 </p>
 
 <p>
@@ -358,8 +354,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgacc961e" class="outline-2">
-<h2 id="orgacc961e"><span class="section-number-2">4</span> Python3</h2>
+<div id="outline-container-orgead5790" class="outline-2">
+<h2 id="orgead5790"><span class="section-number-2">4</span> Python3</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 和 <code>Python2</code> 中不同的是， <code>Python3</code> 默认的字符串类型变为了 <code>unicode</code>, 而字节字符串的定义需要通过 <code>b'abc'</code> 的方式。
@@ -405,8 +401,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org69db542" class="outline-2">
-<h2 id="org69db542"><span class="section-number-2">5</span> 编写程序</h2>
+<div id="outline-container-org3d567e5" class="outline-2">
+<h2 id="org3d567e5"><span class="section-number-2">5</span> 编写程序</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b>无法改变的五个事实：</b>
@@ -430,8 +426,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org33e6854" class="outline-2">
-<h2 id="org33e6854"><span class="section-number-2">6</span> 代码样例</h2>
+<div id="outline-container-org2ee4fde" class="outline-2">
+<h2 id="org2ee4fde"><span class="section-number-2">6</span> 代码样例</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在阅读 <a href="https://github.com/webpy/webpy">webpy</a> 源码的过程中， 发现了在 <code>utils.py</code> 中的一段处理这个问题的代码， 感觉很有用：
@@ -492,8 +488,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org493de90" class="outline-2">
-<h2 id="org493de90"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org6656e50" class="outline-2">
+<h2 id="org6656e50"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue5/unipain.html">unicode 之痛</a> - 推荐</li>

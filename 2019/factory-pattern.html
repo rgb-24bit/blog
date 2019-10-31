@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-05-25 周六 17:09 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>设计模式之工厂模式</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org58d48fa">1. 前言</a></li>
-<li><a href="#org0bc12a6">2. 三个面向对象设计原则</a></li>
-<li><a href="#org47f3e10">3. 简单工厂模式</a></li>
-<li><a href="#org5868391">4. 工厂方法模式</a></li>
-<li><a href="#org32557b7">5. 抽象工厂模式</a></li>
-<li><a href="#org1da925f">6. 综合理解</a></li>
-<li><a href="#org164bbb3">7. 结语</a></li>
+<li><a href="#org01acc69">1. 前言</a></li>
+<li><a href="#org634d742">2. 三个面向对象设计原则</a></li>
+<li><a href="#org2073870">3. 简单工厂模式</a></li>
+<li><a href="#org1135ebd">4. 工厂方法模式</a></li>
+<li><a href="#org2521ea6">5. 抽象工厂模式</a></li>
+<li><a href="#org976cb6a">6. 综合理解</a></li>
+<li><a href="#org572d6e8">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org58d48fa" class="outline-2">
-<h2 id="org58d48fa"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org01acc69" class="outline-2">
+<h2 id="org01acc69"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在多次接触设计模式的过程中，工厂模式留给我的印象是最深的，因为，它基本上是各种教程前面必然会出现的一个模式 (￢_￢)
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0bc12a6" class="outline-2">
-<h2 id="org0bc12a6"><span class="section-number-2">2</span> 三个面向对象设计原则</h2>
+<div id="outline-container-org634d742" class="outline-2">
+<h2 id="org634d742"><span class="section-number-2">2</span> 三个面向对象设计原则</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 某种程度上，设计模式的设计依据便是面向对象的设计原则，这里先列出来个人认为有助于工厂模式的理解的三个原则：
@@ -284,8 +284,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org47f3e10" class="outline-2">
-<h2 id="org47f3e10"><span class="section-number-2">3</span> 简单工厂模式</h2>
+<div id="outline-container-org2073870" class="outline-2">
+<h2 id="org2073870"><span class="section-number-2">3</span> 简单工厂模式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 简单工厂模式不是一个设计模式，这是每个教程里面都会有的一句话，这里也不例外。
@@ -336,14 +336,13 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-注：《Head First 设计模式》给出的源码中，方法 <code>createPizza</code> 并不是静态的，理由是：非静态的方法可以通过继承的方式进行重写。但我个人感觉不是很有必要，
-就改成静态的了。
+注：《Head First 设计模式》给出的源码中，方法 <code>createPizza</code> 并不是静态的，理由是：非静态的方法可以通过继承的方式进行重写。但我个人感觉不是很有必要，就改成静态的了。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5868391" class="outline-2">
-<h2 id="org5868391"><span class="section-number-2">4</span> 工厂方法模式</h2>
+<div id="outline-container-org1135ebd" class="outline-2">
+<h2 id="org1135ebd"><span class="section-number-2">4</span> 工厂方法模式</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 工厂方法模式和简单工厂模式有点像，它在父类中声明用于创建具体对象的 <b>抽象方法</b>, 然后由 <b>子类</b> 来实现抽象方法。
@@ -374,8 +373,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org32557b7" class="outline-2">
-<h2 id="org32557b7"><span class="section-number-2">5</span> 抽象工厂模式</h2>
+<div id="outline-container-org2521ea6" class="outline-2">
+<h2 id="org2521ea6"><span class="section-number-2">5</span> 抽象工厂模式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 抽象工厂模式和工厂方法模式很接近，主要用于创建一组相关的对象，也就是经常会在一起被创建的对象，其类图如下：
@@ -388,19 +387,17 @@ for the JavaScript code in this tag.
 <img src="https://i.loli.net/2019/05/25/5ce8f9368d11c36366.png">
 
 <p>
-可以发现，抽象工厂模式和工厂方法模式的差别并不是很大，只不过，一个负责创建一组对象，而另一个只创建某一类型的对象。
-如果将一组对象变成一个对象，那么抽象工厂模式和工厂方法模式就变得差不多了。
+可以发现，抽象工厂模式和工厂方法模式的差别并不是很大，只不过，一个负责创建一组对象，而另一个只创建某一类型的对象。如果将一组对象变成一个对象，那么抽象工厂模式和工厂方法模式就变得差不多了。
 </p>
 
 <p>
-虽然在抽象工厂模式中单个具体工厂的职责更多，但是，如果将需要经常在一起创建的对象分散到多个工厂中，反而会增加使用者的依赖和整体的复杂的，
-因此，抽象工厂模式在创建一组相关的对象的时候还是很有用的。
+虽然在抽象工厂模式中单个具体工厂的职责更多，但是，如果将需要经常在一起创建的对象分散到多个工厂中，反而会增加使用者的依赖和整体的复杂的，因此，抽象工厂模式在创建一组相关的对象的时候还是很有用的。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1da925f" class="outline-2">
-<h2 id="org1da925f"><span class="section-number-2">6</span> 综合理解</h2>
+<div id="outline-container-org976cb6a" class="outline-2">
+<h2 id="org976cb6a"><span class="section-number-2">6</span> 综合理解</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 设计模式的设计依据是面向对象的设计原则，因此，在理解设计模式的时候，应该参考相应的设计原则。
@@ -415,13 +412,11 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-无论是工厂方法还是抽象工厂，添加功能的时候都可以通过增加子类的方式完成，避免了对已有代码的修改。而工厂方法中的具体工厂的职责也很单一，
-这样一来，出现错误时，受影响的范围可以少一点。
+无论是工厂方法还是抽象工厂，添加功能的时候都可以通过增加子类的方式完成，避免了对已有代码的修改。而工厂方法中的具体工厂的职责也很单一，这样一来，出现错误时，受影响的范围可以少一点。
 </p>
 
 <p>
-同时，虽然抽象工厂中的具体工厂需要负责创建多个对象，出现错误可能全军覆没，但是，抽象工厂创建的对象本来就是相关的，也就是说，就算分开了，
-一个地方出错还是会影响整体，因此，将相关的一组对象放在一起创建带来的好处是更多的。
+同时，虽然抽象工厂中的具体工厂需要负责创建多个对象，出现错误可能全军覆没，但是，抽象工厂创建的对象本来就是相关的，也就是说，就算分开了，一个地方出错还是会影响整体，因此，将相关的一组对象放在一起创建带来的好处是更多的。
 </p>
 
 <p>
@@ -430,8 +425,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org164bbb3" class="outline-2">
-<h2 id="org164bbb3"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org572d6e8" class="outline-2">
+<h2 id="org572d6e8"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 据说学习设计模式容易陷入一个误区，那就是到处都在用设计模式，使得整体代码变得复杂且难以理解。

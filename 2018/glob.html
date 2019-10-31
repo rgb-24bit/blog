@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glob 语法及解析</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,16 +246,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc90494e">1. glob 简介</a></li>
-<li><a href="#orgf1fc867">2. glob 语法</a></li>
-<li><a href="#org213adba">3. .gitignore</a></li>
-<li><a href="#org654c3a7">4. Python glob</a></li>
+<li><a href="#org681cbba">1. glob 简介</a></li>
+<li><a href="#org37554ef">2. glob 语法</a></li>
+<li><a href="#orga90cca8">3. .gitignore</a></li>
+<li><a href="#org000a1c1">4. Python glob</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc90494e" class="outline-2">
-<h2 id="orgc90494e"><span class="section-number-2">1</span> glob 简介</h2>
+<div id="outline-container-org681cbba" class="outline-2">
+<h2 id="org681cbba"><span class="section-number-2">1</span> glob 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>glob</code> 是用于匹配符合指定模式的文件集合的一种语言， 类似于正则表达式， 但更加简单。
@@ -271,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf1fc867" class="outline-2">
-<h2 id="orgf1fc867"><span class="section-number-2">2</span> glob 语法</h2>
+<div id="outline-container-org37554ef" class="outline-2">
+<h2 id="org37554ef"><span class="section-number-2">2</span> glob 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>glob</code> 的语法很简单：
@@ -357,8 +357,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-<b>Update-2018-09-20:</b> 好像只是 <code>Python</code> 中 <code>pathlib.Path.glob</code> 支持列出所有文件，其他工具只是列出当前所有子目录中匹配的文件，
-子目录的子目录需要 <code>**/**/*</code>.
+<b>Update-2018-09-20:</b> 好像只是 <code>Python</code> 中 <code>pathlib.Path.glob</code> 支持列出所有文件，其他工具只是列出当前所有子目录中匹配的文件，子目录的子目录需要 <code>**/**/*</code>.
 </p>
 
 <ul class="org-ul">
@@ -367,8 +366,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org213adba" class="outline-2">
-<h2 id="org213adba"><span class="section-number-2">3</span> .gitignore</h2>
+<div id="outline-container-orga90cca8" class="outline-2">
+<h2 id="orga90cca8"><span class="section-number-2">3</span> .gitignore</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>git</code> 的 <code>.gitignore</code> 文件可以使用 <code>glob</code> 模式匹配， 另外还有一些规则：
@@ -382,8 +381,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org654c3a7" class="outline-2">
-<h2 id="org654c3a7"><span class="section-number-2">4</span> Python glob</h2>
+<div id="outline-container-org000a1c1" class="outline-2">
+<h2 id="org000a1c1"><span class="section-number-2">4</span> Python glob</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Python</code> 有进行 <code>glob</code> 匹配的标准库， 使用也很简单：

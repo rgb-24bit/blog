@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python2.5-2.7的版本变化</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,37 +246,37 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgadf3b3b">1. 前言</a></li>
-<li><a href="#orgf04d9b2">2. Python2.5</a>
+<li><a href="#orgc659822">1. 前言</a></li>
+<li><a href="#org7b884e3">2. Python2.5</a>
 <ul>
-<li><a href="#org84a8935">2.1. 主要语言变化</a></li>
-<li><a href="#orga55bd31">2.2. 核心语言变化</a></li>
-<li><a href="#org340566e">2.3. 其他内容</a></li>
+<li><a href="#org48c993a">2.1. 主要语言变化</a></li>
+<li><a href="#org7761ae6">2.2. 核心语言变化</a></li>
+<li><a href="#orgb5a0226">2.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#orgf0e42dc">3. Python2.6</a>
+<li><a href="#org57f705f">3. Python2.6</a>
 <ul>
-<li><a href="#org95503a8">3.1. 主要语言变化</a></li>
-<li><a href="#orgeea83b4">3.2. 核心语言变化</a></li>
-<li><a href="#org6464cdc">3.3. 其他内容</a></li>
+<li><a href="#org5a5088f">3.1. 主要语言变化</a></li>
+<li><a href="#orgd87eea1">3.2. 核心语言变化</a></li>
+<li><a href="#org298e862">3.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#orgb3b1b86">4. Python2.7</a>
+<li><a href="#org50131b8">4. Python2.7</a>
 <ul>
-<li><a href="#org6979c4e">4.1. 主要变化之前</a></li>
-<li><a href="#orgc427732">4.2. 主要语言变化</a></li>
-<li><a href="#org68b0be0">4.3. 核心语言变化</a></li>
-<li><a href="#org94a5901">4.4. 其他内容</a></li>
+<li><a href="#org5ad196c">4.1. 主要变化之前</a></li>
+<li><a href="#org0ddad56">4.2. 主要语言变化</a></li>
+<li><a href="#orgcb6bdb1">4.3. 核心语言变化</a></li>
+<li><a href="#org8b66c03">4.4. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#orgd5ddfaa">5. 完结感言</a></li>
-<li><a href="#orgeb1a7b4">6. 相关链接</a></li>
+<li><a href="#org5658d90">5. 完结感言</a></li>
+<li><a href="#orgf5f19bb">6. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgadf3b3b" class="outline-2">
-<h2 id="orgadf3b3b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgc659822" class="outline-2">
+<h2 id="orgc659822"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <code>Python</code> 之前就纠结过到底是先学 <code>Python2</code> 好还是先学 <code>Python3</code> 好.
@@ -292,14 +292,13 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-所以为了进一步了解和学习 <code>Python</code>, 我决定通过官方文档来了解 <code>2.5-&gt;2.7</code> 这几个版本的
-变化. (<code>3.x</code> 的留待以后)
+所以为了进一步了解和学习 <code>Python</code>, 我决定通过官方文档来了解 <code>2.5-&gt;2.7</code> 这几个版本的变化. (<code>3.x</code> 的留待以后)
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgf04d9b2" class="outline-2">
-<h2 id="orgf04d9b2"><span class="section-number-2">2</span> Python2.5</h2>
+<div id="outline-container-org7b884e3" class="outline-2">
+<h2 id="org7b884e3"><span class="section-number-2">2</span> Python2.5</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 虽然 《Python基础教程》 讲解的便是 <code>Python2.5</code>, 但我还是感觉有必要来了解一下
@@ -307,8 +306,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org84a8935" class="outline-3">
-<h3 id="org84a8935"><span class="section-number-3">2.1</span> 主要语言变化</h3>
+<div id="outline-container-org48c993a" class="outline-3">
+<h3 id="org48c993a"><span class="section-number-3">2.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>2.5</code> 对比 <code>2.4</code> 有了这些变化.
@@ -725,8 +724,8 @@ BaseException       # New in Python 2.5
 </div>
 </div>
 
-<div id="outline-container-orga55bd31" class="outline-3">
-<h3 id="orga55bd31"><span class="section-number-3">2.2</span> 核心语言变化</h3>
+<div id="outline-container-org7761ae6" class="outline-3">
+<h3 id="org7761ae6"><span class="section-number-3">2.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 以下是Python 2.5对Python核心语言所做的更改.
@@ -754,13 +753,11 @@ BaseException       # New in Python 2.5
 </div></li>
 
 <li><p>
-所有的 8-bit 字符和 Unicode 字符都有了新的 <code>partition(sep)</code> 和 <code>rpartition(sep)</code> 方法来
-简化常见用例.
+所有的 8-bit 字符和 Unicode 字符都有了新的 <code>partition(sep)</code> 和 <code>rpartition(sep)</code> 方法来简化常见用例.
 </p>
 
 <p>
-这两个方法返回一个三元组, 根据 <code>sep</code> 指定的分隔符分割, 如果 <code>sep</code> 为找的, 那么
-元组的另外两个值为 <code>''</code>
+这两个方法返回一个三元组, 根据 <code>sep</code> 指定的分隔符分割, 如果 <code>sep</code> 为找的, 那么元组的另外两个值为 <code>''</code>
 </p>
 
 <p>
@@ -854,8 +851,8 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-org340566e" class="outline-3">
-<h3 id="org340566e"><span class="section-number-3">2.3</span> 其他内容</h3>
+<div id="outline-container-orgb5a0226" class="outline-3">
+<h3 id="orgb5a0226"><span class="section-number-3">2.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 其他的内容包括: <a href="https://docs.python.org/2/whatsnew/2.5.html#new-improved-and-removed-modules">新增, 改进, 移除的模块</a>, <a href="https://docs.python.org/2/whatsnew/2.5.html#build-and-c-api-changes">Python 构建过程和 C API 的变化</a> &#x2026;
@@ -868,16 +865,15 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-orgf0e42dc" class="outline-2">
-<h2 id="orgf0e42dc"><span class="section-number-2">3</span> Python2.6</h2>
+<div id="outline-container-org57f705f" class="outline-2">
+<h2 id="org57f705f"><span class="section-number-2">3</span> Python2.6</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
 </p>
 
 <p>
-通过文档发现, <code>2.6</code> 版本的主题是向 <code>3.0</code> 迁移. 所以这个版本就已经在尽可能的
-适应可能的 <code>3.0</code> 版本可能拥有的特性了.
+通过文档发现, <code>2.6</code> 版本的主题是向 <code>3.0</code> 迁移. 所以这个版本就已经在尽可能的适应可能的 <code>3.0</code> 版本可能拥有的特性了.
 </p>
 
 <p>
@@ -889,8 +885,8 @@ ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
 </p>
 </div>
 
-<div id="outline-container-org95503a8" class="outline-3">
-<h3 id="org95503a8"><span class="section-number-3">3.1</span> 主要语言变化</h3>
+<div id="outline-container-org5a5088f" class="outline-3">
+<h3 id="org5a5088f"><span class="section-number-3">3.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 对比 <code>2.5</code>, <code>2.6</code> 版本的 Python 多了这些变化.
@@ -984,8 +980,7 @@ from __future__ import with_statement
 </div>
 
 <ul class="org-ul">
-<li><code>Pool</code> 提供更高级的接口. <code>Pool</code> 可以创建固定数量的 <code>工作进程</code>, 可以通过 <code>apply()</code> 或 <code>apply_async()</code> 方法来
-请求使用. 也可以使用 <code>map()</code> 或 <code>map_async()</code> 来添加一些请求.</li>
+<li><code>Pool</code> 提供更高级的接口. <code>Pool</code> 可以创建固定数量的 <code>工作进程</code>, 可以通过 <code>apply()</code> 或 <code>apply_async()</code> 方法来请求使用. 也可以使用 <code>map()</code> 或 <code>map_async()</code> 来添加一些请求.</li>
 </ul>
 
 <div class="org-src-container">
@@ -1073,8 +1068,7 @@ from __future__ import with_statement
 </p>
 
 <p>
-嗯, 字符串对象新增了 <code>format()</code> 方法, 因为 <code>3.0</code> 版本的 <code>%</code> 有了更强大的方法 <code>format()</code> 方法
-作为补充.
+嗯, 字符串对象新增了 <code>format()</code> 方法, 因为 <code>3.0</code> 版本的 <code>%</code> 有了更强大的方法 <code>format()</code> 方法作为补充.
 </p>
 
 <p>
@@ -1188,8 +1182,7 @@ b<span class="org-string">'ABC'</span>
 </div>
 
 <p>
-差别很明显了. <code>2.6</code> 版本中的 <code>bytes</code> 还是主要用于编写像 <code>isinstance(x, bytes)</code> 的类型
-检测器. 方便 <code>2.x</code> 版本向 <code>3.x</code> 版本转化.
+差别很明显了. <code>2.6</code> 版本中的 <code>bytes</code> 还是主要用于编写像 <code>isinstance(x, bytes)</code> 的类型检测器. 方便 <code>2.x</code> 版本向 <code>3.x</code> 版本转化.
 </p>
 
 <p>
@@ -1236,9 +1229,7 @@ b<span class="org-string">'ABC'</span>
 </p>
 
 <p>
-<code>ABCs(Abstract Base Classes)</code> 类似于其他语言中的 <code>接口或抽象类</code> 的概念. 你可以定义一个
-基本的类, 而继承这个类的子类可能必须实现这个基类定义的某些方法. 另一方面, 你可以继承一些现成
-的 <code>ABC(Abstract Base Classe)</code> 来实现一些功能而非手动定义.
+<code>ABCs(Abstract Base Classes)</code> 类似于其他语言中的 <code>接口或抽象类</code> 的概念. 你可以定义一个基本的类, 而继承这个类的子类可能必须实现这个基类定义的某些方法. 另一方面, 你可以继承一些现成的 <code>ABC(Abstract Base Classe)</code> 来实现一些功能而非手动定义.
 </p>
 
 <p>
@@ -1464,8 +1455,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orgeea83b4" class="outline-3">
-<h3 id="orgeea83b4"><span class="section-number-3">3.2</span> 核心语言变化</h3>
+<div id="outline-container-orgd87eea1" class="outline-3">
+<h3 id="orgd87eea1"><span class="section-number-3">3.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 以下是python核心语言的小变动.
@@ -1582,8 +1573,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-org6464cdc" class="outline-3">
-<h3 id="org6464cdc"><span class="section-number-3">3.3</span> 其他内容</h3>
+<div id="outline-container-org298e862" class="outline-3">
+<h3 id="org298e862"><span class="section-number-3">3.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 同上, 文档链接:
@@ -1593,8 +1584,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orgb3b1b86" class="outline-2">
-<h2 id="orgb3b1b86"><span class="section-number-2">4</span> Python2.7</h2>
+<div id="outline-container-org50131b8" class="outline-2">
+<h2 id="org50131b8"><span class="section-number-2">4</span> Python2.7</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 终于 <code>2.7</code> 了&#x2026;
@@ -1606,8 +1597,8 @@ Fraction(5, 3)
 </p>
 </div>
 
-<div id="outline-container-org6979c4e" class="outline-3">
-<h3 id="org6979c4e"><span class="section-number-3">4.1</span> 主要变化之前</h3>
+<div id="outline-container-org5ad196c" class="outline-3">
+<h3 id="org5ad196c"><span class="section-number-3">4.1</span> 主要变化之前</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 官方文档在正式讲解 <code>2.7</code> 版本的新功能前, 还讲了一些其他的东西 !
@@ -1632,8 +1623,8 @@ PS: 写程序的时候尽可能的考虑与 <code>3.x</code> 版本兼容吧 !
 </div>
 </div>
 
-<div id="outline-container-orgc427732" class="outline-3">
-<h3 id="orgc427732"><span class="section-number-3">4.2</span> 主要语言变化</h3>
+<div id="outline-container-org0ddad56" class="outline-3">
+<h3 id="org0ddad56"><span class="section-number-3">4.2</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-4-2">
 <ol class="org-ol">
 <li><p>
@@ -1677,8 +1668,7 @@ PS: 写程序的时候尽可能的考虑与 <code>3.x</code> 版本兼容吧 !
 </div>
 
 <p>
-另外, <code>popitem()</code> 方法将会默认返回最后一个元素, 如果设置 <code>last</code> 参数为 <code>False</code> 的
-话, 将从头开始返回元素.
+另外, <code>popitem()</code> 方法将会默认返回最后一个元素, 如果设置 <code>last</code> 参数为 <code>False</code> 的话, 将从头开始返回元素.
 </p>
 
 <div class="org-src-container">
@@ -1965,8 +1955,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org68b0be0" class="outline-3">
-<h3 id="org68b0be0"><span class="section-number-3">4.3</span> 核心语言变化</h3>
+<div id="outline-container-orgcb6bdb1" class="outline-3">
+<h3 id="orgcb6bdb1"><span class="section-number-3">4.3</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-4-3">
 <ul class="org-ul">
 <li><p>
@@ -2077,8 +2067,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org94a5901" class="outline-3">
-<h3 id="org94a5901"><span class="section-number-3">4.4</span> 其他内容</h3>
+<div id="outline-container-org8b66c03" class="outline-3">
+<h3 id="org8b66c03"><span class="section-number-3">4.4</span> 其他内容</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 同上上: <a href="https://docs.python.org/2/whatsnew/2.7.html#new-and-improved-modules">新增和改进模块</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#build-and-c-api-changes">构建过程和 C API</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#porting-to-python-2-7">迁移到2.7</a>
@@ -2086,8 +2076,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 </div>
-<div id="outline-container-orgd5ddfaa" class="outline-2">
-<h2 id="orgd5ddfaa"><span class="section-number-2">5</span> 完结感言</h2>
+<div id="outline-container-org5658d90" class="outline-2">
+<h2 id="org5658d90"><span class="section-number-2">5</span> 完结感言</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 终于&#x2026;
@@ -2110,8 +2100,7 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </p>
 
 <p>
-本来是想看看 <code>set</code> 这个类型的相关内容才来翻文档的(买的书对 <code>set</code> 的讲解很少), 结果 <code>set</code> 的内容
-没有多少, 到是其他内容收获不少&#x2026;
+本来是想看看 <code>set</code> 这个类型的相关内容才来翻文档的(买的书对 <code>set</code> 的讲解很少), 结果 <code>set</code> 的内容没有多少, 到是其他内容收获不少&#x2026;
 </p>
 
 <p>
@@ -2120,8 +2109,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-orgeb1a7b4" class="outline-2">
-<h2 id="orgeb1a7b4"><span class="section-number-2">6</span> 相关链接</h2>
+<div id="outline-container-orgf5f19bb" class="outline-2">
+<h2 id="orgf5f19bb"><span class="section-number-2">6</span> 相关链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/whatsnew/2.5.html">What’s New in Python 2.5</a></li>

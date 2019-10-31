@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python urllib</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,28 +246,27 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd3a1f1f">1. 前言</a></li>
-<li><a href="#org7764e0d">2. Python2</a>
+<li><a href="#org84501c1">1. 前言</a></li>
+<li><a href="#orged38304">2. Python2</a>
 <ul>
-<li><a href="#org2908f5e">2.1. 获取资源</a></li>
-<li><a href="#orgdf947ce">2.2. 发送数据</a></li>
-<li><a href="#org80b7cc8">2.3. 用户代理</a></li>
-<li><a href="#orgad0d80f">2.4. 异常处理</a></li>
-<li><a href="#org6205dfa">2.5. 超时设置</a></li>
+<li><a href="#org28c7627">2.1. 获取资源</a></li>
+<li><a href="#org0dc1be8">2.2. 发送数据</a></li>
+<li><a href="#org5edcc0e">2.3. 用户代理</a></li>
+<li><a href="#org65427a1">2.4. 异常处理</a></li>
+<li><a href="#orga72920e">2.5. 超时设置</a></li>
 </ul>
 </li>
-<li><a href="#org57a9212">3. Python3</a></li>
-<li><a href="#orgbfaedf0">4. 相关链接</a></li>
+<li><a href="#orgd47469b">3. Python3</a></li>
+<li><a href="#org3aca908">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd3a1f1f" class="outline-2">
-<h2 id="orgd3a1f1f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org84501c1" class="outline-2">
+<h2 id="org84501c1"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-这篇博客之前是发过的，当时由于太过求全，添加了不少自己不太明白的内容，
-于是便删了，将和 <code>HTTP</code> 协议相关的部分单独拿出来写了篇博客 <a href="http.html">HTTP 协议相关</a>.
+这篇博客之前是发过的，当时由于太过求全，添加了不少自己不太明白的内容，于是便删了，将和 <code>HTTP</code> 协议相关的部分单独拿出来写了篇博客 <a href="http.html">HTTP 协议相关</a>.
 </p>
 
 <p>
@@ -281,20 +280,19 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7764e0d" class="outline-2">
-<h2 id="org7764e0d"><span class="section-number-2">2</span> Python2</h2>
+<div id="outline-container-orged38304" class="outline-2">
+<h2 id="orged38304"><span class="section-number-2">2</span> Python2</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 这篇博客的内容以 <code>Python2</code> 为基础， <code>Python3</code> 为补充。
 </p>
 </div>
 
-<div id="outline-container-org2908f5e" class="outline-3">
-<h3 id="org2908f5e"><span class="section-number-3">2.1</span> 获取资源</h3>
+<div id="outline-container-org28c7627" class="outline-3">
+<h3 id="org28c7627"><span class="section-number-3">2.1</span> 获取资源</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-<code>Python2</code> 中的 <code>urllib</code> 库分为 <code>urllib</code> 和 <code>urllib2</code>, 两者都可以用于获取 <code>URL</code> 资源， 
-但使用的更多的是 <code>urllib2</code>.
+<code>Python2</code> 中的 <code>urllib</code> 库分为 <code>urllib</code> 和 <code>urllib2</code>, 两者都可以用于获取 <code>URL</code> 资源，但使用的更多的是 <code>urllib2</code>.
 </p>
 
 <p>
@@ -312,8 +310,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-<code>urllib2</code> 使用一个 <code>Request</code> 对象来表示一个请求，用 <code>Request</code> 对象作为参数调用 <code>urlopen</code> 函数，
-将会返回与之对应的响应对象。响应对象类似于一个文件对象，你可以调用 <code>read</code> 方法来获取内容。
+<code>urllib2</code> 使用一个 <code>Request</code> 对象来表示一个请求，用 <code>Request</code> 对象作为参数调用 <code>urlopen</code> 函数，将会返回与之对应的响应对象。响应对象类似于一个文件对象，你可以调用 <code>read</code> 方法来获取内容。
 </p>
 
 <div class="org-src-container">
@@ -327,8 +324,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdf947ce" class="outline-3">
-<h3 id="orgdf947ce"><span class="section-number-3">2.2</span> 发送数据</h3>
+<div id="outline-container-org0dc1be8" class="outline-3">
+<h3 id="org0dc1be8"><span class="section-number-3">2.2</span> 发送数据</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 我们可以使用 <code>POST</code> 请求向服务器发送一些数据，数据在发送之前，需要以标准方式进行编码。
@@ -398,12 +395,11 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 </div>
 </div>
 
-<div id="outline-container-org80b7cc8" class="outline-3">
-<h3 id="org80b7cc8"><span class="section-number-3">2.3</span> 用户代理</h3>
+<div id="outline-container-org5edcc0e" class="outline-3">
+<h3 id="org5edcc0e"><span class="section-number-3">2.3</span> 用户代理</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器
-认可并发出响应。（比如只允许浏览器进行访问的网页）
+很多情况下， 我们需要在请求的时候， 附加一些信息来标识自己， 让服务器认可并发出响应。（比如只允许浏览器进行访问的网页）
 </p>
 
 <p>
@@ -411,8 +407,7 @@ PS: 有时可能需要其他编码， 详见 <a href="https://www.w3.org/TR/REC-
 </p>
 
 <p>
-浏览器通过 <code>User-Agent</code> 来标识自己。但既然只是一段信息，那我们可以通过浏览器的头信息
-伪装自己。
+浏览器通过 <code>User-Agent</code> 来标识自己。但既然只是一段信息，那我们可以通过浏览器的头信息伪装自己。
 </p>
 
 <p>
@@ -452,8 +447,8 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-orgad0d80f" class="outline-3">
-<h3 id="orgad0d80f"><span class="section-number-3">2.4</span> 异常处理</h3>
+<div id="outline-container-org65427a1" class="outline-3">
+<h3 id="org65427a1"><span class="section-number-3">2.4</span> 异常处理</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <i>urlopen</i> 在不能处理响应的时候会抛出错误 <code>URLError</code>.
@@ -506,8 +501,7 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </p>
 
 <p>
-另外， <code>BaseHTTPServer.BaseHTTPRequestHandler.responses</code> 是一个有用的响应码字典。
-你可以打印这个字典来了解一些响应码的含义。
+另外， <code>BaseHTTPServer.BaseHTTPRequestHandler.responses</code> 是一个有用的响应码字典。你可以打印这个字典来了解一些响应码的含义。
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">from</span> BaseHTTPServer <span class="org-keyword">import</span> BaseHTTPRequestHandler.responses
@@ -588,8 +582,8 @@ PS: 如果 <code>Network</code> 没有内容， 可以刷新一下网页。
 </div>
 </div>
 
-<div id="outline-container-org6205dfa" class="outline-3">
-<h3 id="org6205dfa"><span class="section-number-3">2.5</span> 超时设置</h3>
+<div id="outline-container-orga72920e" class="outline-3">
+<h3 id="orga72920e"><span class="section-number-3">2.5</span> 超时设置</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <code>urllib</code> 依赖于 <code>socket</code>, 因此可以通过 <code>socket</code> 来设置超时时间：
@@ -612,21 +606,19 @@ socket.setdefaulttimeout(timeout)
 </div>
 </div>
 
-<div id="outline-container-org57a9212" class="outline-2">
-<h2 id="org57a9212"><span class="section-number-2">3</span> Python3</h2>
+<div id="outline-container-orgd47469b" class="outline-2">
+<h2 id="orgd47469b"><span class="section-number-2">3</span> Python3</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我们都知道 <code>Python3</code> 和 <code>Python2</code> 不兼容。 对于 <code>urllib</code> 来说更是如此。
 </p>
 
 <p>
-<code>3.x</code> 没有 <code>urllib2</code>, 替代它的是 <code>urllib.request</code>. 而与原有 <code>urllib</code> 对应的
-是 <code>urllib.parse</code>.
+<code>3.x</code> 没有 <code>urllib2</code>, 替代它的是 <code>urllib.request</code>. 而与原有 <code>urllib</code> 对应的是 <code>urllib.parse</code>.
 </p>
 
 <p>
-同时， <code>3.x</code> 版本的 <code>urlopen</code> 返回的响应对象支持上下文管理器， 即可以这样
-写代码：
+同时， <code>3.x</code> 版本的 <code>urlopen</code> 返回的响应对象支持上下文管理器， 即可以这样写代码：
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">import</span> urllib.request
@@ -672,8 +664,8 @@ socket.setdefaulttimeout(timeout)
 </div>
 </div>
 
-<div id="outline-container-orgbfaedf0" class="outline-2">
-<h2 id="orgbfaedf0"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org3aca908" class="outline-2">
+<h2 id="org3aca908"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/howto/urllib2.html">HOWTO Fetch Internet Resources Using urllib2</a></li>

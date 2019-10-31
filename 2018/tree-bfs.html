@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>树的广度优先遍历</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,16 +246,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org34bf3d1">1. 前言</a></li>
-<li><a href="#orgbeec84d">2. 广度优先遍历的实现</a></li>
-<li><a href="#org5a6666a">3. 将树保存到文件</a></li>
-<li><a href="#org882e911">4. 结语</a></li>
+<li><a href="#org8a481a6">1. 前言</a></li>
+<li><a href="#org14df5e2">2. 广度优先遍历的实现</a></li>
+<li><a href="#org963a7f0">3. 将树保存到文件</a></li>
+<li><a href="#org7b03477">4. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org34bf3d1" class="outline-2">
-<h2 id="org34bf3d1"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org8a481a6" class="outline-2">
+<h2 id="org8a481a6"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 《数据结构与算法分析 - C 语言描述》 一书中，相当详细的介绍了 <b>树的深度优先遍历 - DFS</b>, 
@@ -276,12 +276,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbeec84d" class="outline-2">
-<h2 id="orgbeec84d"><span class="section-number-2">2</span> 广度优先遍历的实现</h2>
+<div id="outline-container-org14df5e2" class="outline-2">
+<h2 id="org14df5e2"><span class="section-number-2">2</span> 广度优先遍历的实现</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-虽然 《数据结构与算法分析 - C 语言描述》 一书在 <b>树</b> 的章节没有介绍 <code>BFS</code> 的实现，
-但在 <b>图</b> 的章节讲解了 <code>BFS</code> 的实现。毕竟， <b>树</b> 是 <b>图</b> 的一种。
+虽然 《数据结构与算法分析 - C 语言描述》 一书在 <b>树</b> 的章节没有介绍 <code>BFS</code> 的实现，但在 <b>图</b> 的章节讲解了 <code>BFS</code> 的实现。毕竟， <b>树</b> 是 <b>图</b> 的一种。
 </p>
 
 <p>
@@ -309,8 +308,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-通过队列保存深度较低的节点，队列 <b>先进先出</b> 的特性决定了，先出来的节点绝对是深度较低的，
-而后放入的节点会放在队列尾部，也就是说，深度越深，出来的越晚。
+通过队列保存深度较低的节点，队列 <b>先进先出</b> 的特性决定了，先出来的节点绝对是深度较低的，而后放入的节点会放在队列尾部，也就是说，深度越深，出来的越晚。
 </p>
 
 <p>
@@ -325,12 +323,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5a6666a" class="outline-2">
-<h2 id="org5a6666a"><span class="section-number-2">3</span> 将树保存到文件</h2>
+<div id="outline-container-org963a7f0" class="outline-2">
+<h2 id="org963a7f0"><span class="section-number-2">3</span> 将树保存到文件</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-这是为什么我会想到用 <code>BFS</code> 的原因，最开始只是需要将 <b>二叉树</b> 保存到文件，
-但是 <b>二叉树</b> 可以转换为 <b>数组</b>, 保存起来也不难。
+这是为什么我会想到用 <code>BFS</code> 的原因，最开始只是需要将 <b>二叉树</b> 保存到文件，但是 <b>二叉树</b> 可以转换为 <b>数组</b>, 保存起来也不难。
 </p>
 
 <p>
@@ -351,8 +348,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-我需要将这样一棵树保存到文件，然后就懵逼了。我可以用深度优先遍历的方式把它保存到文件，
-但是没法用深度优先的方法把它从文件中复原回来啊！
+我需要将这样一棵树保存到文件，然后就懵逼了。我可以用深度优先遍历的方式把它保存到文件，但是没法用深度优先的方法把它从文件中复原回来啊！
 </p>
 
 <p>
@@ -561,8 +557,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org882e911" class="outline-2">
-<h2 id="org882e911"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org7b03477" class="outline-2">
+<h2 id="org7b03477"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这次 <code>BFS</code> 的学习，收获最大的不是学会了 <code>BFS</code> 的实现，而是扩宽了思路。

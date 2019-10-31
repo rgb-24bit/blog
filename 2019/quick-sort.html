@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-06-22 周六 17:03 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quick Sort 快速排序算法</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,19 +268,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8a5b86c">1. 前言</a></li>
-<li><a href="#org6959dc8">2. 算法步骤</a></li>
-<li><a href="#org5aaf549">3. 选取枢纽元</a></li>
-<li><a href="#orgd768b9a">4. 分割数组</a></li>
-<li><a href="#orgb54a406">5. 算法实现</a></li>
-<li><a href="#orgabc8782">6. 小数组和插入排序</a></li>
-<li><a href="#org84db817">7. 结语</a></li>
+<li><a href="#org65741d0">1. 前言</a></li>
+<li><a href="#org459139b">2. 算法步骤</a></li>
+<li><a href="#org8b86b1e">3. 选取枢纽元</a></li>
+<li><a href="#org78c9f26">4. 分割数组</a></li>
+<li><a href="#orgd5affe8">5. 算法实现</a></li>
+<li><a href="#org647240c">6. 小数组和插入排序</a></li>
+<li><a href="#orgb114ed1">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8a5b86c" class="outline-2">
-<h2 id="org8a5b86c"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org65741d0" class="outline-2">
+<h2 id="org65741d0"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 快速排序算法应该是常见的排序算法中使用的最多的一个，很多语言内置的排序算法都间接或直接的使用了这一算法。
@@ -292,8 +292,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6959dc8" class="outline-2">
-<h2 id="org6959dc8"><span class="section-number-2">2</span> 算法步骤</h2>
+<div id="outline-container-org459139b" class="outline-2">
+<h2 id="org459139b"><span class="section-number-2">2</span> 算法步骤</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 在了解详细的算法步骤之前可以先来看一下快速排序算法的算法复杂度：
@@ -344,8 +344,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5aaf549" class="outline-2">
-<h2 id="org5aaf549"><span class="section-number-2">3</span> 选取枢纽元</h2>
+<div id="outline-container-org8b86b1e" class="outline-2">
+<h2 id="org8b86b1e"><span class="section-number-2">3</span> 选取枢纽元</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 常见的枢纽元选择方式大概就是选择数组 <b>中间</b> 的那个元素，简单直接有效。
@@ -397,12 +397,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd768b9a" class="outline-2">
-<h2 id="orgd768b9a"><span class="section-number-2">4</span> 分割数组</h2>
+<div id="outline-container-org78c9f26" class="outline-2">
+<h2 id="org78c9f26"><span class="section-number-2">4</span> 分割数组</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-分割数组时，需要首先将选取的枢纽元和末端的元素交换位置，然后从左向右遍历所有小于枢纽元的元素，从右向左遍历所有大于枢纽元的元素，当两者遇到大于或小于枢纽元的元素停下时，
-便交换遇到的元素，然后继续遍历，直到交错：
+分割数组时，需要首先将选取的枢纽元和末端的元素交换位置，然后从左向右遍历所有小于枢纽元的元素，从右向左遍历所有大于枢纽元的元素，当两者遇到大于或小于枢纽元的元素停下时，便交换遇到的元素，然后继续遍历，直到交错：
 </p>
 <pre class="example">
         初始状态：
@@ -458,8 +457,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb54a406" class="outline-2">
-<h2 id="orgb54a406"><span class="section-number-2">5</span> 算法实现</h2>
+<div id="outline-container-orgd5affe8" class="outline-2">
+<h2 id="orgd5affe8"><span class="section-number-2">5</span> 算法实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 在确定了枢纽元的选取方法和数组的分割策略后，就可以尝试实现快速排序算法了：
@@ -553,8 +552,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgabc8782" class="outline-2">
-<h2 id="orgabc8782"><span class="section-number-2">6</span> 小数组和插入排序</h2>
+<div id="outline-container-org647240c" class="outline-2">
+<h2 id="org647240c"><span class="section-number-2">6</span> 小数组和插入排序</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 快速排序在小数组上的表现还不如插入排序好，因此，在实现快速排序时，常常还会通过插入排序来排序较小的数组，比如说 <a href="https://github.com/exsourcode/jdk8u-jdk/blob/master/src/share/classes/java/util/DualPivotQuicksort.java#L214">OpenJDK</a> 中的实现便是这样的。
@@ -605,8 +604,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org84db817" class="outline-2">
-<h2 id="org84db817"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-orgb114ed1" class="outline-2">
+<h2 id="orgb114ed1"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这篇博客的大部分内容都来源于《数据结构和算法分析 —— C 语言描述》一书的 <i>7.7</i> 节，有兴趣的可以看一看 @_@

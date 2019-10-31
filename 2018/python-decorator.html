@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 闭包和装饰器</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,24 +246,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdf95e24">1. 简介</a></li>
-<li><a href="#org310eebe">2. 闭包</a></li>
-<li><a href="#orgf9b56dd">3. 装饰器</a>
+<li><a href="#org05c1dfd">1. 简介</a></li>
+<li><a href="#orgb8b77df">2. 闭包</a></li>
+<li><a href="#orgcc2f534">3. 装饰器</a>
 <ul>
-<li><a href="#orgce5f97a">3.1. 多重装饰器</a></li>
+<li><a href="#org3f97253">3.1. 多重装饰器</a></li>
 </ul>
 </li>
-<li><a href="#orge9b85a1">4. 参考链接</a></li>
+<li><a href="#orgb9fb949">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdf95e24" class="outline-2">
-<h2 id="orgdf95e24"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org05c1dfd" class="outline-2">
+<h2 id="org05c1dfd"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时
-编写出更加简介的代码。
+<code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时编写出更加简介的代码。
 </p>
 
 <p>
@@ -272,8 +271,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org310eebe" class="outline-2">
-<h2 id="org310eebe"><span class="section-number-2">2</span> 闭包</h2>
+<div id="outline-container-orgb8b77df" class="outline-2">
+<h2 id="orgb8b77df"><span class="section-number-2">2</span> 闭包</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
@@ -363,8 +362,7 @@ Out[12]: <span class="org-constant">False</span>
 </p>
 
 <p>
-说明 <code>f1</code> 和 <code>f2</code> 共用函数 <code>func</code> 的局部命名空间， 即： 函数 <code>f1</code> 和 <code>f2</code> 是和函数 <code>func</code> 的局部命名空间组合
-而成的实体。
+说明 <code>f1</code> 和 <code>f2</code> 共用函数 <code>func</code> 的局部命名空间， 即： 函数 <code>f1</code> 和 <code>f2</code> 是和函数 <code>func</code> 的局部命名空间组合而成的实体。
 </p>
 
 <p>
@@ -377,12 +375,11 @@ Out[12]: <span class="org-constant">False</span>
 </div>
 </div>
 
-<div id="outline-container-orgf9b56dd" class="outline-2">
-<h2 id="orgf9b56dd"><span class="section-number-2">3</span> 装饰器</h2>
+<div id="outline-container-orgcc2f534" class="outline-2">
+<h2 id="orgcc2f534"><span class="section-number-2">3</span> 装饰器</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的
-环境存在联系。
+可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的环境存在联系。
 </p>
 
 <p>
@@ -440,8 +437,7 @@ Out[12]: <span class="org-constant">False</span>
 </dl>
 
 <p>
-可以看到， 两种 <b>装饰器</b> 的调用流程的区别很明显， <b>带参数</b> 比 <b>不带参数</b> 多了
-一次调用流程。
+可以看到， 两种 <b>装饰器</b> 的调用流程的区别很明显， <b>带参数</b> 比 <b>不带参数</b> 多了一次调用流程。
 </p>
 
 <p>
@@ -449,8 +445,7 @@ Out[12]: <span class="org-constant">False</span>
 </p>
 
 <p>
-这两种 <b>装饰器</b> 的区别主要是在 <b>调用流程</b> 上， 对于 <b>装饰器</b> 内部的代码并没做过多的
-要求。
+这两种 <b>装饰器</b> 的区别主要是在 <b>调用流程</b> 上， 对于 <b>装饰器</b> 内部的代码并没做过多的要求。
 </p>
 
 <p>
@@ -482,8 +477,7 @@ Out[12]: <span class="org-constant">False</span>
 </p>
 
 <p>
-如果 <b>带参</b> 调用 <b>装饰器</b>, 那么首先传入的 <b>参数</b> 会是你设置的参数， 而由于 <b>装饰器</b> 的
-参数设置为了 <b>关键字</b> 参数， 因此 <b>第一个</b> 参数 <code>func</code> 会被置为 <code>None</code>.
+如果 <b>带参</b> 调用 <b>装饰器</b>, 那么首先传入的 <b>参数</b> 会是你设置的参数， 而由于 <b>装饰器</b> 的参数设置为了 <b>关键字</b> 参数， 因此 <b>第一个</b> 参数 <code>func</code> 会被置为 <code>None</code>.
 </p>
 
 <p>
@@ -507,8 +501,8 @@ Out[12]: <span class="org-constant">False</span>
 </ul>
 </div>
 
-<div id="outline-container-orgce5f97a" class="outline-3">
-<h3 id="orgce5f97a"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div id="outline-container-org3f97253" class="outline-3">
+<h3 id="org3f97253"><span class="section-number-3">3.1</span> 多重装饰器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
@@ -544,8 +538,8 @@ Out[12]: <span class="org-constant">False</span>
 </div>
 </div>
 
-<div id="outline-container-orge9b85a1" class="outline-2">
-<h2 id="orge9b85a1"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orgb9fb949" class="outline-2">
+<h2 id="orgb9fb949"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>

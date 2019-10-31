@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>散列表的简单实现</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org26c6290">1. 前言</a></li>
-<li><a href="#org469cbe8">2. 概念</a></li>
-<li><a href="#org4b0bc73">3. 散列函数</a></li>
-<li><a href="#orgabb62b3">4. 冲突</a></li>
-<li><a href="#org4ff4471">5. 分离链接法</a></li>
-<li><a href="#org214efbf">6. 简单的实现</a></li>
-<li><a href="#org13f1943">7. 结语</a></li>
-<li><a href="#orga115c9e">8. 参考链接</a></li>
+<li><a href="#org1c85771">1. 前言</a></li>
+<li><a href="#org437ddb9">2. 概念</a></li>
+<li><a href="#org45183e5">3. 散列函数</a></li>
+<li><a href="#orgfb8157d">4. 冲突</a></li>
+<li><a href="#orgb29c78e">5. 分离链接法</a></li>
+<li><a href="#org7964b26">6. 简单的实现</a></li>
+<li><a href="#org8023626">7. 结语</a></li>
+<li><a href="#org51b240c">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org26c6290" class="outline-2">
-<h2 id="org26c6290"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org1c85771" class="outline-2">
+<h2 id="org1c85771"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 当初学数据结构的时候，只有列表、栈、队列和树跟着书上的代码敲过一次。
@@ -275,8 +275,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org469cbe8" class="outline-2">
-<h2 id="org469cbe8"><span class="section-number-2">2</span> 概念</h2>
+<div id="outline-container-org437ddb9" class="outline-2">
+<h2 id="org437ddb9"><span class="section-number-2">2</span> 概念</h2>
 <div class="outline-text-2" id="text-2">
 <blockquote>
 <p>
@@ -299,8 +299,8 @@ A hash table uses a hash function to compute an index into an array of buckets o
 </div>
 </div>
 
-<div id="outline-container-org4b0bc73" class="outline-2">
-<h2 id="org4b0bc73"><span class="section-number-2">3</span> 散列函数</h2>
+<div id="outline-container-org45183e5" class="outline-2">
+<h2 id="org45183e5"><span class="section-number-2">3</span> 散列函数</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 散列函数的作用是：通过一系列的计算来将 <b>键</b> 映射到 <b>表</b> 的某一个位置上，然后通过那个位置来存储键对应的 <b>值</b>.
@@ -351,8 +351,8 @@ A hash table uses a hash function to compute an index into an array of buckets o
 </div>
 </div>
 
-<div id="outline-container-orgabb62b3" class="outline-2">
-<h2 id="orgabb62b3"><span class="section-number-2">4</span> 冲突</h2>
+<div id="outline-container-orgfb8157d" class="outline-2">
+<h2 id="orgfb8157d"><span class="section-number-2">4</span> 冲突</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 确定了散列函数后还需要解决的一个问题是：冲突 - 两个不同的键经过散列函数计算后得到了相同的值。
@@ -407,8 +407,7 @@ A hash table uses a hash function to compute an index into an array of buckets o
 </table>
 
 <p>
-选择一个大一点的表可以缓解这一问题，但是过大的表会造成内存的浪费，因为散列函数计算的值可能会较为密集的分布在某一区间，
-虽然可以通过 <b>散列函数的选择</b> 来缓解这一问题，但是依然可能会有冲突的产生。
+选择一个大一点的表可以缓解这一问题，但是过大的表会造成内存的浪费，因为散列函数计算的值可能会较为密集的分布在某一区间，虽然可以通过 <b>散列函数的选择</b> 来缓解这一问题，但是依然可能会有冲突的产生。
 </p>
 
 <p>
@@ -421,8 +420,8 @@ A hash table uses a hash function to compute an index into an array of buckets o
 </div>
 </div>
 
-<div id="outline-container-org4ff4471" class="outline-2">
-<h2 id="org4ff4471"><span class="section-number-2">5</span> 分离链接法</h2>
+<div id="outline-container-orgb29c78e" class="outline-2">
+<h2 id="orgb29c78e"><span class="section-number-2">5</span> 分离链接法</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 分离链接法解决冲突的办法是：将散列到同一个值的所有元素保存到一个 <b>表</b> 中，而数组中保存的则是这些表的 <b>表头</b>.
@@ -454,8 +453,8 @@ A hash table uses a hash function to compute an index into an array of buckets o
 </div>
 </div>
 
-<div id="outline-container-org214efbf" class="outline-2">
-<h2 id="org214efbf"><span class="section-number-2">6</span> 简单的实现</h2>
+<div id="outline-container-org7964b26" class="outline-2">
+<h2 id="org7964b26"><span class="section-number-2">6</span> 简单的实现</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 通过 <code>Python</code> 实现的一个简单的散列表：
@@ -547,8 +546,8 @@ Out[7]: {0: 0, 28: 784, 2: 4, 4: 16, 6: 36, 8: 64, 10: 100, 12: 144, 14: 196, 16
 </div>
 </div>
 
-<div id="outline-container-org13f1943" class="outline-2">
-<h2 id="org13f1943"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org8023626" class="outline-2">
+<h2 id="org8023626"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 通过上面那个简陋的实现可以看到，只有有了现成的散列函数和冲突解决方法，散列表的实现就不是很难。
@@ -564,8 +563,8 @@ Out[7]: {0: 0, 28: 784, 2: 4, 4: 16, 6: 36, 8: 64, 10: 100, 12: 144, 14: 196, 16
 </div>
 </div>
 
-<div id="outline-container-orga115c9e" class="outline-2">
-<h2 id="orga115c9e"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org51b240c" class="outline-2">
+<h2 id="org51b240c"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="http://www.nowamagic.net/academy/part/30/185/">数据结构：查找篇 &#x2013; 简明现代魔法</a></li>

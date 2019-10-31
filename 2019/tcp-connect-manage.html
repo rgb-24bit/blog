@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-06-08 周六 17:04 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TCP 中的三次握手和四次挥手</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,31 +246,30 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf272f12">1. 前言</a></li>
-<li><a href="#org12ead43">2. 数据报头部</a></li>
-<li><a href="#org12aab84">3. 三次握手</a>
+<li><a href="#org6b5ca43">1. 前言</a></li>
+<li><a href="#org23a9f09">2. 数据报头部</a></li>
+<li><a href="#orgc2a1797">3. 三次握手</a>
 <ul>
-<li><a href="#org13649aa">3.1. SYN 攻击</a></li>
+<li><a href="#org527bca0">3.1. SYN 攻击</a></li>
 </ul>
 </li>
-<li><a href="#orgd3cb5f6">4. 四次挥手</a>
+<li><a href="#org8b19eee">4. 四次挥手</a>
 <ul>
-<li><a href="#orge375097">4.1. 半连接</a></li>
-<li><a href="#orgd53ae23">4.2. TIME_WAIT</a></li>
+<li><a href="#org0e6fe5e">4.1. 半连接</a></li>
+<li><a href="#org3f39c03">4.2. TIME_WAIT</a></li>
 </ul>
 </li>
-<li><a href="#orgfa8c9bc">5. 结语</a></li>
-<li><a href="#org02d1e19">6. 参考链接</a></li>
+<li><a href="#org06800f1">5. 结语</a></li>
+<li><a href="#org28af6aa">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf272f12" class="outline-2">
-<h2 id="orgf272f12"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6b5ca43" class="outline-2">
+<h2 id="org6b5ca43"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-TCP 中的三次握手和四次挥手应该是非常著名的两个问题了，一方面这两个过程基本上属于面试必考题目，另一方面，
-这两个过程在实际的使用中也非常重要。
+TCP 中的三次握手和四次挥手应该是非常著名的两个问题了，一方面这两个过程基本上属于面试必考题目，另一方面，这两个过程在实际的使用中也非常重要。
 </p>
 
 <p>
@@ -279,8 +278,8 @@ TCP 中的三次握手和四次挥手应该是非常著名的两个问题了，�
 </div>
 </div>
 
-<div id="outline-container-org12ead43" class="outline-2">
-<h2 id="org12ead43"><span class="section-number-2">2</span> 数据报头部</h2>
+<div id="outline-container-org23a9f09" class="outline-2">
+<h2 id="org23a9f09"><span class="section-number-2">2</span> 数据报头部</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 在学习三次握手和四次挥手的具体过程之前，我觉得有必要先对 TCP/IP 的数据报头部进行一定的了解，当然，不需要了解所有信息。
@@ -350,8 +349,8 @@ TCP 头部的结构和 IP 头部一样，都比较复杂，但是在这里，我
 </div>
 </div>
 
-<div id="outline-container-org12aab84" class="outline-2">
-<h2 id="org12aab84"><span class="section-number-2">3</span> 三次握手</h2>
+<div id="outline-container-orgc2a1797" class="outline-2">
+<h2 id="orgc2a1797"><span class="section-number-2">3</span> 三次握手</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 在对 TCP/IP 数据报的头部结构有了一定的了解后，就可以进入正题了，首先是三次握手的过程：
@@ -411,17 +410,15 @@ TCP 头部的结构和 IP 头部一样，都比较复杂，但是在这里，我
 </p>
 </div>
 
-<div id="outline-container-org13649aa" class="outline-3">
-<h3 id="org13649aa"><span class="section-number-3">3.1</span> SYN 攻击</h3>
+<div id="outline-container-org527bca0" class="outline-3">
+<h3 id="org527bca0"><span class="section-number-3">3.1</span> SYN 攻击</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-SYN 攻击是针对三次握手过程的一种攻击方式，通过观察三次握手的过程可以发现，当服务端向客户端发送 SYN-ACK 后还未进入完整的连接状态，
-而是处于 <b>半连接</b> 状态。只有在接收到客户端的 ACK 后才会转入完整的连接状态。
+SYN 攻击是针对三次握手过程的一种攻击方式，通过观察三次握手的过程可以发现，当服务端向客户端发送 SYN-ACK 后还未进入完整的连接状态，而是处于 <b>半连接</b> 状态。只有在接收到客户端的 ACK 后才会转入完整的连接状态。
 </p>
 
 <p>
-而 SYN 攻击便是通过短时间内伪造大量不存在的 IP 地址，向服务器不断地发送 SYN 包实现的。这使得服务端存在大量未确认的半连接，
-这些半连接只有等待服务端不断的重发直至超时才会断开。
+而 SYN 攻击便是通过短时间内伪造大量不存在的 IP 地址，向服务器不断地发送 SYN 包实现的。这使得服务端存在大量未确认的半连接，这些半连接只有等待服务端不断的重发直至超时才会断开。
 </p>
 
 <p>
@@ -431,8 +428,8 @@ SYN 攻击是针对三次握手过程的一种攻击方式，通过观察三次�
 </div>
 </div>
 
-<div id="outline-container-orgd3cb5f6" class="outline-2">
-<h2 id="orgd3cb5f6"><span class="section-number-2">4</span> 四次挥手</h2>
+<div id="outline-container-org8b19eee" class="outline-2">
+<h2 id="org8b19eee"><span class="section-number-2">4</span> 四次挥手</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 四次挥手似乎没有三次握手那么有名，但也还是十分重要的一个过程，其具体过程如下：
@@ -474,26 +471,24 @@ SYN 攻击是针对三次握手过程的一种攻击方式，通过观察三次�
 </p>
 </div>
 
-<div id="outline-container-orge375097" class="outline-3">
-<h3 id="orge375097"><span class="section-number-3">4.1</span> 半连接</h3>
+<div id="outline-container-org0e6fe5e" class="outline-3">
+<h3 id="org0e6fe5e"><span class="section-number-3">4.1</span> 半连接</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
-通过对四次挥手过程的理解我们可以发现，连接的关闭过程是由两端分别停止自身的数据 <b>发送</b> 操作完成的，因此，假如一方停止发送操作，而另一方继续发送数据，
-这时便进入了半连接状态。
+通过对四次挥手过程的理解我们可以发现，连接的关闭过程是由两端分别停止自身的数据 <b>发送</b> 操作完成的，因此，假如一方停止发送操作，而另一方继续发送数据，这时便进入了半连接状态。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd53ae23" class="outline-3">
-<h3 id="orgd53ae23"><span class="section-number-3">4.2</span> TIME_WAIT</h3>
+<div id="outline-container-org3f39c03" class="outline-3">
+<h3 id="org3f39c03"><span class="section-number-3">4.2</span> TIME_WAIT</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 TIME_WAIT 这个状态也是比较常见的一个问题了，第四次挥手后进行第四次挥手的一方会进入 TIME_WAIT 状态，要至少等待 2MSL 才关闭连接。
 </p>
 
 <p>
-这是为了避免另一端没有收到自己的 ACK 又进行了 FIN 的重发，如果自己直接就把连接关了，那么就收不到这个 FIN 数据报了。这样一来，
-另一端就会长时间处在 LAST_ACK 的状态。
+这是为了避免另一端没有收到自己的 ACK 又进行了 FIN 的重发，如果自己直接就把连接关了，那么就收不到这个 FIN 数据报了。这样一来，另一端就会长时间处在 LAST_ACK 的状态。
 </p>
 
 <p>
@@ -501,8 +496,7 @@ TIME_WAIT 这个状态也是比较常见的一个问题了，第四次挥手后�
 </p>
 
 <p>
-2MSL 的时间长度默认情况下并不短，通常情况下可能有 30~300 秒，这意味着在这个时间段类相应的 <b>端口</b> 资源是一直被占据的，
-这对相当依赖有限的端口资源的服务器来说是难以接受的。
+2MSL 的时间长度默认情况下并不短，通常情况下可能有 30~300 秒，这意味着在这个时间段类相应的 <b>端口</b> 资源是一直被占据的，这对相当依赖有限的端口资源的服务器来说是难以接受的。
 </p>
 
 <p>
@@ -512,8 +506,8 @@ TIME_WAIT 这个状态也是比较常见的一个问题了，第四次挥手后�
 </div>
 </div>
 
-<div id="outline-container-orgfa8c9bc" class="outline-2">
-<h2 id="orgfa8c9bc"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org06800f1" class="outline-2">
+<h2 id="org06800f1"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 说起来，学习计算机网络基础的时候，并没有怎么学习关于三次握手和四次挥手的内容，基本上都是简单的了解了一下就完事了。
@@ -537,8 +531,8 @@ TIME_WAIT 这个状态也是比较常见的一个问题了，第四次挥手后�
 </div>
 </div>
 
-<div id="outline-container-org02d1e19" class="outline-2">
-<h2 id="org02d1e19"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org28af6aa" class="outline-2">
+<h2 id="org28af6aa"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="https://www.zhihu.com/question/24853633/answer/573627478">TCP 为什么是三次握手，而不是两次或四次？ - HioHio的回答 - 知乎</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pipenv 的使用</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,46 +246,45 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga95fd0e">1. 简介</a></li>
-<li><a href="#orgf8356cf">2. Pipenv</a>
+<li><a href="#orgd7c8c4e">1. 简介</a></li>
+<li><a href="#org9d95ca1">2. Pipenv</a>
 <ul>
-<li><a href="#orgbb41f2f">2.1. 下载</a></li>
-<li><a href="#org8cbc9a8">2.2. 使用</a></li>
-<li><a href="#org4651777">2.3. 设置</a></li>
+<li><a href="#org3582a0e">2.1. 下载</a></li>
+<li><a href="#org7845109">2.2. 使用</a></li>
+<li><a href="#org867e500">2.3. 设置</a></li>
 </ul>
 </li>
-<li><a href="#org055fe82">3. Pipfile</a>
+<li><a href="#orge59b392">3. Pipfile</a>
 <ul>
-<li><a href="#orgeef1c45">3.1. Pipfile</a></li>
-<li><a href="#org6d2c54c">3.2. Pipfile.lock</a></li>
-<li><a href="#org2884fb8">3.3. PEP508</a></li>
+<li><a href="#orga33bc92">3.1. Pipfile</a></li>
+<li><a href="#org9fd18da">3.2. Pipfile.lock</a></li>
+<li><a href="#org5654c73">3.3. PEP508</a></li>
 </ul>
 </li>
-<li><a href="#org574a5c6">4. 相关链接</a></li>
+<li><a href="#orgd315aea">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga95fd0e" class="outline-2">
-<h2 id="orga95fd0e"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgd7c8c4e" class="outline-2">
+<h2 id="orgd7c8c4e"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Pipenv</code> 是被 <code>Python</code> 官方推荐的包管理器.
 </p>
 
 <p>
-<code>Pipenv</code> 可以自动生成 <code>Virtualenv</code> 环境, 通过 <code>Pipfile</code> 方便的管理生产环境与依赖环境
-的包. 并可以根据 <code>Pipfile</code> 生成 <code>Pipfile.lock</code> 文件.
+<code>Pipenv</code> 可以自动生成 <code>Virtualenv</code> 环境, 通过 <code>Pipfile</code> 方便的管理生产环境与依赖环境的包. 并可以根据 <code>Pipfile</code> 生成 <code>Pipfile.lock</code> 文件.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgf8356cf" class="outline-2">
-<h2 id="orgf8356cf"><span class="section-number-2">2</span> Pipenv</h2>
+<div id="outline-container-org9d95ca1" class="outline-2">
+<h2 id="org9d95ca1"><span class="section-number-2">2</span> Pipenv</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgbb41f2f" class="outline-3">
-<h3 id="orgbb41f2f"><span class="section-number-3">2.1</span> 下载</h3>
+<div id="outline-container-org3582a0e" class="outline-3">
+<h3 id="org3582a0e"><span class="section-number-3">2.1</span> 下载</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 下载 <code>Pipenv</code> 很简单, 使用指令 <code>Pip install pipenv</code> 就可以了.
@@ -297,8 +296,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8cbc9a8" class="outline-3">
-<h3 id="org8cbc9a8"><span class="section-number-3">2.2</span> 使用</h3>
+<div id="outline-container-org7845109" class="outline-3">
+<h3 id="org7845109"><span class="section-number-3">2.2</span> 使用</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Pipenv</code> 拥有简洁明了的帮助信息, 如下:
@@ -418,8 +417,8 @@ Commands:
 </div>
 </div>
 
-<div id="outline-container-org4651777" class="outline-3">
-<h3 id="org4651777"><span class="section-number-3">2.3</span> 设置</h3>
+<div id="outline-container-org867e500" class="outline-3">
+<h3 id="org867e500"><span class="section-number-3">2.3</span> 设置</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li><p>
@@ -436,8 +435,7 @@ Commands:
 </p></li>
 
 <li><p>
-<code>Pip</code> 源
-国内环境原因, 可以更换 <code>Pip</code> 的源来提高包的安装速度, 我使用的是清华镜像:
+<code>Pip</code> 源国内环境原因, 可以更换 <code>Pip</code> 的源来提高包的安装速度, 我使用的是清华镜像:
 </p>
 <pre class="example">
 [[source]]
@@ -451,8 +449,8 @@ name = "pypi.tuna"
 </div>
 </div>
 
-<div id="outline-container-org055fe82" class="outline-2">
-<h2 id="org055fe82"><span class="section-number-2">3</span> Pipfile</h2>
+<div id="outline-container-orge59b392" class="outline-2">
+<h2 id="orge59b392"><span class="section-number-2">3</span> Pipfile</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Pipfile</code> 和 <code>Pipfile.lock</code> 用于替代 <code>pip</code> 的 <code>requirements.txt</code>.
@@ -468,23 +466,22 @@ name = "pypi.tuna"
 </p>
 </div>
 
-<div id="outline-container-orgeef1c45" class="outline-3">
-<h3 id="orgeef1c45"><span class="section-number-3">3.1</span> Pipfile</h3>
+<div id="outline-container-orga33bc92" class="outline-3">
+<h3 id="orga33bc92"><span class="section-number-3">3.1</span> Pipfile</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>Pipfile</code> 的特点:
 </p>
 <ul class="org-ul">
 <li>使用 <code>TOML</code> 语法编写.</li>
-<li>一个 <code>Pipfile</code> 可以替代多个 <code>requirements.txt</code>. 不需要为开发环境和依赖环境
-单独划分文件.</li>
+<li>一个 <code>Pipfile</code> 可以替代多个 <code>requirements.txt</code>. 不需要为开发环境和依赖环境单独划分文件.</li>
 <li>通过 <code>Pipfile.lock</code> 指定确定的环境配置, 通过 <code>Pipfile.lock</code> 恢复项目环境.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6d2c54c" class="outline-3">
-<h3 id="org6d2c54c"><span class="section-number-3">3.2</span> Pipfile.lock</h3>
+<div id="outline-container-org9fd18da" class="outline-3">
+<h3 id="org9fd18da"><span class="section-number-3">3.2</span> Pipfile.lock</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 环境的详细信息保存在 <code>Pipfile.lock</code> 中, 方便复用. 这个文件应该是自动生成的, 不应该手动修改.
@@ -492,8 +489,8 @@ name = "pypi.tuna"
 </div>
 </div>
 
-<div id="outline-container-org2884fb8" class="outline-3">
-<h3 id="org2884fb8"><span class="section-number-3">3.3</span> PEP508</h3>
+<div id="outline-container-org5654c73" class="outline-3">
+<h3 id="org5654c73"><span class="section-number-3">3.3</span> PEP508</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>Pipfile</code> 支持所有的 <code>PEP508</code> 标记, 并可以通过 <code>Pipenv check</code> 来检查是否符合标准.
@@ -678,8 +675,8 @@ specification = wsp* ( url_req | name_req ) wsp*
 </div>
 </div>
 
-<div id="outline-container-org574a5c6" class="outline-2">
-<h2 id="org574a5c6"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-orgd315aea" class="outline-2">
+<h2 id="orgd315aea"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://github.com/pypa/pipenv">pipenv</a></li>

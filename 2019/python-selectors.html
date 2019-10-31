@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-29 周五 21:53 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 高级 I/O 多路复用</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +246,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbcb08f2">1. 前言</a></li>
-<li><a href="#org5c1e877">2. select</a></li>
-<li><a href="#org2eec672">3. selectors</a></li>
-<li><a href="#orgf299260">4. 结语</a></li>
-<li><a href="#org86aca83">5. 参考链接</a></li>
+<li><a href="#org9b8ca79">1. 前言</a></li>
+<li><a href="#org538ec26">2. select</a></li>
+<li><a href="#orgebac788">3. selectors</a></li>
+<li><a href="#org1b1c200">4. 结语</a></li>
+<li><a href="#orgc189aa4">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbcb08f2" class="outline-2">
-<h2 id="orgbcb08f2"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org9b8ca79" class="outline-2">
+<h2 id="org9b8ca79"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触和 I/O 多路复用相关的概念是在书 CSAPP<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 的并发编程章节，当时在了解了这个概念后只是感觉很神奇，但是并没有实际使用过。
@@ -272,12 +272,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5c1e877" class="outline-2">
-<h2 id="org5c1e877"><span class="section-number-2">2</span> select</h2>
+<div id="outline-container-org538ec26" class="outline-2">
+<h2 id="org538ec26"><span class="section-number-2">2</span> select</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-介绍 I/O 多路复用这个概念往往都是从 <code>select</code> 这个 <b>系统调用</b> 开始的，这篇博客也不例外，但是为了方便，
-我们使用的是 Python 提供的 <code>select.select</code> 函数<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>。
+介绍 I/O 多路复用这个概念往往都是从 <code>select</code> 这个 <b>系统调用</b> 开始的，这篇博客也不例外，但是为了方便，我们使用的是 Python 提供的 <code>select.select</code> 函数<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>。
 </p>
 
 <p>
@@ -312,8 +311,8 @@ I/O 多路复用的基本模型就和这个函数一样，都是通过一定的�
 </div>
 </div>
 
-<div id="outline-container-org2eec672" class="outline-2">
-<h2 id="org2eec672"><span class="section-number-2">3</span> selectors</h2>
+<div id="outline-container-orgebac788" class="outline-2">
+<h2 id="orgebac788"><span class="section-number-2">3</span> selectors</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>selectors</code> 模块是对 <code>select</code> 的一层封装，能够让我们以更方便的方式来使用 I/O 多路复用。
@@ -328,8 +327,7 @@ I/O 多路复用的基本模型就和这个函数一样，都是通过一定的�
 </p>
 
 <p>
-当然还存在其他不同种类的 <code>Selector</code>, 但是不同种类的 <code>Selector</code> 的受支持情况在不同的平台上存在差异，
-因此大多数时候使用 <code>DefaultSelector</code> 就可以了，它是相应平台上最有效的 <code>Selector</code> 的易名。
+当然还存在其他不同种类的 <code>Selector</code>, 但是不同种类的 <code>Selector</code> 的受支持情况在不同的平台上存在差异，因此大多数时候使用 <code>DefaultSelector</code> 就可以了，它是相应平台上最有效的 <code>Selector</code> 的易名。
 </p></li>
 
 <li><p>
@@ -420,8 +418,8 @@ sel.register(sock, selectors.EVENT_READ, accept)
 </div>
 </div>
 
-<div id="outline-container-orgf299260" class="outline-2">
-<h2 id="orgf299260"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org1b1c200" class="outline-2">
+<h2 id="org1b1c200"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 虽然接触 I/O 多路复用已经有一段时间了，但是还没有遇到过需要使用的地方……
@@ -437,8 +435,8 @@ sel.register(sock, selectors.EVENT_READ, accept)
 </div>
 </div>
 
-<div id="outline-container-org86aca83" class="outline-2">
-<h2 id="org86aca83"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-orgc189aa4" class="outline-2">
+<h2 id="orgc189aa4"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/selectors.html">selectors — High-level I/O multiplexing — Python 3.7.3 documentation</a></li>

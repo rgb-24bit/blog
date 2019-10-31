@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 元类</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,28 +246,27 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org66c73d6">1. 前言</a></li>
-<li><a href="#org4c7d268">2. type</a></li>
-<li><a href="#org80f78ed">3. 元类的定义</a></li>
-<li><a href="#org29703d0">4. 类属性和实例属性</a></li>
-<li><a href="#orgafc7401">5. 元类的使用</a></li>
-<li><a href="#orgf3a04d2">6. 结语</a></li>
+<li><a href="#orga8e4bb9">1. 前言</a></li>
+<li><a href="#org2b3054c">2. type</a></li>
+<li><a href="#orgc02738c">3. 元类的定义</a></li>
+<li><a href="#org12fe53f">4. 类属性和实例属性</a></li>
+<li><a href="#orgfd0ab43">5. 元类的使用</a></li>
+<li><a href="#orgd0876a4">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org66c73d6" class="outline-2">
-<h2 id="org66c73d6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orga8e4bb9" class="outline-2">
+<h2 id="orga8e4bb9"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<b>元类</b> 在 <code>Python</code> 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 <b>创建类</b> 时的行为，
-有趣在于通过元类你可以体会到 <b>类和实例</b> 之间奇妙的关系。
+<b>元类</b> 在 <code>Python</code> 中是一个很强大也很有趣的功能， 强大在于你可以通过元类来控制 <b>创建类</b> 时的行为，有趣在于通过元类你可以体会到 <b>类和实例</b> 之间奇妙的关系。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4c7d268" class="outline-2">
-<h2 id="org4c7d268"><span class="section-number-2">2</span> type</h2>
+<div id="outline-container-org2b3054c" class="outline-2">
+<h2 id="org2b3054c"><span class="section-number-2">2</span> type</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 作为动态语言， 类型是在运行时创建和确定的， 默认情况下， 用于创建类的就是 <code>type</code>.
@@ -329,8 +328,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org80f78ed" class="outline-2">
-<h2 id="org80f78ed"><span class="section-number-2">3</span> 元类的定义</h2>
+<div id="outline-container-orgc02738c" class="outline-2">
+<h2 id="orgc02738c"><span class="section-number-2">3</span> 元类的定义</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>元类(metaclass)</b> 属于 <code>type</code> 的子类， 而 <b>类</b> 属于 <b>元类</b> 的 <b>实例</b>.
@@ -425,8 +424,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-org29703d0" class="outline-2">
-<h2 id="org29703d0"><span class="section-number-2">4</span> 类属性和实例属性</h2>
+<div id="outline-container-org12fe53f" class="outline-2">
+<h2 id="org12fe53f"><span class="section-number-2">4</span> 类属性和实例属性</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 搞清楚 <b>类属性</b> 和 <b>实例属性</b> 的关系之前， 需要明确的两点是：
@@ -470,8 +469,7 @@ Create an instance with type MyMetaClass.TestClass.
 <li>通过类似 <code>self.xxx = xxx</code> 的方式设置的属性直接 <b>绑定</b> 到 <b>实例对象</b></li>
 <li>直接在 <b>类</b> 内部定义的属性 <b>没有绑定</b> 到 <b>实例</b>, 而是 <b>绑定</b> 到 <b>类</b> 对象</li>
 <li>访问一个 <b>实例对象</b> 不存在的 <b>属性</b> 的时候会尝试从 <b>类对象</b> 获去那个属性</li>
-<li>设置 一个 <b>实例对象</b> 不存在的 <b>属性</b> 的值的时候， 会尝试从 <b>类对象</b> 获取属性的值，
-然后将运算后的结果 <b>绑定</b> 到 <b>实例</b> 上， 使之成为 <b>实例属性</b></li>
+<li>设置 一个 <b>实例对象</b> 不存在的 <b>属性</b> 的值的时候， 会尝试从 <b>类对象</b> 获取属性的值，然后将运算后的结果 <b>绑定</b> 到 <b>实例</b> 上， 使之成为 <b>实例属性</b></li>
 </ol>
 
 <p>
@@ -511,8 +509,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-orgafc7401" class="outline-2">
-<h2 id="orgafc7401"><span class="section-number-2">5</span> 元类的使用</h2>
+<div id="outline-container-orgfd0ab43" class="outline-2">
+<h2 id="orgfd0ab43"><span class="section-number-2">5</span> 元类的使用</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 元类的使用我也没有多少经验， 只能简单的列出一些自己尝试的结果。
@@ -545,8 +543,7 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 
 <p>
-这种情况下， 我们需要保证的是在 <code>MyMetaClass</code> 的 <code>__new__</code> 方法中保证使用 <code>type.__new__</code> 创建
-类的参数正确。
+这种情况下， 我们需要保证的是在 <code>MyMetaClass</code> 的 <code>__new__</code> 方法中保证使用 <code>type.__new__</code> 创建类的参数正确。
 </p>
 
 <p>
@@ -613,8 +610,8 @@ Create an instance with type MyMetaClass.TestClass.
 </div>
 </div>
 
-<div id="outline-container-orgf3a04d2" class="outline-2">
-<h2 id="orgf3a04d2"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgd0876a4" class="outline-2">
+<h2 id="orgd0876a4"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Python</code> 给了我们很大程度上的自由， 我们可以运用各种奇淫技巧写出各种神奇的代码。

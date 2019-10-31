@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 生成器</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org30f7036">1. 简介</a></li>
-<li><a href="#org465499b">2. 创建生成器</a></li>
-<li><a href="#orgcad3c6c">3. 简单的使用</a></li>
-<li><a href="#org734e5df">4. 生成器对象</a></li>
-<li><a href="#orgd628ad8">5. 新的特性</a></li>
-<li><a href="#org6034087">6. 结语</a></li>
+<li><a href="#orgc9c8fcb">1. 简介</a></li>
+<li><a href="#org59c84c7">2. 创建生成器</a></li>
+<li><a href="#orgfa46983">3. 简单的使用</a></li>
+<li><a href="#org3edbdcf">4. 生成器对象</a></li>
+<li><a href="#org51f707b">5. 新的特性</a></li>
+<li><a href="#org5275bc5">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org30f7036" class="outline-2">
-<h2 id="org30f7036"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgc9c8fcb" class="outline-2">
+<h2 id="orgc9c8fcb"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>生成器</b> 这个对于 <code>Python</code> 使用者来说应该并不陌生， <del>毕竟现在的 <code>Python3</code> 中部分内置函数的返回值就是一个 <b>生成器</b>.</del>
@@ -269,8 +269,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org465499b" class="outline-2">
-<h2 id="org465499b"><span class="section-number-2">2</span> 创建生成器</h2>
+<div id="outline-container-org59c84c7" class="outline-2">
+<h2 id="org59c84c7"><span class="section-number-2">2</span> 创建生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 创建生成器的方式有两种：
@@ -281,8 +281,7 @@ for the JavaScript code in this tag.
 </ol>
 
 <p>
-<b>生成器表达式</b> 简单快捷，足以胜任简单的生成器创建工作，其形式和 <b>列表推导式</b> 类似，
-只不过将中括号 <code>[]</code> 替换成了小括号 <code>()</code>.
+<b>生成器表达式</b> 简单快捷，足以胜任简单的生成器创建工作，其形式和 <b>列表推导式</b> 类似，只不过将中括号 <code>[]</code> 替换成了小括号 <code>()</code>.
 </p>
 
 <div class="org-src-container">
@@ -337,12 +336,11 @@ Out[3]: generator
 </div>
 </div>
 
-<div id="outline-container-orgcad3c6c" class="outline-2">
-<h2 id="orgcad3c6c"><span class="section-number-2">3</span> 简单的使用</h2>
+<div id="outline-container-orgfa46983" class="outline-2">
+<h2 id="orgfa46983"><span class="section-number-2">3</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-我们可以通过内置函数 <code>next()</code> 获取 <b>生成器</b> 的下一个返回值，如果没有更多的返回值时，
-调用 <code>next()</code> 就会抛出 <code>StopIteration</code>.
+我们可以通过内置函数 <code>next()</code> 获取 <b>生成器</b> 的下一个返回值，如果没有更多的返回值时，调用 <code>next()</code> 就会抛出 <code>StopIteration</code>.
 </p>
 
 <div class="org-src-container">
@@ -403,8 +401,8 @@ Out[24]: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 </div>
 </div>
 
-<div id="outline-container-org734e5df" class="outline-2">
-<h2 id="org734e5df"><span class="section-number-2">4</span> 生成器对象</h2>
+<div id="outline-container-org3edbdcf" class="outline-2">
+<h2 id="org3edbdcf"><span class="section-number-2">4</span> 生成器对象</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 生成器的完整名称应该是生成器 <b>对象</b>, 既然是一个对象，那么自然有 <b>方法</b> 和 <b>属性</b>.
@@ -591,8 +589,7 @@ Out[5]: -1
 </p>
 
 <p>
-对于剩下的几个属性，说实话，暂时还不知道这几个属性是干啥的， <code>gi_yieldfrom</code> 和 <code>gi_running</code> 还有所猜测
-但是其他几个就完成不清楚了。
+对于剩下的几个属性，说实话，暂时还不知道这几个属性是干啥的， <code>gi_yieldfrom</code> 和 <code>gi_running</code> 还有所猜测但是其他几个就完成不清楚了。
 </p>
 
 <p>
@@ -601,8 +598,8 @@ Out[5]: -1
 </div>
 </div>
 
-<div id="outline-container-orgd628ad8" class="outline-2">
-<h2 id="orgd628ad8"><span class="section-number-2">5</span> 新的特性</h2>
+<div id="outline-container-org51f707b" class="outline-2">
+<h2 id="org51f707b"><span class="section-number-2">5</span> 新的特性</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 从 <code>3.3</code> 开始， <code>yield</code> 语句可以这样：
@@ -629,8 +626,8 @@ Out[10]: 0
 </div>
 </div>
 
-<div id="outline-container-org6034087" class="outline-2">
-<h2 id="org6034087"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org5275bc5" class="outline-2">
+<h2 id="org5275bc5"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在学习 <b>协程</b> 之前我是万万没想到生成器对象居然存在方法和属性，毕竟平时还是简单的使用为主。

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 基础梳理</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,26 +246,25 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0b856c9">1. 前言</a></li>
-<li><a href="#org177dc21">2. 语法无关内容</a></li>
-<li><a href="#org16564db">3. 原始数据类型和引用</a></li>
-<li><a href="#org44822c4">4. 数组和字符串</a></li>
-<li><a href="#org742674f">5. 继承和多态</a></li>
-<li><a href="#org92ee3f9">6. 重载</a></li>
-<li><a href="#orgb50f86f">7. 抽象类</a></li>
-<li><a href="#org33fd483">8. 接口</a></li>
-<li><a href="#org6b39146">9. 异常</a></li>
-<li><a href="#org4de5c8b">10. 静态成员和常量</a></li>
+<li><a href="#orga595fad">1. 前言</a></li>
+<li><a href="#org6c2ab15">2. 语法无关内容</a></li>
+<li><a href="#org4972ffa">3. 原始数据类型和引用</a></li>
+<li><a href="#orgf841ecb">4. 数组和字符串</a></li>
+<li><a href="#org19cac02">5. 继承和多态</a></li>
+<li><a href="#orgb946873">6. 重载</a></li>
+<li><a href="#org45d60b0">7. 抽象类</a></li>
+<li><a href="#org197639f">8. 接口</a></li>
+<li><a href="#org0c3501e">9. 异常</a></li>
+<li><a href="#orgac4c06e">10. 静态成员和常量</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0b856c9" class="outline-2">
-<h2 id="org0b856c9"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orga595fad" class="outline-2">
+<h2 id="orga595fad"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-本篇博客主要是对 <code>Java</code> 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容
-的一次汇总。
+本篇博客主要是对 <code>Java</code> 基础学习的一次梳理， 主要是对一些在其他语言中未接触过或有区别的内容的一次汇总。
 </p>
 
 <p>
@@ -274,8 +273,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org177dc21" class="outline-2">
-<h2 id="org177dc21"><span class="section-number-2">2</span> 语法无关内容</h2>
+<div id="outline-container-org6c2ab15" class="outline-2">
+<h2 id="org6c2ab15"><span class="section-number-2">2</span> 语法无关内容</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Java</code> 学习中有一些容易让人疑惑而与语法无关的内容， 这些内容教材上提到的少， 而平时又经常接触。
@@ -393,8 +392,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org16564db" class="outline-2">
-<h2 id="org16564db"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
+<div id="outline-container-org4972ffa" class="outline-2">
+<h2 id="org4972ffa"><span class="section-number-2">3</span> 原始数据类型和引用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Java</code> 关键字中有 <code>8</code> 个代表 <b>原始数据类型</b>, 这些原始数据类型在 <code>java.lang</code> 还存在与之对应的 <b>包装类型</b>.
@@ -480,8 +479,7 @@ for the JavaScript code in this tag.
 </table>
 
 <p>
-与 <b>原始数据类型</b> 相对应的是 <b>引用</b>, 两者的主要区别是： <b>原始数据类型</b> 保存实际的值，
-而 <b>引用</b> 保存 <b>对象的引用</b>.
+与 <b>原始数据类型</b> 相对应的是 <b>引用</b>, 两者的主要区别是： <b>原始数据类型</b> 保存实际的值，而 <b>引用</b> 保存 <b>对象的引用</b>.
 </p>
 
 <p>
@@ -519,8 +517,7 @@ for the JavaScript code in this tag.
 
 <li>定义 <code>float</code> 类型的变量需要加 <code>f</code> 后缀， 如： <code>float f = 32.45f</code>, 否则小数会默认当做 <code>double</code> 处理</li>
 
-<li>布尔类型变量的值只有 <code>true/false</code>, 不能使用 <code>0, 1, null</code> 等值代替。 需要布尔值的地方只能使用布尔类型的值或
-使用布尔表达式</li>
+<li>布尔类型变量的值只有 <code>true/false</code>, 不能使用 <code>0, 1, null</code> 等值代替。 需要布尔值的地方只能使用布尔类型的值或使用布尔表达式</li>
 
 <li>数值类型(包括 char)的默认值为 <code>0</code>, 布尔类型默认为 <code>false</code>, 引用默认为 <code>null</code></li>
 
@@ -532,14 +529,13 @@ for the JavaScript code in this tag.
 
 <li>原始数据类型没有方法， 如果需要使用相关的方法， 请使用对应的 <b>包装类型</b></li>
 
-<li><code>Java 5.0</code> 开始引入了 <code>autoboxing</code> 机制， 允许在 参数、 返回值、布尔表达式、 数值运算 和 赋值等地方自动完成
-原始数据类型和对应的包装对象的转换</li>
+<li><code>Java 5.0</code> 开始引入了 <code>autoboxing</code> 机制， 允许在 参数、 返回值、布尔表达式、 数值运算 和 赋值等地方自动完成原始数据类型和对应的包装对象的转换</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org44822c4" class="outline-2">
-<h2 id="org44822c4"><span class="section-number-2">4</span> 数组和字符串</h2>
+<div id="outline-container-orgf841ecb" class="outline-2">
+<h2 id="orgf841ecb"><span class="section-number-2">4</span> 数组和字符串</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>Java</code> 中数组类型的变量属于 <b>引用</b>, 有如下几种声明和创建方式：
@@ -593,8 +589,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org742674f" class="outline-2">
-<h2 id="org742674f"><span class="section-number-2">5</span> 继承和多态</h2>
+<div id="outline-container-org19cac02" class="outline-2">
+<h2 id="org19cac02"><span class="section-number-2">5</span> 继承和多态</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Java</code> 中的继承机制并不复杂， 一般语法就是 <code>class A extends B</code>.
@@ -669,8 +665,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org92ee3f9" class="outline-2">
-<h2 id="org92ee3f9"><span class="section-number-2">6</span> 重载</h2>
+<div id="outline-container-orgb946873" class="outline-2">
+<h2 id="orgb946873"><span class="section-number-2">6</span> 重载</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 首先需要明白的一点是： <b>重载不是多态</b>.
@@ -695,8 +691,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb50f86f" class="outline-2">
-<h2 id="orgb50f86f"><span class="section-number-2">7</span> 抽象类</h2>
+<div id="outline-container-org45d60b0" class="outline-2">
+<h2 id="org45d60b0"><span class="section-number-2">7</span> 抽象类</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 假如你希望一个 <b>方法</b> 必须被子类覆盖， 那么你可以用 <code>abstract</code> 这个关键字来修饰它。
@@ -738,8 +734,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org33fd483" class="outline-2">
-<h2 id="org33fd483"><span class="section-number-2">8</span> 接口</h2>
+<div id="outline-container-org197639f" class="outline-2">
+<h2 id="org197639f"><span class="section-number-2">8</span> 接口</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <b>接口不是类</b>.
@@ -783,16 +779,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6b39146" class="outline-2">
-<h2 id="org6b39146"><span class="section-number-2">9</span> 异常</h2>
+<div id="outline-container-org0c3501e" class="outline-2">
+<h2 id="org0c3501e"><span class="section-number-2">9</span> 异常</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 <code>java</code> 中使用 <code>throw</code> 抛出异常， 使用 <code>throws</code> 声明要抛出的远程， 使用 <code>try/catch</code> 捕获处理异常。
 </p>
 
 <p>
-所有的异常都是 <code>Exception</code> 的子类， 除了 <code>RuntimeException</code> 及其子类类型的异常以外， 其他类型的异常都要
-求捕获处理
+所有的异常都是 <code>Exception</code> 的子类， 除了 <code>RuntimeException</code> 及其子类类型的异常以外， 其他类型的异常都要求捕获处理
 </p>
 
 <div class="org-src-container">
@@ -841,8 +836,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4de5c8b" class="outline-2">
-<h2 id="org4de5c8b"><span class="section-number-2">10</span> 静态成员和常量</h2>
+<div id="outline-container-orgac4c06e" class="outline-2">
+<h2 id="orgac4c06e"><span class="section-number-2">10</span> 静态成员和常量</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Java</code> 中， 你可以使用 <code>static</code> 修饰类的 <b>内部成员</b>, 被 <code>static</code> 修饰的内部成员属于 <b>静态成员</b>.

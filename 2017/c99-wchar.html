@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:43 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C99 宽字符</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,22 +246,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org164af08">1. 前言</a></li>
-<li><a href="#orgc6e1cdc">2. 头文件</a></li>
-<li><a href="#orgf05dbc0">3. 宽字符及本地化支持</a>
+<li><a href="#orgc38b433">1. 前言</a></li>
+<li><a href="#org1e30a24">2. 头文件</a></li>
+<li><a href="#org7990ca5">3. 宽字符及本地化支持</a>
 <ul>
-<li><a href="#orgfd0af4a">3.1. 本地化支持</a></li>
-<li><a href="#org270fcd8">3.2. 文件编码格式设置</a></li>
-<li><a href="#org0c50c3e">3.3. 代码编写</a></li>
+<li><a href="#org45c4814">3.1. 本地化支持</a></li>
+<li><a href="#orgcc1eb69">3.2. 文件编码格式设置</a></li>
+<li><a href="#org376a58d">3.3. 代码编写</a></li>
 </ul>
 </li>
-<li><a href="#org1effcad">4. 相关链接</a></li>
+<li><a href="#org759f21e">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org164af08" class="outline-2">
-<h2 id="org164af08"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgc38b433" class="outline-2">
+<h2 id="orgc38b433"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这两天学习 <code>C99标准</code> 的过程中, 宽字符的问题可是花了我不少时间。
@@ -273,8 +273,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc6e1cdc" class="outline-2">
-<h2 id="orgc6e1cdc"><span class="section-number-2">2</span> 头文件</h2>
+<div id="outline-container-org1e30a24" class="outline-2">
+<h2 id="org1e30a24"><span class="section-number-2">2</span> 头文件</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><p>
@@ -291,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf05dbc0" class="outline-2">
-<h2 id="orgf05dbc0"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
+<div id="outline-container-org7990ca5" class="outline-2">
+<h2 id="org7990ca5"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一段简单的代码:
@@ -325,13 +325,11 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-其中，虽然多字节字符串形式的输出能够正常输出，但是这时你并不能对这个字符串进行操作，
-不然可能会出现乱码。
+其中，虽然多字节字符串形式的输出能够正常输出，但是这时你并不能对这个字符串进行操作，不然可能会出现乱码。
 </p>
 
 <p>
-之所以能够正确输出相应的内容， 是因为 <code>控制台</code> 对字符串的原始字节序列进行了处理。如果这时
-对这个字符串进行操作，那么便会打乱原始字节序列，从而得不到想要得到的输出。
+之所以能够正确输出相应的内容， 是因为 <code>控制台</code> 对字符串的原始字节序列进行了处理。如果这时对这个字符串进行操作，那么便会打乱原始字节序列，从而得不到想要得到的输出。
 </p>
 
 <p>
@@ -339,16 +337,15 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgfd0af4a" class="outline-3">
-<h3 id="orgfd0af4a"><span class="section-number-3">3.1</span> 本地化支持</h3>
+<div id="outline-container-org45c4814" class="outline-3">
+<h3 id="org45c4814"><span class="section-number-3">3.1</span> 本地化支持</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 在使用宽字符之前，我们需要了解一些相关的内容。
 </p>
 
 <p>
-在不同的系统，平台，区域环境下，可能具有不同的区域设置，如: <b>编码格式</b> ，日期写法，文字排序
-等，为了保证程序能够输出正确的字符，便需要进行本地化支持。
+在不同的系统，平台，区域环境下，可能具有不同的区域设置，如: <b>编码格式</b> ，日期写法，文字排序等，为了保证程序能够输出正确的字符，便需要进行本地化支持。
 </p>
 
 <p>
@@ -366,13 +363,11 @@ for the JavaScript code in this tag.
 
 <p>
 其中: 参数 <code>category</code> 通过指定预定义的宏: <code>LC_ALL、LC_COLLATE、LC_CTYPE、</code>
-<code>LC_MESSAGES、LC_MONETARY、LC_NUMERIC、LC_TIME</code> 来指定本地化设置的分类，
-其中: <code>LC_ALL</code> 是其他分类的并集。
+<code>LC_MESSAGES、LC_MONETARY、LC_NUMERIC、LC_TIME</code> 来指定本地化设置的分类，其中: <code>LC_ALL</code> 是其他分类的并集。
 </p>
 
 <p>
-而参数 <code>locale</code> 指定本次设置的内容，由于 <code>windows</code> 和 <code>unix</code> 系统的区别，
-所以设置的格式也有一定的区别，如果想要详细了解，可以查看以下文档:
+而参数 <code>locale</code> 指定本次设置的内容，由于 <code>windows</code> 和 <code>unix</code> 系统的区别，所以设置的格式也有一定的区别，如果想要详细了解，可以查看以下文档:
 </p>
 
 <ul class="org-ul">
@@ -382,13 +377,11 @@ for the JavaScript code in this tag.
 </ul>
 
 <p>
-如果没有显式的对本地化进行设置的话， C程序在运行前会 <b>默认</b> 运行 <code>setlocale(LC_ALL, "C")</code> 来进行本地化设置，
-而这个 <b>C</b> 对应着怎样的设置我们并不清楚，但是有一点，这个设置不适合 <code>中文字符</code> 的环境。
+如果没有显式的对本地化进行设置的话， C程序在运行前会 <b>默认</b> 运行 <code>setlocale(LC_ALL, "C")</code> 来进行本地化设置，而这个 <b>C</b> 对应着怎样的设置我们并不清楚，但是有一点，这个设置不适合 <code>中文字符</code> 的环境。
 </p>
 
 <p>
-所以可以通过像这样 <code>setlocale(LC_ALL, "")</code> 来简单调用该函数，这时C程序会通过环境变量来进行本地化
-设置。简单省事。
+所以可以通过像这样 <code>setlocale(LC_ALL, "")</code> 来简单调用该函数，这时C程序会通过环境变量来进行本地化设置。简单省事。
 </p>
 
 <p>
@@ -397,8 +390,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org270fcd8" class="outline-3">
-<h3 id="org270fcd8"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
+<div id="outline-container-orgcc1eb69" class="outline-3">
+<h3 id="orgcc1eb69"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 完成了本地化支持的设置，那么还有一个关键内容便是 <code>文件编码格式</code> 了。
@@ -409,18 +402,15 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-除了 <code>ASCII字符</code> 在各个编码环境下对应的字节序列都是一样的外，
-其他字符的编码在各个环境的字节序列很有可能是不一样的。
+除了 <code>ASCII字符</code> 在各个编码环境下对应的字节序列都是一样的外，其他字符的编码在各个环境的字节序列很有可能是不一样的。
 </p>
 
 <p>
-程序并 <code>不能自动识别</code> 你定义的字符串的编码格式，它只会按照你指定的或
-按照默认的编码格式来读取处理相应的字节序列。
+程序并 <code>不能自动识别</code> 你定义的字符串的编码格式，它只会按照你指定的或按照默认的编码格式来读取处理相应的字节序列。
 </p>
 
 <p>
-这时文件编码格式便会影响到 <code>非ASCII码</code> 字符的字节序列，如果文件编码格式与指定的环境的编码
-格式不一样，那么输出便可能乱码，或者出现 <b>编译警告甚至错误</b> 。
+这时文件编码格式便会影响到 <code>非ASCII码</code> 字符的字节序列，如果文件编码格式与指定的环境的编码格式不一样，那么输出便可能乱码，或者出现 <b>编译警告甚至错误</b> 。
 </p>
 
 <p>
@@ -453,8 +443,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0c50c3e" class="outline-3">
-<h3 id="org0c50c3e"><span class="section-number-3">3.3</span> 代码编写</h3>
+<div id="outline-container-org376a58d" class="outline-3">
+<h3 id="org376a58d"><span class="section-number-3">3.3</span> 代码编写</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 前面两个步骤完成了基础设置， 这时候便需要了解一些在编程过程中需要注意的一些问题了。
@@ -468,8 +458,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1effcad" class="outline-2">
-<h2 id="org1effcad"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org759f21e" class="outline-2">
+<h2 id="org759f21e"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>维基百科:

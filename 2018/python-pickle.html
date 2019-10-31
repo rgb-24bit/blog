@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>使用 pickle 序列化 Python 对象</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1453e50">1. 前言</a></li>
-<li><a href="#orgd34977a">2. pickle 的简单使用</a></li>
-<li><a href="#org54ce07e">3. 可序列化的对象</a></li>
-<li><a href="#org502fdc7">4. pickle 和 json</a></li>
-<li><a href="#org993e55f">5. pickle 的使用技巧</a></li>
-<li><a href="#orgc42205a">6. 结语</a></li>
-<li><a href="#orgabc89c3">7. 参考链接</a></li>
+<li><a href="#orgf879db3">1. 前言</a></li>
+<li><a href="#org80035f6">2. pickle 的简单使用</a></li>
+<li><a href="#orgf749b28">3. 可序列化的对象</a></li>
+<li><a href="#org70b107a">4. pickle 和 json</a></li>
+<li><a href="#org5a06cb5">5. pickle 的使用技巧</a></li>
+<li><a href="#org8a46811">6. 结语</a></li>
+<li><a href="#orgf384313">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1453e50" class="outline-2">
-<h2 id="org1453e50"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgf879db3" class="outline-2">
+<h2 id="orgf879db3"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 很久以前就接触过和 <code>pickle</code> 相关的内容了，但是因为存在 <code>json</code> 的原因，就没有专门去了解学习相关的内容。
@@ -270,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd34977a" class="outline-2">
-<h2 id="orgd34977a"><span class="section-number-2">2</span> pickle 的简单使用</h2>
+<div id="outline-container-org80035f6" class="outline-2">
+<h2 id="org80035f6"><span class="section-number-2">2</span> pickle 的简单使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>pickle</code> 模块的使用很简单，接口和 <code>json</code> 差不多，如果有 <code>json</code> 模块的使用经验，那么 <code>pickle</code> 模块的上手无疑会简单很多。
@@ -335,8 +335,8 @@ obj.value:  233
 </div>
 </div>
 
-<div id="outline-container-org54ce07e" class="outline-2">
-<h2 id="org54ce07e"><span class="section-number-2">3</span> 可序列化的对象</h2>
+<div id="outline-container-orgf749b28" class="outline-2">
+<h2 id="orgf749b28"><span class="section-number-2">3</span> 可序列化的对象</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Python</code> 中，绝大多数对象都可以 <b>直接</b> 用 <code>pickle</code> 完成序列化，包括自定义的类，具体的规则如下：
@@ -428,8 +428,8 @@ obj.value:  233
 </div>
 </div>
 
-<div id="outline-container-org502fdc7" class="outline-2">
-<h2 id="org502fdc7"><span class="section-number-2">4</span> pickle 和 json</h2>
+<div id="outline-container-org70b107a" class="outline-2">
+<h2 id="org70b107a"><span class="section-number-2">4</span> pickle 和 json</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 大多数时候，序列化一个 <code>Python</code> 对象我会选择 <code>json</code> 模块来完成，因为 <code>json</code> 格式更通用，更易读。
@@ -505,8 +505,8 @@ In [4]: %timeit <span class="org-variable-name">pickle_dump</span> = pickle.dump
 </div>
 </div>
 
-<div id="outline-container-org993e55f" class="outline-2">
-<h2 id="org993e55f"><span class="section-number-2">5</span> pickle 的使用技巧</h2>
+<div id="outline-container-org5a06cb5" class="outline-2">
+<h2 id="org5a06cb5"><span class="section-number-2">5</span> pickle 的使用技巧</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><p>
@@ -531,8 +531,7 @@ In [4]: %timeit <span class="org-variable-name">pickle_dump</span> = pickle.dump
 </ul>
 <ul class="org-ul">
 <li><p>
-函数 <code>pickle.dump</code> 和 <code>pickle.dumps</code> 可以通过参数 <code>protocol</code> 来指定序列化方式，
-该参数的取值范围为 <code>[0, pickle.HIGHEST_PROTOCOL]</code>, 默认值为 <code>pickle.DEFAULT_PROTOCOL</code>.
+函数 <code>pickle.dump</code> 和 <code>pickle.dumps</code> 可以通过参数 <code>protocol</code> 来指定序列化方式，该参数的取值范围为 <code>[0, pickle.HIGHEST_PROTOCOL]</code>, 默认值为 <code>pickle.DEFAULT_PROTOCOL</code>.
 </p>
 
 <p>
@@ -561,8 +560,8 @@ $  du -h dump_max.dat
 </div>
 </div>
 
-<div id="outline-container-orgc42205a" class="outline-2">
-<h2 id="orgc42205a"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org8a46811" class="outline-2">
+<h2 id="org8a46811"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 测试的时候想创建一个够大的列表，直接顺手按了一串零，结果，电脑当场死机&#x2026;&#x2026;
@@ -578,8 +577,8 @@ $  du -h dump_max.dat
 </div>
 </div>
 
-<div id="outline-container-orgabc89c3" class="outline-2">
-<h2 id="orgabc89c3"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgf384313" class="outline-2">
+<h2 id="orgf384313"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/pickle.html">pickle — Python object serialization</a></li>

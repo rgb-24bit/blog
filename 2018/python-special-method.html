@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 魔法方法</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,29 +246,29 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb0d147d">1. 简介</a></li>
-<li><a href="#orgc00d9e2">2. 构造和初始化</a></li>
-<li><a href="#org9cd62cc">3. 比较和数值运算</a>
+<li><a href="#org2f68cdf">1. 简介</a></li>
+<li><a href="#org8cd5aa8">2. 构造和初始化</a></li>
+<li><a href="#org3826a9f">3. 比较和数值运算</a>
 <ul>
-<li><a href="#orgab1a118">3.1. 用于比较的魔法方法</a></li>
-<li><a href="#orgb9a0f1d">3.2. 数值处理的魔法方法</a></li>
+<li><a href="#org4605606">3.1. 用于比较的魔法方法</a></li>
+<li><a href="#org4bbdf8b">3.2. 数值处理的魔法方法</a></li>
 </ul>
 </li>
-<li><a href="#orge053ac9">4. 类型转化</a></li>
-<li><a href="#org733fe9f">5. 表现类</a></li>
-<li><a href="#org1de1d35">6. 属性访问控制</a></li>
-<li><a href="#org4f1167c">7. 创建定制的序列</a></li>
-<li><a href="#orgaf0cc1a">8. 反射</a></li>
-<li><a href="#orgb2e0cd7">9. 可以调用的对象</a></li>
-<li><a href="#org4f1dfeb">10. 上下文管理器</a></li>
-<li><a href="#org1b46910">11. 更多的方法</a></li>
-<li><a href="#orgf940abb">12. 参考链接</a></li>
+<li><a href="#org8d844be">4. 类型转化</a></li>
+<li><a href="#org10c7565">5. 表现类</a></li>
+<li><a href="#org07cbe4a">6. 属性访问控制</a></li>
+<li><a href="#org4be12ab">7. 创建定制的序列</a></li>
+<li><a href="#org698862a">8. 反射</a></li>
+<li><a href="#orgadb2e33">9. 可以调用的对象</a></li>
+<li><a href="#orgd3af0af">10. 上下文管理器</a></li>
+<li><a href="#org8ccaa86">11. 更多的方法</a></li>
+<li><a href="#org70724b7">12. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb0d147d" class="outline-2">
-<h2 id="orgb0d147d"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org2f68cdf" class="outline-2">
+<h2 id="org2f68cdf"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 <code>Python</code> 中， 你可以通过定义一些特殊的方法来控制一个对象的行为。
@@ -288,8 +288,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc00d9e2" class="outline-2">
-<h2 id="orgc00d9e2"><span class="section-number-2">2</span> 构造和初始化</h2>
+<div id="outline-container-org8cd5aa8" class="outline-2">
+<h2 id="org8cd5aa8"><span class="section-number-2">2</span> 构造和初始化</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Python</code> 一个对象实例化到销毁调用的方法的顺序是：
@@ -305,11 +305,9 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </p>
 
 <dl class="org-dl">
-<dt>__new__(cls[,&#x2026;]))</dt><dd>对象实例化的时候所调用的第一个方法， 它的第一个参数是这个类，
-其他的参数是用来直接传递给 <code>__init__()</code> 方法。</dd>
+<dt>__new__(cls[,&#x2026;]))</dt><dd>对象实例化的时候所调用的第一个方法， 它的第一个参数是这个类，其他的参数是用来直接传递给 <code>__init__()</code> 方法。</dd>
 
-<dt>__init__(self[, &#x2026;])</dt><dd>类的初始化方法。 可以说是最常用的方法了。 调用构造函数时
-的参数就是传给它的。</dd>
+<dt>__init__(self[, &#x2026;])</dt><dd>类的初始化方法。 可以说是最常用的方法了。 调用构造函数时的参数就是传给它的。</dd>
 
 <dt>__del__(self)</dt><dd>当实例即将被销毁时调用， 也被叫做析构函数。 <b>没有参数</b>.</dd>
 </dl>
@@ -329,8 +327,8 @@ __new__() ==&gt; __init__() ==&gt; ... ==&gt; __del__()
 </div>
 </div>
 
-<div id="outline-container-org9cd62cc" class="outline-2">
-<h2 id="org9cd62cc"><span class="section-number-2">3</span> 比较和数值运算</h2>
+<div id="outline-container-org3826a9f" class="outline-2">
+<h2 id="org3826a9f"><span class="section-number-2">3</span> 比较和数值运算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一个有趣的例子：
@@ -368,8 +366,8 @@ Traceback (most recent call last):
 </p>
 </div>
 
-<div id="outline-container-orgab1a118" class="outline-3">
-<h3 id="orgab1a118"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
+<div id="outline-container-org4605606" class="outline-3">
+<h3 id="org4605606"><span class="section-number-3">3.1</span> 用于比较的魔法方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <dl class="org-dl">
 <dt>__cmp__(self, other)</dt><dd>最基本的用于比较的魔法方法， 现了所有的比较符号 <b>(&lt;,==,!=,etc.)</b>. 如果 <code>self &lt; other</code> 应该返回一个 <b>负数</b>, 如果
@@ -413,8 +411,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-orgb9a0f1d" class="outline-3">
-<h3 id="orgb9a0f1d"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
+<div id="outline-container-org4bbdf8b" class="outline-3">
+<h3 id="org4bbdf8b"><span class="section-number-3">3.2</span> 数值处理的魔法方法</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li><b>一元操作符和函数</b> 
@@ -487,8 +485,7 @@ from __future__ import division
 </p>
 
 <p>
-这个就是比较熟悉的运算了， 就是类似于 <code>A += B</code> 的运算， 实现方式和 <b>普通算数操作符</b> 类似， 
-只需要在对应的运算前面加上一个 <code>i</code> 就可以了。
+这个就是比较熟悉的运算了， 就是类似于 <code>A += B</code> 的运算， 实现方式和 <b>普通算数操作符</b> 类似，只需要在对应的运算前面加上一个 <code>i</code> 就可以了。
 </p>
 
 <p>
@@ -507,8 +504,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orge053ac9" class="outline-2">
-<h2 id="orge053ac9"><span class="section-number-2">4</span> 类型转化</h2>
+<div id="outline-container-org8d844be" class="outline-2">
+<h2 id="org8d844be"><span class="section-number-2">4</span> 类型转化</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 可以通过一些 <b>魔法方法</b> 来实现内置类型类型转换， 注意， 是转换为 <b>内置类型</b>. 
@@ -531,8 +528,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org733fe9f" class="outline-2">
-<h2 id="org733fe9f"><span class="section-number-2">5</span> 表现类</h2>
+<div id="outline-container-org10c7565" class="outline-2">
+<h2 id="org10c7565"><span class="section-number-2">5</span> 表现类</h2>
 <div class="outline-text-2" id="text-5">
 <dl class="org-dl">
 <dt>__str__(self)</dt><dd>使用 <code>str(obj)</code> 会调用这个方法</dd>
@@ -545,21 +542,18 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-org1de1d35" class="outline-2">
-<h2 id="org1de1d35"><span class="section-number-2">6</span> 属性访问控制</h2>
+<div id="outline-container-org07cbe4a" class="outline-2">
+<h2 id="org07cbe4a"><span class="section-number-2">6</span> 属性访问控制</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-作为动态语言， <code>Python</code> 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，
-就可以使用这一部分的 <b>魔法方法</b>.
+作为动态语言， <code>Python</code> 一个对象的属性的访问是很开放的。 如果需要对属性的访问进行控制，就可以使用这一部分的 <b>魔法方法</b>.
 </p>
 
 <dl class="org-dl">
-<dt>__getattr__(self, name)</dt><dd>获取不存在的属性的值时会调用这个方法， 所以在这个方法内可以
-获取正常属性的值。</dd>
+<dt>__getattr__(self, name)</dt><dd>获取不存在的属性的值时会调用这个方法， 所以在这个方法内可以获取正常属性的值。</dd>
 
 <dt>__getattribute__(self, name)</dt><dd><p>
-获取对象的属性时调用， 不管属性存不存在。 同时如果定义了这个方法， <code>__getattr__</code> 将
-不起作用， 除非显示调用或引发 <code>AttributeError</code>.
+获取对象的属性时调用， 不管属性存不存在。 同时如果定义了这个方法， <code>__getattr__</code> 将不起作用， 除非显示调用或引发 <code>AttributeError</code>.
 </p>
 
 <p>
@@ -603,14 +597,13 @@ from __future__ import division
 </dl>
 
 <p>
-对于这一部分的 <b>魔法方法</b>, 每个 <b>对象</b> 的 <code>__dict__</code> 属性应该是一个很重要的内容， 有兴趣可以
-了解一下 ☞ <a href="https://docs.python.org/3/library/stdtypes.html?highlight=__dict__#object.__dict__">object.__dict__</a>.
+对于这一部分的 <b>魔法方法</b>, 每个 <b>对象</b> 的 <code>__dict__</code> 属性应该是一个很重要的内容， 有兴趣可以了解一下 ☞ <a href="https://docs.python.org/3/library/stdtypes.html?highlight=__dict__#object.__dict__">object.__dict__</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4f1167c" class="outline-2">
-<h2 id="org4f1167c"><span class="section-number-2">7</span> 创建定制的序列</h2>
+<div id="outline-container-org4be12ab" class="outline-2">
+<h2 id="org4be12ab"><span class="section-number-2">7</span> 创建定制的序列</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Python</code> 中的序列有 <b>可变</b> 和 <b>不可变</b> 的区分， 比如 <code>tuple</code> 和 <code>list</code>.
@@ -641,8 +634,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orgaf0cc1a" class="outline-2">
-<h2 id="orgaf0cc1a"><span class="section-number-2">8</span> 反射</h2>
+<div id="outline-container-org698862a" class="outline-2">
+<h2 id="org698862a"><span class="section-number-2">8</span> 反射</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 通过魔法方法控制使用 <code>isinstance</code> 和 <code>issubclass</code> 的反射行为：
@@ -654,8 +647,8 @@ from __future__ import division
 </div>
 </div>
 
-<div id="outline-container-orgb2e0cd7" class="outline-2">
-<h2 id="orgb2e0cd7"><span class="section-number-2">9</span> 可以调用的对象</h2>
+<div id="outline-container-orgadb2e33" class="outline-2">
+<h2 id="orgadb2e33"><span class="section-number-2">9</span> 可以调用的对象</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 如果你希望可以向调用函数那样调用你的 <b>对象</b>, 那么你可以定义那个对象的 <code>__call__</code> 方法。
@@ -680,8 +673,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org4f1dfeb" class="outline-2">
-<h2 id="org4f1dfeb"><span class="section-number-2">10</span> 上下文管理器</h2>
+<div id="outline-container-orgd3af0af" class="outline-2">
+<h2 id="orgd3af0af"><span class="section-number-2">10</span> 上下文管理器</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <code>Python</code> 中使用 <code>with</code> 可以写出更加简洁高效的代码， 而能够使用 <code>with</code> 的对象需要支持上下文管理器。
@@ -723,8 +716,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-org1b46910" class="outline-2">
-<h2 id="org1b46910"><span class="section-number-2">11</span> 更多的方法</h2>
+<div id="outline-container-org8ccaa86" class="outline-2">
+<h2 id="org8ccaa86"><span class="section-number-2">11</span> 更多的方法</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <code>Python</code> 的魔法方法还有不少， <code>Python2</code> 和 <code>Python3</code> 在这方面也有一定的区别。
@@ -732,8 +725,8 @@ t()
 </div>
 </div>
 
-<div id="outline-container-orgf940abb" class="outline-2">
-<h2 id="orgf940abb"><span class="section-number-2">12</span> 参考链接</h2>
+<div id="outline-container-org70724b7" class="outline-2">
+<h2 id="org70724b7"><span class="section-number-2">12</span> 参考链接</h2>
 <div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2.7/reference/datamodel.html#special-method-names">Python2.7 Special method names</a></li>

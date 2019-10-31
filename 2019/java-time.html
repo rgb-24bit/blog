@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-04-20 周六 11:16 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java8 时间处理</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0315286">1. 前言</a></li>
-<li><a href="#orgf89ed72">2. 时间单位和时区</a></li>
-<li><a href="#orge1508d7">3. 时间点</a></li>
-<li><a href="#org5b680cc">4. 时间段</a></li>
-<li><a href="#org92edb35">5. 时间的解析和格式化</a></li>
-<li><a href="#orge3b9c9a">6. 时区时间</a></li>
-<li><a href="#org5e7e513">7. 兼容旧接口</a></li>
-<li><a href="#org7c8f46a">8. 结语</a></li>
+<li><a href="#org7d4b03e">1. 前言</a></li>
+<li><a href="#orgaebefca">2. 时间单位和时区</a></li>
+<li><a href="#org3d65c95">3. 时间点</a></li>
+<li><a href="#org0686e8d">4. 时间段</a></li>
+<li><a href="#org333ccaf">5. 时间的解析和格式化</a></li>
+<li><a href="#orgb1fa5c5">6. 时区时间</a></li>
+<li><a href="#orged7f275">7. 兼容旧接口</a></li>
+<li><a href="#org4a631fa">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0315286" class="outline-2">
-<h2 id="org0315286"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org7d4b03e" class="outline-2">
+<h2 id="org7d4b03e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 时间处理是一个经常会用到但又不那么好用的功能，其中的主要问题在于对人友好的时间格式的处理上。
@@ -279,8 +279,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf89ed72" class="outline-2">
-<h2 id="orgf89ed72"><span class="section-number-2">2</span> 时间单位和时区</h2>
+<div id="outline-container-orgaebefca" class="outline-2">
+<h2 id="orgaebefca"><span class="section-number-2">2</span> 时间单位和时区</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 时间是我们每天都在接触的东西，但我并不是很清楚和它的相关的一些概念，借着这次机会，去了解了时间处理中常用的两个概念：时间单位和时区。
@@ -382,8 +382,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge1508d7" class="outline-2">
-<h2 id="orge1508d7"><span class="section-number-2">3</span> 时间点</h2>
+<div id="outline-container-org3d65c95" class="outline-2">
+<h2 id="org3d65c95"><span class="section-number-2">3</span> 时间点</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 对时间的处理可以粗略的划分为三个部分：时间点、时间段和时间的解析与格式化。
@@ -449,8 +449,8 @@ LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
 </div>
 </div>
 
-<div id="outline-container-org5b680cc" class="outline-2">
-<h2 id="org5b680cc"><span class="section-number-2">4</span> 时间段</h2>
+<div id="outline-container-org0686e8d" class="outline-2">
+<h2 id="org0686e8d"><span class="section-number-2">4</span> 时间段</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 时间段对应的接口是 <a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAmount.html">java.time.temporal</a>，这个接口的实现只有两个：Duration 和 Period。
@@ -492,8 +492,8 @@ Period.of(1, 2, 3).getDays();     <span class="org-comment-delimiter">// </span>
 </div>
 </div>
 
-<div id="outline-container-org92edb35" class="outline-2">
-<h2 id="org92edb35"><span class="section-number-2">5</span> 时间的解析和格式化</h2>
+<div id="outline-container-org333ccaf" class="outline-2">
+<h2 id="org333ccaf"><span class="section-number-2">5</span> 时间的解析和格式化</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 时间的解析和格式化相关的对象是 <code>DateTimeFormatter</code>, 这个类提供了很多默认的格式器，也可以自己创建格式器。
@@ -582,8 +582,8 @@ LocalDateTime.parse(<span class="org-warning">'</span>2017-12-3T09:32:00<span cl
 </div>
 </div>
 
-<div id="outline-container-orge3b9c9a" class="outline-2">
-<h2 id="orge3b9c9a"><span class="section-number-2">6</span> 时区时间</h2>
+<div id="outline-container-orgb1fa5c5" class="outline-2">
+<h2 id="orgb1fa5c5"><span class="section-number-2">6</span> 时区时间</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 时区时间同样也是时间点对象，实现了 <code>Temporal</code> 接口，相较于 <code>LocalDateTime</code>, 时区时间多了 <b>时区信息</b>:
@@ -622,8 +622,8 @@ LocalDateTime.ofInstant(Instant.now(), ZoneOffset.of(<span class="org-string">"+
 </div>
 </div>
 
-<div id="outline-container-org5e7e513" class="outline-2">
-<h2 id="org5e7e513"><span class="section-number-2">7</span> 兼容旧接口</h2>
+<div id="outline-container-orged7f275" class="outline-2">
+<h2 id="orged7f275"><span class="section-number-2">7</span> 兼容旧接口</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Java8 提供了一些方法允许新的日期时间后旧的日期时间进行转换，下面列举出了一部分：
@@ -678,8 +678,8 @@ Java8 提供了一些方法允许新的日期时间后旧的日期时间进行�
 </div>
 </div>
 
-<div id="outline-container-org7c8f46a" class="outline-2">
-<h2 id="org7c8f46a"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org4a631fa" class="outline-2">
+<h2 id="org4a631fa"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 这篇博客的内容不怎么详细，基本上只是简单的提了一下各个接口可以做什么，更多的使用还是需要翻文档。

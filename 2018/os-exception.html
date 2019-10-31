@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:44 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>操作系统之异常控制流</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,27 +246,25 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf401ba2">1. 简介</a></li>
-<li><a href="#org415d405">2. 异常控制流</a></li>
-<li><a href="#org8ca05a6">3. 异常</a></li>
-<li><a href="#orgcb81fe1">4. 信号</a></li>
-<li><a href="#org4408124">5. 非本地跳转</a></li>
-<li><a href="#org3461242">6. 参考链接</a></li>
+<li><a href="#org9653799">1. 简介</a></li>
+<li><a href="#orge5facc4">2. 异常控制流</a></li>
+<li><a href="#orgd8dd1bb">3. 异常</a></li>
+<li><a href="#org38e88d3">4. 信号</a></li>
+<li><a href="#org2d4771d">5. 非本地跳转</a></li>
+<li><a href="#org10b4609">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf401ba2" class="outline-2">
-<h2 id="orgf401ba2"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org9653799" class="outline-2">
+<h2 id="org9653799"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<code>CSAPP</code> - 深入理解计算机系统这本书断断续续的看了部分章节了， 但是在看到 <b>异常控制流</b> 这一章之前，
-我没有想到 <b>操作系统</b> 在我们编写的程序中扮演着如此总要的角色。
+<code>CSAPP</code> - 深入理解计算机系统这本书断断续续的看了部分章节了， 但是在看到 <b>异常控制流</b> 这一章之前，我没有想到 <b>操作系统</b> 在我们编写的程序中扮演着如此总要的角色。
 </p>
 
 <p>
-我看这本书的顺序没有按着目录顺序来， 一部分原因是为了适配学校的课程， 一部分是因为兴趣， 毕竟
-部分内容看着更有趣些。
+我看这本书的顺序没有按着目录顺序来， 一部分原因是为了适配学校的课程， 一部分是因为兴趣， 毕竟部分内容看着更有趣些。
 </p>
 
 <p>
@@ -291,16 +289,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org415d405" class="outline-2">
-<h2 id="org415d405"><span class="section-number-2">2</span> 异常控制流</h2>
+<div id="outline-container-orge5facc4" class="outline-2">
+<h2 id="orge5facc4"><span class="section-number-2">2</span> 异常控制流</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 如果学过其他高级语言， 那么 <b>异常</b> 这个词应该不陌生， 或者说很熟悉。
 </p>
 
 <p>
-但是在 <b>异常控制流</b> 这一章中， 异常的概念和我之前的理解有着很大的不同， 但是也感觉的出来，
-书中的描述更符合 <b>计算机</b> 的想法。
+但是在 <b>异常控制流</b> 这一章中， 异常的概念和我之前的理解有着很大的不同， 但是也感觉的出来，书中的描述更符合 <b>计算机</b> 的想法。
 </p>
 
 <p>
@@ -325,8 +322,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8ca05a6" class="outline-2">
-<h2 id="org8ca05a6"><span class="section-number-2">3</span> 异常</h2>
+<div id="outline-container-orgd8dd1bb" class="outline-2">
+<h2 id="orgd8dd1bb"><span class="section-number-2">3</span> 异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>异常</b> 是 <b>异常控制流</b> 的一种 <b>表现形式</b>, 也就是说异常就是异常控制流。
@@ -342,13 +339,11 @@ for the JavaScript code in this tag.
 
 <dl class="org-dl">
 <dt>中断</dt><dd><p>
-中断是由处理器外部的 <code>I/O</code> 设备引起的， 与指令的执行无关， 因此是 <b>异步的</b>. 这是唯一的 <b>异步</b> 异常，
-而处理 <b>中断</b> 的异常处理程序为 <b>中断处理程序</b>.
+中断是由处理器外部的 <code>I/O</code> 设备引起的， 与指令的执行无关， 因此是 <b>异步的</b>. 这是唯一的 <b>异步</b> 异常，而处理 <b>中断</b> 的异常处理程序为 <b>中断处理程序</b>.
 </p>
 
 <p>
-如果执行 <code>I_curr</code> 指令时发生中断异常， 那么处理器会在执行完 <code>I_curr</code> 指令后调用 <b>中断处理程序</b>, 此时控制流发生了
-突变， 因为 <b>中断处理程序</b> 的指令和当前程序的指令在内存上不相邻。
+如果执行 <code>I_curr</code> 指令时发生中断异常， 那么处理器会在执行完 <code>I_curr</code> 指令后调用 <b>中断处理程序</b>, 此时控制流发生了突变， 因为 <b>中断处理程序</b> 的指令和当前程序的指令在内存上不相邻。
 </p>
 
 <p>
@@ -369,8 +364,7 @@ for the JavaScript code in this tag.
 </p></dd>
 
 <dt><b>故障</b></dt><dd><p>
-故障是由正在执行的指令 <code>I_curr</code> 引起的， 这条指令可能导致了某个错误。 错误发生后， 处理器会停下当前指令的执行， 调用对应
-的 <b>故障处理程序</b>.
+故障是由正在执行的指令 <code>I_curr</code> 引起的， 这条指令可能导致了某个错误。 错误发生后， 处理器会停下当前指令的执行， 调用对应的 <b>故障处理程序</b>.
 </p>
 
 <p>
@@ -387,8 +381,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcb81fe1" class="outline-2">
-<h2 id="orgcb81fe1"><span class="section-number-2">4</span> 信号</h2>
+<div id="outline-container-org38e88d3" class="outline-2">
+<h2 id="org38e88d3"><span class="section-number-2">4</span> 信号</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在原书上， 信号前还有一节的内容是 <b>进程</b>, <b>进程</b> 属于 <b>异常</b> 的一种应用方式， 需要详细了解的话可以查阅相关资料。
@@ -420,8 +414,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-当进程收到信号后， 会通过 <b>异常控制流</b> 调用相应的 <b>信号处理程序</b>. 操作系统提供了一些默认的处理行为， 我们可以修改其中的
-一部分。
+当进程收到信号后， 会通过 <b>异常控制流</b> 调用相应的 <b>信号处理程序</b>. 操作系统提供了一些默认的处理行为， 我们可以修改其中的一部分。
 </p>
 
 <p>
@@ -430,8 +423,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4408124" class="outline-2">
-<h2 id="org4408124"><span class="section-number-2">5</span> 非本地跳转</h2>
+<div id="outline-container-org2d4771d" class="outline-2">
+<h2 id="org2d4771d"><span class="section-number-2">5</span> 非本地跳转</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;setjmp.h&gt;</span>
@@ -479,8 +472,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-这个函数定义了一个 <b>信号处理程序</b>, 这个信号处理程序使用函数 <code>signal</code> 完成注册， 替代
-了信号 <code>SIGINT</code> 的默认处理程序。
+这个函数定义了一个 <b>信号处理程序</b>, 这个信号处理程序使用函数 <code>signal</code> 完成注册， 替代了信号 <code>SIGINT</code> 的默认处理程序。
 </p>
 
 <p>
@@ -500,8 +492,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-这个变量用于保存上下文信息， 当调用 <code>setjmp</code> 时， 会将调用时的上下文信息保存到 <code>ex_buf__</code> 中。
-并返回数值 <code>0</code>.
+这个变量用于保存上下文信息， 当调用 <code>setjmp</code> 时， 会将调用时的上下文信息保存到 <code>ex_buf__</code> 中。并返回数值 <code>0</code>.
 </p>
 
 <p>
@@ -509,8 +500,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-当时正在执行的调用是 <code>setjmp</code>, 此时， <code>setjmp</code> 会再次返回一个值， 这个值就是 <code>longjmp</code> 第二个
-参数指定的值。
+当时正在执行的调用是 <code>setjmp</code>, 此时， <code>setjmp</code> 会再次返回一个值， 这个值就是 <code>longjmp</code> 第二个参数指定的值。
 </p>
 
 <p>
@@ -558,8 +548,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-<b>猜测：</b> 高级语言抛出异常时， 执行一次非本地跳转， 然后判断该次非本地跳转的
-返回值以执行相应的 <b>catch</b> 块。
+<b>猜测：</b> 高级语言抛出异常时， 执行一次非本地跳转， 然后判断该次非本地跳转的返回值以执行相应的 <b>catch</b> 块。
 </p>
 
 <p>
@@ -568,8 +557,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3461242" class="outline-2">
-<h2 id="org3461242"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org10b4609" class="outline-2">
+<h2 id="org10b4609"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.di.unipi.it/~nids/docs/longjump_try_trow_catch.html">Exceptions in C with Longjmp and Setjmp</a></li>

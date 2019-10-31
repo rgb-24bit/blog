@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:45 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>随机数杂谈</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +246,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2a0425b">1. 前言</a></li>
-<li><a href="#org19529f4">2. 简单的伪随机数生成器</a></li>
-<li><a href="#orgfd46056">3. 蒙特卡洛方法求 π</a></li>
-<li><a href="#orge070ef8">4. 随机的 BUG</a></li>
-<li><a href="#orgc0fc413">5. 洗牌算法</a></li>
-<li><a href="#org2b7e656">6. 自然底数</a></li>
-<li><a href="#orgd33d83d">7. 缘起</a></li>
-<li><a href="#org77041c8">8. 结语</a></li>
+<li><a href="#orgef1c42f">1. 前言</a></li>
+<li><a href="#org2dfa628">2. 简单的伪随机数生成器</a></li>
+<li><a href="#orga63708a">3. 蒙特卡洛方法求 π</a></li>
+<li><a href="#org67d845a">4. 随机的 BUG</a></li>
+<li><a href="#orgb47da0b">5. 洗牌算法</a></li>
+<li><a href="#org67887c3">6. 自然底数</a></li>
+<li><a href="#org5f1952c">7. 缘起</a></li>
+<li><a href="#org58f37bb">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2a0425b" class="outline-2">
-<h2 id="org2a0425b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgef1c42f" class="outline-2">
+<h2 id="orgef1c42f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前几天在 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上看到的一个问题再次勾起了我对随机数的兴趣，可以说，对各种和随机数相关的话题我都挺感兴趣的。
@@ -271,16 +271,15 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org19529f4" class="outline-2">
-<h2 id="org19529f4"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
+<div id="outline-container-org2dfa628" class="outline-2">
+<h2 id="org2dfa628"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，我们使用的随机数生成器都是 <b>伪随机数（看起来像随机数的数字序列）</b> 生成器，对于这一点我相信你并不陌生。
 </p>
 
 <p>
-毕竟，我们的程序只是按照指令一条条的执行下去，这个过程是线性的，不存在什么概率问题，因此，要生成随机数，
-也只能通过数学手段生成伪随机数。
+毕竟，我们的程序只是按照指令一条条的执行下去，这个过程是线性的，不存在什么概率问题，因此，要生成随机数，也只能通过数学手段生成伪随机数。
 </p>
 
 <p>
@@ -329,8 +328,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfd46056" class="outline-2">
-<h2 id="orgfd46056"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
+<div id="outline-container-orga63708a" class="outline-2">
+<h2 id="orga63708a"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>蒙特卡罗方法</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 是一种以概率统计理论为指导的数值计算方法，可以通过随机数（伪随机数）来解决很多计算问题。
@@ -387,14 +386,13 @@ pi = 3.135840
 </pre>
 
 <p>
-可以看到，运行结果还是存在不小的误差的，这与 C 语言采用的随机数生成器存在一定关系，如果用其他高级语言重写的话，
-你可以得到更准确的结果。
+可以看到，运行结果还是存在不小的误差的，这与 C 语言采用的随机数生成器存在一定关系，如果用其他高级语言重写的话，你可以得到更准确的结果。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge070ef8" class="outline-2">
-<h2 id="orge070ef8"><span class="section-number-2">4</span> 随机的 BUG</h2>
+<div id="outline-container-org67d845a" class="outline-2">
+<h2 id="org67d845a"><span class="section-number-2">4</span> 随机的 BUG</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 记不清是在什么地方看到的这个操作了，大意是如何在交付应用程序后保证甲方能够及时付清尾款。
@@ -409,14 +407,13 @@ pi = 3.135840
 </div>
 
 <p>
-我们知道，C 语言中是不存在 <code>true</code> 这个关键字的，通过这样的操作，可以使得程序运行过程中不时出现一些奇怪的问题，
-只要将概率调低点，那么 @_@
+我们知道，C 语言中是不存在 <code>true</code> 这个关键字的，通过这样的操作，可以使得程序运行过程中不时出现一些奇怪的问题，只要将概率调低点，那么 @_@
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc0fc413" class="outline-2">
-<h2 id="orgc0fc413"><span class="section-number-2">5</span> 洗牌算法</h2>
+<div id="outline-container-orgb47da0b" class="outline-2">
+<h2 id="orgb47da0b"><span class="section-number-2">5</span> 洗牌算法</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 洗牌算法，顾名思义，就是和洗牌一样，打乱一个序列的顺序。这也是一个很有趣的算法不是吗？
@@ -432,8 +429,7 @@ for i from n−1 downto 1 do
 </pre>
 
 <p>
-可以看到，这个算法的基本思想很简单，就是在指定范围内随机选择一个成员，然后将其放到尾部，缩小范围，
-循环往复。
+可以看到，这个算法的基本思想很简单，就是在指定范围内随机选择一个成员，然后将其放到尾部，缩小范围，循环往复。
 </p>
 
 <p>
@@ -473,8 +469,8 @@ Out: 3 5 8 6 1 9 4 2 0 7
 </div>
 </div>
 
-<div id="outline-container-org2b7e656" class="outline-2">
-<h2 id="org2b7e656"><span class="section-number-2">6</span> 自然底数</h2>
+<div id="outline-container-org67887c3" class="outline-2">
+<h2 id="org67887c3"><span class="section-number-2">6</span> 自然底数</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 之前在知乎上看到的图形学大佬 <b>Milo Yip</b> 的文章 - <a href="https://zhuanlan.zhihu.com/p/46698082">自然而然 - 知乎</a>，其中的代码：
@@ -507,8 +503,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-orgd33d83d" class="outline-2">
-<h2 id="orgd33d83d"><span class="section-number-2">7</span> 缘起</h2>
+<div id="outline-container-org5f1952c" class="outline-2">
+<h2 id="org5f1952c"><span class="section-number-2">7</span> 缘起</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这一节的内容是关于 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上的那个问题的，问题描述为：
@@ -560,8 +556,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-org77041c8" class="outline-2">
-<h2 id="org77041c8"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org58f37bb" class="outline-2">
+<h2 id="org58f37bb"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 我一直觉得，程序代码中的那一丝不确定性是一种别样的浪漫，因此一直很好奇随机数的实现与使用。

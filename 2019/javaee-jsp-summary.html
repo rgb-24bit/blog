@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-04-13 周六 15:04 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java EE - JSP 小结</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,46 +246,46 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org699f8d5">1. 前言</a></li>
-<li><a href="#orgb1a585d">2. JSP 与 Servlet</a>
+<li><a href="#orgda126a8">1. 前言</a></li>
+<li><a href="#org5038d9d">2. JSP 与 Servlet</a>
 <ul>
-<li><a href="#orgbae5e2b">2.1. JSP 初始化参数</a></li>
+<li><a href="#org6bdc10d">2.1. JSP 初始化参数</a></li>
 </ul>
 </li>
-<li><a href="#orgbcccd8b">3. 脚本元素</a>
+<li><a href="#org643ffb3">3. 脚本元素</a>
 <ul>
-<li><a href="#org25c3f97">3.1. page 指令</a></li>
-<li><a href="#org42fa918">3.2. 禁用脚本元素</a></li>
+<li><a href="#orgea6312c">3.1. page 指令</a></li>
+<li><a href="#org885404e">3.2. 禁用脚本元素</a></li>
 </ul>
 </li>
-<li><a href="#org172242a">4. EL 表达式</a>
+<li><a href="#orgcf628dc">4. EL 表达式</a>
 <ul>
-<li><a href="#org3d7fac0">4.1. EL 函数</a></li>
-<li><a href="#orge45c8c3">4.2. taglib 指令</a></li>
+<li><a href="#orge7e2116">4.1. EL 函数</a></li>
+<li><a href="#org3af811b">4.2. taglib 指令</a></li>
 </ul>
 </li>
-<li><a href="#org66e5204">5. 标记</a>
+<li><a href="#orgbf4e78b">5. 标记</a>
 <ul>
-<li><a href="#org7618d7d">5.1. TLD 文件的位置</a></li>
-<li><a href="#orgb9c5426">5.2. 标准动作</a></li>
-<li><a href="#orgc76c91a">5.3. 第三方标记库</a></li>
-<li><a href="#org916cf5c">5.4. 定制标记</a>
+<li><a href="#orgc37572b">5.1. TLD 文件的位置</a></li>
+<li><a href="#org9e04bb8">5.2. 标准动作</a></li>
+<li><a href="#orgbaf8ee1">5.3. 第三方标记库</a></li>
+<li><a href="#org00c0ca1">5.4. 定制标记</a>
 <ul>
-<li><a href="#orgc2b23ef">5.4.1. 标记文件</a></li>
-<li><a href="#org87ff7ae">5.4.2. 简单标记处理器</a></li>
-<li><a href="#org03da240">5.4.3. 标记的属性与体</a></li>
+<li><a href="#orgc1e16f7">5.4.1. 标记文件</a></li>
+<li><a href="#orgba5c9ca">5.4.2. 简单标记处理器</a></li>
+<li><a href="#org8053794">5.4.3. 标记的属性与体</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org224853a">6. include 指令</a></li>
-<li><a href="#org350cf29">7. 结语</a></li>
+<li><a href="#org6967564">6. include 指令</a></li>
+<li><a href="#org39b547e">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org699f8d5" class="outline-2">
-<h2 id="org699f8d5"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgda126a8" class="outline-2">
+<h2 id="orgda126a8"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在接触 Servlet 和 JSP 之前我一直觉得两者中应该是 Servlet 比较难，接触了之后才发现，JSP 的东西怎么那么多啊？
@@ -309,8 +309,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb1a585d" class="outline-2">
-<h2 id="orgb1a585d"><span class="section-number-2">2</span> JSP 与 Servlet</h2>
+<div id="outline-container-org5038d9d" class="outline-2">
+<h2 id="org5038d9d"><span class="section-number-2">2</span> JSP 与 Servlet</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 JSP 和 Servlet 的关系十分紧密，可以说 Servlet 是学习 JSP 的前置基础，这可能也是诸多教程将 Servlet 放在 JSP 前面的原因之一。
@@ -337,8 +337,8 @@ JSP 和 Servlet 的关系十分紧密，可以说 Servlet 是学习 JSP 的前�
 </p>
 </div>
 
-<div id="outline-container-orgbae5e2b" class="outline-3">
-<h3 id="orgbae5e2b"><span class="section-number-3">2.1</span> JSP 初始化参数</h3>
+<div id="outline-container-org6bdc10d" class="outline-3">
+<h3 id="org6bdc10d"><span class="section-number-3">2.1</span> JSP 初始化参数</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 JSP 初始化参数的配置和 Servlet 初始化参数的配置基本相同，只需要一点简单的修改：
@@ -373,8 +373,8 @@ JSP 初始化参数的配置和 Servlet 初始化参数的配置基本相同，�
 </div>
 </div>
 
-<div id="outline-container-orgbcccd8b" class="outline-2">
-<h2 id="orgbcccd8b"><span class="section-number-2">3</span> 脚本元素</h2>
+<div id="outline-container-org643ffb3" class="outline-2">
+<h2 id="org643ffb3"><span class="section-number-2">3</span> 脚本元素</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 脚本元素应该是很多人初学 JSP 接触的第一个 JSP 元素，其组成为：<a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnaou.html">scriptlets</a>(<code>&lt;% %&gt;</code>)、<a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnaov.html">scriptlet expressions</a>(<code>&lt;%= %&gt;</code>) 和 <a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnaos.html">scriptlet declarations</a>(<code>&lt;%! %&gt;</code>)。
@@ -509,16 +509,15 @@ JSP 初始化参数的配置和 Servlet 初始化参数的配置基本相同，�
 </p>
 </div>
 
-<div id="outline-container-org25c3f97" class="outline-3">
-<h3 id="org25c3f97"><span class="section-number-3">3.1</span> page 指令</h3>
+<div id="outline-container-orgea6312c" class="outline-3">
+<h3 id="orgea6312c"><span class="section-number-3">3.1</span> page 指令</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 由于指令和另外三大元素都有关系，而且有些元素对指令的依赖还很大，因此，指令的内容将会向这样拆分开来讲解。
 </p>
 
 <p>
-使用指令时，我们是通过指令的 <b>属性</b> 来影响这个 JSP 页面的编译与使用，而使用脚本元素意味着我们编写的就是 Java 代码，
-因此可以通过 page 指令的 <code>import</code> 属性告诉容器这个 JSP 需要那些而外的依赖，容器将会把定义的 import 语句增加到生成的 Servlet 类代码中。
+使用指令时，我们是通过指令的 <b>属性</b> 来影响这个 JSP 页面的编译与使用，而使用脚本元素意味着我们编写的就是 Java 代码，因此可以通过 page 指令的 <code>import</code> 属性告诉容器这个 JSP 需要那些而外的依赖，容器将会把定义的 import 语句增加到生成的 Servlet 类代码中。
 </p>
 
 <p>
@@ -544,8 +543,8 @@ page 指令还用其他一些属性，比如属性 <code>pageEncoding</code> 可
 </div>
 </div>
 
-<div id="outline-container-org42fa918" class="outline-3">
-<h3 id="org42fa918"><span class="section-number-3">3.2</span> 禁用脚本元素</h3>
+<div id="outline-container-org885404e" class="outline-3">
+<h3 id="org885404e"><span class="section-number-3">3.2</span> 禁用脚本元素</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 当我们在 <b>DD</b><sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> 添加如下配置的时候就会使得脚本元素无法使用（用了就会出错）：
@@ -563,8 +562,8 @@ page 指令还用其他一些属性，比如属性 <code>pageEncoding</code> 可
 </div>
 </div>
 
-<div id="outline-container-org172242a" class="outline-2">
-<h2 id="org172242a"><span class="section-number-2">4</span> EL 表达式</h2>
+<div id="outline-container-orgcf628dc" class="outline-2">
+<h2 id="orgcf628dc"><span class="section-number-2">4</span> EL 表达式</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 EL 表达式很简单，尤其是对于使用者来说，只需要记住一些简单的语法便可以直接上手使用，不需要像脚本元素那样需要会 Java。
@@ -587,8 +586,8 @@ EL 表达式很简单，尤其是对于使用者来说，只需要记住一些�
 </p>
 </div>
 
-<div id="outline-container-org3d7fac0" class="outline-3">
-<h3 id="org3d7fac0"><span class="section-number-3">4.1</span> EL 函数</h3>
+<div id="outline-container-orge7e2116" class="outline-3">
+<h3 id="orge7e2116"><span class="section-number-3">4.1</span> EL 函数</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 使用 EL 函数是很简单的，只需要使用 <code>taglib</code> 指令告诉容器你使用的 EL 函数来自什么地方：
@@ -649,8 +648,8 @@ ${mine:random()}
 </div>
 </div>
 
-<div id="outline-container-orge45c8c3" class="outline-3">
-<h3 id="orge45c8c3"><span class="section-number-3">4.2</span> taglib 指令</h3>
+<div id="outline-container-org3af811b" class="outline-3">
+<h3 id="org3af811b"><span class="section-number-3">4.2</span> taglib 指令</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>taglib</code> 指令的使用更多是在使用标记的时候，但是 EL 函数却需要使用 taglib 指令来使用……
@@ -670,8 +669,8 @@ ${mine:random()}
 </div>
 </div>
 
-<div id="outline-container-org66e5204" class="outline-2">
-<h2 id="org66e5204"><span class="section-number-2">5</span> 标记</h2>
+<div id="outline-container-orgbf4e78b" class="outline-2">
+<h2 id="orgbf4e78b"><span class="section-number-2">5</span> 标记</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 标记应该是 JSP 中最复杂的一部分，在我的理解中，标准动作、第三方标记库、定制标记都属于标记。
@@ -682,8 +681,8 @@ ${mine:random()}
 </p>
 </div>
 
-<div id="outline-container-org7618d7d" class="outline-3">
-<h3 id="org7618d7d"><span class="section-number-3">5.1</span> TLD 文件的位置</h3>
+<div id="outline-container-orgc37572b" class="outline-3">
+<h3 id="orgc37572b"><span class="section-number-3">5.1</span> TLD 文件的位置</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 在进一步了解标记之前需要先来看看 TLD 文件可以放在那些地方：
@@ -701,8 +700,8 @@ ${mine:random()}
 </div>
 </div>
 
-<div id="outline-container-orgb9c5426" class="outline-3">
-<h3 id="orgb9c5426"><span class="section-number-3">5.2</span> 标准动作</h3>
+<div id="outline-container-org9e04bb8" class="outline-3">
+<h3 id="org9e04bb8"><span class="section-number-3">5.2</span> 标准动作</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 标记的语法比 EL 表达式还要简单，使用上的问题主要集中在标记的作用、属性与标记体上，因此这里将会略过快速标准动作的相关内容。
@@ -731,8 +730,8 @@ ${mine:random()}
 </div>
 </div>
 
-<div id="outline-container-orgc76c91a" class="outline-3">
-<h3 id="orgc76c91a"><span class="section-number-3">5.3</span> 第三方标记库</h3>
+<div id="outline-container-orgbaf8ee1" class="outline-3">
+<h3 id="orgbaf8ee1"><span class="section-number-3">5.3</span> 第三方标记库</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 这里的第三方标记库包括 JSTL，虽然说 JSTL 被叫做标准标记库，但它不是和标准动作不一样，不是内置的标记。
@@ -765,16 +764,16 @@ JSTL 使用时通常使用如下形式的 taglib 指令：
 </div>
 </div>
 
-<div id="outline-container-org916cf5c" class="outline-3">
-<h3 id="org916cf5c"><span class="section-number-3">5.4</span> 定制标记</h3>
+<div id="outline-container-org00c0ca1" class="outline-3">
+<h3 id="org00c0ca1"><span class="section-number-3">5.4</span> 定制标记</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 定制标记有三种方式：标记文件、简单标记处理器和传统标记处理器，这篇博客将只涉及标记文件和简单标记处理器。
 </p>
 </div>
 
-<div id="outline-container-orgc2b23ef" class="outline-4">
-<h4 id="orgc2b23ef"><span class="section-number-4">5.4.1</span> 标记文件</h4>
+<div id="outline-container-orgc1e16f7" class="outline-4">
+<h4 id="orgc1e16f7"><span class="section-number-4">5.4.1</span> 标记文件</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
 标记文件更像是可以通过标记语法进行包含的 JSP 文件，使用它的 tablib 指令也和一般的指令存在一定区别：
@@ -838,8 +837,8 @@ JSTL 使用时通常使用如下形式的 taglib 指令：
 </div>
 </div>
 
-<div id="outline-container-org87ff7ae" class="outline-4">
-<h4 id="org87ff7ae"><span class="section-number-4">5.4.2</span> 简单标记处理器</h4>
+<div id="outline-container-orgba5c9ca" class="outline-4">
+<h4 id="orgba5c9ca"><span class="section-number-4">5.4.2</span> 简单标记处理器</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 简单标记处理器的实现还是比较简单的，只需要扩展 <code>SimpleTagSupport</code> 类就可以了：
@@ -903,8 +902,8 @@ JSTL 使用时通常使用如下形式的 taglib 指令：
 </div>
 </div>
 
-<div id="outline-container-org03da240" class="outline-4">
-<h4 id="org03da240"><span class="section-number-4">5.4.3</span> 标记的属性与体</h4>
+<div id="outline-container-org8053794" class="outline-4">
+<h4 id="org8053794"><span class="section-number-4">5.4.3</span> 标记的属性与体</h4>
 <div class="outline-text-4" id="text-5-4-3">
 <p>
 在自定义标记的时候我们可以限制标记的属性与体的形式：
@@ -967,16 +966,15 @@ JSTL 使用时通常使用如下形式的 taglib 指令：
 </ul>
 
 <p>
-对于标记文件来说，rtexprvalue 可以通过 attribute 指令的 rtexprvalue 属性设置，而标记文件的体不能有脚本元素，因此值只能是 scriptless、tagdependent 和 empty，
-可以通过 tag 指令的 body-content 属性进行设置。
+对于标记文件来说，rtexprvalue 可以通过 attribute 指令的 rtexprvalue 属性设置，而标记文件的体不能有脚本元素，因此值只能是 scriptless、tagdependent 和 empty，可以通过 tag 指令的 body-content 属性进行设置。
 </p>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org224853a" class="outline-2">
-<h2 id="org224853a"><span class="section-number-2">6</span> include 指令</h2>
+<div id="outline-container-org6967564" class="outline-2">
+<h2 id="org6967564"><span class="section-number-2">6</span> include 指令</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我们可以通过 include 指令将一个资源的内容增加到一个 JSP 中，作用相似的还有标准动作 <code>&lt;jsp:include&gt;</code> 和 JSTL 标记 <code>&lt;c:import&gt;</code>.
@@ -1000,16 +998,15 @@ JSTL 使用时通常使用如下形式的 taglib 指令：
 </div>
 </div>
 
-<div id="outline-container-org350cf29" class="outline-2">
-<h2 id="org350cf29"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-org39b547e" class="outline-2">
+<h2 id="org39b547e"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这篇博客目前来说达到了自己的目的：梳理 JSP 相关的内容。
 </p>
 
 <p>
-当然了，这是篇偏向总结的博客，关于 JSP 各个元素的使用的内容并不多，更多的是我在学习过程的感觉比较重要的内容的记录，
-以及较为困惑的内容的梳理。
+当然了，这是篇偏向总结的博客，关于 JSP 各个元素的使用的内容并不多，更多的是我在学习过程的感觉比较重要的内容的记录，以及较为困惑的内容的梳理。
 </p>
 
 <p>

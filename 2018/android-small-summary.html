@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-03-12 周二 13:43 -->
+<!-- 2019-10-31 四 11:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Android 小总结</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,28 +246,27 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgca23e62">1. 前言</a></li>
-<li><a href="#org0974988">2. 开发环境的搭建</a></li>
-<li><a href="#org0c40fbd">3. 日志工具</a></li>
-<li><a href="#org18fbca5">4. 活动</a></li>
-<li><a href="#org7558374">5. 广播、服务和内容提供器</a></li>
-<li><a href="#org21f5ea1">6. 数据持久化</a></li>
-<li><a href="#org919aaa8">7. 权限问题</a></li>
-<li><a href="#org8851684">8. 后记</a></li>
+<li><a href="#org24aa412">1. 前言</a></li>
+<li><a href="#orgc9bd5b9">2. 开发环境的搭建</a></li>
+<li><a href="#orgc6c18c0">3. 日志工具</a></li>
+<li><a href="#orgfd3033e">4. 活动</a></li>
+<li><a href="#orgfdf475e">5. 广播、服务和内容提供器</a></li>
+<li><a href="#orgad0e639">6. 数据持久化</a></li>
+<li><a href="#org83990ac">7. 权限问题</a></li>
+<li><a href="#org71b1017">8. 后记</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgca23e62" class="outline-2">
-<h2 id="orgca23e62"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org24aa412" class="outline-2">
+<h2 id="org24aa412"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触 Android 还在刚开始学编程的时候，那会刚学了点 C 语言的基础，除此以外什么都不会。
 </p>
 
 <p>
-因为一些原因，想要搞一个手机上的应用程序，然后折腾了几天 Eclipse、Android Studio、虚拟机，
-成功在手机上运行了 Hello World.
+因为一些原因，想要搞一个手机上的应用程序，然后折腾了几天 Eclipse、Android Studio、虚拟机，成功在手机上运行了 Hello World.
 </p>
 
 <p>
@@ -287,8 +286,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-但是呢，由于兴趣、电脑性能、时间安排等原因，结课后的一段时间内估计都不会怎么接触 Android 了，
-为了避免以后要用的时候又要重头学起，准备用这篇博客来总结一下学到的一些东西。
+但是呢，由于兴趣、电脑性能、时间安排等原因，结课后的一段时间内估计都不会怎么接触 Android 了，为了避免以后要用的时候又要重头学起，准备用这篇博客来总结一下学到的一些东西。
 </p>
 
 <details><summary><i>找教程的请点这里</i></summary>
@@ -298,8 +296,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-这篇博客主要是这学期学习 Android 的一个总结，主要是给我自己看的，写成博客的原因是写博客的时候，
-我会认真一点。
+这篇博客主要是这学期学习 Android 的一个总结，主要是给我自己看的，写成博客的原因是写博客的时候，我会认真一点。
 </p>
 
 <p>
@@ -310,8 +307,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0974988" class="outline-2">
-<h2 id="org0974988"><span class="section-number-2">2</span> 开发环境的搭建</h2>
+<div id="outline-container-orgc9bd5b9" class="outline-2">
+<h2 id="orgc9bd5b9"><span class="section-number-2">2</span> 开发环境的搭建</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Android 开发环境是我接触到的，最难搭建的开发环境，没有之一。
@@ -341,8 +338,7 @@ Android 开发环境是我接触到的，最难搭建的开发环境，没有之
 </ul>
 
 <p>
-最后是 Gradle，建议手动下载好对应版本的压缩包放到 <code>C:\Users\UserName\.gradle\wrapper\dists</code> 下，
-等 Android Studio 自己下载真的很绝望。
+最后是 Gradle，建议手动下载好对应版本的压缩包放到 <code>C:\Users\UserName\.gradle\wrapper\dists</code> 下，等 Android Studio 自己下载真的很绝望。
 </p>
 
 <p>
@@ -357,14 +353,13 @@ Android 开发环境是我接触到的，最难搭建的开发环境，没有之
 </ul>
 
 <p>
-其他和开发环境的搭建相关的问题就不多说了，因人而异，相同的步骤在不同的电脑上可能遇到不同的问题，
-多谷歌或百度，总能解决的。
+其他和开发环境的搭建相关的问题就不多说了，因人而异，相同的步骤在不同的电脑上可能遇到不同的问题，多谷歌或百度，总能解决的。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0c40fbd" class="outline-2">
-<h2 id="org0c40fbd"><span class="section-number-2">3</span> 日志工具</h2>
+<div id="outline-container-orgc6c18c0" class="outline-2">
+<h2 id="orgc6c18c0"><span class="section-number-2">3</span> 日志工具</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Android 的日志工具使用起来是真的省心，不需要自己去配置什么，默认的格式基本就足够了。
@@ -402,8 +397,7 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 </div>
 
 <p>
-还有一个问题就是日志工具的定制，如果开发和生产环境中需要不同级别的日志打印，
-可以通过定制日志工具实现<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
+还有一个问题就是日志工具的定制，如果开发和生产环境中需要不同级别的日志打印，可以通过定制日志工具实现<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
 </p>
 
 <div class="org-src-container">
@@ -456,8 +450,8 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 </div>
 </div>
 
-<div id="outline-container-org18fbca5" class="outline-2">
-<h2 id="org18fbca5"><span class="section-number-2">4</span> 活动</h2>
+<div id="outline-container-orgfd3033e" class="outline-2">
+<h2 id="orgfd3033e"><span class="section-number-2">4</span> 活动</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 活动属于 Android 四大组件之一，相关的内容也很多，想要学习它们的使用可以看官方教程：
@@ -494,8 +488,7 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 
 <blockquote>
 <p>
-活动作为应用程序的门面，通过方法 <code>setContentView</code> 加载指定的布局，内部通过 <b>反射</b> 机制，
-动态创建布局文件中定义的各种控件与布局，然后按照布局文件中定义的层次结构与属性装填好显示。
+活动作为应用程序的门面，通过方法 <code>setContentView</code> 加载指定的布局，内部通过 <b>反射</b> 机制，动态创建布局文件中定义的各种控件与布局，然后按照布局文件中定义的层次结构与属性装填好显示。
 </p>
 </blockquote></li>
 
@@ -521,8 +514,7 @@ R 类是怎么一回事？
 
 <blockquote>
 <p>
-很明显，我们没有自己创建 R 类，这就意味着 Android Studio 会自主编译 R 类，
-推测是在资源文件发生修改后进行编译。
+很明显，我们没有自己创建 R 类，这就意味着 Android Studio 会自主编译 R 类，推测是在资源文件发生修改后进行编译。
 </p>
 
 <p>
@@ -536,8 +528,7 @@ R 类是怎么一回事？
 
 <blockquote>
 <p>
-Android 可以动态的加载布局，当移动端的大小不同或横竖屏不一样是，可以自动选择相应的布局（如果有的话），
-所以说，加载了什么布局，方法 <code>findViewById</code> 就作用在什么布局上，因此编写代码是需要注意存在多种不同的布局的情况。
+Android 可以动态的加载布局，当移动端的大小不同或横竖屏不一样是，可以自动选择相应的布局（如果有的话），所以说，加载了什么布局，方法 <code>findViewById</code> 就作用在什么布局上，因此编写代码是需要注意存在多种不同的布局的情况。
 </p>
 </blockquote></li>
 
@@ -564,12 +555,11 @@ Intent 可以传递实现了 <a href="https://developer.android.google.cn/refere
 </div>
 </div>
 
-<div id="outline-container-org7558374" class="outline-2">
-<h2 id="org7558374"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
+<div id="outline-container-orgfdf475e" class="outline-2">
+<h2 id="orgfdf475e"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-Android 的四大组件为：活动、广播、服务和内容提供器，除了活动以外，另外三大组件都只是简单的学习了一下，
-用的还不多，就简单的一并总结了 @_@
+Android 的四大组件为：活动、广播、服务和内容提供器，除了活动以外，另外三大组件都只是简单的学习了一下，用的还不多，就简单的一并总结了 @_@
 </p>
 
 <p>
@@ -597,8 +587,7 @@ Android 的四大组件为：活动、广播、服务和内容提供器，除了
 
 <ul class="org-ul">
 <li><p>
-服务：服务是 Android 运行后台任务的方式，与之相关的话题有 <b>多线程</b> 和 <b>异步消息机制</b>. 而服务本身的使用反而比较简单，
-需要注意的一点是：子线程中是不能修改 UI 内容的，如果要修改，就只能想办法告诉主线程执行相应的操作。
+服务：服务是 Android 运行后台任务的方式，与之相关的话题有 <b>多线程</b> 和 <b>异步消息机制</b>. 而服务本身的使用反而比较简单，需要注意的一点是：子线程中是不能修改 UI 内容的，如果要修改，就只能想办法告诉主线程执行相应的操作。
 </p>
 
 <p>
@@ -610,8 +599,8 @@ Android 的四大组件为：活动、广播、服务和内容提供器，除了
 </div>
 </div>
 
-<div id="outline-container-org21f5ea1" class="outline-2">
-<h2 id="org21f5ea1"><span class="section-number-2">6</span> 数据持久化</h2>
+<div id="outline-container-orgad0e639" class="outline-2">
+<h2 id="orgad0e639"><span class="section-number-2">6</span> 数据持久化</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库中，并提供了相应的，简洁的接口。
@@ -630,12 +619,11 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org919aaa8" class="outline-2">
-<h2 id="org919aaa8"><span class="section-number-2">7</span> 权限问题</h2>
+<div id="outline-container-org83990ac" class="outline-2">
+<h2 id="org83990ac"><span class="section-number-2">7</span> 权限问题</h2>
 <div class="outline-text-2" id="text-7">
 <p>
-编写 Android 问题避不开的一个问题就是权限的获取，对于危险的权限来说，除了需要在 <code>AndroidManifest.xml</code> 中声明以外，
-还需要进行运行时权限申请。
+编写 Android 问题避不开的一个问题就是权限的获取，对于危险的权限来说，除了需要在 <code>AndroidManifest.xml</code> 中声明以外，还需要进行运行时权限申请。
 </p>
 
 <p>
@@ -659,8 +647,8 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org8851684" class="outline-2">
-<h2 id="org8851684"><span class="section-number-2">8</span> 后记</h2>
+<div id="outline-container-org71b1017" class="outline-2">
+<h2 id="org71b1017"><span class="section-number-2">8</span> 后记</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Android 的内容是很多的，单靠一篇博客就想写完是不可能的，这里也只是拎了一些印象比较深的的内容出来总结。
