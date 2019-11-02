@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-11-02 六 21:39 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spring Security Web 和 OAuth2</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Spring Security Web 和 OAuth2</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0640bae">1. 前言</a></li>
+<li><a href="#org8c592f4">2. Spring Security Core</a></li>
+<li><a href="#org95dc422">3. Spring Security Web</a>
+<ul>
+<li><a href="#orgcc1e876">3.1. 过滤器链的构建</a></li>
+<li><a href="#orge159b86">3.2. 过滤器链的调用</a></li>
+<li><a href="#org959df6f">3.3. 过滤器链的使用</a></li>
+</ul>
+</li>
+<li><a href="#orgf5fb7f0">4. Spring Security OAuth2</a>
+<ul>
+<li><a href="#orgce61107">4.1. 授权服务器</a>
+<ul>
+<li><a href="#orga852287">4.1.1. 授权码模式</a></li>
+<li><a href="#org40668f6">4.1.2. 密码模式</a></li>
+<li><a href="#orga87174a">4.1.3. 客户端认证</a></li>
+<li><a href="#org4684319">4.1.4. TokenGranter</a></li>
+</ul>
+</li>
+<li><a href="#org5992800">4.2. 资源服务器</a></li>
+</ul>
+</li>
+<li><a href="#org4f6936d">5. Spring Security JWT</a></li>
+<li><a href="#orge769bdd">6. 结语</a></li>
+<li><a href="#org156a9ba">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0640bae" class="outline-2">
+<h2 id="org0640bae"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Spring Security 是一个多模块的项目，之前梳理了一下 <a href="https://rgb-24bit.github.io/blog/2019/spring-security-certification-process.html">Spring Security 认证流程</a>，现在才发现，梳理的那部分内容更多的只是 Spring Security Core 这个核心模块中的内容。
+</p>
+
+<p>
+日常使用时，还会更多的涉及 Spring Security Web 和 Spring Security OAuth2 中的东西，这篇博客的主要内容便是梳理一下这三者之间的关系，了解一下各自发挥的作用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8c592f4" class="outline-2">
+<h2 id="org8c592f4"><span class="section-number-2">2</span> Spring Security Core</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Spring Security Core 在整个 Spring Security 框架中扮演着重要的角色，提供了有关于认证和权限控制相关的抽象。
+</p>
+
+<p>
+然而，在使用的过程中，我们接触的更多的可能是和认证相关的抽象，比如：
+</p>
+<ul class="org-ul">
+<li>通过 <code>AuthenticationManager</code> 提供了进行用户认证方法的抽象，允许通过 <code>ProviderManager</code> 和 <code>AuthenticationProvider</code> 来组装和实现自己的认证方法</li>
+<li>通过 <code>UserDetails</code> 和 <code>UserDetailsService</code> 提供了用户详细信息和获取用户详细信息方式的抽象</li>
+<li>通过 <code>Authentication</code> 提供了用户认证信息和认证结果的抽象</li>
+<li>通过 <code>SecurityContext</code> 和 <code>SecurityContextHolder</code> 提供了保存认证结果的方式</li>
+<li>……</li>
+</ul>
+
+<p>
+这些东西其实就是将传统的认证流程中的关键组成单独抽象了出来，结合传统的认证流程可以很容易的理解这些组件之间的关系，也可以看这张来自 <a href="http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/?vip">Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客</a> 的一张图片：
+</p>
+<img src="https://i.loli.net/2019/10/20/BJ3lRDFtxSuZpod.png">
+
+<p>
+而权限控制部分的抽象，主要就是 <code>AccessDecisionManager</code> 和 <code>AccessDecisionVoter</code> 了，这两个东西我目前还没有手动操作过，只能说，Spring Security Web 提供的服务太贴心，权限控制部分的实现并不需要我操太多心。
+</p>
+
+<p>
+关于 Spring Security Core 模块更多的内容可以参考：
+</p>
+<ul class="org-ul">
+<li><a href="http://www.iocoder.cn/Spring-Security/laoxu/Architecture-Overview/?vip">Spring Security(一) —— Architecture Overview | 芋道源码 —— 纯源码解析博客</a></li>
+<li><a href="https://leer.moe/2019/03/26/spring-security-architecture/">Spring Security 架构 | LeeReindeer's blog</a></li>
+<li><a href="https://rgb-24bit.github.io/blog/2019/spring-security-certification-process.html">Spring Security 认证流程梳理</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org95dc422" class="outline-2">
+<h2 id="org95dc422"><span class="section-number-2">3</span> Spring Security Web</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+如果说 Spring Security Core 只是提供了认证和权限控制相关的抽象的话，Spring Security Web 便为我们提供了这些抽象的具体实现与应用。
+</p>
+
+<p>
+Spring Security Web 通过 <b>过滤器链</b> 来实现了和 Web 安全相关的一系列功能，而用户的认证和权限控制只是其中的一部分，在这部分的实现中，过滤器充当 Spring Security Core 调用者的身份，一般流程为：
+</p>
+<ul class="org-ul">
+<li>过滤器提取请求中的认证信息封装为 <code>Authentication</code> 传递给 <code>AuthenticationManager</code> 进行认证，然后将认证结果放到 <code>SecurityContext</code> 中供后续过滤器使用</li>
+<li>过滤器在请求进入端点前根据认证结果利用 <code>AccessDecisionManager</code> 判断是否具备相应的权限</li>
+</ul>
+
+<p>
+在这里，Spring Security Core 只是 Spring Security Web 利用的一部分功能，更为重要的是，整个过滤器链。
+</p>
+</div>
+
+<div id="outline-container-orgcc1e876" class="outline-3">
+<h3 id="orgcc1e876"><span class="section-number-3">3.1</span> 过滤器链的构建</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+之前本来只是想了解一下过滤器链的调用过程，但是看着看着，就跑到源码去了。反应过来的时候才发现，已经搞了这么多了有点吃亏，就干脆把过滤器链的构建逻辑理了一下。
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+在梳理完构建器链的构建和调用逻辑后感觉，过滤器链的构建逻辑貌似没有好多用，还不如直接看过滤器链的调用逻辑……
+</p>
+
+</details>
+
+<p>
+这部分逻辑的梳理过程有些复杂，反正我调试的时候断点就在 <code>build()</code> 方法附近反复横跳，这里为了简单，就直接放结果了<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>：
+</p>
+<img src="https://i.loli.net/2019/11/01/573eMSbcNmE9ALo.png">
+
+<p>
+时序图画的不是很标准，大致意思一下就可以了哈（￣▽￣），解析如下：
+</p>
+<ol class="org-ol">
+<li>Spring Security Web 中的过滤器链的构建主要是由 <code>WebSecurity</code> 和 <code>HttpSecurity</code> 完成的</li>
+<li><code>WebSecurity</code> 根据上下文中的 <code>WebSecurityConfigurer</code> 构建出 <code>HttpSecurity</code> 对象，然后通过 <code>HttpSecurity</code> 构建出 <code>SecurityFilterChain</code> 后，将 <code>SecurityFilterChain</code> 放到 <code>FilterChainProxy</code> 中。其中，WebSecurityConfigurer 的常用实现为 <code>WebMvcConfigurerAdapter</code>, 而 <code>SecurityFilterChain</code> 的常用实现为 <code>DefaultSecurityFilterChain</code></li>
+<li><code>HttpSecurity</code> 根据直接添加的 <code>Filter</code> 和通过 <code>AbstractHttpConfigurer</code> 实现类构建的 <code>Filter</code> 生成过滤器链</li>
+</ol>
+
+<p>
+这部分逻辑中，关键的对象分别是 <code>WebSecurity</code> 和它依赖的配置类 <code>WebSecurityConfigurer</code>, <code>HttpSecurity</code> 和它依赖的配置类 <code>AbstractHttpConfigurer</code>.
+</p>
+
+<p>
+在实际的使用中，我们通常会继承 <code>WebMvcConfigurerAdapter</code> 这个 <code>WebSecurityConfigurer</code> 的实现类，然后在重写它的 <code>configure(HttpSecurity)</code> 方法：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@Configuration</span>
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SecurityConfig</span> <span class="org-keyword">extends</span> <span class="org-type">WebSecurityConfigurerAdapter</span> {
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">configure</span>(<span class="org-type">HttpSecurity</span> <span class="org-variable-name">http</span>) <span class="org-keyword">throws</span> <span class="org-type">Exception</span> {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">@formatter:off</span>
+        http
+            .authorizeRequests()
+              .antMatchers(<span class="org-string">"/oauth/**"</span>)
+              .authenticated()
+              .and()
+            .requestMatchers()
+              .antMatchers(<span class="org-string">"/oauth/**"</span>,<span class="org-string">"/login/**"</span>,<span class="org-string">"/logout/**"</span>)
+              .and()
+            .csrf()
+              .disable()
+            .formLogin()
+              .permitAll();
+        <span class="org-comment-delimiter">// </span><span class="org-comment">@formatter:on</span>
+    }
+}
+</pre>
+</div>
+
+<p>
+在上面这个类中，我们继承了 <code>WebSecurityConfigurerAdapter</code> 这个类，当我们将自定义的类放到 Spring 上下文中后，就可以被 WebSecurity 拿到用于构建 HttpSecurity，而重写的 <code>configure(HttpSecurity)</code> 则会在 HttpSecurity 构建过滤器之前调用，完成过滤器链的配置。
+</p>
+
+<p>
+其中，诸如 <code>csrf()</code> 之类的方法都会返回一个 <code>AbstractHttpConfigurer</code> 实现，允许我们对特定的过滤器进行配置。
+</p>
+
+<p>
+到了最后，HttpSecurity 就可以根据相应的配置完成过滤器链的构建，然后再由 WebSecurity 将它们放到 <code>FilterChainProxy</code> 实例中返回。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge159b86" class="outline-3">
+<h3 id="orge159b86"><span class="section-number-3">3.2</span> 过滤器链的调用</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+过滤器链的调用的话，主要涉及两个对象：FilterChainProxy 和 DefaultSecurityFilterChain，关键其实还是在 FilterChainProxy 上。
+</p>
+
+<p>
+然而，这两个对象的源码都挺简单的，这里就不贴了，有兴趣的可以去看一下，这里简单说一下结果：
+</p>
+<ul class="org-ul">
+<li>FilterChainProxy 会作为 Servlet 容器过滤器链中的一个过滤器，当接收到请求后在持有的过滤器链中判断是否存在匹配的过滤器链</li>
+<li>存在匹配的过滤器链时，会直接使用第一个匹配项对请求进行处理</li>
+<li>不存在匹配的过滤器链或者匹配的过滤器链走完后，就会回到 Servlet 容器过滤器链继续执行</li>
+</ul>
+
+<p>
+这里的关键点其实就是，存在多条过滤器链，每条过滤器链匹配一定的请求。之前看文档的时候不仔细，没有意识到这一点，饶了不少弯路 QAQ
+</p>
+
+<p>
+附图：
+</p>
+<img src="https://i.loli.net/2019/11/02/b7QCFNX1Knga9pS.png">
+</div>
+</div>
+
+<div id="outline-container-org959df6f" class="outline-3">
+<h3 id="org959df6f"><span class="section-number-3">3.3</span> 过滤器链的使用</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Spring Security Web 过滤器的使用主要就是自定义过滤器链，默认的过滤器链会添加一些 Spring Security Web 自带的一些过滤器，使用时，需要考虑是否去掉默认的一些过滤器器（获取不使用默认配置），并将自定义的过滤器添加到过滤器链中的一个合适的位置上。
+</p>
+
+<p>
+这里会简要介绍部分内置过滤器的作用和过滤器的顺序，首先是内置的几个过滤器：
+</p>
+<ul class="org-ul">
+<li>过滤器 <code>SecurityContextPersistenceFilter</code> 可以从 Session 中取出已认证用户的信息</li>
+<li>过滤器 <code>AnonymousAuthenticationFilter</code> 在发现 <code>SecurityContextHolder</code> 中还没有认证信息时，会生成一个匿名认证信息放到 <code>SecurityContextHolder</code></li>
+<li>过滤器 <code>ExceptionTranslationFilter</code> 可以处理 <code>FilterSecurityInterceptor</code> 中抛出的异常，进行重定向、输出错误信息等</li>
+<li>过滤器 <code>FilterSecurityInterceptor</code> 对认证信息的权限进行判断，权限不足时抛出异常</li>
+</ul>
+
+<p>
+在自定义过滤器时（通常是认证过滤器），我们需要考虑自定义过滤器的位置，比如，我们不应该把自定义的认证过滤器放在 <code>AnonymousAuthenticationFilter</code> 的后面，官方文档对过滤器的顺序给出了解释：在去除一些过滤器后，大致顺序就为：
+</p>
+<pre class="example">
+SecurityContextPersistenceFilter -&gt; AuthenticationProcessingFilter -&gt; AnonymousAuthenticationFilter -&gt; ExceptionTranslationFilter -&gt; FilterSecurityInterceptor
+</pre>
+
+<p>
+其中，AuthenticationProcessingFilter 是指认证过滤器实现，比如常用的 <code>UsernamePasswordAuthenticationFilter</code> 这个过滤器。
+</p>
+
+<p>
+完整的顺序可以参考：
+</p>
+<ul class="org-ul">
+<li><a href="https://www.docs4dev.com/docs/en/spring-security/5.1.2.RELEASE/reference/web-app-security.html#filter-ordering">Spring Security 5.1.2.RELEASE Reference - 10. Web Application Security | Docs4dev</a></li>
+</ul>
+
+<p>
+在这个顺序中，由于 <code>SecurityContextPersistenceFilter</code> 可能从 Session 中取出已认证用户的信息，因此，自定义过滤器时应该考虑 SecurityContextHolder 是不是已经存在用户认证信息。或者在登录/注册相关 URL 的过滤器链中设置认证用户账户密码的过滤器，在其他过滤器链中设置认证 token 的过滤器。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf5fb7f0" class="outline-2">
+<h2 id="orgf5fb7f0"><span class="section-number-2">4</span> Spring Security OAuth2</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web 的基础上，提供了对 OAuth2 授权框架的支持。
+</p>
+
+<p>
+其中，最为复杂的部分是在 <b>授权服务器</b> 上，相对的，资源服务器基本上就是重用 Spring Security Web 提供的过滤器链，通过过滤器 <code>OAuth2AuthenticationProcessingFilter</code> 和请求携带的 <code>Token</code> 获取认证信息，因此，这里的重心会放在授权服务器上。
+</p>
+</div>
+
+<div id="outline-container-orgce61107" class="outline-3">
+<h3 id="orgce61107"><span class="section-number-3">4.1</span> 授权服务器</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+对于传统的认证方式来说，简单认证用户的信息基本上就足够了，但是对于 OAuth2 来说是不够的，对于 OAuth2 授权服务器来说，除了需要完成用户的认证以外，还需完成客户端的认证，还需要效验客户端请求的 Scope，因此，单凭过滤器链是不足以完成两者的认证的，因为 SecurityContextHolder 只能持有一个认证结果。
+</p>
+
+<p>
+于是，Spring Security OAuth2 采用的认证策略便是：在过滤器链中完成客户端或用户的认证，然后再在端点的内部逻辑中完成剩余信息的效验。而这个认证策略，在不同模式中也是不一样的。
+</p>
+
+<p>
+这里主要会对 <b>授权码模式</b> 和 <b>密码模式</b> 中的认证策略进行介绍，因为这两个模式中使用到的端点 <code>AuthorizationEndpoint</code> 和 <code>TokenEndpoint</code> 已经涵盖了两条主要的过滤器链。
+</p>
+</div>
+
+<div id="outline-container-orga852287" class="outline-4">
+<h4 id="orga852287"><span class="section-number-4">4.1.1</span> 授权码模式</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+首先是授权码模式，对于授权码模式来说，请求流程通常是先到 <code>/oauth/authorize</code> 获取授权码，然后再到 <code>/oauth/token</code> 获取 Token，对于 <code>/oauth/authorize</code> 这个端点的过滤器链来说，认证的是用户的信息，认证通过后进入端点内部，会对客户端请求 <code>Scope</code> 和用户的 <code>Approval</code> 进行效验，效验通过会生成授权码返回给客户端。
+</p>
+
+<p>
+其实这里也就可以明白为什么 <code>/oauth/authorize</code> 这个端点需要对用户进行认证了，因为，这里需要获取的是 <b>用户</b> 的授权。
+</p>
+
+<p>
+然后客户端拿着授权码去 <code>/oauth/token</code> 这个端点获取 Token 时，该端点的过滤器链会对客户端进行认证，认证通过后进入端点内部，这时端点内部会对客户端请求的 Scope 进行效验，效验通过后就会通过 <code>TokenGranter</code> 生成 Token 返回给客户端。
+</p>
+
+<p>
+也就是说，对于授权码模式来说：
+</p>
+<ul class="org-ul">
+<li>端点 <code>/oauth/authorize</code> 完成用户的认证、客户端请求的 Scope 的效验、用户的授权检查</li>
+<li>端点 <code>/oauth/token</code> 完成客户端的认证，客户端请求的 Scope 的效验、客户端授权码的检查</li>
+</ul>
+
+<p>
+这其实就可以看做时对授权码模式的代码解释，因为，在授权码模式中，去获取 Token 的往往不是用户操作的客户端，因此，需要认证客户端是否是受信任的。
+</p>
+
+<p>
+相关逻辑对应的源码，去掉了一部分效验代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@RequestMapping</span>(value = <span class="org-string">"/oauth/authorize"</span>)
+<span class="org-keyword">public</span> <span class="org-type">ModelAndView</span> <span class="org-function-name">authorize</span>(<span class="org-type">Map</span>&lt;<span class="org-type">String</span>, <span class="org-type">Object</span>&gt; <span class="org-variable-name">model</span>, <span class="org-c-annotation">@RequestParam</span> <span class="org-type">Map</span>&lt;<span class="org-type">String</span>, <span class="org-type">String</span>&gt; <span class="org-variable-name">parameters</span>, <span class="org-type">SessionStatus</span> <span class="org-variable-name">sessionStatus</span>, <span class="org-type">Principal</span> <span class="org-variable-name">principal</span>) {
+  <span class="org-type">AuthorizationRequest</span> <span class="org-variable-name">authorizationRequest</span> = getOAuth2RequestFactory().createAuthorizationRequest(parameters);
+
+  <span class="org-keyword">try</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26410;&#36890;&#36807;&#35748;&#35777;&#30340;&#35831;&#27714;&#20250;&#25243;&#24322;&#24120;</span>
+    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>(principal <span class="org-keyword">instanceof</span> Authentication) || <span class="org-negation-char">!</span>((<span class="org-type">Authentication</span>) principal).isAuthenticated()) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">InsufficientAuthenticationException</span>(<span class="org-string">"User must be authenticated with Spring Security before authorization can be completed."</span>);
+    }
+
+    <span class="org-type">ClientDetails</span> <span class="org-variable-name">client</span> = getClientDetailsService().loadClientByClientId(authorizationRequest.getClientId());
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#25928;&#39564; Scope</span>
+    oauth2RequestValidator.validateScope(authorizationRequest, client);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#25928;&#39564;&#29992;&#25143;&#30340;&#25480;&#26435;</span>
+    authorizationRequest = userApprovalHandler.checkForPreApproval(authorizationRequest, (<span class="org-type">Authentication</span>) principal);
+    <span class="org-type">boolean</span> <span class="org-variable-name">approved</span> = userApprovalHandler.isApproved(authorizationRequest, (<span class="org-type">Authentication</span>) principal);
+    authorizationRequest.setApproved(approved);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Validation is all done, so we can check for auto approval...</span>
+    <span class="org-keyword">if</span> (authorizationRequest.isApproved()) {
+      <span class="org-keyword">if</span> (responseTypes.contains(<span class="org-string">"token"</span>)) {
+        <span class="org-keyword">return</span> getImplicitGrantResponse(authorizationRequest);
+      }
+      <span class="org-keyword">if</span> (responseTypes.contains(<span class="org-string">"code"</span>)) {
+        <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">ModelAndView</span>(getAuthorizationCodeResponse(authorizationRequest, (<span class="org-type">Authentication</span>) principal));
+      }
+    }
+
+    <span class="org-keyword">return</span> getUserApprovalPageResponse(model, authorizationRequest, (<span class="org-type">Authentication</span>) principal);
+  }
+  <span class="org-keyword">catch</span> (<span class="org-type">RuntimeException</span> <span class="org-variable-name">e</span>) {
+    sessionStatus.setComplete();
+    <span class="org-keyword">throw</span> e;
+  }
+}
+
+<span class="org-c-annotation">@RequestMapping</span>(value = <span class="org-string">"/oauth/token"</span>, method=<span class="org-constant">RequestMethod</span>.POST)
+<span class="org-keyword">public</span> <span class="org-type">ResponseEntity</span>&lt;<span class="org-type">OAuth2AccessToken</span>&gt; <span class="org-function-name">postAccessToken</span>(<span class="org-type">Principal</span> <span class="org-variable-name">principal</span>, <span class="org-c-annotation">@RequestParam</span> <span class="org-type">Map</span>&lt;<span class="org-type">String</span>, <span class="org-type">String</span>&gt; <span class="org-variable-name">parameters</span>)
+  <span class="org-keyword">throws</span> <span class="org-type">HttpRequestMethodNotSupportedException</span> {
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21487;&#20197;&#30475;&#21040;&#65292;&#36890;&#36807;&#25928;&#39564;&#30340;&#26159;&#23458;&#25143;&#31471;</span>
+  <span class="org-type">String</span> <span class="org-variable-name">clientId</span> = getClientId(principal);
+  <span class="org-type">ClientDetails</span> <span class="org-variable-name">authenticatedClient</span> = getClientDetailsService().loadClientByClientId(clientId);
+
+  <span class="org-type">TokenRequest</span> <span class="org-variable-name">tokenRequest</span> = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25928;&#39564;&#35831;&#27714;&#30340; Scope</span>
+  <span class="org-keyword">if</span> (authenticatedClient != <span class="org-constant">null</span>) {
+    oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);
+  }
+
+  <span class="org-keyword">if</span> (isAuthCodeRequest(parameters)) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">The scope was requested or determined during the authorization step</span>
+    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>tokenRequest.getScope().isEmpty()) {
+      tokenRequest.setScope(Collections.&lt;<span class="org-type">String</span>&gt; emptySet());
+    }
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#35843;&#29992; TokenGranter &#36827;&#34892;&#25480;&#26435;</span>
+  <span class="org-type">OAuth2AccessToken</span> <span class="org-variable-name">token</span> = getTokenGranter().grant(tokenRequest.getGrantType(), tokenRequest);
+  <span class="org-keyword">if</span> (token == <span class="org-constant">null</span>) {
+    <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">UnsupportedGrantTypeException</span>(<span class="org-string">"Unsupported grant type: "</span> + tokenRequest.getGrantType());
+  }
+  <span class="org-keyword">return</span> getResponse(token);
+}
+</pre>
+</div>
+
+<p>
+授权码模式流程图：
+</p>
+<img src="https://i.loli.net/2019/11/02/hjMWfXc4ELl3w9O.png">
+</div>
+</div>
+
+<div id="outline-container-org40668f6" class="outline-4">
+<h4 id="org40668f6"><span class="section-number-4">4.1.2</span> 密码模式</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+密码模式，或者说简化模式，只有一个端点即 <code>/oauth/token</code> 这个端点，也就是说，这个端点要同时完成用户和客户端的认证。
+</p>
+
+<p>
+但是，这个端点不可能同时拥有两个过滤器链，而为了支持授权码模式，这个端点的过滤器链的职责已经确定了，就是完成客户端的认证。因此，用户的认证就只能在端点内部逻辑完成。
+</p>
+
+<p>
+当 <code>TokenEndpoint</code> 发现授权模式为 <b>密码模式</b> 时，会将 <code>ResourceOwnerPasswordTokenGranter</code> 放入 <code>TokenGranter</code>, 而 <code>ResourceOwnerPasswordTokenGranter</code> 进行授权时会调用 <code>AuthenticationManager</code> 来完成对用户的认证，认证成功才会通过 <code>TokenService</code> 生成 Token 返回。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">AuthorizationServerEndpointsConfigurer.getDefaultTokenGranters</span>
+<span class="org-keyword">private</span> <span class="org-type">List</span>&lt;<span class="org-type">TokenGranter</span>&gt; <span class="org-function-name">getDefaultTokenGranters</span>() {
+  <span class="org-type">List</span>&lt;<span class="org-type">TokenGranter</span>&gt; <span class="org-variable-name">tokenGranters</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">TokenGranter</span>&gt;();
+  tokenGranters.add(<span class="org-keyword">new</span> <span class="org-type">AuthorizationCodeTokenGranter</span>(tokenServices, authorizationCodeServices, clientDetails, requestFactory));
+  tokenGranters.add(<span class="org-keyword">new</span> <span class="org-type">RefreshTokenGranter</span>(tokenServices, clientDetails, requestFactory));
+  tokenGranters.add(<span class="org-keyword">new</span> <span class="org-type">ImplicitTokenGranter</span>(tokenServices, clientDetails, requestFactory));
+  tokenGranters.add(<span class="org-keyword">new</span> <span class="org-type">ClientCredentialsTokenGranter</span>(tokenServices, clientDetails, requestFactory));
+  <span class="org-keyword">if</span> (authenticationManager != <span class="org-constant">null</span>) {
+    tokenGranters.add(<span class="org-keyword">new</span> <span class="org-type">ResourceOwnerPasswordTokenGranter</span>(authenticationManager, tokenServices, clientDetails, requestFactory));
+  }
+  <span class="org-keyword">return</span> tokenGranters;
+}
+</pre>
+</div>
+
+<p>
+密码模式流程图：
+</p>
+<img src="https://i.loli.net/2019/11/02/PaKl8W1jxFQeR65.png">
+</div>
+</div>
+
+<div id="outline-container-orga87174a" class="outline-4">
+<h4 id="orga87174a"><span class="section-number-4">4.1.3</span> 客户端认证</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<p>
+通过对 <b>授权码模式</b> 和 <b>密码模式</b> 的了解我们知道了客户端的认证是在过滤器链中完成的，这个认证可以通过 <code>BasicAuthenticationFilter</code> 完成，但更通用的大概是 <code>ClientCredentialsTokenEndpointFilter</code> 这个过滤器。
+</p>
+
+<p>
+其内部的认证流程其实是很简单的，最为重要的一点是，它用的还是 Spring Security Core 那一套！
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@Override</span>
+<span class="org-keyword">public</span> <span class="org-type">Authentication</span> <span class="org-function-name">attemptAuthentication</span>(<span class="org-type">HttpServletRequest</span> <span class="org-variable-name">request</span>, <span class="org-type">HttpServletResponse</span> <span class="org-variable-name">response</span>)
+  <span class="org-keyword">throws</span> <span class="org-type">AuthenticationException</span>, <span class="org-type">IOException</span>, <span class="org-type">ServletException</span> {
+
+  <span class="org-type">String</span> <span class="org-variable-name">clientId</span> = request.getParameter(<span class="org-string">"client_id"</span>);
+  <span class="org-type">String</span> <span class="org-variable-name">clientSecret</span> = request.getParameter(<span class="org-string">"client_secret"</span>);
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">If the request is already authenticated we can assume that this filter is not needed</span>
+  <span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span> = SecurityContextHolder.getContext().getAuthentication();
+  <span class="org-keyword">if</span> (authentication != <span class="org-constant">null</span> &amp;&amp; authentication.isAuthenticated()) {
+    <span class="org-keyword">return</span> authentication;
+  }
+
+  <span class="org-type">UsernamePasswordAuthenticationToken</span> <span class="org-variable-name">authRequest</span> = <span class="org-keyword">new</span> <span class="org-type">UsernamePasswordAuthenticationToken</span>(clientId, clientSecret);
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#36890;&#36807; AuthenticationManager &#23436;&#25104;&#35748;&#35777;</span>
+  <span class="org-keyword">return</span> <span class="org-keyword">this</span>.getAuthenticationManager().authenticate(authRequest);
+}
+</pre>
+</div>
+
+<p>
+我们知道，Spring Security OAuth2 提供了 ClientDetails 和 ClientDetailsService 这两种抽象，它们和 UserDetails 和 UserDetailsService 是不兼容的，这时，可以选择自己实现一个 AuthenticationProvider 使用 ClientDetails 和 ClientDetailsService，但也可以将 ClientDetails 和 ClientDetailsService 转换为 UserDetails 和 UserDetailsService，Spring Security OAuth2 通过 ClientDetailsUserDetailsService 来完成这一转换：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">ClientDetailsUserDetailsService</span> <span class="org-keyword">implements</span> <span class="org-type">UserDetailsService</span> {
+  <span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-type">ClientDetailsService</span> <span class="org-variable-name">clientDetailsService</span>;
+
+  <span class="org-keyword">public</span> <span class="org-function-name">ClientDetailsUserDetailsService</span>(<span class="org-type">ClientDetailsService</span> <span class="org-variable-name">clientDetailsService</span>) {
+    <span class="org-keyword">this</span>.clientDetailsService = clientDetailsService;
+  }
+
+  <span class="org-keyword">public</span> <span class="org-type">UserDetails</span> <span class="org-function-name">loadUserByUsername</span>(<span class="org-type">String</span> <span class="org-variable-name">username</span>) <span class="org-keyword">throws</span> <span class="org-type">UsernameNotFoundException</span> {
+    <span class="org-type">ClientDetails</span> <span class="org-variable-name">clientDetails</span>;
+    <span class="org-keyword">try</span> {
+      clientDetails = clientDetailsService.loadClientByClientId(username);
+    } <span class="org-keyword">catch</span> (<span class="org-type">NoSuchClientException</span> <span class="org-variable-name">e</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">UsernameNotFoundException</span>(e.getMessage(), e);
+    }
+    <span class="org-type">String</span> <span class="org-variable-name">clientSecret</span> = clientDetails.getClientSecret();
+    <span class="org-keyword">if</span> (clientSecret== <span class="org-constant">null</span> || clientSecret.trim().length()==0) {
+      clientSecret = emptyPassword;
+    }
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">User</span>(username, clientSecret, clientDetails.getAuthorities());
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4684319" class="outline-4">
+<h4 id="org4684319"><span class="section-number-4">4.1.4</span> TokenGranter</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<p>
+Spring Security OAuth2 中授权码的生成时通过 TokenGranter 来完成的，进行授权码的生成时，会遍历拥有的各个 TokenGranter 实现，直到成功生成 Token 或者所有 TokenGranter 实现都不能生成 Token。
+</p>
+
+<p>
+生成 Token 也是一个可以抽象出来的环节，因此，Spring Security OAuth2 通过 TokenService 和 TokenStore 来生成、获取和保存 Token。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-keyword">class</span> <span class="org-type">AbstractTokenGranter</span> <span class="org-keyword">implements</span> <span class="org-type">TokenGranter</span> {
+  <span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-type">AuthorizationServerTokenServices</span> <span class="org-variable-name">tokenServices</span>;
+
+  <span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-type">ClientDetailsService</span> <span class="org-variable-name">clientDetailsService</span>;
+
+  <span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-type">OAuth2RequestFactory</span> <span class="org-variable-name">requestFactory</span>;
+
+  <span class="org-keyword">private</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">grantType</span>;
+
+  <span class="org-keyword">protected</span> <span class="org-function-name">AbstractTokenGranter</span>(<span class="org-type">AuthorizationServerTokenServices</span> <span class="org-variable-name">tokenServices</span>,
+      <span class="org-type">ClientDetailsService</span> <span class="org-variable-name">clientDetailsService</span>, <span class="org-type">OAuth2RequestFactory</span> <span class="org-variable-name">requestFactory</span>, <span class="org-type">String</span> <span class="org-variable-name">grantType</span>) {
+    <span class="org-keyword">this</span>.clientDetailsService = clientDetailsService;
+    <span class="org-keyword">this</span>.grantType = grantType;
+    <span class="org-keyword">this</span>.tokenServices = tokenServices;
+    <span class="org-keyword">this</span>.requestFactory = requestFactory;
+  }
+
+  <span class="org-keyword">public</span> <span class="org-type">OAuth2AccessToken</span> <span class="org-function-name">grant</span>(<span class="org-type">String</span> <span class="org-variable-name">grantType</span>, <span class="org-type">TokenRequest</span> <span class="org-variable-name">tokenRequest</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#27599;&#20010; TokenGranter &#23545;&#24212;&#19968;&#31181;&#25480;&#26435;&#31867;&#22411;</span>
+    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span><span class="org-keyword">this</span>.grantType.equals(grantType)) {
+      <span class="org-keyword">return</span> <span class="org-constant">null</span>;
+    }
+
+    <span class="org-type">String</span> <span class="org-variable-name">clientId</span> = tokenRequest.getClientId();
+    <span class="org-type">ClientDetails</span> <span class="org-variable-name">client</span> = clientDetailsService.loadClientByClientId(clientId);
+    validateGrantType(grantType, client);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#33719;&#21462;&#25480;&#26435;&#30721;</span>
+    <span class="org-keyword">return</span> getAccessToken(client, tokenRequest);
+  }
+
+  <span class="org-keyword">protected</span> <span class="org-type">OAuth2AccessToken</span> <span class="org-function-name">getAccessToken</span>(<span class="org-type">ClientDetails</span> <span class="org-variable-name">client</span>, <span class="org-type">TokenRequest</span> <span class="org-variable-name">tokenRequest</span>) {
+    <span class="org-keyword">return</span> tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
+  }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#40664;&#35748;&#30340; TokenServices &#30340;&#37096;&#20998;&#20195;&#30721;</span>
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">DefaultTokenServices</span> {
+  <span class="org-c-annotation">@Transactional</span>
+  <span class="org-keyword">public</span> <span class="org-type">OAuth2AccessToken</span> <span class="org-function-name">createAccessToken</span>(<span class="org-type">OAuth2Authentication</span> <span class="org-variable-name">authentication</span>) <span class="org-keyword">throws</span> <span class="org-type">AuthenticationException</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#39318;&#20808;&#20174; TokenStore &#20013;&#33719;&#21462; Token</span>
+    <span class="org-type">OAuth2AccessToken</span> <span class="org-variable-name">existingAccessToken</span> = tokenStore.getAccessToken(authentication);
+    <span class="org-type">OAuth2RefreshToken</span> <span class="org-variable-name">refreshToken</span> = <span class="org-constant">null</span>;
+    <span class="org-keyword">if</span> (existingAccessToken != <span class="org-constant">null</span>) {
+      <span class="org-keyword">if</span> (existingAccessToken.isExpired()) {
+        <span class="org-keyword">if</span> (existingAccessToken.getRefreshToken() != <span class="org-constant">null</span>) {
+          refreshToken = existingAccessToken.getRefreshToken();
+          tokenStore.removeRefreshToken(refreshToken);
+        }
+        tokenStore.removeAccessToken(existingAccessToken);
+      }
+      <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Re-store the access token in case the authentication has changed</span>
+        tokenStore.storeAccessToken(existingAccessToken, authentication);
+        <span class="org-keyword">return</span> existingAccessToken;
+      }
+    }
+
+    <span class="org-keyword">if</span> (refreshToken == <span class="org-constant">null</span>) {
+      refreshToken = createRefreshToken(authentication);
+    }
+
+    <span class="org-type">OAuth2AccessToken</span> <span class="org-variable-name">accessToken</span> = createAccessToken(authentication, refreshToken);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#20445;&#23384; accessToken</span>
+    tokenStore.storeAccessToken(accessToken, authentication);
+    refreshToken = accessToken.getRefreshToken();
+    <span class="org-keyword">if</span> (refreshToken != <span class="org-constant">null</span>) {
+      tokenStore.storeRefreshToken(refreshToken, authentication);
+    }
+    <span class="org-keyword">return</span> accessToken;
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20174; TokenStore &#20013;&#33719;&#21462; Token</span>
+  <span class="org-keyword">public</span> <span class="org-type">OAuth2AccessToken</span> <span class="org-function-name">getAccessToken</span>(<span class="org-type">OAuth2Authentication</span> <span class="org-variable-name">authentication</span>) {
+    <span class="org-keyword">return</span> tokenStore.getAccessToken(authentication);
+  }
+}
+</pre>
+</div>
+
+<p>
+简单来说就是：
+</p>
+<ol class="org-ol">
+<li>在过滤器链和端点内部逻辑中完成客户端和用户的认证与 Scope 的效验</li>
+<li>通过 TokenGranter 生成 Token，而 TokenGranter 通过 TokenService 创建 Token，TokenStore 可以保存 Token</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5992800" class="outline-3">
+<h3 id="org5992800"><span class="section-number-3">4.2</span> 资源服务器</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+资源服务器相较于授权服务器来说就要简单多了，和传统的流程差不多，通过过滤器 <code>OAuth2AuthenticationProcessingFilter</code> 和 <code>OAuth2AuthenticationManager</code> 验证 Token 并获取认证信息：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">OAuth2AuthenticationProcessingFilter</span> <span class="org-keyword">implements</span> <span class="org-type">Filter</span>, <span class="org-type">InitializingBean</span> {
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">doFilter</span>(<span class="org-type">ServletRequest</span> <span class="org-variable-name">req</span>, <span class="org-type">ServletResponse</span> <span class="org-variable-name">res</span>, <span class="org-type">FilterChain</span> <span class="org-variable-name">chain</span>) <span class="org-keyword">throws</span> <span class="org-type">IOException</span>, <span class="org-type">ServletException</span> {
+    <span class="org-keyword">final</span> <span class="org-type">HttpServletRequest</span> <span class="org-variable-name">request</span> = (<span class="org-type">HttpServletRequest</span>) req;
+    <span class="org-keyword">final</span> <span class="org-type">HttpServletResponse</span> <span class="org-variable-name">response</span> = (<span class="org-type">HttpServletResponse</span>) res;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#20174;&#35831;&#27714;&#22836;&#20013;&#25552;&#21462; Token</span>
+    <span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span> = tokenExtractor.extract(request);
+
+    <span class="org-type">Authentication</span> <span class="org-variable-name">authResult</span> = authenticationManager.authenticate(authentication);
+
+    SecurityContextHolder.getContext().setAuthentication(authResult);
+
+    chain.doFilter(request, response);
+  }
+}
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">OAuth2AuthenticationManager</span> <span class="org-keyword">implements</span> <span class="org-type">AuthenticationManager</span>, <span class="org-type">InitializingBean</span> {
+  <span class="org-keyword">public</span> <span class="org-type">Authentication</span> <span class="org-function-name">authenticate</span>(<span class="org-type">Authentication</span> <span class="org-variable-name">authentication</span>) <span class="org-keyword">throws</span> <span class="org-type">AuthenticationException</span> {
+    <span class="org-type">String</span> <span class="org-variable-name">token</span> = (<span class="org-type">String</span>) authentication.getPrincipal();
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#36890;&#36807; TokenService &#33719;&#21462;&#35748;&#35777;&#20449;&#24687;</span>
+    <span class="org-type">OAuth2Authentication</span> <span class="org-variable-name">auth</span> = tokenServices.loadAuthentication(token);
+
+    <span class="org-keyword">if</span> (auth == <span class="org-constant">null</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">InvalidTokenException</span>(<span class="org-string">"Invalid token: "</span> + token);
+    }
+
+    checkClientDetails(auth);
+
+    <span class="org-keyword">if</span> (authentication.getDetails() <span class="org-keyword">instanceof</span> OAuth2AuthenticationDetails) {
+      <span class="org-type">OAuth2AuthenticationDetails</span> <span class="org-variable-name">details</span> = (<span class="org-type">OAuth2AuthenticationDetails</span>) authentication.getDetails();
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Guard against a cached copy of the same details</span>
+      <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>details.equals(auth.getDetails())) {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Preserve the authentication details from the one loaded by token services</span>
+        details.setDecodedDetails(auth.getDetails());
+      }
+    }
+    auth.setDetails(authentication.getDetails());
+    auth.setAuthenticated(<span class="org-constant">true</span>);
+    <span class="org-keyword">return</span> auth;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4f6936d" class="outline-2">
+<h2 id="org4f6936d"><span class="section-number-2">5</span> Spring Security JWT</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+很多地方都可以看到 JWT 在 OAuth2 中的使用，Spring Security JWT 在 Spring Security OAuth2 中便扮演了 TokenService 和 TokenStore 的角色，用于生成和效验 Token。
+</p>
+
+<p>
+但是，我还是很想吐槽一下 JWT 这个东西。当初刚看到的时候感觉很有趣，使用 JWT 可以直接在 Token 中携带一些信息，同时服务端还不用存储 Token 的信息。
+</p>
+
+<p>
+然而，在实际的一些使用中，可能会遇见需要作废还有效的 JWT Token 的需求，这对于 JWT 来说是无法实现的。为了实现这一需求，就只能在服务端存储一些信息。
+</p>
+
+<p>
+但是，既然都要在服务端存储信息了，那干嘛还用 JWT 呢？只要需要在服务端存储信息，那么，用不用 JWT 都没多大区别了啊……
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge769bdd" class="outline-2">
+<h2 id="orge769bdd"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Spring Security 真的是一个很复杂的框架，目前设计的还只是在 Servlet 程序中的应用，然鹅我目前突然对 Spring WebFlux 产生了一点兴趣，不知道 Spring Security 在 Spring WebFlux 中是啥样的……
+</p>
+</div>
+</div>
+
+<div id="outline-container-org156a9ba" class="outline-2">
+<h2 id="org156a9ba"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Spring Security 整体相关的资料：
+</p>
+<ul class="org-ul">
+<li><a href="http://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/index.html">TERASOLUNA Server Framework for Java (5.x) Development Guideline</a></li>
+<li><a href="https://leer.moe/2019/03/26/spring-security-architecture/">Spring Security 架构 | LeeReindeer's blog</a></li>
+</ul>
+
+<p>
+Spring Security Web 相关的资料：
+</p>
+<ul class="org-ul">
+<li><a href="https://www.cnblogs.com/xz816111/p/8528896.html">Spring Security验证流程剖析及自定义验证方法 - Decouple - 博客园</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/web/wa-spring-security-web-application-and-fingerprint-login/index.html">Spring Security 的 Web 应用和指纹登录实践</a></li>
+<li><a href="https://docs.spring.io/spring-security/site/docs/5.2.0.RELEASE/reference/htmlsingle/#servlet-applications">Spring Security Reference</a></li>
+</ul>
+
+<p>
+Spring Security OAuth2 相关的资料：
+</p>
+<ul class="org-ul">
+<li><a href="http://www.iocoder.cn/Spring-Security/OAuth2-learning/?vip">芋道 Spring Security OAuth2 入门 | 芋道源码 —— 纯源码解析博客</a></li>
+<li><a href="https://projects.spring.io/spring-security-oauth/docs/oauth2.html">Spring Security OAuth</a></li>
+<li><a href="https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/html/index.html">OAuth2 Boot</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+对详细过程有兴趣的，可以看我的笔记 <a href="https://github.com/rgb-24bit/read-source-code/blob/master/spring/spring-security-web-filter-chain-build.org">Spring Security Web 过滤器链的构建</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
