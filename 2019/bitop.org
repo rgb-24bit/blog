@@ -69,6 +69,7 @@
 * 乘法实现
   对于乘法来说，直接的实现就是通过很多次的加法来实现，简单粗暴：
   #+BEGIN_SRC C
+    // 这里最小的负数会出现溢出的情况，多谢评论区大佬指出
     int abs(int num) {
       return num < 0 ? negate(num) : num;
     }
