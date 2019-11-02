@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2019-11-02 六 21:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 协程和事件循环</title>
@@ -246,19 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3f9b1a2">1. 前言</a></li>
-<li><a href="#org987eb4b">2. 协程</a></li>
-<li><a href="#org06bf262">3. async &amp; await</a></li>
-<li><a href="#org9d7dd2f">4. 事件循环</a></li>
-<li><a href="#org81259a8">5. asyncio 的事件循环</a></li>
-<li><a href="#org5ccd518">6. 结语</a></li>
-<li><a href="#orgaf2eeba">7. 参考链接</a></li>
+<li><a href="#org077296f">1. 前言</a></li>
+<li><a href="#org559f969">2. 协程</a></li>
+<li><a href="#orgc76967d">3. async &amp; await</a></li>
+<li><a href="#orgf57ab26">4. 事件循环</a></li>
+<li><a href="#orgb2d7a1d">5. asyncio 的事件循环</a></li>
+<li><a href="#orgf0f67e8">6. 结语</a></li>
+<li><a href="#org6ce047a">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3f9b1a2" class="outline-2">
-<h2 id="org3f9b1a2"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org077296f" class="outline-2">
+<h2 id="org077296f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Python 标准库 <code>asyncio</code> 是我目前接触过的最难理解的 Python 库，它的实现使用了太多我不太熟悉的东西：协程、事件循环、多路 I/O 复用……
@@ -274,8 +274,8 @@ Python 标准库 <code>asyncio</code> 是我目前接触过的最难理解的 Py
 </div>
 </div>
 
-<div id="outline-container-org987eb4b" class="outline-2">
-<h2 id="org987eb4b"><span class="section-number-2">2</span> 协程</h2>
+<div id="outline-container-org559f969" class="outline-2">
+<h2 id="org559f969"><span class="section-number-2">2</span> 协程</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先需要明白的是，协程不是 Python 独有的功能，因为协程通常是在 <b>语言</b> 层面上实现的功能，因此，只要有需要，各个语言都有可能实现这一功能。
@@ -329,8 +329,8 @@ PS：假如你不理解这段代码，可以先看看有关于 <a href="e:/blog/
 </div>
 </div>
 
-<div id="outline-container-org06bf262" class="outline-2">
-<h2 id="org06bf262"><span class="section-number-2">3</span> async &amp; await</h2>
+<div id="outline-container-orgc76967d" class="outline-2">
+<h2 id="orgc76967d"><span class="section-number-2">3</span> async &amp; await</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 在 Python 中调用协程对象<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>的 <code>send()</code> 方法时，第一次调用必须使用参数 <code>None</code>, 这使得协程的使用变得十分麻烦。
@@ -366,8 +366,8 @@ PS：假如你不理解这段代码，可以先看看有关于 <a href="e:/blog/
 </div>
 </div>
 
-<div id="outline-container-org9d7dd2f" class="outline-2">
-<h2 id="org9d7dd2f"><span class="section-number-2">4</span> 事件循环</h2>
+<div id="outline-container-orgf57ab26" class="outline-2">
+<h2 id="orgf57ab26"><span class="section-number-2">4</span> 事件循环</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 看到事件循环的时候我首先想到的是 <code>GUI</code> 程序编程中的那种事件/消息循环，通过注册回调的方式，由事件循环获取事件并调用回调处理事件。
@@ -679,8 +679,8 @@ Oh!!!yes!!!我们可以将协程的执行结果保存！！！
 </div>
 </div>
 
-<div id="outline-container-org81259a8" class="outline-2">
-<h2 id="org81259a8"><span class="section-number-2">5</span> asyncio 的事件循环</h2>
+<div id="outline-container-orgb2d7a1d" class="outline-2">
+<h2 id="orgb2d7a1d"><span class="section-number-2">5</span> asyncio 的事件循环</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 asyncio 中的事件循环不生产值，但是 <b>返回</b> 值, 返回值是协程的执行结果：
@@ -954,8 +954,8 @@ That's all!
 </div>
 </div>
 
-<div id="outline-container-org5ccd518" class="outline-2">
-<h2 id="org5ccd518"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orgf0f67e8" class="outline-2">
+<h2 id="orgf0f67e8"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 最后想了下，asyncio 的事件循环其实并不复杂，关键点在于：
@@ -975,8 +975,8 @@ That's all!
 </div>
 </div>
 
-<div id="outline-container-orgaf2eeba" class="outline-2">
-<h2 id="orgaf2eeba"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org6ce047a" class="outline-2">
+<h2 id="org6ce047a"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://mp.weixin.qq.com/s/GgamzHPyZuSg45LoJKsofA">深入理解 Python 异步编程（上）</a></li>
@@ -996,7 +996,7 @@ That's all!
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-为了区分生成器和协程，这篇博客中将把 <a href="e:/blog/2018/python-generator.html#MissingReference">生成器对象</a> 称为 <b>协程对象</b>
+为了区分生成器和协程，这篇博客中将把 <a href="https://rgb-24bit.github.io/blog/2018/python-generator.html#org3edbdcf">生成器对象</a> 称为 <b>协程对象</b>
 </p></div></div>
 
 

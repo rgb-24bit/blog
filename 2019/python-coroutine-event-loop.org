@@ -580,5 +580,5 @@
 
 * Footnotes
 
-[fn:1] 为了区分生成器和协程，这篇博客中将把 [[file:e:/blog/2018/python-generator.org::*%E7%94%9F%E6%88%90%E5%99%A8%E5%AF%B9%E8%B1%A1][生成器对象]] 称为 *协程对象*
+[fn:1] 为了区分生成器和协程，这篇博客中将把 [[https://rgb-24bit.github.io/blog/2018/python-generator.html#org3edbdcf][生成器对象]] 称为 *协程对象*
 
