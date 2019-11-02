@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-11-02 六 21:39 -->
+<!-- 2019-11-02 六 21:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spring Security Web 和 OAuth2</title>
@@ -246,37 +246,37 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0640bae">1. 前言</a></li>
-<li><a href="#org8c592f4">2. Spring Security Core</a></li>
-<li><a href="#org95dc422">3. Spring Security Web</a>
+<li><a href="#org7a691ce">1. 前言</a></li>
+<li><a href="#org6c8facf">2. Spring Security Core</a></li>
+<li><a href="#org2558cda">3. Spring Security Web</a>
 <ul>
-<li><a href="#orgcc1e876">3.1. 过滤器链的构建</a></li>
-<li><a href="#orge159b86">3.2. 过滤器链的调用</a></li>
-<li><a href="#org959df6f">3.3. 过滤器链的使用</a></li>
+<li><a href="#orgb6801a0">3.1. 过滤器链的构建</a></li>
+<li><a href="#org6704aa0">3.2. 过滤器链的调用</a></li>
+<li><a href="#org7d942d6">3.3. 过滤器链的使用</a></li>
 </ul>
 </li>
-<li><a href="#orgf5fb7f0">4. Spring Security OAuth2</a>
+<li><a href="#org5c76b4a">4. Spring Security OAuth2</a>
 <ul>
-<li><a href="#orgce61107">4.1. 授权服务器</a>
+<li><a href="#org80afd7c">4.1. 授权服务器</a>
 <ul>
-<li><a href="#orga852287">4.1.1. 授权码模式</a></li>
-<li><a href="#org40668f6">4.1.2. 密码模式</a></li>
-<li><a href="#orga87174a">4.1.3. 客户端认证</a></li>
-<li><a href="#org4684319">4.1.4. TokenGranter</a></li>
+<li><a href="#orgbc2d018">4.1.1. 授权码模式</a></li>
+<li><a href="#org0c81801">4.1.2. 密码模式</a></li>
+<li><a href="#orgceb6661">4.1.3. 客户端认证</a></li>
+<li><a href="#org382dff7">4.1.4. TokenGranter</a></li>
 </ul>
 </li>
-<li><a href="#org5992800">4.2. 资源服务器</a></li>
+<li><a href="#org296375f">4.2. 资源服务器</a></li>
 </ul>
 </li>
-<li><a href="#org4f6936d">5. Spring Security JWT</a></li>
-<li><a href="#orge769bdd">6. 结语</a></li>
-<li><a href="#org156a9ba">7. 参考链接</a></li>
+<li><a href="#orge69ff17">5. Spring Security JWT</a></li>
+<li><a href="#org9820731">6. 结语</a></li>
+<li><a href="#org794422e">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0640bae" class="outline-2">
-<h2 id="org0640bae"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org7a691ce" class="outline-2">
+<h2 id="org7a691ce"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Spring Security 是一个多模块的项目，之前梳理了一下 <a href="https://rgb-24bit.github.io/blog/2019/spring-security-certification-process.html">Spring Security 认证流程</a>，现在才发现，梳理的那部分内容更多的只是 Spring Security Core 这个核心模块中的内容。
@@ -288,8 +288,8 @@ Spring Security 是一个多模块的项目，之前梳理了一下 <a href="htt
 </div>
 </div>
 
-<div id="outline-container-org8c592f4" class="outline-2">
-<h2 id="org8c592f4"><span class="section-number-2">2</span> Spring Security Core</h2>
+<div id="outline-container-org6c8facf" class="outline-2">
+<h2 id="org6c8facf"><span class="section-number-2">2</span> Spring Security Core</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Spring Security Core 在整个 Spring Security 框架中扮演着重要的角色，提供了有关于认证和权限控制相关的抽象。
@@ -326,8 +326,8 @@ Spring Security Core 在整个 Spring Security 框架中扮演着重要的角色
 </div>
 </div>
 
-<div id="outline-container-org95dc422" class="outline-2">
-<h2 id="org95dc422"><span class="section-number-2">3</span> Spring Security Web</h2>
+<div id="outline-container-org2558cda" class="outline-2">
+<h2 id="org2558cda"><span class="section-number-2">3</span> Spring Security Web</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 如果说 Spring Security Core 只是提供了认证和权限控制相关的抽象的话，Spring Security Web 便为我们提供了这些抽象的具体实现与应用。
@@ -346,11 +346,11 @@ Spring Security Web 通过 <b>过滤器链</b> 来实现了和 Web 安全相关�
 </p>
 </div>
 
-<div id="outline-container-orgcc1e876" class="outline-3">
-<h3 id="orgcc1e876"><span class="section-number-3">3.1</span> 过滤器链的构建</h3>
+<div id="outline-container-orgb6801a0" class="outline-3">
+<h3 id="orgb6801a0"><span class="section-number-3">3.1</span> 过滤器链的构建</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-之前本来只是想了解一下过滤器链的调用过程，但是看着看着，就跑到源码去了。反应过来的时候才发现，已经搞了这么多了有点吃亏，就干脆把过滤器链的构建逻辑理了一下。
+之前本来只是想了解一下过滤器链的调用过程，但是看着看着，就跑到源码去了。反应过来的时候才发现，已经搞了这么多了停下来的话有点吃亏，就干脆把过滤器链的构建逻辑理了一下。
 </p>
 
 <details><summary><i></i></summary>
@@ -420,8 +420,8 @@ Spring Security Web 通过 <b>过滤器链</b> 来实现了和 Web 安全相关�
 </div>
 </div>
 
-<div id="outline-container-orge159b86" class="outline-3">
-<h3 id="orge159b86"><span class="section-number-3">3.2</span> 过滤器链的调用</h3>
+<div id="outline-container-org6704aa0" class="outline-3">
+<h3 id="org6704aa0"><span class="section-number-3">3.2</span> 过滤器链的调用</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 过滤器链的调用的话，主要涉及两个对象：FilterChainProxy 和 DefaultSecurityFilterChain，关键其实还是在 FilterChainProxy 上。
@@ -447,8 +447,8 @@ Spring Security Web 通过 <b>过滤器链</b> 来实现了和 Web 安全相关�
 </div>
 </div>
 
-<div id="outline-container-org959df6f" class="outline-3">
-<h3 id="org959df6f"><span class="section-number-3">3.3</span> 过滤器链的使用</h3>
+<div id="outline-container-org7d942d6" class="outline-3">
+<h3 id="org7d942d6"><span class="section-number-3">3.3</span> 过滤器链的使用</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Spring Security Web 过滤器的使用主要就是自定义过滤器链，默认的过滤器链会添加一些 Spring Security Web 自带的一些过滤器，使用时，需要考虑是否去掉默认的一些过滤器器（获取不使用默认配置），并将自定义的过滤器添加到过滤器链中的一个合适的位置上。
@@ -489,8 +489,8 @@ SecurityContextPersistenceFilter -&gt; AuthenticationProcessingFilter -&gt; Anon
 </div>
 </div>
 
-<div id="outline-container-orgf5fb7f0" class="outline-2">
-<h2 id="orgf5fb7f0"><span class="section-number-2">4</span> Spring Security OAuth2</h2>
+<div id="outline-container-org5c76b4a" class="outline-2">
+<h2 id="org5c76b4a"><span class="section-number-2">4</span> Spring Security OAuth2</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web 的基础上，提供了对 OAuth2 授权框架的支持。
@@ -501,8 +501,8 @@ Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web �
 </p>
 </div>
 
-<div id="outline-container-orgce61107" class="outline-3">
-<h3 id="orgce61107"><span class="section-number-3">4.1</span> 授权服务器</h3>
+<div id="outline-container-org80afd7c" class="outline-3">
+<h3 id="org80afd7c"><span class="section-number-3">4.1</span> 授权服务器</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 对于传统的认证方式来说，简单认证用户的信息基本上就足够了，但是对于 OAuth2 来说是不够的，对于 OAuth2 授权服务器来说，除了需要完成用户的认证以外，还需完成客户端的认证，还需要效验客户端请求的 Scope，因此，单凭过滤器链是不足以完成两者的认证的，因为 SecurityContextHolder 只能持有一个认证结果。
@@ -517,8 +517,8 @@ Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web �
 </p>
 </div>
 
-<div id="outline-container-orga852287" class="outline-4">
-<h4 id="orga852287"><span class="section-number-4">4.1.1</span> 授权码模式</h4>
+<div id="outline-container-orgbc2d018" class="outline-4">
+<h4 id="orgbc2d018"><span class="section-number-4">4.1.1</span> 授权码模式</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 首先是授权码模式，对于授权码模式来说，请求流程通常是先到 <code>/oauth/authorize</code> 获取授权码，然后再到 <code>/oauth/token</code> 获取 Token，对于 <code>/oauth/authorize</code> 这个端点的过滤器链来说，认证的是用户的信息，认证通过后进入端点内部，会对客户端请求 <code>Scope</code> 和用户的 <code>Approval</code> 进行效验，效验通过会生成授权码返回给客户端。
@@ -625,8 +625,8 @@ Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web �
 </div>
 </div>
 
-<div id="outline-container-org40668f6" class="outline-4">
-<h4 id="org40668f6"><span class="section-number-4">4.1.2</span> 密码模式</h4>
+<div id="outline-container-org0c81801" class="outline-4">
+<h4 id="org0c81801"><span class="section-number-4">4.1.2</span> 密码模式</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 密码模式，或者说简化模式，只有一个端点即 <code>/oauth/token</code> 这个端点，也就是说，这个端点要同时完成用户和客户端的认证。
@@ -663,8 +663,8 @@ Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web �
 </div>
 </div>
 
-<div id="outline-container-orga87174a" class="outline-4">
-<h4 id="orga87174a"><span class="section-number-4">4.1.3</span> 客户端认证</h4>
+<div id="outline-container-orgceb6661" class="outline-4">
+<h4 id="orgceb6661"><span class="section-number-4">4.1.3</span> 客户端认证</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <p>
 通过对 <b>授权码模式</b> 和 <b>密码模式</b> 的了解我们知道了客户端的认证是在过滤器链中完成的，这个认证可以通过 <code>BasicAuthenticationFilter</code> 完成，但更通用的大概是 <code>ClientCredentialsTokenEndpointFilter</code> 这个过滤器。
@@ -725,8 +725,8 @@ Spring Security OAuth2 建立在 Spring Security Core 和 Spring Security Web �
 </div>
 </div>
 
-<div id="outline-container-org4684319" class="outline-4">
-<h4 id="org4684319"><span class="section-number-4">4.1.4</span> TokenGranter</h4>
+<div id="outline-container-org382dff7" class="outline-4">
+<h4 id="org382dff7"><span class="section-number-4">4.1.4</span> TokenGranter</h4>
 <div class="outline-text-4" id="text-4-1-4">
 <p>
 Spring Security OAuth2 中授权码的生成时通过 TokenGranter 来完成的，进行授权码的生成时，会遍历拥有的各个 TokenGranter 实现，直到成功生成 Token 或者所有 TokenGranter 实现都不能生成 Token。
@@ -828,8 +828,8 @@ Spring Security OAuth2 中授权码的生成时通过 TokenGranter 来完成的�
 </div>
 </div>
 
-<div id="outline-container-org5992800" class="outline-3">
-<h3 id="org5992800"><span class="section-number-3">4.2</span> 资源服务器</h3>
+<div id="outline-container-org296375f" class="outline-3">
+<h3 id="org296375f"><span class="section-number-3">4.2</span> 资源服务器</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 资源服务器相较于授权服务器来说就要简单多了，和传统的流程差不多，通过过滤器 <code>OAuth2AuthenticationProcessingFilter</code> 和 <code>OAuth2AuthenticationManager</code> 验证 Token 并获取认证信息：
@@ -883,8 +883,8 @@ Spring Security OAuth2 中授权码的生成时通过 TokenGranter 来完成的�
 </div>
 </div>
 
-<div id="outline-container-org4f6936d" class="outline-2">
-<h2 id="org4f6936d"><span class="section-number-2">5</span> Spring Security JWT</h2>
+<div id="outline-container-orge69ff17" class="outline-2">
+<h2 id="orge69ff17"><span class="section-number-2">5</span> Spring Security JWT</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多地方都可以看到 JWT 在 OAuth2 中的使用，Spring Security JWT 在 Spring Security OAuth2 中便扮演了 TokenService 和 TokenStore 的角色，用于生成和效验 Token。
@@ -904,17 +904,21 @@ Spring Security OAuth2 中授权码的生成时通过 TokenGranter 来完成的�
 </div>
 </div>
 
-<div id="outline-container-orge769bdd" class="outline-2">
-<h2 id="orge769bdd"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org9820731" class="outline-2">
+<h2 id="org9820731"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Spring Security 真的是一个很复杂的框架，目前设计的还只是在 Servlet 程序中的应用，然鹅我目前突然对 Spring WebFlux 产生了一点兴趣，不知道 Spring Security 在 Spring WebFlux 中是啥样的……
 </p>
+
+<p>
+另外，我想说的是，Spring Security 的官方教程真的很棒，将大体的架构都解释清楚了，可惜吃了英语的亏 T_T
+</p>
 </div>
 </div>
 
-<div id="outline-container-org156a9ba" class="outline-2">
-<h2 id="org156a9ba"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org794422e" class="outline-2">
+<h2 id="org794422e"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Spring Security 整体相关的资料：
