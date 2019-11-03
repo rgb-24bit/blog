@@ -122,7 +122,7 @@
    #+HTML: <img src="https://i.loli.net/2019/11/02/b7QCFNX1Knga9pS.png">
 
 ** 过滤器链的使用
-   Spring Security Web 过滤器的使用主要就是自定义过滤器链，默认的过滤器链会添加一些 Spring Security Web 自带的一些过滤器，使用时，需要考虑是否去掉默认的一些过滤器器（获取不使用默认配置），
+   Spring Security Web 过滤器的使用主要就是自定义过滤器链，默认的过滤器链会添加一些 Spring Security Web 自带的一些过滤器，使用时，需要考虑是否去掉默认的一些过滤器器（或者不使用默认配置），
    并将自定义的过滤器添加到过滤器链中的一个合适的位置上。
 
    这里会简要介绍部分内置过滤器的作用和过滤器的顺序，首先是内置的几个过滤器：
@@ -133,9 +133,7 @@
 
    在自定义过滤器时（通常是认证过滤器），我们需要考虑自定义过滤器的位置，比如，我们不应该把自定义的认证过滤器放在 ~AnonymousAuthenticationFilter~ 的后面，官方文档对过滤器的顺序给出了解释：
    在去除一些过滤器后，大致顺序就为：
-   #+begin_example
-     SecurityContextPersistenceFilter -> AuthenticationProcessingFilter -> AnonymousAuthenticationFilter -> ExceptionTranslationFilter -> FilterSecurityInterceptor
-   #+end_example
+   #+HTML: <img src="https://i.loli.net/2019/11/03/aXR9HSomNf36gQO.png">
    
    其中，AuthenticationProcessingFilter 是指认证过滤器实现，比如常用的 ~UsernamePasswordAuthenticationFilter~ 这个过滤器。
 
