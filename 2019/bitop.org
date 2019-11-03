@@ -74,6 +74,7 @@
       return num < 0 ? negate(num) : num;
     }
 
+    // 这里同样没有考虑溢出的情况 @_@
     int multiply(int a, int b) {
       int multiplier = abs(a), multiplicand = abs(b);
 
