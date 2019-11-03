@@ -54,7 +54,7 @@
 * 时间点
   对时间的处理可以粗略的划分为三个部分：时间点、时间段和时间的解析与格式化。
 
-  在 Java8 中表示时间点的对象都实现了接口 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/Temporal.html][java.time.temporal]]，其中，常用的时间点对象有：Instant、LocalDate、LocalTime 和 LocalDateTime。
+  在 Java8 中表示时间点的对象都实现了接口 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/Temporal.html][java.time.Temporal]]，其中，常用的时间点对象有：Instant、LocalDate、LocalTime 和 LocalDateTime。
 
   这几个时间点对象中比较特殊的是 ~Instant~ 对象，这个对象表示的时间是世界标准时间，而不是本地时间。
 
@@ -93,7 +93,7 @@
   #+END_SRC
 
 * 时间段
-  时间段对应的接口是 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAmount.html][java.time.temporal]]，这个接口的实现只有两个：Duration 和 Period。
+  时间段对应的接口是 [[https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAmount.html][java.time.TemporalAmount]]，这个接口的实现只有两个：Duration 和 Period。
 
   Duration 可以通过两个 LocalDateTime、LocalTime 和 Instant 对象创建：
   #+BEGIN_SRC java
