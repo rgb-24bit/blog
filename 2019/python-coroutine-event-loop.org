@@ -23,7 +23,7 @@
 * 协程
   首先需要明白的是，协程不是 Python 独有的功能，因为协程通常是在 *语言* 层面上实现的功能，因此，只要有需要，各个语言都有可能实现这一功能。
 
-  而在 Python 中，协程虽然是借助 *生成器* 实现的（有关生成器的介绍可以看这篇博客：[[file:e:/blog/2018/python-generator.org][Python 生成器]]），但是在使用时一定要分清这两个概念。
+  而在 Python 中，协程虽然是借助 *生成器* 实现的（有关生成器的介绍可以看这篇博客：[[https://rgb-24bit.github.io/blog/2018/python-generator.html][Python 生成器]]），但是在使用时一定要分清这两个概念。
 
   引用 [[http://www.dabeaz.com/][David Beazley]] 在 PyCon 2009 的课程 [[http://www.dabeaz.com/coroutines/index.html][A Curious Course on Coroutines and Concurrency]] 中的观点来说的话就是：
   + 生成器生产数据而协程消费数据，同时，协程和迭代无关
@@ -51,7 +51,7 @@
 
   可以看到，使用协程时我们并不关心协程的返回值，而是不断的向协程传输数据进行处理。
 
-  PS：假如你不理解这段代码，可以先看看有关于 [[file:e:/blog/2018/python-generator.org::*%E7%94%9F%E6%88%90%E5%99%A8%E5%AF%B9%E8%B1%A1][生成器对象]] 的内容
+  PS：假如你不理解这段代码，可以先看看有关于 [[https://rgb-24bit.github.io/blog/2018/python-generator.html#org3edbdcf][生成器对象]] 的内容
 
 * async & await
   在 Python 中调用协程对象[fn:1]的 ~send()~ 方法时，第一次调用必须使用参数 ~None~, 这使得协程的使用变得十分麻烦。
