@@ -305,7 +305,7 @@
 
   然后，我看到了微信上的文章 [[https://mp.weixin.qq.com/s/GgamzHPyZuSg45LoJKsofA][深入理解 Python 异步编程（上）]]，其中的一部分代码：
 
-  #+HTML: <img src="https://mmbiz.qpic.cn/mmbiz_png/fhujzoQe7TqwIlwniae0PZntyOBFHJKp6iaxmFsCDl62tUWztJTicyFVCib0LXokHIm0DRU1QUhHBHqsQuicMktqprg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+  #+HTML: <img src="https://i.loli.net/2019/11/10/UAqs5FJpEiaNefO.png">
 
   Oh!!!yes!!!我们可以将协程的执行结果保存！！！
 
