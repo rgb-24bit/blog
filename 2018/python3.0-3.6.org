@@ -496,19 +496,7 @@
           return 'Hello ' + name
     #+END_SRC
 
-    通过注释来表示参数和返回值的类型。
-
-    效果：
-    #+BEGIN_SRC python
-      >>> def greeting(name: str) -> str:
-      ...     return 'Hello ' + name
-      ...
-      >>> greeting(10)
-      Traceback (most recent call last):
-        File "<stdin>", line 1, in <module>
-        File "<stdin>", line 2, in greeting
-      TypeError: must be str, not int
-    #+END_SRC
+    通过注释来表示参数和返回值的类型，但是解释器运行时会忽略这些注释，因此，也只有注释的作用。
 
     感觉 ~Python~ 代码长得越来越奇怪了 QAQ
 
