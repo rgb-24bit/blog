@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
+- 12-29 -- [[file:2019/memory-management-and-rust-ownership.org][内存管理和 Rust 所有权]] ::
 - 11-02 -- [[file:2019/spring-security-web-and-oauth2.org][Spring Security Web 和 OAuth2]] ::
 - 10-20 -- [[file:2019/spring-security-certification-process.org][Spring Security 认证流程梳理]] ::
 - 10-06 -- [[file:2019/java-spi.org][Java SPI 机制及其实现]] ::
@@ -29,7 +30,7 @@
 
 #+HTML: </details>
 
-#+HTML: <details><summary><i>2018</i></summary>
+#+HTML: <details open="open"><summary><i>2018</i></summary>
 
 - 12-28 -- [[file:2018/msisdn.org][移动台国际用户识别码]] ::
 - 12-21 -- [[file:2018/android-small-summary.org][Android 小总结]] ::
@@ -78,7 +79,7 @@
 
 #+HTML: </details>
 
-#+HTML: <details><summary><i>2017</i></summary>
+#+HTML: <details open="open"><summary><i>2017</i></summary>
 
 - 12-27 -- [[file:2017/org-gtd.org][Emacs Org 搭建 GTD 系统]] ::
 - 12-26 -- [[file:2017/c99-wchar.org][C99 宽字符]] ::

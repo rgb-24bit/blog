@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2019-12-29 日 15:36 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内存管理和 Rust 所有权</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">内存管理和 Rust 所有权</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga9cfd5d">1. 前言</a></li>
+<li><a href="#org175aa2f">2. 内存管理及常见问题</a></li>
+<li><a href="#org1c5beed">3. 垃圾回收机制</a>
+<ul>
+<li><a href="#org3172372">3.1. 引用计数和循环引用</a></li>
+<li><a href="#org44aedbf">3.2. 根可达性算法</a></li>
+<li><a href="#org011ac4f">3.3. 问题</a></li>
+</ul>
+</li>
+<li><a href="#org13dbecd">4. 手动管理内存</a></li>
+<li><a href="#org0a29bf6">5. Rust 所有权</a></li>
+<li><a href="#orgc682c37">6. 结语</a></li>
+<li><a href="#orgbcb993d">7. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga9cfd5d" class="outline-2">
+<h2 id="orga9cfd5d"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+前段时间带着好奇去看了一下 <code>Rust</code> 语言的教程，然后就看到了 <code>Rust</code> 中所有权的概念，看的时候就是一句卧槽脱口而出，居然还有这种操作？
+</p>
+
+<p>
+感慨完了以后就联系了一下以前学过的一些知识，感觉可以思考总结一下内存管理的方式，于是，这篇博客便诞生了。
+</p>
+
+<p>
+PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <a href="https://rustlang-cn.org/office/rust/book/understanding-ownership/ch04-01-what-is-ownership.html">教程</a>，讲得真的很好！
+</p>
+</div>
+</div>
+
+<div id="outline-container-org175aa2f" class="outline-2">
+<h2 id="org175aa2f"><span class="section-number-2">2</span> 内存管理及常见问题</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+我们的程序运行时往往离不开 <b>栈</b> 和 <b>堆</b> 这两个内存空间，很多问题往往就是对这两个空间的不合理使用导致的，常见的有：
+</p>
+<ul class="org-ul">
+<li><b>内存溢出</b> - 指程序运行过程中申请的内存大于系统能够提供的内存，导致无法申请到足够的内存</li>
+<li><b>内存泄漏</b> - 指程序运行过程中申请的内存空间没有被正确释放，导致后续程序里这块内存被永远占用</li>
+<li><b>越界访问</b> - 指程序运行过程中非法访问了分配的内存区域以外的内存区域，导致很严重的安全问题</li>
+</ul>
+
+<p>
+而怎样安全合理的利用 <b>栈</b> 和 <b>堆</b> 中的空间便是 <b>内存管理</b> 需要考虑的问题，其中，常见的两种管理方式为：
+</p>
+<ul class="org-ul">
+<li><code>C/C++</code> 这类底层语言中的手动管理方式，不仅对 <b>堆内存</b> 操作给与了极大的自由，对于 <b>栈内存</b> 的访问也是极其放肆</li>
+<li><code>Java/Python/JavaScript</code> 这类高级语言中的垃圾回收机制，通过垃圾回收完成内存的自动管理</li>
+</ul>
+
+<p>
+然后，便是 <code>Rust</code> 中的所有权方式了，通过巧妙的方式在编译时便解决了内存管理中的很多问题。
+</p>
+
+<p>
+这些方式各有各的优势，但又存在各自的问题，不能说那个绝对比另一个好，只能说，各自存在适合自己的领域。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1c5beed" class="outline-2">
+<h2 id="org1c5beed"><span class="section-number-2">3</span> 垃圾回收机制</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+本来想先讲 <b>手动管理内存</b> 的，然后才发现，手动管理内存中的很多问题和优势都是通过和 <b>垃圾回收机制</b> 对比出来的，于是，只能先讲垃圾回收机制了。
+</p>
+
+<p>
+就我目前的经验来说，使用 <b>垃圾回收机制</b> 的编程语言可以分为两种类型：
+</p>
+<ul class="org-ul">
+<li><b>强类型</b> 的编程语言，由于可以通过类型系统确定基本数据类型（数值、布尔、字符）的大小，因此为了加快访问速度，往往会将基本数据类型的值放在 <b>栈内存</b> 中</li>
+<li><b>弱类型</b> 的编程语言，由于缺少类型系统的原因，因此这些语言往往无法直接确定对象的大小，只能将所有对象都保存在 <b>堆内存</b> 中，而在 <b>栈内存</b> 中保存大小固定的 <b>引用</b></li>
+</ul>
+
+<img src="https://i.loli.net/2019/12/28/lNUpg4jDehaFSRi.png">
+
+<p>
+但是不管是 <b>强类型</b> 的还是 <b>弱类型</b> 的语言，它们都可以保证在 <b>栈内存</b> 中保存的是大小确定的值，这样一来，便尽可能的避免了 <b>栈内存</b> 空间的越界访问，而堆中的对象，又可以通过一系列的措施检查避免越界访问。
+</p>
+
+<p>
+因此，对于拥有 <b>垃圾回收机制</b> 的语言来说，它们关注的主要问题便是 <b>堆内存</b> 空间的使用和管理。由于内存溢出的特殊性，于是乎，主要的问题就变成了如何避免内存泄漏。
+</p>
+
+<p>
+而垃圾回收，便是指通过回收在 <b>堆中</b> 已经没有用的对象来回收堆中内存，达到避免内存泄漏的目的，因此，这里需要解决的问题便变成了如何判断一个对象已经是没有用的！
+</p>
+</div>
+
+<div id="outline-container-org3172372" class="outline-3">
+<h3 id="org3172372"><span class="section-number-3">3.1</span> 引用计数和循环引用</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+我们都知道，当我们通过 <code>obj.attr</code> 的方式访问对象时，其实就是通过 <code>obj</code> 这个 <b>引用</b> 来访问对象，那么，当一个对象的引用不存在了以后，这个对象不就无法访问 - 没有用了吗？
+</p>
+
+<p>
+因此，一个很直接的想法便出现了，那就是通过 <b>引用计数</b> 的方式来判断一个对象是否有效，当一个对象的 <b>引用计数</b> 变为 <code>0</code> 时，垃圾回收器便可以回收该对象。
+</p>
+
+<p>
+然而，这样的操作方式虽然很简单，但还是存在一些问题，其中，最为著名的大概就是 <b>循环引用</b> 问题了。
+</p>
+
+<p>
+当引用位于 <b>栈</b> 上时，可以随着栈的退出而失效，使得引用计数减一，但是，假如引用本身就是对象的属性呢？由于对象是保存在堆上的，因此，当对象的属性是引用时，要让该引用失效就只有等垃圾回收器回收该对象。
+</p>
+
+<p>
+那么，问题来了，如果出现 <code>obj.attr = obj</code> 的情况咋办？
+</p>
+</div>
+</div>
+
+<div id="outline-container-org44aedbf" class="outline-3">
+<h3 id="org44aedbf"><span class="section-number-3">3.2</span> 根可达性算法</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+为了避免循环引用的问题，Java 采用了 <b>根可达性算法</b> 来进行垃圾回收，该算法将所有无法通过 <b>根对象</b> 达到的对象视为无效对象，这些对象包括栈中的局部变量和全局的静态变量和常量。
+</p>
+
+<p>
+通过这种方式，无法从局部变量或全局变量达到的对象，那么也就没有存在的必要了，垃圾回收器也就可以干掉它们。这时循环引用也就不存在问题了：
+</p>
+<img src="https://i.loli.net/2019/12/29/TtjmG9VUlA4cPsZ.png">
+
+<p>
+但是，这也不意味着 Java 就不存在内存泄漏的问题了，比如说：
+</p>
+<ul class="org-ul">
+<li><a href="https://zhuanlan.zhihu.com/p/56214714">深入分析 ThreadLocal 内存泄漏问题 - 知乎</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org011ac4f" class="outline-3">
+<h3 id="org011ac4f"><span class="section-number-3">3.3</span> 问题</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+虽然说垃圾回收机制能够让程序员从复杂的内存管理中解脱出来，但也还是导致了一些问题，最直接的便是性能问题，使用垃圾回收机制的语言往往都需要运行在虚拟机/解释器上，由于中间多了一层东西的原因，使得这些语言的运行速度多少还是受到了影响。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org13dbecd" class="outline-2">
+<h2 id="org13dbecd"><span class="section-number-2">4</span> 手动管理内存</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+我学习的第一个编程语言是 <code>C</code> 语言，虽然现在很多人都不推荐使用 <code>C</code> 语言作为入门语言，但是不得不说，C 语言本身的语法大概是我学过的所有语言中最简单的一个了。
+</p>
+
+<p>
+而 C 语言中的内存管理方式便是手动管理，程序员手中直接就掌握了整个内存空间的生杀大权，只要你想，你就可以在内存空间中反复横跳。
+</p>
+
+<p>
+首先是栈内存的使用，和拥有垃圾回收机制的编程语言不同，C 语言中各种值默认都是是存在 <b>栈内存</b> 中的，类型的作用往往就只是：
+</p>
+<ol class="org-ol">
+<li>确定你要访问的内存大小</li>
+<li>确定解释该内存空间中的值的方式</li>
+</ol>
+
+<p>
+这时，对于普通的数值还好，但要是涉及到 <b>数组</b> 和 <b>指针</b> 操作，稍不注意就是一个越界访问，而且还是栈上的越界访问，很容易让有心之人有机可乘：
+</p>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">int</span>* <span class="org-variable-name">ptr</span> = &amp;var + 1;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#38656;&#35201;&#22312;&#21462;&#22336;&#21518;&#20559;&#31227;&#19968;&#28857;&#65292;&#23601;&#21487;&#20197;&#35775;&#38382;&#23384;&#20648;&#35813;&#20540;&#20197;&#22806;&#30340;&#26632;&#20869;&#23384;&#31354;&#38388;&#20102;</span>
+</pre>
+</div>
+
+<p>
+然后是堆内存空间，越界访问就不说了，由于堆内存空间的申请和释放完全由程序员自己来完成，很容易就会造成内存泄漏。
+</p>
+
+<p>
+简单来说，就是在 C 语言这样的底层语言中，内存管理中的常见问题都是很容易出现的，而且极其依赖于程序员本身的素质，程序员自身能力不过关，写出来的程序很有可能就存在各种各样的问题。
+</p>
+
+<p>
+但是，在明白了 C 语言其实是 “弱类型” 的语言后，你才会发现，C 语言中这自由的内存操作是很爽的，比如说，直接申请一大段的堆内存，然后用你想用的方式去操作它：
+</p>
+<div class="org-src-container">
+<pre class="src src-c"><span class="org-type">void</span>* <span class="org-variable-name">ptr</span> = (<span class="org-type">int</span>*) malloc(<span class="org-keyword">sizeof</span>(<span class="org-type">int</span>) * 1000);
+
+((<span class="org-type">int</span>*) ptr + 1);       <span class="org-comment-delimiter">// </span><span class="org-comment">int &#23485;&#24230;&#35775;&#38382;</span>
+((<span class="org-keyword">struct</span> <span class="org-type">node</span>*) ptr);   <span class="org-comment-delimiter">// </span><span class="org-comment">struct node &#23485;&#24230;&#35775;&#38382;</span>
+</pre>
+</div>
+
+<p>
+虽然没什么用，但是，很爽啊 （￣▽￣），而且，这样的自由度，在大佬手里，完全是可以玩出花来的。
+</p>
+
+<p>
+而且，C 语言这样的底层语言的运行速度往往是要快一点的，这在对性能要求比较高的时候就很有用了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0a29bf6" class="outline-2">
+<h2 id="org0a29bf6"><span class="section-number-2">5</span> Rust 所有权</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+虽然说 C 语言的速度很快，但是其内存管理完全依赖于程序员自身，安全隐患太大，而垃圾回收机制又会降低运行速度，于是乎，Rust 中的所有权概念便出现了。
+</p>
+
+<p>
+Rust 中的所有权是围绕作用域打造的一种内存管理方式，在大多数语言中，局部变量和引用在离开其作用域后便失效了，其所占据的内存便被回收，但由于对象可以存在 <b>多个引用</b> 的原因，因此，往往需要在对象所有引用失效后才可以被回收。
+</p>
+
+<p>
+但是 Rust 换了一种思路，它让每个值只拥有 <b>一个</b> 所有者，当所有者离开作用域后，该值便失效：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust">{                      // s 在这里无效, 它尚未声明
+    let s = "hello";   // 从此处起，s 是有效的
+
+    // 使用 s
+}                      // 此作用域已结束，s 不再有效
+</pre>
+</div>
+
+<p>
+为了保证一个值只拥有一个所有者这一点，Rust 通过编译器对代码的编写增加了诸多限制，其中一个便是所有权的转移，当发生以下情况之一时所有权便会转移，原有变量不在拥有所有权：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust">// 1. 赋值时所有权转移到 s2 上，s1 不在有效
+let s1 = String::from("hello");
+let s2 = s1;
+
+// 2. 作为函数参数传递时，s 的所有权转移到函数内部，s 失效
+let s = String::from("hello");
+takes_ownership(s);
+
+// 3. 函数的返回值将所有权转移给它的接受者
+fn gives_ownership() -&gt; String {
+    let some_string = String::from("hello");
+    return some_string;
+}
+</pre>
+</div>
+
+<p>
+使用已经失去所有权的变量的时候 <b>编译器</b> 会给出错误，这样，便在编译时解决了内存管理的问题：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust">let s1 = String::from("hello");
+let s2 = s1;
+
+println!("{}, world!", s1);
+
+// error[E0382]: use of moved value: `s1`
+//     --&gt; src/main.rs:5:28
+//     |
+// 3 |     let s2 = s1;
+// |         -- value moved here
+//     4 |
+// 5 |     println!("{}, world!", s1);
+// |                            ^^ value used here after move
+//     |
+// = note: move occurs because `s1` has type `std::string::String`, which does
+//     not implement the `Copy` trait
+</pre>
+</div>
+
+<p>
+这真的是一种很清奇的思路，这样做的最大的好处就是即保留了底层语言的运行速度（不需要虚拟机/解释器)，又在一定程度上解决了内存管理的问题。
+</p>
+
+<p>
+但问题就是，这样的编写代码的方式让人很是不习惯，为了方便一点，就需要使用其他的东西，比如引用，但随之又会带来其他的问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc682c37" class="outline-2">
+<h2 id="orgc682c37"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+总的来说，三种内存管理方式各有各的优势与缺点，其中 Rust 中的所有权更是让人耳目一新，虽然说现在的主流还是垃圾回收 ‍╮(￣▽￣)╭
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+这篇博客大概就是 2019 年的最后一篇博客了，本来按年初的计划来的话，我应该可以和去年一样保持平均一周一篇的输出，但是，中途突然去实习后才发现，没时间了啊……
+</p>
+
+<p>
+写一篇博客需要的时间并不少，在学校的时候大多数时间都可以自由分配，但是实习后，还需要完成安排的任务，虽然说也学了一些东西，开阔了一下视野，但是又想到失去的那么多时间，不知道到底是赚了还是亏了……
+</p>
+
+<p>
+希望，明年能够适应并调整过来吧 QAQ
+</p>
+
+</details>
+</div>
+</div>
+
+
+<div id="outline-container-orgbcb993d" class="outline-2">
+<h2 id="orgbcb993d"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li><a href="https://www.cnblogs.com/xiaoxi/p/7354857.html">内存溢出与内存泄漏 - 平凡希 - 博客园</a></li>
+<li><a href="https://rustlang-cn.org/office/rust/book/understanding-ownership/ch04-01-what-is-ownership.html">什么是所有权 | Rust中文</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
