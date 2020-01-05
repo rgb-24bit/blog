@@ -1,0 +1,154 @@
+#+TITLE:      LaTeX 学习小结
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2020-01-05 日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#基本概念][基本概念]]
+- [[#字体相关][字体相关]]
+- [[#相关问题][相关问题]]
+  - [[#latex-和-tex-的区别是什么][LaTeX 和 TeX 的区别是什么？]]
+  - [[#plain-tex-又是什么东西][plain TeX 又是什么东西？]]
+  - [[#cls-和-sty-文件之间的区别][.cls 和 .sty 文件之间的区别]]
+  - [[#如何在-latex-中使用中文][如何在 LaTeX 中使用中文]]
+  - [[#命令和环境的区别][命令和环境的区别]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  数次试图入坑 LaTeX，但是都因为 LaTex 中各种复杂的概念被劝退，但是，在前两天，我感觉我似乎成功入坑了，所以，准备把我入坑过程中遇到的问题总结下来。
+
+  因此，这篇博客的内容不会涉及到多少 LaTeX 语法上的东西 ‍(｀・ω・´)
+
+* 基本概念
+  首先需要明白的是，TeX(LaTeX) 是一个页面排版系统，因此除了 TeX 这个标记语言本身以外，还涉及到了一些其他更底层的东西，比如说光栅图像处理器 RIP 和页面描述语言 PDL。
+
+  RIP 是数字排版中的一个重要概念，可以是硬件、固件和软件，通过 RIP 生成的点阵图像可以输出到激光照排机或直接制版机等制版设备，也可以输出到打印机。而 PDL 可以作为 RIP 的输入，
+  用来控制 RIP 的输出，生成我们想要的页面排版效果。
+
+  但是 PDL 太底层了，即不适合阅读，也不适合编写，因此，往往还会在 PDL 外面再加一层标记语言，方便阅读和编写。而 TeX 就是这样一种标记语言。学习 TeX 时常见的如 LuaTeX、XeTeX 便是用来将 TeX 编译为页面描述语言的引擎，
+  等价于我们在编译型语言中使用的编译器。
+
+  另外，TeX 引擎的输出往往是 DVI 格式，这是一种特殊的设备无关的页面描述语言[fn:2]，不能嵌入字体和图像，因此，往往还需要某种 *驱动* 程序来将 DVI 转换为其他页面描述语言，比如 PostScript。
+
+  类比 TeX 和 C 语言的使用过程便是：
+  |--------------------------------------------+------------------------------|
+  | TeX                                        | C 语言                       |
+  |--------------------------------------------+------------------------------|
+  | 使用 TeX 编写文档                          | 使用 C 语言编写源代码        |
+  | 使用 TeX 引擎将 TeX 编译为页面描述语言 DVI | 将 C 编译为汇编代码          |
+  | 使用 TeX 驱动将 DVI 转换为其他页面描述语言 | 将汇编代码编译为机器码       |
+  | 将页面描述语言作为 RIP 的输入生成最终结果  | 将机器码作为计算机的输入运行 |
+  |--------------------------------------------+------------------------------|
+
+* 字体相关
+  作为想要使用 LaTeX 的中文选手，避不开的一个问题就是中文的使用，虽然可以通过 CTEX 宏包解决中文问题，但还是需要理解一些字体相关的概念。
+
+  简单来说，就是我们编写的文档往往并没有直接定义文本和图像的表现形式，其中，文本的表现形式往往是存储在 *字体文件* 中的，而字体文件本身就是与页面排版系统密切相关的一种文件，
+  理解是可以区分为三种层次：
+  + 编码层 - 通过索引定义了字符集，通过二进制编码定义了字符编码格式
+  + 格式层 - 定义了字形的描述方法和字体文件的存储格式
+  + 显示层 - 字体的外在表现形式
+
+  而编码层，对应的就是我们编写 TeX 文档时这一层，保存的文件便包含了字符的二进制编码，然后在编译时，可以通过对应的字体格式得到字体字形的描述，然后输出显示到屏幕上。
+
+  其中，早期的 LaTeX 引擎往往需要有字体文件对应的 ~tfm~ 文件才能使用该字体，但是，XeTeX 可以不需要 ~tfm~ 文件，因此，想简单点的话，写中文还是用 ~XeTeX~ 引擎好了。
+
+  参考：
+  + [[https://en.wikipedia.org/wiki/TeX_font_metric][TeX font metric - Wikipedia]]
+  + [[https://zh.wikipedia.org/wiki/OpenType][OpenType - 维基百科，自由的百科全书]]
+  + [[https://zh.wikipedia.org/wiki/TrueType][TrueType - 维基百科，自由的百科全书]]
+  
+* 相关问题
+** LaTeX 和 TeX 的区别是什么？
+   ~TeX~ 是一个由美国计算机教授高德纳[fn:1]发明的标记语言（排版软件），通过各种命令来控制页面输出，比如：
+   #+begin_src tex
+     Hello, World
+     \bye          % marks the end of the file; not shown in the final output
+   #+end_src
+
+   而 ~LaTeX~ 是一个通过 ~TeX~ 编写的宏包，提供了很多预设的模版和样式，能够让我们能够更加容易的编写文档，格式往往类似：
+   #+begin_src tex
+     \documentclass[a4paper]{book}
+     \begin{document}
+     \section{ ... a title }
+     \subsection{ ... a subtitle}
+     %% Text goes here
+     \end{document}
+   #+end_src
+
+   因此，LaTeX 和 TeX 之间的关系就像是 Java 语言和各种依赖包之间的关系一样，参考：
+   + [[https://www.zhihu.com/question/49681542][LaTeX 与 TeX 有什么本质区别？ - 知乎]]
+   + [[https://zh.wikipedia.org/wiki/TeX][TeX - 维基百科，自由的百科全书]]
+
+** plain TeX 又是什么东西？
+   TeX 是一种标记语言，也是一种宏语言，当你制作了一些特别基础的宏，那么你可以将其发布为一个格式，plain TeX 便是高纳德创建的一种格式，LaTeX 则是现在使用的最为广泛的格式。
+
+   使用类似 ~XeLaTeX~ 的命令时其实便等价于 ~XeTeX -fmt=latex~ 的简写。
+
+** .cls 和 .sty 文件之间的区别  
+   这两种文件没有本质上的区别，在 LaTeX 升级之前其实只有 .sty 这一种文件，因为，所有的 TeX 宏包某种程度上来说都是为了样式服务的，
+   但是由于 LaTeX 中往往只会加载一个 documentclass，因此，后来单独分了一个后缀名 ~.cls~ 来存在 documentclass。
+
+   使用时，往往是通过 ~\documentclass{}~ 加载一个类文件，且只能加载一次，并通过 ~\usepackage{}~ 加载任意数量的其他宏包。
+
+   两者文件的编写原则：
+   + 如果一个命令是用来控制文档结构的，则应该放到类文件中，否则应该放到包文件中
+   + 如果一个命令可以被其他所有的文档使用，那么将这个命令放置到一个包中，如果不是，则将它放到一个类文件中
+   + 当一个命令使上述两条规则冲突的时候，优先考虑第一条规则。如 ~\section~ 命令几乎在所有的文档中都使用，但因为其是用来控制文档结构的，我们将其放置到类文件中
+   
+   参考：
+   + [[https://www.jianshu.com/p/12b4a4b3afce][latex 中 cls 和 sty 文件 - 简书]]
+   + [[https://tex.stackexchange.com/questions/97418/sty-suffix-extension-for-latex-packages/97420][texmf - .sty suffix (extension) for LaTeX packages - TeX - LaTeX Stack Exchange]]
+
+** 如何在 LaTeX 中使用中文
+   在 LaTeX 中使用中文的简单方案是使用 CTEX 宏包和 xelatex 引擎，其中，CTEX 宏包提供了简便的 ctexart、ctexrep、ctexbook 和 ctexbemer 文档类，但是如果想使用其他的文档类的话，
+   也可以单独使用 ctex 宏包。
+
+   #+begin_src latex
+     \usepackage[UTF8]{ctex}
+   #+end_src
+
+   还可以通过 ~heading~ 选项开启中文风格的标题：
+   #+begin_src latex
+     \usepackage[UTF8, heading = true]{ctex}
+   #+end_src
+   
+   其中，CTEX 宏包会使用 CJK 字体集，CJK 的含义是中日韩统一表意文字在电脑的所有字体列表，参考：
+   + [[https://zh.wikipedia.org/wiki/CJK%E5%AD%97%E4%BD%93%E5%88%97%E8%A1%A8][CJK 字体列表 - 维基百科，自由的百科全书]]
+
+** 命令和环境的区别
+   命令通常用来来控制 LaTeX 文档的行为，常见的格式为：
+   #+begin_src tex
+     \commandname[optional argument]{main argument}
+
+     % 多个参数
+     \multicolumn{number of columns joined}{alignment}{content} 
+   #+end_src
+
+   还有一些命令可以不要参数：
+   #+begin_src tex
+     \item Text being item content
+   #+end_src
+   
+   环境是一种特殊的命令，也可以有参数和选项，常见格式为：
+   #+begin_src tex
+     \begin{environmentname}
+       content
+     \end{environmentname}
+   #+end_src
+
+   参考：
+   + [[https://www.overleaf.com/learn/latex/Commands_and_environments][Commands and environments - Overleaf, Online LaTeX Editor]]
+
+* 结语
+  总的来说的话，LaTeX 本身的语法并不难，但是，学习的时候经常就是一堆概念糊到你脸上，让人有些措手不及。
+
+  希望，这次理清了一些概念后后续的学习能够轻松一点。
+
+* Footnotes
+
+[fn:1] 《计算机程序设计艺术》的作者，我喜欢叫他高祖，拥有个人 [[https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming][维基百科页面]] 的大佬
+
+[fn:2] 准确来说只能算是准页面描述语言 

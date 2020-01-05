@@ -2,6 +2,13 @@
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
+#+HTML: <details open="open"><summary><i>2020</i></summary>
+
+- 01-05 -- [[file:2020/latex-summary.org][LateX 学习小结]] ::
+
+#+HTML: </details>
+
+
 #+HTML: <details open="open"><summary><i>2019</i></summary>
 
 - 12-29 -- [[file:2019/memory-management-and-rust-ownership.org][内存管理和 Rust 所有权]] ::
