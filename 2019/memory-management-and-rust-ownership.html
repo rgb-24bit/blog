@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-12-29 日 15:36 -->
+<!-- 2020-01-17 五 15:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>内存管理和 Rust 所有权</title>
@@ -246,25 +246,25 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga9cfd5d">1. 前言</a></li>
-<li><a href="#org175aa2f">2. 内存管理及常见问题</a></li>
-<li><a href="#org1c5beed">3. 垃圾回收机制</a>
+<li><a href="#org6b6958a">1. 前言</a></li>
+<li><a href="#org5e3118d">2. 内存管理及常见问题</a></li>
+<li><a href="#org729d6be">3. 垃圾回收机制</a>
 <ul>
-<li><a href="#org3172372">3.1. 引用计数和循环引用</a></li>
-<li><a href="#org44aedbf">3.2. 根可达性算法</a></li>
-<li><a href="#org011ac4f">3.3. 问题</a></li>
+<li><a href="#org56220f9">3.1. 引用计数和循环引用</a></li>
+<li><a href="#org884ee24">3.2. 根可达性算法</a></li>
+<li><a href="#orgbc56cfd">3.3. 问题</a></li>
 </ul>
 </li>
-<li><a href="#org13dbecd">4. 手动管理内存</a></li>
-<li><a href="#org0a29bf6">5. Rust 所有权</a></li>
-<li><a href="#orgc682c37">6. 结语</a></li>
-<li><a href="#orgbcb993d">7. 参考链接</a></li>
+<li><a href="#org88fa2e6">4. 手动管理内存</a></li>
+<li><a href="#orgde31b40">5. Rust 所有权</a></li>
+<li><a href="#orge8de03a">6. 结语</a></li>
+<li><a href="#orgcf8c41d">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga9cfd5d" class="outline-2">
-<h2 id="orga9cfd5d"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6b6958a" class="outline-2">
+<h2 id="org6b6958a"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前段时间带着好奇去看了一下 <code>Rust</code> 语言的教程，然后就看到了 <code>Rust</code> 中所有权的概念，看的时候就是一句卧槽脱口而出，居然还有这种操作？
@@ -280,8 +280,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org175aa2f" class="outline-2">
-<h2 id="org175aa2f"><span class="section-number-2">2</span> 内存管理及常见问题</h2>
+<div id="outline-container-org5e3118d" class="outline-2">
+<h2 id="org5e3118d"><span class="section-number-2">2</span> 内存管理及常见问题</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 我们的程序运行时往往离不开 <b>栈</b> 和 <b>堆</b> 这两个内存空间，很多问题往往就是对这两个空间的不合理使用导致的，常见的有：
@@ -310,11 +310,11 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org1c5beed" class="outline-2">
-<h2 id="org1c5beed"><span class="section-number-2">3</span> 垃圾回收机制</h2>
+<div id="outline-container-org729d6be" class="outline-2">
+<h2 id="org729d6be"><span class="section-number-2">3</span> 垃圾回收机制</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-本来想先讲 <b>手动管理内存</b> 的，然后才发现，手动管理内存中的很多问题和优势都是通过和 <b>垃圾回收机制</b> 对比出来的，于是，只能先讲垃圾回收机制了。
+本来想先写 <b>手动管理内存</b> 的，然后才发现，手动管理内存中的很多问题和优势都是通过和 <b>垃圾回收机制</b> 对比出来的，于是，只能先讲垃圾回收机制了。
 </p>
 
 <p>
@@ -324,6 +324,10 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 <li><b>强类型</b> 的编程语言，由于可以通过类型系统确定基本数据类型（数值、布尔、字符）的大小，因此为了加快访问速度，往往会将基本数据类型的值放在 <b>栈内存</b> 中</li>
 <li><b>弱类型</b> 的编程语言，由于缺少类型系统的原因，因此这些语言往往无法直接确定对象的大小，只能将所有对象都保存在 <b>堆内存</b> 中，而在 <b>栈内存</b> 中保存大小固定的 <b>引用</b></li>
 </ul>
+
+<p>
+修@2020-01-17：这里存在错误，并不是所有弱类型编程语言都会将所有对象保存在堆内存中，或者说，这和语言的类型没有关系，但通常来说，对象一般都会放到堆内存中，而将引用放在栈里面
+</p>
 
 <img src="https://i.loli.net/2019/12/28/lNUpg4jDehaFSRi.png">
 
@@ -340,8 +344,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </p>
 </div>
 
-<div id="outline-container-org3172372" class="outline-3">
-<h3 id="org3172372"><span class="section-number-3">3.1</span> 引用计数和循环引用</h3>
+<div id="outline-container-org56220f9" class="outline-3">
+<h3 id="org56220f9"><span class="section-number-3">3.1</span> 引用计数和循环引用</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 我们都知道，当我们通过 <code>obj.attr</code> 的方式访问对象时，其实就是通过 <code>obj</code> 这个 <b>引用</b> 来访问对象，那么，当一个对象的引用不存在了以后，这个对象不就无法访问 - 没有用了吗？
@@ -365,8 +369,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org44aedbf" class="outline-3">
-<h3 id="org44aedbf"><span class="section-number-3">3.2</span> 根可达性算法</h3>
+<div id="outline-container-org884ee24" class="outline-3">
+<h3 id="org884ee24"><span class="section-number-3">3.2</span> 根可达性算法</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 为了避免循环引用的问题，Java 采用了 <b>根可达性算法</b> 来进行垃圾回收，该算法将所有无法通过 <b>根对象</b> 达到的对象视为无效对象，这些对象包括栈中的局部变量和全局的静态变量和常量。
@@ -386,8 +390,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org011ac4f" class="outline-3">
-<h3 id="org011ac4f"><span class="section-number-3">3.3</span> 问题</h3>
+<div id="outline-container-orgbc56cfd" class="outline-3">
+<h3 id="orgbc56cfd"><span class="section-number-3">3.3</span> 问题</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 虽然说垃圾回收机制能够让程序员从复杂的内存管理中解脱出来，但也还是导致了一些问题，最直接的便是性能问题，使用垃圾回收机制的语言往往都需要运行在虚拟机/解释器上，由于中间多了一层东西的原因，使得这些语言的运行速度多少还是受到了影响。
@@ -396,8 +400,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org13dbecd" class="outline-2">
-<h2 id="org13dbecd"><span class="section-number-2">4</span> 手动管理内存</h2>
+<div id="outline-container-org88fa2e6" class="outline-2">
+<h2 id="org88fa2e6"><span class="section-number-2">4</span> 手动管理内存</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我学习的第一个编程语言是 <code>C</code> 语言，虽然现在很多人都不推荐使用 <code>C</code> 语言作为入门语言，但是不得不说，C 语言本身的语法大概是我学过的所有语言中最简单的一个了。
@@ -452,8 +456,8 @@ PS：这里十分推荐大家去看一下 <code>Rust</code> 官方的所有权 <
 </div>
 </div>
 
-<div id="outline-container-org0a29bf6" class="outline-2">
-<h2 id="org0a29bf6"><span class="section-number-2">5</span> Rust 所有权</h2>
+<div id="outline-container-orgde31b40" class="outline-2">
+<h2 id="orgde31b40"><span class="section-number-2">5</span> Rust 所有权</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 虽然说 C 语言的速度很快，但是其内存管理完全依赖于程序员自身，安全隐患太大，而垃圾回收机制又会降低运行速度，于是乎，Rust 中的所有权概念便出现了。
@@ -528,8 +532,8 @@ println!("{}, world!", s1);
 </div>
 </div>
 
-<div id="outline-container-orgc682c37" class="outline-2">
-<h2 id="orgc682c37"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-orge8de03a" class="outline-2">
+<h2 id="orge8de03a"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 总的来说，三种内存管理方式各有各的优势与缺点，其中 Rust 中的所有权更是让人耳目一新，虽然说现在的主流还是垃圾回收 ‍╮(￣▽￣)╭
@@ -554,8 +558,8 @@ println!("{}, world!", s1);
 </div>
 
 
-<div id="outline-container-orgbcb993d" class="outline-2">
-<h2 id="orgbcb993d"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgcf8c41d" class="outline-2">
+<h2 id="orgcf8c41d"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://www.cnblogs.com/xiaoxi/p/7354857.html">内存溢出与内存泄漏 - 平凡希 - 博客园</a></li>
