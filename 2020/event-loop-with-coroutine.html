@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2020-01-18 周六 22:12 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>事件循环和协程</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">事件循环和协程</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbdb30c4">1. 前言</a></li>
+<li><a href="#org3f9e3d8">2. Python 中异步编程模型的特殊性</a></li>
+<li><a href="#org3185a4c">3. 协程的基本认识</a></li>
+<li><a href="#org24e58d3">4. 简单事件循环的实现</a></li>
+<li><a href="#org6a4cf41">5. 结语</a></li>
+<li><a href="#orgcbd59b3">6. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbdb30c4" class="outline-2">
+<h2 id="orgbdb30c4"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+第一次接触异步编程这个概念是在 <code>Python</code> 里面，去年的时候就因为不清楚 <code>Python</code> 中异步编程的实现原理找了很多资料研究，但最后也没有搞得很清楚。
+</p>
+
+<p>
+后来又因为重心逐渐转移到了 <code>Java</code> 上，就暂时放弃了对 <code>Python</code> 中异步原理的探究，直到前段时间，被 <code>JavaScript</code> 的异步坑了一次后，让我想起了 <code>Python</code> 里面的异步……
+</p>
+
+<p>
+然后我就在网上看到了一篇文章，看了半天后在文章的评论中发现了自己两年前的评论……
+</p>
+
+<p>
+当时我那个心情啊，太曲折了，于是乎决定找个时间在研究一下 <code>Python</code> 中的异步，这便是这篇博客的由来。
+</p>
+
+<ul class="org-ul">
+<li>注 1：虽然这篇博客源自探究 <code>Python</code> 异步编程实现原理的过程，但是，并不会包含太多 <code>Python</code> 中异步编程的实现原理，因为我还没有搞明白</li>
+<li>注 2：博客中最后的实现代码存在问题，但一时间找不到解决办法，只好作为一种思路发出来，等待后续研究解决</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3f9e3d8" class="outline-2">
+<h2 id="org3f9e3d8"><span class="section-number-2">2</span> Python 中异步编程模型的特殊性</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+我先后接触过了 Python、JavaScript<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 和 Java 中的异步编程，其中，Python 的是最为特殊的一个，因为它是 <b>单线程</b> 和 <b>异步阻塞</b> 的。
+</p>
+
+<p>
+通常来说，异步编程模型下最小的执行单位是一个个任务（往往就是一个函数），而为了能够在一个任务执行完成后执行另外的操作，又会引入回调任务（函数）。不同的任务和回调任务的执行，往往又是通过事件循环和任务队列来完成。
+</p>
+
+<p>
+假如将这些东西拆分开来，像 JavaScript 那样，放在不同的线程下面处理，是很容易理解的，因为整体结构足够清晰，但是 Python 不行，因为 <code>GIL</code> 的原因，如果 Python 还是使用多线程的方式来实现异步编程的话，并不能带来多少性能上的提升，因此，Python 异步中的事件循环、任务队列和任务的执行都在一个线程里面。
+</p>
+
+<p>
+而且，Python 中异步的实现是基于协程的，这不仅使得 Python 中的异步是阻塞的，而且，最小执行单位不再是单个任务，而是单个任务的一部分。
+</p>
+
+<p>
+这就让 Python 中异步的实现变得复杂起来，本来 Python 的源码就不好读，好家伙，现在更不好读了，同时又因为异步编程往往都和异步 I/O 挂钩，刷的一下，源码中一堆和异步 I/O 相关的代码……
+</p>
+
+<p>
+这让我明白了，想快速搞明白 Python 异步是咋回事是不可能的，毕竟，我要做的是通过阅读源码倒推作者的思路，这很难！！！
+</p>
+
+<p>
+因此，我换了一个思路，我先自己用协程实现一个简单的事件循环，在慢慢去读 Python 的源码，总可以了吧！
+</p>
+
+<p>
+这就是为啥这篇博客说是在探究 <code>Python</code> 异步编程的实现原理，但是标题连 Python 这个单词都没有的原因。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3185a4c" class="outline-2">
+<h2 id="org3185a4c"><span class="section-number-2">3</span> 协程的基本认识</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Python 中的协程是通过生成器来实现的，但是，基本上所有博客将协程的时候都会说的一句话，协程不等于生成器，它们只是长得像：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">grep</span>(pattern):
+    <span class="org-doc">"""</span>
+<span class="org-doc">    &gt;&gt;&gt; g = grep("python")</span>
+<span class="org-doc">    &gt;&gt;&gt; g.send(None)</span>
+<span class="org-doc">    Looking for python</span>
+<span class="org-doc">    &gt;&gt;&gt; g.send("Yeah, but no, but yeah, but no")</span>
+<span class="org-doc">    &gt;&gt;&gt; g.send("A series of tubes")</span>
+<span class="org-doc">    &gt;&gt;&gt; g.send("python generators rock!")</span>
+<span class="org-doc">    python generators rock!</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">print</span>(<span class="org-string">"Looking for %s"</span> % pattern)
+    <span class="org-keyword">while</span> <span class="org-constant">True</span>:
+        <span class="org-variable-name">line</span> = <span class="org-keyword">yield</span>
+        <span class="org-keyword">if</span> pattern <span class="org-keyword">in</span> line:
+            <span class="org-keyword">print</span>(line)
+</pre>
+</div>
+
+<p>
+上面这个协程不断接收来自 <code>send</code> 方法的输入，在经过判断后进行输出，假如把它当做生成器使用的话，那么你只能得到无数的 <code>None</code> 值。
+</p>
+
+<p>
+本质上，在低版本的 <code>Python</code> 中生成器和协程没有区别，就看你怎么用，关键就在于协程 <b>消费</b> 值，而生成器 <b>生成</b> 值，当然了，高版本的 <code>Python</code> 对协程提供了更多的支持，使得它们不再一样，但是，这篇博客里面，所有的协程都通过生成器实现。
+</p>
+
+<p>
+因此，我们需要关注后面会用到的几个特性：
+</p>
+<ol class="org-ol">
+<li><p>
+<code>yield</code> 的左值会接收来自 <code>send</code> 方法的输入，但是协程在第一次运行时还没到达 <code>yield</code> 语句处，因此无法传递参数，只能通过 <code>None</code> 值来调用协程：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">coroutine</span>():
+    <span class="org-keyword">while</span> <span class="org-constant">True</span>:
+        <span class="org-variable-name">val</span> = <span class="org-keyword">yield</span>
+        <span class="org-keyword">print</span>(val)
+</pre>
+</div>
+
+<p>
+执行输出：
+</p>
+<pre class="example">
+In [9]: coro = coroutine()
+
+In [10]: coro.send(None)
+
+In [11]: coro.send(1)
+1
+
+In [12]: coro = coroutine()
+
+In [13]: coro.send(1)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-13-e272bd1527da&gt; in &lt;module&gt;()
+----&gt; 1 coro.send(1)
+
+TypeError: can't send non-None value to a just-started generator
+</pre></li>
+
+<li><p>
+可以通过 <code>yield from</code> 语句递归调用协程，效果如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">coroutine</span>():
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(3):
+        <span class="org-variable-name">val</span> = <span class="org-keyword">yield</span>
+        <span class="org-keyword">print</span>(<span class="org-string">'coroutine %s'</span> % val)
+
+<span class="org-keyword">def</span> <span class="org-function-name">invoker</span>():
+    <span class="org-keyword">yield</span> <span class="org-keyword">from</span> coroutine()
+</pre>
+</div>
+
+<p>
+执行输出（就是会报异常）：
+</p>
+<pre class="example">
+In [29]: coro = invoker()
+
+In [30]: coro.send(None)
+
+In [31]: coro.send(1)
+coroutine 1
+
+In [32]: coro.send(2)
+coroutine 2
+
+In [33]: coro.send(3)
+coroutine 3
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+&lt;ipython-input-33-8e657389bc11&gt; in &lt;module&gt;()
+----&gt; 1 coro.send(3)
+
+StopIteration:
+</pre></li>
+
+<li><p>
+协程可以有返回值，保存在 <code>StopIteration</code> 异常中，作为 <code>yield from</code> 的左值时可以直接接收：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">coroutine</span>():
+    <span class="org-variable-name">val</span> = <span class="org-keyword">yield</span>
+    <span class="org-keyword">return</span> <span class="org-string">'coroutine %s'</span> % val
+</pre>
+</div>
+
+<p>
+执行输出：
+</p>
+<pre class="example">
+In [42]: coro = coroutine()
+
+In [43]: coro.send(None)
+
+In [44]: coro.send(1)
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+&lt;ipython-input-44-e272bd1527da&gt; in &lt;module&gt;()
+----&gt; 1 coro.send(1)
+
+StopIteration: coroutine 1
+</pre></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org24e58d3" class="outline-2">
+<h2 id="org24e58d3"><span class="section-number-2">4</span> 简单事件循环的实现</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+本来想将 <code>Future &amp; Task</code> 和 <code>EventLoop</code> 分成两节的，结果 <code>Task</code> 和 <code>EventLoop</code> 耦合在了一起，只好合在一起了，下面是代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">EventLoop</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>._ready = []
+
+    <span class="org-keyword">def</span> <span class="org-function-name">call_soon</span>(<span class="org-keyword">self</span>, task):
+        <span class="org-keyword">self</span>._ready.append(task)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">run_forever</span>(<span class="org-keyword">self</span>, coro):
+        <span class="org-variable-name">root</span> = Task(coro, <span class="org-keyword">self</span>)
+        <span class="org-keyword">while</span> <span class="org-keyword">self</span>._ready:
+            <span class="org-variable-name">task</span> = <span class="org-keyword">self</span>._ready.pop(0)
+            task.step(Future())
+        <span class="org-keyword">return</span> root.result
+
+<span class="org-keyword">class</span> <span class="org-type">Future</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; result &#26469;&#20445;&#23384;&#21327;&#31243;&#30340;&#36820;&#22238;&#20540;</span>
+        <span class="org-keyword">self</span>.result = <span class="org-constant">None</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; _callbacks &#26469;&#20445;&#23384;&#22238;&#35843;&#20989;&#25968;</span>
+        <span class="org-keyword">self</span>._callbacks = []
+
+    <span class="org-keyword">def</span> <span class="org-function-name">add_done_callback</span>(<span class="org-keyword">self</span>, fn):
+        <span class="org-keyword">self</span>._callbacks.append(fn)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">set_result</span>(<span class="org-keyword">self</span>, result):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">try suppression bug</span>
+        <span class="org-keyword">self</span>.result = <span class="org-keyword">self</span>.result <span class="org-keyword">or</span> result
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;&#23436;&#25104;&#21518;&#23558;&#33258;&#36523;&#20316;&#20026;&#21442;&#25968;&#20256;&#36882;&#32473;&#22238;&#35843;&#20989;&#25968;</span>
+        <span class="org-keyword">for</span> callback <span class="org-keyword">in</span> <span class="org-keyword">self</span>._callbacks:
+            callback(<span class="org-keyword">self</span>)
+
+<span class="org-keyword">class</span> <span class="org-type">Task</span>(Future):
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#31867;&#22411;</span>
+    <span class="org-variable-name">coroutine</span> = <span class="org-builtin">type</span>((i <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(0)))
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, coro, loop):
+        <span class="org-builtin">super</span>().__init__()
+        <span class="org-keyword">self</span>.coro = coro
+        <span class="org-keyword">self</span>.loop = loop
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#33258;&#36523;&#21152;&#20837;&#20219;&#21153;&#38431;&#21015;</span>
+        <span class="org-keyword">self</span>.loop.call_soon(<span class="org-keyword">self</span>)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">step</span>(<span class="org-keyword">self</span>, future):
+        <span class="org-keyword">try</span>:
+            <span class="org-variable-name">result</span> = <span class="org-keyword">self</span>.coro.send(future.result)
+        <span class="org-keyword">except</span> <span class="org-type">StopIteration</span> <span class="org-keyword">as</span> exc:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#35302;&#21457; StopIteration &#24322;&#24120;&#26102;&#35828;&#26126;&#21327;&#31243;&#24050;&#32463;&#25191;&#34892;&#32467;&#26463;</span>
+            <span class="org-keyword">self</span>.set_result(exc.value)
+        <span class="org-keyword">else</span>:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#21327;&#31243;&#65292;&#23558;&#20854;&#36716;&#25442;&#20026; Task &#21518;&#23558; self.step &#27880;&#20876;&#20026;&#26399;&#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
+            <span class="org-keyword">if</span> <span class="org-builtin">type</span>(result) == <span class="org-keyword">self</span>.coroutine:
+                <span class="org-variable-name">result</span> = Task(result, <span class="org-keyword">self</span>.loop)
+                result.add_done_callback(<span class="org-keyword">self</span>.step)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#20219;&#21153;&#65292;&#23558; self.step &#27880;&#20876;&#20026;&#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
+            <span class="org-keyword">elif</span> <span class="org-builtin">isinstance</span>(result, Task):
+                <span class="org-comment-delimiter"># </span><span class="org-comment">there is a bug</span>
+                result.add_done_callback(<span class="org-keyword">self</span>.step)
+                <span class="org-keyword">self</span>.loop.call_soon(result)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#20854;&#20182;&#19996;&#35199;&#65292;&#19981;&#21463;&#29702;&#65292;&#30452;&#25509;&#23558; self &#20877;&#27425;&#25918;&#20837;&#20219;&#21153;&#38431;&#21015;</span>
+            <span class="org-keyword">else</span>:
+                <span class="org-keyword">self</span>.loop.call_soon(<span class="org-keyword">self</span>)
+</pre>
+</div>
+
+<p>
+一开始实现的时候是想用一个外部的事件循环来操作，不需要 <code>Task</code> 持有事件循环，但是实现过程中发现那样存在一点问题，便学着 <code>Python</code> 中的方式将事件循环传递给 <code>Task</code> 操作，但这里的实现是依然存在问题。
+</p>
+
+<p>
+在只存在协程和同序返回 <code>Task</code> 的情况下测试没有问题，但是当存在异序返回 <code>Task</code> 的情况下问题就出现了，下面的测试代码便是异序返回，我通过在 <code>set_result</code> 中判断 <code>result</code> 的方式暂时抑制了该异常，但是，这是治标不治本的方式。如果有大佬知道方案，请务必告诉我 QAQ
+</p>
+
+<p>
+测试代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">_loop</span> = EventLoop()
+
+<span class="org-keyword">def</span> <span class="org-function-name">main</span>():
+    <span class="org-variable-name">ta</span> = Task(say_hello(), _loop)
+    <span class="org-variable-name">tb</span> = Task(say_world(), _loop)
+
+    <span class="org-variable-name">b</span> = <span class="org-keyword">yield</span> tb
+    <span class="org-variable-name">a</span> = <span class="org-keyword">yield</span> ta
+
+    <span class="org-keyword">return</span> a + b
+
+<span class="org-keyword">def</span> <span class="org-function-name">say_world</span>():
+    <span class="org-keyword">print</span>(<span class="org-string">'world'</span>)
+    <span class="org-keyword">yield</span>
+    <span class="org-keyword">return</span> <span class="org-string">'world'</span>
+
+<span class="org-keyword">def</span> <span class="org-function-name">say_hello</span>():
+    <span class="org-keyword">print</span>(<span class="org-string">'hello'</span>)
+    <span class="org-keyword">yield</span> <span class="org-keyword">from</span> say_other()
+    <span class="org-keyword">return</span> <span class="org-string">'hello '</span>
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">say_other</span>():
+    <span class="org-keyword">print</span>(<span class="org-string">'other'</span>)
+    <span class="org-keyword">yield</span>
+
+<span class="org-keyword">print</span>(_loop.run_forever(main()))
+</pre>
+</div>
+
+<p>
+输出：
+</p>
+<pre class="example">
+hello
+other
+world
+hello world
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6a4cf41" class="outline-2">
+<h2 id="org6a4cf41"><span class="section-number-2">5</span> 结语</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+折腾了一圈后结果还是只能得到一份存在问题的代码，和去年的时候差不多，但比去年好的是，多少多了一点思路。
+</p>
+
+<p>
+但是，还是差得好远啊……
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcbd59b3" class="outline-2">
+<h2 id="orgcbd59b3"><span class="section-number-2">6</span> 参考链接</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="https://zhuanlan.zhihu.com/p/25228075">从 0 到 1，Python 异步编程的演进之路 - 知乎</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+ES6 中 <code>async/await</code> 的原理还没有怎么了解过，因此这里的异步只包括 <code>ajax</code> 这类异步操作 
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
