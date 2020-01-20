@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-01-18 周六 22:12 -->
+<!-- 2020-01-20 一 16:43 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>事件循环和协程</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,18 +246,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbdb30c4">1. 前言</a></li>
-<li><a href="#org3f9e3d8">2. Python 中异步编程模型的特殊性</a></li>
-<li><a href="#org3185a4c">3. 协程的基本认识</a></li>
-<li><a href="#org24e58d3">4. 简单事件循环的实现</a></li>
-<li><a href="#org6a4cf41">5. 结语</a></li>
-<li><a href="#orgcbd59b3">6. 参考链接</a></li>
+<li><a href="#org16d1ad3">1. 前言</a></li>
+<li><a href="#org3fe2ded">2. Python 中异步编程模型的特殊性</a></li>
+<li><a href="#orgc426133">3. 协程的基本认识</a></li>
+<li><a href="#orga547deb">4. 简单事件循环的实现</a></li>
+<li><a href="#orgee055fd">5. 简单事件循环的实现 · 修</a></li>
+<li><a href="#org89664ac">6. 结语</a></li>
+<li><a href="#orgd681309">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbdb30c4" class="outline-2">
-<h2 id="orgbdb30c4"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org16d1ad3" class="outline-2">
+<h2 id="org16d1ad3"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触异步编程这个概念是在 <code>Python</code> 里面，去年的时候就因为不清楚 <code>Python</code> 中异步编程的实现原理找了很多资料研究，但最后也没有搞得很清楚。
@@ -276,14 +277,15 @@ for the JavaScript code in this tag.
 </p>
 
 <ul class="org-ul">
-<li>注 1：虽然这篇博客源自探究 <code>Python</code> 异步编程实现原理的过程，但是，并不会包含太多 <code>Python</code> 中异步编程的实现原理，因为我还没有搞明白</li>
+<li>注 1：虽然这篇博客源自探究 <code>Python</code> 异步编程实现原理的过程，但是，并不会包含太多 <code>Python</code> 中异步编程的实现原理，因为我还没有搞明白 QAQ</li>
 <li>注 2：博客中最后的实现代码存在问题，但一时间找不到解决办法，只好作为一种思路发出来，等待后续研究解决</li>
+<li>注 3：哇咔咔咔，通过研究 JavaScript 的异步实现解决了代码的问题 (≧▽≦)/</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3f9e3d8" class="outline-2">
-<h2 id="org3f9e3d8"><span class="section-number-2">2</span> Python 中异步编程模型的特殊性</h2>
+<div id="outline-container-org3fe2ded" class="outline-2">
+<h2 id="org3fe2ded"><span class="section-number-2">2</span> Python 中异步编程模型的特殊性</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 我先后接触过了 Python、JavaScript<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 和 Java 中的异步编程，其中，Python 的是最为特殊的一个，因为它是 <b>单线程</b> 和 <b>异步阻塞</b> 的。
@@ -319,8 +321,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3185a4c" class="outline-2">
-<h2 id="org3185a4c"><span class="section-number-2">3</span> 协程的基本认识</h2>
+<div id="outline-container-orgc426133" class="outline-2">
+<h2 id="orgc426133"><span class="section-number-2">3</span> 协程的基本认识</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Python 中的协程是通过生成器来实现的，但是，基本上所有博客将协程的时候都会说的一句话，协程不等于生成器，它们只是长得像：
@@ -457,8 +459,8 @@ StopIteration: coroutine 1
 </div>
 </div>
 
-<div id="outline-container-org24e58d3" class="outline-2">
-<h2 id="org24e58d3"><span class="section-number-2">4</span> 简单事件循环的实现</h2>
+<div id="outline-container-orga547deb" class="outline-2">
+<h2 id="orga547deb"><span class="section-number-2">4</span> 简单事件循环的实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 本来想将 <code>Future &amp; Task</code> 和 <code>EventLoop</code> 分成两节的，结果 <code>Task</code> 和 <code>EventLoop</code> 耦合在了一起，只好合在一起了，下面是代码：
@@ -582,9 +584,161 @@ hello world
 </div>
 </div>
 
-<div id="outline-container-org6a4cf41" class="outline-2">
-<h2 id="org6a4cf41"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-orgee055fd" class="outline-2">
+<h2 id="orgee055fd"><span class="section-number-2">5</span> 简单事件循环的实现 · 修</h2>
 <div class="outline-text-2" id="text-5">
+<p>
+发现在 <code>Python</code> 这边碰壁后，我就想到了去 <code>JavaScript</code> 这边取取经，然后，我就在阮老师的 <a href="https://es6.ruanyifeng.com/#docs/generator-async">Generator 函数的异步应用</a> 教程里面找到了自己代码的问题，并成功解决  (≧▽≦)/
+</p>
+
+<p>
+这是新的代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">EventLoop</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">self</span>._ready = []
+
+    <span class="org-keyword">def</span> <span class="org-function-name">call_soon</span>(<span class="org-keyword">self</span>, task):
+        <span class="org-keyword">self</span>._ready.append(task)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">run_forever</span>(<span class="org-keyword">self</span>, coro):
+        <span class="org-variable-name">root</span> = Task(coro, <span class="org-keyword">self</span>)
+        <span class="org-keyword">while</span> <span class="org-keyword">self</span>._ready:
+            <span class="org-variable-name">task</span> = <span class="org-keyword">self</span>._ready.pop(0)
+            task.step(Future())
+        <span class="org-keyword">return</span> root.result
+
+
+<span class="org-keyword">class</span> <span class="org-type">Future</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#33258;&#36523;&#26159;&#21542;&#25191;&#34892;&#23436;&#25104;</span>
+        <span class="org-keyword">self</span>.done = <span class="org-constant">False</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; result &#26469;&#20445;&#23384;&#21327;&#31243;&#30340;&#36820;&#22238;&#20540;</span>
+        <span class="org-keyword">self</span>.result = <span class="org-constant">None</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; _callbacks &#26469;&#20445;&#23384;&#22238;&#35843;&#20989;&#25968;</span>
+        <span class="org-keyword">self</span>._callbacks = []
+
+    <span class="org-keyword">def</span> <span class="org-function-name">add_done_callback</span>(<span class="org-keyword">self</span>, callback):
+        <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>.done:
+            <span class="org-keyword">self</span>._callbacks.append(callback)
+        <span class="org-keyword">else</span>:
+            callback(<span class="org-keyword">self</span>)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">set_result</span>(<span class="org-keyword">self</span>, result):
+        <span class="org-keyword">self</span>.result = result
+        <span class="org-keyword">self</span>.done = <span class="org-constant">True</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;&#23436;&#25104;&#21518;&#23558;&#33258;&#36523;&#20316;&#20026;&#21442;&#25968;&#20256;&#36882;&#32473;&#22238;&#35843;&#20989;&#25968;</span>
+        <span class="org-keyword">for</span> callback <span class="org-keyword">in</span> <span class="org-keyword">self</span>._callbacks:
+            callback(<span class="org-keyword">self</span>)
+
+<span class="org-keyword">class</span> <span class="org-type">Task</span>(Future):
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#31867;&#22411;</span>
+    <span class="org-variable-name">coroutine</span> = <span class="org-builtin">type</span>((i <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(0)))
+
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, coro, loop):
+        <span class="org-builtin">super</span>().__init__()
+        <span class="org-keyword">self</span>.coro = coro
+        <span class="org-keyword">self</span>.loop = loop
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#33258;&#36523;&#21152;&#20837;&#20219;&#21153;&#38431;&#21015;</span>
+        <span class="org-keyword">self</span>.loop.call_soon(<span class="org-keyword">self</span>)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">step</span>(<span class="org-keyword">self</span>, future):
+        <span class="org-keyword">try</span>:
+            <span class="org-variable-name">result</span> = <span class="org-keyword">self</span>.coro.send(future.result)
+        <span class="org-keyword">except</span> <span class="org-type">StopIteration</span> <span class="org-keyword">as</span> exc:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#35302;&#21457; StopIteration &#24322;&#24120;&#26102;&#35828;&#26126;&#21327;&#31243;&#24050;&#32463;&#25191;&#34892;&#32467;&#26463;</span>
+            <span class="org-keyword">self</span>.set_result(exc.value)
+        <span class="org-keyword">else</span>:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#21327;&#31243;&#65292;&#23558;&#20854;&#36716;&#25442;&#20026; Task</span>
+            <span class="org-keyword">if</span> <span class="org-builtin">type</span>(result) == <span class="org-keyword">self</span>.coroutine:
+                <span class="org-variable-name">result</span> = Task(result, <span class="org-keyword">self</span>.loop)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558; self.step &#27880;&#20876;&#20026; task &#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
+            <span class="org-keyword">if</span> <span class="org-builtin">isinstance</span>(result, Task):
+                result.add_done_callback(<span class="org-keyword">self</span>.step)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#20854;&#20182;&#19996;&#35199;&#65292;&#19981;&#21463;&#29702;&#65292;&#30452;&#25509;&#23558; self &#20877;&#27425;&#25918;&#20837;&#20219;&#21153;&#38431;&#21015;</span>
+            <span class="org-keyword">else</span>:
+                <span class="org-keyword">self</span>.loop.call_soon(<span class="org-keyword">self</span>)
+</pre>
+</div>
+
+<p>
+主要改动为：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"> <span class="org-keyword">class</span> <span class="org-type">Future</span>:
+     <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>):
++        <span class="org-comment-delimiter"># </span><span class="org-comment">&#33258;&#36523;&#26159;&#21542;&#25191;&#34892;&#23436;&#25104;</span>
++        <span class="org-keyword">self</span>.done = <span class="org-constant">False</span>
+         <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; result &#26469;&#20445;&#23384;&#21327;&#31243;&#30340;&#36820;&#22238;&#20540;</span>
+         <span class="org-keyword">self</span>.result = <span class="org-constant">None</span>
+         <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807; _callbacks &#26469;&#20445;&#23384;&#22238;&#35843;&#20989;&#25968;</span>
+         <span class="org-keyword">self</span>._callbacks = []
+
+-    <span class="org-keyword">def</span> <span class="org-function-name">add_done_callback</span>(<span class="org-keyword">self</span>, fn):
+-        <span class="org-keyword">self</span>._callbacks.append(fn)
++    <span class="org-keyword">def</span> <span class="org-function-name">add_done_callback</span>(<span class="org-keyword">self</span>, callback):
++        <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-keyword">self</span>.done:
++            <span class="org-keyword">self</span>._callbacks.append(callback)
++        <span class="org-keyword">else</span>:
++            callback(<span class="org-keyword">self</span>)
+
+     <span class="org-keyword">def</span> <span class="org-function-name">set_result</span>(<span class="org-keyword">self</span>, result):
+-        <span class="org-comment-delimiter"># </span><span class="org-comment">try suppression bug</span>
+-        <span class="org-keyword">self</span>.result = <span class="org-keyword">self</span>.result <span class="org-keyword">or</span> result
++        <span class="org-keyword">self</span>.result = result
++        <span class="org-keyword">self</span>.done = <span class="org-constant">True</span>
+         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;&#23436;&#25104;&#21518;&#23558;&#33258;&#36523;&#20316;&#20026;&#21442;&#25968;&#20256;&#36882;&#32473;&#22238;&#35843;&#20989;&#25968;</span>
+         <span class="org-keyword">for</span> callback <span class="org-keyword">in</span> <span class="org-keyword">self</span>._callbacks:
+             callback(<span class="org-keyword">self</span>)
+@@ -47,15 +53,12 @@
+             <span class="org-comment-delimiter"># </span><span class="org-comment">&#35302;&#21457; StopIteration &#24322;&#24120;&#26102;&#35828;&#26126;&#21327;&#31243;&#24050;&#32463;&#25191;&#34892;&#32467;&#26463;</span>
+             <span class="org-keyword">self</span>.set_result(exc.value)
+         <span class="org-keyword">else</span>:
+-            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#21327;&#31243;&#65292;&#23558;&#20854;&#36716;&#25442;&#20026; Task &#21518;&#23558; self.step &#27880;&#20876;&#20026;&#26399;&#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
++            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#21327;&#31243;&#65292;&#23558;&#20854;&#36716;&#25442;&#20026; Task</span>
+             <span class="org-keyword">if</span> <span class="org-builtin">type</span>(result) == <span class="org-keyword">self</span>.coroutine:
+                 <span class="org-variable-name">result</span> = Task(result, <span class="org-keyword">self</span>.loop)
++            <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558; self.step &#27880;&#20876;&#20026; task &#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
++            <span class="org-keyword">if</span> <span class="org-builtin">isinstance</span>(result, Task):
+                 result.add_done_callback(<span class="org-keyword">self</span>.step)
+-            <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#20219;&#21153;&#65292;&#23558; self.step &#27880;&#20876;&#20026;&#22238;&#35843;&#20989;&#25968;&#31561;&#24453;&#21796;&#37266;</span>
+-            <span class="org-keyword">elif</span> <span class="org-builtin">isinstance</span>(result, Task):
+-                <span class="org-comment-delimiter"># </span><span class="org-comment">there is a bug</span>
+-                result.add_done_callback(<span class="org-keyword">self</span>.step)
+-                <span class="org-keyword">self</span>.loop.call_soon(result)
+             <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#31243;&#36820;&#22238;&#20854;&#20182;&#19996;&#35199;&#65292;&#19981;&#21463;&#29702;&#65292;&#30452;&#25509;&#23558; self &#20877;&#27425;&#25918;&#20837;&#20219;&#21153;&#38431;&#21015;</span>
+             <span class="org-keyword">else</span>:
+                 <span class="org-keyword">self</span>.loop.call_soon(<span class="org-keyword">self</span>)
+</pre>
+</div>
+
+<p>
+问题原因为：
+</p>
+<ol class="org-ol">
+<li>创建 Task 时任务会被立即加入事件循环，在任务执行时发现返回的是一个 Task 那么就会将唤醒自身的回调注册到该任务的回调函数中</li>
+<li>如果这时任务已经执行完成了，那么，按照我之前的逻辑，这次回调函数的注册是无效的</li>
+<li>结果就是，我发现回调函数没有执行，就只好在注册了回调函数后仍然将自身加入事件循环，导致重复调用</li>
+</ol>
+
+<p>
+现在好了，加个判断，加入注册回调函数时自身已经执行完成了，就立即执行回调函数，这样就不用担心出现问题了。
+</p>
+
+<p>
+优化：
+</p>
+<ol class="org-ol">
+<li>现在的执行模式的话可能导致递归调用，更好的方式就是改造一下，在注册回调函数时发现自身已经执行完成，那么就把回调函数封装为 Task 注册到事件循环</li>
+<li>现在的事件循环其实就只是个简单的同步协程执行器，而异步操作关注的更多的往往是 <code>I/O</code> 操作，因此可以考虑通过 <code>Selector</code> 的方式注册异步 I/O 回调函数，这个到时候可以去研究一下 Python 里面的实现</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org89664ac" class="outline-2">
+<h2 id="org89664ac"><span class="section-number-2">6</span> 结语</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 折腾了一圈后结果还是只能得到一份存在问题的代码，和去年的时候差不多，但比去年好的是，多少多了一点思路。
 </p>
@@ -595,9 +749,9 @@ hello world
 </div>
 </div>
 
-<div id="outline-container-orgcbd59b3" class="outline-2">
-<h2 id="orgcbd59b3"><span class="section-number-2">6</span> 参考链接</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgd681309" class="outline-2">
+<h2 id="orgd681309"><span class="section-number-2">7</span> 参考链接</h2>
+<div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://zhuanlan.zhihu.com/p/25228075">从 0 到 1，Python 异步编程的演进之路 - 知乎</a></li>
 </ul>
