@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2020-02-09 日 15:03 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 偏向锁、轻量级锁和重量级锁</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Java 偏向锁、轻量级锁和重量级锁</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge87b836">1. 前言</a></li>
+<li><a href="#org17d801a">2. 同步代码块和同步方法</a></li>
+<li><a href="#org70ff175">3. 锁对象和 Mark Word</a></li>
+<li><a href="#org45fdeb3">4. 重量级锁</a></li>
+<li><a href="#org4a2b5d1">5. 轻量级锁</a></li>
+<li><a href="#org9651a17">6. 偏向锁</a></li>
+<li><a href="#org225edf4">7. 使用场景</a></li>
+<li><a href="#orgc8336ec">8. 结语</a></li>
+<li><a href="#org31af0f4">9. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge87b836" class="outline-2">
+<h2 id="orge87b836"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+最开始听到偏向锁、轻量级锁和重量级锁的概念的时候，我还以为是 <code>Java</code> 中提供了相应的类库来实现的，结果了解后才发现，这三个原来是虚拟机底层对 <code>synchronized</code> 代码块的不同加锁方式。
+</p>
+
+<p>
+因此，不了解这三者的概念其实是不影响 <code>synchronized</code> 的使用的（大概），但是，了解它们对自身的提升来说却是必要的。
+</p>
+
+<p>
+这里，就来看看它们是怎么回事吧！
+</p>
+</div>
+</div>
+
+<div id="outline-container-org17d801a" class="outline-2">
+<h2 id="org17d801a"><span class="section-number-2">2</span> 同步代码块和同步方法</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+在 <code>Java</code> 中，关键字 <code>synchronized</code> 通常有两种使用方式，一是直接修饰在方法上定义同步方法，二是修饰单个对象，定义同步代码块：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">synchronized</span> <span class="org-type">void</span> <span class="org-function-name">syncMethod</span>() {
+  System.out.println(<span class="org-string">"Sync method"</span>);
+}
+
+<span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">syncCodeBlock</span>() {
+  <span class="org-keyword">synchronized</span> (<span class="org-keyword">this</span>) {
+    System.out.println(<span class="org-string">"Sync code block"</span>);
+  }
+}
+</pre>
+</div>
+
+<p>
+对于同步代码块来说，Javac 编译时会在同步代码块的前后插入 <code>monitorenter</code> 和 <code>monitorexit</code> 指令，同时保证只要执行了 <code>monitorenter</code> 指令，就必然会执行 <code>monitorexit</code> 指令。
+</p>
+
+<p>
+比如说上面的 <code>syncCodeBlock</code> 方法，它的编译结果为：
+</p>
+<pre class="example">
+public void syncCodeBlock();
+  descriptor: ()V
+  flags: ACC_PUBLIC
+  Code:
+    stack=2, locals=3, args_size=1
+       0: aload_0
+       1: dup
+       2: astore_1
+  --&gt;  3: monitorenter
+       4: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       7: ldc           #5                  // String Sync code block
+       9: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      12: aload_1
+  --&gt; 13: monitorexit
+      14: goto          22
+      17: astore_2
+      18: aload_1
+  --&gt; 19: monitorexit
+      20: aload_2
+      21: athrow
+      22: return
+  Exception table:
+   from    to  target type
+  --&gt;  4    14    17   any
+      17    20    17   any
+
+</pre>
+
+<p>
+可以看到，编译器在插入一个 <code>monitorenter</code> 后却插入了两个 <code>monitorexit</code> 指令，通过 <code>Exception table</code> 可以发现，当第 <code>4</code> 至 <code>14</code> 间的代码执行出现异常时，就会跳转到第 <code>17</code> 行执行，此时，第 <code>17</code> 行后依然还有一个 <code>monitorexit</code> 指令保证同步代码块的退出。
+</p>
+
+<p>
+但是对于同步方法来说，就不需要编译器添加 <code>monitorenter</code> 和 <code>monitorexit</code> 指令了，而是直接添加 <code>ACC_SYNCHRONIZED</code> 方法访问标志，方法的同步交由虚拟机完成：
+</p>
+<pre class="example">
+public synchronized void syncMethod();
+   descriptor: ()V
+-&gt; flags: ACC_PUBLIC, ACC_SYNCHRONIZED
+   Code:
+     stack=2, locals=1, args_size=1
+        0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        3: ldc           #3                  // String Sync method
+        5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        8: return
+</pre>
+
+<p>
+虽然说同步方法和同步代码块编译出来的结果不一样，但是，它们最后实现同步的方式还是一样的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70ff175" class="outline-2">
+<h2 id="org70ff175"><span class="section-number-2">3</span> 锁对象和 Mark Word</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+对象头里面的 <code>Mark Word</code> 是了解 <code>synchronized</code> 实现原理时绕不开的东西，为了节约内存，这个 <code>Mark Word</code> 在不同锁状态下存储的内容是不一样的，大致如下图：
+</p>
+<img src="https://i.loli.net/2020/02/09/HlfeUF7waBS34Pg.png">
+
+<p>
+其中，较为关键的便是最后的两位锁标志位了，根据其值的不同，虚拟机加锁时会做出不同的操作。
+</p>
+
+<p>
+而锁对象，则是在获取锁和释放锁时需要关注的对象，对于同步代码块来说就是被 <code>synchronized</code> 关键字修饰的对象，对于同步方法来说，静态方法的锁对象是该类对应的 <code>java.lang.Class</code> 对象，而普通方法则是相应的实例对象。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org45fdeb3" class="outline-2">
+<h2 id="org45fdeb3"><span class="section-number-2">4</span> 重量级锁</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+重量级锁指的就是一般意义上 <code>synchronized</code> 的同步方式，通过对象内部的监视器（monitor）实现，其中 monitor 的本质是依赖于底层操作系统的 Mutex Lock 实现，操作系统实现线程之间的切换需要从用户态到内核态的切换，切换成本非常高。
+</p>
+
+<p>
+获取重量级锁后，会在对象头中保存指向重量级锁对象的指针，并将锁标志位的值设为 10，当其他线程过来尝试获得锁时，就会进入等待，直到重量级锁释放。
+</p>
+
+<p>
+由于将线程挂起同样需要系统调用，存在用户态和内核态之间的转换，为了减少这种操作，对于获取重量级锁失败的线程来说，还可以通过 <b>自旋锁</b> 来等待获取锁成功的线程执行完成释放锁。
+</p>
+
+<p>
+而自旋锁就是一个忙循环，因为很多同步块的执行时间并不是很长，因此通过一个忙循环等待来替代线程挂起是值得尝试的操作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4a2b5d1" class="outline-2">
+<h2 id="org4a2b5d1"><span class="section-number-2">5</span> 轻量级锁</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+获取释放重量级锁的消耗都是极为巨大的，如果临界区经常有几个线程同时访问，那么，这个消耗还可以接受，但是，如果临界区同一时间只有一个线程访问呢？这个时候还用重量级锁不就亏了？
+</p>
+
+<p>
+因此，为了针对这一情况进行优化，虚拟机实现了轻量级锁，通过虚拟机自身在 <b>用户态</b> 下的 <code>CAS</code> 操作来替换获取释放重量级锁时的用户态内核态切换，其获取流程为：
+</p>
+<ol class="org-ol">
+<li>判断当前对象是否处于无锁状态（偏向锁标志为 0，锁标志位为 01），若是，则在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的 Mark Word 的拷贝，否则执行步骤（3）</li>
+<li>通过 CAS 操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针，如果成功表示竞争到锁，将锁标志位变成 00，执行同步操作代码，如果失败则执行步骤（3）</li>
+<li>判断当前对象的 Mark Word 是否指向当前线程的栈帧，如果是则表示当前线程已经持有当前对象的锁，则直接执行同步代码块，否则只能说明该锁对象已经被其他线程抢占了，这时轻量级锁需要膨胀为重量级锁</li>
+</ol>
+
+<p>
+在执行完同步代码后，轻量级锁会被主动释放，释放流程如下：
+</p>
+<ol class="org-ol">
+<li>取出在获取轻量级锁保存在 Lock Record 中的数据</li>
+<li>用 CAS 操作将取出的数据替换到当前对象的 Mark Word 中，如果成功，则说明释放锁成功，否则执行步骤 (3)</li>
+<li>如果 CAS 操作替换失败，说明有其他线程尝试获取该锁，这时需要将该锁升级为重量级锁，并释放</li>
+</ol>
+
+<p>
+轻量级锁的关键思路就在于通过 CAS 操作代替消耗大的系统调用，但是在频繁存在多个线程同时进入临界区的情况时，轻量级锁反而会带来额外的消耗。因此，轻量级锁更适合不存在多个线程同时竞争同一个资源的情况。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9651a17" class="outline-2">
+<h2 id="org9651a17"><span class="section-number-2">6</span> 偏向锁</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+虽然说轻量级锁通过 CAS 代替了系统调用减小了同步消耗，但是，如果临界区通常只有一个线程会进入呢？这时，是可以通过偏向锁进一步减小同步消耗的。
+</p>
+
+<p>
+偏向锁通过如下措施进一步的减少了轻量级锁的消耗：
+</p>
+<ol class="org-ol">
+<li>在对象头中记录获取偏向锁成功的线程 ID，当该线程再次获取偏向锁时，发现线程 ID 一样，就可以直接通过判断执行同步代码，减少获取锁时的消耗</li>
+<li>不主动释放偏向锁，仅在出现竞争时才是否偏向锁，减小释放锁的消耗</li>
+</ol>
+
+<p>
+获取偏向锁的过程为：
+</p>
+<ol class="org-ol">
+<li>检测 Mark Word 是否为可偏向状态（锁标志位为 01）</li>
+<li>若为可偏向状态，则测试线程 ID 是否为当前线程 ID，如果是，则执行步骤 (5)，否则执行步骤 (3)</li>
+<li>如果线程 ID 不为当前线程 ID，则通过 CAS 操作竞争锁，竞争成功，则将 Mark Word 的线程 ID 替换为当前线程 ID，否则执行线程 (4)</li>
+<li>通过 CAS 竞争锁失败，证明当前存在多线程竞争情况，当到达全局安全点，获得偏向锁的线程被挂起，撤销偏向锁，升级为轻量级锁，升级完成后被阻塞在安全点的线程继续往下执行同步代码</li>
+<li>执行同步代码块</li>
+</ol>
+
+<p>
+偏向锁不会主动释放，只有当其它线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，释放过程为：
+</p>
+<ol class="org-ol">
+<li>暂停拥有偏向锁的线程，判断锁对象是否还处于被锁定状态</li>
+<li>撤销偏向锁，恢复到无锁状态(01)或者轻量级锁(00)的状态</li>
+</ol>
+
+<p>
+偏向锁在 JDK 1.6 之后默认启用，可以通过 <code>XX:-UseBiasedLocking=false</code> 参数关闭偏向锁。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org225edf4" class="outline-2">
+<h2 id="org225edf4"><span class="section-number-2">7</span> 使用场景</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+虽然说从重量级锁到偏向锁的过程中，获取和释放锁的消耗在逐渐减少，但是，各自适用的场景也越来越特殊：
+</p>
+<ul class="org-ul">
+<li>重量级锁，适用于多个线程 <b>同时</b> 进入临界区的场景</li>
+<li>轻量级锁，适用于多个线程 <b>交替</b> 进入临界区</li>
+<li>偏向锁，适用于 <b>只有一个</b> 线程进入临界区临界区的情况</li>
+</ul>
+
+<p>
+当然了，使用那个锁是由虚拟机在运行时决定的，我们需要了解的是它们各自的实现原理，为什么要那么做，带来了什么好处，又有什么坏处。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc8336ec" class="outline-2">
+<h2 id="orgc8336ec"><span class="section-number-2">8</span> 结语</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+总的来说，这几个锁的概念比我想象的要容易一些，但也还是存在一些细节上的东西不是很清楚，其中一个就是锁膨胀的过程和重量级锁的具体实现。
+</p>
+
+<p>
+这些东西后面还需要慢慢学习啊 ‍(｀・ω・´)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org31af0f4" class="outline-2">
+<h2 id="org31af0f4"><span class="section-number-2">9</span> 参考链接</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li><a href="https://www.sczyh30.com/posts/Java/jvm-gc-safepoint-condition/">深入探究 JVM | Safepoint 及 GC 的触发条件 | 「浮生若梦」 - sczyh30's blog</a></li>
+<li><a href="https://www.cnblogs.com/duanxz/p/4967042.html">java 对象在内存中的结构（HotSpot虚拟机） - duanxz - 博客园</a></li>
+<li><a href="http://bigdatadecode.club/JavaSynchronizedTheory.html">Java Synchronized 实现原理 | big data decode club</a></li>
+<li><a href="https://www.jianshu.com/p/c5058b6fe8e5">JVM 源码分析之 synchronized 实现 - 简书</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
