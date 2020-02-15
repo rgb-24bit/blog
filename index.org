@@ -4,6 +4,7 @@
 
 #+HTML: <details open="open"><summary><i>2020</i></summary>
 
+- 02-15 -- [[file:2020/java-dynamic-proxy.org][Java 动态代理的简单使用和理解]] ::
 - 02-09 -- [[file:2020/java-synchronized.org][Java 偏向锁、轻量级锁和重量级锁]] ::
 - 01-18 -- [[file:2020/event-loop-with-coroutine.org][事件循环和协程]] ::
 - 01-05 -- [[file:2020/latex-summary.org][LateX 学习小结]] ::

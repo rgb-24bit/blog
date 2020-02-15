@@ -1,0 +1,419 @@
+#+TITLE:      Java 动态代理的简单使用和理解
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2020-02-15 六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#jdk-动态代理][JDK 动态代理]]
+  - [[#代理类][代理类]]
+- [[#cglib-动态代理][CGLIB 动态代理]]
+  - [[#代理类-1][代理类]]
+  - [[#spring-configuration][Spring @Configuration]]
+- [[#小结][小结]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  在 Java 中，动态代理是一个很常用的功能，虽然说一般不需要自己直接去用，但是了解它们是怎么回事还是很有必要的。
+
+  这篇博客的主要内容便是 JDK 动态代理和 CGLIB 动态代理的简单使用和理解。
+
+* JDK 动态代理
+  JDK 动态代理依赖于 *接口* 来确定它需要代理的方法，使用时可以分为以下几个角色：
+  + =TargetInterfaces= - 需要代理的目标接口（们），JDK 动态代理将会为这些接口的 *方法调用* 创建代理
+  + =TargetObject= - 实现了目标接口的对象
+  + =InvocationHandler= - *方法调用* 处理器，JDK 动态代理在内部通过 =InvocationHandler= 对象来处理目标方法的调用
+  + =java.lang.reflect.Proxy= - 组装 =InvocationHandler= 和 =TargetObject=, 创建代理对象，创建出来的代理对象是它的子类的实例
+
+  =TargetInterfaces= 和 =TargetObject= 相对来说很容易理解，就是一些接口和实现了这些接口的对象，比如说：
+  #+begin_src java
+    interface TargetInterfaceA {
+      void targetMethodA();
+    }
+
+    interface TargetInterfaceB {
+      void targetMethodB();
+    }
+
+    class TargetClass implements TargetInterfaceA, TargetInterfaceB {
+      @Override
+      public void targetMethodA() {
+        System.out.println("Target method A...");
+      }
+
+      @Override
+      public void targetMethodB() {
+        System.out.println("Target method B...");
+      }
+    }
+  #+end_src
+
+  上面的例子中，目标接口为 =[TargetInterfaceA, TargetInterfaceB]=, 而目标对象就是 =TargetClass= 的 *实例*.
+
+  现在，我们想要拦截 =TargetClass= 实现的接口的方法的调用，我们需要先通过 =InvocationHandler= 来定义代理逻辑：
+  #+begin_src java
+    class SimpleInvocationHandler implements InvocationHandler {
+      private Object target;
+
+      public SimpleInvocationHandler(Object target) {
+        this.target = target;
+      }
+
+      @Override
+      public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println(String.format("Before invocation method %s", method.getName()));
+        Object result = method.invoke(target, args);
+        System.out.println(String.format("After invocation method %s", method.getName()));
+        return result;
+      }
+    }
+  #+end_src
+  
+  =InvocationHandler= 这个接口只定义了一个方法 =invoke=, 该方法的参数为：
+  + =proxy= - 代理对象实例，注意，不是 =TargetObject=, 是 =Proxy= 子类的实例，因此，我们需要在 =InvocationHandler= 实例内部持有 =TargetObject=
+  + =method= - 要调用的方法
+  + =args= - 方法调用参数
+
+  有了 =InvocationHandler= 和 =TargetClass= 之后，我们就可以创建 =TargetObject= 并通过 =Proxy= 组装创建代理对象了，主要通过 =newProxyInstance= 方法完成：
+  #+begin_src java
+    TargetClass targetObject = new TargetClass();
+    Proxy.newProxyInstance(targetObject.getClass().getClassLoader(), targetObject.getClass().getInterfaces(), new SimpleInvocationHandler(targetObject););
+  #+end_src
+
+  方法 =Proxy.newProxyInstance= 的参数为：
+  + =ClassLoader= - 一个 =ClassLoader=, 简单的话直接用 =targetObject= 的 =ClassLoader= 就可以了
+  + =Class<?>[]= - 要代理的接口数组，同样，直接获取 =targetObject= 实现的所有接口
+  + =InvocationHandler= - 定义了方法调用处理逻辑的 =InvocationHandler=
+
+  *PS*: 可以看到，创建代理对象的时候需要我们先创建 =TargetObject= 才行，而且还需要手动将 =TargetObject= 传递给 =InvocationHandler=, 很麻烦……
+
+  完整代码和测试：
+  #+begin_src java
+    interface TargetInterfaceA {
+        void targetMethodA();
+    }
+
+    interface TargetInterfaceB {
+        void targetMethodB();
+    }
+
+    class TargetClass implements TargetInterfaceA, TargetInterfaceB {
+        @Override
+        public void targetMethodA() {
+            System.out.println("Target method A...");
+        }
+
+        @Override
+        public void targetMethodB() {
+            System.out.println("Target method B...");
+        }
+    }
+
+    class SimpleInvocationHandler implements InvocationHandler {
+        private Object target;
+
+        public SimpleInvocationHandler(Object target) {
+            this.target = target;
+        }
+
+        public static Object bind(Object targetObject) {
+            SimpleInvocationHandler handler = new SimpleInvocationHandler(targetObject);
+            return Proxy.newProxyInstance(targetObject.getClass().getClassLoader(), targetObject.getClass().getInterfaces(), handler);
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println(String.format("Before invocation method %s", method.getName()));
+            Object result = method.invoke(target, args);
+            System.out.println(String.format("After invocation method %s", method.getName()));
+            return result;
+        }
+    }
+
+    public class ProxyTest {
+      public static void main(String[] args) {
+        Object proxy = SimpleInvocationHandler.bind(new TargetClass());
+        ((TargetInterfaceA) proxy).targetMethodA();
+        ((TargetInterfaceB) proxy).targetMethodB();
+      }
+    }
+  #+end_src
+
+  输出为：
+  #+begin_example
+    Before invocation method targetMethodA
+    Target method A...
+    After invocation method targetMethodA
+    Before invocation method targetMethodB
+    Target method B...
+    After invocation method targetMethodB
+  #+end_example
+
+** 代理类
+   在运行代码时可以将下面这行代码放在最前面查看 =Proxy= 动态生成的代理类是怎样的：
+   #+begin_src java
+     System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+   #+end_src
+
+   前面的代码生成的代理类为：
+   #+begin_src java
+     final class $Proxy0 extends Proxy implements TargetInterfaceA, TargetInterfaceB {
+       private static Method m0;
+       private static Method m1;
+       private static Method m2;
+       private static Method m4;
+       private static Method m3;
+
+       static {
+         try {
+           m1 = Class.forName("java.lang.Object").getMethod("equals", Class.forName("java.lang.Object"));
+           m2 = Class.forName("java.lang.Object").getMethod("toString");
+
+           // 目标接口中定义的方法
+           m4 = Class.forName("classload.TargetInterfaceB").getMethod("targetMethodB");
+           m3 = Class.forName("classload.TargetInterfaceA").getMethod("targetMethodA");
+
+           m0 = Class.forName("java.lang.Object").getMethod("hashCode");
+         } catch (NoSuchMethodException var2) {
+           throw new NoSuchMethodError(var2.getMessage());
+         } catch (ClassNotFoundException var3) {
+           throw new NoClassDefFoundError(var3.getMessage());
+         }
+       }
+
+       public $Proxy0(InvocationHandler var1) throws  {
+         super(var1);
+       }
+
+       // 通过 InvocationHandler 来调用目标方法
+       public final void targetMethodA() throws  {
+         try {
+           super.h.invoke(this, m3, (Object[])null);
+         } catch (RuntimeException | Error var2) {
+           throw var2;
+         } catch (Throwable var3) {
+           throw new UndeclaredThrowableException(var3);
+         }
+       }
+
+       // 通过 InvocationHandler 来调用目标方法
+       public final void targetMethodB() throws  {
+         try {
+           super.h.invoke(this, m4, (Object[])null);
+         } catch (RuntimeException | Error var2) {
+           throw var2;
+         } catch (Throwable var3) {
+           throw new UndeclaredThrowableException(var3);
+         }
+       }
+     }
+   #+end_src
+
+   通过阅读代理类的代码我们可以发现：
+   + 代理类继承了 =Proxy= 并实现了目标接口
+   + 代理类在静态初始化块通过反射获取了目标接口的方法
+   + 代理类实现的接口方法会通过 =InvocationHandler= 来调用目标方法
+   + =InvocationHandler= 传递的第一个参数为代理对象，不是 =TargetObject=[fn:1]
+
+   另外，代理类还获取了 =Object= 的 hashCode、equals 和 toString 方法，它们的调用逻辑都是一样的，就是直接调用 =InvocationHandler= 对象对应的方法，比如：
+   #+begin_src java
+     public final int hashCode() throws  {
+       try {
+         return (Integer)super.h.invoke(this, m0, (Object[])null);
+       } catch (RuntimeException | Error var2) {
+         throw var2;
+       } catch (Throwable var3) {
+         throw new UndeclaredThrowableException(var3);
+       }
+     }
+   #+end_src
+   
+   因此，我们也是可以代理目标对象的这些方法的。
+
+* CGLIB 动态代理
+  CGLIB 动态代理和 JDK 动态代理类似，只不过 CGLIB 动态代理是基于类的，不需要实现接口，简单使用的话只需要定义一个 =MethodInterceptor= 就可以了，
+  相当于 JDK 动态代理中的 =InvocationHandler=.
+
+  #+begin_src java
+    class SimpleMethodInterceptor implements MethodInterceptor {
+      @Override
+      public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        System.out.println(String.format("Before invocation method %s", method.getName()));
+        Object result = proxy.invokeSuper(obj, args);
+        System.out.println(String.format("After invocation method %s", method.getName()));
+        return result;
+      }
+    }
+  #+end_src
+
+  有了 =MethodInterceptor= 后我们就可以创建代理对象了：
+  #+begin_src java
+    class ProxyTest {
+      public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        // 设置需要被代理的类
+        enhancer.setSuperclass(TargetClass.class);
+        // 设置 MethodInterceptor
+        enhancer.setCallback(new SimpleMethodInterceptor());
+        // 创建代理对象
+        TargetClass proxyObject = (TargetClass) enhancer.create();
+        // 调用方法
+        proxyObject.targetMethodA();
+        proxyObject.targetMethodB();
+      }
+    }
+
+
+    class TargetClass {
+      public void targetMethodA() {
+        System.out.println("Target method A...");
+      }
+
+      public void targetMethodB() {
+        System.out.println("Target method B...");
+      }
+    }
+  #+end_src
+
+  执行输出为：
+  #+begin_example
+    Before invocation method targetMethodA
+    Target method A...
+    After invocation method targetMethodA
+    Before invocation method targetMethodB
+    Target method B...
+    After invocation method targetMethodB
+  #+end_example
+
+** 代理类
+   对于 =CGLIB= 来说可以设置 =DebuggingClassWriter.DEBUG_LOCATION_PROPERTY= 属性的值来保存生成的代理类[fn:2]：
+   #+begin_src java
+     public class TargetClass$$EnhancerByCGLIB$$eb42b691 extends TargetClass implements Factory {
+       private MethodInterceptor CGLIB$CALLBACK_0;
+
+       static void CGLIB$STATICHOOK1() {
+         // 要代理的目标方法
+         var10000 = ReflectUtils.findMethods(new String[]{"targetMethodA", "()V", "targetMethodB", "()V"}, (var1 = Class.forName("TargetClass")).getDeclaredMethods());
+         CGLIB$targetMethodA$0$Method = var10000[0];
+         CGLIB$targetMethodA$0$Proxy = MethodProxy.create(var1, var0, "()V", "targetMethodA", "CGLIB$targetMethodA$0");
+         CGLIB$targetMethodB$1$Method = var10000[1];
+         CGLIB$targetMethodB$1$Proxy = MethodProxy.create(var1, var0, "()V", "targetMethodB", "CGLIB$targetMethodB$1");
+       }
+
+       // 目标方法的简单代理
+       final void CGLIB$targetMethodA$0() {
+         super.targetMethodA();
+       }
+
+       public final void targetMethodA() {
+         MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
+         if (var10000 == null) {
+           CGLIB$BIND_CALLBACKS(this);
+           var10000 = this.CGLIB$CALLBACK_0;
+         }
+
+         // 当 MethodInterceptor 不为空时通过 MethodInterceptor 调用目标方法
+         if (var10000 != null) {
+           var10000.intercept(this, CGLIB$targetMethodA$0$Method, CGLIB$emptyArgs, CGLIB$targetMethodA$0$Proxy);
+         } else {
+           super.targetMethodA();
+         }
+       }
+
+       // 目标方法的简单代理
+       final void CGLIB$targetMethodB$1() {
+         super.targetMethodB();
+       }
+
+       public final void targetMethodB() {
+         MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
+         if (var10000 == null) {
+           CGLIB$BIND_CALLBACKS(this);
+           var10000 = this.CGLIB$CALLBACK_0;
+         }
+
+         // 当 MethodInterceptor 不为空时通过 MethodInterceptor 调用目标方法
+         if (var10000 != null) {
+           var10000.intercept(this, CGLIB$targetMethodB$1$Method, CGLIB$emptyArgs, CGLIB$targetMethodB$1$Proxy);
+         } else {
+           super.targetMethodB();
+         }
+       }
+
+       final int CGLIB$hashCode$5() {
+         return super.hashCode();
+       }
+
+       // 对 Object 方法的代理
+       public final int hashCode() {
+         MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
+         if (var10000 == null) {
+           CGLIB$BIND_CALLBACKS(this);
+           var10000 = this.CGLIB$CALLBACK_0;
+         }
+
+         if (var10000 != null) {
+           Object var1 = var10000.intercept(this, CGLIB$hashCode$5$Method, CGLIB$emptyArgs, CGLIB$hashCode$5$Proxy);
+           return var1 == null ? 0 : ((Number)var1).intValue();
+         } else {
+           return super.hashCode();
+         }
+       }
+
+       // ...
+     }
+   #+end_src
+
+   可以看到
+   + CGLIB 每个方法设置了两个代理，一个直接调用父类方法，另一个判断是否存在 =MethodInterceptor= 来进行调用
+   + 代理类继承了 =TargetClass=, 和 JDK 动态代理中继承 =Proxy= 的方式不一样
+
+   当我们设置了 =MethodInterceptor= 以后，CGLIB 便可以通过 =MethodInterceptor= 来调用目标方法，另外，调用 =MethodInterceptor.intercept= 方法时传递的第一个参数为代理类实例，
+   因此，需要执行被代理的方法时，应该通过 =MethodProxy.invokeSuper= 来完成，如果使用 =Method.invoke= 的话就会导致无限递归调用。
+
+** Spring @Configuration
+   在使用 Spring 的时候我们可以通过如下方式定义 Bean：
+   #+begin_src java
+     @Configuration
+     @ComponentScan(basePackageClasses = Company.class)
+     public class Config {
+       @Bean
+       public Address getAddress() {
+         return new Address("High Street", 1000);
+       }
+
+       @Bean
+       public Person getPerson() {
+         return new Person(getAddress());
+       }
+     }
+   #+end_src
+
+   当初对于这种方式的一种困惑就是，Spring 是怎么拦截对 =getAddress= 方法的调用的，因为在我的印象中 JDK 动态代理做不到这样的事情，现在才发现，Spring 会通过 CGLIB 为 =Config= 创建代理对象，拦截对 =getAddress= 方法的调用，保证 Bean 的单例性。
+
+   因为在 Java 中会根据先对象的 *实际类型* 查找方法，找不到才到 *父类* 中进行查找，而恰好的是，CGLIB 创建的代理对象是覆盖了父类的方法的，这样一来，在代理类中通过 =MethodInterceptor= 拦截方法的调用就可以避免重复创建 Bean 了。
+
+   这在 Spring 中对应的 =MethodInterceptor= 为 =ConfigurationClassEnhancer.BeanMethodInterceptor=.
+
+* 小结
+  这里汇总一下 JDK 动态代理和 CGLIB 动态代理的代理方式：
+  + JDK 动态代理通过创建继承了 =Proxy= 并实现了 =TargetInterfaces= 的代理类来完成代理，调用 =TargetInterfaces= 的方法时，代理类会将方法调用转交给 =InvocationHandler= 完成
+  + CGLIB 动态代理通过创建继承了 =TargetClass= 的代理类来完成代理，调用 =TargetClass= 的方法时，如果 =MethodInterceptor= 不为空，那么就会将方法调用转交给 =MethodInterceptor= 完成
+
+  可以看到，两种实现动态代理的方式还是很接近的，只不过一个是通过接口，一个是通过子类。
+
+* 结语
+  最开始接触动态代理这个概念是在看《Java 核心技术卷》这本书的时候，当时刚开始学 Java 没多久，看到这个东西后的想法就是，这么不方便的东西，
+  谁没事会去用啊 ‍→_→
+  
+  结果，它的使用很广泛 ‍( ´_ゝ｀)
+
+  类似的还有源码注解，不得不说，这些操作起来麻烦，但是功能又强大的特性，总会有人完成花样来‍╮(￣▽￣)╭
+
+* Footnotes
+
+[fn:1] 最开始看到 =InvocationHandler= 这个接口的时候总以为它的第一个参数为 =TargetObject=
+
+[fn:2] 为了方便阅读省略了很多其他不必要的内容 
+

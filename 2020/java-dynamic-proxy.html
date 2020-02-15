@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2020-02-15 六 14:12 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 动态代理的简单使用和理解</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Java 动态代理的简单使用和理解</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga06c972">1. 前言</a></li>
+<li><a href="#org65dcf86">2. JDK 动态代理</a>
+<ul>
+<li><a href="#org0fbf5d0">2.1. 代理类</a></li>
+</ul>
+</li>
+<li><a href="#orgeba9df6">3. CGLIB 动态代理</a>
+<ul>
+<li><a href="#org0b63a61">3.1. 代理类</a></li>
+<li><a href="#org4b5d693">3.2. Spring @Configuration</a></li>
+</ul>
+</li>
+<li><a href="#org205fa66">4. 小结</a></li>
+<li><a href="#org2210565">5. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga06c972" class="outline-2">
+<h2 id="orga06c972"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在 Java 中，动态代理是一个很常用的功能，虽然说一般不需要自己直接去用，但是了解它们是怎么回事还是很有必要的。
+</p>
+
+<p>
+这篇博客的主要内容便是 JDK 动态代理和 CGLIB 动态代理的简单使用和理解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org65dcf86" class="outline-2">
+<h2 id="org65dcf86"><span class="section-number-2">2</span> JDK 动态代理</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+JDK 动态代理依赖于 <b>接口</b> 来确定它需要代理的方法，使用时可以分为以下几个角色：
+</p>
+<ul class="org-ul">
+<li><code>TargetInterfaces</code> - 需要代理的目标接口（们），JDK 动态代理将会为这些接口的 <b>方法调用</b> 创建代理</li>
+<li><code>TargetObject</code> - 实现了目标接口的对象</li>
+<li><code>InvocationHandler</code> - <b>方法调用</b> 处理器，JDK 动态代理在内部通过 <code>InvocationHandler</code> 对象来处理目标方法的调用</li>
+<li><code>java.lang.reflect.Proxy</code> - 组装 <code>InvocationHandler</code> 和 <code>TargetObject</code>, 创建代理对象，创建出来的代理对象是它的子类的实例</li>
+</ul>
+
+<p>
+<code>TargetInterfaces</code> 和 <code>TargetObject</code> 相对来说很容易理解，就是一些接口和实现了这些接口的对象，比如说：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">interface</span> <span class="org-type">TargetInterfaceA</span> {
+  <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>();
+}
+
+<span class="org-keyword">interface</span> <span class="org-type">TargetInterfaceB</span> {
+  <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>();
+}
+
+<span class="org-keyword">class</span> <span class="org-type">TargetClass</span> <span class="org-keyword">implements</span> <span class="org-type">TargetInterfaceA</span>, <span class="org-type">TargetInterfaceB</span> {
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>() {
+    System.out.println(<span class="org-string">"Target method A..."</span>);
+  }
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>() {
+    System.out.println(<span class="org-string">"Target method B..."</span>);
+  }
+}
+</pre>
+</div>
+
+<p>
+上面的例子中，目标接口为 <code>[TargetInterfaceA, TargetInterfaceB]</code>, 而目标对象就是 <code>TargetClass</code> 的 <b>实例</b>.
+</p>
+
+<p>
+现在，我们想要拦截 <code>TargetClass</code> 实现的接口的方法的调用，我们需要先通过 <code>InvocationHandler</code> 来定义代理逻辑：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">class</span> <span class="org-type">SimpleInvocationHandler</span> <span class="org-keyword">implements</span> <span class="org-type">InvocationHandler</span> {
+  <span class="org-keyword">private</span> <span class="org-type">Object</span> <span class="org-variable-name">target</span>;
+
+  <span class="org-keyword">public</span> <span class="org-function-name">SimpleInvocationHandler</span>(<span class="org-type">Object</span> <span class="org-variable-name">target</span>) {
+    <span class="org-keyword">this</span>.target = target;
+  }
+
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">invoke</span>(<span class="org-type">Object</span> <span class="org-variable-name">proxy</span>, <span class="org-type">Method</span> <span class="org-variable-name">method</span>, <span class="org-type">Object</span>[] <span class="org-variable-name">args</span>) <span class="org-keyword">throws</span> <span class="org-type">Throwable</span> {
+    System.out.println(String.format(<span class="org-string">"Before invocation method %s"</span>, method.getName()));
+    <span class="org-type">Object</span> <span class="org-variable-name">result</span> = method.invoke(target, args);
+    System.out.println(String.format(<span class="org-string">"After invocation method %s"</span>, method.getName()));
+    <span class="org-keyword">return</span> result;
+  }
+}
+</pre>
+</div>
+
+<p>
+<code>InvocationHandler</code> 这个接口只定义了一个方法 <code>invoke</code>, 该方法的参数为：
+</p>
+<ul class="org-ul">
+<li><code>proxy</code> - 代理对象实例，注意，不是 <code>TargetObject</code>, 是 <code>Proxy</code> 子类的实例，因此，我们需要在 <code>InvocationHandler</code> 实例内部持有 <code>TargetObject</code></li>
+<li><code>method</code> - 要调用的方法</li>
+<li><code>args</code> - 方法调用参数</li>
+</ul>
+
+<p>
+有了 <code>InvocationHandler</code> 和 <code>TargetClass</code> 之后，我们就可以创建 <code>TargetObject</code> 并通过 <code>Proxy</code> 组装创建代理对象了，主要通过 <code>newProxyInstance</code> 方法完成：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">TargetClass</span> <span class="org-variable-name">targetObject</span> = <span class="org-keyword">new</span> <span class="org-type">TargetClass</span>();
+Proxy.newProxyInstance(targetObject.getClass().getClassLoader(), targetObject.getClass().getInterfaces(), <span class="org-keyword">new</span> <span class="org-type">SimpleInvocationHandler</span>(targetObject););
+</pre>
+</div>
+
+<p>
+方法 <code>Proxy.newProxyInstance</code> 的参数为：
+</p>
+<ul class="org-ul">
+<li><code>ClassLoader</code> - 一个 <code>ClassLoader</code>, 简单的话直接用 <code>targetObject</code> 的 <code>ClassLoader</code> 就可以了</li>
+<li><code>Class&lt;?&gt;[]</code> - 要代理的接口数组，同样，直接获取 <code>targetObject</code> 实现的所有接口</li>
+<li><code>InvocationHandler</code> - 定义了方法调用处理逻辑的 <code>InvocationHandler</code></li>
+</ul>
+
+<p>
+<b>PS</b>: 可以看到，创建代理对象的时候需要我们先创建 <code>TargetObject</code> 才行，而且还需要手动将 <code>TargetObject</code> 传递给 <code>InvocationHandler</code>, 很麻烦……
+</p>
+
+<p>
+完整代码和测试：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">interface</span> <span class="org-type">TargetInterfaceA</span> {
+    <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>();
+}
+
+<span class="org-keyword">interface</span> <span class="org-type">TargetInterfaceB</span> {
+    <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>();
+}
+
+<span class="org-keyword">class</span> <span class="org-type">TargetClass</span> <span class="org-keyword">implements</span> <span class="org-type">TargetInterfaceA</span>, <span class="org-type">TargetInterfaceB</span> {
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>() {
+        System.out.println(<span class="org-string">"Target method A..."</span>);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>() {
+        System.out.println(<span class="org-string">"Target method B..."</span>);
+    }
+}
+
+<span class="org-keyword">class</span> <span class="org-type">SimpleInvocationHandler</span> <span class="org-keyword">implements</span> <span class="org-type">InvocationHandler</span> {
+    <span class="org-keyword">private</span> <span class="org-type">Object</span> <span class="org-variable-name">target</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">SimpleInvocationHandler</span>(<span class="org-type">Object</span> <span class="org-variable-name">target</span>) {
+        <span class="org-keyword">this</span>.target = target;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">Object</span> <span class="org-function-name">bind</span>(<span class="org-type">Object</span> <span class="org-variable-name">targetObject</span>) {
+        <span class="org-type">SimpleInvocationHandler</span> <span class="org-variable-name">handler</span> = <span class="org-keyword">new</span> <span class="org-type">SimpleInvocationHandler</span>(targetObject);
+        <span class="org-keyword">return</span> Proxy.newProxyInstance(targetObject.getClass().getClassLoader(), targetObject.getClass().getInterfaces(), handler);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">invoke</span>(<span class="org-type">Object</span> <span class="org-variable-name">proxy</span>, <span class="org-type">Method</span> <span class="org-variable-name">method</span>, <span class="org-type">Object</span>[] <span class="org-variable-name">args</span>) <span class="org-keyword">throws</span> <span class="org-type">Throwable</span> {
+        System.out.println(String.format(<span class="org-string">"Before invocation method %s"</span>, method.getName()));
+        <span class="org-type">Object</span> <span class="org-variable-name">result</span> = method.invoke(target, args);
+        System.out.println(String.format(<span class="org-string">"After invocation method %s"</span>, method.getName()));
+        <span class="org-keyword">return</span> result;
+    }
+}
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">ProxyTest</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {
+    <span class="org-type">Object</span> <span class="org-variable-name">proxy</span> = SimpleInvocationHandler.bind(<span class="org-keyword">new</span> <span class="org-type">TargetClass</span>());
+    ((<span class="org-type">TargetInterfaceA</span>) proxy).targetMethodA();
+    ((<span class="org-type">TargetInterfaceB</span>) proxy).targetMethodB();
+  }
+}
+</pre>
+</div>
+
+<p>
+输出为：
+</p>
+<pre class="example">
+Before invocation method targetMethodA
+Target method A...
+After invocation method targetMethodA
+Before invocation method targetMethodB
+Target method B...
+After invocation method targetMethodB
+</pre>
+</div>
+
+<div id="outline-container-org0fbf5d0" class="outline-3">
+<h3 id="org0fbf5d0"><span class="section-number-3">2.1</span> 代理类</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+在运行代码时可以将下面这行代码放在最前面查看 <code>Proxy</code> 动态生成的代理类是怎样的：
+</p>
+<div class="org-src-container">
+<pre class="src src-java">System.getProperties().put(<span class="org-string">"sun.misc.ProxyGenerator.saveGeneratedFiles"</span>, <span class="org-string">"true"</span>);
+</pre>
+</div>
+
+<p>
+前面的代码生成的代理类为：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">final</span> <span class="org-keyword">class</span> $Proxy0 <span class="org-keyword">extends</span> <span class="org-type">Proxy</span> <span class="org-keyword">implements</span> <span class="org-type">TargetInterfaceA</span>, <span class="org-type">TargetInterfaceB</span> {
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-type">Method</span> <span class="org-variable-name">m0</span>;
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-type">Method</span> <span class="org-variable-name">m1</span>;
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-type">Method</span> <span class="org-variable-name">m2</span>;
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-type">Method</span> <span class="org-variable-name">m4</span>;
+  <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-type">Method</span> <span class="org-variable-name">m3</span>;
+
+  <span class="org-keyword">static</span> {
+    <span class="org-keyword">try</span> {
+      m1 = Class.forName(<span class="org-string">"java.lang.Object"</span>).getMethod(<span class="org-string">"equals"</span>, Class.forName(<span class="org-string">"java.lang.Object"</span>));
+      m2 = Class.forName(<span class="org-string">"java.lang.Object"</span>).getMethod(<span class="org-string">"toString"</span>);
+
+      <span class="org-comment-delimiter">// </span><span class="org-comment">&#30446;&#26631;&#25509;&#21475;&#20013;&#23450;&#20041;&#30340;&#26041;&#27861;</span>
+      m4 = Class.forName(<span class="org-string">"classload.TargetInterfaceB"</span>).getMethod(<span class="org-string">"targetMethodB"</span>);
+      m3 = Class.forName(<span class="org-string">"classload.TargetInterfaceA"</span>).getMethod(<span class="org-string">"targetMethodA"</span>);
+
+      m0 = Class.forName(<span class="org-string">"java.lang.Object"</span>).getMethod(<span class="org-string">"hashCode"</span>);
+    } <span class="org-keyword">catch</span> (<span class="org-type">NoSuchMethodException</span> <span class="org-variable-name">var2</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">NoSuchMethodError</span>(var2.getMessage());
+    } <span class="org-keyword">catch</span> (<span class="org-type">ClassNotFoundException</span> <span class="org-variable-name">var3</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">NoClassDefFoundError</span>(var3.getMessage());
+    }
+  }
+
+  <span class="org-keyword">public</span> $Proxy0(<span class="org-type">InvocationHandler</span> <span class="org-variable-name">var1</span>) <span class="org-keyword">throws</span>  {
+    <span class="org-keyword">super</span>(var1);
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#36890;&#36807; InvocationHandler &#26469;&#35843;&#29992;&#30446;&#26631;&#26041;&#27861;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>() <span class="org-keyword">throws</span>  {
+    <span class="org-keyword">try</span> {
+      <span class="org-keyword">super</span>.h.invoke(<span class="org-keyword">this</span>, m3, (Object[])<span class="org-constant">null</span>);
+    } <span class="org-keyword">catch</span> (RuntimeException | Error var2) {
+      <span class="org-keyword">throw</span> var2;
+    } <span class="org-keyword">catch</span> (<span class="org-type">Throwable</span> <span class="org-variable-name">var3</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">UndeclaredThrowableException</span>(var3);
+    }
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#36890;&#36807; InvocationHandler &#26469;&#35843;&#29992;&#30446;&#26631;&#26041;&#27861;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>() <span class="org-keyword">throws</span>  {
+    <span class="org-keyword">try</span> {
+      <span class="org-keyword">super</span>.h.invoke(<span class="org-keyword">this</span>, m4, (Object[])<span class="org-constant">null</span>);
+    } <span class="org-keyword">catch</span> (RuntimeException | Error var2) {
+      <span class="org-keyword">throw</span> var2;
+    } <span class="org-keyword">catch</span> (<span class="org-type">Throwable</span> <span class="org-variable-name">var3</span>) {
+      <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">UndeclaredThrowableException</span>(var3);
+    }
+  }
+}
+</pre>
+</div>
+
+<p>
+通过阅读代理类的代码我们可以发现：
+</p>
+<ul class="org-ul">
+<li>代理类继承了 <code>Proxy</code> 并实现了目标接口</li>
+<li>代理类在静态初始化块通过反射获取了目标接口的方法</li>
+<li>代理类实现的接口方法会通过 <code>InvocationHandler</code> 来调用目标方法</li>
+<li><code>InvocationHandler</code> 传递的第一个参数为代理对象，不是 <code>TargetObject</code><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></li>
+</ul>
+
+<p>
+另外，代理类还获取了 <code>Object</code> 的 hashCode、equals 和 toString 方法，它们的调用逻辑都是一样的，就是直接调用 <code>InvocationHandler</code> 对象对应的方法，比如：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-function-name">hashCode</span>() <span class="org-keyword">throws</span>  {
+  <span class="org-keyword">try</span> {
+    <span class="org-keyword">return</span> (Integer)<span class="org-keyword">super</span>.h.invoke(<span class="org-keyword">this</span>, m0, (Object[])<span class="org-constant">null</span>);
+  } <span class="org-keyword">catch</span> (RuntimeException | Error var2) {
+    <span class="org-keyword">throw</span> var2;
+  } <span class="org-keyword">catch</span> (<span class="org-type">Throwable</span> <span class="org-variable-name">var3</span>) {
+    <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">UndeclaredThrowableException</span>(var3);
+  }
+}
+</pre>
+</div>
+
+<p>
+因此，我们也是可以代理目标对象的这些方法的。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeba9df6" class="outline-2">
+<h2 id="orgeba9df6"><span class="section-number-2">3</span> CGLIB 动态代理</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+CGLIB 动态代理和 JDK 动态代理类似，只不过 CGLIB 动态代理是基于类的，不需要实现接口，简单使用的话只需要定义一个 <code>MethodInterceptor</code> 就可以了，相当于 JDK 动态代理中的 <code>InvocationHandler</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">class</span> <span class="org-type">SimpleMethodInterceptor</span> <span class="org-keyword">implements</span> <span class="org-type">MethodInterceptor</span> {
+  <span class="org-c-annotation">@Override</span>
+  <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">intercept</span>(<span class="org-type">Object</span> <span class="org-variable-name">obj</span>, <span class="org-type">Method</span> <span class="org-variable-name">method</span>, <span class="org-type">Object</span>[] <span class="org-variable-name">args</span>, <span class="org-type">MethodProxy</span> <span class="org-variable-name">proxy</span>) <span class="org-keyword">throws</span> <span class="org-type">Throwable</span> {
+    System.out.println(String.format(<span class="org-string">"Before invocation method %s"</span>, method.getName()));
+    <span class="org-type">Object</span> <span class="org-variable-name">result</span> = proxy.invokeSuper(obj, args);
+    System.out.println(String.format(<span class="org-string">"After invocation method %s"</span>, method.getName()));
+    <span class="org-keyword">return</span> result;
+  }
+}
+</pre>
+</div>
+
+<p>
+有了 <code>MethodInterceptor</code> 后我们就可以创建代理对象了：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">class</span> <span class="org-type">ProxyTest</span> {
+  <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {
+    <span class="org-type">Enhancer</span> <span class="org-variable-name">enhancer</span> = <span class="org-keyword">new</span> <span class="org-type">Enhancer</span>();
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35774;&#32622;&#38656;&#35201;&#34987;&#20195;&#29702;&#30340;&#31867;</span>
+    enhancer.setSuperclass(TargetClass.<span class="org-keyword">class</span>);
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35774;&#32622; MethodInterceptor</span>
+    enhancer.setCallback(<span class="org-keyword">new</span> <span class="org-type">SimpleMethodInterceptor</span>());
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#21019;&#24314;&#20195;&#29702;&#23545;&#35937;</span>
+    <span class="org-type">TargetClass</span> <span class="org-variable-name">proxyObject</span> = (<span class="org-type">TargetClass</span>) enhancer.create();
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35843;&#29992;&#26041;&#27861;</span>
+    proxyObject.targetMethodA();
+    proxyObject.targetMethodB();
+  }
+}
+
+
+<span class="org-keyword">class</span> <span class="org-type">TargetClass</span> {
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>() {
+    System.out.println(<span class="org-string">"Target method A..."</span>);
+  }
+
+  <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>() {
+    System.out.println(<span class="org-string">"Target method B..."</span>);
+  }
+}
+</pre>
+</div>
+
+<p>
+执行输出为：
+</p>
+<pre class="example">
+Before invocation method targetMethodA
+Target method A...
+After invocation method targetMethodA
+Before invocation method targetMethodB
+Target method B...
+After invocation method targetMethodB
+</pre>
+</div>
+
+<div id="outline-container-org0b63a61" class="outline-3">
+<h3 id="org0b63a61"><span class="section-number-3">3.1</span> 代理类</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+对于 <code>CGLIB</code> 来说可以设置 <code>DebuggingClassWriter.DEBUG_LOCATION_PROPERTY</code> 属性的值来保存生成的代理类<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">TargetClass$$EnhancerByCGLIB$$eb42b691</span> <span class="org-keyword">extends</span> <span class="org-type">TargetClass</span> <span class="org-keyword">implements</span> <span class="org-type">Factory</span> {
+  <span class="org-keyword">private</span> <span class="org-type">MethodInterceptor</span> <span class="org-variable-name">CGLIB$CALLBACK_0</span>;
+
+  <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">CGLIB$STATICHOOK1</span>() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#35201;&#20195;&#29702;&#30340;&#30446;&#26631;&#26041;&#27861;</span>
+    var10000 = ReflectUtils.findMethods(<span class="org-keyword">new</span> <span class="org-type">String</span>[]{<span class="org-string">"targetMethodA"</span>, <span class="org-string">"()V"</span>, <span class="org-string">"targetMethodB"</span>, <span class="org-string">"()V"</span>}, (var1 = Class.forName(<span class="org-string">"TargetClass"</span>)).getDeclaredMethods());
+    CGLIB$targetMethodA$0$Method = var10000[0];
+    CGLIB$targetMethodA$0$Proxy = MethodProxy.create(var1, var0, <span class="org-string">"()V"</span>, <span class="org-string">"targetMethodA"</span>, <span class="org-string">"CGLIB$targetMethodA$0"</span>);
+    CGLIB$targetMethodB$1$Method = var10000[1];
+    CGLIB$targetMethodB$1$Proxy = MethodProxy.create(var1, var0, <span class="org-string">"()V"</span>, <span class="org-string">"targetMethodB"</span>, <span class="org-string">"CGLIB$targetMethodB$1"</span>);
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#30446;&#26631;&#26041;&#27861;&#30340;&#31616;&#21333;&#20195;&#29702;</span>
+  <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">CGLIB$targetMethodA$0</span>() {
+    <span class="org-keyword">super</span>.targetMethodA();
+  }
+
+  <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodA</span>() {
+    <span class="org-type">MethodInterceptor</span> <span class="org-variable-name">var10000</span> = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    <span class="org-keyword">if</span> (var10000 == <span class="org-constant">null</span>) {
+      CGLIB$BIND_CALLBACKS(<span class="org-keyword">this</span>);
+      var10000 = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#24403; MethodInterceptor &#19981;&#20026;&#31354;&#26102;&#36890;&#36807; MethodInterceptor &#35843;&#29992;&#30446;&#26631;&#26041;&#27861;</span>
+    <span class="org-keyword">if</span> (var10000 != <span class="org-constant">null</span>) {
+      var10000.intercept(<span class="org-keyword">this</span>, CGLIB$targetMethodA$0$Method, CGLIB$emptyArgs, CGLIB$targetMethodA$0$Proxy);
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">super</span>.targetMethodA();
+    }
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#30446;&#26631;&#26041;&#27861;&#30340;&#31616;&#21333;&#20195;&#29702;</span>
+  <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">CGLIB$targetMethodB$1</span>() {
+    <span class="org-keyword">super</span>.targetMethodB();
+  }
+
+  <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">void</span> <span class="org-function-name">targetMethodB</span>() {
+    <span class="org-type">MethodInterceptor</span> <span class="org-variable-name">var10000</span> = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    <span class="org-keyword">if</span> (var10000 == <span class="org-constant">null</span>) {
+      CGLIB$BIND_CALLBACKS(<span class="org-keyword">this</span>);
+      var10000 = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#24403; MethodInterceptor &#19981;&#20026;&#31354;&#26102;&#36890;&#36807; MethodInterceptor &#35843;&#29992;&#30446;&#26631;&#26041;&#27861;</span>
+    <span class="org-keyword">if</span> (var10000 != <span class="org-constant">null</span>) {
+      var10000.intercept(<span class="org-keyword">this</span>, CGLIB$targetMethodB$1$Method, CGLIB$emptyArgs, CGLIB$targetMethodB$1$Proxy);
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">super</span>.targetMethodB();
+    }
+  }
+
+  <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-function-name">CGLIB$hashCode$5</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">super</span>.hashCode();
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#23545; Object &#26041;&#27861;&#30340;&#20195;&#29702;</span>
+  <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-function-name">hashCode</span>() {
+    <span class="org-type">MethodInterceptor</span> <span class="org-variable-name">var10000</span> = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    <span class="org-keyword">if</span> (var10000 == <span class="org-constant">null</span>) {
+      CGLIB$BIND_CALLBACKS(<span class="org-keyword">this</span>);
+      var10000 = <span class="org-keyword">this</span>.CGLIB$CALLBACK_0;
+    }
+
+    <span class="org-keyword">if</span> (var10000 != <span class="org-constant">null</span>) {
+      <span class="org-type">Object</span> <span class="org-variable-name">var1</span> = var10000.intercept(<span class="org-keyword">this</span>, CGLIB$hashCode$5$Method, CGLIB$emptyArgs, CGLIB$hashCode$5$Proxy);
+      <span class="org-keyword">return</span> var1 == <span class="org-constant">null</span> ? 0 : ((<span class="org-type">Number</span>)var1).intValue();
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">return</span> <span class="org-keyword">super</span>.hashCode();
+    }
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+}
+</pre>
+</div>
+
+<p>
+可以看到
+</p>
+<ul class="org-ul">
+<li>CGLIB 每个方法设置了两个代理，一个直接调用父类方法，另一个判断是否存在 <code>MethodInterceptor</code> 来进行调用</li>
+<li>代理类继承了 <code>TargetClass</code>, 和 JDK 动态代理中继承 <code>Proxy</code> 的方式不一样</li>
+</ul>
+
+<p>
+当我们设置了 <code>MethodInterceptor</code> 以后，CGLIB 便可以通过 <code>MethodInterceptor</code> 来调用目标方法，另外，调用 <code>MethodInterceptor.intercept</code> 方法时传递的第一个参数为代理类实例，因此，需要执行被代理的方法时，应该通过 <code>MethodProxy.invokeSuper</code> 来完成，如果使用 <code>Method.invoke</code> 的话就会导致无限递归调用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4b5d693" class="outline-3">
+<h3 id="org4b5d693"><span class="section-number-3">3.2</span> Spring @Configuration</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+在使用 Spring 的时候我们可以通过如下方式定义 Bean：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-c-annotation">@Configuration</span>
+<span class="org-c-annotation">@ComponentScan</span>(basePackageClasses = Company.<span class="org-keyword">class</span>)
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Config</span> {
+  <span class="org-c-annotation">@Bean</span>
+  <span class="org-keyword">public</span> <span class="org-type">Address</span> <span class="org-function-name">getAddress</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">Address</span>(<span class="org-string">"High Street"</span>, 1000);
+  }
+
+  <span class="org-c-annotation">@Bean</span>
+  <span class="org-keyword">public</span> <span class="org-type">Person</span> <span class="org-function-name">getPerson</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">Person</span>(getAddress());
+  }
+}
+</pre>
+</div>
+
+<p>
+当初对于这种方式的一种困惑就是，Spring 是怎么拦截对 <code>getAddress</code> 方法的调用的，因为在我的印象中 JDK 动态代理做不到这样的事情，现在才发现，Spring 会通过 CGLIB 为 <code>Config</code> 创建代理对象，拦截对 <code>getAddress</code> 方法的调用，保证 Bean 的单例性。
+</p>
+
+<p>
+因为在 Java 中会根据先对象的 <b>实际类型</b> 查找方法，找不到才到 <b>父类</b> 中进行查找，而恰好的是，CGLIB 创建的代理对象是覆盖了父类的方法的，这样一来，在代理类中通过 <code>MethodInterceptor</code> 拦截方法的调用就可以避免重复创建 Bean 了。
+</p>
+
+<p>
+这在 Spring 中对应的 <code>MethodInterceptor</code> 为 <code>ConfigurationClassEnhancer.BeanMethodInterceptor</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org205fa66" class="outline-2">
+<h2 id="org205fa66"><span class="section-number-2">4</span> 小结</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这里汇总一下 JDK 动态代理和 CGLIB 动态代理的代理方式：
+</p>
+<ul class="org-ul">
+<li>JDK 动态代理通过创建继承了 <code>Proxy</code> 并实现了 <code>TargetInterfaces</code> 的代理类来完成代理，调用 <code>TargetInterfaces</code> 的方法时，代理类会将方法调用转交给 <code>InvocationHandler</code> 完成</li>
+<li>CGLIB 动态代理通过创建继承了 <code>TargetClass</code> 的代理类来完成代理，调用 <code>TargetClass</code> 的方法时，如果 <code>MethodInterceptor</code> 不为空，那么就会将方法调用转交给 <code>MethodInterceptor</code> 完成</li>
+</ul>
+
+<p>
+可以看到，两种实现动态代理的方式还是很接近的，只不过一个是通过接口，一个是通过子类。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2210565" class="outline-2">
+<h2 id="org2210565"><span class="section-number-2">5</span> 结语</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+最开始接触动态代理这个概念是在看《Java 核心技术卷》这本书的时候，当时刚开始学 Java 没多久，看到这个东西后的想法就是，这么不方便的东西，谁没事会去用啊 ‍→_→
+</p>
+
+<p>
+结果，它的使用很广泛 ‍( ´_ゝ｀)
+</p>
+
+<p>
+类似的还有源码注解，不得不说，这些操作起来麻烦，但是功能又强大的特性，总会有人完成花样来‍╮(￣▽￣)╭
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+最开始看到 <code>InvocationHandler</code> 这个接口的时候总以为它的第一个参数为 <code>TargetObject</code>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+为了方便阅读省略了很多其他不必要的内容 
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
