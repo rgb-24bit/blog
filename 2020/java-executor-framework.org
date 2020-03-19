@@ -127,43 +127,52 @@
   ~ThreadPoolExecutor~ 是 ~ExecutorService~ 的一种具体实现，一般情况下我们可以通过 ~Executors~ 来创建新的线程池，但是，了解 ~ThreadPoolExecutor~ 提供的各配置项还是很有用的，
   而 ~ThreadPoolExecutor~ 文档中对这些配置项给出了很详细的描述。
 
-  *Core and maximum pool sizes* - 线程池核心线程数和最大线程数，线程池根据这两个参数来自动调整线程池的大小：
+  + Core and maximum pool sizes :: 
+    线程池核心线程数和最大线程数，线程池根据这两个参数来自动调整线程池的大小：
     1. 在提交新任务且运行的线程数少于 ~corePoolSize~ 时，即使其他工作线程处于空闲状态，也会创建一个新线程来处理新任务
     2. 在运行的线程数大于 ~corePoolSize~ 但小于 ~maximumPoolSize~ 时，就仅在 *队列已满* 时才创建新线程
     3. 这两个参数可以在创建线程池时设置，也可以在创建后动态修改
 
-  *On-demand construction* - ~ThreadPoolExecutor~ 默认情况下是在新任务提交后在创建启动线程，但是可以通过覆盖 ~prestartCoreThread()~ 或 ~prestartAllCoreThreads()~ 改变这一行为，
-  这在初始队列不为空时会很有用。
+  + On-demand construction      ::
+    ~ThreadPoolExecutor~ 默认情况下是在新任务提交后在创建启动线程，但是可以通过覆盖 ~prestartCoreThread()~ 或 ~prestartAllCoreThreads()~ 改变这一行为，
+    这在初始队列不为空时会很有用。
 
-  *Creating new threads* - ~ThreadPoolExecutor~ 通过 ~ThreadFactory~ 来创建新的线程，默认情况下会使用 ~Executors.defaultThreadFactory()~, 这个 ~ThreadFactory~ 创建的所有线程拥有相同的 ~ThreadGroup~ 和 ~NORM_PRIORITY~ 级别的优先级，
-  同时也是非守护线程。
+  + Creating new threads        :: 
+    ~ThreadPoolExecutor~ 通过 ~ThreadFactory~ 来创建新的线程，默认情况下会使用 ~Executors.defaultThreadFactory()~, 这个 ~ThreadFactory~ 创建的所有线程拥有相同的 ~ThreadGroup~ 和 ~NORM_PRIORITY~ 级别的优先级，
+    同时也是非守护线程。
 
-  *Keep-alive times* - 当当前线程池中的线程数超过 ~corePoolSize~ 时，多余的线程将在闲置时间超过 ~keepAliveTime~ 时终止。默认情况下参数 ~keepAliveTime~ 仅在线程数超过 ~corePoolSize~ 时起作用，
-  但是也可以通过 ~allowCoreThreadTimeOut(boolean)~ 方法让核心线程在闲置一段时间后也被终止。
+  + Keep-alive times            :: 
+    当当前线程池中的线程数超过 ~corePoolSize~ 时，多余的线程将在闲置时间超过 ~keepAliveTime~ 时终止。默认情况下参数 ~keepAliveTime~ 仅在线程数超过 ~corePoolSize~ 时起作用，
+    但是也可以通过 ~allowCoreThreadTimeOut(boolean)~ 方法让核心线程在闲置一段时间后也被终止。
 
-  *Queuing* - 任意的 ~BlockingQueue~ 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
-  - 在当前线程池中的线程数小于 ~corePoolSize~ 时，优先创建新的线程
-  - 在当前线程池中的线程数超过 ~corePoolSize~ 时，优先选择将任务放入队列
-  - 在新的任务 *无法放入队列* 且线程数小于 ~maximumPoolSize~ 时，会创建新的线程，否则会拒绝新的任务
+  + Queuing                     :: 
+    任意的 ~BlockingQueue~ 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
+    - 在当前线程池中的线程数小于 ~corePoolSize~ 时，优先创建新的线程
+    - 在当前线程池中的线程数超过 ~corePoolSize~ 时，优先选择将任务放入队列
+    - 在新的任务 *无法放入队列* 且线程数小于 ~maximumPoolSize~ 时，会创建新的线程，否则会拒绝新的任务
 
-  线程池中一般可以选择下面三种队列使用策略：
-  - 直接交付，比如说使用 ~SynchronousQueue~ 队列，直接将任务传递给工作线程，如果没有合适的工作线程来处理任务，那么就会选择创建新的线程获拒绝任务，这时一般会将 ~maximumPoolSize~ 设的大一点
-  - 无界队列，比如说使用 ~LinkedBlockingQueue~ 队列，这种情况下因为新的任务必然可以放入队列，因此，参数 ~maximumPoolSize~ 便失去了意义，此时最多只会有 ~corePoolSize~ 个线程在运行
-  - 有界队列，比如说使用 ~ArrayBlockingQueue~ 队列，这时我们可以通过灵活调整 ~corePoolSize~, ~maximumPoolSize~ 和队列大小来更加充分的利用线程池
+    线程池中一般可以选择下面三种队列使用策略：
+    - 直接交付，比如说使用 ~SynchronousQueue~ 队列，直接将任务传递给工作线程，如果没有合适的工作线程来处理任务，那么就会选择创建新的线程获拒绝任务，这时一般会将 ~maximumPoolSize~ 设的大一点
+    - 无界队列，比如说使用 ~LinkedBlockingQueue~ 队列，这种情况下因为新的任务必然可以放入队列，因此，参数 ~maximumPoolSize~ 便失去了意义，此时最多只会有 ~corePoolSize~ 个线程在运行
+    - 有界队列，比如说使用 ~ArrayBlockingQueue~ 队列，这时我们可以通过灵活调整 ~corePoolSize~, ~maximumPoolSize~ 和队列大小来更加充分的利用线程池
 
-  *Rejected tasks* - 当 ~ExecutorService~ 被关闭或者任务无法放入队列且线程数量超过 ~maximumPoolSize~ 时，新任务的提交会被拒绝，这时便会调用 ~RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)~ 来处理被拒绝的任务，
-  可选的处理策略有：
-  1. ~ThreadPoolExecutor.AbortPolicy(default)~ - 抛出运行时异常 ~RejectedExecutionException~
-  2. ~ThreadPoolExecutor.CallerRunsPolicy~ - 在调用 ~executor~ 的 线程执行该任务
-  3. ~ThreadPoolExecutor.DiscardPolicy~ - 直接删除忽略新的任务
-  4. ~ThreadPoolExecutor.DiscardOldestPolicy~ - 如果 ~ExecutorService~ 没有被关闭，那么就丢弃队列头的任务重新提交这个任务
+  + Rejected tasks              :: 
+    当 ~ExecutorService~ 被关闭或者任务无法放入队列且线程数量超过 ~maximumPoolSize~ 时，新任务的提交会被拒绝，这时便会调用 ~RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)~ 来处理被拒绝的任务，
+    可选的处理策略有：
+    1. ~ThreadPoolExecutor.AbortPolicy(default)~ - 抛出运行时异常 ~RejectedExecutionException~
+    2. ~ThreadPoolExecutor.CallerRunsPolicy~ - 在调用 ~executor~ 的 线程执行该任务
+    3. ~ThreadPoolExecutor.DiscardPolicy~ - 直接删除忽略新的任务
+    4. ~ThreadPoolExecutor.DiscardOldestPolicy~ - 如果 ~ExecutorService~ 没有被关闭，那么就丢弃队列头的任务重新提交这个任务
 
-  *Hook methods* - 方法 ~beforeExecute(Thread, Runnable)~ 和 ~afterExecute(Runnable, Throwable)~ 会在每个任务执行的前后调用，也可以覆盖 ~terminated()~ 方法在 ~Executor~ 终止 *后* 执行一些额外的操作。
+  + Hook methods                :: 
+    方法 ~beforeExecute(Thread, Runnable)~ 和 ~afterExecute(Runnable, Throwable)~ 会在每个任务执行的前后调用，也可以覆盖 ~terminated()~ 方法在 ~Executor~ 终止 *后* 执行一些额外的操作。
 
-  *Queue maintenance* - 可以通过 ~getQueue()~ 方法访问工作队列，以进行监视和调试。强烈建议不要将此方法用于任何其他目的，可以通过 ~remove(Runnable)~ 和 ~purge()~ 清理队列中的任务。
+  + Queue maintenance           :: 
+    可以通过 ~getQueue()~ 方法访问工作队列，以进行监视和调试。强烈建议不要将此方法用于任何其他目的，可以通过 ~remove(Runnable)~ 和 ~purge()~ 清理队列中的任务。
   
-  *Finalization* - 在线程池不在被引用 *且* 没有剩余工作线程时，线程池将会被关闭。可以考虑将 ~corePoolSize~ 设小并通过 ~allowCoreThreadTimeOut(boolean)~ 保证核心线程闲置久了也会被回收，
-  那么，忘记调用 ~shutdown~ 也不要担心资源的浪费了。
+  + Finalization                :: 
+    在线程池不在被引用 *且* 没有剩余工作线程时，线程池将会被关闭。可以考虑将 ~corePoolSize~ 设小并通过 ~allowCoreThreadTimeOut(boolean)~ 保证核心线程闲置久了也会被回收，
+    那么，忘记调用 ~shutdown~ 也不要担心资源的浪费了。
      
   这么多的配置项，如此强大的功能，我只想说，Doug Lea NB（破音）！！！
 

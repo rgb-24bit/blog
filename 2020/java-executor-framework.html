@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-02-23 周日 15:47 -->
+<!-- 2020-03-19 周四 17:11 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 并发之 Executor 框架</title>
@@ -193,7 +193,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +246,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1b975b6">1. 前言</a></li>
-<li><a href="#org94a95d2">2. Executor 框架概览</a></li>
-<li><a href="#org3e8e0fb">3. Executor</a></li>
-<li><a href="#org2c6b69c">4. ExecutorService</a></li>
-<li><a href="#org2a25ca2">5. ScheduledExecutorService</a></li>
-<li><a href="#org4575ad6">6. ThreadPoolExecutor</a></li>
-<li><a href="#orgf4d644d">7. ScheduledThreadPoolExecutor</a></li>
-<li><a href="#org487fb01">8. Executors</a></li>
-<li><a href="#orgcc4958d">9. 结语</a></li>
+<li><a href="#org6af95c8">1. 前言</a></li>
+<li><a href="#org3ad998d">2. Executor 框架概览</a></li>
+<li><a href="#orge5ce254">3. Executor</a></li>
+<li><a href="#org3f5d58b">4. ExecutorService</a></li>
+<li><a href="#orgb1e2abe">5. ScheduledExecutorService</a></li>
+<li><a href="#org0f68198">6. ThreadPoolExecutor</a></li>
+<li><a href="#orgfd3198b">7. ScheduledThreadPoolExecutor</a></li>
+<li><a href="#org6a80811">8. Executors</a></li>
+<li><a href="#org799035c">9. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1b975b6" class="outline-2">
-<h2 id="org1b975b6"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6af95c8" class="outline-2">
+<h2 id="org6af95c8"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <code>JUC</code> 的过程中我发现，JUC 这个包下面的文档写的十分的好，清楚又易于理解，这篇博客便是参考 JUC 中和 <code>Executor</code> 框架相关的一些类文档汇总出来的。
@@ -272,8 +272,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org94a95d2" class="outline-2">
-<h2 id="org94a95d2"><span class="section-number-2">2</span> Executor 框架概览</h2>
+<div id="outline-container-org3ad998d" class="outline-2">
+<h2 id="org3ad998d"><span class="section-number-2">2</span> Executor 框架概览</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Executor 框架的起点自然就是 <code>Executor</code> 接口，可以说整个 Executor 框架便是建立在 <code>Executor</code> 接口和其子接口上的，大致结构为：
@@ -317,8 +317,8 @@ Executor 框架的起点自然就是 <code>Executor</code> 接口，可以说整
 </div>
 </div>
 
-<div id="outline-container-org3e8e0fb" class="outline-2">
-<h2 id="org3e8e0fb"><span class="section-number-2">3</span> Executor</h2>
+<div id="outline-container-orge5ce254" class="outline-2">
+<h2 id="orge5ce254"><span class="section-number-2">3</span> Executor</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一般来说，我们可以手动创建 <code>Thread</code> 对象来执行 <code>Runnable</code> 任务，但是，在有了 Executor 框架后，更好的选择是将这些异步任务转交给 <code>Executor</code> 的具体实现来执行。
@@ -364,8 +364,8 @@ executor.execute(<span class="org-keyword">new</span> <span class="org-type">Run
 </div>
 </div>
 
-<div id="outline-container-org2c6b69c" class="outline-2">
-<h2 id="org2c6b69c"><span class="section-number-2">4</span> ExecutorService</h2>
+<div id="outline-container-org3f5d58b" class="outline-2">
+<h2 id="org3f5d58b"><span class="section-number-2">4</span> ExecutorService</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>ExecutorService</code> 为异步任务的执行提供了更多的支持，包括用于 <b>终止</b> 的方法以及可以产生用于跟踪一个或多个异步任务进度的 <code>Future</code> 的方法。
@@ -406,8 +406,8 @@ submit(<span class="org-type">Runnable</span> <span class="org-variable-name">ta
 </div>
 </div>
 
-<div id="outline-container-org2a25ca2" class="outline-2">
-<h2 id="org2a25ca2"><span class="section-number-2">5</span> ScheduledExecutorService</h2>
+<div id="outline-container-orgb1e2abe" class="outline-2">
+<h2 id="orgb1e2abe"><span class="section-number-2">5</span> ScheduledExecutorService</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 接口 <code>ScheduledExecutorService</code> 相较于 <code>ExecutorService</code> 来说添加了对延迟和定期任务执行的支持，还是比较好理解的：
@@ -431,36 +431,29 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-org4575ad6" class="outline-2">
-<h2 id="org4575ad6"><span class="section-number-2">6</span> ThreadPoolExecutor</h2>
+<div id="outline-container-org0f68198" class="outline-2">
+<h2 id="org0f68198"><span class="section-number-2">6</span> ThreadPoolExecutor</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>ThreadPoolExecutor</code> 是 <code>ExecutorService</code> 的一种具体实现，一般情况下我们可以通过 <code>Executors</code> 来创建新的线程池，但是，了解 <code>ThreadPoolExecutor</code> 提供的各配置项还是很有用的，而 <code>ThreadPoolExecutor</code> 文档中对这些配置项给出了很详细的描述。
 </p>
 
-<p>
-<b>Core and maximum pool sizes</b> - 线程池核心线程数和最大线程数，线程池根据这两个参数来自动调整线程池的大小：
-</p>
+<dl class="org-dl">
+<dt>Core and maximum pool sizes</dt><dd>线程池核心线程数和最大线程数，线程池根据这两个参数来自动调整线程池的大小：
 <ol class="org-ol">
 <li>在提交新任务且运行的线程数少于 <code>corePoolSize</code> 时，即使其他工作线程处于空闲状态，也会创建一个新线程来处理新任务</li>
 <li>在运行的线程数大于 <code>corePoolSize</code> 但小于 <code>maximumPoolSize</code> 时，就仅在 <b>队列已满</b> 时才创建新线程</li>
 <li>这两个参数可以在创建线程池时设置，也可以在创建后动态修改</li>
-</ol>
+</ol></dd>
 
-<p>
-<b>On-demand construction</b> - <code>ThreadPoolExecutor</code> 默认情况下是在新任务提交后在创建启动线程，但是可以通过覆盖 <code>prestartCoreThread()</code> 或 <code>prestartAllCoreThreads()</code> 改变这一行为，这在初始队列不为空时会很有用。
-</p>
+<dt>On-demand construction     </dt><dd><code>ThreadPoolExecutor</code> 默认情况下是在新任务提交后在创建启动线程，但是可以通过覆盖 <code>prestartCoreThread()</code> 或 <code>prestartAllCoreThreads()</code> 改变这一行为，这在初始队列不为空时会很有用。</dd>
 
-<p>
-<b>Creating new threads</b> - <code>ThreadPoolExecutor</code> 通过 <code>ThreadFactory</code> 来创建新的线程，默认情况下会使用 <code>Executors.defaultThreadFactory()</code>, 这个 <code>ThreadFactory</code> 创建的所有线程拥有相同的 <code>ThreadGroup</code> 和 <code>NORM_PRIORITY</code> 级别的优先级，同时也是非守护线程。
-</p>
+<dt>Creating new threads       </dt><dd><code>ThreadPoolExecutor</code> 通过 <code>ThreadFactory</code> 来创建新的线程，默认情况下会使用 <code>Executors.defaultThreadFactory()</code>, 这个 <code>ThreadFactory</code> 创建的所有线程拥有相同的 <code>ThreadGroup</code> 和 <code>NORM_PRIORITY</code> 级别的优先级，同时也是非守护线程。</dd>
 
-<p>
-<b>Keep-alive times</b> - 当当前线程池中的线程数超过 <code>corePoolSize</code> 时，多余的线程将在闲置时间超过 <code>keepAliveTime</code> 时终止。默认情况下参数 <code>keepAliveTime</code> 仅在线程数超过 <code>corePoolSize</code> 时起作用，但是也可以通过 <code>allowCoreThreadTimeOut(boolean)</code> 方法让核心线程在闲置一段时间后也被终止。
-</p>
+<dt>Keep-alive times           </dt><dd>当当前线程池中的线程数超过 <code>corePoolSize</code> 时，多余的线程将在闲置时间超过 <code>keepAliveTime</code> 时终止。默认情况下参数 <code>keepAliveTime</code> 仅在线程数超过 <code>corePoolSize</code> 时起作用，但是也可以通过 <code>allowCoreThreadTimeOut(boolean)</code> 方法让核心线程在闲置一段时间后也被终止。</dd>
 
-<p>
-<b>Queuing</b> - 任意的 <code>BlockingQueue</code> 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
+<dt>Queuing                    </dt><dd><p>
+    任意的 <code>BlockingQueue</code> 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
 </p>
 <ul class="org-ul">
 <li>在当前线程池中的线程数小于 <code>corePoolSize</code> 时，优先创建新的线程</li>
@@ -475,29 +468,22 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 <li>直接交付，比如说使用 <code>SynchronousQueue</code> 队列，直接将任务传递给工作线程，如果没有合适的工作线程来处理任务，那么就会选择创建新的线程获拒绝任务，这时一般会将 <code>maximumPoolSize</code> 设的大一点</li>
 <li>无界队列，比如说使用 <code>LinkedBlockingQueue</code> 队列，这种情况下因为新的任务必然可以放入队列，因此，参数 <code>maximumPoolSize</code> 便失去了意义，此时最多只会有 <code>corePoolSize</code> 个线程在运行</li>
 <li>有界队列，比如说使用 <code>ArrayBlockingQueue</code> 队列，这时我们可以通过灵活调整 <code>corePoolSize</code>, <code>maximumPoolSize</code> 和队列大小来更加充分的利用线程池</li>
-</ul>
+</ul></dd>
 
-<p>
-<b>Rejected tasks</b> - 当 <code>ExecutorService</code> 被关闭或者任务无法放入队列且线程数量超过 <code>maximumPoolSize</code> 时，新任务的提交会被拒绝，这时便会调用 <code>RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)</code> 来处理被拒绝的任务，可选的处理策略有：
-</p>
+<dt>Rejected tasks             </dt><dd>当 <code>ExecutorService</code> 被关闭或者任务无法放入队列且线程数量超过 <code>maximumPoolSize</code> 时，新任务的提交会被拒绝，这时便会调用 <code>RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)</code> 来处理被拒绝的任务，可选的处理策略有：
 <ol class="org-ol">
 <li><code>ThreadPoolExecutor.AbortPolicy(default)</code> - 抛出运行时异常 <code>RejectedExecutionException</code></li>
 <li><code>ThreadPoolExecutor.CallerRunsPolicy</code> - 在调用 <code>executor</code> 的 线程执行该任务</li>
 <li><code>ThreadPoolExecutor.DiscardPolicy</code> - 直接删除忽略新的任务</li>
 <li><code>ThreadPoolExecutor.DiscardOldestPolicy</code> - 如果 <code>ExecutorService</code> 没有被关闭，那么就丢弃队列头的任务重新提交这个任务</li>
-</ol>
+</ol></dd>
 
-<p>
-<b>Hook methods</b> - 方法 <code>beforeExecute(Thread, Runnable)</code> 和 <code>afterExecute(Runnable, Throwable)</code> 会在每个任务执行的前后调用，也可以覆盖 <code>terminated()</code> 方法在 <code>Executor</code> 终止 <b>后</b> 执行一些额外的操作。
-</p>
+<dt>Hook methods               </dt><dd>方法 <code>beforeExecute(Thread, Runnable)</code> 和 <code>afterExecute(Runnable, Throwable)</code> 会在每个任务执行的前后调用，也可以覆盖 <code>terminated()</code> 方法在 <code>Executor</code> 终止 <b>后</b> 执行一些额外的操作。</dd>
 
-<p>
-<b>Queue maintenance</b> - 可以通过 <code>getQueue()</code> 方法访问工作队列，以进行监视和调试。强烈建议不要将此方法用于任何其他目的，可以通过 <code>remove(Runnable)</code> 和 <code>purge()</code> 清理队列中的任务。
-</p>
+<dt>Queue maintenance          </dt><dd>可以通过 <code>getQueue()</code> 方法访问工作队列，以进行监视和调试。强烈建议不要将此方法用于任何其他目的，可以通过 <code>remove(Runnable)</code> 和 <code>purge()</code> 清理队列中的任务。</dd>
 
-<p>
-<b>Finalization</b> - 在线程池不在被引用 <b>且</b> 没有剩余工作线程时，线程池将会被关闭。可以考虑将 <code>corePoolSize</code> 设小并通过 <code>allowCoreThreadTimeOut(boolean)</code> 保证核心线程闲置久了也会被回收，那么，忘记调用 <code>shutdown</code> 也不要担心资源的浪费了。
-</p>
+<dt>Finalization               </dt><dd>在线程池不在被引用 <b>且</b> 没有剩余工作线程时，线程池将会被关闭。可以考虑将 <code>corePoolSize</code> 设小并通过 <code>allowCoreThreadTimeOut(boolean)</code> 保证核心线程闲置久了也会被回收，那么，忘记调用 <code>shutdown</code> 也不要担心资源的浪费了。</dd>
+</dl>
 
 <p>
 这么多的配置项，如此强大的功能，我只想说，Doug Lea NB（破音）！！！
@@ -558,8 +544,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-orgf4d644d" class="outline-2">
-<h2 id="orgf4d644d"><span class="section-number-2">7</span> ScheduledThreadPoolExecutor</h2>
+<div id="outline-container-orgfd3198b" class="outline-2">
+<h2 id="orgfd3198b"><span class="section-number-2">7</span> ScheduledThreadPoolExecutor</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>ScheduledThreadPoolExecutor</code> 继承了 <code>ThreadPoolExecutor</code> 并实现了 <code>ScheduledExecutorService</code> 接口，是比 <code>Timer</code> 更好的选择。它使用指定大小的 <code>corePoolSize</code> 和无界队列，因此，参数 <code>maximumPoolSize</code> 没有意义。
@@ -582,8 +568,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-org487fb01" class="outline-2">
-<h2 id="org487fb01"><span class="section-number-2">8</span> Executors</h2>
+<div id="outline-container-org6a80811" class="outline-2">
+<h2 id="org6a80811"><span class="section-number-2">8</span> Executors</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <code>Executors</code> 提供了一些针对 <code>Executor</code>, <code>ExecutorService</code>, <code>ScheduledExecutorService</code> 和 <code>ThreadFactory</code> 的实用方法，文档上的话就没有什么好说的了，其实就是一个熟悉接口的问题。
@@ -598,8 +584,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-orgcc4958d" class="outline-2">
-<h2 id="orgcc4958d"><span class="section-number-2">9</span> 结语</h2>
+<div id="outline-container-org799035c" class="outline-2">
+<h2 id="org799035c"><span class="section-number-2">9</span> 结语</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 通过文档的阅读对 <code>Executors</code> 有了大致的了解，但是，如果你打开源码就会发现，除了类上面的 <code>Javadoc</code> 以外，在类内部，通常还会有很长一段注释告诉你这个东西它是怎么实现的！！！
