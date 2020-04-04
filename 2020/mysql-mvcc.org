@@ -1,0 +1,99 @@
+#+TITLE:      MySQL MVCC - 多版本并发控制
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2020-04-04 周六>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#概念][概念]]
+- [[#实现][实现]]
+- [[#结语][结语]]
+- [[#参考链接][参考链接]]
+
+* 前言
+  前段时间在看《高性能 MySQL》的时候了解到了多版本并发控制（MVCC）这个概念，然而，书上对这个概念的解析只有不到两页纸……
+
+  于是乎，我又到网上去找了一下相关的资料，发现 MVCC 在 MySQL 中应该算是很重要的一个功能了，所以就来总结一下（￣︶￣）↗
+  
+* 概念
+  MVCC 多版本并发控制，顾名思义，是用于实现并发控制的一种机制，而在数据库中，并发控制往往是针对 *事务* 来进行的，因此，
+  在了解 MVCC 之前应该先对事务具有一定的了解。
+
+  当然了，事务的概念本身是很基础的东西，这里就不做过多的介绍了 <(＿　＿)>
+
+  回到 MVCC 的概念上，在《高性能 MySQL》一书中对它的介绍是这样的：
+  #+begin_quote
+  可以认为 MVCC 是行级锁的一个变种，但是它在很多情况下避免了加锁操作，因此开销更低。虽然实现机制有所不同，
+  但大都实现了非阻塞的读操作，写操作也只锁定必要的行。
+  #+end_quote
+
+  也就是说：
+  + MVCC 在实现行级锁的效果的同时避免了加锁操作的发生
+  + MVCC 实现了非阻塞的读操作，写操作也只锁定必要的行
+  
+  同时，MVCC 只在 RC(READ COMMITTED) 和 RR(REPEATABLE READ) 两个隔离级别下工作。
+
+* 实现
+  通过 MVCC 的概念我们可以知道其只在 RC 和 RR 这两个隔离级别下工作，这两个级别的一些特点：
+  + RC - 读取已经提交了的数据，可以避免脏读，但是当其他事务将某行数据修改并提交后，便可能会读取到变化后的数据，导致不可重复读
+  + RR - 可重复读，同一事务内，在未对数据进行修改时，每次读取到的数据都应该时一样的
+
+  MVCC 通过保存数据在某个时间点的快照来实现 RC 和 RR 要求的特性，实现时我们需要知道：
+  + 已提交的事务的有那些
+  + 行记录的事务版本号
+  + 行记录的历史版本
+
+  在 InnoDB 中，我们可以通过行记录的隐藏列知道创建该行记录的事务 ID，通过 undo log 得到行记录的历史版本，
+  通过 read view 得到创建 read view 时已经提交了的事务：
+  + DATA_TRX_ID   ::
+    在 InnoDB 中，行记录存在三个隐藏列，其中一个隐藏列为 ~DATA_TRX_ID~, 表示该行记录的事务 ID，当事务对某行记录进行修改时，
+    新增记录的 ~DATA_TRX_ID~ 就是该事务的 ID。
+
+  + DATA_ROLL_PTR ::
+    ~DATA_ROLL_PTR~ 是行记录三个隐藏列中的另一个，在 InnoDB 中，修改一个行记录时，会创建一个新的记录并设置事务 ID，同时在 undo log 中保存旧的记录，
+    这时，新纪录的 ~DATA_ROLL_PTR~ 会指向 undo log 中的记录，同时，undo log 中的记录也存在执行旧记录的 ~DATA_ROLL_PTR~ 指针。
+
+    #+HTML: <img src="https://tech.youzan.com/content/images/2019/04/UNDO_POINT.jpg">
+
+    这样一来，就构成了一条记录的所有历史记录的链表。当 UNDO 的记录还存在，那么对应的记录的历史版本就能被构建出来。
+   
+  + READ VIEW     ::
+    read view 是在 SQL 语句执行之前创建的，在 read view 中会保存：
+    + ~low_limit_id~ - 创建 ~read view~ 时 *尚未提交* 的事务中的 *最大* 的事务 ID
+    + ~up_limit_id~ - 创建 ~read view~ 时 *尚未提交* 的事务中的 *最小* 的事务 ID
+    + ~trx_ids~ - 创建 ~read view~ 时 *尚未提交* 的事务列表
+
+    通过 ~read view~ 可以将所有事务分为三组：
+    + ~trx_id < up_limit_id~ - 创建 ~read view~ 时已经提交了的事务
+    + ~up_limit_id <= trx_id <= low_limit_id~ - 创建 ~read view~ 时正常执行的事务
+    + ~trx_id > low_limit_id~ - 创建 ~read view~ 时还未创建的事务
+   
+    此时，我们可以根据 ~read view~ 来判断行记录的可见性：
+    1. 当记录的 ~DATA_TRX_ID~ 小于 ~read vew~ 的 ~up_limit_id~ 时说明该记录在创建 ~read view~ 之前就已经提交，记录可见
+    2. 如果记录的 ~DATA_TRX_ID~ 和事务创建者的 ~TRX_ID~ 一样时，记录可见
+    3. 当记录的 ~DATA_TRX_ID~ 大于 ~read vew~ 的 ~up_limit_id~ 时，说明该记录在创建 ~read view~ 之后进行的新建事务修改提交的，记录不可见
+    4. 如果记录对应的 ~DATA_TRX_ID~ 在 ~read view~ 的 ~trx_ids~ 里面，那么该记录也是不可见的
+
+    当通过 ~read view~ 判断该行记录对于当前事务不可见时，就可以通过 ~DATA_ROLL_PTR~ 从 ~undo log~ 找到之前的数据记录，再次进行判断，
+    直到数据为空或可见。
+   
+  + RC && RR      ::
+    对于 RC 级别来说，我们只需要在每次只需 SELECT 语句是创建 read view 就可以知道已提交的事务列表，从而达到读 *已提交* 的要求。
+    
+    对于 RR 级别来说，就只能在事务开始之前创建 read view，在创建事务后提交的数据对于当前事务来说都是不可见的。
+
+* 结语
+  总的来说，MVCC 理解起来并不是很难，实现中，通过在 RC 和 RR 两种隔离级别下使用不同的 READ VIEW 的创建策略就满足了两个隔离级别的要求也是很巧妙的。
+
+  但是在对比网上和书上的描述时，发现有些地方是不一样的，有可能是书太旧了的原因，毕竟 13 年的书了……
+
+  #+HTML: <details><summary><i></i></summary>
+
+  因为准备春招的原因博客断更一个月，感觉手又生了，完成这篇博客的过程中就各种不适应<(＿　＿)>
+
+  #+HTML: </details>
+
+* 参考链接
+  + [[https://segmentfault.com/a/1190000012650596][MySQL-InnoDB-MVCC 多版本并发控制 - 编程空间 - SegmentFault 思否]]
+  + [[https://tech.youzan.com/-ci-da-liang-shan-chu-dao-zhi-mysqlman-cha-de-fen-xi/][一次大量删除导致 MySQL 慢查的分析]]
+

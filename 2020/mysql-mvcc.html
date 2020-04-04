@@ -4,7 +4,7 @@
 <!-- 2020-04-04 周六 16:15 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rgb-24bit's blog</title>
+<title>MySQL MVCC - 多版本并发控制</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="rgb-24bit">
 <style type="text/css">
@@ -241,188 +241,176 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
 </div><div id="content">
-<h1 class="title">rgb-24bit's blog</h1>
-<details open="open"><summary><i>2020</i></summary>
+<h1 class="title">MySQL MVCC - 多版本并发控制</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org44d886d">1. 前言</a></li>
+<li><a href="#orgc9a8c51">2. 概念</a></li>
+<li><a href="#orgc43e6ef">3. 实现</a></li>
+<li><a href="#org64f2fdc">4. 结语</a></li>
+<li><a href="#org1068757">5. 参考链接</a></li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-org44d886d" class="outline-2">
+<h2 id="org44d886d"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+前段时间在看《高性能 MySQL》的时候了解到了多版本并发控制（MVCC）这个概念，然而，书上对这个概念的解析只有不到两页纸……
+</p>
+
+<p>
+于是乎，我又到网上去找了一下相关的资料，发现 MVCC 在 MySQL 中应该算是很重要的一个功能了，所以就来总结一下（￣︶￣）↗
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc9a8c51" class="outline-2">
+<h2 id="orgc9a8c51"><span class="section-number-2">2</span> 概念</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+MVCC 多版本并发控制，顾名思义，是用于实现并发控制的一种机制，而在数据库中，并发控制往往是针对 <b>事务</b> 来进行的，因此，在了解 MVCC 之前应该先对事务具有一定的了解。
+</p>
+
+<p>
+当然了，事务的概念本身是很基础的东西，这里就不做过多的介绍了 &lt;(＿　＿)&gt;
+</p>
+
+<p>
+回到 MVCC 的概念上，在《高性能 MySQL》一书中对它的介绍是这样的：
+</p>
+<blockquote>
+<p>
+可以认为 MVCC 是行级锁的一个变种，但是它在很多情况下避免了加锁操作，因此开销更低。虽然实现机制有所不同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。
+</p>
+</blockquote>
+
+<p>
+也就是说：
+</p>
+<ul class="org-ul">
+<li>MVCC 在实现行级锁的效果的同时避免了加锁操作的发生</li>
+<li>MVCC 实现了非阻塞的读操作，写操作也只锁定必要的行</li>
+</ul>
+
+<p>
+同时，MVCC 只在 RC(READ COMMITTED) 和 RR(REPEATABLE READ) 两个隔离级别下工作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc43e6ef" class="outline-2">
+<h2 id="orgc43e6ef"><span class="section-number-2">3</span> 实现</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+通过 MVCC 的概念我们可以知道其只在 RC 和 RR 这两个隔离级别下工作，这两个级别的一些特点：
+</p>
+<ul class="org-ul">
+<li>RC - 读取已经提交了的数据，可以避免脏读，但是当其他事务将某行数据修改并提交后，便可能会读取到变化后的数据，导致不可重复读</li>
+<li>RR - 可重复读，同一事务内，在未对数据进行修改时，每次读取到的数据都应该时一样的</li>
+</ul>
+
+<p>
+MVCC 通过保存数据在某个时间点的快照来实现 RC 和 RR 要求的特性，实现时我们需要知道：
+</p>
+<ul class="org-ul">
+<li>已提交的事务的有那些</li>
+<li>行记录的事务版本号</li>
+<li>行记录的历史版本</li>
+</ul>
+
+<p>
+在 InnoDB 中，我们可以通过行记录的隐藏列知道创建该行记录的事务 ID，通过 undo log 得到行记录的历史版本，通过 read view 得到创建 read view 时已经提交了的事务：
+</p>
 <dl class="org-dl">
-<dt>04-04 &#x2013; <a href="2020/mysql-mvcc.html">MySQL MVCC - 多版本并发控制</a>        </dt><dd></dd>
+<dt>DATA_TRX_ID  </dt><dd>在 InnoDB 中，行记录存在三个隐藏列，其中一个隐藏列为 <code>DATA_TRX_ID</code>, 表示该行记录的事务 ID，当事务对某行记录进行修改时，新增记录的 <code>DATA_TRX_ID</code> 就是该事务的 ID。</dd>
 
-<dt>02-23 &#x2013; <a href="2020/java-executor-framework.html">Java 并发之 Executor 框架</a>          </dt><dd></dd>
+<dt>DATA_ROLL_PTR</dt><dd><p>
+    <code>DATA_ROLL_PTR</code> 是行记录三个隐藏列中的另一个，在 InnoDB 中，修改一个行记录时，会创建一个新的记录并设置事务 ID，同时在 undo log 中保存旧的记录，这时，新纪录的 <code>DATA_ROLL_PTR</code> 会指向 undo log 中的记录，同时，undo log 中的记录也存在执行旧记录的 <code>DATA_ROLL_PTR</code> 指针。
+</p>
 
-<dt>02-15 &#x2013; <a href="2020/java-dynamic-proxy.html">Java 动态代理的简单使用和理解</a>      </dt><dd></dd>
+<img src="https://tech.youzan.com/content/images/2019/04/UNDO_POINT.jpg">
 
-<dt>02-09 &#x2013; <a href="2020/java-synchronized.html">Java 偏向锁、轻量级锁和重量级锁</a>    </dt><dd></dd>
+<p>
+这样一来，就构成了一条记录的所有历史记录的链表。当 UNDO 的记录还存在，那么对应的记录的历史版本就能被构建出来。
+</p></dd>
 
-<dt>01-18 &#x2013; <a href="2020/event-loop-with-coroutine.html">事件循环和协程</a>                     </dt><dd></dd>
+<dt>READ VIEW    </dt><dd><p>
+    read view 是在 SQL 语句执行之前创建的，在 read view 中会保存：
+</p>
+<ul class="org-ul">
+<li><code>low_limit_id</code> - 创建 <code>read view</code> 时 <b>尚未提交</b> 的事务中的 <b>最大</b> 的事务 ID</li>
+<li><code>up_limit_id</code> - 创建 <code>read view</code> 时 <b>尚未提交</b> 的事务中的 <b>最小</b> 的事务 ID</li>
+<li><code>trx_ids</code> - 创建 <code>read view</code> 时 <b>尚未提交</b> 的事务列表</li>
+</ul>
 
-<dt>01-05 &#x2013; <a href="2020/latex-summary.html">LateX 学习小结</a>                     </dt><dd></dd>
+<p>
+通过 <code>read view</code> 可以将所有事务分为三组：
+</p>
+<ul class="org-ul">
+<li><code>trx_id &lt; up_limit_id</code> - 创建 <code>read view</code> 时已经提交了的事务</li>
+<li><code>up_limit_id &lt;= trx_id &lt;= low_limit_id</code> - 创建 <code>read view</code> 时正常执行的事务</li>
+<li><code>trx_id &gt; low_limit_id</code> - 创建 <code>read view</code> 时还未创建的事务</li>
+</ul>
+
+<p>
+此时，我们可以根据 <code>read view</code> 来判断行记录的可见性：
+</p>
+<ol class="org-ol">
+<li>当记录的 <code>DATA_TRX_ID</code> 小于 <code>read vew</code> 的 <code>up_limit_id</code> 时说明该记录在创建 <code>read view</code> 之前就已经提交，记录可见</li>
+<li>如果记录的 <code>DATA_TRX_ID</code> 和事务创建者的 <code>TRX_ID</code> 一样时，记录可见</li>
+<li>当记录的 <code>DATA_TRX_ID</code> 大于 <code>read vew</code> 的 <code>up_limit_id</code> 时，说明该记录在创建 <code>read view</code> 之后进行的新建事务修改提交的，记录不可见</li>
+<li>如果记录对应的 <code>DATA_TRX_ID</code> 在 <code>read view</code> 的 <code>trx_ids</code> 里面，那么该记录也是不可见的</li>
+</ol>
+
+<p>
+当通过 <code>read view</code> 判断该行记录对于当前事务不可见时，就可以通过 <code>DATA_ROLL_PTR</code> 从 <code>undo log</code> 找到之前的数据记录，再次进行判断，直到数据为空或可见。
+</p></dd>
+
+<dt>RC &amp;&amp; RR     </dt><dd><p>
+    对于 RC 级别来说，我们只需要在每次只需 SELECT 语句是创建 read view 就可以知道已提交的事务列表，从而达到读 <b>已提交</b> 的要求。
+</p>
+
+<p>
+对于 RR 级别来说，就只能在事务开始之前创建 read view，在创建事务后提交的数据对于当前事务来说都是不可见的。
+</p></dd>
 </dl>
+</div>
+</div>
+
+<div id="outline-container-org64f2fdc" class="outline-2">
+<h2 id="org64f2fdc"><span class="section-number-2">4</span> 结语</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+总的来说，MVCC 理解起来并不是很难，实现中，通过在 RC 和 RR 两种隔离级别下使用不同的 READ VIEW 的创建策略就满足了两个隔离级别的要求也是很巧妙的。
+</p>
+
+<p>
+但是在对比网上和书上的描述时，发现有些地方是不一样的，有可能是书太旧了的原因，毕竟 13 年的书了……
+</p>
+
+<details><summary><i></i></summary>
+
+<p>
+因为准备春招的原因博客断更一个月，感觉手又生了，完成这篇博客的过程中就各种不适应&lt;(＿　＿)&gt;
+</p>
 
 </details>
-
-
-<details open="open"><summary><i>2019</i></summary>
-
-<dl class="org-dl">
-<dt>12-29 &#x2013; <a href="2019/memory-management-and-rust-ownership.html">内存管理和 Rust 所有权</a>             </dt><dd></dd>
-
-<dt>11-02 &#x2013; <a href="2019/spring-security-web-and-oauth2.html">Spring Security Web 和 OAuth2</a>      </dt><dd></dd>
-
-<dt>10-20 &#x2013; <a href="2019/spring-security-certification-process.html">Spring Security 认证流程梳理</a>       </dt><dd></dd>
-
-<dt>10-06 &#x2013; <a href="2019/java-spi.html">Java SPI 机制及其实现</a>              </dt><dd></dd>
-
-<dt>06-22 &#x2013; <a href="2019/quick-sort.html">Quick Sort 快速排序算法</a>            </dt><dd></dd>
-
-<dt>06-08 &#x2013; <a href="2019/tcp-connect-manage.html">TCP 中的三次握手和四次挥手</a>         </dt><dd></dd>
-
-<dt>05-25 &#x2013; <a href="2019/factory-pattern.html">设计模式之工厂模式</a>                 </dt><dd></dd>
-
-<dt>05-18 &#x2013; <a href="2019/ml-knn.html">机器学习 - K-近邻算法</a>              </dt><dd></dd>
-
-<dt>05-03 &#x2013; <a href="2019/javaee-servlet30-springmvc.html">Java EE - Servlet 3.0 和 Spring MVC</a></dt><dd></dd>
-
-<dt>04-26 &#x2013; <a href="2019/javaee-servlet-summary.html">Java EE - Servlet 小结</a>             </dt><dd></dd>
-
-<dt>04-20 &#x2013; <a href="2019/java-time.html">Java8 时间处理</a>                     </dt><dd></dd>
-
-<dt>04-13 &#x2013; <a href="2019/javaee-jsp-summary.html">Jave EE - JSP 小结</a>                 </dt><dd></dd>
-
-<dt>04-05 &#x2013; <a href="2019/java-io-abstract.html">Java 中的 I/O 抽象</a>                 </dt><dd></dd>
-
-<dt>03-29 &#x2013; <a href="2019/python-selectors.html">Python 高级 I/O 多路复用</a>           </dt><dd></dd>
-
-<dt>03-22 &#x2013; <a href="2019/sql-relational-algebra.html">SQL 与关系代数</a>                     </dt><dd></dd>
-
-<dt>03-15 &#x2013; <a href="2019/python-coroutine-event-loop.html">Python 协程和事件循环</a>              </dt><dd></dd>
-
-<dt>03-08 &#x2013; <a href="2019/java-enhancements.html">Java SE 5.0 - SE 8 的功能增强</a>      </dt><dd></dd>
-
-<dt>02-20 &#x2013; <a href="2019/regular-expressions-in-different-environments.html">不同环境下的正则表达式</a>             </dt><dd></dd>
-
-<dt>02-12 &#x2013; <a href="2019/bitop.html">通过位运算实现整数的加减乘除</a>       </dt><dd></dd>
-
-<dt>02-09 &#x2013; <a href="2019/biginteger.html">大数的简单实现</a>                     </dt><dd></dd>
-
-<dt>02-01 &#x2013; <a href="2019/binary-search.html">二分搜索算法</a>                       </dt><dd></dd>
-
-<dt>01-25 &#x2013; <a href="2019/rand-misc.html">随机数杂谈</a>                         </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2019/dijkstra-algorithm.html">迪杰斯特拉算法</a>                     </dt><dd></dd>
-</dl>
-
-</details>
-
-<details open="open"><summary><i>2018</i></summary>
-
-<dl class="org-dl">
-<dt>12-28 &#x2013; <a href="2018/msisdn.html">移动台国际用户识别码</a>               </dt><dd></dd>
-
-<dt>12-21 &#x2013; <a href="2018/android-small-summary.html">Android 小总结</a>                     </dt><dd></dd>
-
-<dt>12-14 &#x2013; <a href="2018/hash-table.html">散列表的简单实现</a>                   </dt><dd></dd>
-
-<dt>12-07 &#x2013; <a href="2018/uri.html">URI - 统一资源标识符</a>               </dt><dd></dd>
-
-<dt>11-23 &#x2013; <a href="2018/tree-dfs.html">树的深度优先遍历</a>                   </dt><dd></dd>
-
-<dt>11-16 &#x2013; <a href="2018/python-pickle.html">使用 pickle 序列化 Python 对象</a>     </dt><dd></dd>
-
-<dt>11-09 &#x2013; <a href="2018/python-logging.html">Python 日志模块</a>                    </dt><dd></dd>
-
-<dt>11-02 &#x2013; <a href="2018/io-redirect.html">I/O 重定向</a>                         </dt><dd></dd>
-
-<dt>10-26 &#x2013; <a href="2018/tree-bfs.html">树的广度优先遍历</a>                   </dt><dd></dd>
-
-<dt>10-21 &#x2013; <a href="2018/python-multi-threaded-usage-scenario.html">Python 多线程使用场景</a>              </dt><dd></dd>
-
-<dt>10-12 &#x2013; <a href="2018/csharp-image-process.html">C# 图像处理的三种方式</a>              </dt><dd></dd>
-
-<dt>10-03 &#x2013; <a href="2018/python-standard-type-hierarchy.html">Python 标准类型层次结构</a>            </dt><dd></dd>
-
-<dt>09-22 &#x2013; <a href="2018/python-urllib.html">Python urllib</a>                      </dt><dd></dd>
-
-<dt>09-15 &#x2013; <a href="2018/linux-file-permission.html">Linux 文件权限</a>                     </dt><dd></dd>
-
-<dt>08-28 &#x2013; <a href="2018/python-generator.html">Python 生成器</a>                      </dt><dd></dd>
-
-<dt>08-22 &#x2013; <a href="2018/python-io.html">Python I/O</a>                         </dt><dd></dd>
-
-<dt>08-11 &#x2013; <a href="2018/java-collection.html">Java 核心集合接口</a>                  </dt><dd></dd>
-
-<dt>08-05 &#x2013; <a href="2018/python-metaclass.html">Python 元类</a>                        </dt><dd></dd>
-
-<dt>07-31 &#x2013; <a href="2018/python-new-instance.html">Python 构造对象实例</a>                </dt><dd></dd>
-
-<dt>07-26 &#x2013; <a href="2018/python3.0-3.6.html">Python3.0-3.6的版本变化</a>            </dt><dd></dd>
-
-<dt>07-17 &#x2013; <a href="2018/java-basic.html">Java 基础梳理</a>                      </dt><dd></dd>
-
-<dt>07-01 &#x2013; <a href="2018/os-exception.html">操作系统之异常控制流</a>               </dt><dd></dd>
-
-<dt>06-16 &#x2013; <a href="2018/python-descriptor.html">Python 描述器简述</a>                  </dt><dd></dd>
-
-<dt>06-01 &#x2013; <a href="2018/c-pointer.html">C 语言指针和数组</a>                   </dt><dd></dd>
-
-<dt>05-20 &#x2013; <a href="2018/python-regex.html">Python 正则表达式</a>                  </dt><dd></dd>
-
-<dt>05-16 &#x2013; <a href="2018/python-decorator.html">Python 闭包和装饰器</a>                </dt><dd></dd>
-
-<dt>05-03 &#x2013; <a href="2018/http.html">HTTP 协议相关</a>                      </dt><dd></dd>
-
-<dt>04-15 &#x2013; <a href="2018/python-import.html">Python 导入相关</a>                    </dt><dd></dd>
-
-<dt>04-03 &#x2013; <a href="2018/python-special-method.html">Python 魔法方法</a>                    </dt><dd></dd>
-
-<dt>03-30 &#x2013; <a href="2018/git-base.html">Git 基础使用</a>                       </dt><dd></dd>
-
-<dt>03-25 &#x2013; <a href="2018/win32.html">Win32 API 窗口程序</a>                 </dt><dd></dd>
-
-<dt>03-23 &#x2013; <a href="2018/python-build-in-type.html">Python 内置类型</a>                    </dt><dd></dd>
-
-<dt>03-20 &#x2013; <a href="2018/glob.html">Glob 语法及解析</a>                    </dt><dd></dd>
-
-<dt>03-10 &#x2013; <a href="2018/google.html">Google 搜索</a>                        </dt><dd></dd>
-
-<dt>03-03 &#x2013; <a href="2018/python-collection.html">Python 容器</a>                        </dt><dd></dd>
-
-<dt>02-26 &#x2013; <a href="2018/python-coding.html">Python 编码问题</a>                    </dt><dd></dd>
-
-<dt>02-21 &#x2013; <a href="2018/python-format-string.html">Python 格式化字符串</a>                </dt><dd></dd>
-
-<dt>02-18 &#x2013; <a href="2018/python-build-in-exception.html">Python 内置异常</a>                    </dt><dd></dd>
-
-<dt>02-14 &#x2013; <a href="2018/python-build-in-function.html">Python 内置函数</a>                    </dt><dd></dd>
-
-<dt>02-06 &#x2013; <a href="2018/blockchain.html">区块链的简单尝试</a>                   </dt><dd></dd>
-
-<dt>02-02 &#x2013; <a href="2018/pipenv.html">Pipenv 的使用</a>                      </dt><dd></dd>
-
-<dt>01-23 &#x2013; <a href="2018/python2.5-2.7.html">Python2.5-2.7的版本变化</a>            </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/regex.html">正则表达式</a>                         </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/sqllocaldb-sqlcmd.html">SqlLocalDB 和 Sqlcmd</a>               </dt><dd></dd>
-</dl>
-
-</details>
-
-<details open="open"><summary><i>2017</i></summary>
-
-<dl class="org-dl">
-<dt>12-27 &#x2013; <a href="2017/org-gtd.html">Emacs Org 搭建 GTD 系统</a>            </dt><dd></dd>
-
-<dt>12-26 &#x2013; <a href="2017/c99-wchar.html">C99 宽字符</a>                         </dt><dd></dd>
-</dl>
-
-</details>
-
-<script>
-  (function(href, text) {
-    let anchor = document.querySelector("#org-div-home-and-up > a");
-    Object.assign(anchor, {"href": href, "text": text});
-  })("/blog/search.html", "SEARCH");
-</script>
+</div>
+</div>
+
+<div id="outline-container-org1068757" class="outline-2">
+<h2 id="org1068757"><span class="section-number-2">5</span> 参考链接</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="https://segmentfault.com/a/1190000012650596">MySQL-InnoDB-MVCC 多版本并发控制 - 编程空间 - SegmentFault 思否</a></li>
+<li><a href="https://tech.youzan.com/-ci-da-liang-shan-chu-dao-zhi-mysqlman-cha-de-fen-xi/">一次大量删除导致 MySQL 慢查的分析</a></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
