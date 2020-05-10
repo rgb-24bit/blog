@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2020-05-10 周日 16:02 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMP 算法的两种实现</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">KMP 算法的两种实现</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org352fe4a">1. 前言</a></li>
+<li><a href="#org5b7957e">2. 朴素子字符串查找算法</a></li>
+<li><a href="#orgb651d5d">3. KMP 算法的基本思想</a></li>
+<li><a href="#orgd6fcbec">4. 基于 DFA 的 KMP 实现</a></li>
+<li><a href="#org13aa1c1">5. 基于 PMT 的 KMP 实现</a></li>
+<li><a href="#org7c1438f">6. 历史渊源 &amp; DFA &amp; PMT</a></li>
+<li><a href="#org41e54b7">7. 结语</a></li>
+<li><a href="#orgef37390">8. 参考链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org352fe4a" class="outline-2">
+<h2 id="org352fe4a"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+KMP 算法在 LeetCode 刷题的过程中看见过好几次，这几天终于去学习了一下，然后，我就发现，Google 出来的 KMP 和我书上的不太一样……
+</p>
+
+<p>
+我的书是《算法 第 4 版》，上面的 KMP 是基于 DFA 实现的，而 Google 出来的大多是基于 PMT 的，似乎是《算法导论》那本书上的。
+</p>
+
+<p>
+虽然实现方式咋一看是不一样的，但是了解了一番后，发现，两个实现思路是一样的，难怪都叫 KMP 算法。
+</p>
+
+<p>
+这篇博客的主要内容就是 KMP 算法的这两种实现和它们间的一些联系。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5b7957e" class="outline-2">
+<h2 id="org5b7957e"><span class="section-number-2">2</span> 朴素子字符串查找算法</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+KMP 算法是用来解决 <b>子字符串查找</b> 问题的算法，这个问题有一个很朴素（暴力）的解决方式，通常的写法是：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">bf_search</span>(txt: <span class="org-builtin">str</span>, pat: <span class="org-builtin">str</span>) -&gt; <span class="org-builtin">int</span>:
+    <span class="org-variable-name">txt_len</span>, <span class="org-variable-name">pat_len</span> = <span class="org-builtin">len</span>(txt), <span class="org-builtin">len</span>(pat)
+
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(txt_len - pat_len + 1):
+        <span class="org-keyword">for</span> j <span class="org-keyword">in</span> <span class="org-builtin">range</span>(pat_len):
+            <span class="org-keyword">if</span> <span class="org-keyword">not</span> txt[i + j] == pat[j]:
+                <span class="org-keyword">break</span>
+
+        <span class="org-keyword">if</span> j == pat_len:
+            <span class="org-keyword">return</span> i
+
+    <span class="org-keyword">return</span> -1
+</pre>
+</div>
+
+<p>
+在查找过程中，分别使用了文本指针 <code>i</code> 和模式指针 <code>j</code> 来进行匹配操作，发现不匹配时，会隐式回退两个指针，下面是显式回退的版本：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">bf_search</span>(txt: <span class="org-builtin">str</span>, pat: <span class="org-builtin">str</span>) -&gt; <span class="org-builtin">int</span>:
+    <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-variable-name">txt_len</span>, <span class="org-variable-name">pat_len</span> = 0, 0, <span class="org-builtin">len</span>(txt), <span class="org-builtin">len</span>(pat)
+
+    <span class="org-keyword">while</span> i &lt; txt_len <span class="org-keyword">and</span> j &lt; pat_len:
+        <span class="org-keyword">if</span> txt[i] == pat[j]:
+            <span class="org-variable-name">j</span> += 1
+        <span class="org-keyword">else</span>:
+            <span class="org-variable-name">i</span> -= j  <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#36864;&#25991;&#26412;&#25351;&#38024; i</span>
+            <span class="org-variable-name">j</span> = 0   <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#36864;&#27169;&#24335;&#25351;&#38024; j</span>
+        <span class="org-variable-name">i</span> += 1
+
+    <span class="org-keyword">if</span> j == pat_len:
+        <span class="org-keyword">return</span> i - pat_len
+
+    <span class="org-keyword">return</span> -1
+</pre>
+</div>
+
+<p>
+虽然朴素算法在大多数情况下能够工作的很好，但是在遇到类似 <code>AAAAAAAAAAB</code> 和 <code>AAAB</code> 的情况时，对于每一个文本指针 <code>i</code> 都会遍历一次模式字符串，时间复杂度达到 \(O(MN)\) 的级别。
+</p>
+
+<p>
+而 KMP 算法能够以最坏为 \(O(M + N)\) 级别的时间复杂度解决这个问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb651d5d" class="outline-2">
+<h2 id="orgb651d5d"><span class="section-number-2">3</span> KMP 算法的基本思想</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+无论是基于 DFA 的 KMP 实现还是基于 PMT 的 KMP 实现，两者的基本思想都是一样的，就是在出现不匹配时，利用已知的一部分文本的内容避免回退文本指针，而是只回退模式指针。
+</p>
+
+<p>
+比如说在模式指针在 <code>j</code> 处出现了不匹配的情况，那么，这个时候，文本字符串必然已经匹配了 <code>pat[0:j]</code> 这部分模式字符串，此时，在朴素算法中，我们会回退文本指针并在 <b>右移一位</b> 后继续尝试匹配模式字符串。
+</p>
+
+<p>
+也就是说，接下来要尝试匹配的文本字符串是以 <code>pat[1:j]</code> 这个前缀开头的字符串，我们可以利用这一特性，避免重新匹配这个前缀。
+</p>
+
+<p>
+这样一来，所有已经匹配过的文本字符都不需要重新匹配，只需要不断调整模式字符串完成匹配就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6fcbec" class="outline-2">
+<h2 id="orgd6fcbec"><span class="section-number-2">4</span> 基于 DFA 的 KMP 实现</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+DFA 也就是确定有限自动状态机，第一次接触这个概念还是在编译原理里面。在基于 DFA 的 KMP 中，我们首先需要根据模式字符串构建一个这样的状态机：
+</p>
+<ul class="org-ul">
+<li>这个状态机的状态就是模式指针，可能值为 <code>[0, len(pat)]</code>, 状态为 <code>len(pat)</code> 时，说明成功完成模式字符串的匹配</li>
+<li>这个状态机 <b>构建时</b> 的输入是模式字符串中的字符，对于每一个状态来说，输入某一个字符后会转换为 <b>下一个状态</b></li>
+<li>这个状态机 <b>运行时</b> 的输入是文本字符串中的字符，我们根据输入的文本字符、当前状态和状态机来转换状态</li>
+</ul>
+
+<p>
+比如，基于模式字符串 <code>ABABAC</code> 构建得到的状态机是这样的：
+</p>
+<img src="https://i.loli.net/2020/05/09/5QgR1oXsawi2eUH.png">
+
+<p>
+解释：
+</p>
+<ul class="org-ul">
+<li>在状态为 <code>0</code> 且输入的字符是 <code>A</code> 时，说明匹配字符 <code>pat[0]</code> 成功，下一个需要匹配的字符为 <code>pat[1]</code>, 因此下一个状态为 <code>1</code></li>
+<li>在状态为 <code>0</code> 且输入的字符不是 <code>A</code> 时，说明匹配字符 <code>pat[0]</code> 失败，需要移动文本字符并重新从状态 <code>0</code> 开始匹配，因此下一个状态为 <code>0</code></li>
+</ul>
+
+<p>
+可以通过 <code>[输入][状态] = 下一个状态</code> 或 <code>[状态][输入] = 下一个状态</code> 的形式来表示这个状态机，当状态对应的 <b>模式字符</b> 和输入对应的 <b>文本字符</b> 相同时，说明匹配成功，下一个状态必然为 <b>当前状态 + 1</b>, 也就是说，我们需要考虑的是不同时应该怎么解决。
+</p>
+
+<p>
+在朴素算法中，在位置 <code>j</code> 出现不匹配时，我们会回退文本指针并右移 <code>1</code> 位重新开始匹配，这时，这部分 <b>文本字符串</b> 字串等于 <code>pat[1:j]</code> 这个 <b>模式字符串</b> 子串：
+</p>
+<pre class="example">
+txt: A B A B A D A
+               i
+
+pat: A B A B A C
+       1       j
+               5
+</pre>
+
+<p>
+<code>pat[1:j]</code> 对应的是 <code>BABA</code> 这个子串，把这个子串放到 DFA 中重新匹配最后可以达到的状态为 3，也就是说，在匹配过程中，就算匹配失败，重新匹配时，也必然会在继续匹配到 j - 1 时到达另一个状态。
+</p>
+
+<p>
+我们把这个状态叫做【重启状态】，在状态 <code>j</code> 处匹配成功时，下一个状态为 j + 1，匹配失败时，重新匹配会在状态 <code>j - 1</code> 处到达重启状态，此时，在状态 <code>j</code> 处的状态转换应该和 <b>重启状态</b> 处的状态转换相同。
+</p>
+
+<p>
+假设状态 <code>j</code> 的重启状态为 X，那么状态 <code>j</code> 处可能的转换就应该是：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">for</span> ch <span class="org-keyword">in</span> pat_chrs:          <span class="org-comment-delimiter"># </span><span class="org-comment">&#36941;&#21382;&#27169;&#24335;&#23383;&#31526;&#20018;&#20013;&#30340;&#23383;&#31526;</span>
+    dfa[ch][j] = dfa[ch][x]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#21305;&#37197;&#26102;&#36716;&#25442;&#21644;&#37325;&#21551;&#29366;&#24577; x &#22788;&#30456;&#21516;</span>
+dfa[pat[j]][j] = j + 1       <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197;&#26102;&#19979;&#19968;&#20010;&#29366;&#24577;&#20026; j + 1</span>
+</pre>
+</div>
+
+<p>
+同时，状态 <code>j</code> 和状态 <code>j + 1</code> 的重启状态是存在递推关系的，假如状态 <code>j</code> 的重启状态为 X，那么，我们将我们将 <code>j</code> 处的字符作为重启状态的输入，得到的下一个值不就应该是 <code>j + 1</code> 的重启状态了吗？
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">x</span> = dfa[pat[j]][x]  <span class="org-comment-delimiter"># </span><span class="org-comment">state x, in pat[j]</span>
+</pre>
+</div>
+
+<p>
+我们可以轻易得到状态为 <code>0</code> 时的状态转换和重启状态（你第一个字符都不匹配，重启状态肯定是 0 啊），然后根据状态的转换规律就可以很容易的构建 DFA 了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">x, dfa[pat[0]][0] = 0, 1
+
+<span class="org-keyword">for</span> j <span class="org-keyword">in</span> <span class="org-builtin">range</span>(1, pat_len):
+    <span class="org-keyword">for</span> ch <span class="org-keyword">in</span> pat_chrs:
+        dfa[ch][j] = dfa[ch][x]
+    dfa[pat[j]][j] = j + 1
+    <span class="org-variable-name">x</span> = dfa[pat[j]][x]           <span class="org-comment-delimiter"># </span><span class="org-comment">j + 1 &#26102;&#30340;&#37325;&#21551;&#29366;&#24577;</span>
+</pre>
+</div>
+
+<p>
+使用 DFA 来查找子字符串的过程就很简单了，就是跑这个状态机的过程：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">while</span> i &lt; txt_len <span class="org-keyword">and</span> j &lt; pat_len:
+    <span class="org-variable-name">j</span> = dfa[txt[i]][j]  <span class="org-comment-delimiter"># </span><span class="org-comment">state =&gt; j, in =&gt; txt[i], next state =&gt; dfa[txt[i]][j]</span>
+    <span class="org-variable-name">i</span> += 1
+
+<span class="org-keyword">if</span> j == pat_len:
+    <span class="org-keyword">return</span> i - pat_len
+
+<span class="org-keyword">return</span> -1
+</pre>
+</div>
+
+<p>
+完整的实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">kmp_search</span>(txt: <span class="org-builtin">str</span>, pat: <span class="org-builtin">str</span>) -&gt; <span class="org-builtin">int</span>:
+    <span class="org-variable-name">txt_len</span>, <span class="org-variable-name">pat_len</span> = <span class="org-builtin">len</span>(txt), <span class="org-builtin">len</span>(pat)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">make_dfa</span>():
+        <span class="org-variable-name">dfa</span> = [{} <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(pat_len)]  <span class="org-comment-delimiter"># </span><span class="org-comment">[state][in] =&gt; next state</span>
+
+        x, dfa[0][pat[0]] = 0, 1
+
+        <span class="org-keyword">for</span> j <span class="org-keyword">in</span> <span class="org-builtin">range</span>(1, pat_len):
+            <span class="org-keyword">for</span> ch <span class="org-keyword">in</span> pat:
+                dfa[j][ch] = dfa[x].get(ch, 0)
+            dfa[j][pat[j]] = j + 1
+            <span class="org-variable-name">x</span> = dfa[x].get(pat[j], 0)
+
+        <span class="org-keyword">return</span> dfa
+
+    <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-variable-name">dfa</span> = 0, 0, make_dfa()
+
+    <span class="org-keyword">while</span> i &lt; txt_len <span class="org-keyword">and</span> j &lt; pat_len:
+        <span class="org-variable-name">j</span> = dfa[j].get(txt[i], 0)
+        <span class="org-variable-name">i</span> += 1
+
+    <span class="org-keyword">if</span> j == pat_len:
+        <span class="org-keyword">return</span> i - pat_len
+
+    <span class="org-keyword">return</span> -1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org13aa1c1" class="outline-2">
+<h2 id="org13aa1c1"><span class="section-number-2">5</span> 基于 PMT 的 KMP 实现</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+相对来说，基于 PMT 的 KMP 实现理解起来更加简单，其中，PMT 是一个被称为部分匹配表(Partial Match Table)的数组：
+</p>
+<ul class="org-ul">
+<li>当 <code>PMT[i]</code> 的值为 <code>v</code> 时，表示子串 <code>pat[0: i + 1]</code> 前缀集合与后缀集合的交集中最长元素的长度为 <code>v</code></li>
+</ul>
+
+<blockquote>
+<p>
+对于字符串 ABA 来说，它的前缀集合为 [A, AB]，后缀集合为 [BA, A]，两者的交集为 [A]，最长元素的长度为 1。
+</p>
+</blockquote>
+
+<p>
+通过这个 PMT 数组，我们可以加速子字符串的查找过程：
+</p>
+<ul class="org-ul">
+<li>当我们在模式指针 <code>j</code> 处匹配失败时，我们可以知道的是，前一段文本字符串为 pat[0:j]，需要重新匹配的部分为 pat[1:j]</li>
+<li><p>
+这时，我们可以尽可能地尝试匹配串 <code>pat[1:j]</code> 的后缀和 <code>pat</code> 的前缀，在匹配成功部分的后面继续匹配模式字符串
+</p>
+<img src="https://pic4.zhimg.com/80/v2-03a0d005badd0b8e7116d8d07947681c_1440w.jpg">
+
+<p>
+如上图（来自 - 如何更好地理解和掌握 KMP 算法? - 海纳的回答 - 知乎）。
+</p></li>
+
+<li><code>PMT[j - 1]</code> 中的值保存了子串 <code>pat[0:j]</code> 前缀集合与后缀集合的交集中最长元素的长度 v，因此，我们可以直接使用这个值，将模式指针的值更新为 <code>v</code></li>
+</ul>
+
+<p>
+PS: 这里需要注意长度值和数组索引值之间的差异，有点绕
+</p>
+
+<p>
+可以看到，我们可以通过 PMT 数组来完成查找过程，但是每次匹配失败后都需要取 <code>j - 1</code> 处的值太麻烦，因此，可以将 PMT 数组整体右移 1 位，将索引为 0 处的值设为 -1，就得到了新的 <code>next</code> 数组<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>。
+</p>
+
+<p>
+如下图（来自 - 如何更好地理解和掌握 KMP 算法? - 海纳的回答 - 知乎）：
+</p>
+<img src="https://pic1.zhimg.com/80/v2-40b4885aace7b31499da9b90b7c46ed3_1440w.jpg">
+
+<p>
+这样，我们在匹配失败时就可以根据 next 调整模式指针，具体查找逻辑就为：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">kmp_search</span>(txt: <span class="org-builtin">str</span>, pat: <span class="org-builtin">str</span>) -&gt; <span class="org-builtin">int</span>:
+    <span class="org-variable-name">txt_len</span>, <span class="org-variable-name">pat_len</span> = <span class="org-builtin">len</span>(txt), <span class="org-builtin">len</span>(pat)
+
+    <span class="org-variable-name">i</span> = <span class="org-variable-name">j</span> = 0
+
+    <span class="org-keyword">while</span> i &lt; txt_len <span class="org-keyword">and</span> j &lt; pat_len:
+        <span class="org-keyword">if</span> j == -1 <span class="org-keyword">or</span> txt[i] == pat[j]:
+            <span class="org-variable-name">i</span> += 1
+            <span class="org-variable-name">j</span> += 1
+        <span class="org-keyword">else</span>:
+            <span class="org-variable-name">j</span> = <span class="org-builtin">next</span>[j]
+
+    <span class="org-keyword">if</span> j == pat_len:
+        <span class="org-keyword">return</span> i - pat_len
+
+    <span class="org-keyword">return</span> -1
+</pre>
+</div>
+
+<blockquote>
+<p>
+next[0] = -1, 当 txt[i] != pat[0] 时，j 的值会变为 -1，这时就可以进入另一个分支让 i + 1 并让 j 归 0
+</p>
+</blockquote>
+
+<p>
+现在的问题是，如何构建这个 <code>next</code> 数组，很巧的是，这个构建过程也是有规律的，由于值 <code>PMT[j]</code> 表示的是串 <code>pat[0:j + 1]</code> 中的最大公共长度，那么，值 <code>next[j]</code> 表示的是串 <code>pat[0:j]</code> 中的最大公共长度。
+</p>
+
+<p>
+假如该值等于 2，那么就是说存在类似 <code>AB...AB</code> 的情况：
+</p>
+<pre class="example">
+0           j
+A B ... A B ?
+</pre>
+
+<p>
+如果，这个时候，满足 <code>pat[next[j]] = pat[j]</code> 这个条件，比如说是字符 C，那么，就变成了 <code>ABC...ABC</code> 这个情况，即：
+</p>
+<pre class="example">
+0             j
+A B C ... A B C
+    2
+    |
+pat[next[j]]
+</pre>
+
+<p>
+可以发现：
+</p>
+<ul class="org-ul">
+<li>当 <code>pat[next[j]] = pat[j]</code> 时，值 <code>next[j + 1]</code> 也就等于 <code>next[next[j]] + 1</code></li>
+</ul>
+
+<p>
+如果不满足，那么，也就是说，最大公共长度还位于 <b>更短</b> 的串中，也就是在 <code>pat[0:next[j]]</code> 的内部：
+</p>
+<pre class="example">
+0             j
+A B D ... A B A
+--- 2
+ |
+pat[0:next[j]]
+</pre>
+
+<p>
+此时，便可以重复前面的过程，判断 <code>pat[next[next[j]]] = pat[j]</code> 是否成立，这里恰好一样，值 <code>next[next[j]]</code> 为 0，因此 <code>next[j + 1]</code> 的值就为 0 + 1。
+</p>
+
+<p>
+构造 <code>next</code> 数组时便可以重复上述过程，直到 <code>next[j] = pat[j]</code> 或 <code>j = 0</code> 为止：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">make_next</span>(pat):
+    <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-variable-name">pat_len</span>, <span class="org-builtin">next</span> = 0, -1, <span class="org-builtin">len</span>(pat), [-1]
+
+    <span class="org-keyword">while</span> i &lt; pat_len:
+        <span class="org-keyword">if</span> j == -1 <span class="org-keyword">or</span> pat[i] == pat[j]:
+            <span class="org-variable-name">i</span> += 1
+            <span class="org-variable-name">j</span> += 1
+            <span class="org-builtin">next</span>.append(j)
+        <span class="org-keyword">else</span>:
+            <span class="org-variable-name">j</span> = <span class="org-builtin">next</span>[j]
+
+    <span class="org-keyword">return</span> <span class="org-builtin">next</span>
+</pre>
+</div>
+
+<p>
+完整实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">kmp_search</span>(txt: <span class="org-builtin">str</span>, pat: <span class="org-builtin">str</span>) -&gt; <span class="org-builtin">str</span>:
+    <span class="org-variable-name">txt_len</span>, <span class="org-variable-name">pat_len</span> = <span class="org-builtin">len</span>(txt), <span class="org-builtin">len</span>(pat)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">make_next</span>():
+        <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-builtin">next</span> = 0, -1, [-1]
+
+        <span class="org-keyword">while</span> i &lt; pat_len:
+            <span class="org-keyword">if</span> j == -1 <span class="org-keyword">or</span> pat[i] == pat[j]:
+                <span class="org-variable-name">i</span> += 1
+                <span class="org-variable-name">j</span> += 1
+                <span class="org-builtin">next</span>.append(j)
+            <span class="org-keyword">else</span>:
+                <span class="org-variable-name">j</span> = <span class="org-builtin">next</span>[j]
+
+        <span class="org-keyword">return</span> <span class="org-builtin">next</span>
+
+    <span class="org-variable-name">i</span>, <span class="org-variable-name">j</span>, <span class="org-builtin">next</span> = 0, 0, make_next()
+
+    <span class="org-keyword">while</span> i &lt; txt_len <span class="org-keyword">and</span> j &lt; pat_len:
+        <span class="org-keyword">if</span> j == -1 <span class="org-keyword">or</span> txt[i] == pat[j]:
+            <span class="org-variable-name">i</span> += 1
+            <span class="org-variable-name">j</span> += 1
+        <span class="org-keyword">else</span>:
+            <span class="org-variable-name">j</span> = <span class="org-builtin">next</span>[j]
+
+    <span class="org-keyword">if</span> j == pat_len:
+        <span class="org-keyword">return</span> i - pat_len
+
+    <span class="org-keyword">return</span> -1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7c1438f" class="outline-2">
+<h2 id="org7c1438f"><span class="section-number-2">6</span> 历史渊源 &amp; DFA &amp; PMT</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+KMP 算法的历史故事：
+</p>
+<blockquote>
+<p>
+在 1970 年，S.Cook 在理论上证明了一个关于某种特定类型的抽象计算机的结论。这个结论暗示了一种在最坏情况下用时也只是与 M + N 成正比的解决子字符串查找问题的算法。
+</p>
+
+<p>
+D.E.Knuth 和 V.R.Pratt 改进了 Cook 用来证明定理的框架并将它提炼为一个相对简单而实用的算法。
+</p>
+
+<p>
+J.H.Morris 在实现一个文本编辑器时，未来解决某个棘手的问题也发明了几乎相同的算法。
+</p>
+</blockquote>
+
+<p>
+虽然不知道是谁搞得 DFA，又是谁搞得 PMT，但是，两个的实现思路其实是很接近的。在讨论构建 DFA 的过程中，有一个【重启状态】，表示的是在位置 <code>j</code> 处匹配失败后，重新匹配可以达到的状态。
+</p>
+
+<p>
+比如 <code>ABABA</code> 最后的重启状态到达的位置为 <code>ABA</code>, 这个串是啥？不就是串 <code>ABABA</code> 的最大公共长度吗？
+</p>
+
+<p>
+通过思考尝试可以发现，在构造 DFA 的过程中，重启状态 X 的序列就是 PMT 数组！！！
+</p>
+
+<p>
+真的好巧 ( •̀ ω •́ )✧
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41e54b7" class="outline-2">
+<h2 id="org41e54b7"><span class="section-number-2">7</span> 结语</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+决定要看一下 KMP 是因为前几天 LeetCode 上的每日一题 <a href="https://leetcode-cn.com/problems/subtree-of-another-tree/">另一个树的子树</a>，难度是简单，我用 DFS 暴力 AC 后去看了一下题解……
+</p>
+
+<p>
+评论区的一个评论是这样的：竟然用一个题涵盖 KMP DFS HASH 埃氏筛选法 收藏从未停止 学习从未开始。
+</p>
+
+<p>
+而我的心情是这样的：（￣︶￣）↗  =&gt; (⊙_⊙)？
+</p>
+
+<p>
+讲道理，这样的题基本没见过几个，恰好又用了 Copy 过几次的 KMP，所以就来研究了一下。
+</p>
+
+<p>
+感觉还可以 (～￣▽￣)～
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgef37390" class="outline-2">
+<h2 id="orgef37390"><span class="section-number-2">8</span> 参考链接</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><a href="https://blog.csdn.net/xiangshimoni/article/details/45459963">从 DFA 角度理解 KMP 算法_fpga开发_DC的陋室-CSDN博客</a></li>
+<li><a href="https://donche.github.io/2017/06/24/KMP.html">KMP 字符串查找算法的两种实现 - 知地 | Donche</a></li>
+<li><a href="https://www.zhihu.com/question/21923021">如何更好地理解和掌握 KMP 算法? - 知乎</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+这里的 -1 和 next 数组都是为了编程方便，也可以选择不这样做 
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
