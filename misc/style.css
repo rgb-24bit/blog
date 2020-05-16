@@ -64,7 +64,7 @@ hr {
  */
 audio, canvas, img, video {
   vertical-align: middle;
-  max-width: 50em;
+  max-width: 100%;
 }
 
 /**
@@ -180,7 +180,7 @@ textarea {
 }
 
 pre, code {
-  font-family: "Source Pro", Monaco, "Courier New", monospace;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
   padding-left: 0.3em;
   padding-right: 0.3em;
 }
@@ -386,14 +386,16 @@ textarea {
 }
 
 p.verse, blockquote {
-  padding: 0;
-  padding-left: 3%;
+  padding: 1px;
+  padding-left: 1%;
   margin: 0;
   border-left: 5px solid #EA4C89;
+  color: #6a737d;
+  background-color: #fafcf9;
 }
 
 body {
-  font-family: Monospace, Serif, sans-serif;
+  font-family: BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
   background-color: #FFF;
   width: 92%;
   max-width: 1024px;
