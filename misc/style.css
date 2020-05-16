@@ -249,8 +249,8 @@ pre.src-html:before {
 }
 
 table {
-  overflow-x: auto;
-  display: -webkit-inline-box;
+  overflow: auto;
+  display: block;
   border-collapse: collapse;
 }
 
