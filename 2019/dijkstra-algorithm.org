@@ -180,8 +180,6 @@
                      path.insert(0, ver)
                  result.append(path)
              return result
-
-         def __repr__(self):
    #+END_SRC
    
    #+HTML: </details>
