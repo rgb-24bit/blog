@@ -1,0 +1,175 @@
+#+TITLE:      Emacs 和 Emacs 自定义配置起步
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2020-12-27 周日>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#什么是-emacs][什么是 Emacs]]
+- [[#为什么选择-emacs][为什么选择 Emacs]]
+- [[#自定义配置起步][自定义配置起步]]
+  - [[#initel][init.el]]
+  - [[#参考配置][参考配置]]
+  - [[#包管理器][包管理器]]
+  - [[#需要配置什么][需要配置什么]]
+- [[#结语][结语]]
+- [[#footnotes][Footnotes]]
+
+* 前言
+  自从养成了写博客写前言的习惯后，每次写博客都想在前言部分吐吐槽，但这次情况特殊，作为断更大半年后的更新，
+  一时之间有点不知道该说啥了 QAQ
+
+  这次更新的原因很简单，2020 年就要结束了，想着至少还是要一个结尾，同时，是双休，也有时间写……
+
+  -----
+
+  本片博客的内容比较简单，就是介绍下 Emacs，还有就是自己这几年使用 Emacs 的一些经验分享。
+
+  #+HTML: <details><summary><i>隐藏信息</i></summary>
+  
+  手生了，写前缺少准备，时间也不多，写完后感觉质量挺差的，后面估计会回炉重造 QAQ
+
+  #+HTML: </details>
+
+
+* 什么是 Emacs
+  「什么是 Emacs？」这个问题我认为没有固定的答案，简单的回答可以说 Emacs 是一个编辑器，但 Emacs 又不仅仅是个编辑器。
+
+  Emacs 是什么，取决于你怎么去使用它，本质上来说，Emacs 可以看作是一个 Emacs Lisp[fn:1] 的解释器，同时提供了诸多用于实现编辑器功能的内置函数和结构，
+  从而得到了表面是编辑器，实际是 Emacs Lisp 解释器的 Emacs。
+
+  Emacs Lisp 和 Emacs 之间的关系可以类别 JavaScript 和其宿主环境之间的关系，不同的宿主环境会为 JavaScript 提供不同的全局对象，
+  比如浏览器提供的 window 对象。而通过执行 JavaScript 代码，可以在浏览器页面上为我们呈现各种各样的效果。
+
+  只不过，Emacs Lisp 的宿主环境差不多只有 Emacs，贫穷。
+
+  所以说，圈内一直有着「Emacs 是披着编辑器皮的操作系统」的说法，这个说法虽然有些夸大，但也侧面说明了，借助 Emacs Lisp，
+  是可以为 Emacs 提供很多额外功能的。
+
+  当然，说了这么多，在使用 Emacs 的人里面，会 Emacs Lisp 的其实并不多，大都只会写一点简单的函数啥的，比如我 QAQ
+
+  即：大多数情况下，Emacs 就是一个编辑器。
+
+* 为什么选择 Emacs
+  *我不推荐 Emacs，大多数情况下推荐 Emacs 只是在浪费彼此的时间，与其推荐 Emacs，不如直接推荐 Vim/VsCode，简单直接。*
+
+  -----
+
+  Emacs 对于很多人来说都不是一个好的选择，默认的 Emacs 可以用，但不是很好用，配置对于新人来说往往又是一脸懵逼。
+
+  所以为啥选择 Emacs 呢？
+
+  这个问题没有固定的答案，这里对比 Vim 和 VsCode 简单描述一下我的原因：
+  + 使用 Vim 的过程中，遇到了更快的启动速度和更多的功能之间的矛盾，因为使用 Vim 我习惯频繁的关闭重启，最后，
+    为了保留 Vim 的启动速度，我就只剩下了抄来的几百行的 .vimrc，零插件
+
+    而 Emacs，我不关心那一点启动速度了，只要不是太慢就行：
+    #+begin_src elisp
+      > (emacs-uptime)
+      "14 days, 23 hours, 19 minutes, 7 seconds"
+    #+end_src
+
+    这是我为什么放弃了 Vim，选择了 Emacs。
+
+  + 尝试 VsCode 的过程中，简单试用了一些功能后我就放弃了，不习惯，VsCode 火起来后，Emacs 我已经使用了有一段时间了，
+    随着使用时间的加长，Emacs 的很多地方也越来越适配我自己的习惯。
+
+    VsCode 的扩展性虽然很强，也有很多很强大的扩展，这些扩展的很多功能甚至是 Emacs 很难实现的，但，整体框架已经限制了，
+    我使用的是 VsCode，而不是我的 VsCode。
+
+    这是我为什么没有放弃 Emacs。
+
+  当然，还有其他很多原因，就不多说了，毕竟，不是来推荐 Emacs 的，这一节更多的是给自己一个答案吧！
+
+* 自定义配置起步
+  目前，我还在使用的配置是 spacemacs，随着自定义配置的增多，spacemacs 给我的感觉也越来越难受了。
+
+  通用往往也意味着牺牲个性，于是乎，近期我也开始搞自己的配置了，这一节算是其中的一些经验总结吧。
+
+** init.el
+   Emacs 在启动的时候会加载执行 init.el 中的代码，我们的配置通常也是从这个文件开始，这个文件的位置通常是 ~/init.el 或 ~/.emacs.d/init.el，
+   对于复杂的配置，往往是推荐都放到 ~/.emacs.d 这个目录下，然后通过 ~/.emacs.d/init.el 加载。
+
+   较为特殊的是，Windows 上默认是没有 HOME 这个环境变量的，可以添加环境变量 HOME 并将值设为 %USERPROFILE%。
+
+** 参考配置
+   如果要开始自己的配置，那么，找一个配置来作为参考还是很重要的，大佬懂得往往比你多，我在自定义配置的过程中：
+   + 配置结构参考
+     + [[https://github.com/syl20bnr/spacemacs][syl20bnr/spacemacs]]
+     + [[https://github.com/purcell/emacs.d][purcell/emacs.d]]
+   + 配置代码参考
+     + [[https://github.com/hlissner/doom-emacs][hlissner/doom-emacs]]
+     + [[https://github.com/syl20bnr/spacemacs][syl20bnr/spacemacs]]
+     + [[https://github.com/purcell/emacs.d][purcell/emacs.d]]
+
+** 包管理器
+   Emacs 虽然已经内置了很多强大的工具，但是，额外的扩展还是能增强 Emacs 的使用体验，因此，如何管理 Emacs 的扩展（包）成了一个问题。
+
+   这里就需要明白一个问题，Emacs 包是什么？Emacs 是怎么去寻找加载它们的？
+
+   其实，对于 Emacs 来说，一个包就是一个文件，加载包的过程就是找到指定的文件，读取文件内容并执行的过程。
+
+   不同的加载包的函数在加载逻辑上存在区别：
+   + load ::
+     #+begin_src elisp
+       (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
+     #+end_src
+
+     load 的参数列表如上，在只有 FILE 参数时，会按照下面的顺序去尝试匹配文件：
+     #+begin_example
+       filename.elc -> filename.el -> filename.ext -> filename
+     #+end_example
+
+     如果存在名称一样的压缩文件，那么还会到 =filename.gz= 中去加载。
+
+   + require :: 
+     #+begin_src elisp
+       (require FEATURE &optional FILENAME NOERROR)
+     #+end_src
+
+     require 的参数名是 FEATURE，其加载的文件会末尾会有相应的 (provide FEATURE) 代码，加载时，
+     会在 FEATURE 中判断是否已加载，没有才会调用 (load FEATURE) 加载，避免频繁读取文件。
+
+   load 函数通过参数去匹配文件名，通过 load-path 去匹配文件路径，而下载扩展后的重要一步，就是将其路径放到 load-path 中，
+   但是手动添加太麻烦了，因此，诞生了各种各样的包管理器。
+   
+   下载包并将包路径添加到 load-path，这是需要包管理器完成的事情，而怎么下载包，对于不同的包管理器来说是不同的，
+   Emacs 内置 packages.el 会到指定的源下载，但也存在其他的包管理器可以到更多的地方下载包。
+
+   可以参考 [[https://github.com/raxod502/straight.el][raxod502/straight.el]] 中的各个包管理器的对比选择自己喜欢的。
+
+   -----
+
+   我选择了通过 git submodule 手动管理，将所有第三方包放在一个目录中，然后通过下面这个函数将路径放入 load-path：
+   #+begin_src elisp
+     (defun emacsc/add-subdirs-to-load-path (dir)
+       "Recursive add directories to `load-path'."
+       (let ((default-directory (file-name-as-directory dir))
+             (orig-load-path load-path))
+         (setq load-path (cons dir nil))
+         (normal-top-level-add-subdirs-to-load-path)
+         (nconc load-path orig-load-path)
+         (delete-dups load-path)))
+   #+end_src
+
+** 需要配置什么
+   这可能是对萌新的灵魂拷问，我需要配置什么？个人感觉可以分为：
+   + UI - 包括主题、行号、菜单栏、工具栏、滚动条、mode-line 等，颜值即正义
+   + 功能增强 - 比如文件的自动保存、dired、ibuffer、winnum、which-key 等，极大提升使用体验
+   + 补全框架 - 比如 ivy/helm，记忆力是有限的，给出提示会好很多
+   + 补全提示 - company
+   + 编程语言 - major-mode、lsp-mode 或其他 lsp 实现
+   + ……
+
+   当然，对于萌新来说，还是推荐找一个现成的配置，先用起来，逐渐积累自己的配置。
+
+* 结语
+  终于，写完了，间隔太久了，这篇博客写的不是很满意，但是，也写了快 3 个小时了，不断删删改改……
+
+  感觉有些干瘪，像是在完成任务 QAQ
+
+  ……
+
+* Footnotes
+
+[fn:1] 运行在 Emacs 上的 Lisp 方言

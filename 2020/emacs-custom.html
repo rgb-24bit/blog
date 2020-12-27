@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2020-12-27 周日 17:00 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emacs 和 Emacs 自定义配置起步</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="rgb-24bit">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://rgb-24bit.github.io/blog/misc/style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125860001-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125860001-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://rgb-24bit.github.io/blog/"> UP </a>
+ |
+ <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
+</div><div id="content">
+<h1 class="title">Emacs 和 Emacs 自定义配置起步</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd28bfdf">1. 前言</a></li>
+<li><a href="#orgc6fbc78">2. 什么是 Emacs</a></li>
+<li><a href="#orgcf96fcc">3. 为什么选择 Emacs</a></li>
+<li><a href="#org1d2b536">4. 自定义配置起步</a>
+<ul>
+<li><a href="#org9024924">4.1. init.el</a></li>
+<li><a href="#org12f7e93">4.2. 参考配置</a></li>
+<li><a href="#org707e701">4.3. 包管理器</a></li>
+<li><a href="#org24d6675">4.4. 需要配置什么</a></li>
+</ul>
+</li>
+<li><a href="#org71a50cc">5. 结语</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd28bfdf" class="outline-2">
+<h2 id="orgd28bfdf"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+自从养成了写博客写前言的习惯后，每次写博客都想在前言部分吐吐槽，但这次情况特殊，作为断更大半年后的更新，一时之间有点不知道该说啥了 QAQ
+</p>
+
+<p>
+这次更新的原因很简单，2020 年就要结束了，想着至少还是要一个结尾，同时，是双休，也有时间写……
+</p>
+
+<hr>
+
+<p>
+本片博客的内容比较简单，就是介绍下 Emacs，还有就是自己这几年使用 Emacs 的一些经验分享。
+</p>
+
+<details><summary><i>隐藏信息</i></summary>
+
+<p>
+手生了，写前缺少准备，时间也不多，写完后感觉质量挺差的，后面估计会回炉重造 QAQ
+</p>
+
+</details>
+</div>
+</div>
+
+
+<div id="outline-container-orgc6fbc78" class="outline-2">
+<h2 id="orgc6fbc78"><span class="section-number-2">2</span> 什么是 Emacs</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+「什么是 Emacs？」这个问题我认为没有固定的答案，简单的回答可以说 Emacs 是一个编辑器，但 Emacs 又不仅仅是个编辑器。
+</p>
+
+<p>
+Emacs 是什么，取决于你怎么去使用它，本质上来说，Emacs 可以看作是一个 Emacs Lisp<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 的解释器，同时提供了诸多用于实现编辑器功能的内置函数和结构，从而得到了表面是编辑器，实际是 Emacs Lisp 解释器的 Emacs。
+</p>
+
+<p>
+Emacs Lisp 和 Emacs 之间的关系可以类别 JavaScript 和其宿主环境之间的关系，不同的宿主环境会为 JavaScript 提供不同的全局对象，比如浏览器提供的 window 对象。而通过执行 JavaScript 代码，可以在浏览器页面上为我们呈现各种各样的效果。
+</p>
+
+<p>
+只不过，Emacs Lisp 的宿主环境差不多只有 Emacs，贫穷。
+</p>
+
+<p>
+所以说，圈内一直有着「Emacs 是披着编辑器皮的操作系统」的说法，这个说法虽然有些夸大，但也侧面说明了，借助 Emacs Lisp，是可以为 Emacs 提供很多额外功能的。
+</p>
+
+<p>
+当然，说了这么多，在使用 Emacs 的人里面，会 Emacs Lisp 的其实并不多，大都只会写一点简单的函数啥的，比如我 QAQ
+</p>
+
+<p>
+即：大多数情况下，Emacs 就是一个编辑器。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcf96fcc" class="outline-2">
+<h2 id="orgcf96fcc"><span class="section-number-2">3</span> 为什么选择 Emacs</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>我不推荐 Emacs，大多数情况下推荐 Emacs 只是在浪费彼此的时间，与其推荐 Emacs，不如直接推荐 Vim/VsCode，简单直接。</b>
+</p>
+
+<hr>
+
+<p>
+Emacs 对于很多人来说都不是一个好的选择，默认的 Emacs 可以用，但不是很好用，配置对于新人来说往往又是一脸懵逼。
+</p>
+
+<p>
+所以为啥选择 Emacs 呢？
+</p>
+
+<p>
+这个问题没有固定的答案，这里对比 Vim 和 VsCode 简单描述一下我的原因：
+</p>
+<ul class="org-ul">
+<li><p>
+使用 Vim 的过程中，遇到了更快的启动速度和更多的功能之间的矛盾，因为使用 Vim 我习惯频繁的关闭重启，最后，为了保留 Vim 的启动速度，我就只剩下了抄来的几百行的 .vimrc，零插件
+</p>
+
+<p>
+而 Emacs，我不关心那一点启动速度了，只要不是太慢就行：
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">&gt; (emacs-uptime)
+<span class="org-string">"14 days, 23 hours, 19 minutes, 7 seconds"</span>
+</pre>
+</div>
+
+<p>
+这是我为什么放弃了 Vim，选择了 Emacs。
+</p></li>
+
+<li><p>
+尝试 VsCode 的过程中，简单试用了一些功能后我就放弃了，不习惯，VsCode 火起来后，Emacs 我已经使用了有一段时间了，随着使用时间的加长，Emacs 的很多地方也越来越适配我自己的习惯。
+</p>
+
+<p>
+VsCode 的扩展性虽然很强，也有很多很强大的扩展，这些扩展的很多功能甚至是 Emacs 很难实现的，但，整体框架已经限制了，我使用的是 VsCode，而不是我的 VsCode。
+</p>
+
+<p>
+这是我为什么没有放弃 Emacs。
+</p></li>
+</ul>
+
+<p>
+当然，还有其他很多原因，就不多说了，毕竟，不是来推荐 Emacs 的，这一节更多的是给自己一个答案吧！
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1d2b536" class="outline-2">
+<h2 id="org1d2b536"><span class="section-number-2">4</span> 自定义配置起步</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+目前，我还在使用的配置是 spacemacs，随着自定义配置的增多，spacemacs 给我的感觉也越来越难受了。
+</p>
+
+<p>
+通用往往也意味着牺牲个性，于是乎，近期我也开始搞自己的配置了，这一节算是其中的一些经验总结吧。
+</p>
+</div>
+
+<div id="outline-container-org9024924" class="outline-3">
+<h3 id="org9024924"><span class="section-number-3">4.1</span> init.el</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Emacs 在启动的时候会加载执行 init.el 中的代码，我们的配置通常也是从这个文件开始，这个文件的位置通常是 ~/init.el 或 ~/.emacs.d/init.el，对于复杂的配置，往往是推荐都放到 ~/.emacs.d 这个目录下，然后通过 ~/.emacs.d/init.el 加载。
+</p>
+
+<p>
+较为特殊的是，Windows 上默认是没有 HOME 这个环境变量的，可以添加环境变量 HOME 并将值设为 %USERPROFILE%。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12f7e93" class="outline-3">
+<h3 id="org12f7e93"><span class="section-number-3">4.2</span> 参考配置</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+如果要开始自己的配置，那么，找一个配置来作为参考还是很重要的，大佬懂得往往比你多，我在自定义配置的过程中：
+</p>
+<ul class="org-ul">
+<li>配置结构参考
+<ul class="org-ul">
+<li><a href="https://github.com/syl20bnr/spacemacs">syl20bnr/spacemacs</a></li>
+<li><a href="https://github.com/purcell/emacs.d">purcell/emacs.d</a></li>
+</ul></li>
+<li>配置代码参考
+<ul class="org-ul">
+<li><a href="https://github.com/hlissner/doom-emacs">hlissner/doom-emacs</a></li>
+<li><a href="https://github.com/syl20bnr/spacemacs">syl20bnr/spacemacs</a></li>
+<li><a href="https://github.com/purcell/emacs.d">purcell/emacs.d</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org707e701" class="outline-3">
+<h3 id="org707e701"><span class="section-number-3">4.3</span> 包管理器</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Emacs 虽然已经内置了很多强大的工具，但是，额外的扩展还是能增强 Emacs 的使用体验，因此，如何管理 Emacs 的扩展（包）成了一个问题。
+</p>
+
+<p>
+这里就需要明白一个问题，Emacs 包是什么？Emacs 是怎么去寻找加载它们的？
+</p>
+
+<p>
+其实，对于 Emacs 来说，一个包就是一个文件，加载包的过程就是找到指定的文件，读取文件内容并执行的过程。
+</p>
+
+<p>
+不同的加载包的函数在加载逻辑上存在区别：
+</p>
+<dl class="org-dl">
+<dt>load</dt><dd><div class="org-src-container">
+<pre class="src src-elisp">(load FILE <span class="org-type">&amp;optional</span> NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
+</pre>
+</div>
+
+<p>
+load 的参数列表如上，在只有 FILE 参数时，会按照下面的顺序去尝试匹配文件：
+</p>
+<pre class="example">
+filename.elc -&gt; filename.el -&gt; filename.ext -&gt; filename
+</pre>
+
+<p>
+如果存在名称一样的压缩文件，那么还会到 <code>filename.gz</code> 中去加载。
+</p></dd>
+
+<dt>require</dt><dd><div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">require</span> <span class="org-constant">FEATURE</span> <span class="org-type">&amp;optional</span> FILENAME NOERROR)
+</pre>
+</div>
+
+<p>
+require 的参数名是 FEATURE，其加载的文件会末尾会有相应的 (provide FEATURE) 代码，加载时，会在 FEATURE 中判断是否已加载，没有才会调用 (load FEATURE) 加载，避免频繁读取文件。
+</p></dd>
+</dl>
+
+<p>
+load 函数通过参数去匹配文件名，通过 load-path 去匹配文件路径，而下载扩展后的重要一步，就是将其路径放到 load-path 中，但是手动添加太麻烦了，因此，诞生了各种各样的包管理器。
+</p>
+
+<p>
+下载包并将包路径添加到 load-path，这是需要包管理器完成的事情，而怎么下载包，对于不同的包管理器来说是不同的，
+Emacs 内置 packages.el 会到指定的源下载，但也存在其他的包管理器可以到更多的地方下载包。
+</p>
+
+<p>
+可以参考 <a href="https://github.com/raxod502/straight.el">raxod502/straight.el</a> 中的各个包管理器的对比选择自己喜欢的。
+</p>
+
+<hr>
+
+<p>
+我选择了通过 git submodule 手动管理，将所有第三方包放在一个目录中，然后通过下面这个函数将路径放入 load-path：
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">emacsc/add-subdirs-to-load-path</span> (dir)
+  <span class="org-doc">"Recursive add directories to `</span><span class="org-doc"><span class="org-constant">load-path</span></span><span class="org-doc">'."</span>
+  (<span class="org-keyword">let</span> ((default-directory (file-name-as-directory dir))
+        (orig-load-path load-path))
+    (<span class="org-keyword">setq</span> load-path (cons dir nil))
+    (normal-top-level-add-subdirs-to-load-path)
+    (nconc load-path orig-load-path)
+    (delete-dups load-path)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org24d6675" class="outline-3">
+<h3 id="org24d6675"><span class="section-number-3">4.4</span> 需要配置什么</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+这可能是对萌新的灵魂拷问，我需要配置什么？个人感觉可以分为：
+</p>
+<ul class="org-ul">
+<li>UI - 包括主题、行号、菜单栏、工具栏、滚动条、mode-line 等，颜值即正义</li>
+<li>功能增强 - 比如文件的自动保存、dired、ibuffer、winnum、which-key 等，极大提升使用体验</li>
+<li>补全框架 - 比如 ivy/helm，记忆力是有限的，给出提示会好很多</li>
+<li>补全提示 - company</li>
+<li>编程语言 - major-mode、lsp-mode 或其他 lsp 实现</li>
+<li>……</li>
+</ul>
+
+<p>
+当然，对于萌新来说，还是推荐找一个现成的配置，先用起来，逐渐积累自己的配置。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71a50cc" class="outline-2">
+<h2 id="org71a50cc"><span class="section-number-2">5</span> 结语</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+终于，写完了，间隔太久了，这篇博客写的不是很满意，但是，也写了快 3 个小时了，不断删删改改……
+</p>
+
+<p>
+感觉有些干瘪，像是在完成任务 QAQ
+</p>
+
+<p>
+……
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+运行在 Emacs 上的 Lisp 方言
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'rgb-24bit';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+</div>
+</body>
+</html>
