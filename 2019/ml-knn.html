@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>机器学习 - K-近邻算法</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,19 +281,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org09dee3a">1. 前言</a></li>
-<li><a href="#org4f5d763">2. 算法介绍</a></li>
-<li><a href="#org3d119c1">3. 距离计算</a></li>
-<li><a href="#org8d5ceee">4. 算法实现</a></li>
-<li><a href="#orgc1b9f7e">5. 数据转换</a></li>
-<li><a href="#org948e532">6. K 值选取</a></li>
-<li><a href="#orgccda5f3">7. 结语</a></li>
+<li><a href="#orgb240c25">1. 前言</a></li>
+<li><a href="#orga9cb72e">2. 算法介绍</a></li>
+<li><a href="#org75ae89e">3. 距离计算</a></li>
+<li><a href="#org5c92ab2">4. 算法实现</a></li>
+<li><a href="#org0d5f50f">5. 数据转换</a></li>
+<li><a href="#orgc9848bb">6. K 值选取</a></li>
+<li><a href="#orgf47ddb4">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org09dee3a" class="outline-2">
-<h2 id="org09dee3a"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgb240c25" class="outline-2">
+<h2 id="orgb240c25"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 K-近邻算法(k-nearest neighbors algorithm)，又称为 KNN 算法，是这学期机器学习课教的第一个算法，也是我接触的第一个机器学习算法。
@@ -296,8 +309,8 @@ K-近邻算法(k-nearest neighbors algorithm)，又称为 KNN 算法，是这学
 </div>
 </div>
 
-<div id="outline-container-org4f5d763" class="outline-2">
-<h2 id="org4f5d763"><span class="section-number-2">2</span> 算法介绍</h2>
+<div id="outline-container-orga9cb72e" class="outline-2">
+<h2 id="orga9cb72e"><span class="section-number-2">2</span> 算法介绍</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 KNN 属于有监督的分类算法，也就是说，KNN 是通过 <b>有标签</b> 的样本集进行训练，并通过样本集数据对测试对象进行 <b>分类</b> 的算法。
@@ -313,8 +326,8 @@ KNN 的原理也很简单，通过选取样本集中 K 个离测试对象最近�
 </div>
 </div>
 
-<div id="outline-container-org3d119c1" class="outline-2">
-<h2 id="org3d119c1"><span class="section-number-2">3</span> 距离计算</h2>
+<div id="outline-container-org75ae89e" class="outline-2">
+<h2 id="org75ae89e"><span class="section-number-2">3</span> 距离计算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 说到距离计算，脑子里首先想到的公式便是 \(\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}\), 这个公式可以计算点 \((x_1, y_1)\) 和点 \((x_2, y_2)\) 之间的距离。但是公式是欧几里得距离在二维平面中的简化形式，完整的公式是这样的：
@@ -388,8 +401,8 @@ KNN 的原理也很简单，通过选取样本集中 K 个离测试对象最近�
 </div>
 </div>
 
-<div id="outline-container-org8d5ceee" class="outline-2">
-<h2 id="org8d5ceee"><span class="section-number-2">4</span> 算法实现</h2>
+<div id="outline-container-org5c92ab2" class="outline-2">
+<h2 id="org5c92ab2"><span class="section-number-2">4</span> 算法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 有了距离的计算函数，就可以着手实现 KNN 算法了，使用 Python 的实现的版本如下：
@@ -432,8 +445,8 @@ array([0, 4, 2, 1, 3], dtype=int64)
 </div>
 </div>
 
-<div id="outline-container-orgc1b9f7e" class="outline-2">
-<h2 id="orgc1b9f7e"><span class="section-number-2">5</span> 数据转换</h2>
+<div id="outline-container-org0d5f50f" class="outline-2">
+<h2 id="org0d5f50f"><span class="section-number-2">5</span> 数据转换</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 仔细观察前面的代码的话就可以发现，我们对样本和测试对象作出了一个假设，那就是它们都是 \(1 \times n\) 的向量，而样本集便是由多个样本组成的 \(m \times n\) 的矩阵。
@@ -562,8 +575,8 @@ Python 代码实现如下：
 </div>
 </div>
 
-<div id="outline-container-org948e532" class="outline-2">
-<h2 id="org948e532"><span class="section-number-2">6</span> K 值选取</h2>
+<div id="outline-container-orgc9848bb" class="outline-2">
+<h2 id="orgc9848bb"><span class="section-number-2">6</span> K 值选取</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 完成了距离计算和数据转换，需要考虑的便是 K 值的选取了，在这一点上没有什么技巧，只有靠 <b>试</b>.
@@ -587,8 +600,8 @@ Python 代码实现如下：
 </div>
 </div>
 
-<div id="outline-container-orgccda5f3" class="outline-2">
-<h2 id="orgccda5f3"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-orgf47ddb4" class="outline-2">
+<h2 id="orgf47ddb4"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 KNN 算法真的很简单，而且还是《机器学习实战》一书中唯一一个不需要学习的算法，就是简单粗暴的计算测试对象到样本的距离。
@@ -610,14 +623,12 @@ KNN 算法真的很简单，而且还是《机器学习实战》一书中唯一�
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

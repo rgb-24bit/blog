@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>二分搜索算法</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +259,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc488bf7">1. 前言</a></li>
-<li><a href="#org13733ba">2. 中点值计算</a></li>
-<li><a href="#org2e83fa3">3. 搜索区间与终止条件</a></li>
-<li><a href="#orgbbdf038">4. 等于某值</a></li>
-<li><a href="#orgb94c4bd">5. 第一个不小于</a></li>
-<li><a href="#org1d33516">6. 第一个大于</a></li>
-<li><a href="#org64a55b1">7. 最后一个不大于和最后一个小于</a></li>
-<li><a href="#org0e4a832">8. 结尾</a></li>
-<li><a href="#org5273ddd">9. 参考链接</a></li>
+<li><a href="#org9fa8278">1. 前言</a></li>
+<li><a href="#orgea64506">2. 中点值计算</a></li>
+<li><a href="#org8675d67">3. 搜索区间与终止条件</a></li>
+<li><a href="#org76c2b17">4. 等于某值</a></li>
+<li><a href="#orge01d7c1">5. 第一个不小于</a></li>
+<li><a href="#orgbe7686d">6. 第一个大于</a></li>
+<li><a href="#org4b4e1d4">7. 最后一个不大于和最后一个小于</a></li>
+<li><a href="#org91b8919">8. 结尾</a></li>
+<li><a href="#org67e17f7">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc488bf7" class="outline-2">
-<h2 id="orgc488bf7"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org9fa8278" class="outline-2">
+<h2 id="org9fa8278"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 曾经一度觉得二分搜索算法是一个比较简单的算法，直到我看到了这样一些问题：
@@ -282,8 +295,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org13733ba" class="outline-2">
-<h2 id="org13733ba"><span class="section-number-2">2</span> 中点值计算</h2>
+<div id="outline-container-orgea64506" class="outline-2">
+<h2 id="orgea64506"><span class="section-number-2">2</span> 中点值计算</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 二分搜索算法是一个很细节的算法，中点值的计算就是其需要注意的一个地方。
@@ -333,8 +346,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2e83fa3" class="outline-2">
-<h2 id="org2e83fa3"><span class="section-number-2">3</span> 搜索区间与终止条件</h2>
+<div id="outline-container-org8675d67" class="outline-2">
+<h2 id="org8675d67"><span class="section-number-2">3</span> 搜索区间与终止条件</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 很明显，二分搜索算法的搜索区间存在四种选择： <code>[left, right]</code>, <code>[left, right)</code>, <code>(left, right]</code>, <code>(left, right)</code>.
@@ -380,8 +393,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbbdf038" class="outline-2">
-<h2 id="orgbbdf038"><span class="section-number-2">4</span> 等于某值</h2>
+<div id="outline-container-org76c2b17" class="outline-2">
+<h2 id="org76c2b17"><span class="section-number-2">4</span> 等于某值</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 查找一个已排序序列中等于某个值的元素是很简单的，这里就直接给出代码好了：
@@ -447,8 +460,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb94c4bd" class="outline-2">
-<h2 id="orgb94c4bd"><span class="section-number-2">5</span> 第一个不小于</h2>
+<div id="outline-container-orge01d7c1" class="outline-2">
+<h2 id="orge01d7c1"><span class="section-number-2">5</span> 第一个不小于</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 从这里开始就只讨论区间 <code>[left, right)</code> 的写法了，对于区间 <code>[left, right]</code>, 有兴趣的可以去研究一下。
@@ -553,8 +566,8 @@ right = mid + 1 = left + 1;
 </div>
 </div>
 
-<div id="outline-container-org1d33516" class="outline-2">
-<h2 id="org1d33516"><span class="section-number-2">6</span> 第一个大于</h2>
+<div id="outline-container-orgbe7686d" class="outline-2">
+<h2 id="orgbe7686d"><span class="section-number-2">6</span> 第一个大于</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 前面考虑了第一个不小于的情况，这里再来考虑第一个大于就容易多了，核心依然是搜索区间的修改。
@@ -584,8 +597,8 @@ right = mid + 1 = left + 1;
 </div>
 </div>
 
-<div id="outline-container-org64a55b1" class="outline-2">
-<h2 id="org64a55b1"><span class="section-number-2">7</span> 最后一个不大于和最后一个小于</h2>
+<div id="outline-container-org4b4e1d4" class="outline-2">
+<h2 id="org4b4e1d4"><span class="section-number-2">7</span> 最后一个不大于和最后一个小于</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这两个的实现可以取个巧，首先我们可以研究一下前面两个实现返回的结果的情况：
@@ -635,8 +648,8 @@ arr[result + 1] &gt; target
 </div>
 </div>
 
-<div id="outline-container-org0e4a832" class="outline-2">
-<h2 id="org0e4a832"><span class="section-number-2">8</span> 结尾</h2>
+<div id="outline-container-org91b8919" class="outline-2">
+<h2 id="org91b8919"><span class="section-number-2">8</span> 结尾</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 二分搜索算法真的是一个很细节的算法，各种实现之间的区别都不大，很多就是加一减一这种程度的区别，但不注意还容易搞错。
@@ -648,8 +661,8 @@ arr[result + 1] &gt; target
 </div>
 </div>
 
-<div id="outline-container-org5273ddd" class="outline-2">
-<h2 id="org5273ddd"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org67e17f7" class="outline-2">
+<h2 id="org67e17f7"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.zhihu.com/question/36132386/answer/530313852">二分查找有几种写法？它们的区别是什么？ - Jason Li 的回答</a></li>
@@ -660,14 +673,12 @@ arr[result + 1] &gt; target
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

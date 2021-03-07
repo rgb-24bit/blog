@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:55 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Android 小总结</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +259,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org24aa412">1. 前言</a></li>
-<li><a href="#orgc9bd5b9">2. 开发环境的搭建</a></li>
-<li><a href="#orgc6c18c0">3. 日志工具</a></li>
-<li><a href="#orgfd3033e">4. 活动</a></li>
-<li><a href="#orgfdf475e">5. 广播、服务和内容提供器</a></li>
-<li><a href="#orgad0e639">6. 数据持久化</a></li>
-<li><a href="#org83990ac">7. 权限问题</a></li>
-<li><a href="#org71b1017">8. 后记</a></li>
+<li><a href="#org6cb1a8e">1. 前言</a></li>
+<li><a href="#orgcb4302b">2. 开发环境的搭建</a></li>
+<li><a href="#org4e1cbf0">3. 日志工具</a></li>
+<li><a href="#orgad38d4f">4. 活动</a></li>
+<li><a href="#org1be95c7">5. 广播、服务和内容提供器</a></li>
+<li><a href="#org39c8afa">6. 数据持久化</a></li>
+<li><a href="#orgecc9dc1">7. 权限问题</a></li>
+<li><a href="#org6438f6b">8. 后记</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org24aa412" class="outline-2">
-<h2 id="org24aa412"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org6cb1a8e" class="outline-2">
+<h2 id="org6cb1a8e"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触 Android 还在刚开始学编程的时候，那会刚学了点 C 语言的基础，除此以外什么都不会。
@@ -307,8 +320,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc9bd5b9" class="outline-2">
-<h2 id="orgc9bd5b9"><span class="section-number-2">2</span> 开发环境的搭建</h2>
+<div id="outline-container-orgcb4302b" class="outline-2">
+<h2 id="orgcb4302b"><span class="section-number-2">2</span> 开发环境的搭建</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Android 开发环境是我接触到的，最难搭建的开发环境，没有之一。
@@ -358,8 +371,8 @@ Android 开发环境是我接触到的，最难搭建的开发环境，没有之
 </div>
 </div>
 
-<div id="outline-container-orgc6c18c0" class="outline-2">
-<h2 id="orgc6c18c0"><span class="section-number-2">3</span> 日志工具</h2>
+<div id="outline-container-org4e1cbf0" class="outline-2">
+<h2 id="org4e1cbf0"><span class="section-number-2">3</span> 日志工具</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Android 的日志工具使用起来是真的省心，不需要自己去配置什么，默认的格式基本就足够了。
@@ -450,8 +463,8 @@ Android 的日志工具使用起来是真的省心，不需要自己去配置什
 </div>
 </div>
 
-<div id="outline-container-orgfd3033e" class="outline-2">
-<h2 id="orgfd3033e"><span class="section-number-2">4</span> 活动</h2>
+<div id="outline-container-orgad38d4f" class="outline-2">
+<h2 id="orgad38d4f"><span class="section-number-2">4</span> 活动</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 活动属于 Android 四大组件之一，相关的内容也很多，想要学习它们的使用可以看官方教程：
@@ -555,8 +568,8 @@ Intent 可以传递实现了 <a href="https://developer.android.google.cn/refere
 </div>
 </div>
 
-<div id="outline-container-orgfdf475e" class="outline-2">
-<h2 id="orgfdf475e"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
+<div id="outline-container-org1be95c7" class="outline-2">
+<h2 id="org1be95c7"><span class="section-number-2">5</span> 广播、服务和内容提供器</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Android 的四大组件为：活动、广播、服务和内容提供器，除了活动以外，另外三大组件都只是简单的学习了一下，用的还不多，就简单的一并总结了 @_@
@@ -599,8 +612,8 @@ Android 的四大组件为：活动、广播、服务和内容提供器，除了
 </div>
 </div>
 
-<div id="outline-container-orgad0e639" class="outline-2">
-<h2 id="orgad0e639"><span class="section-number-2">6</span> 数据持久化</h2>
+<div id="outline-container-org39c8afa" class="outline-2">
+<h2 id="org39c8afa"><span class="section-number-2">6</span> 数据持久化</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库中，并提供了相应的，简洁的接口。
@@ -619,8 +632,8 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org83990ac" class="outline-2">
-<h2 id="org83990ac"><span class="section-number-2">7</span> 权限问题</h2>
+<div id="outline-container-orgecc9dc1" class="outline-2">
+<h2 id="orgecc9dc1"><span class="section-number-2">7</span> 权限问题</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 编写 Android 问题避不开的一个问题就是权限的获取，对于危险的权限来说，除了需要在 <code>AndroidManifest.xml</code> 中声明以外，还需要进行运行时权限申请。
@@ -647,8 +660,8 @@ Android 可以将数据存储到文件、SharedPreferences 和 SQLite 数据库�
 </div>
 </div>
 
-<div id="outline-container-org71b1017" class="outline-2">
-<h2 id="org71b1017"><span class="section-number-2">8</span> 后记</h2>
+<div id="outline-container-org6438f6b" class="outline-2">
+<h2 id="org6438f6b"><span class="section-number-2">8</span> 后记</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Android 的内容是很多的，单靠一篇博客就想写完是不可能的，这里也只是拎了一些印象比较深的的内容出来总结。
@@ -686,14 +699,12 @@ Android 的内容是很多的，单靠一篇博客就想写完是不可能的，
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

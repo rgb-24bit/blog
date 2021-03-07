@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pipenv 的使用</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,28 +259,28 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd7c8c4e">1. 简介</a></li>
-<li><a href="#org9d95ca1">2. Pipenv</a>
+<li><a href="#org642eee1">1. 简介</a></li>
+<li><a href="#orge81ae5c">2. Pipenv</a>
 <ul>
-<li><a href="#org3582a0e">2.1. 下载</a></li>
-<li><a href="#org7845109">2.2. 使用</a></li>
-<li><a href="#org867e500">2.3. 设置</a></li>
+<li><a href="#orge0c77c5">2.1. 下载</a></li>
+<li><a href="#orge9abb93">2.2. 使用</a></li>
+<li><a href="#orgd1bcdba">2.3. 设置</a></li>
 </ul>
 </li>
-<li><a href="#orge59b392">3. Pipfile</a>
+<li><a href="#orgdf6fa79">3. Pipfile</a>
 <ul>
-<li><a href="#orga33bc92">3.1. Pipfile</a></li>
-<li><a href="#org9fd18da">3.2. Pipfile.lock</a></li>
-<li><a href="#org5654c73">3.3. PEP508</a></li>
+<li><a href="#org7f1a46c">3.1. Pipfile</a></li>
+<li><a href="#org3048c7e">3.2. Pipfile.lock</a></li>
+<li><a href="#orgbd98149">3.3. PEP508</a></li>
 </ul>
 </li>
-<li><a href="#orgd315aea">4. 相关链接</a></li>
+<li><a href="#org77dc99e">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd7c8c4e" class="outline-2">
-<h2 id="orgd7c8c4e"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org642eee1" class="outline-2">
+<h2 id="org642eee1"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Pipenv</code> 是被 <code>Python</code> 官方推荐的包管理器.
@@ -279,12 +292,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9d95ca1" class="outline-2">
-<h2 id="org9d95ca1"><span class="section-number-2">2</span> Pipenv</h2>
+<div id="outline-container-orge81ae5c" class="outline-2">
+<h2 id="orge81ae5c"><span class="section-number-2">2</span> Pipenv</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org3582a0e" class="outline-3">
-<h3 id="org3582a0e"><span class="section-number-3">2.1</span> 下载</h3>
+<div id="outline-container-orge0c77c5" class="outline-3">
+<h3 id="orge0c77c5"><span class="section-number-3">2.1</span> 下载</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 下载 <code>Pipenv</code> 很简单, 使用指令 <code>Pip install pipenv</code> 就可以了.
@@ -296,8 +309,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7845109" class="outline-3">
-<h3 id="org7845109"><span class="section-number-3">2.2</span> 使用</h3>
+<div id="outline-container-orge9abb93" class="outline-3">
+<h3 id="orge9abb93"><span class="section-number-3">2.2</span> 使用</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Pipenv</code> 拥有简洁明了的帮助信息, 如下:
@@ -417,8 +430,8 @@ Commands:
 </div>
 </div>
 
-<div id="outline-container-org867e500" class="outline-3">
-<h3 id="org867e500"><span class="section-number-3">2.3</span> 设置</h3>
+<div id="outline-container-orgd1bcdba" class="outline-3">
+<h3 id="orgd1bcdba"><span class="section-number-3">2.3</span> 设置</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li><p>
@@ -449,8 +462,8 @@ name = "pypi.tuna"
 </div>
 </div>
 
-<div id="outline-container-orge59b392" class="outline-2">
-<h2 id="orge59b392"><span class="section-number-2">3</span> Pipfile</h2>
+<div id="outline-container-orgdf6fa79" class="outline-2">
+<h2 id="orgdf6fa79"><span class="section-number-2">3</span> Pipfile</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Pipfile</code> 和 <code>Pipfile.lock</code> 用于替代 <code>pip</code> 的 <code>requirements.txt</code>.
@@ -466,8 +479,8 @@ name = "pypi.tuna"
 </p>
 </div>
 
-<div id="outline-container-orga33bc92" class="outline-3">
-<h3 id="orga33bc92"><span class="section-number-3">3.1</span> Pipfile</h3>
+<div id="outline-container-org7f1a46c" class="outline-3">
+<h3 id="org7f1a46c"><span class="section-number-3">3.1</span> Pipfile</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>Pipfile</code> 的特点:
@@ -480,8 +493,8 @@ name = "pypi.tuna"
 </div>
 </div>
 
-<div id="outline-container-org9fd18da" class="outline-3">
-<h3 id="org9fd18da"><span class="section-number-3">3.2</span> Pipfile.lock</h3>
+<div id="outline-container-org3048c7e" class="outline-3">
+<h3 id="org3048c7e"><span class="section-number-3">3.2</span> Pipfile.lock</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 环境的详细信息保存在 <code>Pipfile.lock</code> 中, 方便复用. 这个文件应该是自动生成的, 不应该手动修改.
@@ -489,8 +502,8 @@ name = "pypi.tuna"
 </div>
 </div>
 
-<div id="outline-container-org5654c73" class="outline-3">
-<h3 id="org5654c73"><span class="section-number-3">3.3</span> PEP508</h3>
+<div id="outline-container-orgbd98149" class="outline-3">
+<h3 id="orgbd98149"><span class="section-number-3">3.3</span> PEP508</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>Pipfile</code> 支持所有的 <code>PEP508</code> 标记, 并可以通过 <code>Pipenv check</code> 来检查是否符合标准.
@@ -586,14 +599,13 @@ quoted_marker = ';' wsp* marker
 </p>
 <pre class="example">
 markers="python_version &lt; '2.7.9' or (python_version &gt;= '3.0' and python_version &lt; '3.4')"
-
 </pre>
+
 <p>
 指定 <code>Python</code> 版本小于 <code>2.7.9</code> 或 (大于等于 <code>3.0</code> 并 小于 <code>3.4</code>). 分解为语法:
 </p>
 <pre class="example">
 markers = dquote wsp* env_var marker_op squote python_str squote marker_or ...
-
 </pre></li>
 
 <li><p>
@@ -616,15 +628,15 @@ extras        = '[' wsp* extras_list? wsp* ']'
 </p>
 <pre class="example">
 extras = [pkg1, pkg2...]
-
 </pre>
+
 <p>
 例:
 </p>
 <pre class="example">
 requests[security]
-
 </pre>
+
 <p>
 指定 <code>requests</code> 额外依赖 <code>security</code>.
 </p>
@@ -634,7 +646,6 @@ requests[security]
 </p>
 <pre class="example">
 requests = { extras = ['security'] }
-
 </pre></li>
 
 <li><p>
@@ -646,23 +657,22 @@ requests = { extras = ['security'] }
 </p>
 <pre class="example">
 name_req      = name wsp* extras? wsp* versionspec? wsp* quoted_marker?
-
 </pre>
+
 
 <p>
 直接的规则:
 </p>
 <pre class="example">
 url_req       = name wsp* extras? wsp* urlspec wsp+ quoted_marker?
-
 </pre>
+
 
 <p>
 统一规则:
 </p>
 <pre class="example">
 specification = wsp* ( url_req | name_req ) wsp*
-
 </pre></li>
 
 <li><a href="https://www.python.org/dev/peps/pep-0508/#complete-grammar">more&#x2026;</a></li>
@@ -675,8 +685,8 @@ specification = wsp* ( url_req | name_req ) wsp*
 </div>
 </div>
 
-<div id="outline-container-orgd315aea" class="outline-2">
-<h2 id="orgd315aea"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-org77dc99e" class="outline-2">
+<h2 id="org77dc99e"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://github.com/pypa/pipenv">pipenv</a></li>
@@ -689,14 +699,12 @@ specification = wsp* ( url_req | name_req ) wsp*
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

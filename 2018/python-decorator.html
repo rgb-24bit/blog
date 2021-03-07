@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 闭包和装饰器</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +259,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org05c1dfd">1. 简介</a></li>
-<li><a href="#orgb8b77df">2. 闭包</a></li>
-<li><a href="#orgcc2f534">3. 装饰器</a>
+<li><a href="#org44db8e6">1. 简介</a></li>
+<li><a href="#org5c7bb55">2. 闭包</a></li>
+<li><a href="#org1ccf5f1">3. 装饰器</a>
 <ul>
-<li><a href="#org3f97253">3.1. 多重装饰器</a></li>
+<li><a href="#org52f405a">3.1. 多重装饰器</a></li>
 </ul>
 </li>
-<li><a href="#orgb9fb949">4. 参考链接</a></li>
+<li><a href="#org4c7f2ce">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org05c1dfd" class="outline-2">
-<h2 id="org05c1dfd"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org44db8e6" class="outline-2">
+<h2 id="org44db8e6"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中， 适当的使用 <b>闭包</b> 和 <b>装饰器</b> 可以有效的提高编码效率， 同时编写出更加简介的代码。
@@ -271,8 +284,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb8b77df" class="outline-2">
-<h2 id="orgb8b77df"><span class="section-number-2">2</span> 闭包</h2>
+<div id="outline-container-org5c7bb55" class="outline-2">
+<h2 id="org5c7bb55"><span class="section-number-2">2</span> 闭包</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>闭包</b> 的概念可以通过查阅 <a href="https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">维基百科</a> 进行了解， 其中的一种说法感觉和 <code>Python</code> 中的
@@ -375,8 +388,8 @@ Out[12]: <span class="org-constant">False</span>
 </div>
 </div>
 
-<div id="outline-container-orgcc2f534" class="outline-2">
-<h2 id="orgcc2f534"><span class="section-number-2">3</span> 装饰器</h2>
+<div id="outline-container-org1ccf5f1" class="outline-2">
+<h2 id="org1ccf5f1"><span class="section-number-2">3</span> 装饰器</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 可以说， <b>装饰器</b> 就是 <b>闭包</b> 的一种应用， 因为装饰器往往是将 <b>函数</b> 作为参数传入， 然后返回一个 <b>函数</b>, 这个函数和 <b>装饰器</b> 的环境存在联系。
@@ -501,8 +514,8 @@ Out[12]: <span class="org-constant">False</span>
 </ul>
 </div>
 
-<div id="outline-container-org3f97253" class="outline-3">
-<h3 id="org3f97253"><span class="section-number-3">3.1</span> 多重装饰器</h3>
+<div id="outline-container-org52f405a" class="outline-3">
+<h3 id="org52f405a"><span class="section-number-3">3.1</span> 多重装饰器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 使用多个 <b>装饰器</b> 对一个对象进行装饰的时候， 靠近 <b>对象</b> 的装饰器优先调用。
@@ -538,8 +551,8 @@ Out[12]: <span class="org-constant">False</span>
 </div>
 </div>
 
-<div id="outline-container-orgb9fb949" class="outline-2">
-<h2 id="orgb9fb949"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org4c7f2ce" class="outline-2">
+<h2 id="org4c7f2ce"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://segmentfault.com/a/1190000004461404">Python 的闭包和装饰器</a></li>
@@ -550,14 +563,12 @@ Out[12]: <span class="org-constant">False</span>
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

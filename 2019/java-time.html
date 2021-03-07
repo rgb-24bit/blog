@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-11-03 日 15:41 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java8 时间处理</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +259,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org380c358">1. 前言</a></li>
-<li><a href="#org4a677df">2. 时间单位和时区</a></li>
-<li><a href="#org0355e3b">3. 时间点</a></li>
-<li><a href="#orgba24d2d">4. 时间段</a></li>
-<li><a href="#orgd480991">5. 时间的解析和格式化</a></li>
-<li><a href="#orgcb3b7b9">6. 时区时间</a></li>
-<li><a href="#orge536eea">7. 兼容旧接口</a></li>
-<li><a href="#orgaae09a4">8. 结语</a></li>
+<li><a href="#orgfa3952b">1. 前言</a></li>
+<li><a href="#org43d4bde">2. 时间单位和时区</a></li>
+<li><a href="#org4cde3c5">3. 时间点</a></li>
+<li><a href="#orge8accfe">4. 时间段</a></li>
+<li><a href="#orgc428244">5. 时间的解析和格式化</a></li>
+<li><a href="#org387cbea">6. 时区时间</a></li>
+<li><a href="#org08f9011">7. 兼容旧接口</a></li>
+<li><a href="#org33c2ab9">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org380c358" class="outline-2">
-<h2 id="org380c358"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgfa3952b" class="outline-2">
+<h2 id="orgfa3952b"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 时间处理是一个经常会用到但又不那么好用的功能，其中的主要问题在于对人友好的时间格式的处理上。
@@ -279,8 +292,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4a677df" class="outline-2">
-<h2 id="org4a677df"><span class="section-number-2">2</span> 时间单位和时区</h2>
+<div id="outline-container-org43d4bde" class="outline-2">
+<h2 id="org43d4bde"><span class="section-number-2">2</span> 时间单位和时区</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 时间是我们每天都在接触的东西，但我并不是很清楚和它的相关的一些概念，借着这次机会，去了解了时间处理中常用的两个概念：时间单位和时区。
@@ -382,8 +395,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0355e3b" class="outline-2">
-<h2 id="org0355e3b"><span class="section-number-2">3</span> 时间点</h2>
+<div id="outline-container-org4cde3c5" class="outline-2">
+<h2 id="org4cde3c5"><span class="section-number-2">3</span> 时间点</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 对时间的处理可以粗略的划分为三个部分：时间点、时间段和时间的解析与格式化。
@@ -449,8 +462,8 @@ LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
 </div>
 </div>
 
-<div id="outline-container-orgba24d2d" class="outline-2">
-<h2 id="orgba24d2d"><span class="section-number-2">4</span> 时间段</h2>
+<div id="outline-container-orge8accfe" class="outline-2">
+<h2 id="orge8accfe"><span class="section-number-2">4</span> 时间段</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 时间段对应的接口是 <a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAmount.html">java.time.TemporalAmount</a>，这个接口的实现只有两个：Duration 和 Period。
@@ -492,8 +505,8 @@ Period.of(1, 2, 3).getDays();     <span class="org-comment-delimiter">// </span>
 </div>
 </div>
 
-<div id="outline-container-orgd480991" class="outline-2">
-<h2 id="orgd480991"><span class="section-number-2">5</span> 时间的解析和格式化</h2>
+<div id="outline-container-orgc428244" class="outline-2">
+<h2 id="orgc428244"><span class="section-number-2">5</span> 时间的解析和格式化</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 时间的解析和格式化相关的对象是 <code>DateTimeFormatter</code>, 这个类提供了很多默认的格式器，也可以自己创建格式器。
@@ -582,8 +595,8 @@ LocalDateTime.parse(<span class="org-warning">'</span>2017-12-3T09:32:00<span cl
 </div>
 </div>
 
-<div id="outline-container-orgcb3b7b9" class="outline-2">
-<h2 id="orgcb3b7b9"><span class="section-number-2">6</span> 时区时间</h2>
+<div id="outline-container-org387cbea" class="outline-2">
+<h2 id="org387cbea"><span class="section-number-2">6</span> 时区时间</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 时区时间同样也是时间点对象，实现了 <code>Temporal</code> 接口，相较于 <code>LocalDateTime</code>, 时区时间多了 <b>时区信息</b>:
@@ -622,8 +635,8 @@ LocalDateTime.ofInstant(Instant.now(), ZoneOffset.of(<span class="org-string">"+
 </div>
 </div>
 
-<div id="outline-container-orge536eea" class="outline-2">
-<h2 id="orge536eea"><span class="section-number-2">7</span> 兼容旧接口</h2>
+<div id="outline-container-org08f9011" class="outline-2">
+<h2 id="org08f9011"><span class="section-number-2">7</span> 兼容旧接口</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Java8 提供了一些方法允许新的日期时间后旧的日期时间进行转换，下面列举出了一部分：
@@ -678,8 +691,8 @@ Java8 提供了一些方法允许新的日期时间后旧的日期时间进行�
 </div>
 </div>
 
-<div id="outline-container-orgaae09a4" class="outline-2">
-<h2 id="orgaae09a4"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org33c2ab9" class="outline-2">
+<h2 id="org33c2ab9"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 这篇博客的内容不怎么详细，基本上只是简单的提了一下各个接口可以做什么，更多的使用还是需要翻文档。
@@ -713,14 +726,12 @@ Nice!!!
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

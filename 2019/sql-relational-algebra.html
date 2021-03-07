@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SQL 与关系代数</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,37 +281,37 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcce7dd9">1. 前言</a></li>
-<li><a href="#org67b136a">2. 关系与表</a></li>
-<li><a href="#orgcf5a28c">3. 关系代数的基本运算</a>
+<li><a href="#org5072b9c">1. 前言</a></li>
+<li><a href="#org71a4dcf">2. 关系与表</a></li>
+<li><a href="#orgfd510f1">3. 关系代数的基本运算</a>
 <ul>
-<li><a href="#org9b8598e">3.1. 投影</a></li>
-<li><a href="#org0428ef1">3.2. 选择</a></li>
-<li><a href="#orgbd393c6">3.3. 并运算</a></li>
-<li><a href="#orgac0efe7">3.4. 集合差运算</a></li>
-<li><a href="#org6535460">3.5. 笛卡尔积</a></li>
-<li><a href="#orgcdc00e6">3.6. 更名运算</a></li>
+<li><a href="#org4485bc0">3.1. 投影</a></li>
+<li><a href="#org770a75c">3.2. 选择</a></li>
+<li><a href="#org26c3250">3.3. 并运算</a></li>
+<li><a href="#orga15800e">3.4. 集合差运算</a></li>
+<li><a href="#orgcd1bd39">3.5. 笛卡尔积</a></li>
+<li><a href="#org142ef5a">3.6. 更名运算</a></li>
 </ul>
 </li>
-<li><a href="#org7debbaf">4. 关系代数的附加运算</a>
+<li><a href="#org1b6b203">4. 关系代数的附加运算</a>
 <ul>
-<li><a href="#org44d9a3c">4.1. 集合交运算</a></li>
-<li><a href="#org763d6ab">4.2. 连接运算</a>
+<li><a href="#orgb862e51">4.1. 集合交运算</a></li>
+<li><a href="#org8c28816">4.2. 连接运算</a>
 <ul>
-<li><a href="#org5ed03a1">4.2.1. 自然连接</a></li>
-<li><a href="#org1445d4f">4.2.2. 内连接</a></li>
-<li><a href="#org7c44152">4.2.3. 外连接</a></li>
+<li><a href="#org1c3d5f7">4.2.1. 自然连接</a></li>
+<li><a href="#orgeb21d67">4.2.2. 内连接</a></li>
+<li><a href="#org1b40e36">4.2.3. 外连接</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org723caf8">5. 结语</a></li>
+<li><a href="#org0cae6c8">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcce7dd9" class="outline-2">
-<h2 id="orgcce7dd9"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org5072b9c" class="outline-2">
+<h2 id="org5072b9c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 SQL 是基于关系代数的查询语言，假如学习过 SQL 和关系代数，你就会发现，在 SQL 的查询语句中你会发现很多关系代数的影子。
@@ -310,8 +323,8 @@ SQL 是基于关系代数的查询语言，假如学习过 SQL 和关系代数�
 </div>
 </div>
 
-<div id="outline-container-org67b136a" class="outline-2">
-<h2 id="org67b136a"><span class="section-number-2">2</span> 关系与表</h2>
+<div id="outline-container-org71a4dcf" class="outline-2">
+<h2 id="org71a4dcf"><span class="section-number-2">2</span> 关系与表</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 我们可以把数据库中的表和关系代数中的关系看做是一个东西，这里给出接下来会用到的两个关系（表）：
@@ -344,16 +357,16 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-orgcf5a28c" class="outline-2">
-<h2 id="orgcf5a28c"><span class="section-number-2">3</span> 关系代数的基本运算</h2>
+<div id="outline-container-orgfd510f1" class="outline-2">
+<h2 id="orgfd510f1"><span class="section-number-2">3</span> 关系代数的基本运算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 关系代数的基本运算包括：选择、投影、并、集合差、笛卡尔积和更名。
 </p>
 </div>
 
-<div id="outline-container-org9b8598e" class="outline-3">
-<h3 id="org9b8598e"><span class="section-number-3">3.1</span> 投影</h3>
+<div id="outline-container-org4485bc0" class="outline-3">
+<h3 id="org4485bc0"><span class="section-number-3">3.1</span> 投影</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 这里我们可以先来看一看 <b>投影</b> 运算，它的作用和 SQL 中的 <code>SELECT</code> 基本相同。
@@ -377,8 +390,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org0428ef1" class="outline-3">
-<h3 id="org0428ef1"><span class="section-number-3">3.2</span> 选择</h3>
+<div id="outline-container-org770a75c" class="outline-3">
+<h3 id="org770a75c"><span class="section-number-3">3.2</span> 选择</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 由于一些历史原因，关系代数中的选择和 SQL 中的 <code>SELECT</code> 不是一个意思，而是更接近 <code>WHERE</code>, 我们可以通过选择运算选择关系中符合指定条件的部分。
@@ -410,8 +423,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-orgbd393c6" class="outline-3">
-<h3 id="orgbd393c6"><span class="section-number-3">3.3</span> 并运算</h3>
+<div id="outline-container-org26c3250" class="outline-3">
+<h3 id="org26c3250"><span class="section-number-3">3.3</span> 并运算</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 并运算可以将两个集合并起来，对应到 SQL 中就是 <code>UNION</code> 操作，比如说获取 User 和 Profile 中的所有 ID：
@@ -431,8 +444,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-orgac0efe7" class="outline-3">
-<h3 id="orgac0efe7"><span class="section-number-3">3.4</span> 集合差运算</h3>
+<div id="outline-container-orga15800e" class="outline-3">
+<h3 id="orga15800e"><span class="section-number-3">3.4</span> 集合差运算</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 集合差运算可以从一个集合中排除另一个集合中的内容，对于到 SQL 中就是 <code>EXCEPT</code> 操作，比如获取 User 不在 Profile 中的所有 ID<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>：
@@ -452,8 +465,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org6535460" class="outline-3">
-<h3 id="org6535460"><span class="section-number-3">3.5</span> 笛卡尔积</h3>
+<div id="outline-container-orgcd1bd39" class="outline-3">
+<h3 id="orgcd1bd39"><span class="section-number-3">3.5</span> 笛卡尔积</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 笛卡尔积是一个很重要的运算，通过笛卡尔积我们可以将 <b>任意</b> 两个关系的信息结合在一起，笛卡尔积的运算结果会将两个关系的所有列作为新的关系的列，将两个关系的所有行的组合作为新的关系的行。
@@ -483,8 +496,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-orgcdc00e6" class="outline-3">
-<h3 id="orgcdc00e6"><span class="section-number-3">3.6</span> 更名运算</h3>
+<div id="outline-container-org142ef5a" class="outline-3">
+<h3 id="org142ef5a"><span class="section-number-3">3.6</span> 更名运算</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 关系代数中的更名运算对应到 SQL 中便等价于 <code>AS</code> 操作，可以对关系进行更名也可以对列进行更名操作：
@@ -501,16 +514,16 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org7debbaf" class="outline-2">
-<h2 id="org7debbaf"><span class="section-number-2">4</span> 关系代数的附加运算</h2>
+<div id="outline-container-org1b6b203" class="outline-2">
+<h2 id="org1b6b203"><span class="section-number-2">4</span> 关系代数的附加运算</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 关系代数的附加运算是可以通过基本运算推导得出的，包括集合交运算和各类连接运算。
 </p>
 </div>
 
-<div id="outline-container-org44d9a3c" class="outline-3">
-<h3 id="org44d9a3c"><span class="section-number-3">4.1</span> 集合交运算</h3>
+<div id="outline-container-orgb862e51" class="outline-3">
+<h3 id="orgb862e51"><span class="section-number-3">4.1</span> 集合交运算</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 集合交运算计算两个关系中都存在的部分，可以通过基本运算表示： \(r \cap s = r - (r - s)\).
@@ -530,8 +543,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org763d6ab" class="outline-3">
-<h3 id="org763d6ab"><span class="section-number-3">4.2</span> 连接运算</h3>
+<div id="outline-container-org8c28816" class="outline-3">
+<h3 id="org8c28816"><span class="section-number-3">4.2</span> 连接运算</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 个人认为连接运算是所有运算中最难的一种，它存在很多分类，比如：自然连接、内连接、外连接等。
@@ -542,8 +555,8 @@ Profile
 </p>
 </div>
 
-<div id="outline-container-org5ed03a1" class="outline-4">
-<h4 id="org5ed03a1"><span class="section-number-4">4.2.1</span> 自然连接</h4>
+<div id="outline-container-org1c3d5f7" class="outline-4">
+<h4 id="org1c3d5f7"><span class="section-number-4">4.2.1</span> 自然连接</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 首先是自然连接，自然连接将两个关系的 <b>属性集</b> 的 <b>并集</b> 作为新的关系的属性，同时会对两个关系中的相同属性进行比较筛选。
@@ -574,8 +587,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org1445d4f" class="outline-4">
-<h4 id="org1445d4f"><span class="section-number-4">4.2.2</span> 内连接</h4>
+<div id="outline-container-orgeb21d67" class="outline-4">
+<h4 id="orgeb21d67"><span class="section-number-4">4.2.2</span> 内连接</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 可以把内连接<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>  看做添加了选择语句的笛卡尔积，也就是说，计算内连接时需要先行计算出笛卡尔积，然后在根据选择条件进行选择。
@@ -617,8 +630,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org7c44152" class="outline-4">
-<h4 id="org7c44152"><span class="section-number-4">4.2.3</span> 外连接</h4>
+<div id="outline-container-org1b40e36" class="outline-4">
+<h4 id="org1b40e36"><span class="section-number-4">4.2.3</span> 外连接</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 我们可以把外连接看做是 <b>内连接</b> 的扩展<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>，首先计算出两个关系内连接的结果，然后根据外连接的类型补充数据到内连接的结果上。
@@ -697,8 +710,8 @@ Profile
 </div>
 </div>
 
-<div id="outline-container-org723caf8" class="outline-2">
-<h2 id="org723caf8"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org0cae6c8" class="outline-2">
+<h2 id="org0cae6c8"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 虽然说关系代数和 SQL 有不浅的关系，但是学了关系代数，对编写 SQL 也没有多大的帮助 @_@
@@ -750,14 +763,12 @@ Profile
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

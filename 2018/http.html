@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HTTP 协议相关</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,23 +259,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org72e972a">1. 前言</a></li>
-<li><a href="#org1528cd5">2. URL 相关</a></li>
-<li><a href="#orgfb476a2">3. HTTP 概览</a>
+<li><a href="#orgd7bcf64">1. 前言</a></li>
+<li><a href="#org6afbfda">2. URL 相关</a></li>
+<li><a href="#org6540ad3">3. HTTP 概览</a>
 <ul>
-<li><a href="#orge4338ae">3.1. HTTP 报文</a></li>
-<li><a href="#org71f60be">3.2. HTTP 消息头</a></li>
-<li><a href="#orgf7913bf">3.3. HTTP Cookie</a></li>
-<li><a href="#org02f586b">3.4. HTTP 身份验证</a></li>
+<li><a href="#orgd3aceda">3.1. HTTP 报文</a></li>
+<li><a href="#org8b86661">3.2. HTTP 消息头</a></li>
+<li><a href="#orgb9f5d71">3.3. HTTP Cookie</a></li>
+<li><a href="#orgd484659">3.4. HTTP 身份验证</a></li>
 </ul>
 </li>
-<li><a href="#orge17bbb8">4. 参考链接</a></li>
+<li><a href="#org317c158">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org72e972a" class="outline-2">
-<h2 id="org72e972a"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgd7bcf64" class="outline-2">
+<h2 id="orgd7bcf64"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最近在阅读源码的过程中， 因为对 <code>HTTP</code> 协议了解的太少， 使得源码的阅读难以推进。
@@ -278,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1528cd5" class="outline-2">
-<h2 id="org1528cd5"><span class="section-number-2">2</span> URL 相关</h2>
+<div id="outline-container-org6afbfda" class="outline-2">
+<h2 id="org6afbfda"><span class="section-number-2">2</span> URL 相关</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先来看 <b>统一资源定位符 URL</b>.
@@ -386,8 +399,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-orgfb476a2" class="outline-2">
-<h2 id="orgfb476a2"><span class="section-number-2">3</span> HTTP 概览</h2>
+<div id="outline-container-org6540ad3" class="outline-2">
+<h2 id="org6540ad3"><span class="section-number-2">3</span> HTTP 概览</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 首先， <code>HTTP</code> 是一个协议， 主要规定了 <b>客户端</b> 和 <b>服务端</b> 之间数据传输的 <b>格式</b>.
@@ -398,8 +411,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </p>
 </div>
 
-<div id="outline-container-orge4338ae" class="outline-3">
-<h3 id="orge4338ae"><span class="section-number-3">3.1</span> HTTP 报文</h3>
+<div id="outline-container-orgd3aceda" class="outline-3">
+<h3 id="orgd3aceda"><span class="section-number-3">3.1</span> HTTP 报文</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>HTTP 报文</b> 在一定程度是就是 <code>HTTP</code> 协议的数据结构。
@@ -545,8 +558,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org71f60be" class="outline-3">
-<h3 id="org71f60be"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
+<div id="outline-container-org8b86661" class="outline-3">
+<h3 id="org8b86661"><span class="section-number-3">3.2</span> HTTP 消息头</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>HTTP 消息头</b> 的格式为 <code>Name: Value</code>.
@@ -582,8 +595,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-orgf7913bf" class="outline-3">
-<h3 id="orgf7913bf"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
+<div id="outline-container-orgb9f5d71" class="outline-3">
+<h3 id="orgb9f5d71"><span class="section-number-3">3.3</span> HTTP Cookie</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 由于 <code>HTTP</code> 是 <b>无状态</b> 的协议， 因此无法直接判断两个 <b>请求</b> 之间的关系。
@@ -647,8 +660,8 @@ scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
 </div>
 </div>
 
-<div id="outline-container-org02f586b" class="outline-3">
-<h3 id="org02f586b"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
+<div id="outline-container-orgd484659" class="outline-3">
+<h3 id="orgd484659"><span class="section-number-3">3.4</span> HTTP 身份验证</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 某些情况下， <b>客户端</b> 向 <b>服务端</b> 发送请求后， <b>服务端</b> 会返回 <code>401</code> 状态码， 说明需要验证消息，并在 <code>WWW-Authenticate</code> 头中指定 <b>验证方式</b>.
@@ -697,8 +710,8 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 </div>
 
-<div id="outline-container-orge17bbb8" class="outline-2">
-<h2 id="orge17bbb8"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org317c158" class="outline-2">
+<h2 id="org317c158"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP</a></li>
@@ -714,14 +727,12 @@ Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

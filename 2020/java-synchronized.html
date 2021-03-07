@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-02-09 日 15:03 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 偏向锁、轻量级锁和重量级锁</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +259,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge87b836">1. 前言</a></li>
-<li><a href="#org17d801a">2. 同步代码块和同步方法</a></li>
-<li><a href="#org70ff175">3. 锁对象和 Mark Word</a></li>
-<li><a href="#org45fdeb3">4. 重量级锁</a></li>
-<li><a href="#org4a2b5d1">5. 轻量级锁</a></li>
-<li><a href="#org9651a17">6. 偏向锁</a></li>
-<li><a href="#org225edf4">7. 使用场景</a></li>
-<li><a href="#orgc8336ec">8. 结语</a></li>
-<li><a href="#org31af0f4">9. 参考链接</a></li>
+<li><a href="#org3a222f6">1. 前言</a></li>
+<li><a href="#org9447b2c">2. 同步代码块和同步方法</a></li>
+<li><a href="#org7a8d11a">3. 锁对象和 Mark Word</a></li>
+<li><a href="#org326476a">4. 重量级锁</a></li>
+<li><a href="#org46c1256">5. 轻量级锁</a></li>
+<li><a href="#orgbe6957d">6. 偏向锁</a></li>
+<li><a href="#org5154ac9">7. 使用场景</a></li>
+<li><a href="#org04362e5">8. 结语</a></li>
+<li><a href="#org6d66bf1">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge87b836" class="outline-2">
-<h2 id="orge87b836"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org3a222f6" class="outline-2">
+<h2 id="org3a222f6"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 最开始听到偏向锁、轻量级锁和重量级锁的概念的时候，我还以为是 <code>Java</code> 中提供了相应的类库来实现的，结果了解后才发现，这三个原来是虚拟机底层对 <code>synchronized</code> 代码块的不同加锁方式。
@@ -276,8 +289,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org17d801a" class="outline-2">
-<h2 id="org17d801a"><span class="section-number-2">2</span> 同步代码块和同步方法</h2>
+<div id="outline-container-org9447b2c" class="outline-2">
+<h2 id="org9447b2c"><span class="section-number-2">2</span> 同步代码块和同步方法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 在 <code>Java</code> 中，关键字 <code>synchronized</code> 通常有两种使用方式，一是直接修饰在方法上定义同步方法，二是修饰单个对象，定义同步代码块：
@@ -356,8 +369,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org70ff175" class="outline-2">
-<h2 id="org70ff175"><span class="section-number-2">3</span> 锁对象和 Mark Word</h2>
+<div id="outline-container-org7a8d11a" class="outline-2">
+<h2 id="org7a8d11a"><span class="section-number-2">3</span> 锁对象和 Mark Word</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 对象头里面的 <code>Mark Word</code> 是了解 <code>synchronized</code> 实现原理时绕不开的东西，为了节约内存，这个 <code>Mark Word</code> 在不同锁状态下存储的内容是不一样的，大致如下图：
@@ -374,8 +387,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org45fdeb3" class="outline-2">
-<h2 id="org45fdeb3"><span class="section-number-2">4</span> 重量级锁</h2>
+<div id="outline-container-org326476a" class="outline-2">
+<h2 id="org326476a"><span class="section-number-2">4</span> 重量级锁</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 重量级锁指的就是一般意义上 <code>synchronized</code> 的同步方式，通过对象内部的监视器（monitor）实现，其中 monitor 的本质是依赖于底层操作系统的 Mutex Lock 实现，操作系统实现线程之间的切换需要从用户态到内核态的切换，切换成本非常高。
@@ -395,8 +408,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org4a2b5d1" class="outline-2">
-<h2 id="org4a2b5d1"><span class="section-number-2">5</span> 轻量级锁</h2>
+<div id="outline-container-org46c1256" class="outline-2">
+<h2 id="org46c1256"><span class="section-number-2">5</span> 轻量级锁</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 获取释放重量级锁的消耗都是极为巨大的，如果临界区经常有几个线程同时访问，那么，这个消耗还可以接受，但是，如果临界区同一时间只有一个线程访问呢？这个时候还用重量级锁不就亏了？
@@ -426,8 +439,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org9651a17" class="outline-2">
-<h2 id="org9651a17"><span class="section-number-2">6</span> 偏向锁</h2>
+<div id="outline-container-orgbe6957d" class="outline-2">
+<h2 id="orgbe6957d"><span class="section-number-2">6</span> 偏向锁</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 虽然说轻量级锁通过 CAS 代替了系统调用减小了同步消耗，但是，如果临界区通常只有一个线程会进入呢？这时，是可以通过偏向锁进一步减小同步消耗的。
@@ -466,8 +479,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org225edf4" class="outline-2">
-<h2 id="org225edf4"><span class="section-number-2">7</span> 使用场景</h2>
+<div id="outline-container-org5154ac9" class="outline-2">
+<h2 id="org5154ac9"><span class="section-number-2">7</span> 使用场景</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 虽然说从重量级锁到偏向锁的过程中，获取和释放锁的消耗在逐渐减少，但是，各自适用的场景也越来越特殊：
@@ -484,8 +497,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-orgc8336ec" class="outline-2">
-<h2 id="orgc8336ec"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org04362e5" class="outline-2">
+<h2 id="org04362e5"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 总的来说，这几个锁的概念比我想象的要容易一些，但也还是存在一些细节上的东西不是很清楚，其中一个就是锁膨胀的过程和重量级锁的具体实现。
@@ -497,8 +510,8 @@ public synchronized void syncMethod();
 </div>
 </div>
 
-<div id="outline-container-org31af0f4" class="outline-2">
-<h2 id="org31af0f4"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org6d66bf1" class="outline-2">
+<h2 id="org6d66bf1"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.sczyh30.com/posts/Java/jvm-gc-safepoint-condition/">深入探究 JVM | Safepoint 及 GC 的触发条件 | 「浮生若梦」 - sczyh30's blog</a></li>
@@ -511,14 +524,12 @@ public synchronized void syncMethod();
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>随机数杂谈</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,20 +259,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgef1c42f">1. 前言</a></li>
-<li><a href="#org2dfa628">2. 简单的伪随机数生成器</a></li>
-<li><a href="#orga63708a">3. 蒙特卡洛方法求 π</a></li>
-<li><a href="#org67d845a">4. 随机的 BUG</a></li>
-<li><a href="#orgb47da0b">5. 洗牌算法</a></li>
-<li><a href="#org67887c3">6. 自然底数</a></li>
-<li><a href="#org5f1952c">7. 缘起</a></li>
-<li><a href="#org58f37bb">8. 结语</a></li>
+<li><a href="#org94965a2">1. 前言</a></li>
+<li><a href="#orgc0dc72b">2. 简单的伪随机数生成器</a></li>
+<li><a href="#org34520b4">3. 蒙特卡洛方法求 π</a></li>
+<li><a href="#org6e4b14a">4. 随机的 BUG</a></li>
+<li><a href="#org1aa66cf">5. 洗牌算法</a></li>
+<li><a href="#org9d91206">6. 自然底数</a></li>
+<li><a href="#orgd7a11b4">7. 缘起</a></li>
+<li><a href="#org3b9a68f">8. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgef1c42f" class="outline-2">
-<h2 id="orgef1c42f"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org94965a2" class="outline-2">
+<h2 id="org94965a2"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前几天在 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上看到的一个问题再次勾起了我对随机数的兴趣，可以说，对各种和随机数相关的话题我都挺感兴趣的。
@@ -271,8 +284,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2dfa628" class="outline-2">
-<h2 id="org2dfa628"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
+<div id="outline-container-orgc0dc72b" class="outline-2">
+<h2 id="orgc0dc72b"><span class="section-number-2">2</span> 简单的伪随机数生成器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，我们使用的随机数生成器都是 <b>伪随机数（看起来像随机数的数字序列）</b> 生成器，对于这一点我相信你并不陌生。
@@ -328,8 +341,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga63708a" class="outline-2">
-<h2 id="orga63708a"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
+<div id="outline-container-org34520b4" class="outline-2">
+<h2 id="org34520b4"><span class="section-number-2">3</span> 蒙特卡洛方法求 π</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <b>蒙特卡罗方法</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 是一种以概率统计理论为指导的数值计算方法，可以通过随机数（伪随机数）来解决很多计算问题。
@@ -391,8 +404,8 @@ pi = 3.135840
 </div>
 </div>
 
-<div id="outline-container-org67d845a" class="outline-2">
-<h2 id="org67d845a"><span class="section-number-2">4</span> 随机的 BUG</h2>
+<div id="outline-container-org6e4b14a" class="outline-2">
+<h2 id="org6e4b14a"><span class="section-number-2">4</span> 随机的 BUG</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 记不清是在什么地方看到的这个操作了，大意是如何在交付应用程序后保证甲方能够及时付清尾款。
@@ -412,8 +425,8 @@ pi = 3.135840
 </div>
 </div>
 
-<div id="outline-container-orgb47da0b" class="outline-2">
-<h2 id="orgb47da0b"><span class="section-number-2">5</span> 洗牌算法</h2>
+<div id="outline-container-org1aa66cf" class="outline-2">
+<h2 id="org1aa66cf"><span class="section-number-2">5</span> 洗牌算法</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 洗牌算法，顾名思义，就是和洗牌一样，打乱一个序列的顺序。这也是一个很有趣的算法不是吗？
@@ -469,8 +482,8 @@ Out: 3 5 8 6 1 9 4 2 0 7
 </div>
 </div>
 
-<div id="outline-container-org67887c3" class="outline-2">
-<h2 id="org67887c3"><span class="section-number-2">6</span> 自然底数</h2>
+<div id="outline-container-org9d91206" class="outline-2">
+<h2 id="org9d91206"><span class="section-number-2">6</span> 自然底数</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 之前在知乎上看到的图形学大佬 <b>Milo Yip</b> 的文章 - <a href="https://zhuanlan.zhihu.com/p/46698082">自然而然 - 知乎</a>，其中的代码：
@@ -503,8 +516,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-org5f1952c" class="outline-2">
-<h2 id="org5f1952c"><span class="section-number-2">7</span> 缘起</h2>
+<div id="outline-container-orgd7a11b4" class="outline-2">
+<h2 id="orgd7a11b4"><span class="section-number-2">7</span> 缘起</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这一节的内容是关于 <a href="https://www.v2ex.com/t/528903">V2EX</a> 上的那个问题的，问题描述为：
@@ -556,8 +569,8 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div>
 </div>
 
-<div id="outline-container-org58f37bb" class="outline-2">
-<h2 id="org58f37bb"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org3b9a68f" class="outline-2">
+<h2 id="org3b9a68f"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 我一直觉得，程序代码中的那一丝不确定性是一种别样的浪漫，因此一直很好奇随机数的实现与使用。
@@ -597,14 +610,12 @@ $ gcc -O3 a.c &amp;&amp; ./a.out
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

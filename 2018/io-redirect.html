@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>I/O 重定向</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,18 +259,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfdf462b">1. 前言</a></li>
-<li><a href="#orgdd3bc6a">2. 概念</a></li>
-<li><a href="#org328c61f">3. 系统级实现</a></li>
-<li><a href="#org4b99f6b">4. 简单的使用</a></li>
-<li><a href="#orgc55cb30">5. 用户级实现</a></li>
-<li><a href="#orgdad05be">6. 结语</a></li>
+<li><a href="#org83d62d4">1. 前言</a></li>
+<li><a href="#org2928cf8">2. 概念</a></li>
+<li><a href="#org36d7048">3. 系统级实现</a></li>
+<li><a href="#org8740b29">4. 简单的使用</a></li>
+<li><a href="#orgfdd8eda">5. 用户级实现</a></li>
+<li><a href="#org0f94bf9">6. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfdf462b" class="outline-2">
-<h2 id="orgfdf462b"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org83d62d4" class="outline-2">
+<h2 id="org83d62d4"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>I/O 重定向</b> 算是一个灰常简单的概念，《深入理解计算机系统》这本书中对它的讲解不到一页，但依然很清楚的说明了 <b>I/O 重定向</b> 是怎么一回事。
@@ -269,8 +282,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdd3bc6a" class="outline-2">
-<h2 id="orgdd3bc6a"><span class="section-number-2">2</span> 概念</h2>
+<div id="outline-container-org2928cf8" class="outline-2">
+<h2 id="org2928cf8"><span class="section-number-2">2</span> 概念</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通常情况下，操作系统内部使用小的非负整数 <b>文件描述符</b> 来标识打开的文件，一切对文件的操作都是通过 <b>文件描述符</b> 来完成的。
@@ -286,8 +299,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org328c61f" class="outline-2">
-<h2 id="org328c61f"><span class="section-number-2">3</span> 系统级实现</h2>
+<div id="outline-container-org36d7048" class="outline-2">
+<h2 id="org36d7048"><span class="section-number-2">3</span> 系统级实现</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 很明显，重定向的操作需要修改操作系统内部的数据结构，而作为操作系统使用者的我们，是无法直接操作操作系统内部的数据结构的。
@@ -350,8 +363,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4b99f6b" class="outline-2">
-<h2 id="org4b99f6b"><span class="section-number-2">4</span> 简单的使用</h2>
+<div id="outline-container-org8740b29" class="outline-2">
+<h2 id="org8740b29"><span class="section-number-2">4</span> 简单的使用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在 <code>Shell</code> 中，通过管道命令 <code>|</code> 可以将上一个命令的 <b>标准输出</b> 重定向为下一个命令的 <b>标准输入</b>.
@@ -388,8 +401,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc55cb30" class="outline-2">
-<h2 id="orgc55cb30"><span class="section-number-2">5</span> 用户级实现</h2>
+<div id="outline-container-orgfdd8eda" class="outline-2">
+<h2 id="orgfdd8eda"><span class="section-number-2">5</span> 用户级实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 对一般用户来说，重定向的具体实现是怎样的没有多大意义，只要结果正确就行了。
@@ -423,8 +436,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgdad05be" class="outline-2">
-<h2 id="orgdad05be"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org0f94bf9" class="outline-2">
+<h2 id="org0f94bf9"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 对系统底层的了解越多，就越能感受到现在的高级语言为我们提供了多少便利。
@@ -438,14 +451,12 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

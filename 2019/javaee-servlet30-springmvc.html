@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java EE - Servlet 3.0 和 Spring MVC</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +259,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbef283e">1. 前言</a></li>
-<li><a href="#org2180661">2. 基于 Java 的配置</a></li>
-<li><a href="#org72420c6">3. ServletContainerInitializer</a></li>
-<li><a href="#orge82106d">4. 动态配置</a></li>
-<li><a href="#org2c74dfe">5. DispatcherServlet 和 ContextLoaderListener</a></li>
-<li><a href="#org8195463">6. 两个应用上下文</a></li>
-<li><a href="#org5ed8d1d">7. 配置过程</a></li>
-<li><a href="#org99df631">8. 结语</a></li>
-<li><a href="#org969ad3c">9. 参考链接</a></li>
+<li><a href="#org215475c">1. 前言</a></li>
+<li><a href="#orgef000cd">2. 基于 Java 的配置</a></li>
+<li><a href="#orgf36a31a">3. ServletContainerInitializer</a></li>
+<li><a href="#org9750f6e">4. 动态配置</a></li>
+<li><a href="#orgdf4e1f6">5. DispatcherServlet 和 ContextLoaderListener</a></li>
+<li><a href="#org25a4bca">6. 两个应用上下文</a></li>
+<li><a href="#org5f56a49">7. 配置过程</a></li>
+<li><a href="#orgd15c84c">8. 结语</a></li>
+<li><a href="#org76e5879">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbef283e" class="outline-2">
-<h2 id="orgbef283e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org215475c" class="outline-2">
+<h2 id="org215475c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 Spring MVC 的过程中发现，Spring MVC 使用了不少 Servlet 3.0 的新特性，但鉴于我学习 Servlet 使用的教程是 《Head First Servlet &amp; JSP》，其中的 Servlet 版本只有 2.5，因此不得不去研究一下 Servlet 3.0 的新特性在继续 Spring MVC 的学习。
@@ -284,8 +297,8 @@ Servlet 3.0 规范 2009 年就出来了，但是现在的教程基本上还是�
 </div>
 </div>
 
-<div id="outline-container-org2180661" class="outline-2">
-<h2 id="org2180661"><span class="section-number-2">2</span> 基于 Java 的配置</h2>
+<div id="outline-container-orgef000cd" class="outline-2">
+<h2 id="orgef000cd"><span class="section-number-2">2</span> 基于 Java 的配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 首先我们来看一下一个基于 Java 的配置，其实就是《Spring 实战》第五章的那个配置：
@@ -342,8 +355,8 @@ Servlet 3.0 规范 2009 年就出来了，但是现在的教程基本上还是�
 </div>
 </div>
 
-<div id="outline-container-org72420c6" class="outline-2">
-<h2 id="org72420c6"><span class="section-number-2">3</span> ServletContainerInitializer</h2>
+<div id="outline-container-orgf36a31a" class="outline-2">
+<h2 id="orgf36a31a"><span class="section-number-2">3</span> ServletContainerInitializer</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Servlet 3.0 中的新特性还是不少的，其中一个新特性便是：
@@ -394,8 +407,8 @@ onStartup 中的代码可以不用管，关键在于 SpringServletContainerIniti
 </div>
 </div>
 
-<div id="outline-container-orge82106d" class="outline-2">
-<h2 id="orge82106d"><span class="section-number-2">4</span> 动态配置</h2>
+<div id="outline-container-org9750f6e" class="outline-2">
+<h2 id="org9750f6e"><span class="section-number-2">4</span> 动态配置</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Servlet 3.0 中的一个新特性便是支持动态配置，我们可以通过 ServletContext 获取 Registration 对象进行动态配置，比如：
@@ -416,8 +429,8 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div>
 </div>
 
-<div id="outline-container-org2c74dfe" class="outline-2">
-<h2 id="org2c74dfe"><span class="section-number-2">5</span> DispatcherServlet 和 ContextLoaderListener</h2>
+<div id="outline-container-orgdf4e1f6" class="outline-2">
+<h2 id="orgdf4e1f6"><span class="section-number-2">5</span> DispatcherServlet 和 ContextLoaderListener</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 通过查阅资料可以发现，DispatcherServlet 是 Spring MVC 框架自带的 Servlet，而 ContextLoaderListener 是 Spring MVC 自带的 ServletContextListener，不是新品种的监听者。
@@ -433,8 +446,8 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div>
 </div>
 
-<div id="outline-container-org8195463" class="outline-2">
-<h2 id="org8195463"><span class="section-number-2">6</span> 两个应用上下文</h2>
+<div id="outline-container-org25a4bca" class="outline-2">
+<h2 id="org25a4bca"><span class="section-number-2">6</span> 两个应用上下文</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 在最开始的配置中，我们分别制定了 DispatcherServlet 和 ContextLoaderListener 中的应用上下文的配置类，这意味着：
@@ -461,8 +474,8 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div>
 </div>
 
-<div id="outline-container-org5ed8d1d" class="outline-2">
-<h2 id="org5ed8d1d"><span class="section-number-2">7</span> 配置过程</h2>
+<div id="outline-container-org5f56a49" class="outline-2">
+<h2 id="org5f56a49"><span class="section-number-2">7</span> 配置过程</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 现在可以大致总结一下 Spring MVC 的配置过程了：
@@ -501,8 +514,8 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div>
 </div>
 
-<div id="outline-container-org99df631" class="outline-2">
-<h2 id="org99df631"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-orgd15c84c" class="outline-2">
+<h2 id="orgd15c84c"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 本来还说贴一下 XML 的配置代码，结果《Spring 实战》提供的样例代码中直接把 web.xml 给去了，所以……
@@ -510,8 +523,8 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div>
 </div>
 
-<div id="outline-container-org969ad3c" class="outline-2">
-<h2 id="org969ad3c"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org76e5879" class="outline-2">
+<h2 id="org76e5879"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://elim.iteye.com/blog/2426592">通过 ServletContainerInitializer 注册 Servlet 对象 - Elim 的博客 - ITeye 博客</a></li>
@@ -533,14 +546,12 @@ registratio.addMapping(<span class="org-string">"/"</span>);
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

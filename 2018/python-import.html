@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 导入相关</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,24 +259,24 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3f75237">1. 简介</a></li>
-<li><a href="#orgb5a1a73">2. import 语法</a></li>
-<li><a href="#orgee41afc">3. 相对导入和绝对导入</a>
+<li><a href="#orgbe8d2b6">1. 简介</a></li>
+<li><a href="#org29621e0">2. import 语法</a></li>
+<li><a href="#orgf15a3c7">3. 相对导入和绝对导入</a>
 <ul>
-<li><a href="#org570fa05">3.1. 相对导入</a></li>
-<li><a href="#org8115797">3.2. 绝对导入</a></li>
+<li><a href="#orgb503fbb">3.1. 相对导入</a></li>
+<li><a href="#org700c36b">3.2. 绝对导入</a></li>
 </ul>
 </li>
-<li><a href="#org0af8ba8">4. 同名的包和模块</a></li>
-<li><a href="#orgc7553a6">5. 执行一次导入后</a></li>
-<li><a href="#org99ae272">6. 其他使用细节</a></li>
-<li><a href="#org0049ad6">7. 参考链接</a></li>
+<li><a href="#org4cc86dd">4. 同名的包和模块</a></li>
+<li><a href="#org906f7ab">5. 执行一次导入后</a></li>
+<li><a href="#org14f3d25">6. 其他使用细节</a></li>
+<li><a href="#orga23bd9b">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3f75237" class="outline-2">
-<h2 id="org3f75237"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgbe8d2b6" class="outline-2">
+<h2 id="orgbe8d2b6"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 导入相关的问题说简单也简单， 说坑也坑。
@@ -283,8 +296,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb5a1a73" class="outline-2">
-<h2 id="orgb5a1a73"><span class="section-number-2">2</span> import 语法</h2>
+<div id="outline-container-org29621e0" class="outline-2">
+<h2 id="org29621e0"><span class="section-number-2">2</span> import 语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 使用 <code>import</code> 导入的东西只有三种： <b>包</b>, <b>模块</b>, <b>其他对象</b>.
@@ -315,12 +328,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgee41afc" class="outline-2">
-<h2 id="orgee41afc"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
+<div id="outline-container-orgf15a3c7" class="outline-2">
+<h2 id="orgf15a3c7"><span class="section-number-2">3</span> 相对导入和绝对导入</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org570fa05" class="outline-3">
-<h3 id="org570fa05"><span class="section-number-3">3.1</span> 相对导入</h3>
+<div id="outline-container-orgb503fbb" class="outline-3">
+<h3 id="orgb503fbb"><span class="section-number-3">3.1</span> 相对导入</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 相对导入的方式只能用在 <b>包</b> 内部， 语法格式为：
@@ -349,8 +362,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8115797" class="outline-3">
-<h3 id="org8115797"><span class="section-number-3">3.2</span> 绝对导入</h3>
+<div id="outline-container-org700c36b" class="outline-3">
+<h3 id="org700c36b"><span class="section-number-3">3.2</span> 绝对导入</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 绝对导入可以在任何地方使用， 所有非 <b>相对导入</b> 都是绝对导入。
@@ -545,8 +558,8 @@ Desktop/
 </div>
 </div>
 
-<div id="outline-container-org0af8ba8" class="outline-2">
-<h2 id="org0af8ba8"><span class="section-number-2">4</span> 同名的包和模块</h2>
+<div id="outline-container-org4cc86dd" class="outline-2">
+<h2 id="org4cc86dd"><span class="section-number-2">4</span> 同名的包和模块</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 前面了解到， 当前目录下的 <b>包</b> 和 <b>模块</b> 的导入优先级最高。
@@ -628,8 +641,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-orgc7553a6" class="outline-2">
-<h2 id="orgc7553a6"><span class="section-number-2">5</span> 执行一次导入后</h2>
+<div id="outline-container-org906f7ab" class="outline-2">
+<h2 id="org906f7ab"><span class="section-number-2">5</span> 执行一次导入后</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 很多时候， 我们对某个模块或模块内的对象会进行不止一次的导入。
@@ -674,8 +687,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org99ae272" class="outline-2">
-<h2 id="org99ae272"><span class="section-number-2">6</span> 其他使用细节</h2>
+<div id="outline-container-org14f3d25" class="outline-2">
+<h2 id="org14f3d25"><span class="section-number-2">6</span> 其他使用细节</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><code>import</code> 会生成 <code>.pyc</code> 文件, <code>.pyc</code> 文件的执行速度不比 <code>.py</code> 快， 但是加载速度更快</li>
@@ -708,8 +721,8 @@ pkg/
 </div>
 </div>
 
-<div id="outline-container-org0049ad6" class="outline-2">
-<h2 id="org0049ad6"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orga23bd9b" class="outline-2">
+<h2 id="orga23bd9b"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://loggerhead.me/posts/python-de-import-ji-zhi.html">Python 的 import 机制</a></li>
@@ -720,14 +733,12 @@ pkg/
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

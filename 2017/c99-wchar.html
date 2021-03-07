@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:55 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C99 宽字符</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,22 +259,22 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc38b433">1. 前言</a></li>
-<li><a href="#org1e30a24">2. 头文件</a></li>
-<li><a href="#org7990ca5">3. 宽字符及本地化支持</a>
+<li><a href="#org36b55b9">1. 前言</a></li>
+<li><a href="#org875f5ff">2. 头文件</a></li>
+<li><a href="#org5b483bb">3. 宽字符及本地化支持</a>
 <ul>
-<li><a href="#org45c4814">3.1. 本地化支持</a></li>
-<li><a href="#orgcc1eb69">3.2. 文件编码格式设置</a></li>
-<li><a href="#org376a58d">3.3. 代码编写</a></li>
+<li><a href="#org5039afd">3.1. 本地化支持</a></li>
+<li><a href="#org09195d5">3.2. 文件编码格式设置</a></li>
+<li><a href="#orge2d619e">3.3. 代码编写</a></li>
 </ul>
 </li>
-<li><a href="#org759f21e">4. 相关链接</a></li>
+<li><a href="#orgacec035">4. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc38b433" class="outline-2">
-<h2 id="orgc38b433"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org36b55b9" class="outline-2">
+<h2 id="org36b55b9"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这两天学习 <code>C99标准</code> 的过程中, 宽字符的问题可是花了我不少时间。
@@ -273,8 +286,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1e30a24" class="outline-2">
-<h2 id="org1e30a24"><span class="section-number-2">2</span> 头文件</h2>
+<div id="outline-container-org875f5ff" class="outline-2">
+<h2 id="org875f5ff"><span class="section-number-2">2</span> 头文件</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><p>
@@ -291,8 +304,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7990ca5" class="outline-2">
-<h2 id="org7990ca5"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
+<div id="outline-container-org5b483bb" class="outline-2">
+<h2 id="org5b483bb"><span class="section-number-2">3</span> 宽字符及本地化支持</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一段简单的代码:
@@ -337,8 +350,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org45c4814" class="outline-3">
-<h3 id="org45c4814"><span class="section-number-3">3.1</span> 本地化支持</h3>
+<div id="outline-container-org5039afd" class="outline-3">
+<h3 id="org5039afd"><span class="section-number-3">3.1</span> 本地化支持</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 在使用宽字符之前，我们需要了解一些相关的内容。
@@ -390,8 +403,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcc1eb69" class="outline-3">
-<h3 id="orgcc1eb69"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
+<div id="outline-container-org09195d5" class="outline-3">
+<h3 id="org09195d5"><span class="section-number-3">3.2</span> 文件编码格式设置</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 完成了本地化支持的设置，那么还有一个关键内容便是 <code>文件编码格式</code> 了。
@@ -443,8 +456,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org376a58d" class="outline-3">
-<h3 id="org376a58d"><span class="section-number-3">3.3</span> 代码编写</h3>
+<div id="outline-container-orge2d619e" class="outline-3">
+<h3 id="orge2d619e"><span class="section-number-3">3.3</span> 代码编写</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 前面两个步骤完成了基础设置， 这时候便需要了解一些在编程过程中需要注意的一些问题了。
@@ -458,8 +471,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org759f21e" class="outline-2">
-<h2 id="org759f21e"><span class="section-number-2">4</span> 相关链接</h2>
+<div id="outline-container-orgacec035" class="outline-2">
+<h2 id="orgacec035"><span class="section-number-2">4</span> 相关链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>维基百科:
@@ -481,14 +494,12 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

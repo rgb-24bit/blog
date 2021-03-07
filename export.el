@@ -68,6 +68,7 @@ unwanted space when exporting org-mode to html."
   ;; Export settings
   (setq org-export-default-language "zh-CN")
   (setq org-export-with-sub-superscripts nil)
+  (setq org-export-with-broken-links t)
   (setq org-html-postamble t)
   (setq org-html-postamble (read-file-text "misc/post-body.html"))
 

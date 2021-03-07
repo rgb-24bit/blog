@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>不同环境下的正则表达式</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,18 +259,18 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org13c7c9e">1. 前言</a></li>
-<li><a href="#org9db3f37">2. PCRE</a></li>
-<li><a href="#org2ec5426">3. POSIX</a></li>
-<li><a href="#orgda8fb5a">4. 原始字符串</a></li>
-<li><a href="#orgfb710a4">5. 结语</a></li>
-<li><a href="#org6e054b8">6. 参考链接</a></li>
+<li><a href="#orgfdb2302">1. 前言</a></li>
+<li><a href="#org4c9d56b">2. PCRE</a></li>
+<li><a href="#org3779ba9">3. POSIX</a></li>
+<li><a href="#org593ab66">4. 原始字符串</a></li>
+<li><a href="#org6bfbfa0">5. 结语</a></li>
+<li><a href="#org3dc466a">6. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org13c7c9e" class="outline-2">
-<h2 id="org13c7c9e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgfdb2302" class="outline-2">
+<h2 id="orgfdb2302"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 距离初次接触正则表达式已经过了很久了，随着使用环境的增多，才发现，正则表达式不止一种。
@@ -273,8 +286,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9db3f37" class="outline-2">
-<h2 id="org9db3f37"><span class="section-number-2">2</span> PCRE</h2>
+<div id="outline-container-org4c9d56b" class="outline-2">
+<h2 id="org4c9d56b"><span class="section-number-2">2</span> PCRE</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 PCER 的全称是 Perl Compatible Regular Expression，即：Perl 兼容的正则表达式。
@@ -299,8 +312,8 @@ This module provides regular expression matching operations similar to those fou
 </div>
 </div>
 
-<div id="outline-container-org2ec5426" class="outline-2">
-<h2 id="org2ec5426"><span class="section-number-2">3</span> POSIX</h2>
+<div id="outline-container-org3779ba9" class="outline-2">
+<h2 id="org3779ba9"><span class="section-number-2">3</span> POSIX</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 在 <code>Unix/Linux</code> 环境下，常常会通过命令行进行各种 <b>匹配</b> 操作，常用的两种匹配方式就是通过 <b>Glob</b> 和 <b>正则表达式</b>.
@@ -494,8 +507,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-orgda8fb5a" class="outline-2">
-<h2 id="orgda8fb5a"><span class="section-number-2">4</span> 原始字符串</h2>
+<div id="outline-container-org593ab66" class="outline-2">
+<h2 id="org593ab66"><span class="section-number-2">4</span> 原始字符串</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这是除了正则表达式的类型以外另一个会影响正则表达式的使用的因素。
@@ -540,8 +553,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-orgfb710a4" class="outline-2">
-<h2 id="orgfb710a4"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org6bfbfa0" class="outline-2">
+<h2 id="org6bfbfa0"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 所以说，我们平时说的正则表达式应该是原始字符串环境下的 PCRE，然后就是在需要转义的字符串环境下 PCRE。
@@ -557,8 +570,8 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 </div>
 
-<div id="outline-container-org6e054b8" class="outline-2">
-<h2 id="org6e054b8"><span class="section-number-2">6</span> 参考链接</h2>
+<div id="outline-container-org3dc466a" class="outline-2">
+<h2 id="org3dc466a"><span class="section-number-2">6</span> 参考链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="http://www.4e00.com/blog/linux/2016/01/21/posix-bre-and-ere-regular-expression.html">posix 正则表达式规范 bre 和 ere 简介</a></li>
@@ -571,14 +584,12 @@ ERE(Extended Regular Express, 扩展型正则表达式) 两种。
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

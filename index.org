@@ -2,10 +2,6 @@
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
-#+HTML: <details open="open"><summary><i>2021</i></summary>
-
-
-#+HTML: </details>
 
 #+HTML: <details open="open"><summary><i>2020</i></summary>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-03-19 周四 17:11 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 并发之 Executor 框架</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +259,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6af95c8">1. 前言</a></li>
-<li><a href="#org3ad998d">2. Executor 框架概览</a></li>
-<li><a href="#orge5ce254">3. Executor</a></li>
-<li><a href="#org3f5d58b">4. ExecutorService</a></li>
-<li><a href="#orgb1e2abe">5. ScheduledExecutorService</a></li>
-<li><a href="#org0f68198">6. ThreadPoolExecutor</a></li>
-<li><a href="#orgfd3198b">7. ScheduledThreadPoolExecutor</a></li>
-<li><a href="#org6a80811">8. Executors</a></li>
-<li><a href="#org799035c">9. 结语</a></li>
+<li><a href="#org281822c">1. 前言</a></li>
+<li><a href="#org914a570">2. Executor 框架概览</a></li>
+<li><a href="#org2a0c009">3. Executor</a></li>
+<li><a href="#org7cdb46f">4. ExecutorService</a></li>
+<li><a href="#org65e8d80">5. ScheduledExecutorService</a></li>
+<li><a href="#org831bfa8">6. ThreadPoolExecutor</a></li>
+<li><a href="#orgd057aaf">7. ScheduledThreadPoolExecutor</a></li>
+<li><a href="#orga81084d">8. Executors</a></li>
+<li><a href="#org120e64f">9. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6af95c8" class="outline-2">
-<h2 id="org6af95c8"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org281822c" class="outline-2">
+<h2 id="org281822c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <code>JUC</code> 的过程中我发现，JUC 这个包下面的文档写的十分的好，清楚又易于理解，这篇博客便是参考 JUC 中和 <code>Executor</code> 框架相关的一些类文档汇总出来的。
@@ -272,8 +285,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3ad998d" class="outline-2">
-<h2 id="org3ad998d"><span class="section-number-2">2</span> Executor 框架概览</h2>
+<div id="outline-container-org914a570" class="outline-2">
+<h2 id="org914a570"><span class="section-number-2">2</span> Executor 框架概览</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Executor 框架的起点自然就是 <code>Executor</code> 接口，可以说整个 Executor 框架便是建立在 <code>Executor</code> 接口和其子接口上的，大致结构为：
@@ -317,8 +330,8 @@ Executor 框架的起点自然就是 <code>Executor</code> 接口，可以说整
 </div>
 </div>
 
-<div id="outline-container-orge5ce254" class="outline-2">
-<h2 id="orge5ce254"><span class="section-number-2">3</span> Executor</h2>
+<div id="outline-container-org2a0c009" class="outline-2">
+<h2 id="org2a0c009"><span class="section-number-2">3</span> Executor</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 一般来说，我们可以手动创建 <code>Thread</code> 对象来执行 <code>Runnable</code> 任务，但是，在有了 Executor 框架后，更好的选择是将这些异步任务转交给 <code>Executor</code> 的具体实现来执行。
@@ -364,8 +377,8 @@ executor.execute(<span class="org-keyword">new</span> <span class="org-type">Run
 </div>
 </div>
 
-<div id="outline-container-org3f5d58b" class="outline-2">
-<h2 id="org3f5d58b"><span class="section-number-2">4</span> ExecutorService</h2>
+<div id="outline-container-org7cdb46f" class="outline-2">
+<h2 id="org7cdb46f"><span class="section-number-2">4</span> ExecutorService</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>ExecutorService</code> 为异步任务的执行提供了更多的支持，包括用于 <b>终止</b> 的方法以及可以产生用于跟踪一个或多个异步任务进度的 <code>Future</code> 的方法。
@@ -406,8 +419,8 @@ submit(<span class="org-type">Runnable</span> <span class="org-variable-name">ta
 </div>
 </div>
 
-<div id="outline-container-orgb1e2abe" class="outline-2">
-<h2 id="orgb1e2abe"><span class="section-number-2">5</span> ScheduledExecutorService</h2>
+<div id="outline-container-org65e8d80" class="outline-2">
+<h2 id="org65e8d80"><span class="section-number-2">5</span> ScheduledExecutorService</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 接口 <code>ScheduledExecutorService</code> 相较于 <code>ExecutorService</code> 来说添加了对延迟和定期任务执行的支持，还是比较好理解的：
@@ -431,8 +444,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-org0f68198" class="outline-2">
-<h2 id="org0f68198"><span class="section-number-2">6</span> ThreadPoolExecutor</h2>
+<div id="outline-container-org831bfa8" class="outline-2">
+<h2 id="org831bfa8"><span class="section-number-2">6</span> ThreadPoolExecutor</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>ThreadPoolExecutor</code> 是 <code>ExecutorService</code> 的一种具体实现，一般情况下我们可以通过 <code>Executors</code> 来创建新的线程池，但是，了解 <code>ThreadPoolExecutor</code> 提供的各配置项还是很有用的，而 <code>ThreadPoolExecutor</code> 文档中对这些配置项给出了很详细的描述。
@@ -453,7 +466,7 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 <dt>Keep-alive times           </dt><dd>当当前线程池中的线程数超过 <code>corePoolSize</code> 时，多余的线程将在闲置时间超过 <code>keepAliveTime</code> 时终止。默认情况下参数 <code>keepAliveTime</code> 仅在线程数超过 <code>corePoolSize</code> 时起作用，但是也可以通过 <code>allowCoreThreadTimeOut(boolean)</code> 方法让核心线程在闲置一段时间后也被终止。</dd>
 
 <dt>Queuing                    </dt><dd><p>
-    任意的 <code>BlockingQueue</code> 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
+任意的 <code>BlockingQueue</code> 都可以用于传输和保留提交的任务，队列的使用和当前线程池的大小相关：
 </p>
 <ul class="org-ul">
 <li>在当前线程池中的线程数小于 <code>corePoolSize</code> 时，优先创建新的线程</li>
@@ -544,8 +557,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-orgfd3198b" class="outline-2">
-<h2 id="orgfd3198b"><span class="section-number-2">7</span> ScheduledThreadPoolExecutor</h2>
+<div id="outline-container-orgd057aaf" class="outline-2">
+<h2 id="orgd057aaf"><span class="section-number-2">7</span> ScheduledThreadPoolExecutor</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>ScheduledThreadPoolExecutor</code> 继承了 <code>ThreadPoolExecutor</code> 并实现了 <code>ScheduledExecutorService</code> 接口，是比 <code>Timer</code> 更好的选择。它使用指定大小的 <code>corePoolSize</code> 和无界队列，因此，参数 <code>maximumPoolSize</code> 没有意义。
@@ -568,8 +581,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-org6a80811" class="outline-2">
-<h2 id="org6a80811"><span class="section-number-2">8</span> Executors</h2>
+<div id="outline-container-orga81084d" class="outline-2">
+<h2 id="orga81084d"><span class="section-number-2">8</span> Executors</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 <code>Executors</code> 提供了一些针对 <code>Executor</code>, <code>ExecutorService</code>, <code>ScheduledExecutorService</code> 和 <code>ThreadFactory</code> 的实用方法，文档上的话就没有什么好说的了，其实就是一个熟悉接口的问题。
@@ -584,8 +597,8 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 </div>
 
-<div id="outline-container-org799035c" class="outline-2">
-<h2 id="org799035c"><span class="section-number-2">9</span> 结语</h2>
+<div id="outline-container-org120e64f" class="outline-2">
+<h2 id="org120e64f"><span class="section-number-2">9</span> 结语</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 通过文档的阅读对 <code>Executors</code> 有了大致的了解，但是，如果你打开源码就会发现，除了类上面的 <code>Javadoc</code> 以外，在类内部，通常还会有很长一段注释告诉你这个东西它是怎么实现的！！！
@@ -599,14 +612,12 @@ scheduleWithFixedDelay(<span class="org-type">Runnable</span> <span class="org-v
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

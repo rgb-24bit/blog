@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 核心集合接口</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,42 +259,42 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3809634">1. 简介</a></li>
-<li><a href="#orgde2cbbe">2. Collection</a>
+<li><a href="#orgcf5ff5c">1. 简介</a></li>
+<li><a href="#orga711550">2. Collection</a>
 <ul>
-<li><a href="#org1cf267e">2.1. Collection 基本操作</a></li>
-<li><a href="#orgc0d04e4">2.2. Collection 遍历操作</a></li>
-<li><a href="#orgea8c535">2.3. Collection 批量操作</a></li>
-<li><a href="#orgcac3c7f">2.4. Collection 数组操作</a></li>
+<li><a href="#orgb2eb7bf">2.1. Collection 基本操作</a></li>
+<li><a href="#orgb5dd94e">2.2. Collection 遍历操作</a></li>
+<li><a href="#orgc0a5de0">2.3. Collection 批量操作</a></li>
+<li><a href="#org2131ba4">2.4. Collection 数组操作</a></li>
 </ul>
 </li>
-<li><a href="#orgf886a25">3. Set</a></li>
-<li><a href="#org638a7e8">4. List</a>
+<li><a href="#orgcf7207f">3. Set</a></li>
+<li><a href="#org3732351">4. List</a>
 <ul>
-<li><a href="#org43512e4">4.1. 集合操作</a></li>
-<li><a href="#org93f123e">4.2. 位置访问和搜索操作</a></li>
-<li><a href="#org15f4973">4.3. 迭代器</a></li>
-<li><a href="#orga523bd8">4.4. 范围视图操作</a></li>
-<li><a href="#org965e6f6">4.5. 列表算法</a></li>
+<li><a href="#org3c5f194">4.1. 集合操作</a></li>
+<li><a href="#org9517a45">4.2. 位置访问和搜索操作</a></li>
+<li><a href="#orgdbcd8d3">4.3. 迭代器</a></li>
+<li><a href="#org4b012a2">4.4. 范围视图操作</a></li>
+<li><a href="#org7d657dd">4.5. 列表算法</a></li>
 </ul>
 </li>
-<li><a href="#org15103bb">5. Queue</a></li>
-<li><a href="#orgc3c6a4f">6. Deque</a></li>
-<li><a href="#orga46cec7">7. Map</a>
+<li><a href="#org16a7c81">5. Queue</a></li>
+<li><a href="#org020dd89">6. Deque</a></li>
+<li><a href="#org114b7cd">7. Map</a>
 <ul>
-<li><a href="#org6d019ab">7.1. Map 基本操作</a></li>
-<li><a href="#org10b62ba">7.2. Map 批量操作</a></li>
-<li><a href="#orga0d8cdf">7.3. 集合视图</a></li>
+<li><a href="#orga172c24">7.1. Map 基本操作</a></li>
+<li><a href="#org5d78bb0">7.2. Map 批量操作</a></li>
+<li><a href="#orgf7354b3">7.3. 集合视图</a></li>
 </ul>
 </li>
-<li><a href="#orgd306c13">8. 结尾</a></li>
-<li><a href="#orgd8c1b23">9. 参考链接</a></li>
+<li><a href="#org10f670a">8. 结尾</a></li>
+<li><a href="#org7b3941b">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3809634" class="outline-2">
-<h2 id="org3809634"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgcf5ff5c" class="outline-2">
+<h2 id="orgcf5ff5c"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 除了 <code>C</code> 语言以外，我学过的语言基本上都封装了常用的 <b>数据结构</b> 方便使用。
@@ -307,8 +320,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgde2cbbe" class="outline-2">
-<h2 id="orgde2cbbe"><span class="section-number-2">2</span> Collection</h2>
+<div id="outline-container-orga711550" class="outline-2">
+<h2 id="orga711550"><span class="section-number-2">2</span> Collection</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>Collection</code> 通常用于保存一组对象，保存的这些对象称为它的 <b>元素</b> 或 <b>成员</b>.
@@ -324,8 +337,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1cf267e" class="outline-3">
-<h3 id="org1cf267e"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
+<div id="outline-container-orgb2eb7bf" class="outline-3">
+<h3 id="orgb2eb7bf"><span class="section-number-3">2.1</span> Collection 基本操作</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Collection</code> 常用的基本操作方法有：
@@ -383,8 +396,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc0d04e4" class="outline-3">
-<h3 id="orgc0d04e4"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
+<div id="outline-container-orgb5dd94e" class="outline-3">
+<h3 id="orgb5dd94e"><span class="section-number-3">2.2</span> Collection 遍历操作</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 除去 <b>聚合操作</b> 的话，用于遍历 <code>Collection</code> 的方式有两种：
@@ -437,8 +450,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgea8c535" class="outline-3">
-<h3 id="orgea8c535"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
+<div id="outline-container-orgc0a5de0" class="outline-3">
+<h3 id="orgc0a5de0"><span class="section-number-3">2.3</span> Collection 批量操作</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <b>批量操作</b> 允许我们一次性操作多个元素，以下是批量操作方法：
@@ -487,8 +500,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcac3c7f" class="outline-3">
-<h3 id="orgcac3c7f"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
+<div id="outline-container-org2131ba4" class="outline-3">
+<h3 id="org2131ba4"><span class="section-number-3">2.4</span> Collection 数组操作</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 通过使用方法 <code>Collection.toArray()</code> 可以将一个 <code>Collection</code> 转换一个数组。
@@ -521,8 +534,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf886a25" class="outline-2">
-<h2 id="orgf886a25"><span class="section-number-2">3</span> Set</h2>
+<div id="outline-container-orgcf7207f" class="outline-2">
+<h2 id="orgcf7207f"><span class="section-number-2">3</span> Set</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>Set</code> 是一个不包含重复元素的 <code>Collection</code>.
@@ -561,8 +574,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org638a7e8" class="outline-2">
-<h2 id="org638a7e8"><span class="section-number-2">4</span> List</h2>
+<div id="outline-container-org3732351" class="outline-2">
+<h2 id="org3732351"><span class="section-number-2">4</span> List</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>List</code> 是一个有序的 <code>Collection</code>.
@@ -577,8 +590,8 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 
-<div id="outline-container-org43512e4" class="outline-3">
-<h3 id="org43512e4"><span class="section-number-3">4.1</span> 集合操作</h3>
+<div id="outline-container-org3c5f194" class="outline-3">
+<h3 id="org3c5f194"><span class="section-number-3">4.1</span> 集合操作</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 毫无疑问， <code>List</code> 包含继承了所有 <code>Collection</code> 的操作，如添加删除元素等。
@@ -590,8 +603,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org93f123e" class="outline-3">
-<h3 id="org93f123e"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
+<div id="outline-container-org9517a45" class="outline-3">
+<h3 id="org9517a45"><span class="section-number-3">4.2</span> 位置访问和搜索操作</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>get</code> 和 <code>set</code> 可以获取值设置指定位置的元素的值， 而 <code>add</code>, <code>addAll</code>, <code>remove</code> 都有一个可以指定位置的 <b>重载</b>, 允许你指定要操作的元素的位置。
@@ -615,8 +628,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org15f4973" class="outline-3">
-<h3 id="org15f4973"><span class="section-number-3">4.3</span> 迭代器</h3>
+<div id="outline-container-orgdbcd8d3" class="outline-3">
+<h3 id="orgdbcd8d3"><span class="section-number-3">4.3</span> 迭代器</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 <code>List</code> 除了继承自 <code>Collection</code> 的迭代器以外，还提供了一个功能更强大的迭代器 <code>ListIterator</code>.
@@ -648,8 +661,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga523bd8" class="outline-3">
-<h3 id="orga523bd8"><span class="section-number-3">4.4</span> 范围视图操作</h3>
+<div id="outline-container-org4b012a2" class="outline-3">
+<h3 id="org4b012a2"><span class="section-number-3">4.4</span> 范围视图操作</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 <code>List</code> 的方法 <code>subList(int fromIndex, int toIndex)</code> 返回指定范围的 <b>列表视图</b>.
@@ -679,8 +692,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org965e6f6" class="outline-3">
-<h3 id="org965e6f6"><span class="section-number-3">4.5</span> 列表算法</h3>
+<div id="outline-container-org7d657dd" class="outline-3">
+<h3 id="org7d657dd"><span class="section-number-3">4.5</span> 列表算法</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 <code>Collections</code> 提供了一些很有用的算法， 这里列出来：
@@ -764,8 +777,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org15103bb" class="outline-2">
-<h2 id="org15103bb"><span class="section-number-2">5</span> Queue</h2>
+<div id="outline-container-org16a7c81" class="outline-2">
+<h2 id="org16a7c81"><span class="section-number-2">5</span> Queue</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Queue</code> 是在处理之前保存元素的 <code>Collection</code>.
@@ -837,8 +850,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc3c6a4f" class="outline-2">
-<h2 id="orgc3c6a4f"><span class="section-number-2">6</span> Deque</h2>
+<div id="outline-container-org020dd89" class="outline-2">
+<h2 id="org020dd89"><span class="section-number-2">6</span> Deque</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>Deque</code> 是一个 <b>双端队列</b>, 是元素的线性集合，支持在两个端点处插入和移除元素。
@@ -887,8 +900,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga46cec7" class="outline-2">
-<h2 id="orga46cec7"><span class="section-number-2">7</span> Map</h2>
+<div id="outline-container-org114b7cd" class="outline-2">
+<h2 id="org114b7cd"><span class="section-number-2">7</span> Map</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>Map</code> 是将键映射到值的对象。 不属于 <code>Collection</code>.
@@ -904,8 +917,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org6d019ab" class="outline-3">
-<h3 id="org6d019ab"><span class="section-number-3">7.1</span> Map 基本操作</h3>
+<div id="outline-container-orga172c24" class="outline-3">
+<h3 id="orga172c24"><span class="section-number-3">7.1</span> Map 基本操作</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 <code>Map</code> 的基本操作包括以下几个：
@@ -984,8 +997,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org10b62ba" class="outline-3">
-<h3 id="org10b62ba"><span class="section-number-3">7.2</span> Map 批量操作</h3>
+<div id="outline-container-org5d78bb0" class="outline-3">
+<h3 id="org5d78bb0"><span class="section-number-3">7.2</span> Map 批量操作</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 方法 <code>clear</code> 可以清除 <code>Map</code> 中的所有映射关系，而 <code>putAll</code> 可以使用另一个 <code>Map</code> 来更新当前的 <code>Map</code>, 覆盖存在的关系，添加新的关系。
@@ -1002,8 +1015,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga0d8cdf" class="outline-3">
-<h3 id="orga0d8cdf"><span class="section-number-3">7.3</span> 集合视图</h3>
+<div id="outline-container-orgf7354b3" class="outline-3">
+<h3 id="orgf7354b3"><span class="section-number-3">7.3</span> 集合视图</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 通过如下三个方法获取 <code>Map</code> 的 <b>集合视图</b>:
@@ -1067,7 +1080,7 @@ for the JavaScript code in this tag.
 遍历 <code>Map</code> 的每一个键：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-type">KeyType</span> <span class="org-function-name">key</span> : m.keySet())
+<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-type">KeyType</span> <span class="org-variable-name">key</span> : m.keySet())
   System.out.println(key);
 </pre>
 </div>
@@ -1086,7 +1099,7 @@ for the JavaScript code in this tag.
 <code>entrySet</code> 常和 <code>Map.Entry</code> 一块使用：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-constant">Map</span>.<span class="org-type">Entry</span>&lt;<span class="org-type">KeyType</span>, <span class="org-type">ValType</span>&gt; <span class="org-function-name">e</span> : m.entrySet())
+<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-constant">Map</span>.<span class="org-type">Entry</span>&lt;<span class="org-type">KeyType</span>, <span class="org-type">ValType</span>&gt; <span class="org-variable-name">e</span> : m.entrySet())
   System.out.println(e.getKey() + <span class="org-string">": "</span> + e.getValue());
 </pre>
 </div>
@@ -1094,8 +1107,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd306c13" class="outline-2">
-<h2 id="orgd306c13"><span class="section-number-2">8</span> 结尾</h2>
+<div id="outline-container-org10f670a" class="outline-2">
+<h2 id="org10f670a"><span class="section-number-2">8</span> 结尾</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 核心接口中还有 <code>SortedSet</code> 和 <code>SortedMap</code>, 它们都会对内部的元素进行排序，其余行为和它们的父接口基本一致。
@@ -1111,8 +1124,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd8c1b23" class="outline-2">
-<h2 id="orgd8c1b23"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org7b3941b" class="outline-2">
+<h2 id="org7b3941b"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html">Lesson: Interfaces (The Java™ Tutorials &gt; Collections)</a></li>
@@ -1123,14 +1136,12 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

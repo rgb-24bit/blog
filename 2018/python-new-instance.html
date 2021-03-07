@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 构造对象实例</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +259,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgca51cdb">1. 前言</a></li>
-<li><a href="#org6312403">2. 使用</a></li>
-<li><a href="#orgd2e28db">3. 关系</a></li>
-<li><a href="#orgb193af5">4. 元类</a></li>
-<li><a href="#orge0299a9">5. 参考链接</a></li>
+<li><a href="#org40c4450">1. 前言</a></li>
+<li><a href="#org2dd869c">2. 使用</a></li>
+<li><a href="#orgd039087">3. 关系</a></li>
+<li><a href="#org7d364e9">4. 元类</a></li>
+<li><a href="#org27af7bb">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgca51cdb" class="outline-2">
-<h2 id="orgca51cdb"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org40c4450" class="outline-2">
+<h2 id="org40c4450"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <code>Python</code> 中我们常用的一个特殊方法为 <code>__init__</code>, 曾经， 我认为这个方法是用于构造对象实例的方法。
@@ -281,8 +294,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6312403" class="outline-2">
-<h2 id="org6312403"><span class="section-number-2">2</span> 使用</h2>
+<div id="outline-container-org2dd869c" class="outline-2">
+<h2 id="org2dd869c"><span class="section-number-2">2</span> 使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 对于 <code>__init__</code>, 相信只要使用过 <code>Python</code>, 应该都不陌生， 其一般形式为：
@@ -357,8 +370,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orgd2e28db" class="outline-2">
-<h2 id="orgd2e28db"><span class="section-number-2">3</span> 关系</h2>
+<div id="outline-container-orgd039087" class="outline-2">
+<h2 id="orgd039087"><span class="section-number-2">3</span> 关系</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>__new__</code> 和 <code>__init__</code> 两者之间存在很紧密的关系， 简单的概括一下就是：
@@ -390,7 +403,7 @@ Example()
         <span class="org-keyword">return</span> <span class="org-constant">NULL</span>;
 
     <span class="org-comment-delimiter">/* </span><span class="org-comment">Ugly exception: when the call was type(something),</span>
-<span class="org-comment">       don't call tp_init on the result. </span><span class="org-comment-delimiter">*/</span>
+<span class="org-comment">       don't call tp_init on the result.</span><span class="org-comment-delimiter"> */</span>
     <span class="org-keyword">if</span> (type == &amp;PyType_Type &amp;&amp;
         PyTuple_Check(args) &amp;&amp; PyTuple_GET_SIZE(args) == 1 &amp;&amp;
         (kwds == <span class="org-constant">NULL</span> ||
@@ -398,7 +411,7 @@ Example()
         <span class="org-keyword">return</span> obj;
 
     <span class="org-comment-delimiter">/* </span><span class="org-comment">If the returned object is not an instance of type,</span>
-<span class="org-comment">       it won't be initialized. </span><span class="org-comment-delimiter">*/</span>
+<span class="org-comment">       it won't be initialized.</span><span class="org-comment-delimiter"> */</span>
     <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>PyType_IsSubtype(Py_TYPE(obj), type))
         <span class="org-keyword">return</span> obj;
 
@@ -482,8 +495,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orgb193af5" class="outline-2">
-<h2 id="orgb193af5"><span class="section-number-2">4</span> 元类</h2>
+<div id="outline-container-org7d364e9" class="outline-2">
+<h2 id="org7d364e9"><span class="section-number-2">4</span> 元类</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>__new__</code> 的一大使用场景就是元类了， 和一般的 <code>__new__</code> 不一样， 由于 <b>元类</b> 的实例是 <b>类</b>, 因此 <b>元类</b> 的 <code>__new__</code> 方法的参数需要和 <code>type</code> 相符合。
@@ -512,8 +525,8 @@ Example()
 </div>
 </div>
 
-<div id="outline-container-orge0299a9" class="outline-2">
-<h2 id="orge0299a9"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-org27af7bb" class="outline-2">
+<h2 id="org27af7bb"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://amir.rachum.com/blog/2016/10/03/understanding-python-class-instantiation/">Understanding Python Class Instantiation</a></li>
@@ -523,14 +536,12 @@ Example()
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

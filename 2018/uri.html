@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>URI - 统一资源标识符</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,29 +259,29 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org29d1eb9">1. URI &amp; URL &amp; URN</a></li>
-<li><a href="#orgb40a65b">2. URI 通用语法</a></li>
-<li><a href="#org3b56486">3. URI 协议</a>
+<li><a href="#org82ce0d0">1. URI &amp; URL &amp; URN</a></li>
+<li><a href="#org9ba09a6">2. URI 通用语法</a></li>
+<li><a href="#org63bfd4e">3. URI 协议</a>
 <ul>
-<li><a href="#org263d676">3.1. file</a></li>
-<li><a href="#org22b4a93">3.2. mailto</a></li>
-<li><a href="#orgfe42025">3.3. data</a></li>
+<li><a href="#orgcdc8d64">3.1. file</a></li>
+<li><a href="#orge1edd0a">3.2. mailto</a></li>
+<li><a href="#org8be8286">3.3. data</a></li>
 </ul>
 </li>
-<li><a href="#org93c35f8">4. 参考链接</a></li>
+<li><a href="#org01fd4db">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org29d1eb9" class="outline-2">
-<h2 id="org29d1eb9"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
+<div id="outline-container-org82ce0d0" class="outline-2">
+<h2 id="org82ce0d0"><span class="section-number-2">1</span> URI &amp; URL &amp; URN</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 URI, URL 和 URN 是三个经常放在一起的概念，下面这段摘自 RFC 文档的一段话描述了它们之间的关系：
 </p>
 <blockquote>
 <p>
-A URI can be further classified as a locator, a name, or both. [<a href="http://www.faqs.org/rfcs/rfc3986.html">RFC 3986</a>]
+A URI can be further classified as a locator, a name, or both. ]
 </p>
 </blockquote>
 
@@ -285,7 +298,7 @@ A URI can be further classified as a locator, a name, or both. [<a href="http://
 <blockquote>
 <p>
 A URN may be compared to a person's name, while a URL may be compared to their street address. 
-In other words, a URN identifies an item and a URL provides a method for finding it.[<a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">Wikipedia</a>]
+In other words, a URN identifies an item and a URL provides a method for finding it.]
 </p>
 </blockquote>
 
@@ -295,8 +308,8 @@ In other words, a URN identifies an item and a URL provides a method for finding
 </div>
 </div>
 
-<div id="outline-container-orgb40a65b" class="outline-2">
-<h2 id="orgb40a65b"><span class="section-number-2">2</span> URI 通用语法</h2>
+<div id="outline-container-org9ba09a6" class="outline-2">
+<h2 id="org9ba09a6"><span class="section-number-2">2</span> URI 通用语法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <code>URI</code> 的通用语法由五个组件组成：
@@ -349,16 +362,16 @@ scheme                     path
 </div>
 </div>
 
-<div id="outline-container-org3b56486" class="outline-2">
-<h2 id="org3b56486"><span class="section-number-2">3</span> URI 协议</h2>
+<div id="outline-container-org63bfd4e" class="outline-2">
+<h2 id="org63bfd4e"><span class="section-number-2">3</span> URI 协议</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 这才是写这篇博客的主要目的，前面的内容都是顺带的，不然总感觉差点啥 @_@.
 </p>
 </div>
 
-<div id="outline-container-org263d676" class="outline-3">
-<h3 id="org263d676"><span class="section-number-3">3.1</span> file</h3>
+<div id="outline-container-orgcdc8d64" class="outline-3">
+<h3 id="orgcdc8d64"><span class="section-number-3">3.1</span> file</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>file</code> 应该算是一个比较常用的协议了，它的格式如下：
@@ -392,8 +405,8 @@ C:/Users/Administrator/Desktop/example.txt
 </div>
 </div>
 
-<div id="outline-container-org22b4a93" class="outline-3">
-<h3 id="org22b4a93"><span class="section-number-3">3.2</span> mailto</h3>
+<div id="outline-container-orge1edd0a" class="outline-3">
+<h3 id="orge1edd0a"><span class="section-number-3">3.2</span> mailto</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <code>mailto</code> 是用来表示邮箱地址的 <code>URI</code> 协议，常见的形式为：
@@ -427,8 +440,8 @@ mailto:someone@example.com,someoneelse@example.com
 </div>
 </div>
 
-<div id="outline-container-orgfe42025" class="outline-3">
-<h3 id="orgfe42025"><span class="section-number-3">3.3</span> data</h3>
+<div id="outline-container-org8be8286" class="outline-3">
+<h3 id="org8be8286"><span class="section-number-3">3.3</span> data</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <code>data</code> 在前端应该也是比较常用的一个协议了，提供了一种在网页中包含数据的方法，格式如下：
@@ -476,8 +489,8 @@ data:,
 </div>
 </div>
 
-<div id="outline-container-org93c35f8" class="outline-2">
-<h2 id="org93c35f8"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org01fd4db" class="outline-2">
+<h2 id="org01fd4db"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">Uniform Resource Identifier - Wikipedia</a></li>
@@ -488,14 +501,12 @@ data:,
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

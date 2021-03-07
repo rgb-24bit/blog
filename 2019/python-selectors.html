@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 高级 I/O 多路复用</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +259,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9b8ca79">1. 前言</a></li>
-<li><a href="#org538ec26">2. select</a></li>
-<li><a href="#orgebac788">3. selectors</a></li>
-<li><a href="#org1b1c200">4. 结语</a></li>
-<li><a href="#orgc189aa4">5. 参考链接</a></li>
+<li><a href="#orgedc2e89">1. 前言</a></li>
+<li><a href="#orgeef80c0">2. select</a></li>
+<li><a href="#org7a3e446">3. selectors</a></li>
+<li><a href="#org449c276">4. 结语</a></li>
+<li><a href="#orgd77d915">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9b8ca79" class="outline-2">
-<h2 id="org9b8ca79"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgedc2e89" class="outline-2">
+<h2 id="orgedc2e89"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触和 I/O 多路复用相关的概念是在书 CSAPP<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 的并发编程章节，当时在了解了这个概念后只是感觉很神奇，但是并没有实际使用过。
@@ -272,8 +285,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org538ec26" class="outline-2">
-<h2 id="org538ec26"><span class="section-number-2">2</span> select</h2>
+<div id="outline-container-orgeef80c0" class="outline-2">
+<h2 id="orgeef80c0"><span class="section-number-2">2</span> select</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 介绍 I/O 多路复用这个概念往往都是从 <code>select</code> 这个 <b>系统调用</b> 开始的，这篇博客也不例外，但是为了方便，我们使用的是 Python 提供的 <code>select.select</code> 函数<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>。
@@ -311,8 +324,8 @@ I/O 多路复用的基本模型就和这个函数一样，都是通过一定的�
 </div>
 </div>
 
-<div id="outline-container-orgebac788" class="outline-2">
-<h2 id="orgebac788"><span class="section-number-2">3</span> selectors</h2>
+<div id="outline-container-org7a3e446" class="outline-2">
+<h2 id="org7a3e446"><span class="section-number-2">3</span> selectors</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>selectors</code> 模块是对 <code>select</code> 的一层封装，能够让我们以更方便的方式来使用 I/O 多路复用。
@@ -418,8 +431,8 @@ sel.register(sock, selectors.EVENT_READ, accept)
 </div>
 </div>
 
-<div id="outline-container-org1b1c200" class="outline-2">
-<h2 id="org1b1c200"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org449c276" class="outline-2">
+<h2 id="org449c276"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 虽然接触 I/O 多路复用已经有一段时间了，但是还没有遇到过需要使用的地方……
@@ -435,8 +448,8 @@ sel.register(sock, selectors.EVENT_READ, accept)
 </div>
 </div>
 
-<div id="outline-container-orgc189aa4" class="outline-2">
-<h2 id="orgc189aa4"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-orgd77d915" class="outline-2">
+<h2 id="orgd77d915"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/library/selectors.html">selectors — High-level I/O multiplexing — Python 3.7.3 documentation</a></li>
@@ -465,14 +478,12 @@ C 语言版可以参考 <a href="https://en.wikipedia.org/wiki/Select_(Unix)">se
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

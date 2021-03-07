@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 描述器简述</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,16 +259,16 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org47aef1e">1. 前言</a></li>
-<li><a href="#org3b0bcdf">2. 描述器</a></li>
-<li><a href="#org2bcca97">3. 描述器的使用</a></li>
-<li><a href="#org06d4d6e">4. 参考链接</a></li>
+<li><a href="#orgc4169c0">1. 前言</a></li>
+<li><a href="#org77c8927">2. 描述器</a></li>
+<li><a href="#org71848fd">3. 描述器的使用</a></li>
+<li><a href="#org6038041">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org47aef1e" class="outline-2">
-<h2 id="org47aef1e"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgc4169c0" class="outline-2">
+<h2 id="orgc4169c0"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 前端时间在阅读 <a href="https://github.com/faif/python-patterns">python-patterns</a> 的源码的时候， 其中一个模式的实现使用到了 <b>描述器</b>.
@@ -283,8 +296,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3b0bcdf" class="outline-2">
-<h2 id="org3b0bcdf"><span class="section-number-2">2</span> 描述器</h2>
+<div id="outline-container-org77c8927" class="outline-2">
+<h2 id="org77c8927"><span class="section-number-2">2</span> 描述器</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 和描述器密切相关的魔法方法有四个， 其中： <code>__get__</code>, <code>__set__</code> 和 <code>__delete__</code> 是描述器协议的组成部分。
@@ -412,8 +425,8 @@ call __get__
 </div>
 </div>
 
-<div id="outline-container-org2bcca97" class="outline-2">
-<h2 id="org2bcca97"><span class="section-number-2">3</span> 描述器的使用</h2>
+<div id="outline-container-org71848fd" class="outline-2">
+<h2 id="org71848fd"><span class="section-number-2">3</span> 描述器的使用</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 描述器的方法原型为：
@@ -500,8 +513,8 @@ emmm, 剩下的代码就很简单了。
 </div>
 </div>
 
-<div id="outline-container-org06d4d6e" class="outline-2">
-<h2 id="org06d4d6e"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-org6038041" class="outline-2">
+<h2 id="org6038041"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/3/howto/descriptor.html">Descriptor HowTo Guide</a></li>
@@ -512,14 +525,12 @@ emmm, 剩下的代码就很简单了。
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

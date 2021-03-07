@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>移动台国际用户识别码</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +259,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb5f2c70">1. 前言</a></li>
-<li><a href="#org8414cdb">2. 起因</a></li>
-<li><a href="#org37b204d">3. MSISDN</a></li>
-<li><a href="#org07ded81">4. 国内号码结构</a></li>
-<li><a href="#orge836c6a">5. 正则表达式</a></li>
-<li><a href="#org7dd506a">6. 结尾</a></li>
-<li><a href="#org2063609">7. 参考链接</a></li>
+<li><a href="#orgb2a778c">1. 前言</a></li>
+<li><a href="#org3ed85f9">2. 起因</a></li>
+<li><a href="#orgca05328">3. MSISDN</a></li>
+<li><a href="#org1141e58">4. 国内号码结构</a></li>
+<li><a href="#org6d25505">5. 正则表达式</a></li>
+<li><a href="#orga31a2af">6. 结尾</a></li>
+<li><a href="#orgc94aaf5">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb5f2c70" class="outline-2">
-<h2 id="orgb5f2c70"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgb2a778c" class="outline-2">
+<h2 id="orgb2a778c"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 作为今年的最后一篇博客，本来是准备写 <b>Dijkstra 单源最短路径算法</b> 的，但是计划赶不上变化，只能留在明年了。
@@ -274,8 +287,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8414cdb" class="outline-2">
-<h2 id="org8414cdb"><span class="section-number-2">2</span> 起因</h2>
+<div id="outline-container-org3ed85f9" class="outline-2">
+<h2 id="org3ed85f9"><span class="section-number-2">2</span> 起因</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 移动台国际用户识别码这个东西应该是通信工程要学的东西，和我是没啥关系的。
@@ -298,8 +311,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org37b204d" class="outline-2">
-<h2 id="org37b204d"><span class="section-number-2">3</span> MSISDN</h2>
+<div id="outline-container-orgca05328" class="outline-2">
+<h2 id="orgca05328"><span class="section-number-2">3</span> MSISDN</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <code>MSISDN</code> 就是移动台国际用户识别码的缩写，和身份证号码一样，它可以通过号码中不同的区段来区分你所在的国家、地区，同时也可以标识该号码的服务提供商以及你的用户代码。
@@ -363,8 +376,8 @@ MSISDN = CC + NDC + SN
 </div>
 </div>
 
-<div id="outline-container-org07ded81" class="outline-2">
-<h2 id="org07ded81"><span class="section-number-2">4</span> 国内号码结构</h2>
+<div id="outline-container-org1141e58" class="outline-2">
+<h2 id="org1141e58"><span class="section-number-2">4</span> 国内号码结构</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 现在国内的手机号码通常为 <code>11</code> 位（省略国家代码），其中 <code>NDC</code> 占 <code>7</code> 位，由 <b>MAC</b> 和 <b>HLR</b> 组成，剩下的就是 <code>4</code> 位的 <code>SN</code> 了。
@@ -388,8 +401,8 @@ MSISDN = CC + NDC + SN
 </div>
 </div>
 
-<div id="outline-container-orge836c6a" class="outline-2">
-<h2 id="orge836c6a"><span class="section-number-2">5</span> 正则表达式</h2>
+<div id="outline-container-org6d25505" class="outline-2">
+<h2 id="org6d25505"><span class="section-number-2">5</span> 正则表达式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 通过 <code>Python</code>, 我们可以简单的尝试匹配国内手机号码：
@@ -410,8 +423,8 @@ emmmm, 结果的顺序似乎不是很完美&#x2026;&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org7dd506a" class="outline-2">
-<h2 id="org7dd506a"><span class="section-number-2">6</span> 结尾</h2>
+<div id="outline-container-orga31a2af" class="outline-2">
+<h2 id="orga31a2af"><span class="section-number-2">6</span> 结尾</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 博客中只是简单的介绍了国内号码的结果，而且还没有加上国家代码，实际使用中可能还要考虑跨区拨号的问题。
@@ -423,8 +436,8 @@ emmmm, 结果的顺序似乎不是很完美&#x2026;&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org2063609" class="outline-2">
-<h2 id="org2063609"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-orgc94aaf5" class="outline-2">
+<h2 id="orgc94aaf5"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/MSISDN">MSISDN - Wikipedia</a></li>
@@ -435,14 +448,12 @@ emmmm, 结果的顺序似乎不是很完美&#x2026;&#x2026;
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

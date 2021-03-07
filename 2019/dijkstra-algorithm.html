@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-05-17 周日 11:02 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>迪杰斯特拉算法</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,23 +259,23 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7034af0">1. 前言</a></li>
-<li><a href="#org8136427">2. 算法简述</a></li>
-<li><a href="#org19eb541">3. 算法详述</a></li>
-<li><a href="#org5a4f2bc">4. 算法实现</a>
+<li><a href="#org891fc1b">1. 前言</a></li>
+<li><a href="#org8e19ccc">2. 算法简述</a></li>
+<li><a href="#org6b4a4df">3. 算法详述</a></li>
+<li><a href="#org7474fdd">4. 算法实现</a>
 <ul>
-<li><a href="#orge044842">4.1. 简单的有向无权图</a></li>
-<li><a href="#org1005e37">4.2. 具体的算法实现</a></li>
-<li><a href="#orgb80d6a4">4.3. 可能的实现优化</a></li>
+<li><a href="#org18a5495">4.1. 简单的有向无权图</a></li>
+<li><a href="#org881495b">4.2. 具体的算法实现</a></li>
+<li><a href="#orga3cc526">4.3. 可能的实现优化</a></li>
 </ul>
 </li>
-<li><a href="#org6824a01">5. 结语</a></li>
+<li><a href="#org50cce17">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7034af0" class="outline-2">
-<h2 id="org7034af0"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org891fc1b" class="outline-2">
+<h2 id="org891fc1b"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算法了，经常可以看到 <code>Dijkstra</code> 的大名。
@@ -278,8 +291,8 @@ Dijkstra's algorithm - 迪杰斯特拉算法应该算是相当有名的一个算
 </div>
 </div>
 
-<div id="outline-container-org8136427" class="outline-2">
-<h2 id="org8136427"><span class="section-number-2">2</span> 算法简述</h2>
+<div id="outline-container-org8e19ccc" class="outline-2">
+<h2 id="org8e19ccc"><span class="section-number-2">2</span> 算法简述</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 迪杰斯特拉算法其实是一个很简单的算法，属于典型的贪婪算法，基本思想为：
@@ -332,8 +345,8 @@ a -&gt; b -&gt; c
 </div>
 </div>
 
-<div id="outline-container-org19eb541" class="outline-2">
-<h2 id="org19eb541"><span class="section-number-2">3</span> 算法详述</h2>
+<div id="outline-container-org6b4a4df" class="outline-2">
+<h2 id="org6b4a4df"><span class="section-number-2">3</span> 算法详述</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面了解了迪杰斯特拉算法的基本思想，接下来可以了解算法的详细过程了：
@@ -385,16 +398,16 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org5a4f2bc" class="outline-2">
-<h2 id="org5a4f2bc"><span class="section-number-2">4</span> 算法实现</h2>
+<div id="outline-container-org7474fdd" class="outline-2">
+<h2 id="org7474fdd"><span class="section-number-2">4</span> 算法实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 事实证明，只有实际动手去敲过代码的东西印象才留的深，留的久，这里简单用 Python 实现了这一算法。
 </p>
 </div>
 
-<div id="outline-container-orge044842" class="outline-3">
-<h3 id="orge044842"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
+<div id="outline-container-org18a5495" class="outline-3">
+<h3 id="org18a5495"><span class="section-number-3">4.1</span> 简单的有向无权图</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 要实现算法，首先需要有一个图结构，这里简单实现了一个有向无权图，无向图和有权图都有点麻烦 @_@
@@ -432,8 +445,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org1005e37" class="outline-3">
-<h3 id="org1005e37"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
+<div id="outline-container-org881495b" class="outline-3">
+<h3 id="org881495b"><span class="section-number-3">4.2</span> 具体的算法实现</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 利用 Python 来实现这一算法的思考过程：
@@ -515,8 +528,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-orgb80d6a4" class="outline-3">
-<h3 id="orgb80d6a4"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
+<div id="outline-container-orga3cc526" class="outline-3">
+<h3 id="orga3cc526"><span class="section-number-3">4.3</span> 可能的实现优化</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 算法的实现还是很简单的，但是很明显的，还存在优化空间，就是那个比较耗时的一步：选取最短未知顶点。
@@ -553,8 +566,8 @@ function Dijkstra(Graph, source):
 </div>
 </div>
 
-<div id="outline-container-org6824a01" class="outline-2">
-<h2 id="org6824a01"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-org50cce17" class="outline-2">
+<h2 id="org50cce17"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 全程无图的博客，还是和图结构相关的博客，阅读体验估计不太好 &gt;_&gt;
@@ -582,7 +595,7 @@ function Dijkstra(Graph, source):
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-来自 <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm#Pseudocode">Dijkstra's algorithm - Wikipedia</a>
+来自 <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode">Dijkstra's algorithm - Wikipedia</a>
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
@@ -594,14 +607,12 @@ function Dijkstra(Graph, source):
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

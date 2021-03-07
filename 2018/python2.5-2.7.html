@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python2.5-2.7的版本变化</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,37 +259,37 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc659822">1. 前言</a></li>
-<li><a href="#org7b884e3">2. Python2.5</a>
+<li><a href="#org1f4b634">1. 前言</a></li>
+<li><a href="#orgfda03b0">2. Python2.5</a>
 <ul>
-<li><a href="#org48c993a">2.1. 主要语言变化</a></li>
-<li><a href="#org7761ae6">2.2. 核心语言变化</a></li>
-<li><a href="#orgb5a0226">2.3. 其他内容</a></li>
+<li><a href="#orga00a32d">2.1. 主要语言变化</a></li>
+<li><a href="#orgf4c5e03">2.2. 核心语言变化</a></li>
+<li><a href="#orgfda6500">2.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#org57f705f">3. Python2.6</a>
+<li><a href="#org653ffa7">3. Python2.6</a>
 <ul>
-<li><a href="#org5a5088f">3.1. 主要语言变化</a></li>
-<li><a href="#orgd87eea1">3.2. 核心语言变化</a></li>
-<li><a href="#org298e862">3.3. 其他内容</a></li>
+<li><a href="#org847aee2">3.1. 主要语言变化</a></li>
+<li><a href="#orgd7ba0ad">3.2. 核心语言变化</a></li>
+<li><a href="#orgbb61101">3.3. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#org50131b8">4. Python2.7</a>
+<li><a href="#orgb0b4084">4. Python2.7</a>
 <ul>
-<li><a href="#org5ad196c">4.1. 主要变化之前</a></li>
-<li><a href="#org0ddad56">4.2. 主要语言变化</a></li>
-<li><a href="#orgcb6bdb1">4.3. 核心语言变化</a></li>
-<li><a href="#org8b66c03">4.4. 其他内容</a></li>
+<li><a href="#org3b53b29">4.1. 主要变化之前</a></li>
+<li><a href="#orgb6050c1">4.2. 主要语言变化</a></li>
+<li><a href="#org7c06736">4.3. 核心语言变化</a></li>
+<li><a href="#org2ccb63c">4.4. 其他内容</a></li>
 </ul>
 </li>
-<li><a href="#org5658d90">5. 完结感言</a></li>
-<li><a href="#orgf5f19bb">6. 相关链接</a></li>
+<li><a href="#orge7aba30">5. 完结感言</a></li>
+<li><a href="#org564f425">6. 相关链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc659822" class="outline-2">
-<h2 id="orgc659822"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org1f4b634" class="outline-2">
+<h2 id="org1f4b634"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在学习 <code>Python</code> 之前就纠结过到底是先学 <code>Python2</code> 好还是先学 <code>Python3</code> 好.
@@ -297,8 +310,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7b884e3" class="outline-2">
-<h2 id="org7b884e3"><span class="section-number-2">2</span> Python2.5</h2>
+<div id="outline-container-orgfda03b0" class="outline-2">
+<h2 id="orgfda03b0"><span class="section-number-2">2</span> Python2.5</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 虽然 《Python基础教程》 讲解的便是 <code>Python2.5</code>, 但我还是感觉有必要来了解一下
@@ -306,8 +319,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org48c993a" class="outline-3">
-<h3 id="org48c993a"><span class="section-number-3">2.1</span> 主要语言变化</h3>
+<div id="outline-container-orga00a32d" class="outline-3">
+<h3 id="orga00a32d"><span class="section-number-3">2.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>2.5</code> 对比 <code>2.4</code> 有了这些变化.
@@ -427,7 +440,6 @@ pkg/string.py
 </p>
 <pre class="example">
 from __future__ import absolute_import
-
 </pre></li>
 
 <li><p>
@@ -522,8 +534,8 @@ from __future__ import absolute_import
 </p>
 <pre class="example">
 from __future__ import with_statement
-
 </pre>
+
 
 <ul class="org-ul">
 <li><p>
@@ -724,8 +736,8 @@ BaseException       # New in Python 2.5
 </div>
 </div>
 
-<div id="outline-container-org7761ae6" class="outline-3">
-<h3 id="org7761ae6"><span class="section-number-3">2.2</span> 核心语言变化</h3>
+<div id="outline-container-orgf4c5e03" class="outline-3">
+<h3 id="orgf4c5e03"><span class="section-number-3">2.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 以下是Python 2.5对Python核心语言所做的更改.
@@ -820,7 +832,6 @@ ASCII现在是模块的默认编码.
 </p>
 <pre class="example">
 # -*- coding: utf-8 -*-
-
 </pre></li>
 
 <li><p>
@@ -851,8 +862,8 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-orgb5a0226" class="outline-3">
-<h3 id="orgb5a0226"><span class="section-number-3">2.3</span> 其他内容</h3>
+<div id="outline-container-orgfda6500" class="outline-3">
+<h3 id="orgfda6500"><span class="section-number-3">2.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 其他的内容包括: <a href="https://docs.python.org/2/whatsnew/2.5.html#new-improved-and-removed-modules">新增, 改进, 移除的模块</a>, <a href="https://docs.python.org/2/whatsnew/2.5.html#build-and-c-api-changes">Python 构建过程和 C API 的变化</a> &#x2026;
@@ -865,8 +876,8 @@ ASCII现在是模块的默认编码.
 </div>
 </div>
 
-<div id="outline-container-org57f705f" class="outline-2">
-<h2 id="org57f705f"><span class="section-number-2">3</span> Python2.6</h2>
+<div id="outline-container-org653ffa7" class="outline-2">
+<h2 id="org653ffa7"><span class="section-number-2">3</span> Python2.6</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
@@ -885,8 +896,8 @@ ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
 </p>
 </div>
 
-<div id="outline-container-org5a5088f" class="outline-3">
-<h3 id="org5a5088f"><span class="section-number-3">3.1</span> 主要语言变化</h3>
+<div id="outline-container-org847aee2" class="outline-3">
+<h3 id="org847aee2"><span class="section-number-3">3.1</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 对比 <code>2.5</code>, <code>2.6</code> 版本的 Python 多了这些变化.
@@ -902,8 +913,8 @@ ok, 搞定了 <code>2.5</code>, 可以进入 <code>2.6</code> 了 ！
 </p>
 <pre class="example">
 from __future__ import with_statement
-
 </pre>
+
 
 <p>
 可喜可贺, 但是其他内容貌似没有太多变化 !
@@ -1088,16 +1099,16 @@ from __future__ import with_statement
 </p>
 <pre class="example">
 from __future__ import print_function
-
 </pre>
+
 
 <p>
 <code>print</code> 函数是这样的:
 </p>
 <pre class="example">
 def print(*args, sep=' ', end='\n', file=None)
-
 </pre>
+
 
 <p>
 参数说明:
@@ -1455,8 +1466,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-orgd87eea1" class="outline-3">
-<h3 id="orgd87eea1"><span class="section-number-3">3.2</span> 核心语言变化</h3>
+<div id="outline-container-orgd7ba0ad" class="outline-3">
+<h3 id="orgd7ba0ad"><span class="section-number-3">3.2</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 以下是python核心语言的小变动.
@@ -1514,7 +1525,7 @@ Fraction(5, 3)
 
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">C</span>(<span class="org-builtin">object</span>):
-    <span class="org-type">@property</span>
+    @<span class="org-builtin">property</span>
     <span class="org-keyword">def</span> <span class="org-function-name">x</span>(<span class="org-keyword">self</span>):
         <span class="org-keyword">return</span> <span class="org-keyword">self</span>._x
 
@@ -1573,8 +1584,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-org298e862" class="outline-3">
-<h3 id="org298e862"><span class="section-number-3">3.3</span> 其他内容</h3>
+<div id="outline-container-orgbb61101" class="outline-3">
+<h3 id="orgbb61101"><span class="section-number-3">3.3</span> 其他内容</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 同上, 文档链接:
@@ -1584,8 +1595,8 @@ Fraction(5, 3)
 </div>
 </div>
 
-<div id="outline-container-org50131b8" class="outline-2">
-<h2 id="org50131b8"><span class="section-number-2">4</span> Python2.7</h2>
+<div id="outline-container-orgb0b4084" class="outline-2">
+<h2 id="orgb0b4084"><span class="section-number-2">4</span> Python2.7</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 终于 <code>2.7</code> 了&#x2026;
@@ -1597,8 +1608,8 @@ Fraction(5, 3)
 </p>
 </div>
 
-<div id="outline-container-org5ad196c" class="outline-3">
-<h3 id="org5ad196c"><span class="section-number-3">4.1</span> 主要变化之前</h3>
+<div id="outline-container-org3b53b29" class="outline-3">
+<h3 id="org3b53b29"><span class="section-number-3">4.1</span> 主要变化之前</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 官方文档在正式讲解 <code>2.7</code> 版本的新功能前, 还讲了一些其他的东西 !
@@ -1623,8 +1634,8 @@ PS: 写程序的时候尽可能的考虑与 <code>3.x</code> 版本兼容吧 !
 </div>
 </div>
 
-<div id="outline-container-org0ddad56" class="outline-3">
-<h3 id="org0ddad56"><span class="section-number-3">4.2</span> 主要语言变化</h3>
+<div id="outline-container-orgb6050c1" class="outline-3">
+<h3 id="orgb6050c1"><span class="section-number-3">4.2</span> 主要语言变化</h3>
 <div class="outline-text-3" id="text-4-2">
 <ol class="org-ol">
 <li><p>
@@ -1761,7 +1772,7 @@ parser.add_argument(nargs=<span class="org-string">'*'</span>, action=<span clas
                     <span class="org-builtin">help</span>=<span class="org-string">'input filenames (default is stdin)'</span>)
 
 <span class="org-variable-name">args</span> = parser.parse_args()
-<span class="org-keyword">print</span> args.__dict__
+<span class="org-keyword">print</span> args.<span class="org-builtin">__dict__</span>
 </pre>
 </div>
 
@@ -1955,8 +1966,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-orgcb6bdb1" class="outline-3">
-<h3 id="orgcb6bdb1"><span class="section-number-3">4.3</span> 核心语言变化</h3>
+<div id="outline-container-org7c06736" class="outline-3">
+<h3 id="org7c06736"><span class="section-number-3">4.3</span> 核心语言变化</h3>
 <div class="outline-text-3" id="text-4-3">
 <ul class="org-ul">
 <li><p>
@@ -2067,8 +2078,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-org8b66c03" class="outline-3">
-<h3 id="org8b66c03"><span class="section-number-3">4.4</span> 其他内容</h3>
+<div id="outline-container-org2ccb63c" class="outline-3">
+<h3 id="org2ccb63c"><span class="section-number-3">4.4</span> 其他内容</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 同上上: <a href="https://docs.python.org/2/whatsnew/2.7.html#new-and-improved-modules">新增和改进模块</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#build-and-c-api-changes">构建过程和 C API</a>, <a href="https://docs.python.org/2/whatsnew/2.7.html#porting-to-python-2-7">迁移到2.7</a>
@@ -2076,8 +2087,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 </div>
-<div id="outline-container-org5658d90" class="outline-2">
-<h2 id="org5658d90"><span class="section-number-2">5</span> 完结感言</h2>
+<div id="outline-container-orge7aba30" class="outline-2">
+<h2 id="orge7aba30"><span class="section-number-2">5</span> 完结感言</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 终于&#x2026;
@@ -2109,8 +2120,8 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 </div>
 
-<div id="outline-container-orgf5f19bb" class="outline-2">
-<h2 id="orgf5f19bb"><span class="section-number-2">6</span> 相关链接</h2>
+<div id="outline-container-org564f425" class="outline-2">
+<h2 id="org564f425"><span class="section-number-2">6</span> 相关链接</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="https://docs.python.org/2/whatsnew/2.5.html">What’s New in Python 2.5</a></li>
@@ -2122,14 +2133,12 @@ PS: 你可以通过视图的 <code>readonly</code> 属性来判断它是否是�
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

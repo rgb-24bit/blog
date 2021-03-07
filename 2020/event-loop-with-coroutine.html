@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-01-20 一 16:43 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>事件循环和协程</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +259,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org16d1ad3">1. 前言</a></li>
-<li><a href="#org3fe2ded">2. Python 中异步编程模型的特殊性</a></li>
-<li><a href="#orgc426133">3. 协程的基本认识</a></li>
-<li><a href="#orga547deb">4. 简单事件循环的实现</a></li>
-<li><a href="#orgee055fd">5. 简单事件循环的实现 · 修</a></li>
-<li><a href="#org89664ac">6. 结语</a></li>
-<li><a href="#orgd681309">7. 参考链接</a></li>
+<li><a href="#org211d748">1. 前言</a></li>
+<li><a href="#org4153596">2. Python 中异步编程模型的特殊性</a></li>
+<li><a href="#orga0fe9bc">3. 协程的基本认识</a></li>
+<li><a href="#orgf524bd7">4. 简单事件循环的实现</a></li>
+<li><a href="#org54ef34b">5. 简单事件循环的实现 · 修</a></li>
+<li><a href="#org3237a17">6. 结语</a></li>
+<li><a href="#org9f846ed">7. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org16d1ad3" class="outline-2">
-<h2 id="org16d1ad3"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org211d748" class="outline-2">
+<h2 id="org211d748"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 第一次接触异步编程这个概念是在 <code>Python</code> 里面，去年的时候就因为不清楚 <code>Python</code> 中异步编程的实现原理找了很多资料研究，但最后也没有搞得很清楚。
@@ -284,8 +297,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3fe2ded" class="outline-2">
-<h2 id="org3fe2ded"><span class="section-number-2">2</span> Python 中异步编程模型的特殊性</h2>
+<div id="outline-container-org4153596" class="outline-2">
+<h2 id="org4153596"><span class="section-number-2">2</span> Python 中异步编程模型的特殊性</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 我先后接触过了 Python、JavaScript<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 和 Java 中的异步编程，其中，Python 的是最为特殊的一个，因为它是 <b>单线程</b> 和 <b>异步阻塞</b> 的。
@@ -321,8 +334,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc426133" class="outline-2">
-<h2 id="orgc426133"><span class="section-number-2">3</span> 协程的基本认识</h2>
+<div id="outline-container-orga0fe9bc" class="outline-2">
+<h2 id="orga0fe9bc"><span class="section-number-2">3</span> 协程的基本认识</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Python 中的协程是通过生成器来实现的，但是，基本上所有博客将协程的时候都会说的一句话，协程不等于生成器，它们只是长得像：
@@ -459,8 +472,8 @@ StopIteration: coroutine 1
 </div>
 </div>
 
-<div id="outline-container-orga547deb" class="outline-2">
-<h2 id="orga547deb"><span class="section-number-2">4</span> 简单事件循环的实现</h2>
+<div id="outline-container-orgf524bd7" class="outline-2">
+<h2 id="orgf524bd7"><span class="section-number-2">4</span> 简单事件循环的实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 本来想将 <code>Future &amp; Task</code> 和 <code>EventLoop</code> 分成两节的，结果 <code>Task</code> 和 <code>EventLoop</code> 耦合在了一起，只好合在一起了，下面是代码：
@@ -584,8 +597,8 @@ hello world
 </div>
 </div>
 
-<div id="outline-container-orgee055fd" class="outline-2">
-<h2 id="orgee055fd"><span class="section-number-2">5</span> 简单事件循环的实现 · 修</h2>
+<div id="outline-container-org54ef34b" class="outline-2">
+<h2 id="org54ef34b"><span class="section-number-2">5</span> 简单事件循环的实现 · 修</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 发现在 <code>Python</code> 这边碰壁后，我就想到了去 <code>JavaScript</code> 这边取取经，然后，我就在阮老师的 <a href="https://es6.ruanyifeng.com/#docs/generator-async">Generator 函数的异步应用</a> 教程里面找到了自己代码的问题，并成功解决  (≧▽≦)/
@@ -736,8 +749,8 @@ hello world
 </div>
 </div>
 
-<div id="outline-container-org89664ac" class="outline-2">
-<h2 id="org89664ac"><span class="section-number-2">6</span> 结语</h2>
+<div id="outline-container-org3237a17" class="outline-2">
+<h2 id="org3237a17"><span class="section-number-2">6</span> 结语</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 折腾了一圈后结果还是只能得到一份存在问题的代码，和去年的时候差不多，但比去年好的是，多少多了一点思路。
@@ -749,8 +762,8 @@ hello world
 </div>
 </div>
 
-<div id="outline-container-orgd681309" class="outline-2">
-<h2 id="orgd681309"><span class="section-number-2">7</span> 参考链接</h2>
+<div id="outline-container-org9f846ed" class="outline-2">
+<h2 id="org9f846ed"><span class="section-number-2">7</span> 参考链接</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://zhuanlan.zhihu.com/p/25228075">从 0 到 1，Python 异步编程的演进之路 - 知乎</a></li>
@@ -770,14 +783,12 @@ ES6 中 <code>async/await</code> 的原理还没有怎么了解过，因此这�
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

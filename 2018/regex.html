@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>正则表达式</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,34 +281,34 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf0e99f8">1. 简介</a></li>
-<li><a href="#org27fe4e1">2. 简单的匹配</a></li>
-<li><a href="#org2241149">3. 子表达式</a></li>
-<li><a href="#orgc170302">4. 回溯引用</a>
+<li><a href="#org50b1ea8">1. 简介</a></li>
+<li><a href="#orgdf53190">2. 简单的匹配</a></li>
+<li><a href="#org1e82c76">3. 子表达式</a></li>
+<li><a href="#org860cb58">4. 回溯引用</a>
 <ul>
-<li><a href="#orga29a17b">4.1. 回溯引用在替换操作中的使用</a></li>
+<li><a href="#orgd90b4ae">4.1. 回溯引用在替换操作中的使用</a></li>
 </ul>
 </li>
-<li><a href="#org58314d3">5. 前后查找</a>
+<li><a href="#orgfbec608">5. 前后查找</a>
 <ul>
-<li><a href="#org0809329">5.1. 向前查找</a></li>
-<li><a href="#org6783f0a">5.2. 向后查找</a></li>
-<li><a href="#org5cf3327">5.3. 对前后查找取非</a></li>
+<li><a href="#org617cc3c">5.1. 向前查找</a></li>
+<li><a href="#orgc1fadb9">5.2. 向后查找</a></li>
+<li><a href="#orgc0c3323">5.3. 对前后查找取非</a></li>
 </ul>
 </li>
-<li><a href="#orge186b8c">6. 嵌入条件</a>
+<li><a href="#org253992e">6. 嵌入条件</a>
 <ul>
-<li><a href="#orga082fcc">6.1. 回溯引用条件</a></li>
-<li><a href="#orge22adef">6.2. 前后查找条件</a></li>
+<li><a href="#org99db346">6.1. 回溯引用条件</a></li>
+<li><a href="#org2f1ba52">6.2. 前后查找条件</a></li>
 </ul>
 </li>
-<li><a href="#orgc417057">7. 正则表达式在线测试</a></li>
+<li><a href="#org2cfd65a">7. 正则表达式在线测试</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf0e99f8" class="outline-2">
-<h2 id="orgf0e99f8"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org50b1ea8" class="outline-2">
+<h2 id="org50b1ea8"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 正则表达式(regular expression, 缩写regex) 是文本处理方面功能最强大的工具之一.
@@ -307,8 +320,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org27fe4e1" class="outline-2">
-<h2 id="org27fe4e1"><span class="section-number-2">2</span> 简单的匹配</h2>
+<div id="outline-container-orgdf53190" class="outline-2">
+<h2 id="orgdf53190"><span class="section-number-2">2</span> 简单的匹配</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 有时, 简单的组合正则表达式的 <b>元字符</b> 和 <b>纯文本</b> 便足够解决很多问题.
@@ -684,8 +697,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2241149" class="outline-2">
-<h2 id="org2241149"><span class="section-number-2">3</span> 子表达式</h2>
+<div id="outline-container-org1e82c76" class="outline-2">
+<h2 id="org1e82c76"><span class="section-number-2">3</span> 子表达式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 子表达式可以对表达式进行 <b>分组</b> 和 <b>归类</b>.
@@ -704,16 +717,16 @@ for the JavaScript code in this tag.
 </p>
 <pre class="example">
 The ip address is: [12.159.46.200]
-
 </pre>
+
 
 <p>
 我们要从中匹配出 <code>IP</code> 地址, 简单的做法可以像这样:
 </p>
 <pre class="example">
 \d{1, 3}\.\d{1, 3}\.\d{1, 3}\.\d{1, 3}
-
 </pre>
+
 
 <p>
 <code>\d{1, 3}</code> 匹配连续的一到三个数字, <code>\.</code> 匹配字符 <code>.</code>, 这时, 虽然我们可以从示例文本中匹配出 <code>IP</code> 地址, 但是很繁琐.
@@ -724,8 +737,8 @@ The ip address is: [12.159.46.200]
 </p>
 <pre class="example">
 (\d{1, 3}\.){3}\d{1, 3}
-
 </pre>
+
 
 <p>
 <code>(\d{1, 3}\.){3}</code> 表示匹配连续的一到三个数字和一个点三次, 而 <code>(\d{1, 3})\.)</code>
@@ -747,8 +760,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-orgc170302" class="outline-2">
-<h2 id="orgc170302"><span class="section-number-2">4</span> 回溯引用</h2>
+<div id="outline-container-org860cb58" class="outline-2">
+<h2 id="org860cb58"><span class="section-number-2">4</span> 回溯引用</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>回溯引用</b> 允许正则表达式模式引用前面部分中定义的 <b>子表达式</b> 匹配的 <b>结果</b>.
@@ -775,16 +788,16 @@ The ip address is: [12.159.46.200]
 </p>
 <pre class="example">
 &lt;h([1-6])&gt;.*?&lt;/h\1&gt;
-
 </pre>
+
 
 <p>
 这个匹配模式使用的 <b>回溯引用</b>, <code>\1</code> 引用了子表达式 <code>([1-6])</code> 的匹配 <b>结果</b>, 当前面的子表达式匹配到一个数字的时候, 回溯引用代表的数字便是匹配到的这一个数字. 此时只有前后相同时才可以匹配成功.
 </p>
 </div>
 
-<div id="outline-container-orga29a17b" class="outline-3">
-<h3 id="orga29a17b"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
+<div id="outline-container-orgd90b4ae" class="outline-3">
+<h3 id="orgd90b4ae"><span class="section-number-3">4.1</span> 回溯引用在替换操作中的使用</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 你可以在替换时引用匹配时使用的子表达式.
@@ -814,8 +827,8 @@ The ip address is: [12.159.46.200]
 </p>
 <pre class="example">
 +123+, +456+, +789+....
-
 </pre>
+
 
 <p>
 <b>注</b>: <code>JavaScript</code> 请使用 <code>$</code> 替换 <code>\</code>.
@@ -905,8 +918,8 @@ The ip address is: [12.159.46.200]
 </div>
 </div>
 
-<div id="outline-container-org58314d3" class="outline-2">
-<h2 id="org58314d3"><span class="section-number-2">5</span> 前后查找</h2>
+<div id="outline-container-orgfbec608" class="outline-2">
+<h2 id="orgfbec608"><span class="section-number-2">5</span> 前后查找</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 使用正则表达式标记要匹配的文本的位置, 对该位置的前后内容进行查找.
@@ -921,8 +934,8 @@ The ip address is: [12.159.46.200]
 </p>
 </div>
 
-<div id="outline-container-org0809329" class="outline-3">
-<h3 id="org0809329"><span class="section-number-3">5.1</span> 向前查找</h3>
+<div id="outline-container-org617cc3c" class="outline-3">
+<h3 id="org617cc3c"><span class="section-number-3">5.1</span> 向前查找</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 向前查找指定了一个必须匹配但不在结果中返回的模式.
@@ -960,8 +973,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-org6783f0a" class="outline-3">
-<h3 id="org6783f0a"><span class="section-number-3">5.2</span> 向后查找</h3>
+<div id="outline-container-orgc1fadb9" class="outline-3">
+<h3 id="orgc1fadb9"><span class="section-number-3">5.2</span> 向后查找</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 向后查找类似于向前查找, 操作符是: <code>?&lt;=</code>
@@ -972,13 +985,12 @@ ftp
 </p>
 <pre class="example">
 (?&lt;=&lt;title&gt;).*?(?=&lt;/title&gt;)
-
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org5cf3327" class="outline-3">
-<h3 id="org5cf3327"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
+<div id="outline-container-orgc0c3323" class="outline-3">
+<h3 id="orgc0c3323"><span class="section-number-3">5.3</span> 对前后查找取非</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 前面两种查找方式为: <code>正向前查找</code> 和 <code>正向后查找</code>.
@@ -1004,8 +1016,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orge186b8c" class="outline-2">
-<h2 id="orge186b8c"><span class="section-number-2">6</span> 嵌入条件</h2>
+<div id="outline-container-org253992e" class="outline-2">
+<h2 id="org253992e"><span class="section-number-2">6</span> 嵌入条件</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>注</b>: 并非所有正则表达式实现都支持条件处理.
@@ -1024,8 +1036,8 @@ ftp
 </ul>
 </div>
 
-<div id="outline-container-orga082fcc" class="outline-3">
-<h3 id="orga082fcc"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
+<div id="outline-container-org99db346" class="outline-3">
+<h3 id="org99db346"><span class="section-number-3">6.1</span> 回溯引用条件</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 回溯引用条件只在前面的子表达式匹配取得成功的情况下才允许使用一个表达式.
@@ -1054,8 +1066,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orge22adef" class="outline-3">
-<h3 id="orge22adef"><span class="section-number-3">6.2</span> 前后查找条件</h3>
+<div id="outline-container-org2f1ba52" class="outline-3">
+<h3 id="org2f1ba52"><span class="section-number-3">6.2</span> 前后查找条件</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 前后查找条件只在一个向前查找或一个向后查找取得成功的情况下才允许使用一个表达式.
@@ -1072,8 +1084,8 @@ ftp
 </div>
 </div>
 
-<div id="outline-container-orgc417057" class="outline-2">
-<h2 id="orgc417057"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
+<div id="outline-container-org2cfd65a" class="outline-2">
+<h2 id="org2cfd65a"><span class="section-number-2">7</span> 正则表达式在线测试</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li><a href="https://c.runoob.com/front-end/854">正则表达式在线测试|菜鸟教程</a></li>
@@ -1083,14 +1095,12 @@ ftp
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-02-15 六 14:12 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 动态代理的简单使用和理解</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,26 +259,26 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga06c972">1. 前言</a></li>
-<li><a href="#org65dcf86">2. JDK 动态代理</a>
+<li><a href="#org021a896">1. 前言</a></li>
+<li><a href="#org425f48c">2. JDK 动态代理</a>
 <ul>
-<li><a href="#org0fbf5d0">2.1. 代理类</a></li>
+<li><a href="#org6b3b77b">2.1. 代理类</a></li>
 </ul>
 </li>
-<li><a href="#orgeba9df6">3. CGLIB 动态代理</a>
+<li><a href="#org2331f09">3. CGLIB 动态代理</a>
 <ul>
-<li><a href="#org0b63a61">3.1. 代理类</a></li>
-<li><a href="#org4b5d693">3.2. Spring @Configuration</a></li>
+<li><a href="#org807dd83">3.1. 代理类</a></li>
+<li><a href="#orge888cf0">3.2. Spring @Configuration</a></li>
 </ul>
 </li>
-<li><a href="#org205fa66">4. 小结</a></li>
-<li><a href="#org2210565">5. 结语</a></li>
+<li><a href="#org641a487">4. 小结</a></li>
+<li><a href="#orgde8c197">5. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga06c972" class="outline-2">
-<h2 id="orga06c972"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org021a896" class="outline-2">
+<h2 id="org021a896"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在 Java 中，动态代理是一个很常用的功能，虽然说一般不需要自己直接去用，但是了解它们是怎么回事还是很有必要的。
@@ -277,8 +290,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org65dcf86" class="outline-2">
-<h2 id="org65dcf86"><span class="section-number-2">2</span> JDK 动态代理</h2>
+<div id="outline-container-org425f48c" class="outline-2">
+<h2 id="org425f48c"><span class="section-number-2">2</span> JDK 动态代理</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 JDK 动态代理依赖于 <b>接口</b> 来确定它需要代理的方法，使用时可以分为以下几个角色：
@@ -441,8 +454,8 @@ After invocation method targetMethodB
 </pre>
 </div>
 
-<div id="outline-container-org0fbf5d0" class="outline-3">
-<h3 id="org0fbf5d0"><span class="section-number-3">2.1</span> 代理类</h3>
+<div id="outline-container-org6b3b77b" class="outline-3">
+<h3 id="org6b3b77b"><span class="section-number-3">2.1</span> 代理类</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 在运行代码时可以将下面这行代码放在最前面查看 <code>Proxy</code> 动态生成的代理类是怎样的：
@@ -542,8 +555,8 @@ After invocation method targetMethodB
 </div>
 </div>
 
-<div id="outline-container-orgeba9df6" class="outline-2">
-<h2 id="orgeba9df6"><span class="section-number-2">3</span> CGLIB 动态代理</h2>
+<div id="outline-container-org2331f09" class="outline-2">
+<h2 id="org2331f09"><span class="section-number-2">3</span> CGLIB 动态代理</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 CGLIB 动态代理和 JDK 动态代理类似，只不过 CGLIB 动态代理是基于类的，不需要实现接口，简单使用的话只需要定义一个 <code>MethodInterceptor</code> 就可以了，相当于 JDK 动态代理中的 <code>InvocationHandler</code>.
@@ -607,8 +620,8 @@ After invocation method targetMethodB
 </pre>
 </div>
 
-<div id="outline-container-org0b63a61" class="outline-3">
-<h3 id="org0b63a61"><span class="section-number-3">3.1</span> 代理类</h3>
+<div id="outline-container-org807dd83" class="outline-3">
+<h3 id="org807dd83"><span class="section-number-3">3.1</span> 代理类</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 对于 <code>CGLIB</code> 来说可以设置 <code>DebuggingClassWriter.DEBUG_LOCATION_PROPERTY</code> 属性的值来保存生成的代理类<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>：
@@ -705,8 +718,8 @@ After invocation method targetMethodB
 </div>
 </div>
 
-<div id="outline-container-org4b5d693" class="outline-3">
-<h3 id="org4b5d693"><span class="section-number-3">3.2</span> Spring @Configuration</h3>
+<div id="outline-container-orge888cf0" class="outline-3">
+<h3 id="orge888cf0"><span class="section-number-3">3.2</span> Spring @Configuration</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 在使用 Spring 的时候我们可以通过如下方式定义 Bean：
@@ -743,8 +756,8 @@ After invocation method targetMethodB
 </div>
 </div>
 
-<div id="outline-container-org205fa66" class="outline-2">
-<h2 id="org205fa66"><span class="section-number-2">4</span> 小结</h2>
+<div id="outline-container-org641a487" class="outline-2">
+<h2 id="org641a487"><span class="section-number-2">4</span> 小结</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 这里汇总一下 JDK 动态代理和 CGLIB 动态代理的代理方式：
@@ -760,8 +773,8 @@ After invocation method targetMethodB
 </div>
 </div>
 
-<div id="outline-container-org2210565" class="outline-2">
-<h2 id="org2210565"><span class="section-number-2">5</span> 结语</h2>
+<div id="outline-container-orgde8c197" class="outline-2">
+<h2 id="orgde8c197"><span class="section-number-2">5</span> 结语</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 最开始接触动态代理这个概念是在看《Java 核心技术卷》这本书的时候，当时刚开始学 Java 没多久，看到这个东西后的想法就是，这么不方便的东西，谁没事会去用啊 ‍→_→
@@ -793,14 +806,12 @@ After invocation method targetMethodB
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

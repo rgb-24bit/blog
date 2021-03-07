@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python 内置异常</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,27 +259,27 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6ce1276">1. 简介</a></li>
-<li><a href="#org56e4f26">2. 常见异常</a></li>
-<li><a href="#org1747e1e">3. 自定义异常</a></li>
-<li><a href="#org2eb9b41">4. Python2 内置异常</a>
+<li><a href="#org4818e43">1. 简介</a></li>
+<li><a href="#org2e3753a">2. 常见异常</a></li>
+<li><a href="#org3a7deab">3. 自定义异常</a></li>
+<li><a href="#orgf84a899">4. Python2 内置异常</a>
 <ul>
-<li><a href="#orgda75664">4.1. 完整异常列表</a></li>
-<li><a href="#org1193b1e">4.2. 异常层次结构</a></li>
+<li><a href="#orge40ae47">4.1. 完整异常列表</a></li>
+<li><a href="#orge7982dd">4.2. 异常层次结构</a></li>
 </ul>
 </li>
-<li><a href="#org5389a9c">5. Python3 内置异常</a>
+<li><a href="#orgdab1b67">5. Python3 内置异常</a>
 <ul>
-<li><a href="#org3e44c6d">5.1. 完整异常列表</a></li>
-<li><a href="#org121b8a3">5.2. 异常层次结构</a></li>
+<li><a href="#orgde09c6f">5.1. 完整异常列表</a></li>
+<li><a href="#org7e675c8">5.2. 异常层次结构</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6ce1276" class="outline-2">
-<h2 id="org6ce1276"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org4818e43" class="outline-2">
+<h2 id="org4818e43"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>异常处理</b> 是一个很重要的功能， 然而， 我平时往往会因为不知道可能触发的异常类型而直接对所有异常进行处理。 这样虽然让程序运行了起来， 但是很明显，这样做是不合适的。
@@ -282,8 +295,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org56e4f26" class="outline-2">
-<h2 id="org56e4f26"><span class="section-number-2">2</span> 常见异常</h2>
+<div id="outline-container-org2e3753a" class="outline-2">
+<h2 id="org2e3753a"><span class="section-number-2">2</span> 常见异常</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 网上有人总结了 <code>Python</code> 的常见异常， 这里记录下来：
@@ -372,8 +385,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1747e1e" class="outline-2">
-<h2 id="org1747e1e"><span class="section-number-2">3</span> 自定义异常</h2>
+<div id="outline-container-org3a7deab" class="outline-2">
+<h2 id="org3a7deab"><span class="section-number-2">3</span> 自定义异常</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 定义自己的异常是很有用的， 能够提供更清楚的 <b>异常信息</b>, 也能添加内置异常不具有的功能。
@@ -391,7 +404,7 @@ for the JavaScript code in this tag.
 Help on <span class="org-keyword">class</span> <span class="org-type">Exception</span> <span class="org-keyword">in</span> module builtins:
 
 <span class="org-keyword">class</span> <span class="org-type">Exception</span>(<span class="org-type">BaseException</span>)
- |  Common base <span class="org-keyword">class</span> <span class="org-keyword">for</span> <span class="org-builtin">all</span> non-<span class="org-constant">exit</span> exceptions.
+ |  Common base <span class="org-keyword">class</span> <span class="org-type">for</span> <span class="org-builtin">all</span> non-<span class="org-constant">exit</span> exceptions.
  |
  |  __init__(<span class="org-keyword">self</span>, /, *args, **kwargs)
  |      Initialize <span class="org-keyword">self</span>.  See <span class="org-builtin">help</span>(<span class="org-builtin">type</span>(<span class="org-keyword">self</span>)) <span class="org-keyword">for</span> accurate signature.
@@ -473,12 +486,12 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org2eb9b41" class="outline-2">
-<h2 id="org2eb9b41"><span class="section-number-2">4</span> Python2 内置异常</h2>
+<div id="outline-container-orgf84a899" class="outline-2">
+<h2 id="orgf84a899"><span class="section-number-2">4</span> Python2 内置异常</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgda75664" class="outline-3">
-<h3 id="orgda75664"><span class="section-number-3">4.1</span> 完整异常列表</h3>
+<div id="outline-container-orge40ae47" class="outline-3">
+<h3 id="orge40ae47"><span class="section-number-3">4.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -560,8 +573,8 @@ Traceback (most recent call last):
 </div>
 </div>
 
-<div id="outline-container-org1193b1e" class="outline-3">
-<h3 id="org1193b1e"><span class="section-number-3">4.2</span> 异常层次结构</h3>
+<div id="outline-container-orge7982dd" class="outline-3">
+<h3 id="orge7982dd"><span class="section-number-3">4.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-4-2">
 <pre class="example">
 BaseException
@@ -619,8 +632,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org5389a9c" class="outline-2">
-<h2 id="org5389a9c"><span class="section-number-2">5</span> Python3 内置异常</h2>
+<div id="outline-container-orgdab1b67" class="outline-2">
+<h2 id="orgdab1b67"><span class="section-number-2">5</span> Python3 内置异常</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <code>Python3</code> 和 <code>Python2</code> 不兼容， 异常处理方面， <code>Python3</code> 也对异常结构进行了一些调整。
@@ -634,8 +647,8 @@ BaseException
 </ul>
 </div>
 
-<div id="outline-container-org3e44c6d" class="outline-3">
-<h3 id="org3e44c6d"><span class="section-number-3">5.1</span> 完整异常列表</h3>
+<div id="outline-container-orgde09c6f" class="outline-3">
+<h3 id="orgde09c6f"><span class="section-number-3">5.1</span> 完整异常列表</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><b>BaseException</b> &#x2013; 所有内建的异常的基类
@@ -734,8 +747,8 @@ BaseException
 </div>
 </div>
 
-<div id="outline-container-org121b8a3" class="outline-3">
-<h3 id="org121b8a3"><span class="section-number-3">5.2</span> 异常层次结构</h3>
+<div id="outline-container-org7e675c8" class="outline-3">
+<h3 id="org7e675c8"><span class="section-number-3">5.2</span> 异常层次结构</h3>
 <div class="outline-text-3" id="text-5-2">
 <pre class="example">
 BaseException
@@ -809,14 +822,12 @@ BaseException
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

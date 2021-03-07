@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Win32 API 窗口程序</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,28 +259,28 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org20af4c4">1. 前言</a></li>
-<li><a href="#org6a95bef">2. 基本内容</a>
+<li><a href="#orgbe17cdb">1. 前言</a></li>
+<li><a href="#orgc0a80d1">2. 基本内容</a>
 <ul>
-<li><a href="#org9955c26">2.1. 类型定义</a></li>
-<li><a href="#org98fb744">2.2. 匈牙利命名法</a></li>
-<li><a href="#org3e9eee5">2.3. 使用字符串</a></li>
-<li><a href="#orgcc29915">2.4. 应用程序入口: WinMain</a></li>
-<li><a href="#org0789371">2.5. 关于句柄</a></li>
+<li><a href="#orgec30cc6">2.1. 类型定义</a></li>
+<li><a href="#org38477ba">2.2. 匈牙利命名法</a></li>
+<li><a href="#org7eaba8a">2.3. 使用字符串</a></li>
+<li><a href="#org7cb825c">2.4. 应用程序入口: WinMain</a></li>
+<li><a href="#org4a23b60">2.5. 关于句柄</a></li>
 </ul>
 </li>
-<li><a href="#org65b8359">3. 简单的窗口程序</a>
+<li><a href="#org5455e68">3. 简单的窗口程序</a>
 <ul>
-<li><a href="#org3ed2a0c">3.1. 代码理解</a></li>
+<li><a href="#orgeda0712">3.1. 代码理解</a></li>
 </ul>
 </li>
-<li><a href="#org4274b43">4. 参考链接</a></li>
+<li><a href="#orge38132a">4. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org20af4c4" class="outline-2">
-<h2 id="org20af4c4"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgbe17cdb" class="outline-2">
+<h2 id="orgbe17cdb"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 之前因为一些原因放弃了学习 <code>Win32 API</code> 来编写图形程序， 虽然还是不打算深入学习
@@ -276,12 +289,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6a95bef" class="outline-2">
-<h2 id="org6a95bef"><span class="section-number-2">2</span> 基本内容</h2>
+<div id="outline-container-orgc0a80d1" class="outline-2">
+<h2 id="orgc0a80d1"><span class="section-number-2">2</span> 基本内容</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org9955c26" class="outline-3">
-<h3 id="org9955c26"><span class="section-number-3">2.1</span> 类型定义</h3>
+<div id="outline-container-orgec30cc6" class="outline-3">
+<h3 id="orgec30cc6"><span class="section-number-3">2.1</span> 类型定义</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>Win32 API</code> 预先定义了一些类型， 编写程序之前了解这些是很有必要的。
@@ -424,8 +437,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org98fb744" class="outline-3">
-<h3 id="org98fb744"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
+<div id="outline-container-org38477ba" class="outline-3">
+<h3 id="org38477ba"><span class="section-number-3">2.2</span> 匈牙利命名法</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 <code>Win32 API</code> 中采用 <a href="https://zh.wikipedia.org/wiki/%E5%8C%88%E7%89%99%E5%88%A9%E5%91%BD%E5%90%8D%E6%B3%95">匈牙利命名法</a>, 每个变量名由一个或多个小写字母开始。 这些字母有助于记忆变量的类型和用途。
@@ -439,8 +452,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3e9eee5" class="outline-3">
-<h3 id="org3e9eee5"><span class="section-number-3">2.3</span> 使用字符串</h3>
+<div id="outline-container-org7eaba8a" class="outline-3">
+<h3 id="org7eaba8a"><span class="section-number-3">2.3</span> 使用字符串</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>Windows</code> 系统的使用者遍布全世界， 仅仅使用 <code>ANSI</code> 字符是满足不了需求的。
@@ -590,8 +603,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-orgcc29915" class="outline-3">
-<h3 id="orgcc29915"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
+<div id="outline-container-org7cb825c" class="outline-3">
+<h3 id="org7cb825c"><span class="section-number-3">2.4</span> 应用程序入口: WinMain</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>C</code> 语言的入口函数是 <code>main</code>, 而 <code>Win32 Api</code> 程序的入口函数应该是 <code>WinMain</code>.
@@ -617,8 +630,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-org0789371" class="outline-3">
-<h3 id="org0789371"><span class="section-number-3">2.5</span> 关于句柄</h3>
+<div id="outline-container-org4a23b60" class="outline-3">
+<h3 id="org4a23b60"><span class="section-number-3">2.5</span> 关于句柄</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 <b>句柄</b> 在 <code>Windows</code> 中应该是一个比较重要的概念， 当初在学习的时候把我绕了一圈还晕乎乎的。
@@ -647,8 +660,8 @@ SetWindowTextA(<span class="org-string">"My Application"</span>);       <span cl
 </div>
 </div>
 
-<div id="outline-container-org65b8359" class="outline-2">
-<h2 id="org65b8359"><span class="section-number-2">3</span> 简单的窗口程序</h2>
+<div id="outline-container-org5455e68" class="outline-2">
+<h2 id="org5455e68"><span class="section-number-2">3</span> 简单的窗口程序</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-C"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;windows.h&gt;</span>
@@ -758,8 +771,8 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </p>
 </div>
 
-<div id="outline-container-org3ed2a0c" class="outline-3">
-<h3 id="org3ed2a0c"><span class="section-number-3">3.1</span> 代码理解</h3>
+<div id="outline-container-orgeda0712" class="outline-3">
+<h3 id="orgeda0712"><span class="section-number-3">3.1</span> 代码理解</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 虽然是一个简单的窗口程序， 但是 <code>Win32</code> 窗口程序的基本框架和这个程序是基本相同的， 基本流程就是：
@@ -829,8 +842,8 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </div>
 </div>
 
-<div id="outline-container-org4274b43" class="outline-2">
-<h2 id="org4274b43"><span class="section-number-2">4</span> 参考链接</h2>
+<div id="outline-container-orge38132a" class="outline-2">
+<h2 id="orge38132a"><span class="section-number-2">4</span> 参考链接</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://msdn.microsoft.com/library/windows/desktop/bg126470.aspx?f=255&amp;MSPPError=-2147217396">Desktop Programming</a></li>
@@ -841,14 +854,12 @@ LRESULT <span class="org-type">CALLBACK</span> <span class="org-function-name">W
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>设计模式之工厂模式</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,19 +259,19 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org01acc69">1. 前言</a></li>
-<li><a href="#org634d742">2. 三个面向对象设计原则</a></li>
-<li><a href="#org2073870">3. 简单工厂模式</a></li>
-<li><a href="#org1135ebd">4. 工厂方法模式</a></li>
-<li><a href="#org2521ea6">5. 抽象工厂模式</a></li>
-<li><a href="#org976cb6a">6. 综合理解</a></li>
-<li><a href="#org572d6e8">7. 结语</a></li>
+<li><a href="#org7921757">1. 前言</a></li>
+<li><a href="#org49e30db">2. 三个面向对象设计原则</a></li>
+<li><a href="#org6bda0d7">3. 简单工厂模式</a></li>
+<li><a href="#org0111e81">4. 工厂方法模式</a></li>
+<li><a href="#orgec97ebb">5. 抽象工厂模式</a></li>
+<li><a href="#org08444db">6. 综合理解</a></li>
+<li><a href="#orge5674ee">7. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org01acc69" class="outline-2">
-<h2 id="org01acc69"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-org7921757" class="outline-2">
+<h2 id="org7921757"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在多次接触设计模式的过程中，工厂模式留给我的印象是最深的，因为，它基本上是各种教程前面必然会出现的一个模式 (￢_￢)
@@ -270,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org634d742" class="outline-2">
-<h2 id="org634d742"><span class="section-number-2">2</span> 三个面向对象设计原则</h2>
+<div id="outline-container-org49e30db" class="outline-2">
+<h2 id="org49e30db"><span class="section-number-2">2</span> 三个面向对象设计原则</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 某种程度上，设计模式的设计依据便是面向对象的设计原则，这里先列出来个人认为有助于工厂模式的理解的三个原则：
@@ -284,8 +297,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2073870" class="outline-2">
-<h2 id="org2073870"><span class="section-number-2">3</span> 简单工厂模式</h2>
+<div id="outline-container-org6bda0d7" class="outline-2">
+<h2 id="org6bda0d7"><span class="section-number-2">3</span> 简单工厂模式</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 简单工厂模式不是一个设计模式，这是每个教程里面都会有的一句话，这里也不例外。
@@ -341,8 +354,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1135ebd" class="outline-2">
-<h2 id="org1135ebd"><span class="section-number-2">4</span> 工厂方法模式</h2>
+<div id="outline-container-org0111e81" class="outline-2">
+<h2 id="org0111e81"><span class="section-number-2">4</span> 工厂方法模式</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 工厂方法模式和简单工厂模式有点像，它在父类中声明用于创建具体对象的 <b>抽象方法</b>, 然后由 <b>子类</b> 来实现抽象方法。
@@ -373,8 +386,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2521ea6" class="outline-2">
-<h2 id="org2521ea6"><span class="section-number-2">5</span> 抽象工厂模式</h2>
+<div id="outline-container-orgec97ebb" class="outline-2">
+<h2 id="orgec97ebb"><span class="section-number-2">5</span> 抽象工厂模式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 抽象工厂模式和工厂方法模式很接近，主要用于创建一组相关的对象，也就是经常会在一起被创建的对象，其类图如下：
@@ -396,8 +409,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org976cb6a" class="outline-2">
-<h2 id="org976cb6a"><span class="section-number-2">6</span> 综合理解</h2>
+<div id="outline-container-org08444db" class="outline-2">
+<h2 id="org08444db"><span class="section-number-2">6</span> 综合理解</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 设计模式的设计依据是面向对象的设计原则，因此，在理解设计模式的时候，应该参考相应的设计原则。
@@ -425,8 +438,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org572d6e8" class="outline-2">
-<h2 id="org572d6e8"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-orge5674ee" class="outline-2">
+<h2 id="orge5674ee"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 据说学习设计模式容易陷入一个误区，那就是到处都在用设计模式，使得整体代码变得复杂且难以理解。
@@ -440,14 +453,12 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

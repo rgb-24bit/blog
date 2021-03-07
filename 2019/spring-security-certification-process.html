@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spring Security 认证流程梳理</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,17 +259,17 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6610fa4">1. 前言</a></li>
-<li><a href="#orgf40bc91">2. 简单的认证流程</a></li>
-<li><a href="#org1f0aa75">3. Spring Security</a></li>
-<li><a href="#org3bdc7a8">4. 结语</a></li>
-<li><a href="#org5fce578">5. 参考链接</a></li>
+<li><a href="#orgdbd929d">1. 前言</a></li>
+<li><a href="#org794713e">2. 简单的认证流程</a></li>
+<li><a href="#org5e00e76">3. Spring Security</a></li>
+<li><a href="#orgbd43f8f">4. 结语</a></li>
+<li><a href="#orgdd7f111">5. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6610fa4" class="outline-2">
-<h2 id="org6610fa4"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgdbd929d" class="outline-2">
+<h2 id="orgdbd929d"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个模块之一了，最开始看书学习的时候，在看了几次还有一些迷糊后就放弃了。
@@ -272,8 +285,8 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div>
 </div>
 
-<div id="outline-container-orgf40bc91" class="outline-2">
-<h2 id="orgf40bc91"><span class="section-number-2">2</span> 简单的认证流程</h2>
+<div id="outline-container-org794713e" class="outline-2">
+<h2 id="org794713e"><span class="section-number-2">2</span> 简单的认证流程</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 很多人在刚开始学习 Web 应用程序的编写的时候，应该都使用过下面这种认证方式：
@@ -292,8 +305,8 @@ Spring Security 应该是 Spring 全家桶中学习曲线最为陡峭的几个�
 </div>
 </div>
 
-<div id="outline-container-org1f0aa75" class="outline-2">
-<h2 id="org1f0aa75"><span class="section-number-2">3</span> Spring Security</h2>
+<div id="outline-container-org5e00e76" class="outline-2">
+<h2 id="org5e00e76"><span class="section-number-2">3</span> Spring Security</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 前面的简单的认证流程中，是可以将一些东西抽象出来作为一个单独的实体，这些实体都可以在 Spring Security 中找到相应的对象，包括：
@@ -403,8 +416,8 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </div>
 </div>
 
-<div id="outline-container-org3bdc7a8" class="outline-2">
-<h2 id="org3bdc7a8"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-orgbd43f8f" class="outline-2">
+<h2 id="orgbd43f8f"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 其实除了 Spring Security 以外还看了一下 Spring Security OAuth2 和 Spring Security JWT，本来感觉可以和这篇博客一起总结了，但是写着写着才发现，卧槽，Spring Security 部分的思路那么清晰，怎么到了 Spring Security OAuth2 后就变得断断续续的。
@@ -416,8 +429,8 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </div>
 </div>
 
-<div id="outline-container-org5fce578" class="outline-2">
-<h2 id="org5fce578"><span class="section-number-2">5</span> 参考链接</h2>
+<div id="outline-container-orgdd7f111" class="outline-2">
+<h2 id="orgdd7f111"><span class="section-number-2">5</span> 参考链接</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://www.ibm.com/developerworks/cn/web/wa-spring-security-web-application-and-fingerprint-login/index.html">Spring Security 的 Web 应用和指纹登录实践</a></li>
@@ -429,14 +442,12 @@ Spring Security 是基于 Filter 来实现的，而每个请求往往也会分�
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

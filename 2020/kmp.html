@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2020-05-10 周日 16:02 -->
+<!-- 2021-03-07 周日 15:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KMP 算法的两种实现</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,20 +281,20 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org352fe4a">1. 前言</a></li>
-<li><a href="#org5b7957e">2. 朴素子字符串查找算法</a></li>
-<li><a href="#orgb651d5d">3. KMP 算法的基本思想</a></li>
-<li><a href="#orgd6fcbec">4. 基于 DFA 的 KMP 实现</a></li>
-<li><a href="#org13aa1c1">5. 基于 PMT 的 KMP 实现</a></li>
-<li><a href="#org7c1438f">6. 历史渊源 &amp; DFA &amp; PMT</a></li>
-<li><a href="#org41e54b7">7. 结语</a></li>
-<li><a href="#orgef37390">8. 参考链接</a></li>
+<li><a href="#orgbd0d73f">1. 前言</a></li>
+<li><a href="#orgceaed16">2. 朴素子字符串查找算法</a></li>
+<li><a href="#org78377a4">3. KMP 算法的基本思想</a></li>
+<li><a href="#org49ec29a">4. 基于 DFA 的 KMP 实现</a></li>
+<li><a href="#orgf108df7">5. 基于 PMT 的 KMP 实现</a></li>
+<li><a href="#orgfdfb514">6. 历史渊源 &amp; DFA &amp; PMT</a></li>
+<li><a href="#orgc7df403">7. 结语</a></li>
+<li><a href="#org354e85f">8. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org352fe4a" class="outline-2">
-<h2 id="org352fe4a"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgbd0d73f" class="outline-2">
+<h2 id="orgbd0d73f"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 KMP 算法在 LeetCode 刷题的过程中看见过好几次，这几天终于去学习了一下，然后，我就发现，Google 出来的 KMP 和我书上的不太一样……
@@ -301,8 +314,8 @@ KMP 算法在 LeetCode 刷题的过程中看见过好几次，这几天终于去
 </div>
 </div>
 
-<div id="outline-container-org5b7957e" class="outline-2">
-<h2 id="org5b7957e"><span class="section-number-2">2</span> 朴素子字符串查找算法</h2>
+<div id="outline-container-orgceaed16" class="outline-2">
+<h2 id="orgceaed16"><span class="section-number-2">2</span> 朴素子字符串查找算法</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 KMP 算法是用来解决 <b>子字符串查找</b> 问题的算法，这个问题有一个很朴素（暴力）的解决方式，通常的写法是：
@@ -355,8 +368,8 @@ KMP 算法是用来解决 <b>子字符串查找</b> 问题的算法，这个问�
 </div>
 </div>
 
-<div id="outline-container-orgb651d5d" class="outline-2">
-<h2 id="orgb651d5d"><span class="section-number-2">3</span> KMP 算法的基本思想</h2>
+<div id="outline-container-org78377a4" class="outline-2">
+<h2 id="org78377a4"><span class="section-number-2">3</span> KMP 算法的基本思想</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 无论是基于 DFA 的 KMP 实现还是基于 PMT 的 KMP 实现，两者的基本思想都是一样的，就是在出现不匹配时，利用已知的一部分文本的内容避免回退文本指针，而是只回退模式指针。
@@ -376,8 +389,8 @@ KMP 算法是用来解决 <b>子字符串查找</b> 问题的算法，这个问�
 </div>
 </div>
 
-<div id="outline-container-orgd6fcbec" class="outline-2">
-<h2 id="orgd6fcbec"><span class="section-number-2">4</span> 基于 DFA 的 KMP 实现</h2>
+<div id="outline-container-org49ec29a" class="outline-2">
+<h2 id="org49ec29a"><span class="section-number-2">4</span> 基于 DFA 的 KMP 实现</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 DFA 也就是确定有限自动状态机，第一次接触这个概念还是在编译原理里面。在基于 DFA 的 KMP 中，我们首先需要根据模式字符串构建一个这样的状态机：
@@ -507,8 +520,8 @@ dfa[pat[j]][j] = j + 1       <span class="org-comment-delimiter"># </span><span 
 </div>
 </div>
 
-<div id="outline-container-org13aa1c1" class="outline-2">
-<h2 id="org13aa1c1"><span class="section-number-2">5</span> 基于 PMT 的 KMP 实现</h2>
+<div id="outline-container-orgf108df7" class="outline-2">
+<h2 id="orgf108df7"><span class="section-number-2">5</span> 基于 PMT 的 KMP 实现</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 相对来说，基于 PMT 的 KMP 实现理解起来更加简单，其中，PMT 是一个被称为部分匹配表(Partial Match Table)的数组：
@@ -684,8 +697,8 @@ pat[0:next[j]]
 </div>
 </div>
 
-<div id="outline-container-org7c1438f" class="outline-2">
-<h2 id="org7c1438f"><span class="section-number-2">6</span> 历史渊源 &amp; DFA &amp; PMT</h2>
+<div id="outline-container-orgfdfb514" class="outline-2">
+<h2 id="orgfdfb514"><span class="section-number-2">6</span> 历史渊源 &amp; DFA &amp; PMT</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 KMP 算法的历史故事：
@@ -722,8 +735,8 @@ J.H.Morris 在实现一个文本编辑器时，未来解决某个棘手的问题
 </div>
 </div>
 
-<div id="outline-container-org41e54b7" class="outline-2">
-<h2 id="org41e54b7"><span class="section-number-2">7</span> 结语</h2>
+<div id="outline-container-orgc7df403" class="outline-2">
+<h2 id="orgc7df403"><span class="section-number-2">7</span> 结语</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 决定要看一下 KMP 是因为前几天 LeetCode 上的每日一题 <a href="https://leetcode-cn.com/problems/subtree-of-another-tree/">另一个树的子树</a>，难度是简单，我用 DFS 暴力 AC 后去看了一下题解……
@@ -747,8 +760,8 @@ J.H.Morris 在实现一个文本编辑器时，未来解决某个棘手的问题
 </div>
 </div>
 
-<div id="outline-container-orgef37390" class="outline-2">
-<h2 id="orgef37390"><span class="section-number-2">8</span> 参考链接</h2>
+<div id="outline-container-org354e85f" class="outline-2">
+<h2 id="org354e85f"><span class="section-number-2">8</span> 参考链接</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://blog.csdn.net/xiangshimoni/article/details/45459963">从 DFA 角度理解 KMP 算法_fpga开发_DC的陋室-CSDN博客</a></li>
@@ -770,14 +783,12 @@ J.H.Morris 在实现一个文本编辑器时，未来解决某个棘手的问题
 </div></div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

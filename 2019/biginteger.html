@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>大数的简单实现</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -246,21 +259,21 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org50c7ce7">1. 前言</a></li>
-<li><a href="#org3aee07b">2. 字符数组的本质</a></li>
-<li><a href="#org3bc09ca">3. 整数数组与 1000000000 进制</a></li>
-<li><a href="#org9ebebe6">4. 小端模式存储</a></li>
-<li><a href="#org2217c32">5. 和 10 进制字符串之间的转换</a></li>
-<li><a href="#orgb24d0b6">6. 大数加法</a></li>
-<li><a href="#org755a085">7. 大数乘法</a></li>
-<li><a href="#org4ffdf72">8. 结语</a></li>
-<li><a href="#orgbc5bea8">9. 参考链接</a></li>
+<li><a href="#orgc913953">1. 前言</a></li>
+<li><a href="#orgc5074e9">2. 字符数组的本质</a></li>
+<li><a href="#orga19b670">3. 整数数组与 1000000000 进制</a></li>
+<li><a href="#org37716d9">4. 小端模式存储</a></li>
+<li><a href="#org1bf05be">5. 和 10 进制字符串之间的转换</a></li>
+<li><a href="#org97344b6">6. 大数加法</a></li>
+<li><a href="#orgcfcadb1">7. 大数乘法</a></li>
+<li><a href="#org2e713e4">8. 结语</a></li>
+<li><a href="#org2c4ba3c">9. 参考链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org50c7ce7" class="outline-2">
-<h2 id="org50c7ce7"><span class="section-number-2">1</span> 前言</h2>
+<div id="outline-container-orgc913953" class="outline-2">
+<h2 id="orgc913953"><span class="section-number-2">1</span> 前言</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 大数的实现应该是很多人在初学编程不久后就会遇到的一个问题，常见的问题就是 <b>大数加法</b> 的实现，更进一步便是 <b>大数乘法</b>.
@@ -276,8 +289,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3aee07b" class="outline-2">
-<h2 id="org3aee07b"><span class="section-number-2">2</span> 字符数组的本质</h2>
+<div id="outline-container-orgc5074e9" class="outline-2">
+<h2 id="orgc5074e9"><span class="section-number-2">2</span> 字符数组的本质</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 通过字符数组表示大数的本质是什么，比如像这样一个字符数组：
@@ -308,8 +321,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3bc09ca" class="outline-2">
-<h2 id="org3bc09ca"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
+<div id="outline-container-orga19b670" class="outline-2">
+<h2 id="orga19b670"><span class="section-number-2">3</span> 整数数组与 1000000000 进制</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 通过前面的思考，我们可以发现，通过 <b>字符数组</b> 来实现大数的方式其实就是：
@@ -378,8 +391,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9ebebe6" class="outline-2">
-<h2 id="org9ebebe6"><span class="section-number-2">4</span> 小端模式存储</h2>
+<div id="outline-container-org37716d9" class="outline-2">
+<h2 id="org37716d9"><span class="section-number-2">4</span> 小端模式存储</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 我们选择了整数数组和 1000000000 进制实现大数，其中，整数数组的每个元素最多存储 9 位十进制数字：
@@ -422,8 +435,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2217c32" class="outline-2">
-<h2 id="org2217c32"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
+<div id="outline-container-org1bf05be" class="outline-2">
+<h2 id="org1bf05be"><span class="section-number-2">5</span> 和 10 进制字符串之间的转换</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 将 10 进制字符串转换为 1000000000 进制的整数数组时，只需要按 9 个数字一组的方式分割原字符串就可以了：
@@ -482,8 +495,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb24d0b6" class="outline-2">
-<h2 id="orgb24d0b6"><span class="section-number-2">6</span> 大数加法</h2>
+<div id="outline-container-org97344b6" class="outline-2">
+<h2 id="org97344b6"><span class="section-number-2">6</span> 大数加法</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 整数数组的大数加法和字符数组的大数加法在实现上是差不多的，所有就直接上代码好了：
@@ -530,8 +543,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org755a085" class="outline-2">
-<h2 id="org755a085"><span class="section-number-2">7</span> 大数乘法</h2>
+<div id="outline-container-orgcfcadb1" class="outline-2">
+<h2 id="orgcfcadb1"><span class="section-number-2">7</span> 大数乘法</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 大数乘法我们可以借助 <b>long</b> 数组来辅助实现，因为，这样就不需要担心两个 <b>int</b> 相乘的溢出问题了，这也是为什么不选择 <b>long</b> 数组来实现大数的一个原因。
@@ -585,8 +598,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4ffdf72" class="outline-2">
-<h2 id="org4ffdf72"><span class="section-number-2">8</span> 结语</h2>
+<div id="outline-container-org2e713e4" class="outline-2">
+<h2 id="org2e713e4"><span class="section-number-2">8</span> 结语</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 这里的大数实现是很不完善的，本来是想尝试用 2 进制流来实现，但是尝试后才发现，有点麻烦，于是就放弃了。
@@ -610,8 +623,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbc5bea8" class="outline-2">
-<h2 id="orgbc5bea8"><span class="section-number-2">9</span> 参考链接</h2>
+<div id="outline-container-org2c4ba3c" class="outline-2">
+<h2 id="org2c4ba3c"><span class="section-number-2">9</span> 参考链接</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.pediy.com/kssd/pediy05/pediy50664.htm">RSA 与大数运算</a></li>
@@ -623,14 +636,12 @@ for the JavaScript code in this tag.
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>

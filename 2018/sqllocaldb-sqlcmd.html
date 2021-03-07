@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 2019-10-31 四 11:27 -->
+<!-- 2021-03-07 周日 15:56 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SqlLocalDB 和 Sqlcmd</title>
@@ -159,6 +159,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -268,39 +281,39 @@ for the JavaScript code in this tag.
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org78847a4">1. 简介</a>
+<li><a href="#org6cd252e">1. 简介</a>
 <ul>
-<li><a href="#orgb9e14b0">1.1. sqllocaldb 介绍</a></li>
-<li><a href="#orgefe5dee">1.2. sqlcmd 介绍</a></li>
+<li><a href="#org08d8e9b">1.1. sqllocaldb 介绍</a></li>
+<li><a href="#org45043b5">1.2. sqlcmd 介绍</a></li>
 </ul>
 </li>
-<li><a href="#org43be5dd">2. 安装</a>
+<li><a href="#org311e186">2. 安装</a>
 <ul>
-<li><a href="#org7f02d4d">2.1. 通过VS安装</a></li>
-<li><a href="#org25f9b43">2.2. 通过安装包安装</a></li>
+<li><a href="#orga7fefa7">2.1. 通过VS安装</a></li>
+<li><a href="#org95016c3">2.2. 通过安装包安装</a></li>
 </ul>
 </li>
-<li><a href="#org015db83">3. 使用</a>
+<li><a href="#orga2532ca">3. 使用</a>
 <ul>
-<li><a href="#orgc77d2c1">3.1. 使用sqllocaldb</a></li>
-<li><a href="#orgb59eb61">3.2. 使用sqlcmd</a></li>
+<li><a href="#orgc4e557b">3.1. 使用sqllocaldb</a></li>
+<li><a href="#orge3d4514">3.2. 使用sqlcmd</a></li>
 </ul>
 </li>
-<li><a href="#org9dceb6a">4. 结语</a></li>
+<li><a href="#org4b6aeaf">4. 结语</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org78847a4" class="outline-2">
-<h2 id="org78847a4"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org6cd252e" class="outline-2">
+<h2 id="org6cd252e"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本文介绍如何通过 <code>sqllocaldb</code>, <code>sqlcmd</code> 搭建一个 <b>简单</b> 的 <code>sql server</code> 学习开发环境.
 </p>
 </div>
 
-<div id="outline-container-orgb9e14b0" class="outline-3">
-<h3 id="orgb9e14b0"><span class="section-number-3">1.1</span> sqllocaldb 介绍</h3>
+<div id="outline-container-org08d8e9b" class="outline-3">
+<h3 id="org08d8e9b"><span class="section-number-3">1.1</span> sqllocaldb 介绍</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 <b>sqllocaldb</b> 是微软为开发者量身定制了一款专门用于编程开发的小数据库.
@@ -326,8 +339,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgefe5dee" class="outline-3">
-<h3 id="orgefe5dee"><span class="section-number-3">1.2</span> sqlcmd 介绍</h3>
+<div id="outline-container-org45043b5" class="outline-3">
+<h3 id="org45043b5"><span class="section-number-3">1.2</span> sqlcmd 介绍</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 <b>sqlcmd</b> 在老版本的 <b>sqlserver</b> 中叫做 <b>osql</b>.
@@ -354,12 +367,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org43be5dd" class="outline-2">
-<h2 id="org43be5dd"><span class="section-number-2">2</span> 安装</h2>
+<div id="outline-container-org311e186" class="outline-2">
+<h2 id="org311e186"><span class="section-number-2">2</span> 安装</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org7f02d4d" class="outline-3">
-<h3 id="org7f02d4d"><span class="section-number-3">2.1</span> 通过VS安装</h3>
+<div id="outline-container-orga7fefa7" class="outline-3">
+<h3 id="orga7fefa7"><span class="section-number-3">2.1</span> 通过VS安装</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 这是最简单直接的安装方式, 只需要勾选几个选项就够了.
@@ -372,8 +385,8 @@ VS 2017 示例:
 </div>
 </div>
 
-<div id="outline-container-org25f9b43" class="outline-3">
-<h3 id="org25f9b43"><span class="section-number-3">2.2</span> 通过安装包安装</h3>
+<div id="outline-container-org95016c3" class="outline-3">
+<h3 id="org95016c3"><span class="section-number-3">2.2</span> 通过安装包安装</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个安装方式相对麻烦一些, 如果你没有安装 VS 的话, 可以这样安装.
@@ -397,8 +410,8 @@ VS 2017 示例:
 </p>
 <pre class="example">
 C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
-
 </pre>
+
 <p>
 其中: 根据版本, 可能位于 <code>File(x86)</code>, <code>110...</code> 等位置. 找到 <code>SQLCMD.exe</code> 和
 <code>sqllocaldb.exe</code> 添加到环境变量即可
@@ -407,12 +420,12 @@ C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
 </div>
 </div>
 
-<div id="outline-container-org015db83" class="outline-2">
-<h2 id="org015db83"><span class="section-number-2">3</span> 使用</h2>
+<div id="outline-container-orga2532ca" class="outline-2">
+<h2 id="orga2532ca"><span class="section-number-2">3</span> 使用</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgc77d2c1" class="outline-3">
-<h3 id="orgc77d2c1"><span class="section-number-3">3.1</span> 使用sqllocaldb</h3>
+<div id="outline-container-orgc4e557b" class="outline-3">
+<h3 id="orgc4e557b"><span class="section-number-3">3.1</span> 使用sqllocaldb</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>sqllocaldb -?</code> 查看使用帮助
@@ -448,8 +461,8 @@ sqllocaldb v                       -- 列出在计算机上安装的所有 Local
 </div>
 </div>
 
-<div id="outline-container-orgb59eb61" class="outline-3">
-<h3 id="orgb59eb61"><span class="section-number-3">3.2</span> 使用sqlcmd</h3>
+<div id="outline-container-orge3d4514" class="outline-3">
+<h3 id="orge3d4514"><span class="section-number-3">3.2</span> 使用sqlcmd</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>sqlcmd</b> 的指令还是比较多的, 这里只列举几个常用的指令.
@@ -482,8 +495,8 @@ exit               -- 退出 sqlcmd
 </div>
 </div>
 
-<div id="outline-container-org9dceb6a" class="outline-2">
-<h2 id="org9dceb6a"><span class="section-number-2">4</span> 结语</h2>
+<div id="outline-container-org4b6aeaf" class="outline-2">
+<h2 id="org4b6aeaf"><span class="section-number-2">4</span> 结语</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 通过 <b>sqllocaldb</b> 和 <b>sqlcmd</b> 可以简单搭建用于 <b>sql</b> 学习的环境.
@@ -498,14 +511,12 @@ exit               -- 退出 sqlcmd
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'rgb-24bit';
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script src="https://utteranc.es/client.js"
+        repo="rgb-24bit/blog"
+        issue-term="pathname"
+        theme="boxy-light"
+        crossorigin="anonymous"
+        async>
 </script>
 </div>
 </body>
