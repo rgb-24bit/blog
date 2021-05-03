@@ -4,7 +4,7 @@
 <!-- 2021-05-03 周一 20:48 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rgb-24bit's blog</title>
+<title>不可变对象的魅力</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="rgb-24bit">
 <style type="text/css">
@@ -254,200 +254,154 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="https://rgb-24bit.github.io"> HOME </a>
 </div><div id="content">
-<h1 class="title">rgb-24bit's blog</h1>
-<details open="open"><summary><i>2021</i></summary>
+<h1 class="title">不可变对象的魅力</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgca00e6f">1. 前言</a></li>
+<li><a href="#org856241f">2. Git Commit Object</a></li>
+<li><a href="#org7239bf6">3. GoLang Context</a></li>
+<li><a href="#org0c7a0b3">4. Trace Context</a></li>
+<li><a href="#orgb7cac19">5. 结语</a></li>
+</ul>
+</div>
+</div>
 
-<dl class="org-dl">
-<dt>05-02 &#x2013; <a href="2021/immutable-object.html">不可变对象的魅力</a>                   </dt><dd></dd>
-</dl>
+<div id="outline-container-orgca00e6f" class="outline-2">
+<h2 id="orgca00e6f"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+工作以后就不像在学校里面有那么多的时间拿来写博客了啊 QAQ，一直有些想法想通过博客整理一下，但周六周末的时间往往一下就没了，结果一直拖到现在才有时间写写_(:з」∠)_
+</p>
 
-</details>
+<details><summary><i>……</i></summary>
 
-<details open="open"><summary><i>2020</i></summary>
-
-<dl class="org-dl">
-<dt>12-27 &#x2013; <a href="2020/emacs-custom.html">Emacs 和 Emacs 自定义配置起步</a>      </dt><dd></dd>
-
-<dt>05-10 &#x2013; <a href="2020/kmp.html">KMP 算法的两种实现</a>                 </dt><dd></dd>
-
-<dt>04-04 &#x2013; <a href="2020/mysql-mvcc.html">MySQL MVCC - 多版本并发控制</a>        </dt><dd></dd>
-
-<dt>02-23 &#x2013; <a href="2020/java-executor-framework.html">Java 并发之 Executor 框架</a>          </dt><dd></dd>
-
-<dt>02-15 &#x2013; <a href="2020/java-dynamic-proxy.html">Java 动态代理的简单使用和理解</a>      </dt><dd></dd>
-
-<dt>02-09 &#x2013; <a href="2020/java-synchronized.html">Java 偏向锁、轻量级锁和重量级锁</a>    </dt><dd></dd>
-
-<dt>01-18 &#x2013; <a href="2020/event-loop-with-coroutine.html">事件循环和协程</a>                     </dt><dd></dd>
-
-<dt>01-05 &#x2013; <a href="2020/latex-summary.html">LateX 学习小结</a>                     </dt><dd></dd>
-</dl>
+<p>
+当然，之前也有不少机会可以写写，但是一想到来自不易的周末和写博客需要的时间 @_@
+</p>
 
 </details>
 
-
-<details open="open"><summary><i>2019</i></summary>
-
-<dl class="org-dl">
-<dt>12-29 &#x2013; <a href="2019/memory-management-and-rust-ownership.html">内存管理和 Rust 所有权</a>             </dt><dd></dd>
-
-<dt>11-02 &#x2013; <a href="2019/spring-security-web-and-oauth2.html">Spring Security Web 和 OAuth2</a>      </dt><dd></dd>
-
-<dt>10-20 &#x2013; <a href="2019/spring-security-certification-process.html">Spring Security 认证流程梳理</a>       </dt><dd></dd>
-
-<dt>10-06 &#x2013; <a href="2019/java-spi.html">Java SPI 机制及其实现</a>              </dt><dd></dd>
-
-<dt>06-22 &#x2013; <a href="2019/quick-sort.html">Quick Sort 快速排序算法</a>            </dt><dd></dd>
-
-<dt>06-08 &#x2013; <a href="2019/tcp-connect-manage.html">TCP 中的三次握手和四次挥手</a>         </dt><dd></dd>
-
-<dt>05-25 &#x2013; <a href="2019/factory-pattern.html">设计模式之工厂模式</a>                 </dt><dd></dd>
-
-<dt>05-18 &#x2013; <a href="2019/ml-knn.html">机器学习 - K-近邻算法</a>              </dt><dd></dd>
-
-<dt>05-03 &#x2013; <a href="2019/javaee-servlet30-springmvc.html">Java EE - Servlet 3.0 和 Spring MVC</a></dt><dd></dd>
-
-<dt>04-26 &#x2013; <a href="2019/javaee-servlet-summary.html">Java EE - Servlet 小结</a>             </dt><dd></dd>
-
-<dt>04-20 &#x2013; <a href="2019/java-time.html">Java8 时间处理</a>                     </dt><dd></dd>
-
-<dt>04-13 &#x2013; <a href="2019/javaee-jsp-summary.html">Jave EE - JSP 小结</a>                 </dt><dd></dd>
-
-<dt>04-05 &#x2013; <a href="2019/java-io-abstract.html">Java 中的 I/O 抽象</a>                 </dt><dd></dd>
-
-<dt>03-29 &#x2013; <a href="2019/python-selectors.html">Python 高级 I/O 多路复用</a>           </dt><dd></dd>
-
-<dt>03-22 &#x2013; <a href="2019/sql-relational-algebra.html">SQL 与关系代数</a>                     </dt><dd></dd>
-
-<dt>03-15 &#x2013; <a href="2019/python-coroutine-event-loop.html">Python 协程和事件循环</a>              </dt><dd></dd>
-
-<dt>03-08 &#x2013; <a href="2019/java-enhancements.html">Java SE 5.0 - SE 8 的功能增强</a>      </dt><dd></dd>
-
-<dt>02-20 &#x2013; <a href="2019/regular-expressions-in-different-environments.html">不同环境下的正则表达式</a>             </dt><dd></dd>
-
-<dt>02-12 &#x2013; <a href="2019/bitop.html">通过位运算实现整数的加减乘除</a>       </dt><dd></dd>
-
-<dt>02-09 &#x2013; <a href="2019/biginteger.html">大数的简单实现</a>                     </dt><dd></dd>
-
-<dt>02-01 &#x2013; <a href="2019/binary-search.html">二分搜索算法</a>                       </dt><dd></dd>
-
-<dt>01-25 &#x2013; <a href="2019/rand-misc.html">随机数杂谈</a>                         </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2019/dijkstra-algorithm.html">迪杰斯特拉算法</a>                     </dt><dd></dd>
-</dl>
-
-</details>
-
-<details open="open"><summary><i>2018</i></summary>
-
-<dl class="org-dl">
-<dt>12-28 &#x2013; <a href="2018/msisdn.html">移动台国际用户识别码</a>               </dt><dd></dd>
-
-<dt>12-21 &#x2013; <a href="2018/android-small-summary.html">Android 小总结</a>                     </dt><dd></dd>
-
-<dt>12-14 &#x2013; <a href="2018/hash-table.html">散列表的简单实现</a>                   </dt><dd></dd>
-
-<dt>12-07 &#x2013; <a href="2018/uri.html">URI - 统一资源标识符</a>               </dt><dd></dd>
-
-<dt>11-23 &#x2013; <a href="2018/tree-dfs.html">树的深度优先遍历</a>                   </dt><dd></dd>
-
-<dt>11-16 &#x2013; <a href="2018/python-pickle.html">使用 pickle 序列化 Python 对象</a>     </dt><dd></dd>
-
-<dt>11-09 &#x2013; <a href="2018/python-logging.html">Python 日志模块</a>                    </dt><dd></dd>
-
-<dt>11-02 &#x2013; <a href="2018/io-redirect.html">I/O 重定向</a>                         </dt><dd></dd>
-
-<dt>10-26 &#x2013; <a href="2018/tree-bfs.html">树的广度优先遍历</a>                   </dt><dd></dd>
-
-<dt>10-21 &#x2013; <a href="2018/python-multi-threaded-usage-scenario.html">Python 多线程使用场景</a>              </dt><dd></dd>
-
-<dt>10-12 &#x2013; <a href="2018/csharp-image-process.html">C# 图像处理的三种方式</a>              </dt><dd></dd>
-
-<dt>10-03 &#x2013; <a href="2018/python-standard-type-hierarchy.html">Python 标准类型层次结构</a>            </dt><dd></dd>
-
-<dt>09-22 &#x2013; <a href="2018/python-urllib.html">Python urllib</a>                      </dt><dd></dd>
-
-<dt>09-15 &#x2013; <a href="2018/linux-file-permission.html">Linux 文件权限</a>                     </dt><dd></dd>
-
-<dt>08-28 &#x2013; <a href="2018/python-generator.html">Python 生成器</a>                      </dt><dd></dd>
-
-<dt>08-22 &#x2013; <a href="2018/python-io.html">Python I/O</a>                         </dt><dd></dd>
-
-<dt>08-11 &#x2013; <a href="2018/java-collection.html">Java 核心集合接口</a>                  </dt><dd></dd>
-
-<dt>08-05 &#x2013; <a href="2018/python-metaclass.html">Python 元类</a>                        </dt><dd></dd>
-
-<dt>07-31 &#x2013; <a href="2018/python-new-instance.html">Python 构造对象实例</a>                </dt><dd></dd>
-
-<dt>07-26 &#x2013; <a href="2018/python3.0-3.6.html">Python3.0-3.6的版本变化</a>            </dt><dd></dd>
-
-<dt>07-17 &#x2013; <a href="2018/java-basic.html">Java 基础梳理</a>                      </dt><dd></dd>
-
-<dt>07-01 &#x2013; <a href="2018/os-exception.html">操作系统之异常控制流</a>               </dt><dd></dd>
-
-<dt>06-16 &#x2013; <a href="2018/python-descriptor.html">Python 描述器简述</a>                  </dt><dd></dd>
-
-<dt>06-01 &#x2013; <a href="2018/c-pointer.html">C 语言指针和数组</a>                   </dt><dd></dd>
-
-<dt>05-20 &#x2013; <a href="2018/python-regex.html">Python 正则表达式</a>                  </dt><dd></dd>
-
-<dt>05-16 &#x2013; <a href="2018/python-decorator.html">Python 闭包和装饰器</a>                </dt><dd></dd>
-
-<dt>05-03 &#x2013; <a href="2018/http.html">HTTP 协议相关</a>                      </dt><dd></dd>
-
-<dt>04-15 &#x2013; <a href="2018/python-import.html">Python 导入相关</a>                    </dt><dd></dd>
-
-<dt>04-03 &#x2013; <a href="2018/python-special-method.html">Python 魔法方法</a>                    </dt><dd></dd>
-
-<dt>03-30 &#x2013; <a href="2018/git-base.html">Git 基础使用</a>                       </dt><dd></dd>
-
-<dt>03-25 &#x2013; <a href="2018/win32.html">Win32 API 窗口程序</a>                 </dt><dd></dd>
-
-<dt>03-23 &#x2013; <a href="2018/python-build-in-type.html">Python 内置类型</a>                    </dt><dd></dd>
-
-<dt>03-20 &#x2013; <a href="2018/glob.html">Glob 语法及解析</a>                    </dt><dd></dd>
-
-<dt>03-10 &#x2013; <a href="2018/google.html">Google 搜索</a>                        </dt><dd></dd>
-
-<dt>03-03 &#x2013; <a href="2018/python-collection.html">Python 容器</a>                        </dt><dd></dd>
-
-<dt>02-26 &#x2013; <a href="2018/python-coding.html">Python 编码问题</a>                    </dt><dd></dd>
-
-<dt>02-21 &#x2013; <a href="2018/python-format-string.html">Python 格式化字符串</a>                </dt><dd></dd>
-
-<dt>02-18 &#x2013; <a href="2018/python-build-in-exception.html">Python 内置异常</a>                    </dt><dd></dd>
-
-<dt>02-14 &#x2013; <a href="2018/python-build-in-function.html">Python 内置函数</a>                    </dt><dd></dd>
-
-<dt>02-06 &#x2013; <a href="2018/blockchain.html">区块链的简单尝试</a>                   </dt><dd></dd>
-
-<dt>02-02 &#x2013; <a href="2018/pipenv.html">Pipenv 的使用</a>                      </dt><dd></dd>
-
-<dt>01-23 &#x2013; <a href="2018/python2.5-2.7.html">Python2.5-2.7的版本变化</a>            </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/regex.html">正则表达式</a>                         </dt><dd></dd>
-
-<dt>01-04 &#x2013; <a href="2018/sqllocaldb-sqlcmd.html">SqlLocalDB 和 Sqlcmd</a>               </dt><dd></dd>
-</dl>
-
-</details>
-
-<details open="open"><summary><i>2017</i></summary>
-
-<dl class="org-dl">
-<dt>12-27 &#x2013; <a href="2017/org-gtd.html">Emacs Org 搭建 GTD 系统</a>            </dt><dd></dd>
-
-<dt>12-26 &#x2013; <a href="2017/c99-wchar.html">C99 宽字符</a>                         </dt><dd></dd>
-</dl>
-
-</details>
-
-<script>
-  (function(href, text) {
-    let anchor = document.querySelector("#org-div-home-and-up > a");
-    Object.assign(anchor, {"href": href, "text": text});
-  })("/blog/search.html", "SEARCH");
-</script>
+<p>
+这篇博客的灵感主要来源于 Git Commit Object 和 GoLang Context，两者在使用中都算是不可变对象，通过内部指针建立当前对象和前一个对象之间的联系，实现在分布式/并发场景下的安全使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org856241f" class="outline-2">
+<h2 id="org856241f"><span class="section-number-2">2</span> Git Commit Object</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Git 中一个比较常见的问题：Git Merge 和 Git Rebase 之间的区别是什么？
+</p>
+
+<p>
+对于这个问题，我们可以从 Git Commit Object 和 Git Ref Object 的角度来回答，其中，Commit Object 就是每次我们执行 git commit 会创建的对象，而 Ref Object 则是含有一个 Commit Object SHA-1 值的可变对象，指向对应的 Commit Object。
+</p>
+
+<img src="https://i.loli.net/2021/05/03/Y6Nmi5saWG39gpf.png">
+
+<p>
+对应到上面这张图片，其中的 A、B、C……F 就是 Commit Object，而 master、feature 这样的分支其实就是一个指向 Commit Object 的 Ref Object。
+</p>
+
+<p>
+执行 git merge 将 feature 分支合并到 master 分支时，会创建一个特殊的 Merge Commit Object，这个 Commit 同时存在两个父 Commit，并将 master 包含的 SHA-1 值修改为这个新 Commit 的值：
+</p>
+
+<img src="https://i.loli.net/2021/05/03/sDGW7dghta1RpnQ.png">
+
+<p>
+但是 git rebase 的操作就特殊地多，我们需要明白的一点是，Commit Object 是不变的，无论是 merge 和 rebase，我们都需要解决这样的问题：
+</p>
+<ol class="org-ol">
+<li>我们需要同时保留 F 和 D 相对于 B 已经作出的修改</li>
+<li>Commit Object 是不可变的，也就是说，我们不可能通过修改 F 或 D 对象来应用另一个分支上的修改</li>
+</ol>
+
+<p>
+merge 通过创建一个新的 Commit Object 来保留两边的修改，而 rebase，则会将 E、F 的修改在 master 分支上重放，创建对应的一串新的 Commit Object：
+</p>
+
+<img src="https://i.loli.net/2021/05/03/K9xU6qSZTdrJQID.png">
+
+<p>
+原来的 E 和 F 依然存在，通过这样的方式，我们可以保证已有的 Commit Object 不会被人为修改。这很重要，Git 本质上也是一种分布式系统，每一个 fork 都在已有 Commit 的基础上进行修改，如果每个人都可以随便修改 Commit Object，那么简直就是一种灾难。
+</p>
+
+<p>
+相应的，常用的 git commit &#x2013;amend 也是相同的原理，创建了一个新的 Commit Object，保留之前的和现在的修改，并让 Ref 指向新的 Commit。
+</p>
+
+<p>
+PS：非常推荐阅读 Git Book 的第十章 <a href="https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4%E4%B8%8E%E4%B8%8A%E5%B1%82%E5%91%BD%E4%BB%A4">Git 内部原理</a>，通过这一章我们可以了解到 Git 内部的一些工作原理，同时结合日常使用进行理解，能够让我们知道，我们执行了一个 Git 命令后发生了什么。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7239bf6" class="outline-2">
+<h2 id="org7239bf6"><span class="section-number-2">3</span> GoLang Context</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+GoLang 和 JavaScript 是我接触过的语言中唯二先天异步的编程语言，在 GoLang 中这种异步还是无感知的，写着同步的代码，运行时帮你完成异步协程的调度。
+</p>
+
+<p>
+在 Java 中，多线程下上下文信息的传递往往可以用 ThreadLocal 变量来实现，但是在 GoLang 中，你是无法直接操作线程的，而协程这一级别通常也不会再提供一个 CroutineLocal 机制了。
+</p>
+
+<p>
+因此，在 GoLang 中，上下文信息在函数之间的传递就只有靠函数参数，通常，也就是 Context 对象，所以，写 Go 代码的时候，一堆 <code>func xxx(ctx context.Context, ...)</code> 形式的函数……
+</p>
+
+<p>
+我们可以通过 <code>context.WithValue</code> 创建一个新的 Context 对象，这个对象持有指向父 Context 对象的指针和绑定的值，使用 Context 对象的 Value 方法，可以在当前 Context 对象和父对象上寻找对应的值：
+</p>
+<div class="org-src-container">
+<pre class="src src-go">type contextKey struct{}
+
+func main() {
+  example(context.WithValue(context.Background(), contextKey{}, "value"))
+}
+
+func example(ctx context.Context) {
+  fmt.Println(ctx.Value(contextKey{}))
+}
+</pre>
+</div>
+
+<p>
+Context 对象也可以看做是不可变对象，因此，可以安全地通过 Context 在多个协程中传递上下文信息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0c7a0b3" class="outline-2">
+<h2 id="org0c7a0b3"><span class="section-number-2">4</span> Trace Context</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+在涉及到多个服务之间调用的追踪时，Trace 信息就是非常重要的依据，阅读 <a href="https://www.w3.org/TR/trace-context/">Trace Context</a> 文档的时候，Trace Context 其实也有点不可变对象的感觉，但本质上 Trace 信息就是需要使用相同的 ID 串起来……
+</p>
+
+<p>
+233
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7cac19" class="outline-2">
+<h2 id="orgb7cac19"><span class="section-number-2">5</span> 结语</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+并发场景下，共享内存的安全访问是一个很常见的问题，同样，也有很多成熟的解决方案，而不可变对象只是其中的一种。
+</p>
+
+<p>
+能够使用的场景其实也比较少，但是唯独这种方案让我感觉很 Nice，道理简单，成本低，通过对象上的一个指针，也可以串出像 Git 这样的分布式协作系统。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 版权声明：本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可

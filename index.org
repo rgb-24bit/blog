@@ -2,6 +2,11 @@
 #+AUTHOR:     rgb-24bit
 #+EMAIL:      rgb-24bit@foxmail.com
 
+#+HTML: <details open="open"><summary><i>2021</i></summary>
+
+- 05-02 -- [[file:2021/immutable-object.org][不可变对象的魅力]]                    ::
+
+#+HTML: </details>
 
 #+HTML: <details open="open"><summary><i>2020</i></summary>
 

@@ -1,0 +1,111 @@
+#+TITLE:      不可变对象的魅力
+#+AUTHOR:     rgb-24bit
+#+EMAIL:      rgb-24bit@foxmail.com
+#+DATE:       <2021-05-03 周一>
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#前言][前言]]
+- [[#git-commit-object][Git Commit Object]]
+- [[#golang-context][GoLang Context]]
+- [[#trace-context][Trace Context]]
+- [[#结语][结语]]
+
+* 前言
+  工作以后就不像在学校里面有那么多的时间拿来写博客了啊 QAQ，一直有些想法想通过博客整理一下，
+  但周六周末的时间往往一下就没了，结果一直拖到现在才有时间写写_(:з」∠)_
+
+  #+HTML: <details><summary><i>……</i></summary>
+
+  当然，之前也有不少机会可以写写，但是一想到来自不易的周末和写博客需要的时间 @_@
+
+  #+HTML: </details>
+
+  这篇博客的灵感主要来源于 Git Commit Object 和 GoLang Context，两者在使用中都算是不可变对象，
+  通过内部指针建立当前对象和前一个对象之间的联系，实现在分布式/并发场景下的安全使用。
+
+* Git Commit Object
+  Git 中一个比较常见的问题：Git Merge 和 Git Rebase 之间的区别是什么？
+
+  对于这个问题，我们可以从 Git Commit Object 和 Git Ref Object 的角度来回答，其中，Commit Object 就是每次我们执行 git commit 会创建的对象，
+  而 Ref Object 则是含有一个 Commit Object SHA-1 值的可变对象，指向对应的 Commit Object。
+
+  #+begin_src dot :exports none
+    digraph G {
+        node [shape = Box];
+
+        rankdir = RL;
+    
+         D -> C -> B -> A;
+         F -> E -> B;
+
+         master[shape = plaintext];
+         master -> D;
+     
+         feature[shape = plaintext];
+         feature -> F;
+    }
+  #+end_src
+
+  #+HTML: <img src="https://i.loli.net/2021/05/03/Y6Nmi5saWG39gpf.png">
+
+  对应到上面这张图片，其中的 A、B、C……F 就是 Commit Object，而 master、feature 这样的分支其实就是一个指向 Commit Object 的 Ref Object。
+
+  执行 git merge 将 feature 分支合并到 master 分支时，会创建一个特殊的 Merge Commit Object，这个 Commit 同时存在两个父 Commit，
+  并将 master 包含的 SHA-1 值修改为这个新 Commit 的值：
+  
+  #+HTML: <img src="https://i.loli.net/2021/05/03/sDGW7dghta1RpnQ.png">
+
+  但是 git rebase 的操作就特殊地多，我们需要明白的一点是，Commit Object 是不变的，无论是 merge 和 rebase，我们都需要解决这样的问题：
+  1. 我们需要同时保留 F 和 D 相对于 B 已经作出的修改
+  2. Commit Object 是不可变的，也就是说，我们不可能通过修改 F 或 D 对象来应用另一个分支上的修改
+
+  merge 通过创建一个新的 Commit Object 来保留两边的修改，而 rebase，则会将 E、F 的修改在 master 分支上重放，创建对应的一串新的 Commit Object：
+
+  #+HTML: <img src="https://i.loli.net/2021/05/03/K9xU6qSZTdrJQID.png">
+
+  原来的 E 和 F 依然存在，通过这样的方式，我们可以保证已有的 Commit Object 不会被人为修改。这很重要，Git 本质上也是一种分布式系统，
+  每一个 fork 都在已有 Commit 的基础上进行修改，如果每个人都可以随便修改 Commit Object，那么简直就是一种灾难。
+
+  相应的，常用的 git commit --amend 也是相同的原理，创建了一个新的 Commit Object，保留之前的和现在的修改，并让 Ref 指向新的 Commit。
+  
+  PS：非常推荐阅读 Git Book 的第十章 [[https://git-scm.com/book/zh/v2/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4%E4%B8%8E%E4%B8%8A%E5%B1%82%E5%91%BD%E4%BB%A4][Git 内部原理]]，通过这一章我们可以了解到 Git 内部的一些工作原理，
+  同时结合日常使用进行理解，能够让我们知道，我们执行了一个 Git 命令后发生了什么。
+
+* GoLang Context
+  GoLang 和 JavaScript 是我接触过的语言中唯二先天异步的编程语言，在 GoLang 中这种异步还是无感知的，写着同步的代码，
+  运行时帮你完成异步协程的调度。
+
+  在 Java 中，多线程下上下文信息的传递往往可以用 ThreadLocal 变量来实现，但是在 GoLang 中，你是无法直接操作线程的，
+  而协程这一级别通常也不会再提供一个 CroutineLocal 机制了。
+
+  因此，在 GoLang 中，上下文信息在函数之间的传递就只有靠函数参数，通常，也就是 Context 对象，所以，写 Go 代码的时候，
+  一堆 =func xxx(ctx context.Context, ...)= 形式的函数……
+
+  我们可以通过 =context.WithValue= 创建一个新的 Context 对象，这个对象持有指向父 Context 对象的指针和绑定的值，使用 Context 对象的 Value 方法，
+  可以在当前 Context 对象和父对象上寻找对应的值：
+  #+begin_src go
+    type contextKey struct{}
+
+    func main() {
+      example(context.WithValue(context.Background(), contextKey{}, "value"))
+    }
+
+    func example(ctx context.Context) {
+      fmt.Println(ctx.Value(contextKey{}))
+    }
+  #+end_src
+
+  Context 对象也可以看做是不可变对象，因此，可以安全地通过 Context 在多个协程中传递上下文信息。
+
+* Trace Context
+  在涉及到多个服务之间调用的追踪时，Trace 信息就是非常重要的依据，阅读 [[https://www.w3.org/TR/trace-context/][Trace Context]] 文档的时候，Trace Context 其实也有点不可变对象的感觉，
+  但本质上 Trace 信息就是需要使用相同的 ID 串起来……
+
+  233
+
+* 结语
+  并发场景下，共享内存的安全访问是一个很常见的问题，同样，也有很多成熟的解决方案，而不可变对象只是其中的一种。
+
+  能够使用的场景其实也比较少，但是唯独这种方案让我感觉很 Nice，道理简单，成本低，通过对象上的一个指针，
+  也可以串出像 Git 这样的分布式协作系统。
+
